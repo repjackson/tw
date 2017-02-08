@@ -16,7 +16,7 @@
             // a.icon.item(href='/messages' class="{{isActivePath '/messages'}}")
             //     i.mail.icon
             if isInRole 'admin'
-                a.item(href='/admin/' class="{{isActivePath '/admin/'}}")
+                a.item(href='/admin/members' class="{{isActivePath '/admin/members'}}")
                     i.configure.icon
                     | Admin
             a.item(href="/account/profile/edit/#{currentUser._id}" class="{{isActivePath '/account/profile/edit/#{currentUser._id}'}}")
