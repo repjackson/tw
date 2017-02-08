@@ -151,3 +151,12 @@ if Meteor.isClient
             Meteor.users.update FlowRouter.getParam('user_id'),
                 $unset: image_id: 1
                 
+                
+                
+        'change #newsletter': (e,t)->
+            # console.log e.currentTarget.value
+            value = $('#newsletter').is(":checked")
+            Meteor.users.update FlowRouter.getParam('user_id'), 
+                $set:
+                    "profile.subscribe": value
+    

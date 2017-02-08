@@ -1,14 +1,15 @@
 template(name='footer')
-    .ui.basic.fluid.inverted.green.segment.footer
+    .ui.basic.fluid.segment.footer
+        .ui.divider
         .ui.container
-            // .ui.inverted.form
-            //     .inline.field
-            //         label Email
-            //         input(type='email')
-            //     .field
-            //         .ui.button Submit
-            // .ui.center.aligned.inverted.header
-            //     a(href='/contact') Contact Us
-            .ui.center.aligned.inverted.header
+            .ui.center.aligned.basic.segment
+                .ui.header
+                    |Have we connected on social media?
+                a(href='https://twitter.com/_toriwebster')
+                    i.big.twitter.link.icon
+                a(href='https://www.instagram.com/_toriwebster/')
+                    i.big.instagram.link.icon
+            +twitter
+            .ui.center.aligned.header
                 i.copyright.icon
-                |Watering Hole 2017
+                |Tori Webster 2017

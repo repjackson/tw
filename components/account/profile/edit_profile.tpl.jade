@@ -49,27 +49,36 @@
                 .ui.input
                     textarea#needs(type='textarea' rows='2')
                         |#{profile.needs}
-            .field
-                label Tags
-                each tags
-                    .ui.small.basic.circular.button.person_tag
-                        i.minus.icon
-                        |#{this}
-                // unless ten_tags
-                .ui.left.icon.input
-                    i.add.icon
-                    input#add_tag(type='text' placeholder='Press enter after each tag' maxlength='30')
-            .ui.segment
-                .ui.header 
-                    i.hide.icon
-                    |Private
-                .field
-                    label Phone 
-                    .ui.input
-                        input#phone(type='text' value=profile.phone)
-            .ui.segment
-                +atForm
-            .field
+            // .field
+            //     label Tags
+            //     each tags
+            //         .ui.small.basic.circular.button.person_tag
+            //             i.minus.icon
+            //             |#{this}
+            //     // unless ten_tags
+            //     .ui.left.icon.input
+            //         i.add.icon
+            //         input#add_tag(type='text' placeholder='Press enter after each tag' maxlength='30')
+            // .ui.segment
+            //     .ui.header 
+            //         i.hide.icon
+            //         |Private
+            //     .field
+            //         label Phone 
+            //         .ui.input
+            //             input#phone(type='text' value=profile.phone)
+            // .ui.segment
+            //     +atForm
+        .ui.basic.segment.container
+            .ui.horizontal.divider.header Settings
+            // .ui.form
+            //     .field
+            //         label Subscribe to Newsletter
+                    
+            .ui.slider.checkbox
+                input#newsletter(type='checkbox' checked=user.profile.subscribe)
+                label(for='newsletter') Subscribe to Newsletter
+        .field
                 .ui.center.aligned.basic.segment
-                    #save_profile.ui.center.aligned.huge.green.button
+                    #save_profile.ui.center.aligned.huge.teal.button
                         |Save

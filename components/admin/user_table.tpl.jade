@@ -8,7 +8,7 @@
                 th Tags
                 th Actions
         tbody
-            each hub_users
+            each tori_members
                 tr
                     td 
                         img.ui.tiny.image(src="{{c.url image_id width=100 height=100 gravity='face' crop='fill'}}")
@@ -17,6 +17,8 @@
                             |#{name} 
                             if profile.name
                                 |(#{profile.name})
+                        .ui.header 
+                            |#{username}
                         each emails
                             |#{address}
                         a(href="/account/profile/edit/#{_id}")
@@ -49,15 +51,6 @@
                                 each profile.tags
                                     .ui.basic.label #{this}
                                     
-                    td 
-                        if checked_in
-                            .check_out.ui.basic.compact.small.button
-                                i.red.remove.icon
-                                |Check Out 
-                        else
-                            .check_in.ui.basic.compact.small.button
-                                i.green.check.icon
-                                |Check In 
                     //     .email_user.ui.compact.basic.disabled.button
                     //         i.mail.icon
                     //         |Email

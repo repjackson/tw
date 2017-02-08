@@ -1,20 +1,20 @@
 
-FlowRouter.route '/admin', action: (params) ->
+FlowRouter.route '/admin/members', action: (params) ->
     BlazeLayout.render 'layout',
         nav: 'nav'
         sub_nav: 'admin_nav'
-        main: 'users'
+        main: 'user_table'
  
  
 if Meteor.isClient
     Template.user_table.onCreated ->
         self = @
         self.autorun ->
-            self.subscribe 'hub_users'
+            self.subscribe 'tori_members'
     
     
     Template.user_table.helpers
-        hub_users: -> 
+        tori_members: -> 
             Meteor.users.find {}
             
         user_is_admin: -> 
@@ -97,29 +97,17 @@ if Meteor.isClient
                 return
     
     
-        'click .check_in': ->
-            Meteor.users.update @_id,
-                $set: checked_in: true
-    
-        'click .check_out': ->
-            Meteor.users.update @_id,
-                $set: checked_in: false
-    
-    
     
  
  
         
 if Meteor.isServer
-    Meteor.publish 'hub_users', ->
+    Meteor.publish 'tori_members', ->
         match = {}
-    
-        Meteor.users.find match,
-            fields:
-                tags: 1
-                name: 1
-                roles: 1
-                emails: 1
-                profile: 1
-                image_id: 1
-                checked_in: 1
+        match.site = 'tori'
+        Meteor.users.find match
+         
+    Accounts.onCreateUser (options, user) ->
+        user.site = 'tori'
+        console.log user
+        user

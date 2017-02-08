@@ -6,17 +6,9 @@ FlowRouter.route '/', action: ->
         main: 'home'
 
 
-FlowRouter.route '/features', action: (params) ->
+FlowRouter.route '/contact', action: (params) ->
     BlazeLayout.render 'layout',
-        main: 'features'
-
-FlowRouter.route '/faq', action: (params) ->
-    BlazeLayout.render 'layout',
-        main: 'faq'
-
-FlowRouter.route '/pricing', action: (params) ->
-    BlazeLayout.render 'layout',
-        main: 'pricing'
+        main: 'contact'
 
 FlowRouter.route '/about', action: (params) ->
     BlazeLayout.render 'layout',
