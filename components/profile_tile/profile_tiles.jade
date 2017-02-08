@@ -1,0 +1,29 @@
+template(name='profile_tiles')
+    .ui.container
+        .ui.stackable.centered.cards
+            each profiles
+                +profile_tile
+
+
+
+template(name='profile_tile')
+    .ui.card
+        .image
+            a(href="/view_profile/#{_id}")
+                img.ui.image(src="{{c.url image_id height=400 width=400 crop='fill' gravity='face'}}")
+        .content
+            a(href="/view_profile/#{_id}")
+                .ui.center.aligned.header #{first_name} #{last_name}
+            .meta
+                |I'm a #{position}
+            .meta
+                |I work at #{company}
+        .content
+            each tags
+                .ui.tiny.compact.circular.button(class=profile_tile_tag_class) #{this}
+        // .content
+        //     .description {{nl2br about}}
+        if isInRole 'admin'
+            .extra.content
+                a.ui.basic.circular.icon.button(href="/edit_profile/#{_id}")
+                    i.blue.pencil.icon

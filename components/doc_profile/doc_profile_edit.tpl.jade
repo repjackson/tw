@@ -1,0 +1,21 @@
+with profile
+    .ui.text.container.basic.segment
+        .ui.center.aligned.header Edit Profile
+        .ui.form
+            +edit_name
+            +edit_image
+            +edit_link
+            +edit_position
+            +edit_company
+            // +edit_description
+            +edit_location
+            +edit_about
+            +edit_tags
+            // +publish_button
+            // if isInRole 'admin'
+            //     +edit_type
+            .ui.center.aligned.basic.segment
+                if tags
+                    #save.ui.big.green.button Save
+                #delete.ui.red.icon.button
+                    i.trash.icon

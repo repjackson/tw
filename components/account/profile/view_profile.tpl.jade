@@ -1,0 +1,35 @@
+.ui.container.segment
+    // .ui.center.aligned.header View Profile
+    with person
+        img.ui.centered.large.image(src="{{c.url profile.image_id width=800 height=600 gravity='face' crop='fill'}}")
+        .ui.stackable.grid
+            .ten.wide.column
+                h2.ui.header
+                    |#{profile.first_name} #{profile.last_name}
+                if tags
+                    i.large.tags.icon
+                    each tags
+                        .ui.basic.label #{this}
+                if profile.position
+                    .ui.header Position 
+                    | #{profile.position}
+                if profile.company
+                    .ui.header Company
+                    | #{profile.company}
+                if profile.website
+                    .ui.header Website 
+                    a(href=profile.website target='_blank') #{profile.website}
+                if profile.pro_bio
+                    .ui.header What Working On / Interest in Social Change
+                    |#{profile.pro_bio}
+                if profile.needs
+                    .ui.header Needs
+                    |#{profile.needs}
+            .six.wide.column
+                .ui.horizontal.divider.header
+                    i.red.configure.icon
+                    | Admin
+                +edit_profile_button
+                +member_status
+                +timecard
+                        

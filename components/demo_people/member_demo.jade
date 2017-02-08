@@ -1,0 +1,24 @@
+template(name='member_demo')
+    .center.wild_header.big-header Member Demo
+    +member_demo_cloud
+    +profile_tiles
+    if isInRole
+        #add_demo_member.ui.basic.big.circular.icon.button
+            i.green.plus.icon
+
+    
+
+template(name='member_demo_cloud')
+    #cloud.ui.basic.center.aligned.segment.container
+        if selected_member_demo_tags
+            #clear_tags.ui.primary.icon.circular.large.button
+                i.remove.icon
+            each selected_member_demo_tags
+                .unselect_tag.ui.primary.circular.large.button
+                    strong #{this}
+        each member_demo_tags
+            .ui.circular.basic.button.select_tag(class=cloud_tag_class) 
+                strong #{this.name}
+                // small #{this.count}
+
+

@@ -1,0 +1,16 @@
+.ui.segment
+    .ui.horizontal.divider.header 
+        |Member Status
+    .ui.header 
+        | Current Status: #{member_status}
+    .ui.header 
+        | Member Type: #{member_type}
+    if day_allotment
+        .ui.header Monthly Day Allotment: #{day_allotment}
+    // .ui.header Change Status:
+    //     .ui.small.compact.button.change_status(class=status_class data-status='guest') Guest
+    //     .ui.small.compact.button.change_status(class=status_class data-status='connect') Connect
+    //     .ui.small.compact.button.change_status(class=status_class data-status='drop-in') Drop-In
+    //     .ui.small.compact.button.change_status(class=status_class data-status='part-time') Part-Time
+    //     .ui.small.compact.button.change_status(class=status_class data-status='full-time') Full-Time
+    //     .ui.small.compact.button.change_status(class=status_class data-status='dedicated') Dedicated Desk

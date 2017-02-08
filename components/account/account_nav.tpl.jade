@@ -1,0 +1,18 @@
+.ui.menu
+    .ui.container
+        a.item(href="/account/profile/edit/#{currentUser._id}" class="{{isActivePath '/account/profile/edit/#{currentUser._id}'}}")
+            i.user.icon
+            |Profile
+        a.item(href='/account/social' class="{{isActivePath '/account/social'}}")
+            i.user.icon
+            |Social Media Accounts
+        a.item(href='/account/settings' class="{{isActivePath '/account/settings'}}")
+            i.paw.icon
+            |Herds
+        // a.item(href='/account/favorites' class="{{isActivePath '/account/favorites'}}")
+        //     i.heart.icon
+        //     |Favorites
+        // a.item(href='/account/clouds' class="{{isActivePath '/account/clouds'}}")
+        //     i.cloud.icon
+        //     |Clouds
+            
