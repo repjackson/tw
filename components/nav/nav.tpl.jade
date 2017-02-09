@@ -2,11 +2,10 @@
     .ui.text.container
         a.header.item(href='/' class="{{isActivePath '/'}}")
             h3 Tori Webster
-        // a.item(href='/features' class="{{isActivePath '/features'}}") 
-        //     | Features
-        // a.item(href='/demo' class="{{isActivePath '/demo'}}") People Demo
-        // a.item(href='/events' class="{{isActivePath '/events'}}")
-        //     | Events Demo
+        if isInRole 'admin'
+            a.item(href='/modules' class="{{isActivePath '/modules'}}") 
+                i.configure.icon
+                |Modules
         a.item(href='/about' class="{{isActivePath '/about'}}") About
         a.item(href='/contact' class="{{isActivePath '/contact'}}") Contact
     .right.menu

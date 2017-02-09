@@ -35,7 +35,7 @@ Meteor.methods
         user = Meteor.users.findOne user_id
         Meteor.users.update user_id,
             $set: checked_in: true
-        Docs.insert 
+        Modules.insert 
             author_id: user_id
             type: 'timecard'
             timestamp: new Date()
@@ -47,7 +47,7 @@ Meteor.methods
         user = Meteor.users.findOne user_id
         Meteor.users.update user_id,
             $set: checked_in: false
-        Docs.insert 
+        Modules.insert 
             author_id: user_id
             type: 'timecard'
             timestamp: new Date()

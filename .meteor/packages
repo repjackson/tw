@@ -17,7 +17,7 @@ manuel:reactivearray
 meteorhacks:aggregate
 babrahams:constellation
 mquandalle:stylus
-mobile-experience@1.0.4
+mobile-experience
 
 
 semantic:ui
@@ -29,14 +29,12 @@ shell-server@0.2.1
 kadira:flow-router
 kadira:blaze-layout
 accounts-base@1.2.14
-mizzao:autocomplete
 iandouglas:accounts-ui-semantic-ui
 zimme:active-route
 useraccounts:flow-routing
 useraccounts:semantic-ui
 lepozepo:cloudinary
 momentjs:moment
-edgee:slingshot
 alanning:roles
 reactive-var@1.0.11
 kevohagan:sweetalert
@@ -46,13 +44,8 @@ accounts-facebook@1.0.11
 accounts-google@1.0.11
 service-configuration@1.0.11
 raix:handlebar-helpers
-harrison:papa-parse
 pauli:accounts-linkedin
 matb33:collection-hooks
 froala:editor-reactive
-http
-es5-shim
-ecmascript
 themeteorchef:bert
-reywood:publish-composite
-tmeasday:publish-counts
+adrianliaw:youtube-iframe-api

@@ -7,10 +7,36 @@ if Meteor.isClient
             
             
             Meteor.call 'submit_contact_submission', name, email, message, ->
-                alert 'submitted'
+                swal {
+                    title: "Submitted contact form thing."
+                    # text: 'You will not be able to recover this imaginary file!'
+                    type: 'success'
+                    animation: true
+                    showCancelButton: false
+                    # confirmButtonColor: '#DD6B55'
+                    confirmButtonText: 'Cool'
+                    closeOnConfirm: true
+                }
                 $('#name').val('')
                 $('#email').val('')
                 $('#message').val('')
+            
+        'click #newsletter_signup': ->
+            email = $('#newsletter_email').val()
+            console.log email
+            
+            Meteor.call 'submit_newsletter_subscription', email, ->
+                swal {
+                    title: "Submitted #{email} for newsletter."
+                    # text: 'You will not be able to recover this imaginary file!'
+                    type: 'success'
+                    animation: true
+                    showCancelButton: false
+                    # confirmButtonColor: '#DD6B55'
+                    confirmButtonText: 'Cool'
+                    closeOnConfirm: true
+                }
+                $('#newsletter_email').val('')
             
 if Meteor.isServer
     Meteor.methods
@@ -19,5 +45,9 @@ if Meteor.isServer
                 name: name
                 email: email
                 message: message
+            
+        'submit_newsletter_subscription': (email)->
+            NewsletterSubscriptions.insert
+                email: email
             
             

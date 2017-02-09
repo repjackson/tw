@@ -1,5 +1,5 @@
 # Template.footer.helpers
-#     footer: Docs.find()
+#     footer: Modules.find()
 
 
 
@@ -29,7 +29,7 @@ Template.footer.events
         #get the captcha data
         # captchaData = grecaptcha.getResponse()
         
-        Docs.insert
+        Modules.insert
             type: 'submission'
             data: form_data
         , ->
@@ -54,7 +54,7 @@ Template.footer.events
         #         console.log 'There was an error: ' + error.reason
         #     else
         #         console.log 'Success!'
-        #         Docs.insert
+        #         Modules.insert
         #             type: 'submission'
         #             data: form_data
         #         , ->

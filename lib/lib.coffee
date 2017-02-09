@@ -1,4 +1,3 @@
-@Tags = new Meteor.Collection 'tags'
 
 
 FlowRouter.route '/', action: ->

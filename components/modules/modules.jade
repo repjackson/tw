@@ -1,0 +1,25 @@
+
+template(name='modules')
+    .ui.container
+        div
+            #add.ui.green.basic.button
+                i.plus.icon
+                | Add Module
+        each modules
+            +view
+
+        
+
+
+template(name='view')
+    .ui.segment.container
+        .content
+            a(href="/view_module/#{_id}")
+                .image
+                    img.ui.large.centered.image(src="{{c.url image_id }}")
+                h1.ui.header #{title}
+            .description
+                |!{description}
+            a.ui.basic.button(href="/edit_module/#{_id}")
+                i.pencil.icon.icon
+                |Edit
