@@ -6,12 +6,6 @@ FlowRouter.route '/modules', action: (params) ->
         # cloud: 'cloud'
         main: 'modules'
 
-Meteor.methods
-    add: ()->
-        id = Modules.insert
-        return id
-
-
 if Meteor.isClient
     Template.modules.onCreated -> 
         @autorun -> Meteor.subscribe('modules')
@@ -28,18 +22,18 @@ if Meteor.isClient
         'click .edit': -> FlowRouter.go("/edit/#{@_id}")
 
     Template.modules.events
-        'click #add': ->
-            Meteor.call 'add', (err,id)->
-                FlowRouter.go "/edit_module/#{id}"
+        'click #add_module': ->
+            id = Modules.insert({})
+            FlowRouter.go "/edit_module/#{id}"
     
     
 
 
 if Meteor.isServer
     Modules.allow
-        insert: (userId, doc) -> doc.author_id is userId
-        update: (userId, doc) -> doc.author_id is userId or Roles.userIsInRole(userId, 'admin')
-        remove: (userId, doc) -> doc.author_id is userId or Roles.userIsInRole(userId, 'admin')
+        insert: (userId, doc) -> Roles.userIsInRole(userId, 'admin')
+        update: (userId, doc) -> Roles.userIsInRole(userId, 'admin')
+        remove: (userId, doc) -> Roles.userIsInRole(userId, 'admin')
     
     
     

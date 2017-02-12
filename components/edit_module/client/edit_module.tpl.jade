@@ -5,6 +5,9 @@ with module
             .field
                 label Title
                 input#title(type='text' placeholder='Title' value=title)
+            .field
+                label Module Number
+                input#module_number(type='number' min='0' value=module_number)
             // .ui.segment
             //     // .ui.header Custom Image
             //     if image_id
@@ -62,11 +65,13 @@ with module
             .field
                 label Status
                 if published
-                    #unpublish.ui.green.button
+                    #unpublish.ui.teal.button
                         |Published
                 else
                     #publish.ui.basic.button
-                        |Private
-            #save.ui.large.green.button Save
-            #delete.ui.red.icon.button
-                i.trash.icon
+                        |Unpublished
+            .ui.divider
+            .ui.center.aligned.basic.segment
+                #save.ui.huge.teal.button Save
+                #delete.ui.red.icon.button
+                    i.trash.icon

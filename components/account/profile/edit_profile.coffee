@@ -122,7 +122,7 @@ if Meteor.isClient
                         console.error 'Error uploading', err
                     else
                         Meteor.users.update FlowRouter.getParam('user_id'),
-                            $set: image_id: res.public_id
+                            $set: "profile.image_id": res.public_id
                     return
     
         'click #pick_google_image': ->

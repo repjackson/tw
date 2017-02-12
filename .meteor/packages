@@ -17,7 +17,7 @@ manuel:reactivearray
 meteorhacks:aggregate
 babrahams:constellation
 mquandalle:stylus
-mobile-experience
+mobile-experience@1.0.4
 
 
 semantic:ui
@@ -49,3 +49,6 @@ matb33:collection-hooks
 froala:editor-reactive
 themeteorchef:bert
 adrianliaw:youtube-iframe-api
+mizzao:autocomplete
+mizzao:user-status
+mrgalaxy:stripe

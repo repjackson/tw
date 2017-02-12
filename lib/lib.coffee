@@ -16,3 +16,5 @@ FlowRouter.route '/about', action: (params) ->
 
 
 
+Meteor.users.helpers
+    name: -> "#{@profile.first_name}  #{@profile.last_name}"

@@ -51,6 +51,13 @@ Template.edit_module.events
         Modules.update FlowRouter.getParam('module_id'),
             $set: title: title
             
+    'change #module_number': (e) ->
+        module_number = $('#module_number').val()
+        int = parseInt module_number
+        module_id = FlowRouter.getParam('module_id')
+        Modules.update FlowRouter.getParam('module_id'),
+            $set: module_number: int
+        
             
     "change input[type='file']": (e) ->
         module_id = FlowRouter.getParam('module_id')
