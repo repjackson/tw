@@ -1,4 +1,11 @@
+template(name='subscription')
+    .ui.container
+        +billing
+
+
 template(name='billing')
     .ui.container
         .ui.header Billing
         #checkout.ui.button Launch Checkout
+        
+        +plans
