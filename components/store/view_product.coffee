@@ -13,9 +13,9 @@ if Meteor.isClient
             locale: 'auto'
             # zipCode: true
             token: (token) ->
-                console.log token
+                # console.log token
                 product = Docs.findOne FlowRouter.getParam('doc_id')
-                console.log product
+                # console.log product
                 charge = 
                     amount: product.price*100
                     currency: 'usd'
@@ -24,7 +24,7 @@ if Meteor.isClient
                     receipt_email: token.email
                 Meteor.call 'processPayment', charge, (error, response) ->
                     if error then Bert.alert error.reason, 'danger'
-                    else Bert.alert 'Thanks for your payment bitch.', 'success'
+                    else Bert.alert 'Thanks for your payment.', 'success'
             # closed: ->
             #     alert 'closed'
 
@@ -54,9 +54,10 @@ if Meteor.isClient
 
 if Meteor.isServer
     Stripe = StripeAPI(Meteor.settings.private.stripe.testSecretKey)
-    console.log Meteor.settings.private.stripe.testSecretKey
+    # console.log Meteor.settings.private.stripe.testSecretKey
     Meteor.methods
         processPayment: (charge) ->
             handleCharge = Meteor.wrapAsync(Stripe.charges.create, Stripe.charges)
             payment = handleCharge(charge)
+            console.log payment
             payment

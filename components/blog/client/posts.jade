@@ -48,7 +48,7 @@ template(name='post')
             
             
 template(name='post_item')
-    .item
+    .ui.segment
         a.image(href="/post/view/#{_id}")
             img.ui.rounded.image(src="{{c.url image_id  width=175 height=175 crop='fill' gravity='face' }}")
         .content
