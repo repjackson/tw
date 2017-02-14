@@ -1,6 +1,3 @@
-@Questions = new Meteor.Collection 'questions'
-
-
 FlowRouter.route '/questions', action: (params) ->
     BlazeLayout.render 'layout',
         # cloud: 'cloud'
@@ -9,49 +6,109 @@ FlowRouter.route '/questions', action: (params) ->
 if Meteor.isClient
     Template.questions.onCreated -> 
         @autorun -> Meteor.subscribe('questions', FlowRouter.getParam('module_id'))
+    
+    
+    Template.question.onCreated -> 
+        # console.log @data?._id
+        @autorun -> Meteor.subscribe('answers', @data?._id)
 
+    
     Template.questions.helpers
         questions: -> 
-            Questions.find { }
+            Docs.find
+                type: 'question'
+    
+    
+    
+    
+    Template.question.helpers
+        answers: -> 
+            Docs.find
+                type: 'answer'
+                question: @_id
     
 
     
 
-    Template.view.events
-    
-        'click .edit': -> FlowRouter.go("/edit_question/#{@_id}")
+    Template.question.events
+        'click .remove_answer': -> 
+            self = @
+            swal {
+                title: 'Delete Answer?'
+                # text: 'Confirm delete?'
+                type: 'error'
+                animation: false
+                showCancelButton: true
+                closeOnConfirm: true
+                cancelButtonText: 'Cancel'
+                confirmButtonText: 'Delete'
+                confirmButtonColor: '#da5347'
+            }, ->
+                Docs.remove self._id
+
 
     Template.questions.events
+        'click .remove_question': -> 
+            self = @
+            swal {
+                title: 'Delete Question?'
+                text: 'This will delete answers too.'
+                type: 'error'
+                animation: false
+                showCancelButton: true
+                closeOnConfirm: true
+                cancelButtonText: 'Cancel'
+                confirmButtonText: 'Delete'
+                confirmButtonColor: '#da5347'
+            }, ->
+                Docs.remove self._id
+
+    
+        
+    
+    
         'click #add_question': ->
             question = $('#new_question').val()
             # console.log question
-            id = Questions.insert
+            id = Docs.insert
+                type: 'question'
                 module: FlowRouter.getParam('module_id')
                 text: question
+            $('#new_question').val('')
+    
+    
+    Template.question.events
+        'click #add_answer': (e,t)->
+            answer = $(e.currentTarget).closest('.input').find('#answer').val()
+            id = Docs.insert
+                type: 'answer'
+                question: @_id
+                text: answer
+            $(e.currentTarget).closest('.input').find('#answer').val('')
     
 
 
 if Meteor.isServer
-    Questions.allow
-        insert: (userId, doc) -> Roles.userIsInRole(userId, 'admin')
-        update: (userId, doc) -> Roles.userIsInRole(userId, 'admin')
-        remove: (userId, doc) -> Roles.userIsInRole(userId, 'admin')
-    
-    
-    
     
     Meteor.publish 'questions', ()->
     
         self = @
         match = {}
-        # selected_tags.push current_herd
-        # match.tags = $all: selected_tags
-        # if selected_tags.length > 0 then match.tags = $all: selected_tags
-
+        match.type = 'question'
         
 
-        Questions.find match
+        Docs.find match
+
+
+
+
+    Meteor.publish 'answers', (id)->
     
-    Meteor.publish 'question', (id)->
-        Questions.find id
+        self = @
+        match = {}
+
+        match.question_id = id        
+        match.type = 'answer'
+        
+        Docs.find match
     

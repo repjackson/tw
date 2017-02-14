@@ -37,6 +37,3 @@ if Meteor.isServer
 
         Modules.find match
     
-    Meteor.publish 'module', (id)->
-        Module.find id
-    
