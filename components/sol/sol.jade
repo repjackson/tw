@@ -1,0 +1,24 @@
+template(name='sol')
+    .ui.container.grid
+        .centered.row
+            h1.ui.center.aligned.header Source of Light
+        .five.wide.column
+            .ui.segment
+                .ui.header Members
+            .ui.segment
+                .ui.header Downloads
+            .ui.segment
+                .ui.header Collaboration
+            .ui.segment
+                .ui.header Reminders
+        .ten.wide.column
+            .ui.header Modules
+            each modules
+                .ui.segment
+                    a(href="/view_module/#{_id}")
+                        .ui.header #{title}
+                    .ui.teal.progress
+                        .bar
+                        .progress
+                        
+                        

@@ -1,0 +1,19 @@
+template(name='collaboration')
+    +questions
+
+
+template(name='questions')
+    .ui.action.fluid.input
+        input#new_question(type='text')
+        #add_question.ui.basic.button Add Question
+    .ui.divided.items
+        each questions
+            +question
+
+        
+
+
+template(name='question')
+    .ui.item
+        h4.ui.header #{text}
+                

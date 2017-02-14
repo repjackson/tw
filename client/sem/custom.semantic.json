@@ -31,7 +31,7 @@
     "modal": false,
     "nag": false,
     "popup": false,
-    "progress": false,
+    "progress": true,
     "rail": false,
     "rating": false,
     "reset": true,
