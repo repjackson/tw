@@ -1,4 +1,5 @@
 if Meteor.isClient
+    # console.log $
     $.cloudinary.config
         cloud_name:"facet"
 
