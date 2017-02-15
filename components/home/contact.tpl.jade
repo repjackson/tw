@@ -19,11 +19,12 @@
                     .uppercase Send
     .seven.wide.column
         img.ui.centered.image(src="{{c.url 'madbomber' }}")
-        h1.ui.center.aligned.header
-            |Want to receive weekly wisdom?
-        .ui.form
-            .field
-                label Email
-                input#newsletter_email(type='text')
-        #newsletter_signup.ui.teal.large.fluid.button
-            .uppercase Yes, please send me the light!
+        +mailchimp
+        // // h1.ui.center.aligned.header
+        // //     |Want to receive weekly wisdom?
+        // // .ui.form
+        // //     .field
+        // //         label Email
+        // //         input#newsletter_email(type='text')
+        // #newsletter_signup.ui.teal.large.fluid.button
+        //     .uppercase Yes, please send me the light!
