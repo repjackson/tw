@@ -54,3 +54,13 @@ notes
     $10/month online access to community
     $100 for course
     reputation points can be used to purchase things that are sponsored
+    
+    
+    
+collaboration + reflection the same
+
+
+module structure
+    video
+    video description
+    transcript
