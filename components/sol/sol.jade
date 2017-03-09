@@ -3,6 +3,10 @@ template(name='sol')
         .centered.row
             h1.ui.center.aligned.header Source of Light
         .five.wide.column
+            #add_module.ui.basic.button
+                i.red.configure.icon
+                | Add Module
+
             .ui.segment
                 .ui.header Members
             .ui.segment
@@ -17,6 +21,7 @@ template(name='sol')
                 .ui.segment
                     a(href="/view_module/#{_id}")
                         .ui.header #{title}
+                    .meta Number #{module_number}
                     .ui.teal.progress
                         .bar
                         .progress

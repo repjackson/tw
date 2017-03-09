@@ -5,18 +5,16 @@ with module
         
         // .ui.embed(data-source="youtube" data-id=youtube_id data-placeholder="/video_placeholder.jpg")
         // .ui.embed(data-source="youtube" data-url=video_link data-placeholder="/video_placeholder.jpg")
-        #video
-        // iframe(width='560', height='315', src=video_link, frameborder='0', allowfullscreen='')
-        unless $.Session.get 'initiated'
-            .view.ui.huge.fluid.basic.primary.button View Video
-        .ui.hidden.divider
-        h1.ui.header #{title}
+        // #video
+        // // iframe(width='560', height='315', src=video_link, frameborder='0', allowfullscreen='')
+        // unless $.Session.get 'initiated'
+        //     .view.ui.huge.fluid.basic.primary.button View Video
+        // .ui.hidden.divider
+        h1.ui.center.aligned.header #{title}
         .ui.divided.stackable.grid
             .ten.wide.column
                 // .meta
                 //     | Youtube ID: #{youtube_id}
-                .meta
-                    | Video Link: #{video_link}
                 .description
                     |!{description}
                 .ui.segment
@@ -45,6 +43,6 @@ with module
                 else
                     #mark_as_complete.ui.basic.fluid.button Mark Complete
                 .ui.horizontal.divider.header Admin
-                a.ui.primary.fluid.basic.button(href="/edit_module/#{_id}")
-                    i.pencil.icon
+                a.ui.fluid.basic.button(href="/edit_module/#{_id}")
+                    i.red.configure.icon
                     |Edit

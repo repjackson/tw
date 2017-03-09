@@ -77,5 +77,5 @@ if Meteor.isServer
                 "profile.name": 1
                 
                 
-    Meteor.publish 'message', (id)->
-        Messages.find id
+    # Meteor.publish 'message', (id)->
+    #     Messages.find id

@@ -12,7 +12,8 @@ if Meteor.isClient
 
     Template.modules.helpers
         modules: -> 
-            Modules.find { }
+            Modules.find { },
+                sort: number: 1
     
 
     

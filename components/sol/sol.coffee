@@ -9,7 +9,8 @@ if Meteor.isClient
 
     Template.sol.helpers
         modules: -> 
-            Modules.find { }
+            Modules.find { },
+                sort: module_number: 1
     
 
     

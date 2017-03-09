@@ -5,12 +5,13 @@ with module
             .field
                 label Title
                 input#title(type='text' placeholder='Title' value=title)
-            .field
-                label Module Number
-                input#module_number(type='number' min='0' value=module_number)
-            .field
-                label Parent Course
-                input#course(type='text' value=course)
+            .fields
+                .field
+                    label Module Number
+                    input#module_number(type='number' min='0' value=module_number)
+                .field
+                    label Parent Course
+                    input#course(type='text' value=course)
             // .ui.segment
             //     // .ui.header Custom Image
             //     if image_id
@@ -30,16 +31,16 @@ with module
             //                     label or Choose Cloudinary Image Id
             //                     input#input_image_id(type='text')
                     
-            .field
-                label Video Link
-                .ui.left.icon.input
-                    i.youtube.icon
-                    input#video_link(type='text' value=video_link)
-            .field
-                label Youtube ID
-                .ui.left.icon.input
-                    i.linkify.icon
-                    input#youtube_id(type='text' value=youtube_id)
+            // .field
+            //     label Video Link
+            //     .ui.left.icon.input
+            //         i.youtube.icon
+            //         input#video_link(type='text' value=video_link)
+            // .field
+            //     label Youtube ID
+            //     .ui.left.icon.input
+            //         i.linkify.icon
+            //         input#youtube_id(type='text' value=youtube_id)
             .field
                 label Description
                 .froala-container
@@ -73,7 +74,7 @@ with module
                 else
                     #publish.ui.basic.button
                         |Unpublished
-            .ui.divider
+            // .ui.divider
             .ui.center.aligned.basic.segment
                 #save.ui.huge.teal.button Save
                 #delete.ui.red.icon.button
