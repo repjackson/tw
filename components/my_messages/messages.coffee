@@ -26,14 +26,6 @@ if Meteor.isClient
             Messages.find { }
 
     
-    Template.view.helpers
-        is_author: -> Meteor.userId() and @author_id is Meteor.userId()
-    
-        when: -> moment(@timestamp).fromNow()
-
-    Template.view.events
-        # 'click .edit': -> FlowRouter.go("/edit/#{@_id}")
-
     Template.messages.events
         'click #new_message': ->
             id = Messages.insert({})

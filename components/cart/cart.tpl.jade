@@ -15,7 +15,7 @@
                         a(href='/view/#{_id}')
                             |#{title}
                     td #{point_price} pts
-                    td #{author.profile.name}
+                    td #{profile.name}
                     td 
                         each tags
                             .ui.basic.label #{this}
@@ -28,6 +28,6 @@
                 th #{price_total} Total Points
                 th
                 th Available Points: #{currentUser.points}
-    #checkout.ui.right.floated.large.green.button
+    #checkout.ui.large.green.button
         |Checkout
         i.right.arrow.icon

@@ -16,7 +16,7 @@ if Meteor.isClient
             rules: [
                 {
                     collection: Meteor.users
-                    field: 'profile.name'
+                    field: 'username'
                     matchAll: true
                     template: Template.user_result
                 }
