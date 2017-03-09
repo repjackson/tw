@@ -3,10 +3,6 @@ template(name='sol')
         .centered.row
             h1.ui.center.aligned.header Source of Light
         .five.wide.column
-            #add_module.ui.basic.button
-                i.red.configure.icon
-                | Add Module
-
             .ui.segment
                 .ui.header Members
             .ui.segment
@@ -15,8 +11,15 @@ template(name='sol')
                 .ui.header Collaboration
             .ui.segment
                 .ui.header Reminders
+            .ui.segment
+                .ui.header 
+                    i.red.configure.icon
+                    |Admin
+                #add_module.ui.basic.fluid.button
+                    // i.red.configure.icon
+                    | Add Module
         .ten.wide.column
-            .ui.header Modules
+            h1.ui.header Modules
             each modules
                 .ui.segment
                     a(href="/view_module/#{_id}")

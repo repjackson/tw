@@ -42,7 +42,7 @@ if Meteor.isClient
             Courses.find { }
     
         in_course: ->
-            Meteor.user()?.courses and 'sol' in Meteor.user().courses
+            Meteor.user()?.courses and @title in Meteor.user().courses
     
 
     Template.courses.events
@@ -50,11 +50,20 @@ if Meteor.isClient
         
         
         'click #buy_sol': ->
-            Template.instance().checkout.open
-                name: 'Source of Light'
-                # description: @description
-                amount: 10000
-                bitcoin: true
+            if Meteor.userId() 
+                Template.instance().checkout.open
+                    name: 'Source of Light'
+                    # description: @description
+                    amount: 10000
+                    bitcoin: true
+            else FlowRouter.go '/sign-in'
+
+            
+        'click #add_course': ->
+            id = Courses.insert({})
+            FlowRouter.go "/course/edit/#{id}"
+    
+    
 
         
 
@@ -79,12 +88,6 @@ if Meteor.isServer
     
         self = @
         match = {}
-        # selected_tags.push current_herd
-        # match.tags = $all: selected_tags
-        # if selected_tags.length > 0 then match.tags = $all: selected_tags
-
-        
-
         Courses.find match
     
     Meteor.publish 'course', (id)->

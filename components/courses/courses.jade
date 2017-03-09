@@ -3,24 +3,27 @@ template(name='courses')
         .row
             h1.ui.center.aligned.header Courses
         .row
-            .ui.divided.items
-                .item
-                    // .image
-                    //     img(src='/images/wireframe/image.png')
-                    .content
-                        .header Source of Light
-                        // .meta
-                        //     span.cinema Union Square 14
-                        // .description
-                        //     p
-                        .extra
-                            if in_course
-                                a.ui.right.floated.primary.button(href='/courses/sol')
-                                    |View Course
-                                    i.right.chevron.icon
-                            else
-                                #buy_sol.ui.right.floated.primary.button
-                                    |Buy Course $100
-                                    i.right.chevron.icon
-                        
-template(name='course')            
+            .five.wide.column
+                #add_course.ui.basic.fluid.button
+                    i.red.configure.icon
+                    |Add Course
+            .ten.wide.column
+                .ui.divided.items
+                    each courses
+                        +course
+
+template(name='course')
+    .item
+        // .image
+        //     img(src='/images/wireframe/image.png')
+        .content
+            .header #{title}
+            // .extra
+            //     if in_course
+            //         a.ui.right.floated.primary.button(href="/courses/#{_id}")
+            //             |View Course
+            //             i.right.chevron.icon
+            //     else
+            //         #buy_sol.ui.right.floated.primary.button
+            //             |Buy Course $100
+            //             i.right.chevron.icon

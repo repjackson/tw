@@ -1,0 +1,55 @@
+template(name='view_course')
+    with course
+        .ui.container
+        if in_course
+            +course_page
+        else 
+            +buy_course
+    
+template(name='buy_course')
+    with course
+        .ui.center.aligned.icon.header
+            i.fire.icon
+            #{title}
+
+
+
+
+
+
+    
+template(name='course_page')
+    h1.ui.center.aligned.header #{title}
+    .ui.divided.stackable.grid
+        .ten.wide.column
+            .description
+                |!{description}
+            .ui.segment
+                .ui.header Transcript
+            .ui.segment
+                .ui.header Reflection
+            .ui.segment
+                .ui.header Collaboration
+                +collaboration
+            .ui.segment
+                .ui.header Light Work
+
+        .five.wide.column
+            // .ui.horizontal.divider.header Status
+            .ui.header course Number: #{course_number}
+            .ui.horizontal.divider.header Status
+            if complete
+                .ui.teal.big.fluid.label 
+                    i.check.icon
+                    |Complete
+            else
+                .ui.teal.big.basic.fluid.label 
+                    |Incomplete
+            if complete
+                #mark_as_incomplete.ui.basic.fluid.button Mark Incomplete
+            else
+                #mark_as_complete.ui.basic.fluid.button Mark Complete
+            .ui.horizontal.divider.header Admin
+            a.ui.fluid.basic.button(href="/edit_course/#{_id}")
+                i.red.configure.icon
+                |Edit
