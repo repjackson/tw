@@ -3,23 +3,22 @@
 
 FlowRouter.route '/courses', action: (params) ->
     BlazeLayout.render 'layout',
-        # cloud: 'cloud'
         main: 'courses'
 
 if Meteor.isClient
     Template.courses.onCreated -> 
-        # @autorun -> Meteor.subscribe('courses')
+        @autorun -> Meteor.subscribe('courses')
 
     Template.courses.helpers
-        # courses: -> 
-        #     courses.find { }
+        courses: -> 
+            Courses.find { }
+    
+        in_course: ->
+            @_id in Meteor.user().courses
     
 
-    
-
-    Template.view.events
-    
-        # 'click .edit': -> FlowRouter.go("/edit/#{@_id}")
+    Template.course.events
+        'click .edit': -> FlowRouter.go("/course/edit/#{@_id}")
 
     Template.courses.events
         # 'click #add_module': ->
@@ -30,10 +29,10 @@ if Meteor.isClient
 
 
 if Meteor.isServer
-    # courses.allow
-    #     insert: (userId, doc) -> Roles.userIsInRole(userId, 'admin')
-    #     update: (userId, doc) -> Roles.userIsInRole(userId, 'admin')
-    #     remove: (userId, doc) -> Roles.userIsInRole(userId, 'admin')
+    Courses.allow
+        insert: (userId, doc) -> Roles.userIsInRole(userId, 'admin')
+        update: (userId, doc) -> Roles.userIsInRole(userId, 'admin')
+        remove: (userId, doc) -> Roles.userIsInRole(userId, 'admin')
     
     
     
