@@ -1,6 +1,6 @@
 template(name='posts')
     .ui.container
-        .ui.horizontal.divider.header Blog
+        .ui.horizontal.divider.header Posts
         .ui.stackable.divided.grid
             .twelve.wide.column
                 h1.impact-header Recent Posts
@@ -9,7 +9,7 @@ template(name='posts')
                     each posts
                         +post_item
             .four.wide.column
-                +cloud filter='post'
+                +post_cloud
                 if isInRole 'admin'
                     h2.impact-header 
                         i.red.configure.icon

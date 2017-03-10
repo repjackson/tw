@@ -1,13 +1,11 @@
 Template.post_page.onCreated ->
-    self = @
-    self.autorun ->
-        self.subscribe 'doc', FlowRouter.getParam('doc_id')
+    @autorun -> Meteor.subscribe 'post', FlowRouter.getParam('post_id')
 
 
 
 Template.post_page.helpers
     post: ->
-        Docs.findOne FlowRouter.getParam('doc_id')
+        Posts.findOne FlowRouter.getParam('post_id')
 
 
 Template.post_page.events

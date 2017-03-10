@@ -1,5 +1,5 @@
 Template.posts.onCreated ->
-    @autorun -> Meteor.subscribe('selected_posts', selected_tags.array())
+    @autorun -> Meteor.subscribe('selected_posts', selected_post_tags.array())
 
 Template.posts.onRendered ->
     $('#blog_slider').layerSlider
@@ -8,30 +8,27 @@ Template.posts.onRendered ->
 
 Template.posts.helpers
     posts: -> 
-        Docs.find {
-            type: 'post'
-            },
+        Posts.find {},
             sort:
                 publish_date: -1
             limit: 10
             
 Template.posts.events
     'click #add_post': ->
-        id = Docs.insert
-            type: 'post'
+        id = Posts.insert {}
         FlowRouter.go "/post/edit/#{id}"
 
 
 
 
 Template.post.helpers
-    tag_class: -> if @valueOf() in selected_tags.array() then 'red' else 'basic'
+    tag_class: -> if @valueOf() in selected_post_tags.array() then 'primary' else 'basic'
 
     can_edit: -> @author_id is Meteor.userId()
 
     
 Template.post_item.helpers
-    tag_class: -> if @valueOf() in selected_tags.array() then 'red' else 'basic'
+    tag_class: -> if @valueOf() in selected_post_tags.array() then 'primary' else 'basic'
 
     can_edit: -> @author_id is Meteor.userId()
 
@@ -40,7 +37,7 @@ Template.post_item.helpers
 
 Template.post.events
     'click .post_tag': ->
-        if @valueOf() in selected_tags.array() then selected_tags.remove @valueOf() else selected_tags.push @valueOf()
+        if @valueOf() in selected_post_tags.array() then selected_post_tags.remove @valueOf() else selected_post_tags.push @valueOf()
 
     'click .edit_post': ->
         FlowRouter.go "/post/edit/#{@_id}"

@@ -4,9 +4,9 @@ Docs.before.insert (userId, doc)->
     doc.timestamp = Date.now()
     doc.author_id = Meteor.userId()
     doc.points = 0
-    doc.down_voters = []
+    doc.downvoters = []
     # doc.tags.push Meteor.user().profile.current_herd
-    doc.up_voters = []
+    doc.upvoters = []
     return
 
 
