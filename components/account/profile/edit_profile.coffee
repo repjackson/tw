@@ -1,13 +1,11 @@
 if Meteor.isClient
     Template.edit_profile.onCreated ->
-        @autorun -> Meteor.subscribe 'profile', FlowRouter.getParam('user_id') 
+        @autorun -> Meteor.subscribe 'user_profile', FlowRouter.getParam('user_id') 
     
     # Template.edit_profile.onRendered ->
     #     console.log Meteor.users.findOne(FlowRouter.getParam('user_id'))
     
     Template.edit_profile.helpers
-        ten_tags: -> @tags?.length is 10
-    
         user: -> Meteor.users.findOne FlowRouter.getParam('user_id')
     
     Template.edit_profile.events
@@ -160,3 +158,24 @@ if Meteor.isClient
                 $set:
                     "profile.subscribe": value
     
+
+
+if Meteor.isServer
+    Meteor.publish 'my_profile', ->
+        Meteor.users.find @userId,
+            fields:
+                tags: 1
+                profile: 1
+                username: 1
+                published: 1
+                image_id: 1
+    
+    
+    Meteor.publish 'user_profile', (id)->
+        Meteor.users.find id,
+            fields:
+                tags: 1
+                profile: 1
+                username: 1
+                published: 1
+                image_id: 1

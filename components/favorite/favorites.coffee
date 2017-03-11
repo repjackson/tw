@@ -1,6 +1,5 @@
 
 if Meteor.isClient
-    
     Template.favorite_button.helpers
         favorite_count: -> Template.parentData(0).favorite_count
         
@@ -16,12 +15,12 @@ if Meteor.isClient
     
     
     Template.favorites_card.onCreated ->
-        @autorun -> Meteor.subscribe 'favorite_docs'
+        @autorun -> Meteor.subscribe 'favorite_posts'
         
         
     Template.favorites_card.helpers
         my_favorites: ->
-            Docs.find
+            Posts.find
                 favoriters: $in: [Meteor.userId()]
 
 
@@ -29,13 +28,13 @@ if Meteor.isClient
 Meteor.methods
     favorite: (doc)->
         if doc.favoriters and Meteor.userId() in doc.favoriters
-            Docs.update doc._id,
+            Posts.update doc._id,
                 $pull: favoriters: Meteor.userId()
                 $inc: favorite_count: -1
             Meteor.users.update Meteor.userId(),
                 $pull: "profile.favorites": doc._id
         else
-            Docs.update doc._id,
+            Posts.update doc._id,
                 $addToSet: favoriters: Meteor.userId()
                 $inc: favorite_count: 1
             Meteor.users.update Meteor.userId(),
@@ -45,7 +44,7 @@ Meteor.methods
 
     
 if Meteor.isServer
-    Meteor.publish 'favorite_docs', ->
-        Docs.find 
+    Meteor.publish 'favorite_posts', ->
+        Posts.find 
             favoriters: $in: [@userId]
     

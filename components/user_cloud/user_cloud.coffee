@@ -16,7 +16,7 @@ if Meteor.isClient
             if 0 < user_count < 3 then User_tags.find({ count: $lt: user_count }, {limit:20}) else User_tags.find({}, limit:20)
             # User_tags.find()
     
-        selected_user_tags: -> selected_user_tags.list()
+        selected_user_tags: -> selected_user_tags.array()
     
         cloud_tag_class: ->
             button_class = switch

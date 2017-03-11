@@ -48,6 +48,16 @@
                             textarea#pro_bio(type='textarea' rows='2')
                                 |#{profile.pro_bio}
                     .field
+                        label Tags (anything to identify you with)
+                        each tags
+                            .ui.basic.button.person_tag
+                                i.minus.icon
+                                |#{this}
+                        .ui.left.icon.input
+                            i.add.icon
+                            input#add_tag(type='text' placeholder='Press enter after each one' maxlength='50')
+
+                    .field
                         label Needs 
                         .ui.input
                             textarea#needs(type='textarea' rows='2')
