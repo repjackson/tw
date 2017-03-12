@@ -1,3 +1,11 @@
+FlowRouter.route '/profile/edit/:user_id', action: (params) ->
+    BlazeLayout.render 'layout',
+        # sub_nav: 'account_nav'
+        main: 'edit_profile'
+
+
+
+
 if Meteor.isClient
     Template.edit_profile.onCreated ->
         @autorun -> Meteor.subscribe 'user_profile', FlowRouter.getParam('user_id') 
@@ -9,21 +17,6 @@ if Meteor.isClient
         user: -> Meteor.users.findOne FlowRouter.getParam('user_id')
     
     Template.edit_profile.events
-        'blur #name': ->
-            old_name_tags = @name_tags
-            # console.log old_name_tags
-            name = $('#name').val()
-            split_name = name.match(/\S+/g)
-            
-            Meteor.users.update FlowRouter.getParam('user_id'),
-                $pullAll: tags: old_name_tags
-                    
-            Meteor.users.update FlowRouter.getParam('user_id'),
-                $set: 
-                    name: name
-                    name_tags: split_name
-                $addToSet: tags: $each: split_name
-                
         'blur #first_name': ->
             first_name = $('#first_name').val().trim()
             Meteor.users.update FlowRouter.getParam('user_id'),
@@ -38,46 +31,33 @@ if Meteor.isClient
                     "profile.last_name": last_name
 
             
-        'blur #company': ->
-            company = $('#company').val().trim()
+            
+        'blur #location': ->
+            location = $('#location').val().trim()
             Meteor.users.update FlowRouter.getParam('user_id'),
                 $set: 
-                    "profile.company": company
+                    "profile.location": location
 
             
-        'blur #position': ->
-            position = $('#position').val().trim()
+        'blur #if_knew_me': ->
+            if_knew_me = $('#if_knew_me').val().trim()
             Meteor.users.update FlowRouter.getParam('user_id'),
                 $set: 
-                    "profile.position": position
-        
-        
-        'blur #website': ->
-            website = $('#website').val().trim()
-            Meteor.users.update FlowRouter.getParam('user_id'),
-                $set: 
-                    "profile.website": website
+                    "profile.if_knew_me": if_knew_me
 
             
-        'blur #phone': ->
-            phone = $('#phone').val().trim()
+        'blur #about_me': ->
+            about_me = $('#about_me').val().trim()
             Meteor.users.update FlowRouter.getParam('user_id'),
                 $set: 
-                    "profile.phone": phone
+                    "profile.about_me": about_me
 
             
-        'blur #pro_bio': ->
-            pro_bio = $('#pro_bio').val().trim()
+        'blur #if_not_working': ->
+            if_not_working = $('#if_not_working').val().trim()
             Meteor.users.update FlowRouter.getParam('user_id'),
                 $set: 
-                    "profile.pro_bio": pro_bio
-
-            
-        'blur #needs': ->
-            needs = $('#needs').val().trim()
-            Meteor.users.update FlowRouter.getParam('user_id'),
-                $set: 
-                    "profile.needs": needs
+                    "profile.if_not_working": if_not_working
 
             
             
@@ -106,7 +86,7 @@ if Meteor.isClient
             $('#add_tag').val(tag)
     
         'click #save_profile': ->
-            FlowRouter.go "/account/profile/view/#{@_id}"
+            FlowRouter.go "/profile/view/#{@_id}"
     
         "change input[type='file']": (e) ->
             files = e.currentTarget.files
@@ -167,7 +147,6 @@ if Meteor.isServer
                 tags: 1
                 profile: 1
                 username: 1
-                published: 1
                 image_id: 1
     
     
@@ -177,5 +156,4 @@ if Meteor.isServer
                 tags: 1
                 profile: 1
                 username: 1
-                published: 1
                 image_id: 1

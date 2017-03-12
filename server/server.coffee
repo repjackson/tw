@@ -1,9 +1,3 @@
-Modules.allow
-    insert: (userId, doc) -> doc.author_id is userId
-    update: (userId, doc) -> doc.author_id is userId or Roles.userIsInRole(userId, 'admin')
-    remove: (userId, doc) -> doc.author_id is userId or Roles.userIsInRole(userId, 'admin')
-
-
 Meteor.users.allow
     update: (userId, doc, fields, modifier) ->
         true

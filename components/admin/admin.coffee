@@ -10,11 +10,11 @@ if Meteor.isClient
     Template.user_table.onCreated ->
         self = @
         self.autorun ->
-            self.subscribe 'tori_members'
+            self.subscribe 'members'
     
     
     Template.user_table.helpers
-        tori_members: -> 
+        members: -> 
             Meteor.users.find {}
             
         user_is_admin: -> 
@@ -102,12 +102,9 @@ if Meteor.isClient
  
         
 if Meteor.isServer
-    Meteor.publish 'tori_members', ->
+    Meteor.publish 'members', ->
         match = {}
-        match.site = 'tori'
         Meteor.users.find match
          
     Accounts.onCreateUser (options, user) ->
-        user.site = 'tori'
-        console.log user
         user

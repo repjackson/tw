@@ -1,3 +1,12 @@
+FlowRouter.route '/profile/view/:user_id', action: (params) ->
+    BlazeLayout.render 'layout',
+        # sub_nav: 'account_nav'
+        main: 'view_profile'
+
+
+
+
+
 if Meteor.isClient
     Template.view_profile.onCreated ->
         @autorun -> Meteor.subscribe('user_profile', FlowRouter.getParam('user_id'))
