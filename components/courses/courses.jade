@@ -1,29 +1,9 @@
 template(name='courses')
-    .ui.container.grid
-        .row
-            h1.ui.center.aligned.header Courses
-        .row
-            .five.wide.column
-                #add_course.ui.basic.fluid.button
-                    i.red.configure.icon
-                    |Add Course
-            .ten.wide.column
-                .ui.divided.items
-                    each courses
-                        +course
-
-template(name='course')
-    .item
-        // .image
-        //     img(src='/images/wireframe/image.png')
-        .content
-            .header #{title}
-            // .extra
-            //     if in_course
-            //         a.ui.right.floated.primary.button(href="/courses/#{_id}")
-            //             |View Course
-            //             i.right.chevron.icon
-            //     else
-            //         #buy_sol.ui.right.floated.primary.button
-            //             |Buy Course $100
-            //             i.right.chevron.icon
+    .ui.text.container
+        h1.ui.center.aligned.header Courses
+        h3.ui.center.aligned.header I design courses online to spread light farther than the eye can see. People all around the world are looking for hope, inspiration, and guidance in their personal and professional lives. Explore the courses below to see what best fits your needs
+        .ui.hidden.divider
+        a(href="/courses/sol")
+            img.ui.centered.image(src="{{c.url 'sol' }}")
+            h2.ui.center.aligned.header Source of Light
+        

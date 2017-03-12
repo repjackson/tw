@@ -3,6 +3,12 @@ FlowRouter.route '/courses/sol', action: (params) ->
         # cloud: 'cloud'
         main: 'sol'
 
+
+FlowRouter.route '/courses/sol/front', action: (params) ->
+    BlazeLayout.render 'layout',
+        # cloud: 'cloud'
+        main: 'sol_front'
+
 if Meteor.isClient
     Template.sol.onCreated -> 
         @autorun -> Meteor.subscribe('sol')
