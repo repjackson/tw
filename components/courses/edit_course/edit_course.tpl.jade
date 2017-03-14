@@ -8,6 +8,9 @@ with course
             .field
                 label Subtitle
                 input#subtitle(type='text' placeholder='Subtitle' value=subtitle)
+            .field
+                label Price in $ (0 for free)
+                input#price(type='number' value=price min='0' defaultValue='0')
             .ui.segment
                 if image_id
                     .field

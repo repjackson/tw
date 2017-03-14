@@ -7,8 +7,8 @@
         a.item(href='/contact' class="{{isActivePath '/contact'}}") Contact
     .right.menu
         if currentUser
-            a.icon.item(href='/users' class="{{isActivePath '/users'}}") 
-                i.users.icon
+            // a.icon.item(href='/users' class="{{isActivePath '/users'}}") 
+            //     i.users.icon
             if isInRole 'admin'
                 a.item(href='/admin/members' class="{{isActivePath '/admin/members'}}")
                     i.configure.icon

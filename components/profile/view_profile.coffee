@@ -18,5 +18,5 @@ if Meteor.isClient
         
         is_user: ->
             FlowRouter.getParam('user_id') is Meteor.userId()
-    
+        
     Template.view_profile.events

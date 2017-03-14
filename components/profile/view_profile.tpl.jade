@@ -1,7 +1,9 @@
 with person
-    .ui.container.grid
+    .ui.text.container.grid
         .five.wide.column
             img.ui.centered.image(src="{{c.url profile.image_id width=400 height=400 gravity='face' crop='fill'}}")
+            if is_user
+                a.ui.basic.fluid.button(href="/profile/edit/#{_id}") Edit Profile
         .ten.wide.column
             h2.ui.header
                 |#{profile.first_name} #{profile.last_name}
@@ -21,6 +23,4 @@ with person
                 .ui.header If I am not at work or in class then I am probably…
                 |#{profile.if_not_working}
             if is_user
-                a.ui.basic.button(href="/profile/edit/#{_id}") Edit Profile
-                .ui.horizontal.divider.header My Courses
-                    .ui.header Source of Light
+                +my_courses

@@ -19,25 +19,23 @@ if Meteor.isClient
             # zipCode: true
             token: (token) ->
                 # console.log token
-                # product = Docs.findOne FlowRouter.getParam('doc_id')
-                # console.log product
+                course = Courses.findOne FlowRouter.getParam('course_id')
+                console.log course
                 charge = 
-                    amount: 10000
+                    amount: course.price*100
                     currency: 'usd'
                     source: token.id
                     description: token.description
                     receipt_email: token.email
-                Meteor.call 'processPayment', charge, (error, response) ->
+                Meteor.call 'processPayment', charge, (error, response) =>
                     if error then Bert.alert error.reason, 'danger'
                     else
                         Meteor.users.update Meteor.userId(),
-                            $addToSet: courses: 'sol'
-                        Bert.alert 'Thanks for your payment.', 'success'
+                            $addToSet: courses: course._id
+                        Bert.alert "Thanks for your payment.  You're enrolled in #{course.title}.", 'success'
                         FlowRouter.go "/profile/edit/#{Meteor.userId()}"
             # closed: ->
             #     alert 'closed'
-
-              # We'll pass our token and purchase info to the server here.
         )
 
 
@@ -57,11 +55,18 @@ if Meteor.isClient
     Template.buy_course.events
         'click .buy_course': ->
             if Meteor.userId() 
-                Template.instance().checkout.open
-                    name: 'Source of Light'
-                    # description: @description
-                    amount: @price*100
-                    bitcoin: true
+                if @price > 0
+                    Template.instance().checkout.open
+                        name: @title
+                        description: @subtitle
+                        amount: @price*100
+                        bitcoin: true
+                else
+                    Meteor.call 'enroll', @_id, (err,res)=>
+                        if err then console.error err
+                        else
+                            Bert.alert "You are now enrolled in #{@title}", 'success'
+                            # FlowRouter.go "/course/view/#{_id}"
             else FlowRouter.go '/sign-in'
     
 
@@ -80,3 +85,8 @@ if Meteor.isClient
             FlowRouter.go "/course/edit/#{course_id}"
 
 
+if Meteor.isServer
+    Meteor.methods 
+        enroll: (course_id)->
+            Meteor.users.update Meteor.userId(),
+                $addToSet: courses: course_id

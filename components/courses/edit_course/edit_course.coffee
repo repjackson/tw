@@ -52,6 +52,11 @@ if Meteor.isClient
             subtitle = $('#subtitle').val()
             Courses.update FlowRouter.getParam('course_id'),
                 $set: subtitle: subtitle
+
+        'blur #price': ->
+            price = parseInt $('#price').val()
+            Courses.update FlowRouter.getParam('course_id'),
+                $set: price: price
                 
         'blur #course': ->
             course = $('#course').val()

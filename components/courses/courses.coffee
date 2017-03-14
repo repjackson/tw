@@ -5,6 +5,15 @@ FlowRouter.route '/courses', action: (params) ->
     BlazeLayout.render 'layout',
         main: 'courses'
 
+
+Meteor.users.helpers
+    course_ob: -> 
+        Courses.find
+            _id: $in: @courses
+
+
+
+
 if Meteor.isClient
     Template.courses.onCreated -> 
         @autorun -> Meteor.subscribe('courses')
@@ -42,7 +51,8 @@ if Meteor.isClient
             Courses.find { }
     
         in_course: ->
-            Meteor.user()?.courses and @title in Meteor.user().courses
+            # console.log @_id
+            @_id in Meteor.user().courses
     
 
     Template.courses.events

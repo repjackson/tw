@@ -10,14 +10,30 @@ template(name='courses')
         .ui.divided.items
             each courses
                 .item
+                    .image
+                        img.ui.image(src="{{c.url image_id }}")
                     .content
-                        a.header(href="/course/view/#{_id}") #{title}
+                        a.header(href="/course/view/#{_id}") 
+                            |#{title}
+                            if in_course
+                                .ui.basic.green.label Enrolled
+                        .meta
+                            if price
+                                span $#{price}
+                            else
+                                .ui.basic.green.label Free
                         .description #{subtitle}
                         .extra
+                            if in_course
+                                // .ui.basic.green.label Enrolled
+                                .ui.right.floated.primary.button(href="/course/view/#{_id}")
+                                    |Resume
+                                    i.right.chevron.icon
+                            else
+                                a.ui.right.floated.primary.button(href="/course/view/#{_id}") 
+                                    |View Details
+                                    i.right.chevron.icon
                             if isInRole 'admin'
-                                a.ui.basic.button(href="/course/edit/#{_id}") Edit
-            
-        a(href="/courses/sol")
-            img.ui.centered.image(src="{{c.url 'sol' crop='crop'}}")
-            h2.ui.center.aligned.header Source of Light
-        
+                                a.ui.basic.button(href="/course/edit/#{_id}") 
+                                    i.pencil.icon
+                                    |Edit

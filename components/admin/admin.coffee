@@ -8,9 +8,8 @@ FlowRouter.route '/admin/members', action: (params) ->
  
 if Meteor.isClient
     Template.user_table.onCreated ->
-        self = @
-        self.autorun ->
-            self.subscribe 'members'
+        @autorun -> Meteor.subscribe 'members'
+        @autorun -> Meteor.subscribe 'courses'
     
     
     Template.user_table.helpers
@@ -25,7 +24,10 @@ if Meteor.isClient
             # console.log @
             Roles.userIsInRole(@_id, 'member')
     
-    
+        user_courses: ->
+            if @courses
+                Courses.find
+                    _id: $in: @courses
     
     
     

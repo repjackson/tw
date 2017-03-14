@@ -2,13 +2,19 @@ template(name='view_course')
     with course
         .ui.container
         if in_course
-            +course_page
+            +course_dashboard
         else 
             +buy_course
     
 template(name='buy_course')
     with course
         .ui.text.container
+            .ui.breadcrumb
+                a.section(href='/') Home
+                .divider  / 
+                a.section(href='/courses') Courses
+                .divider  / 
+                .active.section #{title}
             img.ui.centered.image(src="{{c.url image_id }}")
             h1.ui.center.aigned.header #{title}
             h3.ui.center.aigned.header #{subtitle}
@@ -25,6 +31,9 @@ template(name='buy_course')
                         a.buy_course.ui.teal.big.button
                             |Login and Enroll
             if isInRole 'admin'
+                .ui.horizontal.divider.header 
+                    i.red.configure.icon
+                    |Admin
                 a.ui.basic.large.button(href="/course/edit/#{_id}") 
                     i.red.configure.icon
                     |Edit
@@ -35,7 +44,7 @@ template(name='buy_course')
 
 
     
-template(name='course_page')
+template(name='course_dashboard')
     h1.ui.center.aligned.header #{title}
     .ui.divided.stackable.grid
         .ten.wide.column

@@ -4,6 +4,7 @@
             tr
                 th Image
                 th Profile
+                th Courses
         tbody
             each members
                 tr
@@ -18,3 +19,7 @@
                             |#{address}
                         a(href="/account/profile/edit/#{_id}")
                             |Edit
+                    td 
+                        .ui.list
+                            each user_courses
+                                .item #{title}

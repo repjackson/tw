@@ -148,6 +148,7 @@ if Meteor.isServer
                 profile: 1
                 username: 1
                 image_id: 1
+                courses: 1
     
     
     Meteor.publish 'user_profile', (id)->
@@ -157,3 +158,4 @@ if Meteor.isServer
                 profile: 1
                 username: 1
                 image_id: 1
+                courses: 1
