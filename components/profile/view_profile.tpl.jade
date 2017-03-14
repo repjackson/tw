@@ -20,8 +20,7 @@ with person
             if profile.if_not_working
                 .ui.header If I am not at work or in class then I am probably…
                 |#{profile.if_not_working}
-            // if isInRole 'admin'
-            //     .ui.horizontal.divider.header
-            //         i.red.configure.icon
-            //         | Admin
-            //     a.ui.basic.button(href="/profile/edit/#{_id}") Edit Profile
+            if is_user
+                a.ui.basic.button(href="/profile/edit/#{_id}") Edit Profile
+                .ui.horizontal.divider.header My Courses
+                    .ui.header Source of Light

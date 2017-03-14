@@ -46,7 +46,6 @@ service-configuration@1.0.11
 raix:handlebar-helpers
 pauli:accounts-linkedin
 matb33:collection-hooks
-froala:editor-reactive
 themeteorchef:bert
 mizzao:autocomplete
 mizzao:user-status
@@ -54,3 +53,5 @@ mrgalaxy:stripe
 facebook-config-ui
 google-config-ui
 twitter-config-ui
+froala:editor-reactive@=2.4.2
+tomwasd:flow-router-autoscroll

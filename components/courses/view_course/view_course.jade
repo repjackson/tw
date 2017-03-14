@@ -8,9 +8,26 @@ template(name='view_course')
     
 template(name='buy_course')
     with course
-        .ui.center.aligned.icon.header
-            i.fire.icon
-            #{title}
+        .ui.text.container
+            img.ui.centered.image(src="{{c.url image_id }}")
+            h1.ui.center.aigned.header #{title}
+            h3.ui.center.aigned.header #{subtitle}
+            span !{description}
+            .ui.centered.grid
+                .six.wide.column
+                    a.ui.teal.large.button(href='http://toriwebster.us11.list-manage.com/subscribe?u=8973e01aca6da499e7e1a63bd&id=9204d04e30')
+                        |Sign Up for the SOL Newsletter
+                .six.wide.column
+                    if currentUser
+                        a.buy_course.ui.teal.big.button
+                            |Enroll
+                    else
+                        a.buy_course.ui.teal.big.button
+                            |Login and Enroll
+            if isInRole 'admin'
+                a.ui.basic.large.button(href="/course/edit/#{_id}") 
+                    i.red.configure.icon
+                    |Edit
 
 
 

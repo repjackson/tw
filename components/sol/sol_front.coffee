@@ -1,17 +1,5 @@
-FlowRouter.route '/course/view/:course_id', action: (params) ->
-    BlazeLayout.render 'layout',
-        main: 'view_course'
-
-
 if Meteor.isClient
-    Template.view_course.onCreated ->
-        self = @
-        self.autorun ->
-            self.subscribe 'course', FlowRouter.getParam('course_id')
-    
-    Template.buy_course.onCreated ->
-        @autorun -> Meteor.subscribe 'course', FlowRouter.getParam('course_id')
-    
+    Template.sol_front.onCreated -> 
         Template.instance().checkout = StripeCheckout.configure(
             key: Meteor.settings.public.stripe.testPublishableKey
             # image: 'https://tmc-post-content.s3.amazonaws.com/ghostbusters-logo.png'
@@ -39,44 +27,15 @@ if Meteor.isClient
 
               # We'll pass our token and purchase info to the server here.
         )
-
-
-    
-    Template.view_course.helpers
-        course: ->
-            Courses.findOne FlowRouter.getParam('course_id')
         
-        in_course: ->
-            Meteor.user()?.courses and @title in Meteor.user().courses
-    
-    
-    Template.buy_course.helpers
-        course: ->
-            Courses.findOne FlowRouter.getParam('course_id')
-    
-    Template.buy_course.events
-        'click .buy_course': ->
+        
+    Template.sol_front.events
+        'click #buy_sol': ->
             if Meteor.userId() 
                 Template.instance().checkout.open
                     name: 'Source of Light'
                     # description: @description
-                    amount: @price*100
+                    amount: 10000
                     bitcoin: true
             else FlowRouter.go '/sign-in'
-    
-
-    
-    Template.view_course.events
-        'click #mark_as_complete': ->
-            Courses.update FlowRouter.getParam('course_id'),
-                $set: complete: true
-            
-        'click #mark_as_incomplete': ->
-            Courses.update FlowRouter.getParam('course_id'),
-                $set: complete: false
-    
-        'click .edit': ->
-            course_id = FlowRouter.getParam('course_id')
-            FlowRouter.go "/course/edit/#{course_id}"
-
 

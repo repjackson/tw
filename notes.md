@@ -64,3 +64,21 @@ module structure
     video
     video description
     transcript
+    
+    
+todo
+    view profile by default
+    my courses
+    members inside sol page
+    module body, editable
+    course breadcrumbs
+    light work enables
+    sequential modules
+    sequential answers
+    70/30 progress
+    each module has 
+        coursework progress bar
+        light work progress bar
+        
+    badges
+        days in a row

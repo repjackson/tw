@@ -32,6 +32,14 @@ Cloudinary.config
 #     BrowserPolicy.framing.allowAll();
 
 
+Stripe = StripeAPI(Meteor.settings.private.stripe.testSecretKey)
+# console.log Meteor.settings.private.stripe.testSecretKey
+Meteor.methods
+    processPayment: (charge) ->
+        handleCharge = Meteor.wrapAsync(Stripe.charges.create, Stripe.charges)
+        payment = handleCharge(charge)
+        # console.log payment
+        payment
 
 
 

@@ -3,7 +3,21 @@ template(name='courses')
         h1.ui.center.aligned.header Courses
         h3.ui.center.aligned.header I design courses online to spread light farther than the eye can see. People all around the world are looking for hope, inspiration, and guidance in their personal and professional lives. Explore the courses below to see what best fits your needs
         .ui.hidden.divider
+        if isInRole 'admin'
+            #add_course.ui.basic.button 
+                i.plus.icon
+                |Add Course
+        .ui.divided.items
+            each courses
+                .item
+                    .content
+                        a.header(href="/course/view/#{_id}") #{title}
+                        .description #{subtitle}
+                        .extra
+                            if isInRole 'admin'
+                                a.ui.basic.button(href="/course/edit/#{_id}") Edit
+            
         a(href="/courses/sol")
-            img.ui.centered.image(src="{{c.url 'sol' }}")
+            img.ui.centered.image(src="{{c.url 'sol' crop='crop'}}")
             h2.ui.center.aligned.header Source of Light
         
