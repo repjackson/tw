@@ -19,7 +19,7 @@ AccountsTemplates.configure
     enablePasswordChange: true
 
     sendVerificationEmail: true
-    enforceEmailVerification: false
+    enforceEmailVerification: true
     confirmPassword: true
     continuousValidation: true
     #displayFormLabels: true
@@ -35,7 +35,7 @@ AccountsTemplates.configure
     positiveFeedback: true
 
     # Privacy Policy and Terms of Use
-    privacyUrl: 'privacy'
+    # privacyUrl: 'privacy'
     termsUrl: 'terms-of-use'
 
 pwd = AccountsTemplates.removeField('password')
@@ -51,7 +51,7 @@ AccountsTemplates.addFields [
     {
         _id: 'email'
         type: 'email'
-        required: false
+        required: true
         displayName: 'email'
         re: /.+@(.+){2,}\.(.+){2,}/
         errStr: 'Invalid email'

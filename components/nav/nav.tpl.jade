@@ -5,10 +5,10 @@
         a.item(href='/about' class="{{isActivePath '/about'}}") About
         a.icon.item(href='/courses' class="{{isActivePath '/courses'}}") Courses
         a.item(href='/contact' class="{{isActivePath '/contact'}}") Contact
-        a.icon.item(href='/cart' class="{{isActivePath '/cart'}}") 
-            i.cart.icon
     .right.menu
         if currentUser
+            // a.icon.item(href='/cart' class="{{isActivePath '/cart'}}") 
+            //     i.cart.icon
             // a.icon.item(href='/users' class="{{isActivePath '/users'}}") 
             //     i.users.icon
             if isInRole 'admin'
