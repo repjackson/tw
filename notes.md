@@ -84,5 +84,3 @@ todo
         days in a row
         
         
-terms and conditions
-enrollment page

@@ -1,14 +1,14 @@
 {
   "public": {
     "stripe": {
-        "testPublishableKey": "pk_test_EeQ9GTKynLzNMq5hiTCkg3Ec",
-        "livePublishableKey": "pk_live_I5XDcgYoZQHko5epFyMr5IWT"
+        "testPublishableKey": "pk_test_QzOggri5RAYyvLWS1tzxnuHV",
+        "livePublishableKey": "pk_live_oTdYsrpRnqJaHmpuqdiO1Hpt"
       }
   },
   "private": {
     "stripe": {
-      "testSecretKey": "sk_test_VmLHoYbhDWLPgrVp5GoTd0AR",
-      "liveSecretKey": "sk_live_f0QHHkiCuftpYG49819oyrFr"
+      "testSecretKey": "sk_test_B36rKQQMGhzPDnn2JYcttKIR",
+      "liveSecretKey": "sk_live_mRy0s288JPLBPSofdgy8DhZb"
     }
   },
   "cloudinary_key": "754714459692734",

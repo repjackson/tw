@@ -20,7 +20,7 @@ template(name='pages')
         each pages
             .ui.card
                 .content
-                    .ui.header #{title}
+                    .ui.header #{name}
                 .content
-                    a(href="page/view/#{_id}") View
-                    a(href="page/edit/#{_id}") Edit
+                    a.ui.basic.button(href="/page/view/#{_id}") View
+                    a.ui.basic.button(href="/page/edit/#{_id}") Edit
