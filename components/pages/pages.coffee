@@ -4,17 +4,17 @@ FlowRouter.route '/about', action: ->
     BlazeLayout.render 'layout', 
         main: 'about'
 
-FlowRouter.route '/faq', action: (params) ->
+FlowRouter.route '/privacy', action: (params) ->
     BlazeLayout.render 'layout',
-        main: 'faq'
+        main: 'privacy'
 
 FlowRouter.route '/contact', action: (params) ->
     BlazeLayout.render 'layout',
         main: 'contact'
 
-FlowRouter.route '/volunteer', action: (params) ->
+FlowRouter.route '/terms-of-use', action: (params) ->
     BlazeLayout.render 'layout',
-        main: 'volunteer'
+        main: 'terms-of-use'
 
 
 FlowRouter.route '/page/edit/:page_id', action: (params) ->
@@ -26,9 +26,28 @@ FlowRouter.route '/page/view/:page_id', action: (params) ->
         main: 'view_page'
 
 
+if Meteor.isClient
+    Template.pages.onCreated ->
+        @autorun -> Meteor.subscribe 'pages'
+
+    Template.pages.helpers
+        pages: ->
+            Pages.find()
+            
+    Template.pages.events
+        'click #add_page': ->
+            id = Pages.insert {}
+            FlowRouter.go "/page/edit/#{id}"
+
+
 if Meteor.isServer
+    Meteor.publish 'pages', ->
+        Pages.find()
+    
+    
+    
     Pages.allow
-        insert: (userId, doc) -> doc.author_id is userId
-        update: (userId, doc) -> doc.author_id is userId or Roles.userIsInRole(userId, 'admin')
-        remove: (userId, doc) -> doc.author_id is userId or Roles.userIsInRole(userId, 'admin')
+        insert: (userId, doc) -> Roles.userIsInRole(userId, 'admin')
+        update: (userId, doc) -> Roles.userIsInRole(userId, 'admin')
+        remove: (userId, doc) -> Roles.userIsInRole(userId, 'admin')
     

@@ -4,11 +4,23 @@
 // template(name='faq')
 //     +view_page name='faq'
 
-// template(name='volunteer')
-//     +view_page name='volunteer'
+template(name='terms-of-use')
+    +view_page name='terms-of-use'
 
-// template(name='contact')
-//     +view_page name='contact'
+template(name='privacy')
+    +view_page name='privacy'
     
     
-    
+template(name='pages')
+    .ui.container
+        #add_page.ui.basic.button
+            i.plus.icon
+            | Add Page
+    .ui.four.centered.cards
+        each pages
+            .ui.card
+                .content
+                    .ui.header #{title}
+                .content
+                    a(href="page/view/#{_id}") View
+                    a(href="page/edit/#{_id}") Edit

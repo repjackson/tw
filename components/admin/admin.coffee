@@ -5,6 +5,12 @@ FlowRouter.route '/admin/members', action: (params) ->
         sub_nav: 'admin_nav'
         main: 'user_table'
  
+FlowRouter.route '/admin/pages', action: (params) ->
+    BlazeLayout.render 'layout',
+        nav: 'nav'
+        sub_nav: 'admin_nav'
+        main: 'pages'
+ 
  
 if Meteor.isClient
     Template.user_table.onCreated ->
