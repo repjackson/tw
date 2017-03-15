@@ -43,7 +43,7 @@
     "site": true,
     "state": false,
     "statistic": true,
-    "step": false,
+    "step": true,
     "sticky": false,
     "tab": false,
     "table": true,

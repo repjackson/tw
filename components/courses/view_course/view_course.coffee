@@ -5,9 +5,8 @@ FlowRouter.route '/course/view/:course_id', action: (params) ->
 
 if Meteor.isClient
     Template.view_course.onCreated ->
-        self = @
-        self.autorun ->
-            self.subscribe 'course', FlowRouter.getParam('course_id')
+        @autorun ->
+            Meteor.subscribe 'course', FlowRouter.getParam('course_id')
     
     Template.buy_course.onCreated ->
         @autorun -> Meteor.subscribe 'course', FlowRouter.getParam('course_id')
@@ -20,7 +19,7 @@ if Meteor.isClient
             token: (token) ->
                 # console.log token
                 course = Courses.findOne FlowRouter.getParam('course_id')
-                console.log course
+                # console.log course
                 charge = 
                     amount: course.price*100
                     currency: 'usd'
@@ -45,8 +44,13 @@ if Meteor.isClient
             Courses.findOne FlowRouter.getParam('course_id')
         
         in_course: ->
-            Meteor.user()?.courses and @title in Meteor.user().courses
+            Meteor.user()?.courses and @_id in Meteor.user().courses
     
+    Template.course_dashboard.helpers
+        modules: -> 
+            Modules.find { },
+                sort: module_number: 1
+
     
     Template.buy_course.helpers
         course: ->
@@ -54,20 +58,22 @@ if Meteor.isClient
     
     Template.buy_course.events
         'click .buy_course': ->
-            if Meteor.userId() 
-                if @price > 0
-                    Template.instance().checkout.open
-                        name: @title
-                        description: @subtitle
-                        amount: @price*100
-                        bitcoin: true
-                else
-                    Meteor.call 'enroll', @_id, (err,res)=>
-                        if err then console.error err
-                        else
-                            Bert.alert "You are now enrolled in #{@title}", 'success'
-                            # FlowRouter.go "/course/view/#{_id}"
-            else FlowRouter.go '/sign-in'
+            Session.set 'cart_item', @_id
+            FlowRouter.go '/cart'
+            # if Meteor.userId() 
+            #     if @price > 0
+            #         Template.instance().checkout.open
+            #             name: @title
+            #             description: @subtitle
+            #             amount: @price*100
+            #             bitcoin: true
+            #     else
+            #         Meteor.call 'enroll', @_id, (err,res)=>
+            #             if err then console.error err
+            #             else
+            #                 Bert.alert "You are now enrolled in #{@title}", 'success'
+            #                 # FlowRouter.go "/course/view/#{_id}"
+            # else FlowRouter.go '/sign-up'
     
 
     

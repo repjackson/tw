@@ -3,7 +3,7 @@ with person
         .five.wide.column
             img.ui.centered.image(src="{{c.url profile.image_id width=400 height=400 gravity='face' crop='fill'}}")
             if is_user
-                a.ui.basic.fluid.button(href="/profile/edit/#{_id}") Edit Profile
+                a.ui.basic.fluid.button(href="/profile/edit/#{_id}") Edit My Profile
         .ten.wide.column
             h2.ui.header
                 |#{profile.first_name} #{profile.last_name}

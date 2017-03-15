@@ -4,7 +4,7 @@
 $.cloudinary.config
     cloud_name:"facet"
 
-    
+Session.setDefault 'cart_item', null
     
 Meteor.startup ->
     stripeKey = Meteor.settings.public.stripe.testPublishableKey
@@ -35,6 +35,8 @@ Template.registerHelper 'publish_when', () -> moment(@publish_date).fromNow()
 
 
 Template.registerHelper 'when', () -> moment(@timestamp).fromNow()
+
+Template.registerHelper 'in_course', () -> @_id in Meteor.user().courses
 
 
 Template.registerHelper 'is_dev', () -> Meteor.isDevelopment

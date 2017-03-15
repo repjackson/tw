@@ -4,14 +4,11 @@ FlowRouter.route '/course/edit/:course_id', action: (params) ->
 
 if Meteor.isClient
     Template.edit_course.onCreated ->
-        self = @
-        self.autorun ->
-            self.subscribe 'course', FlowRouter.getParam('course_id')
+        @autorun -> Meteor.subscribe 'course', FlowRouter.getParam('course_id')
     
     
     Template.edit_course.helpers
-        course: ->
-            Courses.findOne FlowRouter.getParam('course_id')
+        course: -> Courses.findOne FlowRouter.getParam('course_id')
         
         getFEContext: ->
             @current_doc = Courses.findOne FlowRouter.getParam('course_id')

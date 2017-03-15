@@ -1,13 +1,11 @@
-FlowRouter.route '/view_module/:module_id', action: (params) ->
+FlowRouter.route '/module/view/:module_id', action: (params) ->
     BlazeLayout.render 'layout',
         main: 'view_module'
 
 
 if Meteor.isClient
     Template.view_module.onCreated ->
-        self = @
-        self.autorun ->
-            self.subscribe 'module', FlowRouter.getParam('module_id')
+        @autorun -> Meteor.subscribe 'module', FlowRouter.getParam('module_id')
     
     
     Template.view_module.helpers
@@ -27,6 +25,6 @@ if Meteor.isClient
     
         'click .edit': ->
             module_id = FlowRouter.getParam('module_id')
-            FlowRouter.go "/edit/#{module_id}"
+            FlowRouter.go "/module/edit/#{module_id}"
 
 

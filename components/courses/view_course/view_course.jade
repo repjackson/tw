@@ -1,10 +1,20 @@
 template(name='view_course')
     with course
         .ui.container
-        if in_course
-            +course_dashboard
-        else 
-            +buy_course
+            if in_course
+                // +course_dashboard
+                +course_not_ready
+            else 
+                +buy_course
+    
+    
+template(name='course_not_ready')    
+    .ui.text.center.aligned.basic.segment.container
+        h1.ui.header Thank you for Enrolling in SOL!
+        h3.ui.header We're launching on April 2, please sign up below for updates and notifications.
+        a.ui.teal.large.button(href='http://toriwebster.us11.list-manage.com/subscribe?u=8973e01aca6da499e7e1a63bd&id=9204d04e30')
+            |Sign Up for the SOL Newsletter
+
     
 template(name='buy_course')
     with course
@@ -24,12 +34,16 @@ template(name='buy_course')
                     a.ui.teal.large.button(href='http://toriwebster.us11.list-manage.com/subscribe?u=8973e01aca6da499e7e1a63bd&id=9204d04e30')
                         |Sign Up for the SOL Newsletter
                 .six.wide.column
-                    if currentUser
-                        a.buy_course.ui.teal.big.button
-                            |Enroll
-                    else
-                        a.buy_course.ui.teal.big.button
-                            |Login and Enroll
+                    // if currentUser
+                    //     if in_course
+                    //         // .ui.green.basic.label Enrolled
+                    //         a.ui.teal.big.button(href="/course/view/#{_id}") View Course
+                    //     else
+                    a.buy_course.ui.teal.big.button
+                        |Enroll
+                    // else
+                    //     a.buy_course.ui.teal.big.button
+                    //         |Create an Account and Enroll
             if isInRole 'admin'
                 .ui.horizontal.divider.header 
                     i.red.configure.icon
@@ -45,37 +59,36 @@ template(name='buy_course')
 
     
 template(name='course_dashboard')
-    h1.ui.center.aligned.header #{title}
-    .ui.divided.stackable.grid
-        .ten.wide.column
-            .description
-                |!{description}
+    .ui.container.grid
+        .centered.row
+            h1.ui.center.aligned.header #{title}
+        .five.wide.column
             .ui.segment
-                .ui.header Transcript
+                .ui.header Welcome
             .ui.segment
-                .ui.header Reflection
+                .ui.header Members
+            .ui.segment
+                .ui.header Downloads
             .ui.segment
                 .ui.header Collaboration
-                +collaboration
             .ui.segment
-                .ui.header Light Work
-
-        .five.wide.column
-            // .ui.horizontal.divider.header Status
-            .ui.header course Number: #{course_number}
-            .ui.horizontal.divider.header Status
-            if complete
-                .ui.teal.big.fluid.label 
-                    i.check.icon
-                    |Complete
-            else
-                .ui.teal.big.basic.fluid.label 
-                    |Incomplete
-            if complete
-                #mark_as_incomplete.ui.basic.fluid.button Mark Incomplete
-            else
-                #mark_as_complete.ui.basic.fluid.button Mark Complete
-            .ui.horizontal.divider.header Admin
-            a.ui.fluid.basic.button(href="/edit_course/#{_id}")
-                i.red.configure.icon
-                |Edit
+                .ui.header Reminders
+            .ui.segment
+                .ui.header 
+                    i.red.configure.icon
+                    |Admin
+                #add_module.ui.basic.fluid.button
+                    // i.red.configure.icon
+                    | Add Module
+        .ten.wide.column
+            h1.ui.header Modules
+            each modules
+                .ui.segment
+                    a(href="/module/view/#{_id}")
+                        .ui.header #{title}
+                    .meta Number #{module_number}
+                    .ui.teal.progress
+                        .bar
+                        .progress
+                        
+                        

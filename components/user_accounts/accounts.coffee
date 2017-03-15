@@ -1,3 +1,13 @@
+FlowRouter.route '/privacy', action: (params) ->
+    BlazeLayout.render 'layout',
+        main: 'privacy'
+
+FlowRouter.route '/terms-of-use', action: (params) ->
+    BlazeLayout.render 'layout',
+        main: 'terms-of-use'
+
+
+
 
 AccountsTemplates.configure
     defaultLayout: 'layout'
@@ -25,8 +35,8 @@ AccountsTemplates.configure
     positiveFeedback: true
 
     # Privacy Policy and Terms of Use
-    #privacyUrl: 'privacy'
-    #termsUrl: 'terms-of-use'
+    privacyUrl: 'privacy'
+    termsUrl: 'terms-of-use'
 
 pwd = AccountsTemplates.removeField('password')
 AccountsTemplates.removeField 'email'

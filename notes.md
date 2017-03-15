@@ -72,7 +72,7 @@ todo
     members inside sol page
     module body, editable
     course breadcrumbs
-    light work enables
+    light work enablesn
     sequential modules
     sequential answers
     70/30 progress
@@ -82,3 +82,7 @@ todo
         
     badges
         days in a row
+        
+        
+terms and conditions
+enrollment page

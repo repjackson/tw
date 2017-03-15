@@ -7,9 +7,8 @@ FlowRouter.route '/module/edit/:module_id', action: (params) ->
 
 if Meteor.isClient
     Template.edit_module.onCreated ->
-        self = @
-        self.autorun ->
-            self.subscribe 'module', FlowRouter.getParam('module_id')
+        @autorun ->
+            Meteor.subscribe 'module', FlowRouter.getParam('module_id')
     
     
     Template.edit_module.helpers
