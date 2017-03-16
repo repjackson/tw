@@ -1,6 +1,3 @@
-@selected_tags = new ReactiveArray []
-
-
 $.cloudinary.config
     cloud_name:"facet"
 
