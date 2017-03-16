@@ -19,7 +19,7 @@ AccountsTemplates.configure
     enablePasswordChange: true
 
     sendVerificationEmail: true
-    enforceEmailVerification: true
+    enforceEmailVerification: false
     confirmPassword: true
     continuousValidation: true
     #displayFormLabels: true

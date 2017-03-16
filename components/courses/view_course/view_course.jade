@@ -25,6 +25,7 @@ template(name='buy_course')
                 a.section(href='/courses') Courses
                 .divider  / 
                 .active.section #{title}
+            .ui.hidden.divider
             img.ui.centered.image(src="{{c.url image_id }}")
             h1.ui.center.aigned.header #{title}
             h3.ui.center.aigned.header #{subtitle}

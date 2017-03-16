@@ -16,7 +16,7 @@
   "galaxy.meteor.com": {
     "env": {
       "MONGO_URL": "mongodb://eric:Turnf34ragainst!@aws-us-east-1-portal.21.dblayer.com:10444/toridb?ssl=true",
-      "ROOT_URL": "https://www.toriwebster.meteorapp.com",
+      "ROOT_URL": "https://www.toriwebster.com",
       "MAIL_URL": "smtp://postmaster%40mg.toriwebster.com:06fafd858e2a55bb855535e576d1f693@smtp.mailgun.org:587"
     }
   }

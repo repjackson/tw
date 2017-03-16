@@ -7,7 +7,7 @@ $.cloudinary.config
 Session.setDefault 'cart_item', null
     
 Meteor.startup ->
-    stripeKey = Meteor.settings.public.stripe.testPublishableKey
+    stripeKey = Meteor.settings.public.stripe.livePublishableKey
     Stripe.setPublishableKey stripeKey
     
     STRIPE =

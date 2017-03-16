@@ -12,28 +12,8 @@ Cloudinary.config
     api_secret: Meteor.settings.cloudinary_secret
 
 
-# Meteor.startup ->
-#     # BrowserPolicy.content.allowFrameOrigin 'youtube.com'
-#     # BrowserPolicy.content.allowFrameOrigin 'res.cloudinary.com'
-#     BrowserPolicy.content.allowOriginForAll( 'https://facet-repjackson.c9users.io/' )
-#     BrowserPolicy.content.allowInlineScripts()
-#     # BrowserPolicy.content.allowFrameOrigin( 'youtube.com' );
-#     BrowserPolicy.content.allowSameOriginForAll();
-#     BrowserPolicy.content.allowDataUrlForAll();
-#     BrowserPolicy.content.allowEval();
 
-#     BrowserPolicy.content.allowOriginForAll( 'youtube.com' );
-#     BrowserPolicy.content.allowOriginForAll( 'fonts.googleapis.com' );
-#     BrowserPolicy.content.allowOriginForAll( 'fonts.gstatic.com' );
-#     BrowserPolicy.content.allowOriginForAll( 'res.cloudinary.com' );
-#     # BrowserPolicy.content.allowOriginForAll( 'localhost' );
-#     # BrowserPolicy.content.allowOriginForAll( '*' );
-#     # BrowserPolicy.content.allowOriginForAll( 'unsafe-eval' );
-#     BrowserPolicy.framing.allowAll();
-
-
-Stripe = StripeAPI(Meteor.settings.private.stripe.testSecretKey)
-# console.log Meteor.settings.private.stripe.testSecretKey
+Stripe = StripeAPI(Meteor.settings.private.stripe.liveSecretKey)
 Meteor.methods
     processPayment: (charge) ->
         handleCharge = Meteor.wrapAsync(Stripe.charges.create, Stripe.charges)

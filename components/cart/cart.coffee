@@ -15,7 +15,7 @@ if Meteor.isClient
     Template.cart.onCreated ->
         @autorun -> Meteor.subscribe 'cart', Session.get 'cart_item'
         Template.instance().checkout = StripeCheckout.configure(
-            key: Meteor.settings.public.stripe.testPublishableKey
+            key: Meteor.settings.public.stripe.livePublishableKey
             # image: 'https://tmc-post-content.s3.amazonaws.com/ghostbusters-logo.png'
             locale: 'auto'
             # zipCode: true

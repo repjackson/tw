@@ -11,34 +11,6 @@ if Meteor.isClient
     Template.buy_course.onCreated ->
         @autorun -> Meteor.subscribe 'course', FlowRouter.getParam('course_id')
     
-        Template.instance().checkout = StripeCheckout.configure(
-            key: Meteor.settings.public.stripe.testPublishableKey
-            # image: 'https://tmc-post-content.s3.amazonaws.com/ghostbusters-logo.png'
-            locale: 'auto'
-            # zipCode: true
-            token: (token) ->
-                # console.log token
-                course = Courses.findOne FlowRouter.getParam('course_id')
-                # console.log course
-                charge = 
-                    amount: course.price*100
-                    currency: 'usd'
-                    source: token.id
-                    description: token.description
-                    receipt_email: token.email
-                Meteor.call 'processPayment', charge, (error, response) =>
-                    if error then Bert.alert error.reason, 'danger'
-                    else
-                        Meteor.users.update Meteor.userId(),
-                            $addToSet: courses: course._id
-                        Bert.alert "Thanks for your payment.  You're enrolled in #{course.title}.", 'success'
-                        FlowRouter.go "/profile/edit/#{Meteor.userId()}"
-            # closed: ->
-            #     alert 'closed'
-        )
-
-
-    
     Template.view_course.helpers
         course: ->
             Courses.findOne FlowRouter.getParam('course_id')
@@ -60,21 +32,6 @@ if Meteor.isClient
         'click .buy_course': ->
             Session.set 'cart_item', @_id
             FlowRouter.go '/cart'
-            # if Meteor.userId() 
-            #     if @price > 0
-            #         Template.instance().checkout.open
-            #             name: @title
-            #             description: @subtitle
-            #             amount: @price*100
-            #             bitcoin: true
-            #     else
-            #         Meteor.call 'enroll', @_id, (err,res)=>
-            #             if err then console.error err
-            #             else
-            #                 Bert.alert "You are now enrolled in #{@title}", 'success'
-            #                 # FlowRouter.go "/course/view/#{_id}"
-            # else FlowRouter.go '/sign-up'
-    
 
     
     Template.view_course.events
