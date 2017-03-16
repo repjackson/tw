@@ -10,7 +10,7 @@ if Meteor.isClient
     Template.doc_cloud.helpers
         doc_tags: ->
             doc_count = Docs.find().count()
-            if 0 < doc_count < 3 then Doc_tags.find { count: $lt: doc_count } else Doc_tags.find({}, limit: 10)
+            if 0 < doc_count < 3 then Doc_tags.find { count: $lt: doc_count } else Doc_tags.find({}, limit: 7)
     
         cloud_tag_class: ->
             button_class = switch

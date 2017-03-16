@@ -23,8 +23,8 @@ Meteor.methods
 
 
 
-AccountsMeld.configure
-    askBeforeMeld: false
-    # meldDBCallback: meldDBCallback
-    # serviceAddedCallback: serviceAddedCallback
+# AccountsMeld.configure
+#     askBeforeMeld: false
+#     # meldDBCallback: meldDBCallback
+#     # serviceAddedCallback: serviceAddedCallback
 
