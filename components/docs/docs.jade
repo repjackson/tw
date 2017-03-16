@@ -12,15 +12,15 @@ template(name='docs')
 
 
 template(name='doc_view')
-    .ui.text.container.basic.center.aligned.segment
+    .ui.container.basic.center.aligned.segment
         a(href="/doc/view/#{_id}")
             .image
                 img.ui.large.centered.image(src="{{c.url image_id }}")
         .description
             |!{body}
-        .meta
-            each tags
-                .ui.circular.small.button.tag(class=tag_class) #{this}
+        // .meta
+        //     each tags
+        //         .ui.circular.small.button.tag(class=tag_class) #{this}
         if can_edit
             .edit.ui.circular.basic.large.button
                 i.red.configure.icon
