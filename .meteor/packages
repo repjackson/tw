@@ -56,3 +56,4 @@ froala:editor-reactive@=2.4.2
 tomwasd:flow-router-autoscroll
 email
 okgrow:analytics
+perak:codemirror

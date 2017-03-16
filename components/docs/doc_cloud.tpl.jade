@@ -8,9 +8,8 @@
         each selected_doc_tags
             .unselect_tag.ui.primary.circular.large.button
                 strong #{this}
-    div
-        each doc_tags
-            .ui.circular.basic.button.select_tag(class=cloud_tag_class) 
-                strong #{this.name}
-                // if isInRole 'admin'
-                //     small #{this.count}
+    each doc_tags
+        .ui.circular.basic.button.select_tag(class=cloud_tag_class) 
+            strong #{this.name}
+            // if isInRole 'admin'
+            //     small #{this.count}
