@@ -15,13 +15,6 @@ if Meteor.isClient
             Modules.find { },
                 sort: number: 1
     
-
-    
-
-    Template.view.events
-    
-        'click .edit': -> FlowRouter.go("/edit/#{@_id}")
-
     Template.modules.events
         'click #add_module': ->
             id = Modules.insert({})

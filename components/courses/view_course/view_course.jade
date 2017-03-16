@@ -1,11 +1,19 @@
 template(name='view_course')
-    with course
-        .ui.container
-            if in_course
-                // +course_dashboard
-                +course_not_ready
-            else 
-                +buy_course
+    .ui.container
+        with course
+            .ui.breadcrumb
+                a.section(href='/') Home
+                .divider  / 
+                a.section(href='/courses') Courses
+                .divider  / 
+                .active.section #{title}
+        .ui.hidden.divider
+        if isInRole 'admin'
+            +course_dashboard
+        else if in_course
+            +course_not_ready
+        else 
+            +buy_course
     
     
 template(name='course_not_ready')    
@@ -19,13 +27,6 @@ template(name='course_not_ready')
 template(name='buy_course')
     with course
         .ui.text.container
-            .ui.breadcrumb
-                a.section(href='/') Home
-                .divider  / 
-                a.section(href='/courses') Courses
-                .divider  / 
-                .active.section #{title}
-            .ui.hidden.divider
             img.ui.centered.image(src="{{c.url image_id }}")
             h1.ui.center.aigned.header #{title}
             h3.ui.center.aigned.header #{subtitle}

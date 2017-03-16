@@ -11,7 +11,8 @@ template(name='courses')
             each courses
                 .item
                     .image
-                        img.ui.image(src="{{c.url image_id }}")
+                        a(href="/course/view/#{_id}") 
+                            img.ui.image(src="{{c.url image_id }}")
                     .content
                         a.header(href="/course/view/#{_id}") 
                             |#{title}

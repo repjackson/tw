@@ -4,6 +4,10 @@ FlowRouter.route '/sol',
     return
  ]
 
+FlowRouter.notFound =
+    action: ->
+        FlowRouter.go '/'
+
 
 FlowRouter.route '/', action: ->
     BlazeLayout.render 'layout', 
