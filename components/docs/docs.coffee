@@ -37,6 +37,9 @@ if Meteor.isClient
                     tag_count: 1
                 limit: 1
     
+        one_doc: -> 
+            Docs.find().count() is 1
+    
         tag_class: -> if @valueOf() in selected_doc_tags.array() then 'primary' else 'basic'
 
         selected_doc_tags: -> selected_doc_tags.array()
@@ -55,9 +58,6 @@ if Meteor.isClient
         'click .edit': -> FlowRouter.go("/doc/edit/#{@_id}")
 
     Template.docs.events
-        'click #add': ->
-            Meteor.call 'add', (err,id)->
-                FlowRouter.go "/doc/edit/#{id}"
     
 
 if Meteor.isServer
@@ -75,7 +75,7 @@ if Meteor.isServer
         # if selected_doc_tags.length > 0 then match.tags = $all: selected_doc_tags
 
         Docs.find match,
-            limit: 5
+            limit: 3
             
     
     Meteor.publish 'doc', (id)->

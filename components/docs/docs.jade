@@ -1,23 +1,19 @@
 template(name='docs')
     .ui.container
         +doc_cloud
+        // if one_doc
         each docs
             +doc_view
-        if isInRole 'admin'
-            #add.ui.basic.button
-                i.red.configure.icon
-                | + Doc
 
         
 
 
 template(name='doc_view')
-    .ui.text.container.basic.segment
-        a(href="/doc/view/#{_id}")
-            .image
-                img.ui.large.centered.image(src="{{c.url image_id }}")
-        .description
-            |!{body}
+    .ui.container.basic.fluid.segment
+        // a(href="/doc/view/#{_id}")
+        //     .image
+        //         img.ui.large.centered.image(src="{{c.url image_id }}")
+        |!{body}
         // .meta
         //     each tags
         //         .ui.circular.small.button.tag(class=tag_class) #{this}

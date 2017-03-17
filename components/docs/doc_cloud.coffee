@@ -10,7 +10,7 @@ if Meteor.isClient
     Template.doc_cloud.helpers
         doc_tags: ->
             doc_count = Docs.find().count()
-            if 0 < doc_count < 3 then Doc_tags.find { count: $lt: doc_count } else Doc_tags.find({}, limit: 20)
+            if 0 < doc_count < 3 then Doc_tags.find { count: $lt: doc_count } else Doc_tags.find({}, limit: 10)
     
         cloud_tag_class: ->
             button_class = switch
@@ -28,7 +28,7 @@ if Meteor.isClient
                 {
                     collection: Doc_tags
                     field: 'name'
-                    matchAll: true
+                    matchAll: false
                     template: Template.tag_result
                 }
                 ]
@@ -41,7 +41,10 @@ if Meteor.isClient
         'click .unselect_tag': -> selected_doc_tags.remove @valueOf()
         'click #clear_tags': -> selected_doc_tags.clear()
     
-    
+        'click #add': ->
+            Meteor.call 'add', (err,id)->
+                FlowRouter.go "/doc/edit/#{id}"
+
         'keyup #search': (e,t)->
             e.preventDefault()
             val = $('#search').val().toLowerCase().trim()
@@ -82,7 +85,7 @@ if Meteor.isServer
             { $group: _id: '$tags', count: $sum: 1 }
             { $match: _id: $nin: selected_doc_tags }
             { $sort: count: -1, _id: 1 }
-            { $limit: 50 }
+            { $limit: 10 }
             { $project: _id: 0, name: '$_id', count: 1 }
             ]
         # console.log 'cloud, ', cloud
