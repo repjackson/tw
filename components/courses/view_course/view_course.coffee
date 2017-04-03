@@ -6,27 +6,32 @@ FlowRouter.route '/course/view/:course_id', action: (params) ->
 if Meteor.isClient
     Template.view_course.onCreated ->
         @autorun ->
-            Meteor.subscribe 'course', FlowRouter.getParam('course_id')
+            Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
     
     Template.buy_course.onCreated ->
-        @autorun -> Meteor.subscribe 'course', FlowRouter.getParam('course_id')
+        @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
     
     Template.view_course.helpers
         course: ->
-            Courses.findOne FlowRouter.getParam('course_id')
+            Docs.findOne FlowRouter.getParam('doc_id')
         
         in_course: ->
             Meteor.user()?.courses and @_id in Meteor.user().courses
     
     Template.course_dashboard.helpers
         modules: -> 
-            Modules.find { },
+            course_id = FlowRouter.getParam 'doc_id'
+            
+            Docs.find { 
+                type: 'module'
+                course_id: course_id
+                },
                 sort: module_number: 1
 
     
     Template.buy_course.helpers
         course: ->
-            Courses.findOne FlowRouter.getParam('course_id')
+            Docs.findOne FlowRouter.getParam('doc_id')
     
     Template.buy_course.events
         'click .buy_course': ->
@@ -36,15 +41,15 @@ if Meteor.isClient
     
     Template.view_course.events
         'click #mark_as_complete': ->
-            Courses.update FlowRouter.getParam('course_id'),
+            Docs.update FlowRouter.getParam('doc_id'),
                 $set: complete: true
             
         'click #mark_as_incomplete': ->
-            Courses.update FlowRouter.getParam('course_id'),
+            Docs.update FlowRouter.getParam('doc_id'),
                 $set: complete: false
     
         'click .edit': ->
-            course_id = FlowRouter.getParam('course_id')
+            course_id = FlowRouter.getParam('doc_id')
             FlowRouter.go "/course/edit/#{course_id}"
 
 

@@ -2,45 +2,13 @@ with course
     .ui.container.basic.segment
         .ui.center.aligned.header Edit Course
         .ui.form
-            .field
-                label Title
-                input#title(type='text' placeholder='Title' value=title)
-            .field
-                label Subtitle
-                input#subtitle(type='text' placeholder='Subtitle' value=subtitle)
-            .field
-                label Price in $ (0 for free)
-                input#price(type='number' value=price min='0' defaultValue='0')
-            .ui.segment
-                if image_id
-                    .field
-                        label Image
-                        .ui.large.image
-                            img(src="{{c.url image_id width=800 crop='fit'}}")
-                            a#remove_photo.ui.top.left.attached.link.basic.label Remove
-                            .ui.bottom.right.attached.basic.label Image Id: #{image_id}
-                else
-                    .fields
-                        .field
-                            label Upload Image
-                            input(type='file' name='upload_picture' accept='image/*')
-                        if isInRole 'admin'
-                            .field
-                                label or Choose Cloudinary Image Id
-                                input#input_image_id(type='text')
-                    
-            .field
-                label Description
-                .froala-container
-                    +froalaReactive getFEContext
-            .field
-                if published
-                    #unpublish.ui.teal.button
-                        |Published
-                else
-                    #publish.ui.basic.button
-                        |Unpublished
-            // .ui.divider
+            +title
+            +subtitle
+            +price
+            +image
+            +content
+            +published
+            .ui.divider
             .ui.center.aligned.basic.segment
                 #save.ui.huge.teal.button Save
                 #delete.ui.red.icon.button

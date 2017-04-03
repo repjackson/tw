@@ -5,26 +5,26 @@ FlowRouter.route '/module/view/:module_id', action: (params) ->
 
 if Meteor.isClient
     Template.view_module.onCreated ->
-        @autorun -> Meteor.subscribe 'module', FlowRouter.getParam('module_id')
+        @autorun -> Meteor.subscribe 'module', FlowRouter.getParam('doc_id')
     
     
     Template.view_module.helpers
         module: ->
-            Modules.findOne FlowRouter.getParam('module_id')
+            Modules.findOne FlowRouter.getParam('doc_id')
     
     
     
     Template.view_module.events
         'click #mark_as_complete': ->
-            Modules.update FlowRouter.getParam('module_id'),
+            Modules.update FlowRouter.getParam('doc_id'),
                 $set: complete: true
             
         'click #mark_as_incomplete': ->
-            Modules.update FlowRouter.getParam('module_id'),
+            Modules.update FlowRouter.getParam('doc_id'),
                 $set: complete: false
     
         'click .edit': ->
-            module_id = FlowRouter.getParam('module_id')
+            module_id = FlowRouter.getParam('doc_id')
             FlowRouter.go "/module/edit/#{module_id}"
 
 

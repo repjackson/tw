@@ -2,9 +2,7 @@ with module
     .ui.container.basic.segment
         .ui.center.aligned.header Edit Module
         .ui.form
-            .field
-                label Title
-                input#title(type='text' placeholder='Title' value=title)
+            +title
             .fields
                 .field
                     label Module Number
@@ -41,41 +39,11 @@ with module
             //     .ui.left.icon.input
             //         i.linkify.icon
             //         input#youtube_id(type='text' value=youtube_id)
-            .field
-                label Description
-                .froala-container
-                    +froalaReactive getFEContext
-            // if isInRole 'admin'
-            //     .ui.basic.segment
-            //         #upload_widget_opener.ui.basic.button 
-            //             i.upload.icon
-            //             |Upload Images for Description
-            //         | Copy addresses into the 'Insert Image' button dialogue above
-            //         if image_array.length
-            //             .ui.list
-            //                 each image_array
-            //                     .item
-            //                         .ui.tiny.image
-            //                             img(src=thumbnail_url)
-            //                         .middle.aligned.content
-            //                             // .ui.header #{original_filename}
-            //                             | #{url}
-            // script(src='//widget.cloudinary.com/global/all.js', type='text/javascript')
-            // script(type='text/javascript').
-            //     document.getElementById("upload_widget_opener").addEventListener("click", function() {
-            //     cloudinary.openUploadWidget({ cloud_name: 'facet', upload_preset: 'rodonu5a'},
-            //     function(error, result) { console.log(error, result) });
-            //     }, false);            // +edit_tags
-            .field
-                label Status
-                if published
-                    #unpublish.ui.teal.button
-                        |Published
-                else
-                    #publish.ui.basic.button
-                        |Unpublished
+            +content
+            +tags
+            +published
             // .ui.divider
             .ui.center.aligned.basic.segment
-                #save.ui.huge.teal.button Save
+                #save.ui.huge.teal.button Save Module
                 #delete.ui.red.icon.button
                     i.trash.icon

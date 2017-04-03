@@ -1,6 +1,3 @@
-@Courses = new Meteor.Collection 'courses'
-
-
 FlowRouter.route '/courses', action: (params) ->
     BlazeLayout.render 'layout',
         main: 'courses'
@@ -16,11 +13,12 @@ Meteor.users.helpers
 
 if Meteor.isClient
     Template.courses.onCreated -> 
-        @autorun -> Meteor.subscribe('courses')
+        @autorun -> Meteor.subscribe('docs', [], 'course')
 
     Template.courses.helpers
         courses: -> 
-            Courses.find { }
+            Docs.find 
+                type: 'course'
     
         in_course: ->
             # console.log @_id
@@ -31,28 +29,5 @@ if Meteor.isClient
         'click .edit': -> FlowRouter.go("/course/edit/#{@_id}")
             
         'click #add_course': ->
-            id = Courses.insert({})
+            id = Docs.insert type:'course'
             FlowRouter.go "/course/edit/#{id}"
-    
-    
-
-        
-
-if Meteor.isServer
-    Courses.allow
-        insert: (userId, doc) -> Roles.userIsInRole(userId, 'admin')
-        update: (userId, doc) -> Roles.userIsInRole(userId, 'admin')
-        remove: (userId, doc) -> Roles.userIsInRole(userId, 'admin')
-    
-    
-    
-    
-    Meteor.publish 'courses', ()->
-    
-        self = @
-        match = {}
-        Courses.find match
-    
-    Meteor.publish 'course', (id)->
-        Courses.find id
-    

@@ -4,7 +4,12 @@ if Meteor.isClient
 
     Template.course_dashboard.helpers
         modules: -> 
-            Modules.find { },
+            course_id = FlowRouter.getParam 'course_id'
+            
+            Docs.find { 
+                type: 'module'
+                course_id: course_id
+                },
                 sort: module_number: 1
     
 
@@ -15,5 +20,6 @@ if Meteor.isServer
         self = @
         match = {}
 
-        Modules.find
+        Docs.find
+            type: 'module'
             course_id: course_id
