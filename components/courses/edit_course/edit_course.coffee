@@ -28,8 +28,8 @@ if Meteor.isClient
                 confirmButtonText: 'Delete'
                 confirmButtonColor: '#da5347'
             }, ->
-                course = Courses.findOne FlowRouter.getParam('doc_id')
-                Courses.remove course._id, ->
+                course = Docs.findOne FlowRouter.getParam('doc_id')
+                Docs.remove course._id, ->
                     FlowRouter.go "/courses"
     
     

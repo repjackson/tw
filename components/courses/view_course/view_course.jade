@@ -1,20 +1,38 @@
 template(name='view_course')
     .ui.container
-        with course
-            .ui.breadcrumb
-                a.section(href='/') Home
-                .divider  / 
-                a.section(href='/courses') Courses
-                .divider  / 
-                .active.section #{title}
+        .ui.breadcrumb
+            a.section(href='/') Home
+            .divider  / 
+            a.section(href='/courses') Courses
+            .divider  / 
+            .active.section #{course.title}
         .ui.hidden.divider
-        if isInRole 'admin'
-            +course_dashboard
-        else if in_course
-            +course_not_ready
-        else 
-            +buy_course
-    
+        .ui.grid
+            .centered.row
+                h1.ui.center.aligned.header #{course.title}
+                h4.ui.center.aligned.header #{course.subtitle}
+            .five.wide.column
+                .ui.vertical.fluid.pointing.menu
+                    with course
+                        a.item(href="/course/view/#{_id}/modules" class="{{isActivePath '/course/view/#{_id}/modules'}}") Modules
+                        a.item(href="/course/view/#{_id}/welcome" class="{{isActivePath '/course/view/#{_id}/welcome'}}") Welcome
+                        a.item(href="/course/view/#{_id}/members" class="{{isActivePath '/course/view/#{_id}/members'}}") Members
+                        a.item(href="/course/view/#{_id}/downloads" class="{{isActivePath '/course/view/#{_id}/downloads'}}") Downloads
+                        a.item(href="/course/view/#{_id}/reminders" class="{{isActivePath '/course/view/#{_id}/reminders'}}") Reminders
+                        a.item(href="/course/view/#{_id}/collaboration" class="{{isActivePath '/course/view/#{_id}/collaboration'}}") Collaboration
+                .ui.segment
+                    .ui.header 
+                        i.red.configure.icon
+                        |Admin
+                    #add_module.ui.basic.fluid.button
+                        // i.red.configure.icon
+                        | + Module
+                    #edit_course.ui.basic.fluid.button
+                        | Edit Course
+            .ten.wide.column
+                +Template.dynamic template=course_content
+                // +course_welcome
+
     
 template(name='course_not_ready')    
     .ui.text.center.aligned.basic.segment.container
@@ -22,75 +40,50 @@ template(name='course_not_ready')
         h3.ui.header We're launching on April 2, please sign up below for updates and notifications.
         a.ui.teal.large.button(href='http://toriwebster.us11.list-manage.com/subscribe?u=8973e01aca6da499e7e1a63bd&id=9204d04e30')
             |Sign Up for the SOL Newsletter
-
     
-template(name='buy_course')
-    with course
-        .ui.text.container
-            img.ui.centered.image(src="{{c.url image_id }}")
-            h1.ui.center.aigned.header #{title}
-            h3.ui.center.aigned.header #{subtitle}
-            span !{description}
-            .ui.centered.grid
-                .six.wide.column
-                    a.ui.teal.large.button(href='http://toriwebster.us11.list-manage.com/subscribe?u=8973e01aca6da499e7e1a63bd&id=9204d04e30')
-                        |Sign Up for the SOL Newsletter
-                .six.wide.column
-                    // if currentUser
-                    //     if in_course
-                    //         // .ui.green.basic.label Enrolled
-                    //         a.ui.teal.big.button(href="/course/view/#{_id}") View Course
-                    //     else
-                    a.buy_course.ui.teal.big.button
-                        |Enroll
-                    // else
-                    //     a.buy_course.ui.teal.big.button
-                    //         |Create an Account and Enroll
-            if isInRole 'admin'
-                .ui.horizontal.divider.header 
-                    i.red.configure.icon
-                    |Admin
-                a.ui.basic.large.button(href="/course/edit/#{_id}") 
-                    i.red.configure.icon
-                    |Edit
-
-
-
-
-
-
+template(name='course_welcome')
+    .ui.text.container
+        img.ui.centered.image(src="{{c.url image_id }}")
+        h1.ui.center.aigned.header #{title}
+        h3.ui.center.aigned.header #{subtitle}
+        span !{description}
+        .ui.centered.grid
+            .six.wide.column
+                a.ui.teal.large.button(href='http://toriwebster.us11.list-manage.com/subscribe?u=8973e01aca6da499e7e1a63bd&id=9204d04e30')
+                    |Sign Up for the SOL Newsletter
+            .six.wide.column
+                // if currentUser
+                //     if in_course
+                //         // .ui.green.basic.label Enrolled
+                //         a.ui.teal.big.button(href="/course/view/#{_id}") View Course
+                //     else
+                a.buy_course.ui.teal.big.button
+                    |Enroll
+                // else
+                //     a.buy_course.ui.teal.big.button
+                //         |Create an Account and Enroll
+        if isInRole 'admin'
+            .ui.horizontal.divider.header 
+                i.red.configure.icon
+                |Admin
+            a.ui.basic.large.button(href="/course/edit/#{_id}") 
+                i.red.configure.icon
+                |Edit
     
-template(name='course_dashboard')
-    .ui.container.grid
-        .centered.row
-            h1.ui.center.aligned.header #{title}
-        .five.wide.column
-            .ui.segment
-                .ui.header Welcome
-            .ui.segment
-                .ui.header Members
-            .ui.segment
-                .ui.header Downloads
-            .ui.segment
-                .ui.header Collaboration
-            .ui.segment
-                .ui.header Reminders
-            .ui.segment
-                .ui.header 
-                    i.red.configure.icon
-                    |Admin
-                #add_module.ui.basic.fluid.button
-                    // i.red.configure.icon
-                    | Add Module
-        .ten.wide.column
-            h1.ui.header Modules
-            each modules
-                .ui.segment
-                    a(href="/module/view/#{_id}")
-                        .ui.header #{title}
-                    .meta Number #{module_number}
-                    .ui.teal.progress
-                        .bar
-                        .progress
-                        
-                        
+template(name='course_modules')        
+    h2.ui.header Modules
+    each modules
+        .ui.segment
+            a(href="/module/view/#{_id}")
+                .ui.header #{title}
+            .meta Number #{module_number}
+            .ui.teal.progress
+                .bar
+                .progress
+                
+template(name='course_downloads')                
+    .ui.header Course Downloads            
+
+template(name='course_members')                
+    .ui.header Course Members            
+    

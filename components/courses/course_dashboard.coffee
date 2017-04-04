@@ -1,8 +1,8 @@
 if Meteor.isClient
-    Template.course_dashboard.onCreated -> 
+    Template.course_modules.onCreated -> 
         @autorun -> Meteor.subscribe('course_modules')
 
-    Template.course_dashboard.helpers
+    Template.course_modules.helpers
         modules: -> 
             course_id = FlowRouter.getParam 'course_id'
             

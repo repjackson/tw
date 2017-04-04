@@ -67,12 +67,12 @@ if Meteor.isServer
         remove: (userId, doc) -> Roles.userIsInRole(userId, 'admin')
     
     
-    Meteor.publish 'docs', (selected_tags, type)->
+    Meteor.publish 'docs', (selected_tags=[], type)->
     
         self = @
         match = {}
-        match.tags = $all: selected_tags
-        # if selected_tags.length > 0 then match.tags = $all: selected_tags
+        # match.tags = $all: selected_tags
+        if selected_tags.length > 0 then match.tags = $all: selected_tags
         if type then match.type = type
 
 

@@ -1,15 +1,28 @@
-FlowRouter.route '/course/view/:course_id', action: (params) ->
-    BlazeLayout.render 'layout',
-        main: 'view_course'
+FlowRouter.route '/course/view/:doc_id', action: (params) ->
+    BlazeLayout.render 'view_course',
+        course_content: 'course_welcome'
+
+FlowRouter.route '/course/view/:doc_id/modules', action: (params) ->
+    BlazeLayout.render 'view_course',
+        course_content: 'course_modules'
+
+FlowRouter.route '/course/view/:doc_id/members', action: (params) ->
+    BlazeLayout.render 'view_course',
+        course_content: 'course_members'
+
+FlowRouter.route '/course/view/:doc_id/downloads', action: (params) ->
+    BlazeLayout.render 'view_course',
+        course_content: 'course_downloads'
+
+FlowRouter.route '/course/view/:doc_id/welcome', action: (params) ->
+    BlazeLayout.render 'view_course',
+        course_content: 'course_welcome'
 
 
 if Meteor.isClient
     Template.view_course.onCreated ->
         @autorun ->
             Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
-    
-    Template.buy_course.onCreated ->
-        @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
     
     Template.view_course.helpers
         course: ->
@@ -18,7 +31,7 @@ if Meteor.isClient
         in_course: ->
             Meteor.user()?.courses and @_id in Meteor.user().courses
     
-    Template.course_dashboard.helpers
+    Template.course_modules.helpers
         modules: -> 
             course_id = FlowRouter.getParam 'doc_id'
             
@@ -29,11 +42,7 @@ if Meteor.isClient
                 sort: module_number: 1
 
     
-    Template.buy_course.helpers
-        course: ->
-            Docs.findOne FlowRouter.getParam('doc_id')
-    
-    Template.buy_course.events
+    Template.course_welcome.events
         'click .buy_course': ->
             Session.set 'cart_item', @_id
             FlowRouter.go '/cart'
@@ -48,10 +57,18 @@ if Meteor.isClient
             Docs.update FlowRouter.getParam('doc_id'),
                 $set: complete: false
     
-        'click .edit': ->
+    Template.view_course.events
+        'click #edit_course': ->
             course_id = FlowRouter.getParam('doc_id')
             FlowRouter.go "/course/edit/#{course_id}"
-
+            
+        'click #add_module': ->
+            course_id = FlowRouter.getParam('doc_id')
+            new_module_id = Docs.insert 
+                type:'module' 
+                course_id:course_id 
+            FlowRouter.go "/module/edit/#{new_module_id}"
+            
 
 if Meteor.isServer
     Meteor.methods 
