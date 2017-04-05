@@ -12,10 +12,6 @@ if Meteor.isClient
          
             
     Template.edit_course.events
-        'click #save': ->
-            FlowRouter.go "/course/view/#{@_id}"
-    
-                
         'click #delete': ->
             swal {
                 title: 'Delete?'

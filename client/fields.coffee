@@ -32,6 +32,15 @@ Template.price.events
             $set: price: price
             
             
+Template.number.events
+    'blur #number': (e) ->
+        number = parseInt $('#number').val()
+        Docs.update FlowRouter.getParam('doc_id'),
+            $set: number: number
+    
+
+            
+            
             
 Template.title.events
     'blur #title': ->
@@ -47,14 +56,11 @@ Template.link.events
             $set: link: link
             
             
-            
 Template.page_name.events
     'blur #name': ->
         name = $('#name').val()
         Docs.update FlowRouter.getParam('doc_id'),
             $set: name: name
-            
-            
             
             
 Template.type.events
@@ -123,14 +129,7 @@ Template.image.events
     #                 # Docs.update FlowRouter.getParam('doc_id'), 
     #                 #     $unset: image_id: 1
 
-
             
-            
-            
-# Template.image.helpers
-#     log: -> console.log @
-
-
 Template.location.events
     'change #location': ->
         doc_id = FlowRouter.getParam('doc_id')

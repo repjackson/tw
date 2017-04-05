@@ -1,49 +1,26 @@
-with module
-    .ui.container.basic.segment
-        .ui.center.aligned.header Edit Module
-        .ui.form
-            +title
-            .fields
-                .field
-                    label Module Number
-                    input#module_number(type='number' min='0' value=module_number)
-                .field
-                    label Parent Course
-                    input#course(type='text' value=course)
-            // .ui.segment
-            //     // .ui.header Custom Image
-            //     if image_id
-            //         .field
-            //             label Image
-            //             .ui.large.image
-            //                 img(src="{{c.url image_id width=800 crop='fit'}}")
-            //                 a#remove_photo.ui.top.left.attached.link.basic.label Remove
-            //                 .ui.bottom.right.attached.basic.label Image Id: #{image_id}
-            //     else
-            //         .fields
-            //             .field
-            //                 label Upload Image
-            //                 input(type='file' name='upload_picture' accept='image/*')
-            //             if isInRole 'admin'
-            //                 .field
-            //                     label or Choose Cloudinary Image Id
-            //                     input#input_image_id(type='text')
-                    
-            // .field
-            //     label Video Link
-            //     .ui.left.icon.input
-            //         i.youtube.icon
-            //         input#video_link(type='text' value=video_link)
-            // .field
-            //     label Youtube ID
-            //     .ui.left.icon.input
-            //         i.linkify.icon
-            //         input#youtube_id(type='text' value=youtube_id)
-            +content
-            +tags
-            +published
-            // .ui.divider
-            .ui.center.aligned.basic.segment
-                #save.ui.huge.teal.button Save Module
-                #delete.ui.red.icon.button
-                    i.trash.icon
+.ui.container
+    .ui.breadcrumb
+        a.section(href='/') Home
+        .divider  / 
+        a.section(href='/courses') Courses
+        .divider  / 
+        a.section(href="/course/#{course._id}/view") #{course.title}
+        .divider  / 
+        a.section(href="/course/#{course._id}/modules") Modules
+        .divider  / 
+        a.section(href="/course/#{course._id}/module/#{module._id}/view") #{module.number}: #{module.title}
+        .divider  / 
+        .active.section Edit
+    with module
+        .ui.basic.segment
+            .ui.center.aligned.header Edit Module
+            .ui.form
+                +title
+                +number
+                +content
+                +published
+                // .ui.divider
+                .ui.center.aligned.basic.segment
+                    a.ui.big.teal.button(href="/courses/#{course_id}/modules/#{_id}/view") Save Module
+                    #delete.ui.red.icon.button
+                        i.trash.icon

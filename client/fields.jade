@@ -1,5 +1,5 @@
 template(name='title')
-    .field
+    .inline.field
         label Title
         input#title(type='text' placeholder='Title' value=title)
 
@@ -7,6 +7,12 @@ template(name='subtitle')
     .field
         label Subtitle
         input#subtitle(type='text' value=subtitle)
+
+template(name='number')
+    .inline.field
+        label Number
+        input#number(type='number' min='0' value=number)
+
 
 
 template(name='tags')
@@ -22,7 +28,7 @@ template(name='tags')
 
 
 template(name='price')
-    .field
+    .inline.field
         label Price in $
         input#price(type='number' min='0' value=price)
 

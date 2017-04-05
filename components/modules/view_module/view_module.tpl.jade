@@ -1,12 +1,20 @@
-with module
-    .ui.container
+.ui.container
+    .ui.breadcrumb
+        a.section(href='/') Home
+        .divider  / 
+        a.section(href='/courses') Courses
+        .divider  / 
+        a.section(href="/course/#{course._id}/view") #{course.title}
+        .divider  / 
+        a.section(href="/course/#{course._id}/modules") Modules
+        .divider  / 
+        .active.section #{module.number}: #{module.title}
+    with module
         h1.ui.center.aligned.header #{title}
         .ui.divided.stackable.grid
             .four.wide.column
-                // .meta
-                //     | Youtube ID: #{youtube_id}
-                .description
-                    |!{description}
+                .content
+                    |!{content}
                 .ui.segment
                     .ui.header Transcript
                 .ui.segment
@@ -20,19 +28,14 @@ with module
                 else
                     .ui.teal.big.basic.fluid.label 
                         |Incomplete
-                if complete
-                    #mark_as_incomplete.ui.basic.fluid.button Mark Incomplete
-                else
-                    #mark_as_complete.ui.basic.fluid.button Mark Complete
 
             .twelve.wide.column
-                // .ui.horizontal.divider.header Status
-                .ui.header Module Number: #{module_number}
+                .ui.header Module Number: #{number}
                 .ui.horizontal.divider.header Status
                 .ui.segment
                     .ui.header Reflection
                     +collaboration
                 .ui.horizontal.divider.header Admin
-                a.ui.fluid.basic.button(href="/edit_module/#{_id}")
+                a.ui.fluid.basic.button(href="/course/#{course_id}/module/#{_id}/edit")
                     i.red.configure.icon
                     |Edit

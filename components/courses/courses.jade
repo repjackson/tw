@@ -11,10 +11,10 @@ template(name='courses')
             each courses
                 .item
                     .image
-                        a(href="/course/view/#{_id}") 
+                        a(href="/course/#{_id}") 
                             img.ui.image(src="{{c.url image_id }}")
                     .content
-                        a.header(href="/course/view/#{_id}") 
+                        a.header(href="/course/#{_id}") 
                             |#{title}
                             // if in_course
                             //     .ui.basic.green.label Enrolled
@@ -26,14 +26,10 @@ template(name='courses')
                         .description #{subtitle}
                         .extra
                             if in_course
-                                .ui.right.floated.primary.button(href="/course/view/#{_id}")
+                                .ui.right.floated.primary.button(href="/course/#{_id}")
                                     |Dashboard
                                     i.dashboard.icon
                             // else
-                            a.ui.right.floated.primary.button(href="/course/view/#{_id}") 
+                            a.ui.right.floated.primary.button(href="/course/#{_id}") 
                                 |View Details
                                 i.right.chevron.icon
-                            if isInRole 'admin'
-                                a.ui.basic.button(href="/course/edit/#{_id}") 
-                                    i.red.configure.icon
-                                    |Edit
