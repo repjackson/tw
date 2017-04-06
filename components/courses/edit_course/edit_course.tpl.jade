@@ -2,12 +2,17 @@ with course
     .ui.container.basic.segment
         .ui.center.aligned.header Edit Course
         .ui.form
-            +title
-            +subtitle
-            +price
-            +image
-            +content
-            +published
+            .field
+                label Title
+                input#title(type='text' placeholder='Title' value=title)
+            .field
+                label Price in $
+                input#price(type='number' min='0' value=price)
+            .field
+                label Description
+                .froala-container
+                    +froalaReactive course_description_context
+                
             .ui.divider
             .ui.center.aligned.basic.segment
                 a.ui.big.teal.button(href="/course/#{_id}") Save

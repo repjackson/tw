@@ -44,8 +44,9 @@ Template.number.events
             
 Template.title.events
     'blur #title': ->
+        # alert 'hi'
         title = $('#title').val()
-        Docs.update FlowRouter.getParam('doc_id'),
+        Docs.update Template.currentData()._id,
             $set: title: title
             
             

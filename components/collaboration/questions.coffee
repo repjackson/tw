@@ -1,11 +1,11 @@
 FlowRouter.route '/questions', action: (params) ->
     BlazeLayout.render 'layout',
-        # cloud: 'cloud'
         main: 'questions'
+
 
 if Meteor.isClient
     Template.questions.onCreated -> 
-        @autorun -> Meteor.subscribe('questions', FlowRouter.getParam('module_id'))
+        @autorun -> Meteor.subscribe('questions', @data?._id)
     
     
     Template.question.onCreated -> 
@@ -14,20 +14,11 @@ if Meteor.isClient
 
     
     Template.questions.helpers
-        questions: -> 
-            Docs.find
-                type: 'question'
-    
-    
+        questions: -> Questions.find {}
     
     
     Template.question.helpers
-        answers: -> 
-            Docs.find
-                type: 'answer'
-                question: @_id
-    
-
+        answers: -> Answers.find {}
     
 
     Template.question.events
@@ -44,7 +35,7 @@ if Meteor.isClient
                 confirmButtonText: 'Delete'
                 confirmButtonColor: '#da5347'
             }, ->
-                Docs.remove self._id
+                Answers.remove self._id
 
 
     Template.questions.events
@@ -52,7 +43,7 @@ if Meteor.isClient
             self = @
             swal {
                 title: 'Delete Question?'
-                text: 'This will delete answers too.'
+                text: 'This will delete answers too. [not built]'
                 type: 'error'
                 animation: false
                 showCancelButton: true
@@ -61,7 +52,7 @@ if Meteor.isClient
                 confirmButtonText: 'Delete'
                 confirmButtonColor: '#da5347'
             }, ->
-                Docs.remove self._id
+                Questions.remove self._id
 
     
         
@@ -69,10 +60,8 @@ if Meteor.isClient
     
         'click #add_question': ->
             question = $('#new_question').val()
-            # console.log question
-            id = Docs.insert
-                type: 'question'
-                module: FlowRouter.getParam('module_id')
+            id = Questions.insert
+                section_id: Template.parentData()._id
                 text: question
             $('#new_question').val('')
     
@@ -80,8 +69,7 @@ if Meteor.isClient
     Template.question.events
         'click #add_answer': (e,t)->
             answer = $(e.currentTarget).closest('.input').find('#answer').val()
-            id = Docs.insert
-                type: 'answer'
+            id = Answers.insert
                 question: @_id
                 text: answer
             $(e.currentTarget).closest('.input').find('#answer').val('')
@@ -89,26 +77,14 @@ if Meteor.isClient
 
 
 if Meteor.isServer
-    
-    Meteor.publish 'questions', ()->
-    
-        self = @
-        match = {}
-        match.type = 'question'
-        
-
-        Docs.find match
-
-
-
-
-    Meteor.publish 'answers', (id)->
-    
-        self = @
-        match = {}
-
-        match.question_id = id        
-        match.type = 'answer'
-        
-        Docs.find match
-    
+    publishComposite 'questions', (section_id)->
+        {
+            find: ->
+                Questions.find section_id: section_id
+            children: [
+                { find: (question) ->
+                    Answers.find
+                        question_id: question._id
+                }
+            ]
+        }

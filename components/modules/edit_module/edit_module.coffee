@@ -1,26 +1,25 @@
-FlowRouter.route '/course/:course_id/module/:doc_id/edit', action: (params) ->
+FlowRouter.route '/course/:course_id/module/:module_id/edit', action: (params) ->
     BlazeLayout.render 'layout',
         main: 'edit_module'
 
 if Meteor.isClient
     Template.edit_module.onCreated ->
-        @autorun -> Meteor.subscribe 'module', FlowRouter.getParam('doc_id')
+        @autorun -> Meteor.subscribe 'module', FlowRouter.getParam('module_id')
     
     Template.edit_module.onRendered ->
         Meteor.setTimeout ->
             $('.tabular.menu .item').tab()
-        , 1000
+        , 2000
         
         
         
     Template.edit_module.helpers
-        module: -> Docs.findOne FlowRouter.getParam('doc_id')
-        course: -> Docs.findOne FlowRouter.getParam('course_id')
+        module: -> Modules.findOne FlowRouter.getParam('module_id')
+        course: -> Courses.findOne FlowRouter.getParam('course_id')
         
         sections: ->
-            Docs.find
-                type:'section'
-                module_id: FlowRouter.getParam('doc_id')
+            Sections.find
+                module_id: FlowRouter.getParam('module_id')
             
     Template.edit_module.events
         'click #delete': ->
@@ -35,24 +34,25 @@ if Meteor.isClient
                 confirmButtonText: 'Delete'
                 confirmButtonColor: '#da5347'
             }, ->
-                module = Docs.findOne FlowRouter.getParam('doc_id')
-                Docs.remove module._id, ->
-                    FlowRouter.go "/course/view/#{course_id}"
+                module = Modules.findOne FlowRouter.getParam('module_id')
+                Modules.remove module._id, ->
+                    FlowRouter.go "/course/#{course_id}"
                     
         'click #add_section': ->
-            module_id = FlowRouter.getParam('doc_id')
+            module_id = FlowRouter.getParam('module_id')
             
-            module = Docs.findOne module_id
+            module = Modules.findOne module_id
             
-            
-            Docs.update module_id,
+            Modules.update module_id,
                 $inc: section_count: 1
+
             section_number = module.section_count + 1
             
-            Docs.insert
-                type:'section'
+            Sections.insert
                 number: section_number
                 module_id: module_id
+
+            $('.tabular.menu .item').tab()
                 
                 
         'click .remove_section': ->
@@ -68,24 +68,5 @@ if Meteor.isClient
                 confirmButtonText: 'Delete'
                 confirmButtonColor: '#da5347'
             }, ->
-                Docs.remove self._id
+                Modules.remove self._id
                 
-
-if Meteor.isServer
-    
-    publishComposite 'module', (module_id)->
-        {
-            find: ->
-                Docs.find module_id
-            children: [
-                { find: (module) ->
-                    Docs.find
-                        type: 'section'
-                        module_id: module_id
-                }
-                {
-                    find: (module) ->
-                        Docs.find module.course_id
-                }
-            ]
-        }

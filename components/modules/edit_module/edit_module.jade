@@ -5,7 +5,7 @@ template(name='edit_module')
             .divider  / 
             a.section(href='/courses') Courses
             .divider  / 
-            a.section(href="/course/#{course._id}/view") #{course.title}
+            a.section(href="/course/#{course._id}") #{course.title}
             .divider  / 
             a.section(href="/course/#{course._id}/modules") Modules
             .divider  / 
@@ -22,7 +22,7 @@ template(name='edit_module')
                     // .ui.divider
             h2.ui.horizontal.divider.header Sections
             .ui.top.attached.tabular.menu
-                a#add_section.icon.item(data-tab='tab1') 
+                a#add_section.icon.item(data-tab='tab0') 
                     i.plus.icon
                 each sections
                     a.item(data-tab="tab#{number}") Section #{number}
@@ -38,7 +38,16 @@ template(name='edit_module')
                     
                     
 template(name='edit_section')
-    +title
+    .ui.form
+        .field
+            label Section Content
+            .froala-container
+                +froalaReactive section_content
+        .field
+            label Transcript
+            .froala-container
+                +froalaReactive transcript
+
     +number
     +content
     .remove_section.ui.small.red.basic.button Remove Section
