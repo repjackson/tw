@@ -8,7 +8,7 @@
         .divider  / 
         a.section(href="/course/#{course._id}/modules") Modules
         .divider  / 
-        a.section(href="/course/#{course._id}/module/#{module._id}/view") #{module.number}: #{module.title}
+        a.section(href="/course/#{course._id}/module/#{module._id}") #{module.number}: #{module.title}
         .divider  / 
         .active.section Edit
     with module
@@ -20,7 +20,19 @@
                 +content
                 +published
                 // .ui.divider
-                .ui.center.aligned.basic.segment
-                    a.ui.big.teal.button(href="/courses/#{course_id}/modules/#{_id}/view") Save Module
-                    #delete.ui.red.icon.button
-                        i.trash.icon
+            .ui.header Questions
+            +questions
+        .ui.tabular.menu
+            a#add_section.icon.item(data-tab='tab1') 
+                i.plus.icon
+            each sections
+                a.item(data-tab="tab#{number}") Section #{number}
+        .ui.tab(data-tab='tab1')
+            .ui.header tab1
+        each sections
+            .ui.tab(data-tab='tab{number}')
+                .ui.header Section #{number}
+        .ui.center.aligned.basic.segment
+            a.ui.big.teal.button(href="/course/#{course_id}/module/#{_id}") Save Module
+            #delete.ui.red.icon.button
+                i.trash.icon

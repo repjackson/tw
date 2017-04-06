@@ -12,14 +12,3 @@ if Meteor.isClient
                 },
                 sort: module_number: 1
     
-
-
-if Meteor.isServer
-    Meteor.publish 'course_modules', (course_id)->
-    
-        self = @
-        match = {}
-
-        Docs.find
-            type: 'module'
-            course_id: course_id

@@ -37,7 +37,9 @@ template(name='layout')
     unless isInRole 'admin'
         +footer
 
-
-
 template(name="tag_result")
     .ui.large.basic.label #{name}
+
+template(name='not_found')
+    .ui.text.container
+        .ui.center.aligned.header Page Not Found

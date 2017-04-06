@@ -1,4 +1,4 @@
-FlowRouter.route '/course/:course_id/module/:doc_id/view', action: (params) ->
+FlowRouter.route '/course/:course_id/module/:doc_id', action: (params) ->
     BlazeLayout.render 'layout',
         main: 'view_module'
 

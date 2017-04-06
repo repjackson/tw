@@ -6,7 +6,8 @@ FlowRouter.route '/sol',
 
 FlowRouter.notFound =
     action: ->
-        FlowRouter.go '/'
+        BlazeLayout.render 'layout', 
+            main: 'not_found'
 
 
 FlowRouter.route '/', action: ->
