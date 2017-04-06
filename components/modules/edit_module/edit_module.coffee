@@ -5,13 +5,13 @@ FlowRouter.route '/course/:course_id/module/:doc_id/edit', action: (params) ->
 if Meteor.isClient
     Template.edit_module.onCreated ->
         @autorun -> Meteor.subscribe 'module', FlowRouter.getParam('doc_id')
-        # @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('course_id')
-        # @autorun -> Meteor.subscribe 'module_sections', FlowRouter.getParam('course_id')
     
     Template.edit_module.onRendered ->
         Meteor.setTimeout ->
             $('.tabular.menu .item').tab()
-        , 2000
+        , 1000
+        
+        
         
     Template.edit_module.helpers
         module: -> Docs.findOne FlowRouter.getParam('doc_id')
@@ -41,9 +41,34 @@ if Meteor.isClient
                     
         'click #add_section': ->
             module_id = FlowRouter.getParam('doc_id')
+            
+            module = Docs.findOne module_id
+            
+            
+            Docs.update module_id,
+                $inc: section_count: 1
+            section_number = module.section_count + 1
+            
             Docs.insert
                 type:'section'
+                number: section_number
                 module_id: module_id
+                
+                
+        'click .remove_section': ->
+            self = @
+            swal {
+                title: "Delete Section #{self.number}?"
+                # text: 'Confirm delete?'
+                type: 'error'
+                animation: false
+                showCancelButton: true
+                closeOnConfirm: true
+                cancelButtonText: 'Cancel'
+                confirmButtonText: 'Delete'
+                confirmButtonColor: '#da5347'
+            }, ->
+                Docs.remove self._id
                 
 
 if Meteor.isServer

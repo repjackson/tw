@@ -22,7 +22,7 @@ if Meteor.isClient
     
         in_course: ->
             # console.log @_id
-            @_id in Meteor.user().courses
+            @_id in Meteor.user()?.courses
     
 
     Template.courses.events

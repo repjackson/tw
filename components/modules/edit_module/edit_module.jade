@@ -1,0 +1,44 @@
+template(name='edit_module')
+    .ui.container
+        .ui.breadcrumb
+            a.section(href='/') Home
+            .divider  / 
+            a.section(href='/courses') Courses
+            .divider  / 
+            a.section(href="/course/#{course._id}/view") #{course.title}
+            .divider  / 
+            a.section(href="/course/#{course._id}/modules") Modules
+            .divider  / 
+            a.section(href="/course/#{course._id}/module/#{module._id}") #{module.number}: #{module.title}
+            .divider  / 
+            .active.section Edit
+        with module
+            .ui.basic.segment
+                h1.ui.center.aligned.header Edit Module
+                .ui.form
+                    +title
+                    +number
+                    +published
+                    // .ui.divider
+            h2.ui.horizontal.divider.header Sections
+            .ui.top.attached.tabular.menu
+                a#add_section.icon.item(data-tab='tab1') 
+                    i.plus.icon
+                each sections
+                    a.item(data-tab="tab#{number}") Section #{number}
+            each sections
+                .ui.bottom.attached.tab.segment(data-tab='tab#{number}')
+                    .ui.header Section #{number}
+                    .ui.form
+                        +edit_section this
+            .ui.center.aligned.basic.segment
+                a.ui.big.teal.button(href="/course/#{course_id}/module/#{_id}") Save Module
+                #delete.ui.red.icon.button
+                    i.trash.icon
+                    
+                    
+template(name='edit_section')
+    +title
+    +number
+    +content
+    .remove_section.ui.small.red.basic.button Remove Section
