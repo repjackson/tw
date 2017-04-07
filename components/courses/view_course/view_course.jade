@@ -20,7 +20,6 @@ template(name='view_course')
                         a.item(href="/course/#{_id}/members" class="{{isActiveRoute name='course_members'}}") Members
                         a.item(href="/course/#{_id}/downloads" class="{{isActiveRoute name='course_downloads'}}") Downloads
                         a.item(href="/course/#{_id}/reminders" class="{{isActiveRoute name='course_reminders'}}") Reminders
-                        a.item(href="/course/#{_id}/collaboration" class="{{isActiveRoute name='course_collaboration'}}") Collaboration
                 if isInRole 'admin'
                     .ui.segment
                         .ui.header 
@@ -81,4 +80,8 @@ template(name='course_downloads')
 
 template(name='course_members')                
     .ui.header Course Members            
+
+template(name='course_reminders')                
+    .ui.header Course Reminders            
+
     

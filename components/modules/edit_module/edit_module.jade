@@ -14,7 +14,7 @@ template(name='edit_module')
             .active.section Edit
         with module
             .ui.basic.text.container.segment
-                h1.ui.center.aligned.header Edit Module
+                h1.ui.center.aligned.header Edit #{title} Module
                 .ui.form
                     .fields
                         .twelve.wide.field
@@ -39,7 +39,7 @@ template(name='edit_module')
                             +edit_section this
             .ui.center.aligned.basic.segment
                 a.ui.big.teal.button(href="/course/#{course_id}/module/#{_id}") Save Module
-                #delete.ui.red.icon.button
+                #delete.ui.red.icon.small.button
                     i.trash.icon
                     
                     
@@ -50,6 +50,7 @@ template(name='edit_section')
             .section_content
                 +froalaReactive section_content
         +section_transcript this
+    +questions
     .remove_section.ui.small.red.basic.button Remove Section
 
 

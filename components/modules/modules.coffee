@@ -24,9 +24,18 @@ if Meteor.isServer
             find: ->
                 Modules.find module_id
             children: [
-                { find: (module) ->
-                    Sections.find
-                        module_id: module_id
+                { 
+                    find: (module) ->
+                        Sections.find
+                            module_id: module_id
+                    children: [
+                        {
+                            find: (section) ->
+                                Questions.find
+                                    section_id: section._id
+                            }
+                        
+                        ]
                 }
                 {
                     find: (module) ->

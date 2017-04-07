@@ -15,26 +15,24 @@ template(name='view_module')
             .ui.stackable.grid
                 .four.wide.column
                     .content
-                        |!{content}
-                    .ui.segment
-                        .ui.header Transcript
-                    .ui.segment
-                        .ui.header Collaboration
-                    .ui.segment
-                        .ui.header Light Work
+                        |!{description}
+                    .ui.vertical.fluid.pointing.menu
+                        with module
+                            a.item Sections
+                            a.disabled.item Light Work
                     if complete
-                        .ui.teal.big.fluid.label 
+                        .ui.teal.fluid.label 
                             i.check.icon
                             |Complete
                     else
-                        .ui.teal.big.basic.fluid.label 
+                        .ui.teal.basic.fluid.label 
                             |Incomplete
                     .ui.horizontal.divider.header Status
-                    .ui.segment
-                        .ui.header Admin
-                        a.ui.fluid.basic.button(href="/course/#{course_id}/module/#{_id}/edit")
-                            i.red.configure.icon
-                            |Edit Module
+                    .ui.horizontal.divider.header 
+                        |Admin
+                    a.ui.fluid.basic.button(href="/course/#{course_id}/module/#{_id}/edit")
+                        i.red.configure.icon
+                        |Edit Module
     
                 .twelve.wide.column
                     .ui.top.attached.tabular.menu

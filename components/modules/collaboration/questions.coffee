@@ -17,7 +17,7 @@ FlowRouter.route '/questions', action: (params) ->
 
 if Meteor.isClient
     Template.questions.onCreated -> 
-        @autorun -> Meteor.subscribe('questions', @data?._id)
+        # @autorun -> Meteor.subscribe('questions', @data?._id)
     
     
     Template.question.onCreated -> 
@@ -26,7 +26,9 @@ if Meteor.isClient
 
     
     Template.questions.helpers
-        questions: -> Questions.find {}
+        questions: -> 
+            Questions.find
+                section_id: @_id
     
     
     Template.question.helpers
@@ -70,13 +72,12 @@ if Meteor.isClient
         
     
     
-        'click #add_question': ->
-            question = $('#new_question').val()
+        'click #add_question': (e,t)->
+            question = $(e.currentTarget).closest('.input').find('#new_question').val()
             id = Questions.insert
                 section_id: Template.parentData()._id
                 text: question
-            $('#new_question').val('')
-    
+            $(e.currentTarget).closest('.input').find('#new_question').val('')    
     
     Template.question.events
         'click #add_answer': (e,t)->
@@ -89,6 +90,12 @@ if Meteor.isClient
 
 
 if Meteor.isServer
+    Questions.allow
+        insert: (userId, doc) -> Roles.userIsInRole(userId, 'admin')
+        update: (userId, doc) -> Roles.userIsInRole(userId, 'admin')
+        remove: (userId, doc) -> Roles.userIsInRole(userId, 'admin')
+    
+    
     publishComposite 'questions', (section_id)->
         {
             find: ->

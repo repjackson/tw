@@ -41,7 +41,7 @@ if Meteor.isClient
 
 
     Template.course_modules.helpers
-        modules: -> Modules.find { }, sort: module_number: 1
+        modules: -> Modules.find { }, sort: number: 1
             
     Template.course_welcome.helpers
         course: -> Courses.findOne FlowRouter.getParam('course_id')

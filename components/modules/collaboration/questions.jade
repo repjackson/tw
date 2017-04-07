@@ -3,6 +3,7 @@ template(name='collaboration')
 
 
 template(name='questions')
+    .ui.header Section Questions
     .ui.action.fluid.input
         input#new_question(type='text')
         #add_question.ui.basic.button 
@@ -21,13 +22,15 @@ template(name='question')
             |Question: #{text}
             if can_edit
                 i.remove_question.red.big.link.remove.icon
-        .ui.action.fluid.input
-            input#answer(type='text')
-            #add_answer.ui.basic.button Add Answer
-        .ui.segments
-            each answers
-                .ui.segment 
-                    .ui.header #{text}
-                    | by {{author.name}}
-                    if can_edit
-                        i.remove_answer.red.big.link.remove.icon
+
+template(name='view_question')
+    .ui.action.fluid.input
+        input#answer(type='text')
+        #add_answer.ui.basic.button Add Answer
+    .ui.segments
+        each answers
+            .ui.segment 
+                .ui.header #{text}
+                | by {{author.name}}
+                if can_edit
+                    i.remove_answer.red.big.link.remove.icon
