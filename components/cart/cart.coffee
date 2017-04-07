@@ -58,7 +58,7 @@ if Meteor.isClient
                     if err then console.error err
                     else
                         Bert.alert "You are now enrolled in #{@title}", 'success'
-                        # FlowRouter.go "/course/view/#{_id}"
+                        # FlowRouter.go "/course/#{_id}"
 
 
 if Meteor.isServer

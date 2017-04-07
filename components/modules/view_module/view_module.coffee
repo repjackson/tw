@@ -7,12 +7,20 @@ if Meteor.isClient
     Template.view_module.onCreated ->
         @autorun -> Meteor.subscribe 'module', FlowRouter.getParam('module_id')
     
-    
+    Template.view_module.onRendered ->
+        Meteor.setTimeout ->
+            $('.tabular.menu .item').tab()
+        , 2000
+        
+
     Template.view_module.helpers
         module: -> Modules.findOne FlowRouter.getParam('module_id')
         course: -> Courses.findOne FlowRouter.getParam('course_id')
 
-    
+        sections: ->
+            Sections.find
+                module_id: FlowRouter.getParam('module_id')
+
     Template.view_module.events
         'click .edit': ->
             module_id = FlowRouter.getParam('module_id')

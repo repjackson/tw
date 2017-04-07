@@ -13,27 +13,30 @@ template(name='edit_module')
             .divider  / 
             .active.section Edit
         with module
-            .ui.basic.segment
+            .ui.basic.text.container.segment
                 h1.ui.center.aligned.header Edit Module
                 .ui.form
-                    .field
-                        label Title
-                        input#title(type='text' val=title)
-                    .field
-                        label Number
-                        input#number(type='number' val=number)
-                    // .ui.divider
-            h2.ui.horizontal.divider.header Sections
-            .ui.top.attached.tabular.menu
-                a#add_section.icon.item(data-tab='tab0') 
-                    i.plus.icon
+                    .fields
+                        .twelve.wide.field
+                            .ui.labeled.input
+                                .ui.basic.label Title
+                                input#title(type='text' value=title)
+                        .four.wide.field
+                            .ui.labeled.input
+                                .ui.basic.label Number
+                                input#number(type='number' value=number)
+            .ui.segment
+                h2.ui.header Sections
+                .ui.top.attached.tabular.menu
+                    a#add_section.icon.item(data-tab='tab0') 
+                        i.plus.icon
+                    each sections
+                        a.item(data-tab="tab#{number}") Section #{number}
                 each sections
-                    a.item(data-tab="tab#{number}") Section #{number}
-            each sections
-                .ui.bottom.attached.tab.segment(data-tab='tab#{number}')
-                    .ui.header Section #{number}
-                    .ui.form
-                        +edit_section this
+                    .ui.bottom.attached.tab.segment(data-tab='tab#{number}')
+                        .ui.header Section #{number}
+                        .ui.form
+                            +edit_section this
             .ui.center.aligned.basic.segment
                 a.ui.big.teal.button(href="/course/#{course_id}/module/#{_id}") Save Module
                 #delete.ui.red.icon.button
@@ -44,13 +47,15 @@ template(name='edit_section')
     .ui.form
         .field
             label Section Content
-            .froala-container
+            .section_content
                 +froalaReactive section_content
-        .field
-            label Transcript
-            .froala-container
-                +froalaReactive transcript
-
-    +number
-    +content
+        +section_transcript this
     .remove_section.ui.small.red.basic.button Remove Section
+
+
+
+template(name='section_transcript')
+    .field
+        label Transcript
+        .transcript
+            +froalaReactive transcript

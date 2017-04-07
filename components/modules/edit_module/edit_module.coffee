@@ -22,10 +22,18 @@ if Meteor.isClient
                 module_id: FlowRouter.getParam('module_id')
             
     Template.edit_module.events
+        'blur #number': ->
+            module_id = FlowRouter.getParam('module_id')
+            number = parseInt $('#number').val()
+            Modules.update module_id,
+                $set:
+                    number:number
+            
+    
         'click #save_module': ->
             title = $('#title').val()
             number = parseInt $('#number').val()
-            course_id = FlowRouter.getParam('course_id')
+            module_id = FlowRouter.getParam('module_id')
             Modules.update module_id,
                 $set:
                     title:title
@@ -56,14 +64,14 @@ if Meteor.isClient
             
             Modules.update module_id,
                 $inc: section_count: 1
-
-            section_number = module.section_count + 1
+                , ->
+                    section_number = module.section_count + 1
             
-            Sections.insert
-                number: section_number
-                module_id: module_id
+                    Sections.insert
+                        number: section_number
+                        module_id: module_id
 
-            $('.tabular.menu .item').tab()
+                    $('.tabular.menu .item').tab()
                 
                 
         'click .remove_section': ->
@@ -79,5 +87,9 @@ if Meteor.isClient
                 confirmButtonText: 'Delete'
                 confirmButtonColor: '#da5347'
             }, ->
-                Modules.remove self._id
+                module_id = FlowRouter.getParam('module_id')
+                Modules.update module_id,
+                    $inc: section_count: -1
+
+                Sections.remove self._id
                 

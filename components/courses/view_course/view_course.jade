@@ -27,9 +27,10 @@ template(name='view_course')
                             i.red.configure.icon
                             |Admin
                         #add_module.ui.basic.fluid.button
-                            // i.red.configure.icon
-                            | + Module
+                            i.plus.icon
+                            |Module
                         #edit_course.ui.basic.fluid.button
+                            i.pencil.icon
                             | Edit Course
             .ten.wide.column
                 +Template.dynamic template=course_content
@@ -57,7 +58,7 @@ template(name='course_welcome')
                 // if currentUser
                 //     if in_course
                 //         // .ui.green.basic.label Enrolled
-                //         a.ui.teal.big.button(href="/course/view/#{_id}") View Course
+                //         a.ui.teal.big.button(href="/course/#{_id}") View Course
                 //     else
                 a.buy_course.ui.teal.big.button
                     |Enroll

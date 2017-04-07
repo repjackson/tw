@@ -3,6 +3,7 @@
 Modules.before.insert (userId, doc)->
     doc.timestamp = Date.now()
     doc.author_id = Meteor.userId()
+    doc.module_count = 0
     return
 
 
