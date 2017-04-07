@@ -16,9 +16,12 @@ template(name='edit_module')
             .ui.basic.segment
                 h1.ui.center.aligned.header Edit Module
                 .ui.form
-                    +title
-                    +number
-                    +published
+                    .field
+                        label Title
+                        input#title(type='text' val=title)
+                    .field
+                        label Number
+                        input#number(type='number' val=number)
                     // .ui.divider
             h2.ui.horizontal.divider.header Sections
             .ui.top.attached.tabular.menu

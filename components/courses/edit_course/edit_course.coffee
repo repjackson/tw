@@ -25,8 +25,6 @@ if Meteor.isClient
                 tabSpaces: false
                 height: 300
             }
-    
-        
         
             
     Template.edit_course.events
@@ -37,6 +35,16 @@ if Meteor.isClient
     
             Courses.update course_id,
                 $set: description: html
+                    
+        'click #save_course': ->
+            title = $('#title').val()
+            price = parseInt $('#price').val()
+            course_id = FlowRouter.getParam('course_id')
+            Courses.update course_id,
+                $set:
+                    title:title
+                    price:price
+            FlowRouter.go "/course/#{@_id}"        
                     
         'click #delete': ->
             swal {

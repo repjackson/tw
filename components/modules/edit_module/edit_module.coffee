@@ -22,6 +22,17 @@ if Meteor.isClient
                 module_id: FlowRouter.getParam('module_id')
             
     Template.edit_module.events
+        'click #save_module': ->
+            title = $('#title').val()
+            number = parseInt $('#number').val()
+            course_id = FlowRouter.getParam('course_id')
+            Modules.update module_id,
+                $set:
+                    title:title
+                    number:number
+            FlowRouter.go "/module/#{module_id}"        
+    
+    
         'click #delete': ->
             swal {
                 title: 'Delete?'

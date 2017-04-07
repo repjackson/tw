@@ -63,12 +63,12 @@ if Meteor.isServer
                 { find: (course) ->
                     Modules.find
                         course_id: course_id
-                    children: [
-                        {
-                            find: (module) ->
-                                Sections.find module.section_id
-                        }
-                    ]    
+                children: [
+                    {
+                        find: (module) ->
+                            Sections.find module.section_id
+                    }
+                ]    
                 }
                 {
                     find: (course) ->

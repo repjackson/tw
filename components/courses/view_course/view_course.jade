@@ -15,12 +15,12 @@ template(name='view_course')
             .five.wide.column
                 .ui.vertical.fluid.pointing.menu
                     with course
-                        a.item(href="/course/#{_id}/welcome" class="{{isActivePath '/course/#{_id}/welcome'}}") Welcome
-                        a.item(href="/course/#{_id}/modules" class="{{isActivePath '/course/#{_id}/modules'}}") Modules
-                        a.item(href="/course/#{_id}/members" class="{{isActivePath '/course/#{_id}/members'}}") Members
-                        a.item(href="/course/#{_id}/downloads" class="{{isActivePath '/course/#{_id}/downloads'}}") Downloads
-                        a.item(href="/course/#{_id}/reminders" class="{{isActivePath '/course/#{_id}/reminders'}}") Reminders
-                        a.item(href="/course/#{_id}/collaboration" class="{{isActivePath '/course/#{_id}/collaboration'}}") Collaboration
+                        a.item(href="/course/#{_id}/welcome" class="{{isActiveRoute name='course_welcome'}}") Welcome
+                        a.item(href="/course/#{_id}/modules" class="{{isActiveRoute name='course_modules'}}") Modules
+                        a.item(href="/course/#{_id}/members" class="{{isActiveRoute name='course_members'}}") Members
+                        a.item(href="/course/#{_id}/downloads" class="{{isActiveRoute name='course_downloads'}}") Downloads
+                        a.item(href="/course/#{_id}/reminders" class="{{isActiveRoute name='course_reminders'}}") Reminders
+                        a.item(href="/course/#{_id}/collaboration" class="{{isActiveRoute name='course_collaboration'}}") Collaboration
                 if isInRole 'admin'
                     .ui.segment
                         .ui.header 
@@ -44,11 +44,11 @@ template(name='course_not_ready')
     
 template(name='course_welcome')
     .ui.text.container
-        img.ui.centered.image(src="{{c.url image_id }}")
+        if image_id
+            img.ui.centered.image(src="{{c.url image_id }}")
         h1.ui.center.aigned.header #{course.title}
-        h3.ui.center.aigned.header #{course.subtitle}
         .ui.basic.segment 
-            |!{course.content}
+            |!{course.description}
         .ui.centered.grid
             .six.wide.column
                 a.ui.teal.large.button(href='http://toriwebster.us11.list-manage.com/subscribe?u=8973e01aca6da499e7e1a63bd&id=9204d04e30')
@@ -67,7 +67,7 @@ template(name='course_welcome')
     
 template(name='course_modules')        
     h2.ui.header Modules
-    each module_docs
+    each modules
         .ui.segment
             a(href="/course/#{course_id}/module/#{_id}")
                 .ui.header  #{number}: #{title}

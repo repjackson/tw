@@ -1,22 +1,32 @@
-FlowRouter.route '/course/:course_id', action: (params) ->
-    BlazeLayout.render 'view_course',
-        course_content: 'course_welcome'
+FlowRouter.route '/course/:course_id', 
+    name: 'course_home'
+    action: (params) ->
+        BlazeLayout.render 'view_course',
+            course_content: 'course_welcome'
 
-FlowRouter.route '/course/:course_id/modules', action: (params) ->
-    BlazeLayout.render 'view_course',
-        course_content: 'course_modules'
+FlowRouter.route '/course/:course_id/modules', 
+    name: 'course_modules'
+    action: (params) ->
+        BlazeLayout.render 'view_course',
+            course_content: 'course_modules'
 
-FlowRouter.route '/course/:course_id/members', action: (params) ->
-    BlazeLayout.render 'view_course',
-        course_content: 'course_members'
+FlowRouter.route '/course/:course_id/members', 
+    name: 'course_members'
+    action: (params) ->
+        BlazeLayout.render 'view_course',
+            course_content: 'course_members'
 
-FlowRouter.route '/course/:course_id/downloads', action: (params) ->
-    BlazeLayout.render 'view_course',
-        course_content: 'course_downloads'
+FlowRouter.route '/course/:course_id/downloads', 
+    name: 'course_downloads'
+    action: (params) ->
+        BlazeLayout.render 'view_course',
+            course_content: 'course_downloads'
 
-FlowRouter.route '/course/:course_id/welcome', action: (params) ->
-    BlazeLayout.render 'view_course',
-        course_content: 'course_welcome'
+FlowRouter.route '/course/:course_id/welcome', 
+    name: 'course_welcome'
+    action: (params) ->
+        BlazeLayout.render 'view_course',
+            course_content: 'course_welcome'
 
 
 if Meteor.isClient
@@ -28,16 +38,14 @@ if Meteor.isClient
         
         in_course: -> Meteor.user()?.courses and @_id in Meteor.user().courses
     
-    # Template.course_modules.onCreated ->
-        # @autorun -> Meteor.subscribe 'course_modules', FlowRouter.getParam('course_id')
+
+
     Template.course_modules.helpers
-        module_docs: -> 
-            Modules.find { 
-                course_id: course_id
-                },
-                sort: module_number: 1
+        modules: -> Modules.find { }, sort: module_number: 1
             
-            
+    Template.course_welcome.helpers
+        course: -> Courses.findOne FlowRouter.getParam('course_id')
+  
     
     Template.course_welcome.events
         'click .buy_course': ->

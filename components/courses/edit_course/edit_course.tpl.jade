@@ -1,20 +1,22 @@
 with course
-    .ui.container.basic.segment
+    .ui.text.container.basic.segment
         .ui.center.aligned.header Edit Course
         .ui.form
             .field
-                label Title
-                input#title(type='text' placeholder='Title' value=title)
+                .ui.labeled.input
+                    .ui.large.basic.label Title
+                    input#title(type='text' placeholder='Title' value=title)
             .field
-                label Price in $
-                input#price(type='number' min='0' value=price)
+                .ui.right.labeled.input
+                    .ui.large.basic.label Price in $
+                    input#price(type='number' min='0' value=price)
+                    .ui.basic.label .00
             .field
-                label Description
                 .froala-container
                     +froalaReactive course_description_context
                 
             .ui.divider
             .ui.center.aligned.basic.segment
-                a.ui.big.teal.button(href="/course/#{_id}") Save
+                #save_course.ui.big.teal.button Save Course
                 #delete.ui.red.icon.button
                     i.trash.icon

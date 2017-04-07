@@ -25,8 +25,10 @@
                     | #{currentUser.name}
                 else
                     | Profile
-            a#logout.ui.item(href='#') 
+            a#logout.ui.item(href='#')
+                i.sign.out.icon
                 | Sign Out
         else
             a.ui.item(href='/sign-in') 
+                i.sign.in.icon
                 | Sign In

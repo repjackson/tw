@@ -1,3 +1,15 @@
+@Questions = new Meteor.Collection 'questions'
+
+Questions.before.insert (userId, doc)->
+    doc.timestamp = Date.now()
+    doc.author_id = Meteor.userId()
+    return
+
+
+Questions.helpers
+    author: -> Meteor.users.findOne @author_id
+    when: -> moment(@timestamp).fromNow()
+
 FlowRouter.route '/questions', action: (params) ->
     BlazeLayout.render 'layout',
         main: 'questions'
