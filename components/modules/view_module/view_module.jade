@@ -18,7 +18,7 @@ template(name='view_module')
                         |!{description}
                     .ui.vertical.fluid.pointing.menu
                         with module
-                            a.item Sections
+                            a.disabled.item Sections
                             a.disabled.item Light Work
                     if complete
                         .ui.teal.fluid.label 
@@ -28,20 +28,21 @@ template(name='view_module')
                         .ui.teal.basic.fluid.label 
                             |Incomplete
                     .ui.horizontal.divider.header Status
-                    .ui.horizontal.divider.header 
-                        |Admin
-                    a.ui.fluid.basic.button(href="/course/#{course_id}/module/#{_id}/edit")
-                        i.red.configure.icon
-                        |Edit Module
+                    if isInRole 'admin'
+                        .ui.horizontal.divider.header 
+                            |Admin
+                        a.ui.fluid.basic.button(href="/course/#{course_id}/module/#{_id}/edit")
+                            i.red.configure.icon
+                            |Edit Module
     
                 .twelve.wide.column
-                    .ui.top.attached.tabular.menu
+                    #section_menu.ui.top.attached.tabular.menu
                         each sections
                             a.item(data-tab="tab#{number}") Section #{number}
                     each sections
                         .ui.bottom.attached.tab.segment(data-tab='tab#{number}')
                             .ui.header Section #{number}
-                            +view_section this
+                            +view_section
 
 
 template(name='view_section')
@@ -50,4 +51,21 @@ template(name='view_section')
         |!{section_content}
         .ui.header Transcript
         |!{transcript}
-    
+        +view_questions
+        
+template(name='view_questions')        
+    .ui.header Section Questions
+    #question_menu.ui.top.attached.tabular.menu
+        a.item(data-tab="my_answers") My Answers
+        each questions
+            a.item(data-tab="question#{_id}") Question #{number}
+    .ui.bottom.attached.tab.segment(data-tab='my_answers')
+        each questions
+            .ui.header #{text}
+            .ui.action.fluid.input
+                input#answer(type='text')
+                #add_answer.ui.basic.button Add Your Answer
+    each questions
+        .ui.bottom.attached.tab.segment(data-tab='question#{_id}')
+            .ui.header Collaboration for #{text}
+            // +view_section this

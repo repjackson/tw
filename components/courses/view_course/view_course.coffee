@@ -28,6 +28,12 @@ FlowRouter.route '/course/:course_id/welcome',
         BlazeLayout.render 'view_course',
             course_content: 'course_welcome'
 
+FlowRouter.route '/course/:course_id/reminders', 
+    name: 'course_reminders'
+    action: (params) ->
+        BlazeLayout.render 'view_course',
+            course_content: 'course_reminders'
+
 
 if Meteor.isClient
     Template.view_course.onCreated ->

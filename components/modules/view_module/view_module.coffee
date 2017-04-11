@@ -9,9 +9,20 @@ if Meteor.isClient
     
     Template.view_module.onRendered ->
         Meteor.setTimeout ->
-            $('.tabular.menu .item').tab()
+            $('#section_menu .item').tab()
+        , 2000
+    
+    Template.view_questions.onRendered ->
+        Meteor.setTimeout ->
+            $('#question_menu .item').tab()
         , 2000
         
+    Template.view_questions.helpers
+        questions: -> 
+            Questions.find
+                section_id: @_id
+
+
 
     Template.view_module.helpers
         module: -> Modules.findOne FlowRouter.getParam('module_id')
