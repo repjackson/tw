@@ -53,19 +53,3 @@ template(name='view_section')
         |!{transcript}
         +view_questions
         
-template(name='view_questions')        
-    .ui.header Section Questions
-    #question_menu.ui.top.attached.tabular.menu
-        a.item(data-tab="my_answers") My Answers
-        each questions
-            a.item(data-tab="question#{_id}") Question #{number}
-    .ui.bottom.attached.tab.segment(data-tab='my_answers')
-        each questions
-            .ui.header #{text}
-            .ui.action.fluid.input
-                input#answer(type='text')
-                #add_answer.ui.basic.button Add Your Answer
-    each questions
-        .ui.bottom.attached.tab.segment(data-tab='question#{_id}')
-            .ui.header Collaboration for #{text}
-            // +view_section this

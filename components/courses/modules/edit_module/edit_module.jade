@@ -45,6 +45,10 @@ template(name='edit_module')
                     
 template(name='edit_section')
     .ui.form
+        .four.wide.field
+            .ui.labeled.input
+                .ui.basic.label Number
+                input#number(type='number' value=number min='0')
         .field
             label Section Content
             .section_content

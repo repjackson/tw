@@ -29,15 +29,15 @@ if Meteor.isClient
                 $set:
                     number:number
             
-    
-        'click #save_module': ->
-            title = $('#title').val()
-            number = parseInt $('#number').val()
+        'blur #title': ->
             module_id = FlowRouter.getParam('module_id')
+            title = $('#title').val()
             Modules.update module_id,
                 $set:
                     title:title
-                    number:number
+            
+    
+        'click #save_module': ->
             FlowRouter.go "/module/#{module_id}"        
     
     

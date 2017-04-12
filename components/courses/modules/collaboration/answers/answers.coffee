@@ -9,3 +9,12 @@ Answers.before.insert (userId, doc)->
 Answers.helpers
     author: -> Meteor.users.findOne @author_id
     when: -> moment(@timestamp).fromNow()
+
+
+
+if Meteor.isServer
+    Answers.allow
+        insert: (userId, doc) -> userId
+        update: (userId, doc) -> userId is doc.author_id
+        remove: (userId, doc) -> userId is doc.author_id
+    

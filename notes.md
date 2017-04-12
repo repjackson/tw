@@ -1,4 +1,4 @@
-DEPLOY_HOSTNAME=us-east-1.galaxy-deploy.meteor.com meteor deploy --settings settings.json www.tori.meteorapp.com
+DEPLOY_HOSTNAME=us-east-1.galaxy-deploy.meteor.com meteor deploy --settings settings.json www.toriwebster.com
 
 
 <!--image-->
@@ -67,11 +67,7 @@ module structure
     
     
 todo
-    view profile by default
-    my courses
     members inside sol page
-    module body, editable
-    course breadcrumbs
     light work enablesn
     sequential modules
     sequential answers

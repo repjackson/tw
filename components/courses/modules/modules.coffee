@@ -33,6 +33,13 @@ if Meteor.isServer
                             find: (section) ->
                                 Questions.find
                                     section_id: section._id
+                            children: [
+                                {
+                                    find: (question) ->
+                                        Answers.find 
+                                            question_id: question._id
+                                    }
+                                ]
                             }
                         
                         ]

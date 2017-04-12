@@ -44,6 +44,13 @@ if Meteor.isClient
         
             
     Template.edit_section.events
+        'blur #number': (e,t)->
+            number = parseInt t.$('#number').val()
+            Sections.update @_id,
+                $set:
+                    number:number
+
+    
         'blur .section_content': (e,t)->
             html = t.$('div.froala-reactive-meteorized-override').froalaEditor('html.get', true)
     

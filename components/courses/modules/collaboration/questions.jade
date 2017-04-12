@@ -1,0 +1,59 @@
+template(name='collaboration')
+    +questions
+
+
+template(name='questions')
+    .ui.header Section Questions
+    .ui.action.fluid.input
+        input#new_question(type='text')
+        #add_question.ui.basic.button 
+            i.red.configure.icon
+            |Add Question
+    .ui.divided.segments
+        each questions
+            +question
+
+        
+
+
+template(name='question')
+    .ui.segment
+        h4.ui.header 
+            |Question: #{text}
+            if can_edit
+                i.remove_question.red.big.link.remove.icon
+
+                    
+template(name='view_questions')        
+    .ui.header Section Questions
+    #question_menu.ui.top.attached.tabular.menu
+        a.item(data-tab="my_answers") My Answers
+        each questions
+            if has_answered_question
+                a.item(data-tab="question#{_id}") Collab: #{text}
+    .ui.bottom.attached.tab.segment(data-tab='my_answers')
+        each questions
+            .ui.header #{text}
+            unless has_answered_question
+                .ui.action.fluid.input
+                    input#answer(type='text')
+                    #add_answer.ui.basic.button Add Answer
+            each answers
+                .ui.segment 
+                    .ui.header 
+                        |#{text}
+                        if can_edit
+                            i.remove_answer.remove.red.link.icon
+    each questions
+        .ui.bottom.attached.tab.segment(data-tab='question#{_id}')
+            .ui.header Collaboration for #{text}
+            .ui.segments
+                each answers
+                    .ui.segment 
+                        .ui.header 
+                            |#{text}
+                            if can_edit
+                                i.remove_answer.remove.red.link.icon
+                        | by 
+                        img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+                        |{{author.name}}

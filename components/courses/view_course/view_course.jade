@@ -11,7 +11,8 @@ template(name='view_course')
         .ui.grid
             .centered.row
                 h1.ui.center.aligned.header #{course.title}
-                h4.ui.center.aligned.header #{course.subtitle}
+            // .centered.row
+            //     h4.ui.center.aligned.header #{course.subtitle}
             .five.wide.column
                 .ui.vertical.fluid.pointing.menu
                     with course
@@ -68,7 +69,7 @@ template(name='course_welcome')
                     //         |Create an Account and Enroll
     
 template(name='course_modules')        
-    h2.ui.header Modules
+    h2.ui.center.aligned.header Modules
     each modules
         .ui.segment
             a(href="/course/#{course_id}/module/#{_id}")

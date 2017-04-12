@@ -10,18 +10,13 @@ if Meteor.isClient
     Template.view_module.onRendered ->
         Meteor.setTimeout ->
             $('#section_menu .item').tab()
-        , 2000
+        , 1000
     
-    Template.view_questions.onRendered ->
         Meteor.setTimeout ->
-            $('#question_menu .item').tab()
-        , 2000
-        
-    Template.view_questions.helpers
-        questions: -> 
-            Questions.find
-                section_id: @_id
-
+            $.tab('change tab', 'tab1')
+            $('[data-tab~="tab1"]').addClass( "active" )
+        , 1500
+    
 
 
     Template.view_module.helpers
