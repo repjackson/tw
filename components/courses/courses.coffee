@@ -33,7 +33,13 @@ if Meteor.isClient
         @autorun -> Meteor.subscribe('courses')
 
     Template.courses.helpers
-        courses: -> Courses.find {}
+        courses: -> 
+            Courses.find
+                published: true
+    
+        unpublished_courses: -> 
+            Courses.find
+                published: false
     
         in_course: ->
             # console.log @_id
@@ -44,7 +50,7 @@ if Meteor.isClient
         'click .edit': -> FlowRouter.go("/course/#{@_id}/edit")
             
         'click #add_course': ->
-            id = Courses.insert {}
+            id = Courses.insert published: false
             FlowRouter.go "/course/#{id}/edit"
             
             

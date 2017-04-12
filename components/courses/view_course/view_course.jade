@@ -43,27 +43,29 @@ template(name='course_not_ready')
             |Sign Up for the SOL Newsletter
     
 template(name='course_welcome')
-    .ui.text.container
-        if image_id
-            img.ui.centered.image(src="{{c.url image_id }}")
-        h1.ui.center.aigned.header #{course.title}
-        .ui.basic.segment 
-            |!{course.description}
-        .ui.centered.grid
-            .six.wide.column
-                a.ui.teal.large.button(href='http://toriwebster.us11.list-manage.com/subscribe?u=8973e01aca6da499e7e1a63bd&id=9204d04e30')
-                    |Sign Up for the SOL Newsletter
-            .six.wide.column
-                // if currentUser
-                //     if in_course
-                //         // .ui.green.basic.label Enrolled
-                //         a.ui.teal.big.button(href="/course/#{_id}") View Course
-                //     else
-                a.buy_course.ui.teal.big.button
-                    |Enroll
-                // else
-                //     a.buy_course.ui.teal.big.button
-                //         |Create an Account and Enroll
+    with course
+        .ui.text.container
+            if image_id
+                img.ui.centered.image(src="{{c.url image_id }}")
+            h1.ui.center.aigned.header #{title}
+            h3.ui.center.aigned.header #{subtitle}
+            .ui.basic.segment 
+                |!{description}
+            .ui.centered.grid
+                .six.wide.column
+                    a.ui.teal.large.button(href='http://toriwebster.us11.list-manage.com/subscribe?u=8973e01aca6da499e7e1a63bd&id=9204d04e30')
+                        |Sign Up for the SOL Newsletter
+                .six.wide.column
+                    // if currentUser
+                    //     if in_course
+                    //         // .ui.green.basic.label Enrolled
+                    //         a.ui.teal.big.button(href="/course/#{_id}") View Course
+                    //     else
+                    a.buy_course.ui.teal.big.button
+                        |Enroll
+                    // else
+                    //     a.buy_course.ui.teal.big.button
+                    //         |Create an Account and Enroll
     
 template(name='course_modules')        
     h2.ui.header Modules

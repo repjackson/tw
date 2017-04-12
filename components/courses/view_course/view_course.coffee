@@ -1,8 +1,8 @@
 FlowRouter.route '/course/:course_id', 
     name: 'course_home'
     action: (params) ->
-        BlazeLayout.render 'view_course',
-            course_content: 'course_welcome'
+        BlazeLayout.render 'layout',
+            main: 'course_welcome'
 
 FlowRouter.route '/course/:course_id/modules', 
     name: 'course_modules'
@@ -49,9 +49,14 @@ if Meteor.isClient
     Template.course_modules.helpers
         modules: -> Modules.find { }, sort: number: 1
             
+
+
+
+    Template.course_welcome.onCreated ->
+        @autorun -> Meteor.subscribe 'course', FlowRouter.getParam('course_id')
+
     Template.course_welcome.helpers
         course: -> Courses.findOne FlowRouter.getParam('course_id')
-  
     
     Template.course_welcome.events
         'click .buy_course': ->

@@ -2,13 +2,13 @@ FlowRouter.route '/cart',
     triggersEnter: [ AccountsTemplates.ensureSignedIn ]
     action: ->
         BlazeLayout.render 'layout',
-        main: 'cart'
+            main: 'cart'
 
 FlowRouter.route '/cart-profile/:user_id',
     triggersEnter: [ AccountsTemplates.ensureSignedIn ]
     action: ->
         BlazeLayout.render 'layout',
-        main: 'cart_profile'
+            main: 'cart_profile'
 
 
 if Meteor.isClient

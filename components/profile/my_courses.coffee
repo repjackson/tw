@@ -5,7 +5,7 @@ if Meteor.isClient
 
     Template.my_courses.helpers
         my_courses: -> 
-            if Meteor.user().courses
+            if Meteor.user()?.courses
                 Courses.find
                     _id: $in: Meteor.user().courses
     
