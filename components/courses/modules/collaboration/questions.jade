@@ -33,17 +33,26 @@ template(name='view_questions')
                 a.item(data-tab="question#{_id}") Collab: #{text}
     .ui.bottom.attached.tab.segment(data-tab='my_answers')
         each questions
-            .ui.header #{text}
-            unless has_answered_question
-                .ui.action.fluid.input
-                    input#answer(type='text')
-                    #add_answer.ui.basic.button Add Answer
-            each answers
-                .ui.segment 
+            .ui.segment(class=question_segment_class)
+                .ui.header #{text}
+                unless has_answered_question
+                    .ui.action.fluid.input
+                        input#answer(type='text')
+                        #add_answer.ui.basic.button Add Answer
+                each published_answers
                     .ui.header 
                         |#{text}
-                        if can_edit
-                            i.remove_answer.remove.red.link.icon
+                    if can_edit
+                        .ui.two.column.centered.grid
+                            .column
+                                .ui.compact.segment
+                                    .toggle_published.ui.slider.checkbox
+                                        input(type='checkbox' name='publish_answer')
+                                        label Publish Answer
+                            .column
+                                .remove_answer.ui.basic.button
+                                    i.remove.red.link.icon
+                                    | Delete
     each questions
         .ui.bottom.attached.tab.segment(data-tab='question#{_id}')
             .ui.header Collaboration for #{text}

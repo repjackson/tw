@@ -48,28 +48,34 @@ if Meteor.isClient
     Template.view_questions.onRendered ->
         Meteor.setTimeout ->
             $('#question_menu .item').tab()
+            $('.ui.checkbox').checkbox('enable')
         , 2000
         
     Template.view_questions.helpers
-        questions: -> 
-            Questions.find
-                section_id: @_id
+        questions: -> Questions.find section_id: @_id
                 
-        answers: ->
-            Answers.find
-                question_id: @_id
-                
+        answers: -> Answers.find question_id: @_id
+        
+        published_answers: -> Answers.find question_id: @_id, published: true
                 
         has_answered_question: ->
             Answers.findOne 
                 question_id: @_id
                 author_id: Meteor.userId()
 
+        question_segment_class: -> 
+            answer = Answers.findOne 
+                question_id: @_id
+                author_id: Meteor.userId()
+            
+            if answer.published then 'blue' else ''
+
     Template.view_questions.events
         'click #add_answer': (e,t)->
             answer = $(e.currentTarget).closest('.input').find('#answer').val()
             id = Answers.insert
                 question_id: @_id
+                published: false
                 text: answer
             $(e.currentTarget).closest('.input').find('#answer').val('')
             Meteor.setTimeout =>
@@ -82,6 +88,7 @@ if Meteor.isClient
                 answer = $(e.currentTarget).closest('.input').find('#answer').val()
                 id = Answers.insert
                     question_id: @_id
+                    published: false
                     text: answer
                 $(e.currentTarget).closest('.input').find('#answer').val('')
                 Meteor.setTimeout =>
@@ -119,7 +126,11 @@ if Meteor.isClient
                 Answers.remove self._id
 
 
-
+        'click .toggle_published': (e,t)->
+            published = $(e.currentTarget).closest('.ui.checkbox').checkbox('is checked')
+            Answers.update @_id,
+                $set:
+                    published: published
 
 if Meteor.isServer
     Questions.allow
