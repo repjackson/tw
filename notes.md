@@ -84,13 +84,6 @@ course
         terms
             checkboxes of agreements
         what inspired sol
-    downloads
-        modules
-            tabs
-        file 
-            title
-            description
-            db link
     reminders
         i'm feeling....
             stuck

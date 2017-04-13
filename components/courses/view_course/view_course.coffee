@@ -2,7 +2,7 @@ FlowRouter.route '/course/:course_id',
     name: 'course_home'
     action: (params) ->
         BlazeLayout.render 'layout',
-            main: 'course_welcome'
+            main: 'course_sales'
 
 FlowRouter.route '/course/:course_id/modules', 
     name: 'course_modules'
@@ -52,13 +52,13 @@ if Meteor.isClient
 
 
 
-    Template.course_welcome.onCreated ->
+    Template.course_sales.onCreated ->
         @autorun -> Meteor.subscribe 'course', FlowRouter.getParam('course_id')
 
-    Template.course_welcome.helpers
+    Template.course_sales.helpers
         course: -> Courses.findOne FlowRouter.getParam('course_id')
     
-    Template.course_welcome.events
+    Template.course_sales.events
         'click .buy_course': ->
             Session.set 'cart_item', @_id
             FlowRouter.go '/cart'
@@ -75,6 +75,127 @@ if Meteor.isClient
                 course_id:course_id 
             FlowRouter.go "/course/#{course_id}/module/#{new_module_id}/edit"
             
+
+
+
+    Template.course_welcome.onCreated ->
+        @autorun -> Meteor.subscribe 'course', FlowRouter.getParam('course_id')
+
+    Template.course_welcome.helpers
+        course: -> Courses.findOne FlowRouter.getParam('course_id')
+
+
+    Template.course_welcome.onRendered ->
+        Meteor.setTimeout ->
+            $('#course_welcome_menu .item').tab()
+        , 1000
+
+    # Template.course_welcome.helpers
+    #     agreements: ->
+    #         Agreements.find()
+
+    Template.edit_welcome_course.helpers
+        course: -> Courses.findOne FlowRouter.getParam('course_id')
+        
+        course_welcome_context: ->
+            @current_doc = Courses.findOne FlowRouter.getParam('course_id')
+            self = @
+            {
+                _value: self.current_doc.course_welcome_content
+                _keepMarkers: true
+                _className: 'froala-reactive-meteorized-override'
+                toolbarInline: false
+                initOnClick: false
+                imageInsertButtons: ['imageBack', '|', 'imageByURL']
+                tabSpaces: false
+                height: 300
+            }
+
+    Template.edit_welcome_course.events
+        'blur .froala-container': (e,t)->
+            html = t.$('div.froala-reactive-meteorized-override').froalaEditor('html.get', true)
+            
+            course_id = FlowRouter.getParam('course_id')
+    
+            Courses.update course_id,
+                $set: course_welcome_content: html
+                
+        'click #save_welcome_content': ->
+            Session.set 'editing_id', null
+
+    Template.view_welcome_course.events
+        'click #edit_welcome_content': ->
+            Session.set 'editing_id', @_id
+
+
+    Template.edit_terms_course.helpers
+        course: -> Courses.findOne FlowRouter.getParam('course_id')
+        
+        course_terms_context: ->
+            @current_doc = Courses.findOne FlowRouter.getParam('course_id')
+            self = @
+            {
+                _value: self.current_doc.course_terms_content
+                _keepMarkers: true
+                _className: 'froala-reactive-meteorized-override'
+                toolbarInline: false
+                initOnClick: false
+                imageInsertButtons: ['imageBack', '|', 'imageByURL']
+                tabSpaces: false
+                height: 300
+            }
+
+    Template.edit_terms_course.events
+        'blur .froala-container': (e,t)->
+            html = t.$('div.froala-reactive-meteorized-override').froalaEditor('html.get', true)
+            
+            course_id = FlowRouter.getParam('course_id')
+    
+            Courses.update course_id,
+                $set: course_terms_content: html
+                
+        'click #save_terms_content': ->
+            Session.set 'editing_id', null
+
+    Template.view_terms_course.events
+        'click #edit_terms_content': ->
+            Session.set 'editing_id', @_id
+
+
+
+    Template.edit_inspiration_course.helpers
+        course: -> Courses.findOne FlowRouter.getParam('course_id')
+        
+        course_inspiration_context: ->
+            @current_doc = Courses.findOne FlowRouter.getParam('course_id')
+            self = @
+            {
+                _value: self.current_doc.course_inspiration_content
+                _keepMarkers: true
+                _className: 'froala-reactive-meteorized-override'
+                toolbarInline: false
+                initOnClick: false
+                imageInsertButtons: ['imageBack', '|', 'imageByURL']
+                tabSpaces: false
+                height: 300
+            }
+
+    Template.edit_inspiration_course.events
+        'blur .froala-container': (e,t)->
+            html = t.$('div.froala-reactive-meteorized-override').froalaEditor('html.get', true)
+            
+            course_id = FlowRouter.getParam('course_id')
+    
+            Courses.update course_id,
+                $set: course_inspiration_content: html
+                
+        'click #save_inspiration_content': ->
+            Session.set 'editing_id', null
+
+    Template.view_inspiration_course.events
+        'click #edit_inspiration_content': ->
+            Session.set 'editing_id', @_id
+
 
 if Meteor.isServer
     Meteor.methods 

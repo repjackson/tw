@@ -8,6 +8,10 @@ Template.published.events
             $set: published: false
 
 
+Template.edit_this_button.events
+    'click .edit_this': ->
+        console.log @
+
 Template.delete.events
     'click #delete': ->
         swal {
