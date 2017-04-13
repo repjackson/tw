@@ -20,6 +20,7 @@ template(name='view_module')
                         with module
                             a.disabled.item Sections
                             a.disabled.item Light Work
+                    .ui.horizontal.divider.header Status
                     if complete
                         .ui.teal.fluid.label 
                             i.check.icon
@@ -27,7 +28,6 @@ template(name='view_module')
                     else
                         .ui.teal.basic.fluid.label 
                             |Incomplete
-                    .ui.horizontal.divider.header Status
                     if isInRole 'admin'
                         .ui.horizontal.divider.header 
                             |Admin

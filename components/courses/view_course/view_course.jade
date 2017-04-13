@@ -10,11 +10,13 @@ template(name='view_course')
         .ui.hidden.divider
         .ui.grid
             .centered.row
-                h1.ui.center.aligned.header #{course.title}
+                img.ui.image(src="{{c.url course.image_id }}")
+
+                // h1.ui.center.aligned.header #{course.title}
             // .centered.row
             //     h4.ui.center.aligned.header #{course.subtitle}
             .five.wide.column
-                .ui.vertical.fluid.pointing.menu
+                .ui.vertical.fluid.pointing.large.menu
                     with course
                         a.item(href="/course/#{_id}/welcome" class="{{isActiveRoute name='course_welcome'}}") Welcome
                         a.item(href="/course/#{_id}/modules" class="{{isActiveRoute name='course_modules'}}") Modules
@@ -46,6 +48,10 @@ template(name='course_not_ready')
 template(name='course_welcome')
     with course
         .ui.text.container
+            if isInRole 'admin'
+                a.ui.basic.button(href="/course/#{_id}/modules")
+                    i.red.configure.icon
+                    |#{title} Admin
             if image_id
                 img.ui.centered.image(src="{{c.url image_id }}")
             h1.ui.center.aigned.header #{title}
@@ -77,14 +83,19 @@ template(name='course_modules')
             .ui.teal.progress
                 .bar
                 .progress
+                .label Coursework
+            .ui.teal.progress
+                .bar
+                .progress
+                .label Lightwork
                 
 template(name='course_downloads')                
-    .ui.header Course Downloads            
+    h2.ui.center.aligned.header Course Downloads            
 
 template(name='course_members')                
-    .ui.header Course Members            
+    h2.ui.center.aligned.header Course Members            
 
 template(name='course_reminders')                
-    .ui.header Course Reminders            
+    h2.ui.center.aligned.header Course Reminders            
 
     

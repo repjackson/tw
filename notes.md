@@ -67,10 +67,7 @@ module structure
     
     
 todo
-    members inside sol page
     light work enablesn
-    sequential modules
-    sequential answers
     70/30 progress
     each module has 
         coursework progress bar
@@ -80,3 +77,22 @@ todo
         days in a row
         
         
+        
+course
+    tabs
+        welcome
+        terms
+            checkboxes of agreements
+        what inspired sol
+    downloads
+        modules
+            tabs
+        file 
+            title
+            description
+            db link
+    reminders
+        i'm feeling....
+            stuck
+            motivated
+            

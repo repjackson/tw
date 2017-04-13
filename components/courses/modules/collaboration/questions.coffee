@@ -56,7 +56,10 @@ if Meteor.isClient
                 
         answers: -> Answers.find question_id: @_id
         
-        published_answers: -> Answers.find question_id: @_id, published: true
+        published_answers: -> 
+            Answers.find 
+                question_id: @_id 
+                published: true
                 
         has_answered_question: ->
             Answers.findOne 

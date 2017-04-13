@@ -39,17 +39,18 @@ template(name='view_questions')
                     .ui.action.fluid.input
                         input#answer(type='text')
                         #add_answer.ui.basic.button Add Answer
-                each published_answers
+                each answers
                     .ui.header 
                         |#{text}
+                    .ui.divider
                     if can_edit
-                        .ui.two.column.centered.grid
-                            .column
+                        .ui.grid
+                            .five.wide.column
                                 .ui.compact.segment
                                     .toggle_published.ui.slider.checkbox
-                                        input(type='checkbox' name='publish_answer')
+                                        input(type='checkbox' name='publish_answer' checked=published)
                                         label Publish Answer
-                            .column
+                            .four.wide.column
                                 .remove_answer.ui.basic.button
                                     i.remove.red.link.icon
                                     | Delete
@@ -57,12 +58,10 @@ template(name='view_questions')
         .ui.bottom.attached.tab.segment(data-tab='question#{_id}')
             .ui.header Collaboration for #{text}
             .ui.segments
-                each answers
+                each published_answers
                     .ui.segment 
                         .ui.header 
                             |#{text}
-                            if can_edit
-                                i.remove_answer.remove.red.link.icon
                         | by 
-                        img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
                         |{{author.name}}
+                        img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
