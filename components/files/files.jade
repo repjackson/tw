@@ -1,0 +1,59 @@
+template(name='course_files')
+    .ui.text.container
+        h1.ui.center.aligned.header Courses Files
+        .ui.hidden.divider
+        each course_files
+            .ui.divided.items
+                if is_editing
+                    +edit_file
+                else 
+                    +file_item
+            
+
+            
+            
+template(name='module_downloads')
+    with module
+        .ui.center.aligned.header #{title} Downloads
+        if isInRole 'admin'
+            #add_file.ui.basic.button 
+                i.red.configure.icon
+                |Add #{title} File
+        .ui.divided.items
+            each module_files
+                if is_editing
+                    +edit_file
+                else 
+                    +file_item
+                
+template(name='file_item')                
+    .ui.item
+        .content
+            .header #{title}
+            .description
+                |!{description}
+            .extra
+                a.ui.basic.button(href=link)
+                    i.download.icon
+                    |Download
+                if isInRole 'admin'
+                    .edit_file.ui.basic.button 
+                        i.red.configure.icon
+                        |Edit File
+                
+template(name='edit_file')
+    .ui.segment
+        .ui.form
+            .field
+                label Title
+                input#title(type='text' placeholder='Title' value=title)
+            .field
+                label Description
+                .froala-container
+                    +froalaReactive getFEContext
+            .field
+                label Link (include http://)
+                .ui.left.icon.input
+                    i.linkify.icon
+                    input#link(type='text' value=link)
+            #save_file.ui.teal.button Save File

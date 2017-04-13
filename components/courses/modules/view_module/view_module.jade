@@ -1,4 +1,5 @@
 template(name='view_module')
+    +nav
     .ui.container
         .ui.breadcrumb
             a.section(href='/') Home
@@ -10,16 +11,16 @@ template(name='view_module')
             a.section(href="/course/#{course._id}/modules") Modules
             .divider  / 
             .active.section #{module.number}: #{module.title}
-        with module
-            h1.ui.center.aligned.header #{number}: #{title}
-            .ui.stackable.grid
-                .four.wide.column
+        h1.ui.center.aligned.header #{module.number}: #{module.title}
+        .ui.grid
+            .four.wide.column
+                with module
                     .content
                         |!{description}
                     .ui.vertical.fluid.pointing.menu
-                        with module
-                            a.disabled.item Sections
-                            a.disabled.item Light Work
+                        a.item(href="/course/#{course_id}/module/#{_id}/sections" class="{{isActiveRoute name='module_sections'}}") Sections
+                        a.item(href="/course/#{course_id}/module/#{_id}/downloads" class="{{isActiveRoute name='module_downloads'}}") Downloads
+                        a.disabled.item Light Work
                     .ui.horizontal.divider.header Status
                     if complete
                         .ui.teal.fluid.label 
@@ -34,15 +35,17 @@ template(name='view_module')
                         a.ui.fluid.basic.button(href="/course/#{course_id}/module/#{_id}/edit")
                             i.red.configure.icon
                             |Edit Module
-    
-                .twelve.wide.column
-                    #section_menu.ui.top.attached.tabular.menu
-                        each sections
-                            a.item(data-tab="tab#{number}") Section #{number}
-                    each sections
-                        .ui.bottom.attached.tab.segment(data-tab='tab#{number}')
-                            .ui.header Section #{number}
-                            +view_section
+            .twelve.wide.column
+                +Template.dynamic template=module_content
+
+template(name='module_sections')
+    #section_menu.ui.top.attached.tabular.menu
+        each sections
+            a.item(data-tab="tab#{number}") Section #{number}
+    each sections
+        .ui.bottom.attached.tab.segment(data-tab='tab#{number}')
+            .ui.header Section #{number}
+            +view_section
 
 
 template(name='view_section')

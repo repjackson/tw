@@ -36,4 +36,7 @@ Template.registerHelper 'when', () -> moment(@timestamp).fromNow()
 Template.registerHelper 'in_course', () -> @_id in Meteor.user().courses
 
 
+Template.registerHelper 'is_editing', () -> Session.equals 'editing_id', @_id
+
+
 Template.registerHelper 'is_dev', () -> Meteor.isDevelopment
