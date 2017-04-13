@@ -89,19 +89,11 @@ if Meteor.isClient
                     else
                         throw new Meteor.Error "it failed miserably"
     
-        #         console.log Cloudinary
-        # 		Cloudinary.delete "37hr", (err,res) ->
-        # 		    if err 
-        # 		        console.log "Upload Error: #{err}"
-        # 		    else
-        #     			console.log "Upload Result: #{res}"
-        #                 # Files.update @_id, 
-        #                 #     $unset: image_id: 1
-    
                 
-        'click #delete': ->
+        'click #delete_file': ->
+            self = @
             swal {
-                title: 'Delete file?'
+                title: "Delete #{self.title} file?"
                 # text: 'Confirm delete?'
                 type: 'error'
                 animation: false
@@ -110,11 +102,12 @@ if Meteor.isClient
                 cancelButtonText: 'Cancel'
                 confirmButtonText: 'Delete'
                 confirmButtonColor: '#da5347'
-            }, ->
-                doc = Files.findOne @_id
-                Files.remove doc._id, ->
-                    FlowRouter.go "/lightbank"
-    
+            }, =>
+                Files.remove @_id, ->
+                    swal("Deleted", '', "success")
+                    Session.set 'editing_id', null
+
+
     
         'blur .froala-container': (e,t)->
             html = t.$('div.froala-reactive-meteorized-override').froalaEditor('html.get', true)

@@ -20,7 +20,7 @@ FlowRouter.route '/course/:course_id/downloads',
     name: 'course_downloads'
     action: (params) ->
         BlazeLayout.render 'view_course',
-            course_content: 'course_downloads'
+            course_content: 'course_files'
 
 FlowRouter.route '/course/:course_id/welcome', 
     name: 'course_welcome'

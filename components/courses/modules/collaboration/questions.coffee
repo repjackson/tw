@@ -71,7 +71,7 @@ if Meteor.isClient
                 question_id: @_id
                 author_id: Meteor.userId()
             
-            if answer.published then 'blue' else ''
+            if answer?.published then 'blue' else ''
 
     Template.view_questions.events
         'click #add_answer': (e,t)->

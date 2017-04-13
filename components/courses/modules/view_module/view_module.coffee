@@ -10,12 +10,6 @@ FlowRouter.route '/course/:course_id/module/:module_id/sections',
         BlazeLayout.render 'view_module',
             module_content: 'module_sections'
 
-FlowRouter.route '/course/:course_id/module/:module_id/downloads', 
-    name: 'module_downloads'
-    action: (params) ->
-        BlazeLayout.render 'view_module',
-            module_content: 'module_downloads'
-
 
 if Meteor.isClient
     Template.view_module.onCreated ->
