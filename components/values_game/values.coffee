@@ -8,15 +8,20 @@ if Meteor.isClient
     
     
     Template.values.helpers
-        available_cards: ->
+        liked_cards: ->
             Docs.find
                 type: 'value_card'
-                # $or: [
-                #     { upvoters: $nin: [Meteor.userId()] }
-                #     { downvoters: $nin: [Meteor.userId()] }
-                # ]
+                upvoters: $in: [Meteor.userId()]
         
-        discarded_cards: ->
+        unvoted_cards: ->
+            Docs.find
+                type: 'value_card'
+                $and: [
+                    { upvoters: $nin: [Meteor.userId()] }
+                    { downvoters: $nin: [Meteor.userId()] }
+                ]
+        
+        disliked_cards: ->
             Docs.find
                 type: 'value_card'
                 downvoters: $in: [Meteor.userId()]
@@ -26,7 +31,6 @@ if Meteor.isClient
         'click #add_value_card': ->
             new_id = Docs.insert
                 type: 'value_card'
+            Session.set 'editing_id', new_id
                 
     Template.value_card.events
-        'click .edit_card': ->
-            Session.set 'editing_id', @_id

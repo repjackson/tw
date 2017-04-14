@@ -38,6 +38,16 @@ Template.edit_this_button.events
     'click .save_doc': ->
         Session.set 'editing_id', null
 
+
+Template.rating.onRendered ->
+   Meteor.setTimeout ->
+        $('.ui.rating').rating
+            initialRating: 3,
+            maxRating: 5
+    , 2000
+
+
+
 Template.delete.events
     'click #delete': ->
         swal {

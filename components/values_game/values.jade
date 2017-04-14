@@ -5,11 +5,17 @@ template(name='values')
                 i.red.configure.icon
                 |Add Value Card
         .ui.horizontal.divider.header Available Cards
-        each available_cards
-            +value_card
-        .ui.horizontal.divider.header Discarded Cards
-        each discarded_cards
-            +value_card
+        .ui.four.cards
+            each unvoted_cards
+                +value_card
+        .ui.horizontal.divider.header Liked Cards
+        .ui.four.cards
+            each liked_cards
+                +value_card
+        .ui.horizontal.divider.header Disliked Cards
+        .ui.four.cards
+            each disliked_cards
+                +value_card
 
 template(name='value_card')
     .ui.card
@@ -17,10 +23,10 @@ template(name='value_card')
             unless is_editing
                 h2.ui.center.aligned.header #{title}
                 h4.ui.center.aligned.header #{subtitle}
+                +voting
             else
-                +title
-                +subtitle
-        .extra.content
-            +voting
+                .ui.form
+                    +title
+                    +subtitle
             if isInRole 'admin' 
                 +edit_this_button

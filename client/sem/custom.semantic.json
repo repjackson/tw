@@ -33,7 +33,7 @@
     "popup": false,
     "progress": true,
     "rail": false,
-    "rating": false,
+    "rating": true,
     "reset": true,
     "reveal": false,
     "search": false,

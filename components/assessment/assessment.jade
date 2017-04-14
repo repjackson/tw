@@ -1,0 +1,46 @@
+template(name='assessment')
+    .ui.container
+        if isInRole 'admin'
+            #add_assessment_question.ui.basic.button 
+                i.red.configure.icon
+                |Add Assessment Question
+        .ui.horizontal.divider.header Questions
+        .ui.horizontal.divider.header Unpublished Questions
+        .ui.four.cards
+            each all_questions
+                +assessment_question
+        .ui.four.cards
+            each relationship_questions
+                +assessment_question
+        .ui.four.cards
+            each physical_questions
+                +assessment_question
+        .ui.four.cards
+            each business_questions
+                +assessment_question
+        .ui.four.cards
+            each financial_questions
+                +assessment_question
+        .ui.four.cards
+            each spiritual_questions
+                +assessment_question
+        .ui.four.cards
+            each mental_questions
+                +assessment_question
+        .ui.four.cards
+            each lifestyle_questions
+                +assessment_question
+
+template(name='assessment_question')
+    .ui.card
+        .content
+            unless is_editing
+                h2.ui.center.aligned.header #{title}
+                h4.ui.center.aligned.header #{subtitle}
+                +rating
+            else
+                .ui.form
+                    +title
+                    +subtitle
+            if isInRole 'admin' 
+                +edit_this_button

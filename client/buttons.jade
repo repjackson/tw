@@ -1,8 +1,11 @@
 template(name='voting')
-    .ui.basic.segment
+    .ui.basic.center.aligned.segment
         i.thumbs.up.link.big.icon.vote_up(class=vote_up_button_class)
         i.thumbs.down.link.big.icon.vote_down(class=vote_down_button_class)
         // |#{points}
+
+template(name='rating')
+    .ui.star.rating
 
 template(name='published')
     .field
@@ -16,13 +19,13 @@ template(name='published')
 
 
 template(name='edit_this_button')
-    if is_editing
+    unless is_editing
         .edit_this.ui.basic.button
             i.red.configure.icon
             |Edit
     else
         .save_doc.ui.basic.button
-            i.check.icon
+            i.green.check.icon
             |Save
 
 template(name='add_to_cart')

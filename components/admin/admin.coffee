@@ -1,18 +1,24 @@
-
-FlowRouter.route '/admin/members', action: (params) ->
-    BlazeLayout.render 'layout',
-        nav: 'nav'
-        sub_nav: 'admin_nav'
-        main: 'user_table'
- 
-FlowRouter.route '/admin/pages', action: (params) ->
-    BlazeLayout.render 'layout',
-        nav: 'nav'
-        sub_nav: 'admin_nav'
-        main: 'pages'
- 
- 
 if Meteor.isClient
+
+    FlowRouter.route '/admin/members', action: (params) ->
+        BlazeLayout.render 'layout',
+            nav: 'nav'
+            sub_nav: 'admin_nav'
+            main: 'user_table'
+     
+    FlowRouter.route '/admin/pages', action: (params) ->
+        BlazeLayout.render 'layout',
+            nav: 'nav'
+            sub_nav: 'admin_nav'
+            main: 'pages'
+ 
+    FlowRouter.route '/admin/lab', action: (params) ->
+        BlazeLayout.render 'layout',
+            nav: 'nav'
+            sub_nav: 'admin_nav'
+            main: 'twlab'
+ 
+ 
     Template.user_table.onCreated ->
         @autorun -> Meteor.subscribe 'members'
         @autorun -> Meteor.subscribe 'courses'

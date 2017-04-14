@@ -30,7 +30,7 @@ Meteor.methods
 
 if Meteor.isClient
     Template.docs.onCreated -> 
-        @autorun -> Meteor.subscribe('docs', selected_doc_tags.array())
+        @autorun -> Meteor.subscribe('docs', selected_doc_tags.array(), null, 10)
 
     Template.docs.helpers
         docs: -> 
@@ -69,13 +69,13 @@ if Meteor.isServer
         remove: (userId, doc) -> Roles.userIsInRole(userId, 'admin')
     
     
-    Meteor.publish 'docs', (selected_doc_tags, filter, limit)->
+    Meteor.publish 'docs', (selected_doc_tags, type, limit)->
     
         self = @
         match = {}
-        # match.tags = $all: selected_doc_tags
+        # if selected_doc_tags then match.tags = $all: selected_doc_tags
         if selected_doc_tags.length > 0 then match.tags = $all: selected_doc_tags
-        if filter then match.filter = filter
+        if type then match.type = type
     
         if limit
             Docs.find match, 

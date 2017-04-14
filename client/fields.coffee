@@ -1,7 +1,7 @@
 Template.subtitle.events
     'blur #subtitle': ->
         subtitle = $('#subtitle').val()
-        Docs.update FlowRouter.getParam('doc_id'),
+        Docs.update Template.currentData()._id,
             $set: subtitle: subtitle
             
             
