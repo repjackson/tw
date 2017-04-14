@@ -8,7 +8,7 @@ template(name='view_course')
             .divider  / 
             .active.section #{course.title}
         .ui.hidden.divider
-        .ui.grid
+        .ui.stackable.grid
             .centered.row
                 img.ui.image(src="{{c.url course.image_id }}")
 

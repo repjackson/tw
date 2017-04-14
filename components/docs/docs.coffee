@@ -3,6 +3,8 @@
 Docs.before.insert (userId, doc)->
     doc.timestamp = Date.now()
     doc.author_id = Meteor.userId()
+    doc.upvoters = []
+    doc.downvoters = []
     return
 
 
@@ -67,16 +69,19 @@ if Meteor.isServer
         remove: (userId, doc) -> Roles.userIsInRole(userId, 'admin')
     
     
-    Meteor.publish 'docs', (selected_doc_tags)->
+    Meteor.publish 'docs', (selected_doc_tags, filter, limit)->
     
         self = @
         match = {}
-        match.tags = $all: selected_doc_tags
-        # if selected_doc_tags.length > 0 then match.tags = $all: selected_doc_tags
-
-        Docs.find match,
-            limit: 3
-            
+        # match.tags = $all: selected_doc_tags
+        if selected_doc_tags.length > 0 then match.tags = $all: selected_doc_tags
+        if filter then match.filter = filter
+    
+        if limit
+            Docs.find match, 
+                limit: limit
+        else
+            Docs.find match
     
     Meteor.publish 'doc', (id)->
         Docs.find id

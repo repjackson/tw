@@ -1,0 +1,26 @@
+template(name='values')
+    .ui.container
+        if isInRole 'admin'
+            #add_value_card.ui.basic.button 
+                i.red.configure.icon
+                |Add Value Card
+        .ui.horizontal.divider.header Available Cards
+        each available_cards
+            +value_card
+        .ui.horizontal.divider.header Discarded Cards
+        each discarded_cards
+            +value_card
+
+template(name='value_card')
+    .ui.card
+        .content
+            unless is_editing
+                h2.ui.center.aligned.header #{title}
+                h4.ui.center.aligned.header #{subtitle}
+            else
+                +title
+                +subtitle
+        .extra.content
+            +voting
+            if isInRole 'admin' 
+                +edit_this_button
