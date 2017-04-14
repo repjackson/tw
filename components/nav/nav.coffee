@@ -2,7 +2,10 @@ if Meteor.isClient
     Template.nav.events
         'click #logout': -> 
             AccountsTemplates.logout()
-            
+    
+    Template.body.events
+        'click .toggle_sidebar': ->
+            $('.ui.sidebar').sidebar('toggle')
         
     Template.nav.onCreated ->
         @autorun -> 

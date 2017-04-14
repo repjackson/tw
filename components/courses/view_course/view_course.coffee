@@ -197,8 +197,25 @@ if Meteor.isClient
             Session.set 'editing_id', @_id
 
 
+
+    Template.course_members.onCreated ->
+        @autorun -> Meteor.subscribe 'course_members', FlowRouter.getParam('course_id')
+        
+
+    Template.course_members.helpers
+        course_members: ->
+            course_id = FlowRouter.getParam('course_id')
+            Meteor.users.find
+                courses: $in: [course_id]
+
+
 if Meteor.isServer
     Meteor.methods 
         enroll: (course_id)->
             Meteor.users.update Meteor.userId(),
                 $addToSet: courses: course_id
+                
+    Meteor.publish 'course_members', (course_id) ->
+        Meteor.users.find
+            courses: $in: [course_id]
+            

@@ -22,7 +22,7 @@ template(name='view_course')
                         a.item(href="/course/#{_id}/modules" class="{{isActiveRoute name='course_modules'}}") Modules
                         a.item(href="/course/#{_id}/members" class="{{isActiveRoute name='course_members'}}") Members
                         a.item(href="/course/#{_id}/downloads" class="{{isActiveRoute name='course_downloads'}}") Downloads
-                        a.item(href="/course/#{_id}/reminders" class="{{isActiveRoute name='course_reminders'}}") Reminders
+                        // a.item(href="/course/#{_id}/reminders" class="{{isActiveRoute name='course_reminders'}}") Reminders
                 if isInRole 'admin'
                     .ui.segment
                         .ui.header 
@@ -84,13 +84,18 @@ template(name='course_modules')
                 .bar
                 .progress
                 .label Coursework
-            .ui.teal.progress
-                .bar
-                .progress
-                .label Lightwork
+            // .ui.teal.progress
+            //     .bar
+            //     .progress
+            //     .label Lightwork
                 
 template(name='course_members')                
-    h2.ui.center.aligned.header Course Members            
+    h2.ui.center.aligned.header Course Members      
+    .ui.centered.cards
+        each course_members
+            .ui.card
+                .content
+                    .header #{name}/#{username}
 
 template(name='course_reminders')                
     h2.ui.center.aligned.header Course Reminders            

@@ -6,10 +6,10 @@
         i.search.icon
         +inputAutocomplete settings=settings id="search" class="" autocomplete="off" 
     if selected_doc_tags
-        #clear_tags.ui.primary.icon.circular.big.button
+        #clear_tags.ui.teal.icon.circular.big.button
             i.remove.icon
         each selected_doc_tags
-            .unselect_tag.ui.primary.circular.big.button
+            .unselect_tag.ui.teal.circular.big.button
                 strong #{this}
     each doc_tags
         .ui.circular.basic.button.select_tag(class=cloud_tag_class) 
