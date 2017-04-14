@@ -17,7 +17,6 @@ manuel:reactivearray
 meteorhacks:aggregate
 babrahams:constellation
 mquandalle:stylus
-mobile-experience@1.0.4
 
 
 semantic:ui
@@ -29,7 +28,6 @@ shell-server@0.2.3
 kadira:flow-router
 kadira:blaze-layout
 accounts-base@1.2.16
-iandouglas:accounts-ui-semantic-ui
 zimme:active-route
 useraccounts:flow-routing
 useraccounts:semantic-ui
@@ -38,7 +36,6 @@ momentjs:moment
 alanning:roles
 reactive-var@1.0.11
 kevohagan:sweetalert
-service-configuration@1.0.11
 raix:handlebar-helpers
 matb33:collection-hooks
 themeteorchef:bert
@@ -49,3 +46,4 @@ okgrow:analytics
 perak:codemirror
 reywood:publish-composite
 arillo:flow-router-helpers
+mobile-experience

@@ -11,6 +11,10 @@ if Meteor.isClient
         @autorun -> 
             Meteor.subscribe 'me'
         
+    Template.nav.onRendered ->
+        Meteor.setTimeout =>
+            $('.ui.dropdown').dropdown()
+        , 500
 
 
 if Meteor.isServer
