@@ -5,6 +5,7 @@ Docs.before.insert (userId, doc)->
     doc.author_id = Meteor.userId()
     doc.upvoters = []
     doc.downvoters = []
+    doc.published = false
     return
 
 

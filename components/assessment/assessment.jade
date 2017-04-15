@@ -4,30 +4,36 @@ template(name='assessment')
             #add_assessment_question.ui.basic.button 
                 i.red.configure.icon
                 |Add Assessment Question
-        .ui.horizontal.divider.header Questions
         .ui.horizontal.divider.header Unpublished Questions
-        .ui.four.cards
-            each all_questions
+        .ui.stackable.cards
+            each unpublished_questions
                 +assessment_question
-        .ui.four.cards
+        .ui.horizontal.divider.header Questions
+        .ui.stackable.cards
             each relationship_questions
                 +assessment_question
-        .ui.four.cards
+        .ui.horizontal.divider.header Physical Questions
+        .ui.stackable.cards
             each physical_questions
                 +assessment_question
-        .ui.four.cards
+        .ui.horizontal.divider.header Business Questions
+        .ui.stackable.cards
             each business_questions
                 +assessment_question
-        .ui.four.cards
+        .ui.horizontal.divider.header Financial Questions
+        .ui.stackable.cards
             each financial_questions
                 +assessment_question
-        .ui.four.cards
+        .ui.horizontal.divider.header Spiritual Questions
+        .ui.stackable.cards
             each spiritual_questions
                 +assessment_question
-        .ui.four.cards
+        .ui.horizontal.divider.header Mental Questions
+        .ui.stackable.cards
             each mental_questions
                 +assessment_question
-        .ui.four.cards
+        .ui.horizontal.divider.header Lifestyle Questions
+        .ui.stackable.cards
             each lifestyle_questions
                 +assessment_question
 
@@ -36,11 +42,12 @@ template(name='assessment_question')
         .content
             unless is_editing
                 h2.ui.center.aligned.header #{title}
-                h4.ui.center.aligned.header #{subtitle}
                 +rating
             else
                 .ui.form
                     +title
-                    +subtitle
+                    +tags
+                    +delete
+                    +published
             if isInRole 'admin' 
                 +edit_this_button

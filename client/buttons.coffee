@@ -24,11 +24,11 @@ Template.voting.events
 
 Template.published.events
     'click #publish': ->
-        Docs.update FlowRouter.getParam('doc_id'),
+        Docs.update @_id,
             $set: published: true
 
     'click #unpublish': ->
-        Docs.update FlowRouter.getParam('doc_id'),
+        Docs.update @_id,
             $set: published: false
 
 
@@ -50,6 +50,7 @@ Template.rating.onRendered ->
 
 Template.delete.events
     'click #delete': ->
+        self = @
         swal {
             title: 'Delete?'
             # text: 'Confirm delete?'
@@ -61,6 +62,4 @@ Template.delete.events
             confirmButtonText: 'Delete'
             confirmButtonColor: '#da5347'
         }, ->
-            doc = Docs.findOne FlowRouter.getParam('doc_id')
-            Docs.remove doc._id, ->
-                FlowRouter.go "/admin/content"
+            Docs.remove self._id

@@ -69,13 +69,13 @@ if Meteor.isClient
 
 
 if Meteor.isServer
-    Meteor.publish 'doc_tags', (selected_doc_tags)->
+    Meteor.publish 'doc_tags', (selected_doc_tags, type)->
         
         self = @
         match = {}
         
         # match.tags = $all: selected_doc_tags
-
+        if type the match.type = type
         if selected_doc_tags.length > 0 then match.tags = $all: selected_doc_tags
         
         cloud = Docs.aggregate [

@@ -8,17 +8,17 @@ template(name='rating')
     .ui.star.rating
 
 template(name='published')
-    .field
-        label Status
-        if published
-            #unpublish.ui.green.button
-                |Published
-        else
-            #publish.ui.basic.button
-                |Private
+    .ui.hidden.fitted.divider
+    if published
+        #unpublish.ui.green.basic.button
+            |Published
+    else
+        #publish.ui.basic.button
+            |Private
 
 
 template(name='edit_this_button')
+    .ui.hidden.fitted.divider
     unless is_editing
         .edit_this.ui.basic.button
             i.red.configure.icon
@@ -34,7 +34,8 @@ template(name='add_to_cart')
         |Add to Cart
 
 template(name='delete')
-    #delete.ui.red.icon.button
+    .ui.hidden.fitted.divider
+    #delete.ui.red.icon.basic.button
         i.trash.icon
 
 template(name='featured')
@@ -51,7 +52,7 @@ template(name='featured')
             .ui.basic.label Unfeatured
 
 template(name='favorite')
-    .ui.basic.segment
-        i.heart.big.link.icon.favorite_item(class=favorite_item_class)
-        if favorite_count
-            | #{favorite_count}
+    .ui.hidden.fitted.divider
+    i.heart.big.link.icon.favorite_item(class=favorite_item_class)
+    if favorite_count
+        | #{favorite_count}
