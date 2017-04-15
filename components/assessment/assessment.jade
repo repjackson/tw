@@ -1,5 +1,6 @@
 template(name='assessment')
     .ui.container
+        +cloud type='assessment_question'
         if isInRole 'admin'
             #add_assessment_question.ui.basic.button 
                 i.red.configure.icon

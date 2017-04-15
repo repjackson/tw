@@ -1,6 +1,3 @@
-@Tags = new Meteor.Collection 'tags'
-
-
 FlowRouter.route '/sol',
   triggersEnter: [ (context, redirect) ->
     redirect '/course/view/TTNQCYM5xMTHSHs3q'

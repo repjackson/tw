@@ -1,16 +1,16 @@
-@Doc_tags = new Meteor.Collection 'doc_tags'
+@Tags = new Meteor.Collection 'tags'
 
 if Meteor.isClient
     
-    @selected_doc_tags = new ReactiveArray []
+    @selected_tags = new ReactiveArray []
 
-    Template.doc_cloud.onCreated ->
-        @autorun -> Meteor.subscribe('doc_tags', selected_doc_tags.array())
+    Template.cloud.onCreated ->
+        @autorun => Meteor.subscribe('tags', selected_tags.array(), @data.type)
     
-    Template.doc_cloud.helpers
-        doc_tags: ->
+    Template.cloud.helpers
+        tags: ->
             doc_count = Docs.find().count()
-            if 0 < doc_count < 3 then Doc_tags.find { count: $lt: doc_count } else Doc_tags.find({}, limit: 7)
+            if 0 < doc_count < 3 then Tags.find { count: $lt: doc_count } else Tags.find({}, limit: 7)
     
         cloud_tag_class: ->
             button_class = switch
@@ -19,14 +19,14 @@ if Meteor.isClient
                 when @index <= 20 then ''
             return button_class
     
-        selected_doc_tags: -> selected_doc_tags.array()
+        selected_tags: -> selected_tags.array()
     
         settings: -> {
             position: 'bottom'
             limit: 10
             rules: [
                 {
-                    collection: Doc_tags
+                    collection: Tags
                     field: 'name'
                     matchAll: false
                     template: Template.tag_result
@@ -36,10 +36,10 @@ if Meteor.isClient
     
     
     
-    Template.doc_cloud.events
-        'click .select_tag': -> selected_doc_tags.push @name
-        'click .unselect_tag': -> selected_doc_tags.remove @valueOf()
-        'click #clear_tags': -> selected_doc_tags.clear()
+    Template.cloud.events
+        'click .select_tag': -> selected_tags.push @name
+        'click .unselect_tag': -> selected_tags.remove @valueOf()
+        'click #clear_tags': -> selected_tags.clear()
     
         'click #add': ->
             Meteor.call 'add', (err,id)->
@@ -52,45 +52,47 @@ if Meteor.isClient
                 when 13 #enter
                     switch val
                         when 'clear'
-                            selected_doc_tags.clear()
+                            selected_tags.clear()
                             $('#search').val ''
                         else
                             unless val.length is 0
-                                selected_doc_tags.push val.toString()
+                                selected_tags.push val.toString()
                                 $('#search').val ''
                 when 8
                     if val.length is 0
-                        selected_doc_tags.pop()
+                        selected_tags.pop()
                         
         'autocompleteselect #search': (event, template, doc) ->
             # console.log 'selected ', doc
-            selected_doc_tags.push doc.name
+            selected_tags.push doc.name
             $('#search').val ''
 
 
 if Meteor.isServer
-    Meteor.publish 'doc_tags', (selected_doc_tags, type)->
+    Meteor.publish 'tags', (selected_tags, type)->
         
         self = @
         match = {}
         
-        # match.tags = $all: selected_doc_tags
-        if type the match.type = type
-        if selected_doc_tags.length > 0 then match.tags = $all: selected_doc_tags
+        # match.tags = $all: selected_tags
+        if type 
+            match.type = type
+            console.log 'type:',type
+        if selected_tags.length > 0 then match.tags = $all: selected_tags
         
         cloud = Docs.aggregate [
             { $match: match }
             { $project: tags: 1 }
             { $unwind: "$tags" }
             { $group: _id: '$tags', count: $sum: 1 }
-            { $match: _id: $nin: selected_doc_tags }
+            { $match: _id: $nin: selected_tags }
             { $sort: count: -1, _id: 1 }
             { $limit: 10 }
             { $project: _id: 0, name: '$_id', count: 1 }
             ]
         # console.log 'cloud, ', cloud
         cloud.forEach (tag, i) ->
-            self.added 'doc_tags', Random.id(),
+            self.added 'tags', Random.id(),
                 name: tag.name
                 count: tag.count
                 index: i
