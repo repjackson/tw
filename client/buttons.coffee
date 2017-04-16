@@ -20,7 +20,12 @@ Template.voting.events
         else FlowRouter.go '/sign-in'
 
 
-
+Template.rating.events
+    'click .rating': (e,t)->
+        rating = $(e.currentTarget).closest('.rating').rating('get rating')
+        
+        # rating = $('.ui.rating').rating('get rating')
+        alert rating
 
 Template.published.events
     'click #publish': ->

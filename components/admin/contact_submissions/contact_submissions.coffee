@@ -4,18 +4,17 @@ FlowRouter.route '/admin/contact_submissions', action: (params) ->
         sub_nav: 'admin_nav'
         main: 'contact_submissions'
  
-@Submissions = new Meteor.Collection 'submissions'
-
-
 if Meteor.isClient
     Template.contact_submissions.onCreated ->
         @autorun -> Meteor.subscribe 'contact_submissions'
         
     Template.contact_submissions.helpers
         submissions: ->
-            Submissions.find()
+            Docs.find
+                type: 'contact_submission'
             
             
 if Meteor.isServer
     Meteor.publish 'contact_submissions', ->
-        Submissions.find()
+        Docs.find
+            type: 'contact_submission'

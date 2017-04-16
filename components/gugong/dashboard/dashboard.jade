@@ -1,0 +1,9 @@
+template(name='member_dashboard')
+    .ui.center.aligned.header #{currentUser.username}'s Dashboard
+    .ui.stackable.grid
+        .four.wide.column
+            +user_card
+        .ten.wide.column
+            .ui.header feed
+            .four.wide.column
+                .ui.header friends or something

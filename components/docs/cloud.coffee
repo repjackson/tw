@@ -75,9 +75,7 @@ if Meteor.isServer
         match = {}
         
         # match.tags = $all: selected_tags
-        if type 
-            match.type = type
-            console.log 'type:',type
+        if type then match.type = type
         if selected_tags.length > 0 then match.tags = $all: selected_tags
         
         cloud = Docs.aggregate [

@@ -37,8 +37,8 @@ if Meteor.isClient
             
     Template.edit_doc.events
         'click #save': ->
-            selected_doc_tags.clear()
-            selected_doc_tags.push tag for tag in @tags
+            selected_tags.clear()
+            selected_tags.push tag for tag in @tags
             FlowRouter.go "/lightbank"
             
             # FlowRouter.go "/doc/view/#{@_id}"

@@ -31,7 +31,7 @@ Meteor.methods
 
 if Meteor.isClient
     Template.docs.onCreated -> 
-        @autorun -> Meteor.subscribe('docs', selected_doc_tags.array(), null, 10)
+        @autorun -> Meteor.subscribe('docs', selected_tags.array(), null, 10)
 
     Template.docs.helpers
         docs: -> 
@@ -43,20 +43,20 @@ if Meteor.isClient
         one_doc: -> 
             Docs.find().count() is 1
     
-        tag_class: -> if @valueOf() in selected_doc_tags.array() then 'primary' else 'basic'
+        tag_class: -> if @valueOf() in selected_tags.array() then 'primary' else 'basic'
 
-        selected_doc_tags: -> selected_doc_tags.array()
+        selected_tags: -> selected_tags.array()
 
     
     Template.doc_view.helpers
         is_author: -> Meteor.userId() and @author_id is Meteor.userId()
     
-        tag_class: -> if @valueOf() in selected_doc_tags.array() then 'primary' else 'basic'
+        tag_class: -> if @valueOf() in selected_tags.array() then 'primary' else 'basic'
     
         when: -> moment(@timestamp).fromNow()
 
     Template.doc_view.events
-        'click .tag': -> if @valueOf() in selected_doc_tags.array() then selected_doc_tags.remove(@valueOf()) else selected_doc_tags.push(@valueOf())
+        'click .tag': -> if @valueOf() in selected_tags.array() then selected_tags.remove(@valueOf()) else selected_tags.push(@valueOf())
     
         'click .edit': -> FlowRouter.go("/doc/edit/#{@_id}")
 
@@ -70,12 +70,12 @@ if Meteor.isServer
         remove: (userId, doc) -> Roles.userIsInRole(userId, 'admin')
     
     
-    Meteor.publish 'docs', (selected_doc_tags, type, limit)->
+    Meteor.publish 'docs', (selected_tags, type, limit)->
     
         self = @
         match = {}
-        # if selected_doc_tags then match.tags = $all: selected_doc_tags
-        if selected_doc_tags.length > 0 then match.tags = $all: selected_doc_tags
+        if selected_tags then match.tags = $all: selected_tags
+        # if selected_tags.length > 0 then match.tags = $all: selected_tags
         if type then match.type = type
     
         if limit

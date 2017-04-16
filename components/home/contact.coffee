@@ -8,13 +8,13 @@ if Meteor.isClient
             
             Meteor.call 'submit_contact_submission', name, email, message, ->
                 swal {
-                    title: "Submitted contact form thing."
+                    title: "Thanks, we'll be in touch."
                     # text: 'You will not be able to recover this imaginary file!'
                     type: 'success'
                     animation: true
                     showCancelButton: false
                     # confirmButtonColor: '#DD6B55'
-                    confirmButtonText: 'Cool'
+                    confirmButtonText: 'Ok'
                     closeOnConfirm: true
                 }
                 $('#name').val('')
@@ -41,13 +41,9 @@ if Meteor.isClient
 if Meteor.isServer
     Meteor.methods
         'submit_contact_submission': (name, email, message)->
-            Submissions.insert
+            Docs.insert
+                type: 'contact_submission'
                 name: name
                 email: email
                 message: message
-            
-        'submit_newsletter_subscription': (email)->
-            NewsletterSubscriptions.insert
-                email: email
-            
             

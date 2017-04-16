@@ -8,9 +8,12 @@
                 th Name
                 th Email
                 th Message
+                th Actions
         tbody
             each submissions
                 tr
                     td #{name}
                     td #{email}
                     td #{message}
+                    td 
+                        +delete

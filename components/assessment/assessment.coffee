@@ -4,56 +4,20 @@ FlowRouter.route '/assessment', action: (params) ->
 
 if Meteor.isClient
     Template.assessment.onCreated -> 
-        @autorun -> Meteor.subscribe('docs', [], 'assessment_question')
+        @autorun -> Meteor.subscribe('docs', selected_tags.array(), 'assessment_question')
     
     
     Template.assessment.helpers
         unpublished_questions: ->
             Docs.find
                 type: 'assessment_question'
-                # published: false
+                published: false
                 
-        relationship_questions: ->
+        published_questions: ->
             Docs.find
                 type: 'assessment_question'
-                tags: $in: ['relationship']
                 published: true
         
-        physical_questions: ->
-            Docs.find
-                type: 'assessment_question'
-                tags: $in: ['physical']
-                published: true
-        
-        business_questions: ->
-            Docs.find
-                type: 'assessment_question'
-                tags: $in: ['business']
-                published: true
-        
-        financial_questions: ->
-            Docs.find
-                type: 'assessment_question'
-                tags: $in: ['financial']
-                published: true
-        
-        spiritual_questions: ->
-            Docs.find
-                type: 'assessment_question'
-                tags: $in: ['spiritual']
-                published: true
-        
-        mental_questions: ->
-            Docs.find
-                type: 'assessment_question'
-                tags: $in: ['mental']
-                published: true
-        
-        lifestyle_questions: ->
-            Docs.find
-                type: 'assessment_question'
-                tags: $in: ['lifestyle']
-                published: true
         
     
     
