@@ -9,7 +9,7 @@ template(name='users')
 template(name='user')
     .ui.card
         .content
-            a(href="/profile/view/#{_id}")
+            a(href="/profile/#{_id}")
                 .ui.image
                     img.ui.image(src="{{c.url profile.image_id width=400 height=400 gravity='face' crop='fill'}}")
                 .ui.header

@@ -1,0 +1,47 @@
+template(name='feed')
+    .ui.header Feed
+    if adding_id
+        +add_post
+    else
+        #add_post.ui.basic.teal.button
+            i.plus.icon
+            |Add Post
+    .ui.feed
+        each my_feed
+            unless is_editing
+                +feed_event
+            else
+                +edit_feed_event
+        
+template(name='feed_event')
+    .event
+        .label
+            img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+        .content
+            .summary
+                a.user
+                    | #{author.username}
+                | said
+                .date
+                    | #{when}
+            .extra.text
+                |!{content}
+            .meta
+                +favorite
+                +voting
+                if is_author
+                    +delete
+                    .edit_post.ui.basic.icon.button
+                        i.pencil.link.icon
+
+    
+    
+template(name='add_post')
+    with adding_post
+        +content
+        #save_post.ui.green.button Save Post
+        
+template(name='edit_feed_event')
+    .ui.header Edit Post
+    +content
+    #save_post.ui.green.button Save Post

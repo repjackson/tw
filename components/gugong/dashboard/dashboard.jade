@@ -1,9 +1,25 @@
 template(name='member_dashboard')
-    .ui.center.aligned.header #{currentUser.username}'s Dashboard
-    .ui.stackable.grid
-        .four.wide.column
-            +user_card
-        .ten.wide.column
-            .ui.header feed
+    .ui.container
+        .ui.center.aligned.header #{currentUser.username}'s Dashboard
+        .ui.stackable.grid
             .four.wide.column
-                .ui.header friends or something
+                +me_card
+                +my_courses
+            .eight.wide.column
+                +feed
+            .four.wide.column
+                +friends_card
+                
+                
+template(name='friends_card')
+    .ui.segment
+        .ui.center.aligned.header Friends
+        each my_friends
+            img.ui.avatar.image(src="{{c.url profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+            a(href="/profile/#{_id}")
+                if profile.first_name 
+                    |#{profile.first_name} #{profile.last_name}
+                else
+                    |#{username}
+                    
+                    

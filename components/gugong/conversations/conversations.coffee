@@ -1,7 +1,3 @@
-@Conversation_tags = new Meteor.Collection 'conversation_tags'
-
-
-
 FlowRouter.route '/conversations', action: (params) ->
     BlazeLayout.render 'layout',
         sub_nav: 'gugong_nav'

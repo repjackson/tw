@@ -1,4 +1,4 @@
-template(name='posts')
+template(name='articles')
     .ui.container
         // #blog_slider(style='width: 1000px; height: 500px;')
         //     .ls-slide(data-ls='slidedelay: 2000;')
@@ -8,35 +8,35 @@ template(name='posts')
         // .ui.hidden.divider
         .ui.stackable.divided.grid
             .twelve.wide.column
-                h1.impact-header Recent Posts
+                h1.impact-header Recent articles
                 // .ui.cards
                 .ui.relaxed.divided.items
-                    each posts
-                        +post_item
+                    each articles
+                        +article_item
             .four.wide.column
-                +cloud filter='post'
-                #add_post.ui.large.basic.fluid.button
+                +cloud type='article'
+                #add_article.ui.large.basic.fluid.button
                     i.plus.icon
-                    |Add Post
+                    |Add article
                 // if isInRole 'admin'
                 //     h2.impact-header 
                 //         i.red.configure.icon
                 //         |Admin
-                //     #add_post.ui.compact.basic.fluid.button
+                //     #add_article.ui.compact.basic.fluid.button
                 //         i.large.icons
                 //             i.sticky.note.outline.icon
                 //             i.green.plus.corner.icon
-                //         |Add Post
+                //         |Add article
 
 
-template(name='post_card')
+template(name='article_card')
     .ui.fluid.card
         .ui.centered.image
-            a(href="/post/view/#{_id}")
+            a(href="/article/view/#{_id}")
                 img(src="{{c.url image_id  height=300 crop='fill' gravity='face' }}")
         .content
             .header
-                a(href="/post/view/#{_id}")
+                a(href="/article/view/#{_id}")
                     h2.ui.header #{title}
             if publish_date
                 .meta
@@ -46,32 +46,32 @@ template(name='post_card')
                 // |!{description}
         .content
             each tags
-                .ui.compact.button.post_tag(class=tag_class) #{this}
+                .ui.compact.button.article_tag(class=tag_class) #{this}
             if isInRole 'admin'
-                .edit_post.ui.primary.basic.right.floated.button
+                .edit_article.ui.primary.basic.right.floated.button
                     i.pencil.icon
-                    |Edit Post    
+                    |Edit Article    
         .content
             +favorite
 
             
-template(name='post_item')
+template(name='article_item')
     .item
-        a.image(href="/post/view/#{_id}")
+        a.image(href="/article/view/#{_id}")
             img.ui.rounded.image(src="{{c.url image_id  width=175 height=175 crop='fill' gravity='face' }}")
         .content
-            a.header(href="/post/view/#{_id}") #{title}
+            a.header(href="/article/view/#{_id}") #{title}
             .meta
                 | Published #{publish_when}
             .description
                 p #{snippet}
-                a(href="/post/view/#{_id}") 
+                a(href="/article/view/#{_id}") 
                     |View More
                     i.arrow.right.icon
             .extra
                 i.tags.icon
                 each tags
-                    .ui.compact.tiny.button.post_tag(class=tag_class) #{this}
+                    .ui.compact.tiny.button.article_tag(class=tag_class) #{this}
             if isInRole 'admin'
                 .extra
                     i.red.configure.large.icon

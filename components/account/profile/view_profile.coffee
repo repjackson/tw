@@ -1,6 +1,6 @@
 FlowRouter.route '/profile/:user_id', action: (params) ->
     BlazeLayout.render 'layout',
-        sub_nav: 'account_nav'
+        # sub_nav: 'account_nav'
         main: 'view_profile'
 
 

@@ -22,3 +22,5 @@ if Meteor.isServer
         Meteor.users.find @userId,
             fields: 
                 courses: 1
+                friends: 1
+                points: 1

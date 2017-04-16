@@ -27,6 +27,25 @@ Template.rating.events
         # rating = $('.ui.rating').rating('get rating')
         alert rating
 
+Template.toggle_friend.helpers
+    is_friend: ->
+        if Meteor.user()?.friends
+            @_id in Meteor.user().friends
+        
+        
+Template.toggle_friend.events
+    'click #add_friend': ->
+        Meteor.users.update Meteor.userId(),
+            $addToSet: 
+                friends: @_id
+                
+    'click #remove_friend': ->
+        Meteor.users.update Meteor.userId(),
+            $pull: 
+                friends: @_id
+                
+
+
 Template.published.events
     'click #publish': ->
         Docs.update @_id,
@@ -68,3 +87,18 @@ Template.delete.events
             confirmButtonColor: '#da5347'
         }, ->
             Docs.remove self._id
+
+
+
+Template.favorite.helpers
+    favorite_count: -> Template.parentData(0).favorite_count
+    
+    favorite_item_class: -> 
+        if Meteor.userId()
+            if Template.parentData(0).favoriters and Meteor.userId() in Template.parentData(0).favoriters then 'red' else 'outline'
+        else 'grey disabled'
+    
+Template.favorite.events
+    'click .favorite_item': -> 
+        if Meteor.userId() then Meteor.call 'favorite', Template.parentData(0)
+        else FlowRouter.go '/sign-in'

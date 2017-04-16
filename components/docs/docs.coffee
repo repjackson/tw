@@ -74,8 +74,8 @@ if Meteor.isServer
     
         self = @
         match = {}
-        if selected_tags then match.tags = $all: selected_tags
-        # if selected_tags.length > 0 then match.tags = $all: selected_tags
+        # if selected_tags then match.tags = $all: selected_tags
+        if selected_tags.length > 0 then match.tags = $all: selected_tags
         if type then match.type = type
     
         if limit

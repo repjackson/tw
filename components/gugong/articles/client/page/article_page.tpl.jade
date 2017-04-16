@@ -1,8 +1,8 @@
-with post
+with article
     .ui.container
-        a.ui.top.left.attached.basic.button(href="/posts")
+        a.ui.top.left.attached.basic.button(href="/articles")
             i.arrow.left.icon
-            |Blog
+            |Articles
         if image_id
             img.ui.centered.image(src="{{c.url image_id height=500 width=800 background='white' crop='lpad'}}")
         h1.ui.header #{title}
@@ -12,7 +12,7 @@ with post
                     if publish_date
                         h4.ui.header Published #{publish_when}
                     .ui.basic.segment
-                        |!{description}
+                        |!{content}
                     if tags
                         .ui.basic.segment
                             each tags
@@ -22,9 +22,9 @@ with post
                 if isInRole 'admin'
                     .ui.divider
                     i.large.red.configure.icon
-                    .edit_post.ui.basic.button
+                    .edit_article.ui.basic.button
                         i.pencil.icon
-                        |Edit
+                        |Edit Article
                     if published
                         .ui.green.label Published
                     else
@@ -36,5 +36,3 @@ with post
                 .ui.horizontal.divider.header
                 +voting
                 +favorite
-                +send_point
-                +upvoted_match

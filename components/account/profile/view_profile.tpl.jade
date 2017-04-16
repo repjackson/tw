@@ -2,8 +2,11 @@ with person
     .ui.text.container.stackable.grid
         .five.wide.column
             img.ui.centered.image(src="{{c.url profile.image_id width=400 height=400 gravity='face' crop='fill'}}")
-            if is_user
-                a.ui.basic.fluid.button(href="/profile/edit/#{_id}") Edit My Profile
+            .ui.basic.center.aligned.segment
+                if is_user
+                    a.ui.basic.fluid.button(href="/profile/edit/#{_id}") Edit My Profile
+                else
+                    +toggle_friend
         .ten.wide.column
             h2.ui.center.aligned.header
                 |#{profile.first_name} #{profile.last_name}

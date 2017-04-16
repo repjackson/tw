@@ -14,7 +14,7 @@ template(name='events')
                     if isInRole 'admin'
                         +admin_events
                 .four.wide.column
-                    +cloud filter='event'
+                    +cloud type='event'
                     // +google_calendar
                     if isInRole 'admin'
                         h2.impact-header 
