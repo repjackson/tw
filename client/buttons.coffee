@@ -62,6 +62,12 @@ Template.edit_this_button.events
     'click .save_doc': ->
         Session.set 'editing_id', null
 
+Template.edit_link.events
+    'click .edit_this': ->
+        Session.set 'editing_id', @_id
+    'click .save_doc': ->
+        Session.set 'editing_id', null
+
 
 Template.rating.onRendered ->
    Meteor.setTimeout ->
@@ -72,7 +78,23 @@ Template.rating.onRendered ->
 
 
 
-Template.delete.events
+Template.delete_button.events
+    'click #delete': ->
+        self = @
+        swal {
+            title: 'Delete?'
+            # text: 'Confirm delete?'
+            type: 'error'
+            animation: false
+            showCancelButton: true
+            closeOnConfirm: true
+            cancelButtonText: 'Cancel'
+            confirmButtonText: 'Delete'
+            confirmButtonColor: '#da5347'
+        }, ->
+            Docs.remove self._id
+            
+Template.delete_link.events
     'click #delete': ->
         self = @
         swal {

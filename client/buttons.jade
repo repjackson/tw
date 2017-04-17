@@ -30,6 +30,8 @@ template(name='published')
             |Private
 
 
+
+
 template(name='edit_this_button')
     .ui.hidden.fitted.divider
     unless is_editing
@@ -41,15 +43,26 @@ template(name='edit_this_button')
             i.green.check.icon
             |Save
 
+template(name='edit_link')
+    unless is_editing
+        a.edit_this Edit
+    else
+        .save_doc.ui.basic.button
+            i.green.check.icon
+            |Save
+
 template(name='add_to_cart')
     .ui.fluid.basic.button
         i.large.add.to.cart.icon
         |Add to Cart
 
-template(name='delete')
+template(name='delete_button')
     .ui.hidden.fitted.divider
     #delete.ui.red.icon.basic.button
         i.trash.icon
+        
+template(name='delete_link')
+    a#delete(href='#') Delete
 
 template(name='featured')
     .field

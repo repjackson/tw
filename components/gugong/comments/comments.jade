@@ -1,0 +1,48 @@
+template(name='comments')
+    .ui.dividing.header Comments
+    if adding_id
+        +add_comment
+    else
+        #add_comment.ui.basic.teal.button
+            i.plus.icon
+            |Add comment
+    .ui.threaded.comments
+        each comments
+            unless is_editing
+                +comment
+            else
+                +edit_comment
+        
+template(name='comment')
+    .comment
+        a.avatar
+            img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+        .content
+            a.author #{author.username}
+            .metadata
+                span.date #{when}
+            .text
+                | !{content}
+            .actions
+                a.reply(href='#') Reply
+                // +favorite
+                // +voting
+                if is_author
+                    +delete_link
+                    a.edit_comment(href='#') Edit
+        if children
+            each children
+                h2 #{this}
+
+
+    
+    
+template(name='add_comment')
+    with adding_comment
+        +content
+        #save_comment.ui.green.button Save Comment
+        
+template(name='edit_comment')
+    .ui.header Edit comment
+    +content
+    #save_comment.ui.green.button Save Comment
