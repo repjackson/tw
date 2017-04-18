@@ -5,9 +5,8 @@ if Meteor.isClient
             main: 'member_dashboard'
             
     Template.friends_card.onCreated ->
-        @autorun -> Meteor.subscribe('my_friends')
-            
-            
+        @autorun => Meteor.subscribe 'my_friends'
+        
     Template.friends_card.helpers
         my_friends: ->
             if Meteor.user() and Meteor.user().friends
@@ -21,6 +20,10 @@ if Meteor.isClient
 if Meteor.isServer
     Meteor.publish 'my_friends', ->
         me = Meteor.users.findOne @userId
-        Meteor.users.find
-            _id: $in: me.friends
-            
+        Meteor.users.find {_id: $in: me.friends},
+            fields: 
+                tags: 1
+                courses: 1
+                friends: 1
+                points: 1
+                status: 1

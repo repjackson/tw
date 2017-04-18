@@ -14,6 +14,7 @@ Docs.after.update ((userId, doc, fieldNames, modifier, options) ->
 ), fetchPrevious: true
 
 
+
 Docs.helpers
     author: -> Meteor.users.findOne @author_id
     when: -> moment(@timestamp).fromNow()

@@ -1,0 +1,30 @@
+template(name='tag_rating')
+    each article_tags
+        .ui.basic.label #{this}
+    .ui.list
+        each ratings
+            .item
+                img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+                .content
+                    a.header(href="/account/profile/#{author._id}")
+                        if profile.name 
+                            |#{author.profile.name}
+                        else
+                            |#{author.username}
+                    .description
+                        each tags
+                            .ui.small.basic.label #{this}
+    if has_rated
+        .ui.dividing.header My Rating
+        with my_rating
+            each tags
+                .ui.small.basic.label #{this}
+            +edit_link
+            +delete_link
+    else
+        unless is_editing
+            #add_rating.ui.basic.button
+                i.plus.icon
+                |Rating
+        else
+            with new_rating

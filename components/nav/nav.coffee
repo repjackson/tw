@@ -24,3 +24,4 @@ if Meteor.isServer
                 courses: 1
                 friends: 1
                 points: 1
+                status: 1

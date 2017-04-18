@@ -42,3 +42,13 @@ Template.registerHelper 'is_editing', () ->
 
 
 Template.registerHelper 'is_dev', () -> Meteor.isDevelopment
+
+
+Template.userPill.helpers
+    labelClass: ->
+        if @status?.idle
+            'yellow'
+        else if @status?.online
+            'green'
+        else
+            'basic'

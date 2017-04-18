@@ -6,6 +6,25 @@ Meteor.users.allow
         #     # console.log 'user allowed to modify own account'
         #     true
 
+
+Meteor.publish 'userStatus', ->
+    Meteor.users.find { 'status.online': true }, 
+        fields: 
+            points: 1
+            tags: 1
+            
+            
+            
+Meteor.publish 'user_status_notification', ->
+    Meteor.users.find('status.online': true).observe
+        added: (id) ->
+            console.log "#{id} just logged in"
+        removed: (id) ->
+            console.log "#{id} just logged out"
+
+
+
+
 Cloudinary.config
     cloud_name: 'facet'
     api_key: Meteor.settings.cloudinary_key

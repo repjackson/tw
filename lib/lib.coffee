@@ -31,6 +31,13 @@ Meteor.users.helpers
         if @profile?.first_name and @profile?.last_name
             "#{@profile.first_name}  #{@profile.last_name}"
             
+    last_login: -> 
+        moment(@status.lastLogin.date).fromNow()
+
+    five_tags: -> @tags[0..3]
+    
+            
+            
 Meteor.methods
     vote_up: (id)->
         doc = Docs.findOne id
