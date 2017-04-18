@@ -33,6 +33,25 @@ template(name='comment')
         if children
             each children
                 h2 #{this}
+            each children_docs
+                .h2 sub comments
+                .ui.comments
+                    .comment
+                        a.avatar
+                            img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+                        .content
+                            a.author #{author.username}
+                            .metadata
+                                span.date #{when}
+                            .text
+                                | !{content}
+                            .actions
+                                a.reply(href='#') Reply
+                                // +favorite
+                                // +voting
+                                if is_author
+                                    +delete_link
+                                    a.edit_comment(href='#') Edit
 
 
     

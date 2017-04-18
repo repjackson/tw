@@ -4,7 +4,7 @@ with person
             img.ui.centered.image(src="{{c.url profile.image_id width=400 height=400 gravity='face' crop='fill'}}")
             .ui.basic.center.aligned.segment
                 if is_user
-                    a.ui.basic.fluid.button(href="/profile/edit/#{_id}") Edit My Profile
+                    a.ui.basic.fluid.button(href="/account/profile/edit/#{_id}") Edit My Profile
                 else
                     +toggle_friend
         .ten.wide.column

@@ -129,7 +129,7 @@ if Meteor.isClient
     
         'click #remove_photo': ->
             Meteor.users.update FlowRouter.getParam('user_id'),
-                $unset: image_id: 1
+                $unset: "profile.image_id": 1
                 
                 
                 

@@ -28,6 +28,12 @@ if Meteor.isClient
     Template.edit_comment.events
         'click #save_comment': -> Session.set 'editing_id', null
 
+    Template.comment.helpers
+        children_docs: -> 
+            # console.log @
+            Docs.find
+                type: 'comment'
+                _id: $in: @children
     
 
     Template.comments.helpers
@@ -44,4 +50,4 @@ if Meteor.isServer
     Meteor.publish 'comments', (parent_id)->
         Docs.find
             type: 'comment'
-            parent_id: parent_id
+            # parent_id: parent_id

@@ -11,7 +11,7 @@ template(name='edit_notecard')
                     textarea#back(rows='3') #{back}
             .ui.center.aligned.basic.segment
                 a(href="/deck/view/#{deck_id}").ui.huge.green.button save card
-                +delete
+                +delete_button
 
 
 template(name='notecard_card')
