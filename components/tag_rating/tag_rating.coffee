@@ -1,6 +1,5 @@
 if Meteor.isClient
     Template.tag_rating.onCreated ->
-        # console.log @data._id
         @autorun => Meteor.subscribe('article_tags', @data._id)
     
     Template.tag_rating.helpers
@@ -9,19 +8,22 @@ if Meteor.isClient
                 type: 'tag_rating'
                 parent_id: @_id
     
-        has_rated: ->
+        my_rating: ->
             # console.log @
-            Docs.findOne 
+            my_rating = Docs.findOne 
                 type: 'tag_rating'
                 parent_id: @_id 
+            # if my_rating then console.log my_rating
+            my_rating
 
     Template.tag_rating.events
         'click #add_rating': ->
-            Docs.insert 
+            new_rating_id = Docs.insert 
                 type: 'tag_rating'
                 parent_id: @_id 
-                
-            
+            Session.set 'editing_id', new_rating_id    
+
+
 
 if Meteor.isServer
     Meteor.publish 'article_tags', (doc_id)->

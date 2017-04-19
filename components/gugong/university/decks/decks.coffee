@@ -70,7 +70,7 @@ if Meteor.isClient
     
         
     Template.deck_card_view.helpers
-        tag_class: -> if @valueOf() in selected_tags.array() then 'primary' else 'basic'
+        tag_class: -> if @valueOf() in selected_tags.array() then 'teal' else 'basic'
     
         can_edit: -> @author_id is Meteor.userId()
     

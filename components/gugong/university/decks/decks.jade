@@ -2,7 +2,7 @@ template(name='decks')
     .ui.container
         .ui.stackable.divided.grid
             .twelve.wide.column
-                h1.ui.horizontal.divider.header notecard decks
+                h1.ui.dividing.header notecard decks
                 .ui.centered.cards
                     each decks
                         +deck_card_view
@@ -58,12 +58,12 @@ template(name='deck_page')
                 .four.wide.column
                     +voting
                     +favorite
-                    .ui.horizontal.divider.header Tags
+                    .ui.dividing.header Tags
                     each tags
                         .ui.basic.label #{this}
                     +user_card
                     if can_edit
-                        .ui.horizontal.divider.header
+                        .ui.dividing.header
                             i.large.red.configure.icon
                             |Admin
                         a(href="/deck/edit/#{_id}").ui.basic.fluid.button

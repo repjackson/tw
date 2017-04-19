@@ -2,7 +2,7 @@ template(name='ucourses')
     .ui.container
         .ui.stackable.divided.grid
             .twelve.wide.column
-                h1.ui.horizontal.divider.header ucourses
+                h1.ui.dividing.header ucourses
                 // .ui.cards
                 .ui.relaxed.divided.items
                     each ucourses
@@ -102,14 +102,14 @@ template(name='ucourse_page')
                     .ui.basic.segment
                         |!{description}
                 .four.wide.column
-                    .ui.horizontal.divider.header Price: $#{price}
+                    .ui.dividing.header Price: $#{price}
                     +add_to_cart
-                    .ui.horizontal.divider.header Tags
+                    .ui.dividing.header Tags
                     each tags
                         .ui.basic.label #{this}
                     +user_card
                     if can_edit
-                        .ui.horizontal.divider.header
+                        .ui.dividing.header
                             i.large.red.configure.icon
                             |Admin
                         a(href="/ucourse/edit/#{_id}").ui.basic.fluid.button

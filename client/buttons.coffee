@@ -56,7 +56,7 @@ Template.published.events
             $set: published: false
 
 
-Template.edit_this_button.events
+Template.edit_button.events
     'click .edit_this': ->
         Session.set 'editing_id', @_id
     'click .save_doc': ->
@@ -124,3 +124,13 @@ Template.favorite.events
     'click .favorite_item': -> 
         if Meteor.userId() then Meteor.call 'favorite', Template.parentData(0)
         else FlowRouter.go '/sign-in'
+
+
+Template.featured.events
+    'click #make_featured': ->
+        Docs.update FlowRouter.getParam('doc_id'),
+            $set: featured: true
+
+    'click #make_unfeatured': ->
+        Docs.update FlowRouter.getParam('doc_id'),
+            $set: featured: false

@@ -5,11 +5,11 @@ template(name='assessment')
             #add_assessment_question.ui.basic.button 
                 i.red.configure.icon
                 |Add Assessment Question
-        .ui.horizontal.divider.header Unpublished Questions
+        .ui.dividing.header Unpublished Questions
         .ui.stackable.cards
             each unpublished_questions
                 +assessment_question
-        .ui.horizontal.divider.header Questions
+        .ui.dividing.header Questions
         .ui.stackable.cards
             each published_questions
                 +assessment_question

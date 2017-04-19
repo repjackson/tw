@@ -78,5 +78,11 @@ template(name='not_found')
         .ui.center.aligned.header Page Not Found
         
         
-template(name='userPill')
-    .ui.label(class='{{labelClass}}') #{username}
+template(name='staus_indicator')
+    .ui.label(class='{{labelClass}}') 
+        if online 
+            |Online
+        else if idle
+            |Idle
+        else 
+            |Offline

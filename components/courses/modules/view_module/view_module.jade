@@ -21,7 +21,7 @@ template(name='view_module')
                         a.item(href="/course/#{course_id}/module/#{_id}/sections" class="{{isActiveRoute name='module_sections'}}") Sections
                         a.item(href="/course/#{course_id}/module/#{_id}/downloads" class="{{isActiveRoute name='module_downloads'}}") Downloads
                         a.disabled.item Light Work
-                    .ui.horizontal.divider.header Status
+                    .ui.dividing.header Status
                     if complete
                         .ui.teal.fluid.label 
                             i.check.icon
@@ -30,7 +30,7 @@ template(name='view_module')
                         .ui.teal.basic.fluid.label 
                             |Incomplete
                     if isInRole 'admin'
-                        .ui.horizontal.divider.header 
+                        .ui.dividing.header 
                             |Admin
                         a.ui.fluid.basic.button(href="/course/#{course_id}/module/#{_id}/edit")
                             i.red.configure.icon

@@ -20,7 +20,7 @@ if Meteor.isClient
                     tag_count: 1
                 limit: 10
     
-        tag_class: -> if @valueOf() in selected_user_tags.array() then 'primary' else ''
+        tag_class: -> if @valueOf() in selected_user_tags.array() then 'teal' else ''
 
     Template.user.events
         'click .user_tag': ->

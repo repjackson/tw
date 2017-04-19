@@ -1,4 +1,5 @@
 template(name='tag_rating')
+    .ui.dividing.header Article Tag Ratings
     each article_tags
         .ui.basic.label #{this}
     .ui.list
@@ -14,17 +15,19 @@ template(name='tag_rating')
                     .description
                         each tags
                             .ui.small.basic.label #{this}
-    if has_rated
+    if my_rating
         .ui.dividing.header My Rating
         with my_rating
-            each tags
-                .ui.small.basic.label #{this}
-            +edit_link
-            +delete_link
+            unless is_editing
+                each tags
+                    .ui.small.basic.label #{this}
+                .ui.hidden.divider
+                +edit_button
+                +delete_button
+            else
+                +tags
+                +edit_button
     else
-        unless is_editing
-            #add_rating.ui.basic.button
-                i.plus.icon
-                |Rating
-        else
-            with new_rating
+        #add_rating.ui.basic.button
+            i.plus.icon
+            |Rating

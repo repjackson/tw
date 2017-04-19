@@ -1,5 +1,5 @@
 template(name='title')
-    .ui.labeled.input
+    .ui.labeled.fluid.input
         .ui.basic.label Title
         input#title(type='text' value=title)
 
@@ -14,24 +14,21 @@ template(name='number')
         input#number(type='number' min='0' value=number)
 
 
-
 template(name='tags')
-    .field
-        label Tags
-        each tags
-            .ui.basic.button.doc_tag
-                i.minus.icon
-                |#{this}
-        .ui.hidden.fitted.divider        
-        .ui.left.icon.four.wide.input
-            i.add.icon
-            input#add_tag(type='text' placeholder='Add Tag' maxlength='50')
+    .ui.labeled.input
+        .ui.basic.label Tags
+        input#add_tag(type='text' placeholder='Add Tag' maxlength='50')
+    each tags
+        .ui.basic.circular.button.doc_tag
+            i.minus.icon
+            |#{this}
 
 
 template(name='price')
     .ui.labeled.input
         .ui.basic.label Price in $
         input#price(type='number' min='0' value=price)
+
 
 template(name='link')
     .ui.labeled.input
@@ -64,27 +61,27 @@ template(name='location')
 
 template(name='content')
     .field
-        label Content
+        // label Content
         .froala-container
             +froalaReactive getFEContext
     
     
 template(name='image')
-    // .ui.header Custom Image
-    if image_id
-        .field
-            label Image
-            .ui.large.image
-                img(src="{{c.url image_id width=500 crop='fit'}}")
-                a#remove_photo.ui.top.left.attached.link.basic.label Remove
-                .ui.bottom.right.attached.basic.label Image Id: #{image_id}
-    else
-        .fields
+    .ui.form
+        if image_id
             .field
-                label Upload Image
-                input(type='file' name='upload_picture' accept='image/*')
-            if isInRole 'admin'
+                label Image
+                .ui.large.image
+                    img(src="{{c.url image_id width=500 crop='fit'}}")
+                    a#remove_photo.ui.top.left.attached.link.basic.label Remove
+                    .ui.bottom.right.attached.basic.label Image Id: #{image_id}
+        else
+            .fields
                 .field
-                    label or Choose Cloudinary Image Id
-                    input#input_image_id(type='text')
+                    label Upload Image
+                    input(type='file' name='upload_picture' accept='image/*')
+                if isInRole 'admin'
+                    .field
+                        label or Choose Cloudinary Image Id
+                        input#input_image_id(type='text')
     

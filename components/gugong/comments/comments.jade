@@ -5,7 +5,7 @@ template(name='comments')
     else
         #add_comment.ui.basic.teal.button
             i.plus.icon
-            |Add comment
+            |Add Comment
     .ui.threaded.comments
         each comments
             unless is_editing
@@ -24,34 +24,34 @@ template(name='comment')
             .text
                 | !{content}
             .actions
-                a.reply(href='#') Reply
+                // a.reply(href='#') Reply
                 // +favorite
                 // +voting
                 if is_author
                     +delete_link
                     a.edit_comment(href='#') Edit
-        if children
-            each children
-                h2 #{this}
-            each children_docs
-                .h2 sub comments
-                .ui.comments
-                    .comment
-                        a.avatar
-                            img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
-                        .content
-                            a.author #{author.username}
-                            .metadata
-                                span.date #{when}
-                            .text
-                                | !{content}
-                            .actions
-                                a.reply(href='#') Reply
-                                // +favorite
-                                // +voting
-                                if is_author
-                                    +delete_link
-                                    a.edit_comment(href='#') Edit
+        // if children
+        //     each children
+        //         h2 #{this}
+        //     each children_docs
+        //         .h2 sub comments
+        //         .ui.comments
+        //             .comment
+        //                 a.avatar
+        //                     img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+        //                 .content
+        //                     a.author #{author.username}
+        //                     .metadata
+        //                         span.date #{when}
+        //                     .text
+        //                         | !{content}
+        //                     .actions
+        //                         a.reply(href='#') Reply
+        //                         // +favorite
+        //                         // +voting
+        //                         if is_author
+        //                             +delete_link
+        //                             a.edit_comment(href='#') Edit
 
 
     

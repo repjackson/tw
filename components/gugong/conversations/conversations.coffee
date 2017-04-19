@@ -73,7 +73,7 @@ if Meteor.isClient
     
     
     Template.conversation_card.helpers
-        conversation_tag_class: -> if @valueOf() in selected_conversation_tags.array() then 'primary' else 'basic'
+        conversation_tag_class: -> if @valueOf() in selected_conversation_tags.array() then 'teal' else 'basic'
     
     Template.conversation_card.events
         'click .remove_message': ->

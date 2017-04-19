@@ -1,0 +1,21 @@
+template(name='my_friends')
+    .ui.dividing.header Friends
+    .ui.divided.list
+        each my_friends
+            .item
+                img.ui.avatar.image(src="{{c.url profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+                .content
+                    a.header(href="/profile/#{_id}")
+                        if profile.name 
+                            |#{profile.name}
+                            // |#{profile.first_name} #{profile.last_name}
+                        else
+                            |#{username}
+                    // .description
+                    //     each five_tags
+                    //         .ui.tiny.basic.label #{this}
+                    .description
+                        +staus_indicator
+                        |last login: #{last_login}
+                                
+                        

@@ -12,6 +12,9 @@
                 .divider
                 if currentUser
                     if isInRole 'admin'
+                        a.item(href='/dashboard' class="{{isActivePath '/dashboard'}}") 
+                            i.dashboard.icon
+                            | Dashboard
                         a.item(href='/admin/members' class="{{isActivePath '/admin/members'}}")
                             i.configure.icon
                             | Admin

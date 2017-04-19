@@ -10,9 +10,18 @@ db.users.find({ image_id:{$exists:true}, profile: {$exists:true} }).forEach(
 )
 
 
+db.docs.find({ type:{$exists:false} }).forEach(
+    function(doc) {
+        doc.type = 'article';
+        db.docs.save(doc);
+    }
+)
 
 
-mongo --ssl --sslAllowInvalidCertificates aws-us-east-1-portal.21.dblayer.com:10444/facetdb -u facetadmin -pTurnf34ragainst!
+db.docs.find({ type:{$exists:false} }).count()
+
+
+mongo --ssl --sslAllowInvalidCertificates aws-us-east-1-portal.21.dblayer.com:10444/toridb -u toriadmin -pTurnf34ragainst!
 
 
 mongodb://facet:<password>@aws-us-east-1-portal.21.dblayer.com:10444/facetdb?ssl=true

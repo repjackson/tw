@@ -1,23 +1,22 @@
 Template.subtitle.events
     'blur #subtitle': ->
         subtitle = $('#subtitle').val()
-        Docs.update Template.currentData()._id,
+        Docs.update @_id,
             $set: subtitle: subtitle
             
             
 Template.tags.events
     'keydown #add_tag': (e,t)->
         if e.which is 13
-            doc_id = FlowRouter.getParam('doc_id')
             tag = $('#add_tag').val().toLowerCase().trim()
             if tag.length > 0
-                Docs.update doc_id,
+                Docs.update @_id,
                     $addToSet: tags: tag
                 $('#add_tag').val('')
 
     'click .doc_tag': (e,t)->
         tag = @valueOf()
-        Docs.update FlowRouter.getParam('doc_id'),
+        Docs.update Template.currentData()._id,
             $pull: tags: tag
         $('#add_tag').val(tag)
 
@@ -25,55 +24,51 @@ Template.tags.events
 
 Template.price.events
     'change #price': ->
-        doc_id = FlowRouter.getParam('doc_id')
         price = parseInt $('#price').val()
 
-        Docs.update doc_id,
+        Docs.update @_id,
             $set: price: price
             
             
 Template.number.events
     'blur #number': (e) ->
         number = parseInt $('#number').val()
-        Docs.update FlowRouter.getParam('doc_id'),
+        Docs.update @_id,
             $set: number: number
-    
-
-            
             
             
 Template.title.events
     'blur #title': ->
         # alert 'hi'
         title = $('#title').val()
-        Docs.update Template.currentData()._id,
+        Docs.update @_id,
             $set: title: title
             
             
 Template.link.events
     'blur #link': ->
         link = $('#link').val()
-        Docs.update FlowRouter.getParam('doc_id'),
+        Docs.update @_id,
             $set: link: link
             
             
 Template.page_name.events
     'blur #name': ->
         name = $('#name').val()
-        Docs.update FlowRouter.getParam('doc_id'),
+        Docs.update @_id,
             $set: name: name
             
             
 Template.type.events
     'blur #type': ->
         type = $('#type').val()
-        Docs.update FlowRouter.getParam('doc_id'),
+        Docs.update @_id,
             $set: type: type
             
             
 Template.image.events
     "change input[type='file']": (e) ->
-        doc_id = FlowRouter.getParam('doc_id')
+        doc_id = @_id
         files = e.currentTarget.files
 
 
@@ -91,7 +86,7 @@ Template.image.events
 
     'keydown #input_image_id': (e,t)->
         if e.which is 13
-            doc_id = FlowRouter.getParam('doc_id')
+            doc_id = @_id
             image_id = $('#input_image_id').val().toLowerCase().trim()
             if image_id.length > 0
                 Docs.update doc_id,
@@ -115,7 +110,7 @@ Template.image.events
                 if not err
                     # Do Stuff with res
                     # console.log res
-                    Docs.update FlowRouter.getParam('doc_id'), 
+                    Docs.update @_id, 
                         $unset: image_id: 1
 
                 else
@@ -127,13 +122,13 @@ Template.image.events
     # 		        console.log "Upload Error: #{err}"
     # 		    else
     #     			console.log "Upload Result: #{res}"
-    #                 # Docs.update FlowRouter.getParam('doc_id'), 
+    #                 # Docs.update @_id, 
     #                 #     $unset: image_id: 1
 
             
 Template.location.events
     'change #location': ->
-        doc_id = FlowRouter.getParam('doc_id')
+        doc_id = @_id
         location = $('#location').val()
 
         Docs.update doc_id,
@@ -146,7 +141,7 @@ Template.content.events
         # snippet = $('#snippet').val()
         # if snippet.length is 0
         #     snippet = $(html).text().substr(0, 300).concat('...')
-        doc_id = FlowRouter.getParam('doc_id')
+        doc_id = @_id
 
         Docs.update doc_id,
             $set: content: html
@@ -154,7 +149,7 @@ Template.content.events
 
 Template.content.helpers
     getFEContext: ->
-        @current_doc = Docs.findOne FlowRouter.getParam('doc_id')
+        @current_doc = Docs.findOne @_id
         self = @
         {
             _value: self.current_doc.content

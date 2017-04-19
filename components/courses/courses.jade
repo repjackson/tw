@@ -29,7 +29,7 @@ template(name='courses')
                                 |View Details
                                 i.right.chevron.icon
             if isInRole 'admin'
-                .ui.horizontal.divider.header 
+                .ui.dividing.header 
                     i.red.configure.icon
                     |Unpublished Courses
                 each unpublished_courses

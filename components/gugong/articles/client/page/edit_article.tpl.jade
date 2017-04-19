@@ -1,18 +1,31 @@
 with article
-    .ui.container.segment
+    .ui.container
         .ui.center.aligned.header Edit Article
-        .ui.form
-            +title
-            +image
-            .field
-                label Publish Date
-                input#publish_date(type='date' value=publish_date)
-            +content
-            +tags
-            +published
-            +featured
+        .ui.hidden.compact.divider
+        +title
+        .ui.hidden.compact.divider
+        +image
+        .ui.hidden.compact.divider
+        .ui.labeled.input
+            .ui.basic.label Publish Date
+            input#publish_date(type='date' value=publish_date)
+        .ui.hidden.compact.divider
+        +content
+        .ui.hidden.compact.divider
+        +tags
+        .ui.hidden.compact.divider
+        +published
+        .ui.hidden.compact.divider
+        +featured
+        .ui.hidden.compact.divider
+        .ui.basic.center.aligned.segment
             if title
-                #save_article.ui.green.button 
-                    i.check.icon
-                    |Save
+                if tags
+                    #save_article.ui.green.button 
+                        i.check.icon
+                        |Save
+                else
+                    .ui.disabled.basic.green.button Add Tags to Save
+            else
+                .ui.disabled.basic.green.button Add Title to Save
             +delete_button

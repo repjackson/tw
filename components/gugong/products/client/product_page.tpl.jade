@@ -10,14 +10,14 @@ with product
                 h1.ui.center.aligned.header #{title}
                 |!{content}
             .five.wide.column
-                .ui.horizontal.divider.header Price $#{price}
+                .ui.dividing.header Price $#{price}
                 +add_to_cart
-                .ui.horizontal.divider.header Tags
+                .ui.dividing.header Tags
                 each tags
                     .ui.basic.label #{this}
                 +user_card
                 if can_edit
-                    .ui.horizontal.divider.header 
+                    .ui.dividing.header 
                         i.red.configure.icon
                         |Admin
                     a.ui.basic.fluid.button(href="/product/edit/#{_id}")

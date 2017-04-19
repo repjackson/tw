@@ -12,17 +12,17 @@ with article
                     if publish_date
                         h4.ui.header Published #{publish_when}
                     .ui.basic.segment
-                        |!{content}
-                    if tags
-                        .ui.basic.segment
-                            each tags
-                                .ui.basic.label #{this}
+                        |!{body}
                 +user_blurb
                 +comments
             .four.wide.column
+                .ui.dividing.header Article Tags
+                each tags
+                    .ui.basic.label #{this}
                 if isInRole 'admin'
-                    .ui.divider.header Admin
-                    i.large.red.configure.icon
+                    .ui.dividing.header 
+                        i.large.red.configure.icon
+                        |Admin
                     .edit_article.ui.basic.button
                         i.pencil.icon
                         |Edit Article
@@ -30,7 +30,7 @@ with article
                         .ui.green.label Published
                     else
                         .ui.red.label Unpublished                        
-                .ui.horizontal.divider.header
+                .ui.dividing.header Actions
                 +voting
                 +favorite
                 +tag_rating

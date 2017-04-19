@@ -4,15 +4,15 @@ template(name='values')
             #add_value_card.ui.basic.button 
                 i.red.configure.icon
                 |Add Value Card
-        .ui.horizontal.divider.header Available Cards
+        .ui.dividing.header Available Cards
         .ui.four.cards
             each unvoted_cards
                 +value_card
-        .ui.horizontal.divider.header Liked Cards
+        .ui.dividing.header Liked Cards
         .ui.four.cards
             each liked_cards
                 +value_card
-        .ui.horizontal.divider.header Disliked Cards
+        .ui.dividing.header Disliked Cards
         .ui.four.cards
             each disliked_cards
                 +value_card

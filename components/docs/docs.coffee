@@ -3,6 +3,7 @@
 Docs.before.insert (userId, doc)->
     doc.timestamp = Date.now()
     doc.author_id = Meteor.userId()
+    doc.points = 0
     doc.upvoters = []
     doc.downvoters = []
     doc.published = false
@@ -44,7 +45,7 @@ if Meteor.isClient
         one_doc: -> 
             Docs.find().count() is 1
     
-        tag_class: -> if @valueOf() in selected_tags.array() then 'primary' else 'basic'
+        tag_class: -> if @valueOf() in selected_tags.array() then 'teal' else 'basic'
 
         selected_tags: -> selected_tags.array()
 
@@ -52,7 +53,7 @@ if Meteor.isClient
     Template.doc_view.helpers
         is_author: -> Meteor.userId() and @author_id is Meteor.userId()
     
-        tag_class: -> if @valueOf() in selected_tags.array() then 'primary' else 'basic'
+        tag_class: -> if @valueOf() in selected_tags.array() then 'teal' else 'basic'
     
         when: -> moment(@timestamp).fromNow()
 
