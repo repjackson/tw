@@ -23,10 +23,10 @@ template(name='value_card')
             unless is_editing
                 h2.ui.center.aligned.header #{title}
                 h4.ui.center.aligned.header #{subtitle}
-                +voting
+                +big_both_voter
             else
                 .ui.form
                     +title
                     +subtitle
             if isInRole 'admin' 
-                +edit_this_button
+                +edit_button

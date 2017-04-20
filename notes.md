@@ -27,18 +27,6 @@ mongo --ssl --sslAllowInvalidCertificates aws-us-east-1-portal.21.dblayer.com:10
 mongodb://facet:<password>@aws-us-east-1-portal.21.dblayer.com:10444/facetdb?ssl=true
 
 
-notes
-    member matching on edit page
-    check in process for members
-    check in process for guests
-        name
-        email
-        associated member
-            notify member via text/email
-
-todo
-    remote editing mode for guest that just checked in
-    
     
 my thoughts
     love game concept, everything you do is for a purpose, thus has value, thus should be rewarded/incentivized
@@ -69,18 +57,9 @@ notes
 collaboration + reflection the same
 
 
-module structure
-    video
-    video description
-    transcript
-    
-    
 todo
     light work enablesn
     70/30 progress
-    each module has 
-        coursework progress bar
-        light work progress bar
         
     badges
         days in a row
@@ -89,7 +68,6 @@ todo
         
 course
     tabs
-        welcome
         terms
             checkboxes of agreements
         what inspired sol
@@ -98,3 +76,16 @@ course
             stuck
             motivated
             
+
+
+tests notes
+    each answer is a document with sessionID, question_id, answer, userID, makes it easy for any analytics
+    each test has a dashboard showing sessions, statistics (user and total), 
+    test creater app, add questions, add type of answer
+    each session has results doc? probably just in the same doc, with finished boolean
+    when finished, can publish results, adds badge to user profile
+    future tests
+        english competency
+        math skills
+        office skills
+        any business related/beneficial skill, aim is to build ability, empower people

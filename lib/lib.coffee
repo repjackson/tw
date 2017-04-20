@@ -32,7 +32,7 @@ Meteor.users.helpers
             "#{@profile.first_name}  #{@profile.last_name}"
             
     last_login: -> 
-        moment(@status.lastLogin.date).fromNow()
+        moment(@status?.lastLogin.date).fromNow()
 
     five_tags: -> @tags[0..3]
     

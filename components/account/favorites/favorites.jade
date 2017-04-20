@@ -1,8 +1,10 @@
-.ui.text.container.segment
-    h2.ui.header Favorites
+template(name='favorites')
+    .ui.dividing.header My Favorites
     .ui.divided.vertical.list
         each favorites
             .item
                 a(href="/view/#{_id}") #{title} 
+                each tags
+                    .ui.small.basic.label #{this}
                 +favorite
         

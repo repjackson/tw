@@ -1,0 +1,71 @@
+template(name='test_page')
+    with test
+        .ui.container
+            a.ui.top.left.attached.basic.button(href="/tests")
+                i.arrow.left.icon
+                |tests
+            if image_id
+                img.ui.centered.image(src="{{c.url image_id height=500 width=800 background='white' crop='lpad'}}")
+            h1.ui.header #{title}
+            .ui.stackable.divided.grid
+                .twelve.wide.column
+                    .content
+                        if publish_date
+                            h4.ui.header Published #{publish_when}
+                        .ui.basic.segment
+                            |!{body}
+                    +user_blurb
+                    +comments
+                .four.wide.column
+                    .ui.dividing.header test Tags
+                    each tags
+                        .ui.basic.label #{this}
+                    if isInRole 'admin'
+                        .ui.dividing.header 
+                            i.large.red.configure.icon
+                            |Admin
+                        .edit_test.ui.basic.button
+                            i.pencil.icon
+                            |Edit test
+                        if published
+                            .ui.green.label Published
+                        else
+                            .ui.red.label Unpublished                        
+                    .ui.dividing.header Actions
+                    +voting
+                    +favorite
+                    +tag_rating
+                    
+                    
+template(name='edit_test')        
+    with test
+        .ui.container
+            .ui.center.aligned.header Edit test
+            .ui.hidden.compact.divider
+            +title
+            .ui.hidden.compact.divider
+            +image
+            .ui.hidden.compact.divider
+            .ui.labeled.input
+                .ui.basic.label Publish Date
+                input#publish_date(type='date' value=publish_date)
+            .ui.hidden.compact.divider
+            +content
+            .ui.hidden.compact.divider
+            +tags
+            .ui.hidden.compact.divider
+            +published
+            .ui.hidden.compact.divider
+            +featured
+            .ui.hidden.compact.divider
+            .ui.basic.center.aligned.segment
+                if title
+                    if tags
+                        #save_test.ui.green.button 
+                            i.check.icon
+                            |Save
+                    else
+                        .ui.disabled.basic.green.button Add Tags to Save
+                else
+                    .ui.disabled.basic.green.button Add Title to Save
+                +delete_button

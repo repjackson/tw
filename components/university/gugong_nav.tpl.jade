@@ -1,4 +1,4 @@
-.ui.menu
+.ui.borderless.menu
     .ui.container
         a.item(href="/dashboard" class="{{isActivePath '/dashboard'}}")
             i.dashboard.icon
@@ -11,9 +11,18 @@
             i.large.university.icon
         a.icon.item(href='/conversations' class="{{isActivePath '/conversations'}}")
             i.large.comments.outline.icon
-        a.icon.disabled.item(href='/ideas' class="{{isActivePath '/ideas'}}")
+        a.icon.disabled.item(href='#')
             i.large.idea.icon
         a.icon.item(href='/products' class="{{isActivePath '/products'}}")
             i.large.shopping.cart.icon
         a.icon.item(href='/users' class="{{isActivePath '/users'}}")
             i.users.icon
+        a.item(href="/profile/#{currentUser._id}" class="{{isActivePath '/profile/#{currentUser._id}'}}")
+            if currentUser.profile.image_id
+                img.ui.avatar.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+            else
+                i.user.icon
+            // if currentUser.name
+            //     | #{currentUser.name}
+            // else
+            | Profile

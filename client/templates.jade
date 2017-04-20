@@ -65,6 +65,7 @@ template(name='layout')
     .pusher
         +nav
         +Template.dynamic template=sub_nav
+        +Template.dynamic template=sub_sub_nav
         +Template.dynamic template=cloud
         +Template.dynamic template=main
         unless isInRole 'admin'

@@ -1,0 +1,27 @@
+template(name='university')
+    .ui.container
+        h1.ui.dividing.header Inspire U
+        +courses
+        +decks
+        +excercises
+        +tests2
+    
+    
+template(name='excercises')
+    .ui.container
+        h1.ui.dividing.header Excercises
+        a.item(href='/values') Values Card Game
+
+    
+template(name='inspire_u_nav')
+    .ui.borderless.menu
+        .ui.container
+            .header.item Inspire U
+            a.item(href='/iu/courses' class="{{isActivePath '/iu/courses'}}")
+                |Courses
+            a.item(href="/iu/decks" class="{{isActivePath '/iu/decks'}}")
+                |Notecard Decks
+            a.item(href='/iu/excercises' class="{{isActivePath '/iu/excercises'}}")
+                |Excercises
+            a.item(href='/iu/tests' class="{{isActivePath '/iu/tests'}}")
+                |Tests
