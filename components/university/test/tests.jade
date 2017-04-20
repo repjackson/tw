@@ -1,10 +1,9 @@
-template(name='tests2')
+template(name='tests')
     .ui.container
         h1.ui.dividing.header Tests
         a.item(href='/assessment') Life Assessment
         .ui.stackable.divided.grid
             .twelve.wide.column
-                h1.ui.dividing.header tests
                 if is_list_view
                     .ui.relaxed.divided.items
                         each tests
@@ -35,11 +34,11 @@ template(name='tests2')
 template(name='test_card')
     .ui.card
         .ui.centered.image
-            a(href="/test/view/#{_id}")
+            a(href="{{pathFor 'view_test' doc_id=_id}}")
                 img(src="{{c.url image_id  height=300 crop='fill' gravity='face' }}")
         .content
             .header
-                a(href="/test/view/#{_id}")
+                a(href="{{pathFor 'view_test' doc_id=_id}}")
                     h2.ui.header #{title}
             if publish_date
                 .meta
@@ -60,15 +59,15 @@ template(name='test_card')
             
 template(name='test_item')
     .item
-        a.image(href="/test/view/#{_id}")
+        a.image(href="{{pathFor 'view_test' doc_id=_id}}")
             img.ui.rounded.image(src="{{c.url image_id  width=175 height=175 crop='fill' gravity='face' }}")
         .content
-            a.header(href="/test/view/#{_id}") #{title}
+            a.header(href="{{pathFor 'view_test' doc_id=_id}}") #{title}
             .meta
                 | Published #{publish_when}
             .description
                 p !{body}
-                a(href="/test/view/#{_id}") 
+                a(href="{{pathFor 'view_test' doc_id=_id}}") 
                     |View More
                     i.arrow.right.icon
             .extra
@@ -86,3 +85,5 @@ template(name='test_item')
                         .ui.green.basic.label Featured
                     else
                         .ui.red.basic.label Unfeatured
+
+

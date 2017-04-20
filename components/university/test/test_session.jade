@@ -1,0 +1,50 @@
+template(name='take_test')
+    .ui.container
+        .ui.breadcrumb
+            a.section(href='/') Home
+            .divider  / 
+            a.section(href='/courses') Inspire U
+            .divider  / 
+            a.section(href="/tests") Tests
+            .divider  / 
+            .section #{test.title}
+            .divider  / 
+            .active.section Session: #{test_session._id}
+
+        .ui.dividing.header #{test.title}
+        +test_session_view
+
+template(name='test_session_view')
+    .ui.container
+        +cloud type='test_question'
+        if isInRole 'admin'
+            #add_test_question.ui.basic.button 
+                i.red.configure.icon
+                |Add Test Question
+        .ui.dividing.header Unpublished Questions
+        .ui.stackable.cards
+            each unpublished_questions
+                +test_question
+        .ui.dividing.header Questions
+        .ui.stackable.cards
+            each published_questions
+                +test_question
+
+template(name='test_question')
+    .ui.card
+        .content
+            unless is_editing
+                h2.ui.center.aligned.header #{title}
+                .ui.basic.center.aligned.compact.segment
+                    +rating
+                .ui.divider
+                each tags
+                    .ui.basic.teal.label #{this}
+            else
+                .ui.form
+                    +title
+                    +tags
+                    +delete_button
+                    +published
+            if isInRole 'admin' 
+                +edit_button

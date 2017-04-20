@@ -23,7 +23,7 @@ template(name='feed_event')
                     | #{author.username}
                 | said
                 .date
-                    | #{when}
+                    | #{from_now}
             .extra.text
                 |!{content}
             .meta

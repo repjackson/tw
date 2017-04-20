@@ -3,17 +3,28 @@ if Meteor.isClient
         BlazeLayout.render 'layout',
             sub_nav: 'gugong_nav'
             sub_sub_nav: 'inspire_u_nav'
-            main: 'tests2'
+            main: 'tests'
     
     
-    FlowRouter.route '/test/:doc_id/edit', action: (params) ->
-        BlazeLayout.render 'layout',
-            main: 'edit_test'
+    FlowRouter.route '/test/:doc_id/edit', 
+        name: 'edit_test'
+        action: (params) ->
+            BlazeLayout.render 'layout',
+                main: 'edit_test'
     
-    FlowRouter.route '/test/:doc_id/view', action: (params) ->
-        BlazeLayout.render 'layout',
-            sub_nav: 'gugong_nav'
-            main: 'test_page'
+    FlowRouter.route '/test/:doc_id/view', 
+        name: 'view_test'
+        action: (params) ->
+            BlazeLayout.render 'layout',
+                sub_nav: 'gugong_nav'
+                main: 'test_page'
+    
+    FlowRouter.route '/test/:doc_id/session/:session_id/', 
+        name: 'edit_test_session'
+        action: (params) ->
+            BlazeLayout.render 'layout',
+                sub_nav: 'gugong_nav'
+                main: 'take_test'
     
     Template.tests.onCreated ->
         @autorun -> Meteor.subscribe('docs', selected_tags.array(), 'test')
@@ -57,3 +68,38 @@ if Meteor.isClient
     
         'click .edit_test': ->
             FlowRouter.go "/test/edit/#{@_id}"
+
+
+
+
+
+    Template.take_test.onCreated ->
+        @autorun -> Meteor.subscribe('test_questions', FlowRouter.getParam('session_id'))
+    
+    Template.take_test.helpers
+        test_session: -> Docs.findOne type: 'test_session'
+        test: -> Docs.findOne type: 'test'
+        questions: -> Docs.find type: 'question'
+
+
+if Meteor.isServer
+    publishComposite 'test_questions', (session_id)->
+        {
+            find: ->
+                Docs.find session_id
+            children: [
+                { find: (session) ->
+                    Docs.find
+                        type: 'test'
+                        _id: session.test_id
+                children: [
+                    {
+                        find: (test) ->
+                            Docs.find
+                                type: 'question'
+                                test_id: test._id
+                    }
+                ]    
+                }
+            ]
+        }            

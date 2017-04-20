@@ -20,7 +20,7 @@ template(name='comment')
         .content
             a.author #{author.username}
             .metadata
-                span.date #{when}
+                span.date #{from_now}
             .text
                 | !{content}
             .actions
@@ -42,7 +42,7 @@ template(name='comment')
         //                 .content
         //                     a.author #{author.username}
         //                     .metadata
-        //                         span.date #{when}
+        //                         span.date #{from_now}
         //                     .text
         //                         | !{content}
         //                     .actions

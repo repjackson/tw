@@ -1,9 +1,14 @@
 template(name='test_page')
     with test
         .ui.container
-            a.ui.top.left.attached.basic.button(href="/tests")
-                i.arrow.left.icon
-                |tests
+            .ui.breadcrumb
+                a.section(href='/') Home
+                .divider  / 
+                a.section(href='/courses') Inspire U
+                .divider  / 
+                a.section(href="/tests") Tests
+                .divider  / 
+                .active.section #{title}
             if image_id
                 img.ui.centered.image(src="{{c.url image_id height=500 width=800 background='white' crop='lpad'}}")
             h1.ui.header #{title}
@@ -13,20 +18,38 @@ template(name='test_page')
                         if publish_date
                             h4.ui.header Published #{publish_when}
                         .ui.basic.segment
-                            |!{body}
+                            h3.ui.dividing.header Description
+                            |!{content}
+                            h3.ui.dividing.header Statistics
+                            h3.ui.dividing.header Your Sessions
+                                .ui.cards
+                                    a#new_session.ui.card(href='#')
+                                        .content
+                                            .header 
+                                                i.big.plus.icon
+                                                | New Session
+                                    each my_sessions
+                                        .ui.card
+                                            .content
+                                                .header #{number}
+                                                .description
+                                                    |#{from_now}
+                                            .content
+                                                |#{results}
+                                                    
                     +user_blurb
                     +comments
                 .four.wide.column
-                    .ui.dividing.header test Tags
+                    .ui.dividing.header #{title} Tags
                     each tags
                         .ui.basic.label #{this}
                     if isInRole 'admin'
                         .ui.dividing.header 
                             i.large.red.configure.icon
                             |Admin
-                        .edit_test.ui.basic.button
+                        a.ui.basic.button(href="{{pathFor 'edit_test' doc_id=_id}}")
                             i.pencil.icon
-                            |Edit test
+                            |Edit Test
                         if published
                             .ui.green.label Published
                         else
@@ -40,7 +63,7 @@ template(name='test_page')
 template(name='edit_test')        
     with test
         .ui.container
-            .ui.center.aligned.header Edit test
+            .ui.center.aligned.header Edit #{title} Test
             .ui.hidden.compact.divider
             +title
             .ui.hidden.compact.divider
@@ -61,9 +84,9 @@ template(name='edit_test')
             .ui.basic.center.aligned.segment
                 if title
                     if tags
-                        #save_test.ui.green.button 
+                        #save_test.ui.big.green.button 
                             i.check.icon
-                            |Save
+                            |Save #{title} Test
                     else
                         .ui.disabled.basic.green.button Add Tags to Save
                 else
