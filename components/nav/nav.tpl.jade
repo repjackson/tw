@@ -8,6 +8,7 @@
                 a.item(href='/about' class="{{isActivePath '/about'}}") About
                 a.item(href='/courses' class="{{isActivePath '/courses'}}") Courses
                 a.item(href='/lightbank' class="{{isActivePath '/lightbank'}}") Lightbank
+                a.item(href='/products' class="{{isActivePath '/products'}}") Services
                 a.item(href='/contact' class="{{isActivePath '/contact'}}") Contact
                 .divider
                 if currentUser
@@ -18,7 +19,7 @@
                         a.item(href='/admin/members' class="{{isActivePath '/admin/members'}}")
                             i.configure.icon
                             | Admin
-                    a.item(href="/profile/#{currentUser._id}" class="{{isActivePath '/profile/#{currentUser._id}'}}")
+                    a.item(href="/dashboard" class="{{isActivePath '/dashboard'}}")
                         if currentUser.profile.image_id
                             img.ui.avatar.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
                         else

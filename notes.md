@@ -53,29 +53,6 @@ notes
     reputation points can be used to purchase things that are sponsored
     
     
-    
-collaboration + reflection the same
-
-
-todo
-    light work enablesn
-    70/30 progress
-        
-    badges
-        days in a row
-        
-        
-        
-course
-    tabs
-        terms
-            checkboxes of agreements
-        what inspired sol
-    reminders
-        i'm feeling....
-            stuck
-            motivated
-            
 
 
 tests notes
@@ -92,9 +69,12 @@ tests notes
         
         
 meeting notes
-    remove sol title from sales page
     marketplace
     inspire u
         courses
         tests
     stable sol link
+    
+    
+todo today
+    remove unneeded components
