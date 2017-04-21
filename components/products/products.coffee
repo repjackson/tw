@@ -1,16 +1,19 @@
 FlowRouter.route '/products', action: ->
     BlazeLayout.render 'layout',
-        # sub_nav: 'gugong_nav'
+        # sub_nav: 'member_nav'
         main: 'products'
 
-FlowRouter.route '/product/edit/:doc_id', action: (params) ->
-    BlazeLayout.render 'layout',
-        main: 'edit_product'
+FlowRouter.route '/product/:doc_id/edit', 
+    name: 'edit_product'
+    action: (params) ->
+        BlazeLayout.render 'layout',
+            main: 'edit_product'
 
-FlowRouter.route '/product/view/:doc_id', action: (params) ->
-    BlazeLayout.render 'layout',
-        # sub_nav: 'gugong_nav'
-        main: 'product_page'
+FlowRouter.route '/product/:doc_id/view', 
+    name: 'view_product'
+    action: (params) ->
+        BlazeLayout.render 'layout',
+            main: 'product_page'
 
 if Meteor.isClient
     Template.products.onCreated ->

@@ -1,5 +1,5 @@
 template(name='cart')
-    .ui.text.container
+    .ui.container
         |{{> ensureSignedIn template="cart_checkout"}}
 
 
@@ -29,41 +29,53 @@ template(name='cart_checkout')
     //                 a.buy_course.ui.teal.big.button
     //                     |Buy #{title} for $#{price}
     // .ui.hidden.divider
-    table.ui.table
-        thead
-            tr
-                th 
-                th Title
-                th Price
-                th Amount
-                th Actions
-        tbody
-            each cart_items
+    if total_items
+        table.ui.table
+            thead
                 tr
-                    td 
-                        img.ui.tiny.image(src="{{c.url parent_doc.image_id width=100 height=100 gravity='face' crop='fill'}}")
-                    td 
-                        .ui.header 
-                            |#{parent_doc.title}
-                        each parent_doc.tags
-                            .ui.small.basic.label #{this}
-                    td 
-                        |#{parent_doc.price}
-                    td
-                        +number
-                        #increase_amount.ui.basic.icon.button
-                            i.plus.icon
-                        |#{number}
-                        #decrease_amount.ui.basic.icon.button
-                            i.minus.icon
-                    td 
-                        +delete_button
-        tfoot
-            tr
-                th 3 People
-                th 2 Approved
-                th
-
+                    th 
+                    th Title
+                    th Price
+                    // th Amount
+                    th Actions
+            tbody
+                each cart_items
+                    tr
+                        td 
+                            img.ui.tiny.image(src="{{c.url parent_doc.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                        td 
+                            a.ui.header(href="product/#{parent_doc._id}/view") 
+                                |#{parent_doc.title}
+                            each parent_doc.tags
+                                .ui.small.basic.label #{this}
+                        td 
+                            |$#{parent_doc.price}
+                        // td
+                        //     +number
+                        //     #increase_amount.ui.basic.icon.button
+                        //         i.plus.icon
+                        //     |#{number}
+                        //     #decrease_amount.ui.basic.icon.button
+                        //         i.minus.icon
+                        td 
+                            +delete_button
+                            .purchase_item.ui.basic.green.button 
+                                i.check.icon
+                                | Purchase
+            tfoot
+                tr
+                    th 
+                    th 
+                    th
+                    th Subtotal (#{total_items} items): $#{subtotal}
+    else
+        .ui.message
+            .header 
+                |No shopping cart items
+            p 
+                |Checkout our 
+                a(href='/products') Services
+                |section to add some.
 
 
 template(name='cart_profile')

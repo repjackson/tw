@@ -32,9 +32,6 @@ template(name='published')
         #publish.ui.basic.button
             |Private
 
-
-
-
 template(name='edit_button')
     unless is_editing
         .edit_this.ui.basic.button
@@ -54,13 +51,26 @@ template(name='edit_link')
             |Save
 
 template(name='add_to_cart')
-    #add_to_cart.ui.fluid.basic.button
-        i.large.add.to.cart.icon
-        |Add to Cart
+    unless added
+        #add_to_cart.ui.fluid.basic.button
+            i.large.icons
+                i.add.to.cart.icon
+                i.corner.green.plus.icon
+            |Add to Cart
+    else
+        .ui.fluid.labeled.basic.button
+            #remove_from_cart.ui.basic.button
+                i.large.icons
+                    i.add.to.cart.icon
+                    i.corner.red.minus.icon
+                |Remove from Cart
+            a.ui.basic.right.pointing.label(href='/cart')
+                |View Cart
+        
 
 template(name='delete_button')
     #delete.ui.red.icon.basic.button
-        i.trash.icon
+        i.remove.icon
         
 template(name='delete_link')
     a#delete(href='#') Delete

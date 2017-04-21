@@ -11,7 +11,9 @@ if Meteor.isClient
     
     
     Template.favorites.helpers
-        favorites: -> Docs.find()
+        favorites: -> 
+            Docs.find
+                favoriters: $in: [@userId]
     
     Template.favorites.events
 

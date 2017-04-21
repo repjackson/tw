@@ -1,0 +1,9 @@
+template(name='my_purchases')
+    .ui.dividing.header My Purchases
+    .ui.list
+        each purchases
+            .item
+                .ui.header hi
+                |#{parent_doc.title}
+                |Purchase Price $#{sale_price}
+                |When #{when}

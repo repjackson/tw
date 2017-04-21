@@ -26,14 +26,14 @@ if Meteor.isClient
             Session.set 'editing_id', new_id
                 
 
-if Meteor.isServer
-    Meteor.publish 'test_questions', (selected_tags, test_id)->
+# if Meteor.isServer
+    # Meteor.publish 'test_questions', (selected_tags, test_id)->
     
-        self = @
-        match = {}
-        # if selected_tags then match.tags = $all: selected_tags
-        if selected_tags.length > 0 then match.tags = $all: selected_tags
-        match.type = 'test_question'
-        match.test_id = test_id
+    #     self = @
+    #     match = {}
+    #     # if selected_tags then match.tags = $all: selected_tags
+    #     if selected_tags.length > 0 then match.tags = $all: selected_tags
+    #     match.type = 'test_question'
+    #     match.test_id = test_id
     
-        Docs.find match
+    #     Docs.find match

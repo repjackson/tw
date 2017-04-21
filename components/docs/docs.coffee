@@ -19,6 +19,8 @@ Docs.after.update ((userId, doc, fieldNames, modifier, options) ->
 Docs.helpers
     author: -> Meteor.users.findOne @author_id
     when: -> moment(@timestamp).fromNow()
+    parent_doc: -> Docs.findOne @parent_id
+
 
 FlowRouter.route '/lightbank', action: (params) ->
     BlazeLayout.render 'layout',

@@ -31,11 +31,11 @@ template(name='products')
 template(name='product_card')
     .ui.card
         .ui.centered.image
-            a(href="/product/view/#{_id}")
+            a(href="/product/#{_id}/view")
                 img(src="{{c.url image_id  height=300 crop='fill' gravity='face' }}")
         .content
             .header
-                a(href="/product/view/#{_id}")
+                a(href="/product/#{_id}/view")
                     h2.ui.header #{title}
             if publish_date
                 .meta
@@ -56,16 +56,16 @@ template(name='product_card')
             
 template(name='product_item')
     .item
-        a.image(href="/product/view/#{_id}")
+        a.image(href="/product/#{_id}/view")
             img.ui.rounded.image(src="{{c.url image_id  width=175 height=175 crop='fill' gravity='face' }}")
         .content
-            a.header(href="/product/view/#{_id}") #{title}
+            a.header(href="/product/#{_id}/view") #{title}
             .meta
                 // | published #{publish_when}
                 | Price: $#{price}
             .description
                 p #{snippet}
-                a(href="/product/view/#{_id}") 
+                a(href="/product/#{_id}/view") 
                     |View More
                     i.arrow.right.icon
             // .extra

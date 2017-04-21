@@ -1,6 +1,6 @@
 FlowRouter.route '/articles', action: ->
     BlazeLayout.render 'layout', 
-        sub_nav: 'gugong_nav'
+        sub_nav: 'member_nav'
         main: 'articles'
 
 FlowRouter.route '/article/edit/:doc_id', action: (params) ->
@@ -9,7 +9,7 @@ FlowRouter.route '/article/edit/:doc_id', action: (params) ->
 
 FlowRouter.route '/article/view/:doc_id', action: (params) ->
     BlazeLayout.render 'layout',
-        sub_nav: 'gugong_nav'
+        sub_nav: 'member_nav'
         main: 'article_page'
 
 Session.setDefault 'layout_view', 'list'

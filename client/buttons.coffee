@@ -133,11 +133,11 @@ Template.delete_link.events
 
 
 Template.favorite.helpers
-    favorite_count: -> Template.parentData(0).favorite_count
+    favorite_count: -> @favorite_count
     
     favorite_item_class: -> 
         if Meteor.userId()
-            if Template.parentData(0).favoriters and Meteor.userId() in Template.parentData(0).favoriters then 'red' else 'outline'
+            if @favoriters and Meteor.userId() in @favoriters then 'red' else 'outline'
         else 'grey disabled'
     
 Template.favorite.events
@@ -155,11 +155,21 @@ Template.featured.events
         Docs.update FlowRouter.getParam('doc_id'),
             $set: featured: false
 
+Template.add_to_cart.onCreated ->
+    @autorun => Meteor.subscribe 'cart'
 
 
 Template.add_to_cart.events
     'click #add_to_cart': -> 
-        Session.set 'cart_item', @_id
-        FlowRouter.go '/cart'
-
+        # Session.set 'cart_item', @_id
+        # FlowRouter.go '/cart'
         Meteor.call 'add_to_cart', @_id
+
+    'click #remove_from_cart': ->
+        Meteor.call 'remove_from_cart', @_id
+        
+Template.add_to_cart.helpers
+    added: ->
+        Docs.findOne 
+            type: 'cart_item'
+            parent_id: @_id

@@ -1,7 +1,7 @@
 if Meteor.isClient
     FlowRouter.route '/tests', action: ->
         BlazeLayout.render 'layout',
-            sub_nav: 'gugong_nav'
+            sub_nav: 'member_nav'
             sub_sub_nav: 'inspire_u_nav'
             main: 'tests'
     
@@ -16,14 +16,14 @@ if Meteor.isClient
         name: 'view_test'
         action: (params) ->
             BlazeLayout.render 'layout',
-                sub_nav: 'gugong_nav'
+                sub_nav: 'member_nav'
                 main: 'test_page'
     
     FlowRouter.route '/test/:doc_id/session/:session_id/', 
         name: 'edit_test_session'
         action: (params) ->
             BlazeLayout.render 'layout',
-                sub_nav: 'gugong_nav'
+                sub_nav: 'member_nav'
                 main: 'take_test'
     
     Template.tests.onCreated ->
