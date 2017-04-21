@@ -89,3 +89,12 @@ tests notes
         math skills
         office skills
         any business related/beneficial skill, aim is to build ability, empower people
+        
+        
+meeting notes
+    remove sol title from sales page
+    marketplace
+    inspire u
+        courses
+        tests
+    stable sol link

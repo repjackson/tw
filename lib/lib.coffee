@@ -1,6 +1,6 @@
 FlowRouter.route '/sol',
   triggersEnter: [ (context, redirect) ->
-    redirect '/course/view/TTNQCYM5xMTHSHs3q'
+    redirect '/course/TTNQCYM5xMTHSHs3q'
     return
  ]
 
