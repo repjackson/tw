@@ -1,28 +1,35 @@
 template(name='products')
     .ui.container
-        // #blog_slider(style='width: 1000px; height: 500px;')
-        //     .ls-slide(data-ls='slidedelay: 2000;')
-        //         img.ls-bg(src="{{c.url 'impact_collage' effect='art:primavera'}}", alt='Slide background')
-        //         h1.ls-l.overlay-text.slider-text(style="top: 50%; text-size: 500%;") 
-        //             | Our Stories
-        // .ui.hidden.divider
         .ui.stackable.divided.grid
             .twelve.wide.column
-                h1.ui.dividing.header Marketplace
-                // .ui.cards
-                .ui.relaxed.divided.items
-                    each products
-                        +product_item
+                h1.ui.dividing.header Tori Webster Services
+                if is_list_view
+                    .ui.relaxed.divided.items
+                        each products
+                            +product_item
+                if is_grid_view
+                    .ui.centered.cards
+                        each products
+                            +product_card
             .four.wide.column
-                +cloud type='product'
-                if currentUser
+                // .ui.dividing.header Tag Filter
+                // +cloud type='product'
+                .ui.dividing.header Layouts
+                #make_list_layout.ui.large.icon.button(class=list_layout_button_class)
+                    i.list.layout.icon
+                #make_grid_layout.ui.large.icon.button(class=grid_layout_button_class)
+                    i.grid.layout.icon
+                if isInRole 'admin'
+                    .ui.dividing.header
+                        i.red.configure.icon
+                        |Admin
                     #add_product.ui.large.basic.fluid.button
                         i.plus.icon
                         |Add Product
 
 
 template(name='product_card')
-    .ui.fluid.card
+    .ui.card
         .ui.centered.image
             a(href="/product/view/#{_id}")
                 img(src="{{c.url image_id  height=300 crop='fill' gravity='face' }}")
@@ -32,16 +39,17 @@ template(name='product_card')
                     h2.ui.header #{title}
             if publish_date
                 .meta
-                    | published #{publish_when}
+                    // | published #{publish_when}
+                    | Price: $#{price}
             .description
-                |#{content}
+                |!{content}
         .content
-            each tags
-                .ui.compact.button.product_tag(class=tag_class) #{this}
+            // each tags
+            //     .ui.compact.button.product_tag(class=tag_class) #{this}
             if isInRole 'admin'
                 .edit_product.ui.primary.basic.right.floated.button
                     i.pencil.icon
-                    |edit product    
+                    |Edit Product    
         .content
             +favorite
 
@@ -53,24 +61,21 @@ template(name='product_item')
         .content
             a.header(href="/product/view/#{_id}") #{title}
             .meta
-                | published #{publish_when}
+                // | published #{publish_when}
+                | Price: $#{price}
             .description
                 p #{snippet}
                 a(href="/product/view/#{_id}") 
-                    |view more
+                    |View More
                     i.arrow.right.icon
-            .extra
-                i.tags.icon
-                each tags
-                    .ui.compact.tiny.button.product_tag(class=tag_class) #{this}
+            // .extra
+            //     i.tags.icon
+            //     each tags
+            //         .ui.compact.tiny.button.product_tag(class=tag_class) #{this}
             if isInRole 'admin'
                 .extra
                     i.red.configure.large.icon
                     if published
-                        .ui.green.label published
+                        .ui.green.basic.label Published
                     else
-                        .ui.red.label unpublished                        
-                    if featured
-                        .ui.green.label featured
-                    else
-                        .ui.red.label unfeatured
+                        .ui.red.basic.label Unpublished                        

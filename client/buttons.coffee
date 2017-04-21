@@ -154,3 +154,12 @@ Template.featured.events
     'click #make_unfeatured': ->
         Docs.update FlowRouter.getParam('doc_id'),
             $set: featured: false
+
+
+
+Template.add_to_cart.events
+    'click #add_to_cart': -> 
+        Session.set 'cart_item', @_id
+        FlowRouter.go '/cart'
+
+        Meteor.call 'add_to_cart', @_id

@@ -4,7 +4,6 @@ FlowRouter.route '/course/:course_id',
         BlazeLayout.render 'layout',
             main: 'course_sales'
 
-
 FlowRouter.route '/course/:course_id/modules', 
     name: 'course_modules'
     action: (params) ->

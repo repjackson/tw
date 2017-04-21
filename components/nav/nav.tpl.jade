@@ -8,7 +8,10 @@
                 a.item(href='/about' class="{{isActivePath '/about'}}") About
                 a.item(href='/courses' class="{{isActivePath '/courses'}}") Courses
                 a.item(href='/lightbank' class="{{isActivePath '/lightbank'}}") Lightbank
-                a.item(href='/products' class="{{isActivePath '/products'}}") Services
+                if isInRole 'admin'
+                    a.item(href='/products' class="{{isActivePath '/products'}}") 
+                        i.red.configure.icon
+                        |Services
                 a.item(href='/contact' class="{{isActivePath '/contact'}}") Contact
                 .divider
                 if currentUser
@@ -40,6 +43,10 @@
         a.mobile.hidden.item(href='/about' class="{{isActivePath '/about'}}") About
         a.mobile.hidden.item(href='/courses' class="{{isActivePath '/courses'}}") Courses
         a.mobile.hidden.item(href='/lightbank' class="{{isActivePath '/lightbank'}}") Lightbank
+        if isInRole 'admin'
+            a.mobile.hidden.item(href='/products' class="{{isActivePath '/products'}}") 
+                i.red.configure.icon
+                |Services
         a.mobile.hidden.item(href='/contact' class="{{isActivePath '/contact'}}") Contact
         .right.mobile.hidden.menu
             if currentUser

@@ -2,7 +2,6 @@ template(name='university')
     .ui.container
         h1.ui.dividing.header Inspire U
         +courses
-        +decks
         +excercises
         +tests
     
@@ -16,7 +15,7 @@ template(name='excercises')
 template(name='inspire_u_nav')
     .ui.borderless.menu
         .ui.container
-            .header.item Inspire U
+            .imogen Inspire U
             a.item(href='/iu/courses' class="{{isActivePath '/iu/courses'}}")
                 |Courses
             a.item(href='/iu/excercises' class="{{isActivePath '/iu/excercises'}}")

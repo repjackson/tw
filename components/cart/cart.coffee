@@ -13,7 +13,7 @@ FlowRouter.route '/cart-profile/:user_id',
 
 if Meteor.isClient
     Template.cart.onCreated ->
-        @autorun -> Meteor.subscribe 'cart', Session.get 'cart_item'
+        @autorun -> Meteor.subscribe 'cart'
         Template.instance().checkout = StripeCheckout.configure(
             key: Meteor.settings.public.stripe.livePublishableKey
             # image: 'https://tmc-post-content.s3.amazonaws.com/ghostbusters-logo.png'
@@ -41,9 +41,16 @@ if Meteor.isClient
         )
 
     Template.cart_checkout.helpers 
-        cart_item: ->
-            Courses.findOne Session.get 'cart_item'
-            
+        # cart_item: ->
+        #     Courses.findOne Session.get 'cart_item'
+        
+        cart_items: ->
+            Docs.find
+                type: 'cart_item'
+                author_id: Meteor.userId()
+                
+        parent_doc: ->
+            Docs.findOne @parent_id
             
     Template.cart.events
         'click .buy_course': ->
@@ -52,7 +59,6 @@ if Meteor.isClient
                     name: @title
                     description: @subtitle
                     amount: @price*100
-                    bitcoin: true
             else
                 Meteor.call 'enroll', @_id, (err,res)=>
                     if err then console.error err
@@ -62,5 +68,24 @@ if Meteor.isClient
 
 
 if Meteor.isServer
-    Meteor.publish 'cart', (course_id)->
-        Courses.find course_id
+    # Meteor.publish 'cart', (course_id)->
+    #     Courses.find course_id
+    Meteor.methods
+        'add_to_cart': (doc_id)->
+            Docs.insert
+                type: 'cart_item'
+                parent_id: doc_id
+                number: 1
+        
+    publishComposite 'cart', ->
+        {
+            find: ->
+                Docs.find
+                    type: 'cart_item'
+                    author_id: @userId            
+            children: [
+                { find: (cart_item) ->
+                    Docs.find cart_item.parent_id
+                    }
+                ]    
+        }

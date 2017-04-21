@@ -1,6 +1,6 @@
 FlowRouter.route '/products', action: ->
     BlazeLayout.render 'layout',
-        sub_nav: 'gugong_nav'
+        # sub_nav: 'gugong_nav'
         main: 'products'
 
 FlowRouter.route '/product/edit/:doc_id', action: (params) ->
@@ -9,7 +9,7 @@ FlowRouter.route '/product/edit/:doc_id', action: (params) ->
 
 FlowRouter.route '/product/view/:doc_id', action: (params) ->
     BlazeLayout.render 'layout',
-        sub_nav: 'gugong_nav'
+        # sub_nav: 'gugong_nav'
         main: 'product_page'
 
 if Meteor.isClient
@@ -19,12 +19,18 @@ if Meteor.isClient
     
     Template.products.helpers
         products: -> 
-            Docs.find {
-                type: 'product'
-                },
+            Docs.find {type: 'product'},
                 sort:
                     publish_date: -1
                 limit: 5
+                
+        is_grid_view: -> Session.equals 'layout_view', 'grid'        
+        is_list_view: -> Session.equals 'layout_view', 'list'        
+                
+        list_layout_button_class: -> if Session.get('layout_view') is 'list' then 'teal' else 'basic'
+        grid_layout_button_class: -> if Session.get('layout_view') is 'grid' then 'teal' else 'basic'
+                
+                
                 
     Template.products.events
         'click #add_product': ->
@@ -33,7 +39,9 @@ if Meteor.isClient
             FlowRouter.go "/product/edit/#{id}"
     
     
-    
+        'click #make_list_layout': -> Session.set 'layout_view', 'list'
+        'click #make_grid_layout': -> Session.set 'layout_view', 'grid'
+
     
     
         

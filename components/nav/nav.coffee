@@ -25,3 +25,4 @@ if Meteor.isServer
                 friends: 1
                 points: 1
                 status: 1
+                cart: 1
