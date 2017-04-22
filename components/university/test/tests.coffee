@@ -52,13 +52,6 @@ if Meteor.isClient
         'click .edit_test': -> FlowRouter.go "/test/edit/#{@_id}"
 
 
-    Template.take_test.onCreated ->
-        @autorun -> Meteor.subscribe('test_questions', FlowRouter.getParam('session_id'))
-    
-    Template.take_test.helpers
-        test_session: -> Docs.findOne type: 'test_session'
-        test: -> Docs.findOne type: 'test'
-        questions: -> Docs.find type: 'question'
 
 
 if Meteor.isServer

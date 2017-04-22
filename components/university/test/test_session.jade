@@ -1,52 +1,51 @@
-template(name='take_test')
+template(name='test_session')
     .ui.container
         .ui.breadcrumb
             a.section(href='/') Home
             .divider  / 
-            a.section(href='/courses') Inspire U
-            .divider  / 
+            // a.section(href='/courses') Inspire U
+            // .divider  / 
             a.section(href="/tests") Tests
             .divider  / 
             a.section(href="/test/#{test._id}/view") #{test.title}
             .divider  / 
             .active.section Session: #{test_session._id}
 
-        .ui.dividing.header #{test.title}
-        +test_session_view
-
-template(name='test_session_view')
-    .ui.container
+        h1.ui.dividing.center.aligned.header #{test.title}
         +cloud type='test_question'
         if isInRole 'admin'
             #add_test_question.ui.basic.button 
                 i.red.configure.icon
                 |Add Test Question
-        .ui.dividing.header 
-            i.red.configure.icon
-            |Unpublished Questions
+        .ui.dividing.header Unanswered Questions
         .ui.stackable.cards
-            each unpublished_questions
+            each unanswered_questions
                 +test_question
-        .ui.dividing.header Questions
+        .ui.dividing.header Answered Questions
         .ui.stackable.cards
-            each published_questions
+            each answered_questions
                 +test_question
-
+        .ui.divider
+        #delete_session.ui.yellow.button End Session
+        #calculate_answers.ui.teal.button Calculate Answers
+        if results
+            .ui.header Results
 template(name='test_question')
     .ui.card
         .content
             unless is_editing
-                h2.ui.center.aligned.header #{title}
+                h4.ui.center.aligned.header #{title}
                 .ui.basic.center.aligned.compact.segment
                     +rating
                 .ui.divider
                 each tags
                     .ui.basic.teal.label #{this}
             else
-                .ui.form
-                    +title
-                    +tags
-                    +delete_button
-                    +published
+                +title
+                .ui.hidden.fitted.divider
+                +tags
+                .ui.hidden.fitted.divider
+                +delete_button
+                .ui.hidden.fitted.divider
             if isInRole 'admin' 
                 +edit_button
