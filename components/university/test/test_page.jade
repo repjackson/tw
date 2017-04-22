@@ -29,7 +29,7 @@ template(name='test_page')
                                 each my_sessions
                                     .ui.card
                                         .content
-                                            .header #{number}
+                                            a.header(href="/test/#{test_id}/session/#{_id}") View
                                             .description
                                                 |#{from_now}
                                         .content

@@ -1,10 +1,17 @@
 if Meteor.isClient
     Template.test_page.onCreated ->
         @autorun => Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
+        @autorun => Meteor.subscribe 'test_sessions', FlowRouter.getParam('doc_id')
     
 
     Template.test_page.helpers
         test: -> Docs.findOne FlowRouter.getParam('doc_id')
+    
+        my_sessions: ->
+            Docs.find
+                type: 'test_session'
+                author_id: Meteor.userId()
+                test_id: FlowRouter.getParam('doc_id')
     
     Template.test_page.events
         'click #new_session': ->
@@ -32,3 +39,10 @@ if Meteor.isClient
                     publish_date: publish_date
                     # description: description
             FlowRouter.go "/test/#{@_id}/view"
+            
+if Meteor.isServer
+    Meteor.publish 'test_sessions', (test_id)->
+        Docs.find
+            type: 'test_session'
+            test_id: test_id
+            author_id: @userId

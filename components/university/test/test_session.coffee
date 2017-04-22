@@ -11,6 +11,7 @@ if Meteor.isClient
     
     Template.test_session_view.onCreated -> 
         @autorun -> Meteor.subscribe('test_questions', FlowRouter.getParam('doc_id'))
+        @autorun -> Meteor.subscribe('test_session', FlowRouter.getParam('session_id'))
     
     
     Template.test_session_view.helpers
@@ -36,14 +37,23 @@ if Meteor.isClient
             Session.set 'editing_id', new_id
                 
 
-# if Meteor.isServer
-    # Meteor.publish 'test_questions', (selected_tags, test_id)->
-    
-    #     self = @
-    #     match = {}
-    #     # if selected_tags then match.tags = $all: selected_tags
-    #     if selected_tags.length > 0 then match.tags = $all: selected_tags
-    #     match.type = 'test_question'
-    #     match.test_id = test_id
-    
-    #     Docs.find match
+if Meteor.isServer
+    publishComposite 'test_session', (session_id)->
+        {
+            find: -> Docs.find session_id
+            children: [
+                { find: (session) ->
+                    Docs.find
+                        type: 'rating'
+                        session_id: session._id
+                # children: [
+                #     {
+                #         find: (test) ->
+                #             Docs.find
+                #                 type: 'question'
+                #                 test_id: test._id
+                #     }
+                # ]    
+                }
+            ]
+        }            

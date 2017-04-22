@@ -7,7 +7,7 @@ template(name='take_test')
             .divider  / 
             a.section(href="/tests") Tests
             .divider  / 
-            .section #{test.title}
+            a.section(href="/test/#{test._id}/view") #{test.title}
             .divider  / 
             .active.section Session: #{test_session._id}
 

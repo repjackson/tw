@@ -64,25 +64,61 @@ Template.edit_link.events
 
 
 Template.rating.onRendered ->
-   Meteor.setTimeout ->
-        $('.ui.rating').rating
-            initialRating: 3,
-            maxRating: 5
-    , 2000
+    # console.log 'template data', @data
+    self = @
+    
+    @autorun =>
+        if @subscriptionsReady()
+            session_id = FlowRouter.getParam('session_id')
+            existing_rating =         
+                Docs.findOne
+                    parent_id: self.data._id
+                    type: 'rating'
+                    session_id: session_id
+            # console.log 'existing rating', existing_rating
+            if existing_rating then initial_rating = existing_rating.rating
+            else initial_rating = 0
+            # console.log initial_rating
+            Meteor.setTimeout ->
+                $('.ui.rating').rating
+                    # initialRating: initial_rating,
+                    maxRating: 5
+            , 2000
+            # console.log 'subs ready'
+
+    
+    
+    
+    
+Template.rating.helpers
+    rating_doc: ->
+        session_id = FlowRouter.getParam('session_id')
+        rating_doc = 
+            Docs.findOne
+                parent_id: @_id
+                type: 'rating'
+                session_id: session_id
+        rating_doc
+            
 
 Template.rating.events
     'click .rating': (e,t)->
+        session_id = FlowRouter.getParam('session_id')
         rating = $(e.currentTarget).closest('.rating').rating('get rating')
-        
-        # rating = $('.ui.rating').rating('get rating')
-        alert rating
-        Docs.update {
-            parent_id: @_id
-            type: 'rating'
-            rating: rating
-        },
-        upsert: true
-
+        rating_doc = 
+            Docs.findOne
+                parent_id: @_id
+                type: 'rating'
+                session_id: session_id
+        if rating_doc        
+            Docs.update rating_doc._id, 
+                $set: rating: rating
+        else
+            Docs.insert
+                type: 'rating'
+                parent_id: @_id
+                rating: rating
+                session_id: session_id
 
 Template.delete_button.events
     'click #delete': ->
@@ -114,7 +150,6 @@ Template.delete_link.events
             confirmButtonColor: '#da5347'
         }, ->
             Docs.remove self._id
-
 
 
 Template.favorite.helpers
