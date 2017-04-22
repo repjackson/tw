@@ -19,17 +19,11 @@ if Meteor.isClient
                 main: 'test_page'
     
     
-    Template.tests.onCreated ->
-        @autorun -> Meteor.subscribe('docs', selected_tags.array(), 'test')
-    
+    Template.tests.onCreated -> @autorun -> Meteor.subscribe('docs', selected_tags.array(), 'test')
     
     Template.tests.helpers
-        tests: -> 
-            Docs.find { type: 'test'},
-                sort:
-                    publish_date: -1
-                limit: 5
-                
+        tests: -> Docs.find { type: 'test'}
+    
         is_grid_view: -> Session.equals 'layout_view', 'grid'        
         is_list_view: -> Session.equals 'layout_view', 'list'        
                 
@@ -41,8 +35,7 @@ if Meteor.isClient
         'click #make_grid_layout': -> Session.set 'layout_view', 'grid'
     
         'click #add_test': ->
-            id = Docs.insert
-                type: 'test'
+            id = Docs.insert type: 'test'
             FlowRouter.go "/test/#{id}/edit"
     
     
@@ -53,17 +46,10 @@ if Meteor.isClient
         can_edit: -> @author_id is Meteor.userId()
     
         
-    
-    
     Template.test_item.events
-        'click .test_tag': ->
-            if @valueOf() in selected_tags.array() then selected_tags.remove @valueOf() else selected_tags.push @valueOf()
+        'click .test_tag': -> if @valueOf() in selected_tags.array() then selected_tags.remove @valueOf() else selected_tags.push @valueOf()
     
-        'click .edit_test': ->
-            FlowRouter.go "/test/edit/#{@_id}"
-
-
-
+        'click .edit_test': -> FlowRouter.go "/test/edit/#{@_id}"
 
 
     Template.take_test.onCreated ->
@@ -78,8 +64,7 @@ if Meteor.isClient
 if Meteor.isServer
     publishComposite 'test_questions', (test_id)->
         {
-            find: ->
-                Docs.find test_id
+            find: -> Docs.find test_id
             children: [
                 { find: (test) ->
                     Docs.find

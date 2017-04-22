@@ -40,53 +40,27 @@ Template.big_both_voter.events
         else FlowRouter.go '/sign-in'
 
 
-Template.rating.events
-    'click .rating': (e,t)->
-        rating = $(e.currentTarget).closest('.rating').rating('get rating')
-        
-        # rating = $('.ui.rating').rating('get rating')
-        alert rating
 
 Template.toggle_friend.helpers
-    is_friend: ->
-        if Meteor.user()?.friends
-            @_id in Meteor.user().friends
-        
+    is_friend: -> if Meteor.user()?.friends then @_id in Meteor.user().friends
         
 Template.toggle_friend.events
-    'click #add_friend': ->
-        Meteor.users.update Meteor.userId(),
-            $addToSet: 
-                friends: @_id
-                
-    'click #remove_friend': ->
-        Meteor.users.update Meteor.userId(),
-            $pull: 
-                friends: @_id
-                
+    'click #add_friend': -> Meteor.users.update Meteor.userId(), $addToSet: friends: @_id
+    'click #remove_friend': -> Meteor.users.update Meteor.userId(), $pull: friends: @_id
 
 
 Template.published.events
-    'click #publish': ->
-        Docs.update @_id,
-            $set: published: true
-
-    'click #unpublish': ->
-        Docs.update @_id,
-            $set: published: false
+    'click #publish': -> Docs.update @_id, $set: published: true
+    'click #unpublish': -> Docs.update @_id, $set: published: false
 
 
 Template.edit_button.events
-    'click .edit_this': ->
-        Session.set 'editing_id', @_id
-    'click .save_doc': ->
-        Session.set 'editing_id', null
+    'click .edit_this': -> Session.set 'editing_id', @_id
+    'click .save_doc': -> Session.set 'editing_id', null
 
 Template.edit_link.events
-    'click .edit_this': ->
-        Session.set 'editing_id', @_id
-    'click .save_doc': ->
-        Session.set 'editing_id', null
+    'click .edit_this': -> Session.set 'editing_id', @_id
+    'click .save_doc': -> Session.set 'editing_id', null
 
 
 Template.rating.onRendered ->
@@ -96,6 +70,18 @@ Template.rating.onRendered ->
             maxRating: 5
     , 2000
 
+Template.rating.events
+    'click .rating': (e,t)->
+        rating = $(e.currentTarget).closest('.rating').rating('get rating')
+        
+        # rating = $('.ui.rating').rating('get rating')
+        alert rating
+        Docs.update {
+            parent_id: @_id
+            type: 'rating'
+            rating: rating
+        },
+        upsert: true
 
 
 Template.delete_button.events
@@ -113,7 +99,6 @@ Template.delete_button.events
             confirmButtonColor: '#da5347'
         }, ->
             Docs.remove self._id
-            
 Template.delete_link.events
     'click #delete': ->
         self = @
@@ -139,7 +124,6 @@ Template.favorite.helpers
         if Meteor.userId()
             if @favoriters and Meteor.userId() in @favoriters then 'red' else 'outline'
         else 'grey disabled'
-    
 Template.favorite.events
     'click .favorite_item': -> 
         if Meteor.userId() then Meteor.call 'favorite', Template.parentData(0)
@@ -147,17 +131,12 @@ Template.favorite.events
 
 
 Template.featured.events
-    'click #make_featured': ->
-        Docs.update FlowRouter.getParam('doc_id'),
-            $set: featured: true
+    'click #make_featured': -> Docs.update FlowRouter.getParam('doc_id'), $set: featured: true
+    'click #make_unfeatured': -> Docs.update FlowRouter.getParam('doc_id'), $set: featured: false
 
-    'click #make_unfeatured': ->
-        Docs.update FlowRouter.getParam('doc_id'),
-            $set: featured: false
 
 Template.add_to_cart.onCreated ->
     @autorun => Meteor.subscribe 'cart'
-
 
 Template.add_to_cart.events
     'click #add_to_cart': -> 
