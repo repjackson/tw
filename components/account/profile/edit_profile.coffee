@@ -25,35 +25,29 @@ if Meteor.isClient
                 $set: 
                     "profile.first_name": first_name
 
-            
         'blur #last_name': ->
             last_name = $('#last_name').val().trim()
             Meteor.users.update FlowRouter.getParam('user_id'),
                 $set: 
                     "profile.last_name": last_name
 
-            
-            
         'blur #location': ->
             location = $('#location').val().trim()
             Meteor.users.update FlowRouter.getParam('user_id'),
                 $set: 
                     "profile.location": location
-
             
         'blur #if_knew_me': ->
             if_knew_me = $('#if_knew_me').val().trim()
             Meteor.users.update FlowRouter.getParam('user_id'),
                 $set: 
                     "profile.if_knew_me": if_knew_me
-
             
         'blur #about_me': ->
             about_me = $('#about_me').val().trim()
             Meteor.users.update FlowRouter.getParam('user_id'),
                 $set: 
                     "profile.about_me": about_me
-
             
         'blur #if_not_working': ->
             if_not_working = $('#if_not_working').val().trim()
@@ -61,7 +55,6 @@ if Meteor.isClient
                 $set: 
                     "profile.if_not_working": if_not_working
 
-            
             
         'keydown #input_image_id': (e,t)->
             if e.which is 13
@@ -88,7 +81,7 @@ if Meteor.isClient
             $('#add_tag').val(tag)
     
         'click #save_profile': ->
-            FlowRouter.go "/profile/view/#{@_id}"
+            FlowRouter.go "/profile/#{@_id}"
     
         "change input[type='file']": (e) ->
             files = e.currentTarget.files

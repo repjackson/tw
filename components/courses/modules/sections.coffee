@@ -1,7 +1,7 @@
 if Meteor.isClient
     Template.section_transcript.helpers
         transcript: ->
-            @current_doc = Sections.findOne @_id
+            @current_doc = Docs.findOne @_id
             self = @
             {
                 _value: self.current_doc.transcript

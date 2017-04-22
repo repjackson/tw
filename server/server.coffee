@@ -31,8 +31,15 @@ Cloudinary.config
     api_secret: Meteor.settings.cloudinary_secret
 
 
+if Meteor.isDevelopment
+    secret_key = Meteor.settings.private.stripe.testSecretKey
+    # console.log 'using test secret key'
+else if Meteor.isProduction
+    secret_key = Meteor.settings.private.stripe.liveSecretKey
+else 
+    console.log 'not dev or prod'
 
-Stripe = StripeAPI(Meteor.settings.private.stripe.liveSecretKey)
+Stripe = StripeAPI(secret_key)
 Meteor.methods
     processPayment: (charge) ->
         handleCharge = Meteor.wrapAsync(Stripe.charges.create, Stripe.charges)

@@ -38,7 +38,8 @@ if Meteor.isClient
     
         user_courses: ->
             if @courses
-                Courses.find
+                Docs.find
+                    type: 'course'
                     _id: $in: @courses
     
     

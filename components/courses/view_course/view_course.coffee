@@ -99,7 +99,7 @@ if Meteor.isClient
                 _id: FlowRouter.getParam('course_id')
                 type: 'course'
         course_welcome_context: ->
-            @current_doc = Courses.findOne FlowRouter.getParam('course_id')
+            @current_doc = Docs.findOne FlowRouter.getParam('course_id')
             self = @
             {
                 _value: self.current_doc.course_welcome_content
@@ -165,10 +165,10 @@ if Meteor.isClient
 
 
     Template.edit_inspiration_course.helpers
-        course: -> Courses.findOne FlowRouter.getParam('course_id')
+        course: -> Docs.findOne FlowRouter.getParam('course_id')
         
         course_inspiration_context: ->
-            @current_doc = Courses.findOne FlowRouter.getParam('course_id')
+            @current_doc = Docs.findOne FlowRouter.getParam('course_id')
             self = @
             {
                 _value: self.current_doc.course_inspiration_content

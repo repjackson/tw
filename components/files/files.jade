@@ -36,11 +36,11 @@ template(name='file_item')
             .extra
                 a.ui.basic.button(href=link)
                     i.download.icon
-                    |Download
+                    |Download #{title}
                 if isInRole 'admin'
                     .edit_file.ui.basic.button 
                         i.red.configure.icon
-                        |Edit File
+                        |Edit #{title} File
                 
 template(name='edit_file')
     .ui.segment
@@ -49,5 +49,6 @@ template(name='edit_file')
         +content
         .ui.hidden.divider
         +link
-        #save_file.ui.teal.button Save File
+        .ui.hidden.divider
+        #save_file.ui.teal.button Save #{title} File
         +delete_button

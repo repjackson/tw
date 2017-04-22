@@ -46,10 +46,9 @@ template(name='view_questions')
                     if can_edit
                         .ui.stackable.grid
                             .five.wide.column
-                                .ui.compact.segment
-                                    .toggle_published.ui.slider.checkbox
-                                        input(type='checkbox' name='publish_answer' checked=published)
-                                        label Publish Answer
+                                .toggle_published.ui.slider.checkbox
+                                    input(type='checkbox' name='publish_answer' checked=published)
+                                    label Publish Answer
                             .four.wide.column
                                 .remove_answer.ui.basic.button
                                     i.remove.red.link.icon

@@ -42,7 +42,7 @@ template(name='cart_checkout')
                 each cart_items
                     tr
                         td 
-                            img.ui.tiny.image(src="{{c.url parent_doc.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                            img.ui.small.image(src="{{c.url parent_doc.image_id}}")
                         td 
                             a.ui.header(href="product/#{parent_doc._id}/view") 
                                 |#{parent_doc.title}
@@ -58,16 +58,16 @@ template(name='cart_checkout')
                         //     #decrease_amount.ui.basic.icon.button
                         //         i.minus.icon
                         td 
-                            +delete_button
-                            .purchase_item.ui.basic.green.button 
+                            .purchase_item.ui.teal.button 
                                 i.check.icon
                                 | Purchase
-            tfoot
-                tr
-                    th 
-                    th 
-                    th
-                    th Subtotal (#{total_items} items): $#{subtotal}
+                            +delete_button
+            // tfoot
+            //     tr
+            //         th 
+            //         th 
+            //         th
+            //         th Subtotal (#{total_items} items): $#{subtotal}
     else
         .ui.message
             .header 

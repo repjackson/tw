@@ -31,6 +31,7 @@ template(name='view_course')
                         #add_module.ui.basic.fluid.button
                             i.plus.icon
                             |Module
+                        .ui.hidden.divider
                         #edit_course.ui.basic.fluid.button
                             i.pencil.icon
                             | Edit Course
@@ -68,8 +69,9 @@ template(name='course_sales')
                     //         // .ui.green.basic.label Enrolled
                     //         a.ui.teal.big.button(href="/course/#{_id}") View Course
                     //     else
-                    a.buy_course.ui.teal.big.button
-                        |Enroll
+                    +add_to_cart
+                    // a.buy_course.ui.teal.big.button
+                    //     |Enroll
                     // else
                     //     a.buy_course.ui.teal.big.button
                     //         |Create an Account and Enroll
@@ -126,12 +128,15 @@ template(name='edit_welcome_course')
             label Content
             .froala-container
                 +froalaReactive course_welcome_context
-        #save_welcome_content.ui.basic.button Save Welcome Content
+        #save_welcome_content.ui.teal.button Save Welcome Content
 
 
 template(name='view_welcome_course')
     if isInRole 'admin'
-        #edit_welcome_content.ui.basic.button Edit Welcome Content
+        #edit_welcome_content.ui.basic.button 
+            i.red.configure.icon
+            |Edit Welcome Content
+        .ui.hidden.divider
     |!{course_welcome_content}
 
 template(name='edit_terms_course')
@@ -140,12 +145,15 @@ template(name='edit_terms_course')
             label Content
             .froala-container
                 +froalaReactive course_terms_context
-        #save_terms_content.ui.basic.button Save Terms Content
+        #save_terms_content.ui.teal.button Save Terms Content
 
 
 template(name='view_terms_course')
     if isInRole 'admin'
-        #edit_terms_content.ui.basic.button Edit Terms Content
+        #edit_terms_content.ui.basic.button 
+            i.red.configure.icon
+            |Edit Terms Content
+        .ui.hidden.divider
     |!{course_terms_content}
 
 template(name='edit_inspiration_course')
@@ -154,11 +162,14 @@ template(name='edit_inspiration_course')
             label Content
             .froala-container
                 +froalaReactive course_inspiration_context
-        #save_inspiration_content.ui.basic.button Save Inspiration Content
+        #save_inspiration_content.ui.teal.button Save Inspiration Content
 
 
 template(name='view_inspiration_course')
     if isInRole 'admin'
-        #edit_inspiration_content.ui.basic.button Edit Inspiration Content
+        #edit_inspiration_content.ui.basic.button 
+            i.red.configure.icon
+            |Edit Inspiration Content
+        .ui.hidden.divider
     |!{course_inspiration_content}
 

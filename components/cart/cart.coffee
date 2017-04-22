@@ -15,6 +15,7 @@ if Meteor.isClient
     Template.cart.onCreated ->
         if Meteor.isDevelopment
             stripe_key = Meteor.settings.public.stripe.testPublishableKey
+            console.log 'using test key'
         else if Meteor.isProduction
             stripe_key = Meteor.settings.public.stripe.livePublishableKey
         else 
@@ -28,10 +29,10 @@ if Meteor.isClient
             # zipCode: true
             token: (token) ->
                 # console.log token
-                course = Courses.findOne Session.get 'cart_item'
-                # console.log course
+                purchasing_item = Docs.findOne Session.get 'purchasing_item'
+                console.dir 'purchasing_item', purchasing_item
                 charge = 
-                    amount: course.price*100
+                    amount: purchasing_item.price*100
                     currency: 'usd'
                     source: token.id
                     description: token.description
@@ -39,18 +40,17 @@ if Meteor.isClient
                 Meteor.call 'processPayment', charge, (error, response) =>
                     if error then Bert.alert error.reason, 'danger'
                     else
-                        Meteor.users.update Meteor.userId(),
-                            $addToSet: courses: course._id
-                        Bert.alert "Thank you for your payment.  You're enrolled in #{course.title}.", 'success'
-                        FlowRouter.go "/cart-profile/#{Meteor.userId()}"
-            closed: ->
-                Bert.alert "Payment Canceled", 'danger'
+                        Meteor.call 'register_purchase', purchasing_item._id, (err, response)->
+                            if err then console.error err
+                            else
+                                Bert.alert "You have purchased #{purchasing_item.title}.", 'success'
+                                Docs.remove Session.get('current_cart_item')
+                                FlowRouter.go "/account"
+            # closed: ->
+            #     Bert.alert "Payment Canceled", 'info', 'growl-top-right'
         )
 
     Template.cart_checkout.helpers 
-        # cart_item: ->
-        #     Courses.findOne Session.get 'cart_item'
-        
         cart_items: ->
             Docs.find
                 type: 'cart_item'
@@ -68,20 +68,22 @@ if Meteor.isClient
             subtotal
             
     Template.cart.events
-        'click .buy_course': ->
-            if @price > 0
-                Template.instance().checkout.open
-                    name: @title
-                    description: @subtitle
-                    amount: @price*100
-            else
-                Meteor.call 'enroll', @_id, (err,res)=>
-                    if err then console.error err
-                    else
-                        Bert.alert "You are now enrolled in #{@title}", 'success'
-                        # FlowRouter.go "/course/#{_id}"
+        # 'click .buy_course': ->
+        #     if @price > 0
+        #         Template.instance().checkout.open
+        #             name: @title
+        #             description: @subtitle
+        #             amount: @price*100
+        #     else
+        #         Meteor.call 'enroll', @_id, (err,res)=>
+        #             if err then console.error err
+        #             else
+        #                 Bert.alert "You are now enrolled in #{@title}", 'success'
+        #                 # FlowRouter.go "/course/#{_id}"
 
         'click .purchase_item': ->
+            Session.set 'purchasing_item', @parent_id
+            Session.set 'current_cart_item', @_id
             parent_doc = Docs.findOne @parent_id
             if parent_doc.price > 0
                 Template.instance().checkout.open
@@ -89,10 +91,12 @@ if Meteor.isClient
                     description: parent_doc.title
                     amount: parent_doc.price*100
             else
-                Meteor.call 'register_purchase', @parent_id, (err,response)->
+                Meteor.call 'register_purchase', @parent_id, (err,response)=>
                     if err then console.error err
                     else
                         Bert.alert "Thank you for your purchase.", 'success'
+                        Docs.remove @_id
+                        FlowRouter.go "/account"
                         
                     
 

@@ -6,7 +6,8 @@ if Meteor.isClient
     Template.my_courses.helpers
         my_courses: -> 
             if Meteor.user()?.courses
-                Courses.find
+                Docs.find
+                    type: 'course'
                     _id: $in: Meteor.user().courses
     
         in_course: ->
@@ -15,5 +16,6 @@ if Meteor.isClient
 if Meteor.isServer
     Meteor.publish 'my_courses', ->
         me = Meteor.users.findOne @userId
-        Courses.find
+        Docs.find
+            type: 'course'
             _id: $in: me.courses
