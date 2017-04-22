@@ -8,12 +8,11 @@ if Meteor.isClient
     
     
     Template.edit_course.helpers
-        course: -> Courses.findOne FlowRouter.getParam('course_id')
-        
-        modules: -> Modules.find() 
+        course: -> Docs.findOne FlowRouter.getParam('course_id')
+        modules: -> Docs.find() 
         
         course_description_context: ->
-            @current_doc = Courses.findOne FlowRouter.getParam('course_id')
+            @current_doc = Docs.findOne FlowRouter.getParam('course_id')
             self = @
             {
                 _value: self.current_doc.description
@@ -33,17 +32,10 @@ if Meteor.isClient
             
             course_id = FlowRouter.getParam('course_id')
     
-            Courses.update course_id,
+            Docs.update course_id,
                 $set: description: html
                     
         'click #save_course': ->
-            title = $('#title').val()
-            price = parseInt $('#price').val()
-            course_id = FlowRouter.getParam('course_id')
-            Courses.update course_id,
-                $set:
-                    title:title
-                    price:price
             FlowRouter.go "/course/#{@_id}"        
                     
         'click #delete': ->
@@ -58,6 +50,6 @@ if Meteor.isClient
                 confirmButtonText: 'Delete'
                 confirmButtonColor: '#da5347'
             }, ->
-                course = Courses.findOne FlowRouter.getParam('course_id')
-                Courses.remove course._id, ->
+                course = Docs.findOne FlowRouter.getParam('course_id')
+                Docs.remove course._id, ->
                     FlowRouter.go "/courses"

@@ -31,12 +31,13 @@ if Meteor.isClient
 
 
     Template.view_module.helpers
-        module: -> Modules.findOne FlowRouter.getParam('module_id')
-        course: -> Courses.findOne FlowRouter.getParam('course_id')
+        module: -> Docs.findOne FlowRouter.getParam('module_id')
+        course: -> Docs.findOne FlowRouter.getParam('course_id')
 
     Template.module_sections.helpers
         sections: ->
-            Sections.find
+            Docs.find
+                type: 'section'
                 module_id: FlowRouter.getParam('module_id')
 
     Template.view_module.events

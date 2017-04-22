@@ -1,15 +1,3 @@
-@Questions = new Meteor.Collection 'questions'
-
-Questions.before.insert (userId, doc)->
-    doc.timestamp = Date.now()
-    doc.author_id = Meteor.userId()
-    return
-
-
-Questions.helpers
-    author: -> Meteor.users.findOne @author_id
-    when: -> moment(@timestamp).fromNow()
-
 FlowRouter.route '/questions', action: (params) ->
     BlazeLayout.render 'layout',
         main: 'questions'
@@ -27,19 +15,21 @@ if Meteor.isClient
     
     Template.questions.helpers
         questions: -> 
-            Questions.find
+            Docs.find
+                type: 'question'
                 section_id: @_id
     
     
     Template.question.helpers
-        answers: -> Answers.find {}
+        answers: -> Docs.find type: 'answer'
     
 
 
     Template.questions.events
         'click #add_question': (e,t)->
             question = $(e.currentTarget).closest('.input').find('#new_question').val()
-            id = Questions.insert
+            id = Docs.insert
+                type: 'question'
                 section_id: Template.parentData()._id
                 text: question
             $(e.currentTarget).closest('.input').find('#new_question').val('')    
@@ -52,22 +42,31 @@ if Meteor.isClient
         , 2000
         
     Template.view_questions.helpers
-        questions: -> Questions.find section_id: @_id
+        questions: -> 
+            Docs.find
+                type: 'question'
+                section_id: @_id
                 
-        answers: -> Answers.find question_id: @_id
+        answers: -> 
+            Docs.find 
+                type: 'answer'
+                question_id: @_id
         
         published_answers: -> 
-            Answers.find 
+            Docs.find 
+                type: 'answer'
                 question_id: @_id 
                 published: true
                 
         has_answered_question: ->
-            Answers.findOne 
+            Docs.findOne
+                type: 'answer'
                 question_id: @_id
                 author_id: Meteor.userId()
 
         question_segment_class: -> 
-            answer = Answers.findOne 
+            answer = Docs.findOne
+                type: 'answer'
                 question_id: @_id
                 author_id: Meteor.userId()
             
@@ -76,7 +75,8 @@ if Meteor.isClient
     Template.view_questions.events
         'click #add_answer': (e,t)->
             answer = $(e.currentTarget).closest('.input').find('#answer').val()
-            id = Answers.insert
+            id = Docs.insert
+                type: 'answer'
                 question_id: @_id
                 published: false
                 text: answer
@@ -89,7 +89,8 @@ if Meteor.isClient
         'keyup #answer': (e,t)->
             if e.which is 13
                 answer = $(e.currentTarget).closest('.input').find('#answer').val()
-                id = Answers.insert
+                id = Docs.insert
+                    type: 'answer'
                     question_id: @_id
                     published: false
                     text: answer
@@ -111,7 +112,7 @@ if Meteor.isClient
                 confirmButtonText: 'Delete'
                 confirmButtonColor: '#da5347'
             }, ->
-                Questions.remove self._id
+                Docs.remove self._id
 
         'click .remove_answer': -> 
             self = @
@@ -126,29 +127,26 @@ if Meteor.isClient
                 confirmButtonText: 'Delete'
                 confirmButtonColor: '#da5347'
             }, ->
-                Answers.remove self._id
+                Docs.remove self._id
 
 
         'click .toggle_published': (e,t)->
             published = $(e.currentTarget).closest('.ui.checkbox').checkbox('is checked')
-            Answers.update @_id,
+            Docs.update @_id,
                 $set:
                     published: published
 
 if Meteor.isServer
-    Questions.allow
-        insert: (userId, doc) -> Roles.userIsInRole(userId, 'admin')
-        update: (userId, doc) -> Roles.userIsInRole(userId, 'admin')
-        remove: (userId, doc) -> Roles.userIsInRole(userId, 'admin')
-    
-    
     publishComposite 'questions', (section_id)->
         {
             find: ->
-                Questions.find section_id: section_id
+                Docs.find 
+                    type: 'question'
+                    section_id: section_id
             children: [
                 { find: (question) ->
-                    Answers.find
+                    Docs.find
+                        type: 'answer'
                         question_id: question._id
                 }
             ]

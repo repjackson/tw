@@ -14,29 +14,15 @@ if Meteor.isClient
         
         
     Template.edit_module.helpers
-        module: -> Modules.findOne FlowRouter.getParam('module_id')
-        course: -> Courses.findOne FlowRouter.getParam('course_id')
+        module: -> Docs.findOne FlowRouter.getParam('module_id')
+        course: -> Docs.findOne FlowRouter.getParam('course_id')
         
         sections: ->
-            Sections.find
+            Docs.find
+                type: 'section'
                 module_id: FlowRouter.getParam('module_id')
             
     Template.edit_module.events
-        'blur #number': ->
-            module_id = FlowRouter.getParam('module_id')
-            number = parseInt $('#number').val()
-            Modules.update module_id,
-                $set:
-                    number:number
-            
-        'blur #title': ->
-            module_id = FlowRouter.getParam('module_id')
-            title = $('#title').val()
-            Modules.update module_id,
-                $set:
-                    title:title
-            
-    
         'click #save_module': ->
             FlowRouter.go "/module/#{module_id}"        
     
@@ -54,20 +40,21 @@ if Meteor.isClient
                 confirmButtonColor: '#da5347'
             }, ->
                 module = Modules.findOne FlowRouter.getParam('module_id')
-                Modules.remove module._id, ->
+                Docs.remove module._id, ->
                     FlowRouter.go "/course/#{course_id}"
                     
         'click #add_section': ->
             module_id = FlowRouter.getParam('module_id')
             
-            module = Modules.findOne module_id
+            module = Docs.findOne module_id
             
-            Modules.update module_id,
+            Docs.update module_id,
                 $inc: section_count: 1
                 , ->
                     section_number = module.section_count + 1
             
-                    Sections.insert
+                    Docs.insert
+                        type: 'section'
                         number: section_number
                         module_id: module_id
 
@@ -88,8 +75,8 @@ if Meteor.isClient
                 confirmButtonColor: '#da5347'
             }, ->
                 module_id = FlowRouter.getParam('module_id')
-                Modules.update module_id,
+                Docs.update module_id,
                     $inc: section_count: -1
 
-                Sections.remove self._id
+                Docs.remove self._id
                 

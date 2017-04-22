@@ -44,19 +44,10 @@ template(name='file_item')
                 
 template(name='edit_file')
     .ui.segment
-        .ui.form
-            .field
-                label Title
-                input#title(type='text' placeholder='Title' value=title)
-            .field
-                label Description
-                .froala-container
-                    +froalaReactive getFEContext
-            .field
-                label Link (include http://)
-                .ui.left.icon.input
-                    i.linkify.icon
-                    input#link(type='text' value=link)
-            #save_file.ui.teal.button Save File
-            #delete_file.ui.small.red.icon.button
-                i.delete.icon
+        +title
+        .ui.hidden.divider
+        +content
+        .ui.hidden.divider
+        +link
+        #save_file.ui.teal.button Save File
+        +delete_button

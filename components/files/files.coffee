@@ -1,15 +1,3 @@
-@Files = new Meteor.Collection 'files'
-
-Files.before.insert (userId, doc)->
-    doc.timestamp = Date.now()
-    doc.author_id = Meteor.userId()
-    return
-
-
-Files.helpers
-    author: -> Meteor.users.findOne @author_id
-    when: -> moment(@timestamp).fromNow()
-
 if Meteor.isClient
     FlowRouter.route '/course/:course_id/module/:module_id/downloads', 
         name: 'module_files'
@@ -24,7 +12,8 @@ if Meteor.isClient
 
     Template.module_files.helpers
         module_files: ->
-            Files.find
+            Docs.find
+                type: 'file'
                 module_id: @_id
     
     Template.module_files_page.onCreated ->
@@ -33,13 +22,16 @@ if Meteor.isClient
     
     Template.module_files_page.helpers
         module_ob: -> 
-            module_ob = Modules.findOne FlowRouter.getParam('module_id')
+            module_ob = Docs.findOne
+                _id: FlowRouter.getParam('module_id')
+                type: 'module'
             module_ob
     
     Template.course_files.helpers
         modules: ->
             course_id = FlowRouter.getParam('course_id')
-            Modules.find
+            Docs.find
+                type:'module'
                 course_id: course_id
     
     Template.course_files.onRendered ->
@@ -50,7 +42,8 @@ if Meteor.isClient
 
     Template.module_files.events
         'click #add_file': (e,t)->
-            new_id = Files.insert
+            new_id = Docs.insert
+                type: 'file'
                 module_id: @_id
             Session.set 'editing_id', new_id
 
@@ -60,16 +53,12 @@ if Meteor.isClient
     
 
 if Meteor.isServer
-    Files.allow
-        insert: (userId, doc) -> Roles.userIsInRole(userId, 'admin')
-        update: (userId, doc) -> Roles.userIsInRole(userId, 'admin')
-        remove: (userId, doc) -> Roles.userIsInRole(userId, 'admin')
-    
-    
     publishComposite 'module_files', (module_id)->
         {
             find: ->
-                Files.find module_id: module_id
+                Docs.find 
+                    type: 'file'
+                    module_id: module_id
             # children: [
             #     { find: (question) ->
             #         Answers.find

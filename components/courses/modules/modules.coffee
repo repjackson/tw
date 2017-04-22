@@ -1,43 +1,26 @@
-@Modules = new Meteor.Collection 'modules'
-
-Modules.before.insert (userId, doc)->
-    doc.timestamp = Date.now()
-    doc.author_id = Meteor.userId()
-    doc.module_count = 0
-    return
-
-
-Modules.helpers
-    author: -> Meteor.users.findOne @author_id
-    when: -> moment(@timestamp).fromNow()
-
-
-
-if Meteor.isServer
-    Modules.allow
-        insert: (userId, doc) -> Roles.userIsInRole(userId, 'admin')
-        update: (userId, doc) -> Roles.userIsInRole(userId, 'admin')
-        remove: (userId, doc) -> Roles.userIsInRole(userId, 'admin')
-    
+if Meteor.isServer    
     publishComposite 'module', (module_id)->
         {
             find: ->
-                Modules.find module_id
+                Docs.find module_id
             children: [
                 { 
                     find: (module) ->
-                        Sections.find
+                        Docs.find
+                            type: 'section'
                             module_id: module_id
                     children: [
                         {
                             find: (section) ->
-                                Questions.find
+                                Docs.find
                                     section_id: section._id
+                                    type: 'question'
                             children: [
                                 {
                                     find: (question) ->
-                                        Answers.find 
+                                        Docs.find 
                                             question_id: question._id
+                                            type: 'answer'
                                     }
                                 ]
                             }
@@ -46,7 +29,9 @@ if Meteor.isServer
                 }
                 {
                     find: (module) ->
-                        Courses.find module.course_id
+                        Docs.find
+                            type: 'course'
+                            _id: module.course_id
                 }
             ]
         }

@@ -15,16 +15,8 @@ template(name='edit_module')
         with module
             .ui.basic.text.container.segment
                 h1.ui.center.aligned.header Edit #{title} Module
-                .ui.form
-                    .fields
-                        .twelve.wide.field
-                            .ui.labeled.input
-                                .ui.basic.label Title
-                                input#title(type='text' value=title)
-                        .four.wide.field
-                            .ui.labeled.input
-                                .ui.basic.label Number
-                                input#number(type='number' value=number min='0')
+                +title
+                +number
             .ui.segment
                 h2.ui.header Sections
                 .ui.top.attached.tabular.menu
@@ -41,19 +33,12 @@ template(name='edit_module')
                 a.ui.big.teal.button(href="/course/#{course_id}/module/#{_id}") Save Module
                 #delete.ui.red.icon.small.button
                     i.trash.icon
-                    
+                    // need to delete child docs
                     
 template(name='edit_section')
-    .ui.form
-        .four.wide.field
-            .ui.labeled.input
-                .ui.basic.label Number
-                input#number(type='number' value=number min='0')
-        .field
-            label Section Content
-            .section_content
-                +froalaReactive section_content
-        +section_transcript this
+    +number
+    +content
+    +section_transcript this
     +questions
     .remove_section.ui.small.red.basic.button Remove Section
 

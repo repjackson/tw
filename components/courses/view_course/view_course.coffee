@@ -40,23 +40,21 @@ if Meteor.isClient
         @autorun -> Meteor.subscribe 'course', FlowRouter.getParam('course_id')
     
     Template.view_course.helpers
-        course: -> Courses.findOne FlowRouter.getParam('course_id')
+        course: -> Docs.findOne FlowRouter.getParam('course_id')
         
         in_course: -> Meteor.user()?.courses and @_id in Meteor.user().courses
     
 
 
     Template.course_modules.helpers
-        modules: -> Modules.find { }, sort: number: 1
+        modules: -> Docs.find {type: 'module' }, sort: number: 1
             
-
-
 
     Template.course_sales.onCreated ->
         @autorun -> Meteor.subscribe 'course', FlowRouter.getParam('course_id')
 
     Template.course_sales.helpers
-        course: -> Courses.findOne FlowRouter.getParam('course_id')
+        course: -> Docs.findOne FlowRouter.getParam('course_id')
     
     Template.course_sales.events
         'click .buy_course': ->
@@ -71,7 +69,8 @@ if Meteor.isClient
             
         'click #add_module': ->
             course_id = FlowRouter.getParam('course_id')
-            new_module_id = Modules.insert 
+            new_module_id = Docs.insert
+                type: 'module'
                 course_id:course_id 
             FlowRouter.go "/course/#{course_id}/module/#{new_module_id}/edit"
             
@@ -82,7 +81,7 @@ if Meteor.isClient
         @autorun -> Meteor.subscribe 'course', FlowRouter.getParam('course_id')
 
     Template.course_welcome.helpers
-        course: -> Courses.findOne FlowRouter.getParam('course_id')
+        course: -> Docs.findOne FlowRouter.getParam('course_id')
 
 
     Template.course_welcome.onRendered ->
@@ -95,8 +94,10 @@ if Meteor.isClient
     #         Agreements.find()
 
     Template.edit_welcome_course.helpers
-        course: -> Courses.findOne FlowRouter.getParam('course_id')
-        
+        course: -> 
+            Docs.findOne 
+                _id: FlowRouter.getParam('course_id')
+                type: 'course'
         course_welcome_context: ->
             @current_doc = Courses.findOne FlowRouter.getParam('course_id')
             self = @
@@ -117,7 +118,7 @@ if Meteor.isClient
             
             course_id = FlowRouter.getParam('course_id')
     
-            Courses.update course_id,
+            Docs.update course_id,
                 $set: course_welcome_content: html
                 
         'click #save_welcome_content': ->
@@ -129,10 +130,10 @@ if Meteor.isClient
 
 
     Template.edit_terms_course.helpers
-        course: -> Courses.findOne FlowRouter.getParam('course_id')
+        course: -> Docs.findOne FlowRouter.getParam('course_id')
         
         course_terms_context: ->
-            @current_doc = Courses.findOne FlowRouter.getParam('course_id')
+            @current_doc = Docs.findOne FlowRouter.getParam('course_id')
             self = @
             {
                 _value: self.current_doc.course_terms_content
@@ -151,7 +152,7 @@ if Meteor.isClient
             
             course_id = FlowRouter.getParam('course_id')
     
-            Courses.update course_id,
+            Docs.update course_id,
                 $set: course_terms_content: html
                 
         'click #save_terms_content': ->
@@ -186,7 +187,7 @@ if Meteor.isClient
             
             course_id = FlowRouter.getParam('course_id')
     
-            Courses.update course_id,
+            Docs.update course_id,
                 $set: course_inspiration_content: html
                 
         'click #save_inspiration_content': ->
