@@ -4,8 +4,8 @@ template(name='test_page')
             .ui.breadcrumb
                 a.section(href='/') Home
                 .divider  / 
-                a.section(href='/courses') Inspire U
-                .divider  / 
+                // a.section(href='/courses') Inspire U
+                // .divider  / 
                 a.section(href="/tests") Tests
                 .divider  / 
                 .active.section #{title}
@@ -22,22 +22,20 @@ template(name='test_page')
                             |!{content}
                             h3.ui.dividing.header Statistics
                             h3.ui.dividing.header Your Sessions
-                                .ui.cards
-                                    a#new_session.ui.card(href='#')
+                            #new_session.ui.basic.teal.button
+                                i.plus.icon
+                                | New Session
+                            .ui.cards
+                                each my_sessions
+                                    .ui.card
                                         .content
-                                            .header 
-                                                i.big.plus.icon
-                                                | New Session
-                                    each my_sessions
-                                        .ui.card
-                                            .content
-                                                .header #{number}
-                                                .description
-                                                    |#{from_now}
-                                            .content
-                                                |#{results}
+                                            .header #{number}
+                                            .description
+                                                |#{from_now}
+                                        .content
+                                            |#{results}
                                                     
-                    +user_blurb
+                    // +user_blurb
                     +comments
                 .four.wide.column
                     .ui.dividing.header #{title} Tags

@@ -3,15 +3,18 @@
         a.item(href="/dashboard" class="{{isActivePath '/dashboard'}}")
             i.dashboard.icon
             |Dashboard
-        a.item(href='/articles' class="{{isActivePath '/articles'}}")
-            i.newspaper.icon
-            | Articles
-        a.item(href='/university' class="{{isActivePath '/university'}}")
-            i.university.icon
-            | InspireU
-        a.item(href='/account' class="{{isActivePath '/account'}}")
-            | Account
-            
+        // a.item(href='/articles' class="{{isActivePath '/articles'}}")
+        //     i.newspaper.icon
+        //     | Articles
+        // a.item(href='/university' class="{{isActivePath '/university'}}")
+        //     i.university.icon
+        //     | InspireU
+        // a.item(href='/courses' class="{{isActivePath '/courses'}}")
+        //     i.university.icon
+        //     | Courses
+        a.item(href='/tests' class="{{isActivePath '/tests'}}")
+            i.edit.icon
+            | Tests
         a.item(href='/users' class="{{isActivePath '/users'}}")
             i.users.icon
             | Member Portal
@@ -24,3 +27,6 @@
             //     | #{currentUser.name}
             // else
             | Profile
+        a.item(href='/account' class="{{isActivePath '/account'}}")
+            i.options.icon
+            | Account

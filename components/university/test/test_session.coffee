@@ -1,6 +1,16 @@
 if Meteor.isClient
+    FlowRouter.route '/test/:doc_id/session/:session_id/', 
+        name: 'edit_test_session'
+        action: (params) ->
+            BlazeLayout.render 'layout',
+                sub_nav: 'member_nav'
+                main: 'take_test'
+
+    
+    
+    
     Template.test_session_view.onCreated -> 
-        @autorun -> Meteor.subscribe('test_questions', selected_tags.array(), FlowRouter.getParam('doc_id'))
+        @autorun -> Meteor.subscribe('test_questions', FlowRouter.getParam('doc_id'))
     
     
     Template.test_session_view.helpers

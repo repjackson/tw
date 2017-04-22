@@ -15,7 +15,7 @@ if Meteor.isClient
     Template.cart.onCreated ->
         if Meteor.isDevelopment
             stripe_key = Meteor.settings.public.stripe.testPublishableKey
-            console.log 'using test key'
+            # console.log 'using test key'
         else if Meteor.isProduction
             stripe_key = Meteor.settings.public.stripe.livePublishableKey
         else 
@@ -120,7 +120,7 @@ if Meteor.isServer
             product = Docs.findOne product_id
             Docs.insert
                 type: 'purchase'
-                parent_doc: product_id
+                parent_id: product_id
                 sale_price: product.price
         
         

@@ -51,7 +51,7 @@
         .right.mobile.hidden.menu
             if currentUser
                 if cart_items
-                    a.icon.item(href='/cart')
+                    a.icon.item(href='/cart' class="{{isActivePath '/cart'}}")
                         i.large.icons
                             i.cart.icon
                             i.corner.teal.asterisk.icon

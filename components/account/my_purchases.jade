@@ -1,9 +1,32 @@
 template(name='my_purchases')
     .ui.dividing.header My Purchases
-    .ui.list
-        each purchases
-            .item
-                .ui.header hi
-                |#{parent_doc.title}
-                |Purchase Price $#{sale_price}
-                |When #{when}
+    table.ui.selectable.table
+            thead
+                tr
+                    th 
+                    th Title
+                    th Sale Price
+                    th When
+                    // th Actions
+            tbody
+                each purchases
+                    tr
+                        td 
+                            img.ui.small.image(src="{{c.url parent_doc.image_id}}")
+                        td 
+                            a.ui.header(href="#{parent_doc.type} /#{parent_doc._id}/view") 
+                                |#{parent_doc.title}
+                            each parent_doc.tags
+                                .ui.small.basic.label #{this}
+                        td 
+                            |$#{parent_doc.price}
+                        td
+                            |#{when}
+                        // td 
+                        //     .ui.disabled.button Download Invoice
+            // tfoot
+            //     tr
+            //         th 
+            //         th 
+            //         th
+            //         th Subtotal (#{total_items} items): $#{subtotal}

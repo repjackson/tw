@@ -2,9 +2,8 @@ if Meteor.isClient
     FlowRouter.route '/tests', action: ->
         BlazeLayout.render 'layout',
             sub_nav: 'member_nav'
-            sub_sub_nav: 'inspire_u_nav'
+            # sub_sub_nav: 'inspire_u_nav'
             main: 'tests'
-    
     
     FlowRouter.route '/test/:doc_id/edit', 
         name: 'edit_test'
@@ -19,12 +18,6 @@ if Meteor.isClient
                 sub_nav: 'member_nav'
                 main: 'test_page'
     
-    FlowRouter.route '/test/:doc_id/session/:session_id/', 
-        name: 'edit_test_session'
-        action: (params) ->
-            BlazeLayout.render 'layout',
-                sub_nav: 'member_nav'
-                main: 'take_test'
     
     Template.tests.onCreated ->
         @autorun -> Meteor.subscribe('docs', selected_tags.array(), 'test')
@@ -83,23 +76,23 @@ if Meteor.isClient
 
 
 if Meteor.isServer
-    publishComposite 'test_questions', (session_id)->
+    publishComposite 'test_questions', (test_id)->
         {
             find: ->
-                Docs.find session_id
+                Docs.find test_id
             children: [
-                { find: (session) ->
+                { find: (test) ->
                     Docs.find
-                        type: 'test'
-                        _id: session.test_id
-                children: [
-                    {
-                        find: (test) ->
-                            Docs.find
-                                type: 'question'
-                                test_id: test._id
-                    }
-                ]    
+                        type: 'test_question'
+                        test_id: test._id
+                # children: [
+                #     {
+                #         find: (test) ->
+                #             Docs.find
+                #                 type: 'question'
+                #                 test_id: test._id
+                #     }
+                # ]    
                 }
             ]
         }            

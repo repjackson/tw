@@ -163,10 +163,13 @@ Template.add_to_cart.events
     'click #add_to_cart': -> 
         # Session.set 'cart_item', @_id
         # FlowRouter.go '/cart'
-        Meteor.call 'add_to_cart', @_id
+        Meteor.call 'add_to_cart', @_id, =>
+            Bert.alert "#{@title} added to cart", 'success', 'growl-top-right'
+
 
     'click #remove_from_cart': ->
-        Meteor.call 'remove_from_cart', @_id
+        Meteor.call 'remove_from_cart', @_id, =>
+            Bert.alert "#{@title} removed from cart", 'info', 'growl-top-right'
         
 Template.add_to_cart.helpers
     added: ->

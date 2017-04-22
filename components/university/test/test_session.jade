@@ -21,7 +21,9 @@ template(name='test_session_view')
             #add_test_question.ui.basic.button 
                 i.red.configure.icon
                 |Add Test Question
-        .ui.dividing.header Unpublished Questions
+        .ui.dividing.header 
+            i.red.configure.icon
+            |Unpublished Questions
         .ui.stackable.cards
             each unpublished_questions
                 +test_question
