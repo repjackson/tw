@@ -77,4 +77,4 @@ meeting notes
     
     
 todo today
-    remove unneeded components
+    change everything to parent_id?

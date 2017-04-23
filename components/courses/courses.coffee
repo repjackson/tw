@@ -75,4 +75,6 @@ if Meteor.isServer
         if not @userId or not Roles.userIsInRole(@userId, ['admin'])
             match.published = true
                 
+        match.type = 'course'        
+                
         Docs.find match

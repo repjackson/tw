@@ -17,8 +17,8 @@ FlowRouter.route '/iu/excercises', action: ->
         main: 'excercises'
 
 
-FlowRouter.route '/iu/courses', action: ->
-    BlazeLayout.render 'layout',
-        sub_nav: 'member_nav'
-        sub_sub_nav: 'inspire_u_nav'
-        main: 'courses'
+# FlowRouter.route '/iu/courses', action: ->
+#     BlazeLayout.render 'layout',
+#         sub_nav: 'member_nav'
+#         sub_sub_nav: 'inspire_u_nav'
+#         main: 'courses'
