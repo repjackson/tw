@@ -3,9 +3,10 @@ template(name='comments')
     if adding_id
         +add_comment
     else
-        #add_comment.ui.basic.teal.button
-            i.plus.icon
-            |Add Comment
+        if currentUser
+            #add_comment.ui.basic.teal.button
+                i.plus.icon
+                |Add Comment
     .ui.threaded.comments
         each comments
             unless is_editing

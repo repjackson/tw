@@ -17,8 +17,8 @@ FlowRouter.route '/product/:doc_id/view',
 
 if Meteor.isClient
     Template.products.onCreated ->
-        @autorun -> Meteor.subscribe('selected_products', selected_tags.array())
-    
+        @autorun -> Meteor.subscribe('selected_products')
+        Session.set 'layout_view', 'list'
     
     Template.products.helpers
         products: -> 
@@ -66,20 +66,16 @@ if Meteor.isClient
 
 
 if Meteor.isServer
-    Meteor.publish 'selected_products', (selected_product_tags)->
+    Meteor.publish 'selected_products', ->
         
         self = @
         match = {}
-        if selected_product_tags.length > 0 then match.tags = $all: selected_product_tags
         match.type = 'product'
         if not @userId or not Roles.userIsInRole(@userId, ['admin'])
             match.published = true
         
     
-        Docs.find match,
-            limit: 10
-            sort: 
-                publish_date: -1
+        Docs.find match
     
     
     Meteor.publish 'product', (doc_id)->

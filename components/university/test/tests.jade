@@ -17,8 +17,8 @@ template(name='tests')
                     i.list.layout.icon
                 #make_grid_layout.ui.large.icon.button(class=grid_layout_button_class)
                     i.grid.layout.icon
-                .ui.dividing.header Tag Filter
-                +cloud type='test'
+                // .ui.dividing.header Tag Filter
+                // +cloud type='test'
                 if isInRole 'admin'
                     .ui.dividing.header 
                         i.red.configure.icon
@@ -69,10 +69,10 @@ template(name='test_item')
                 a(href="{{pathFor 'view_test' doc_id=_id}}") 
                     |View More
                     i.arrow.right.icon
-            .extra
-                i.tags.icon
-                each tags
-                    .ui.compact.tiny.circular.button.test_tag(class=tag_class) #{this}
+            // .extra
+            //     i.tags.icon
+            //     each tags
+            //         .ui.compact.tiny.circular.button.test_tag(class=tag_class) #{this}
             if isInRole 'admin'
                 .extra
                     i.red.configure.large.icon

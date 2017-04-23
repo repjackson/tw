@@ -110,13 +110,21 @@ Template.rating.events
                 parent_id: @_id
                 type: 'rating'
                 session_id: session_id
-        if rating_doc        
+        if rating_doc
+            new_tags = @tags
+            new_tags.push 'rating'
+
             Docs.update rating_doc._id, 
-                $set: rating: rating
+                $set: 
+                    rating: rating
+                    tags: new_tags
         else
+            new_tags = @tags
+            new_tags.push 'rating'
             Docs.insert
                 type: 'rating'
                 parent_id: @_id
+                tags: new_tags
                 rating: rating
                 session_id: session_id
 

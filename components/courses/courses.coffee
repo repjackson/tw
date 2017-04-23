@@ -14,7 +14,7 @@ Meteor.users.helpers
 
 if Meteor.isClient
     Template.courses.onCreated -> 
-        @autorun -> Meteor.subscribe('courses')
+        Meteor.subscribe('courses')
 
     Template.courses.helpers
         courses: -> 
@@ -22,10 +22,10 @@ if Meteor.isClient
                 type: 'course'
                 published: true
     
-        unpublished_courses: -> 
-            Docs.find
-                type: 'course'
-                published: false
+        # unpublished_courses: -> 
+        #     Docs.find
+        #         type: 'course'
+        #         published: false
     
         in_course: ->
             # console.log @_id

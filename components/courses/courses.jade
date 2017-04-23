@@ -28,27 +28,27 @@ template(name='courses')
                             a.ui.right.floated.primary.button(href="/course/#{_id}") 
                                 |View
                                 i.right.chevron.icon
-            if isInRole 'admin'
-                .ui.dividing.header 
-                    i.red.configure.icon
-                    |Unpublished Courses
-                each unpublished_courses
-                    .item
-                        .image
-                            a(href="/course/#{_id}") 
-                                img.ui.image(src="{{c.url image_id }}")
-                        .content
-                            a.header(href="/course/#{_id}") 
-                                |#{title}
-                                // if in_course
-                                //     .ui.basic.green.label Enrolled
-                            .description #{subtitle}
-                            .extra
-                                // if in_course
-                                //     .ui.right.floated.primary.button(href="/course/#{_id}")
-                                //         |Dashboard
-                                //         i.dashboard.icon
-                                // else
-                                a.ui.right.floated.primary.button(href="/course/#{_id}") 
-                                    |View
-                                    i.right.chevron.icon
+            // if isInRole 'admin'
+            //     .ui.dividing.header 
+            //         i.red.configure.icon
+            //         |Unpublished Courses
+            //     each unpublished_courses
+            //         .item
+            //             .image
+            //                 a(href="/course/#{_id}") 
+            //                     img.ui.image(src="{{c.url image_id }}")
+            //             .content
+            //                 a.header(href="/course/#{_id}") 
+            //                     |#{title}
+            //                     // if in_course
+            //                     //     .ui.basic.green.label Enrolled
+            //                 .description #{subtitle}
+            //                 .extra
+            //                     // if in_course
+            //                     //     .ui.right.floated.primary.button(href="/course/#{_id}")
+            //                     //         |Dashboard
+            //                     //         i.dashboard.icon
+            //                     // else
+            //                     a.ui.right.floated.primary.button(href="/course/#{_id}") 
+            //                         |View
+            //                         i.right.chevron.icon

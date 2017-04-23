@@ -28,8 +28,14 @@ template(name='test_session')
         .ui.divider
         #delete_session.ui.yellow.button End Session
         #calculate_answers.ui.teal.button Calculate Answers
-        if results
-            .ui.header Results
+        with test_session
+            if results
+                .ui.header Results
+                each results
+                    .ui.header Category #{category}
+                    .ui.header Score #{category_score}
+            
+            
 template(name='test_question')
     .ui.card
         .content

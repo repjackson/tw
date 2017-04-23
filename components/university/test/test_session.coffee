@@ -79,11 +79,23 @@ Meteor.methods
         Docs.remove session_id
         
     'calculate_life_assessment_answers': (session_id)->
-        session_ratings = Docs.find({type: 'rating',session_id: session_id}).fetch()
-        for rating in session_ratings
-            console.log(rating) 
-            
-            
+        for tag in ['finance', 'business']        
+            ratings = Docs.find({
+                type: 'rating',
+                session_id: session_id
+                tags: $in: [tag]
+                }).fetch()
+            console.log "ratings for #{tag}",ratings
+            tag_score = 0    
+            for rating in ratings
+                tag_score += rating.rating
+            console.log tag_score
+                
+            Docs.update session_id,
+                $addToSet:
+                    results:    
+                        category: tag
+                        category_score: tag_score
 if Meteor.isServer
             # self = @
             # match = {}

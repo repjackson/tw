@@ -21,20 +21,21 @@ template(name='test_page')
                             h3.ui.dividing.header Description
                             |!{content}
                             h3.ui.dividing.header Statistics
-                            h3.ui.dividing.header Your Sessions
-                            #new_session.ui.basic.teal.button
-                                i.plus.icon
-                                | New Session
-                            .ui.hidden.divider
-                            .ui.cards
-                                each my_sessions
-                                    .ui.card
-                                        .content
-                                            a.header(href="/test/#{test_id}/session/#{_id}") View
-                                            .description
-                                                |#{from_now}
-                                        .content
-                                            |#{results}
+                            if currentUser
+                                h3.ui.dividing.header Your Sessions
+                                #new_session.ui.basic.teal.button
+                                    i.plus.icon
+                                    | New Session
+                                .ui.hidden.divider
+                                .ui.cards
+                                    each my_sessions
+                                        .ui.card
+                                            .content
+                                                a.header(href="/test/#{test_id}/session/#{_id}") View
+                                                .description
+                                                    |#{from_now}
+                                            .content
+                                                |#{results}
                                                     
                     // +user_blurb
                     +comments

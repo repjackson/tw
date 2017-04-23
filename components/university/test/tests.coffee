@@ -19,7 +19,9 @@ if Meteor.isClient
                 main: 'test_page'
     
     
-    Template.tests.onCreated -> @autorun -> Meteor.subscribe('docs', selected_tags.array(), 'test')
+    Template.tests.onCreated -> 
+        @autorun -> Meteor.subscribe('docs', selected_tags.array(), 'test')
+        Session.set 'layout_view', 'list'
     
     Template.tests.helpers
         tests: -> Docs.find { type: 'test'}

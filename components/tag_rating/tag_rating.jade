@@ -15,19 +15,20 @@ template(name='tag_rating')
                     .description
                         each tags
                             .ui.small.basic.label #{this}
-    if my_rating
-        .ui.dividing.header My Rating
-        with my_rating
-            unless is_editing
-                each tags
-                    .ui.small.basic.label #{this}
-                .ui.hidden.divider
-                +edit_button
-                +delete_button
-            else
-                +tags
-                +edit_button
-    else
-        #add_rating.ui.basic.button
-            i.plus.icon
-            |Rating
+    if currentUser
+        if my_rating
+            .ui.dividing.header My Rating
+            with my_rating
+                unless is_editing
+                    each tags
+                        .ui.small.basic.label #{this}
+                    .ui.hidden.divider
+                    +edit_button
+                    +delete_button
+                else
+                    +tags
+                    +edit_button
+        else
+            #add_rating.ui.basic.button
+                i.plus.icon
+                |Rating
