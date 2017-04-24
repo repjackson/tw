@@ -1,23 +1,24 @@
 .ui.borderless.menu
     .ui.container
-        a.item(href="/dashboard" class="{{isActivePath '/dashboard'}}")
-            i.dashboard.icon
-            |Dashboard
-        // a.item(href='/articles' class="{{isActivePath '/articles'}}")
-        //     i.newspaper.icon
-        //     | Articles
-        // a.item(href='/university' class="{{isActivePath '/university'}}")
-        //     i.university.icon
-        //     | InspireU
-        // a.item(href='/courses' class="{{isActivePath '/courses'}}")
-        //     i.university.icon
-        //     | Courses
-        a.item(href='/tests' class="{{isActivePath '/tests'}}")
-            i.edit.icon
-            | Tests
-        a.item(href='/users' class="{{isActivePath '/users'}}")
-            i.users.icon
-            | Member Portal
+        if isInRole 'admin'
+            a.item(href="/dashboard" class="{{isActivePath '/dashboard'}}")
+                i.dashboard.icon
+                |Dashboard
+            // a.item(href='/articles' class="{{isActivePath '/articles'}}")
+            //     i.newspaper.icon
+            //     | Articles
+            // a.item(href='/university' class="{{isActivePath '/university'}}")
+            //     i.university.icon
+            //     | InspireU
+            // a.item(href='/courses' class="{{isActivePath '/courses'}}")
+            //     i.university.icon
+            //     | Courses
+            a.item(href='/tests' class="{{isActivePath '/tests'}}")
+                i.edit.icon
+                | Tests
+            a.item(href='/users' class="{{isActivePath '/users'}}")
+                i.users.icon
+                | Member Portal
         a.item(href="/profile/#{currentUser._id}" class="{{isActivePath '/profile/#{currentUser._id}'}}")
             if currentUser.profile.image_id
                 img.ui.avatar.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")

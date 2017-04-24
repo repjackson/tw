@@ -21,6 +21,14 @@ if Meteor.isClient
                     test_id: @_id
             FlowRouter.go("/test/#{@_id}/session/#{new_session_id}")
     
+        
+    Template.session_card.onRendered -> 
+        Meteor.setTimeout ->
+            $('.progress').progress()
+        , 1000
+
+    
+    
     Template.edit_test.onCreated ->
         @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
     

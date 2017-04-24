@@ -29,14 +29,7 @@ template(name='test_page')
                                 .ui.hidden.divider
                                 .ui.cards
                                     each my_sessions
-                                        .ui.card
-                                            .content
-                                                a.header(href="/test/#{test_id}/session/#{_id}") View
-                                                .description
-                                                    |#{from_now}
-                                            .content
-                                                |#{results}
-                                                    
+                                        +session_card
                     // +user_blurb
                     +comments
                 .four.wide.column
@@ -58,6 +51,21 @@ template(name='test_page')
                     +voting
                     +favorite
                     +tag_rating
+
+
+template(name='session_card')
+    .ui.card
+        .content
+            a.header(href="/test/#{test_id}/session/#{_id}") #{long_date}
+            // .description
+            //     |#{long_date}
+        .content
+            each results
+                .ui.teal.tiny.progress(data-percent=category_percent)
+                    .bar
+                    .progress
+                    .label #{category}
+
                     
                     
 template(name='edit_test')        

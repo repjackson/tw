@@ -33,7 +33,8 @@ Template.registerHelper 'publish_when', () -> moment(@publish_date).fromNow()
 
 Template.registerHelper 'from_now', () -> moment(@timestamp).fromNow()
 
-Template.registerHelper 'long_date', () -> moment(@timestamp).format("dddd, MMMM Do YYYY, h:mm:ss a")
+Template.registerHelper 'long_date', () -> moment(@timestamp).format("dddd, MMMM Do, h:mm a")
+# Template.registerHelper 'long_date', () -> moment(@timestamp).format("dddd, MMMM Do YYYY, h:mm:ss a")
 
 
 Template.registerHelper 'in_course', () -> @_id in Meteor.user().courses

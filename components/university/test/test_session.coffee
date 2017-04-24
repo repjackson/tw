@@ -26,6 +26,7 @@ if Meteor.isClient
         test_session: -> Docs.findOne type: 'test_session'
         test: -> Docs.findOne type: 'test'
         questions: -> Docs.find type: 'question'
+        test_finished: -> Session.get 'test_finished'
         unanswered_questions: ->
             session_id = FlowRouter.getParam('session_id')
             rating_docs = Docs.find({type:'rating', session_id: session_id}, {fields:parent_id:1}).fetch()
@@ -57,6 +58,7 @@ if Meteor.isClient
             Session.set 'editing_id', new_id
                 
         'click #calculate_answers': ->
+            Session.set 'test_finished', true
             session_id = FlowRouter.getParam('session_id')
             Meteor.call 'calculate_life_assessment_answers', session_id
                 

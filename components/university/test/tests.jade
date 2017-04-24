@@ -39,9 +39,9 @@ template(name='test_card')
             .header
                 a(href="{{pathFor 'view_test' doc_id=_id}}")
                     h2.ui.header #{title}
-            if publish_date
-                .meta
-                    | Published #{publish_when}
+            // if publish_date
+            //     .meta
+            //         | Published #{publish_when}
             .description
                 |!{body}
         .content
@@ -62,8 +62,8 @@ template(name='test_item')
             img.ui.rounded.image(src="{{c.url image_id  width=175 height=175 crop='fill' gravity='face' }}")
         .content
             a.header(href="{{pathFor 'view_test' doc_id=_id}}") #{title}
-            .meta
-                | Published #{publish_when}
+            // .meta
+            //     | Published #{publish_when}
             .description
                 p !{body}
                 a(href="{{pathFor 'view_test' doc_id=_id}}") 
