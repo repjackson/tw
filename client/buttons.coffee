@@ -83,12 +83,11 @@ Template.rating.onRendered ->
                 $('.ui.rating').rating
                     # initialRating: initial_rating,
                     maxRating: 5
+                    # onRate: (value)->
+                    #     console.log value
             , 2000
             # console.log 'subs ready'
 
-    
-    
-    
     
 Template.rating.helpers
     rating_doc: ->
@@ -185,9 +184,9 @@ Template.add_to_cart.events
     'click #add_to_cart': -> 
         # Session.set 'cart_item', @_id
         # FlowRouter.go '/cart'
-        Meteor.call 'add_to_cart', @_id, =>
+        if Meteor.userId() then Meteor.call 'add_to_cart', @_id, =>
             Bert.alert "#{@title} added to cart", 'success', 'growl-top-right'
-
+        else FlowRouter.go '/sign-in'
 
     'click #remove_from_cart': ->
         Meteor.call 'remove_from_cart', @_id, =>
@@ -198,3 +197,4 @@ Template.add_to_cart.helpers
         Docs.findOne 
             type: 'cart_item'
             parent_id: @_id
+            author_id: Meteor.userId()

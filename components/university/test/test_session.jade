@@ -30,10 +30,21 @@ template(name='test_session')
         #calculate_answers.ui.teal.button Calculate Answers
         with test_session
             if results
-                .ui.header Results
-                each results
-                    .ui.header Category #{category}
-                    .ui.header Score #{category_score}
+                +results
+            
+            
+            
+template(name='results')
+    with test_session
+        .ui.dividing.header Results
+        each results
+            // .ui.header Category #{category}
+            // .ui.header Score #{category_score}
+            .ui.teal.progress(data-percent=category_percent)
+                .bar
+                .progress
+                .label #{category}
+
             
             
 template(name='test_question')

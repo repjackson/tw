@@ -10,7 +10,18 @@ if Meteor.isClient
         @autorun -> Meteor.subscribe('test_questions', FlowRouter.getParam('doc_id'))
         @autorun -> Meteor.subscribe('test_session', FlowRouter.getParam('session_id'))
     
-    
+    Template.results.onRendered -> 
+        Meteor.setTimeout ->
+            $('.progress').progress()
+        , 1000
+
+    Template.results.helpers
+        test_session: -> 
+            test_session = Docs.findOne type: 'test_session'
+            # console.log test_session
+            # test_session
+        
+        
     Template.test_session.helpers
         test_session: -> Docs.findOne type: 'test_session'
         test: -> Docs.findOne type: 'test'
@@ -85,17 +96,19 @@ Meteor.methods
                 session_id: session_id
                 tags: $in: [tag]
                 }).fetch()
-            console.log "ratings for #{tag}",ratings
+            # console.log "ratings for #{tag}",ratings
             tag_score = 0    
             for rating in ratings
                 tag_score += rating.rating
-            console.log tag_score
+            # console.log tag_score
                 
             Docs.update session_id,
                 $addToSet:
                     results:    
                         category: tag
                         category_score: tag_score
+                        category_percent: tag_score*10
+                        
 if Meteor.isServer
             # self = @
             # match = {}
