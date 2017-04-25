@@ -12,13 +12,6 @@ if Meteor.isClient
             sub_nav: 'admin_nav'
             main: 'pages'
  
-    FlowRouter.route '/admin/lab', action: (params) ->
-        BlazeLayout.render 'layout',
-            nav: 'nav'
-            sub_nav: 'admin_nav'
-            main: 'twlab'
- 
- 
     Template.user_table.onCreated ->
         @autorun -> Meteor.subscribe 'members'
         @autorun -> Meteor.subscribe 'courses'
@@ -28,13 +21,13 @@ if Meteor.isClient
         members: -> 
             Meteor.users.find {}
             
-        user_is_admin: -> 
+        is_admin: -> 
             # console.log @
             Roles.userIsInRole(@_id, 'admin')
     
-        user_is_member: -> 
+        is_sol_member: -> 
             # console.log @
-            Roles.userIsInRole(@_id, 'member')
+            Roles.userIsInRole(@_id, 'sol_member')
     
         user_courses: ->
             if @courses
@@ -48,7 +41,7 @@ if Meteor.isClient
         'click .remove_admin': ->
             self = @
             swal {
-                title: "Remove #{@emails[0].address} from Admins?"
+                title: "Remove #{@username} from Admins?"
                 # text: 'You will not be able to recover this imaginary file!'
                 type: 'warning'
                 animation: false
@@ -58,14 +51,14 @@ if Meteor.isClient
                 closeOnConfirm: false
             }, ->
                 Roles.removeUsersFromRoles self._id, 'admin'
-                swal "Removed Admin Privilages from #{self.emails[0].address}", "",'success'
+                swal "Removed Admin Privilages from #{self.username}", "",'success'
                 return
     
     
         'click .make_admin': ->
             self = @
             swal {
-                title: "Make #{@emails[0].address} an Admin?"
+                title: "Make #{@username} an Admin?"
                 # text: 'You will not be able to recover this imaginary file!'
                 type: 'warning'
                 animation: false
@@ -75,13 +68,13 @@ if Meteor.isClient
                 closeOnConfirm: false
             }, ->
                 Roles.addUsersToRoles self._id, 'admin'
-                swal "Made #{self.emails[0].address} an Admin", "",'success'
+                swal "Made #{self.username} an Admin", "",'success'
                 return
     
-        'click .remove_member': ->
+        'click .remove_sol_member': ->
             self = @
             swal {
-                title: "Remove #{@emails[0].address} from members?"
+                title: "Remove #{@username} from SOL?"
                 # text: 'You will not be able to recover this imaginary file!'
                 type: 'warning'
                 animation: false
@@ -90,25 +83,25 @@ if Meteor.isClient
                 confirmButtonText: 'Remove Member Status'
                 closeOnConfirm: false
             }, ->
-                Roles.removeUsersFromRoles self._id, 'member'
-                swal "Removed member privilages from #{self.emails[0].address}", "",'success'
+                Roles.removeUsersFromRoles self._id, 'sol_member'
+                swal "Removed #{self.username} from SOL", "",'success'
                 return
     
     
-        'click .make_member': ->
+        'click .make_sol_member': ->
             self = @
             swal {
-                title: "Make #{@emails[0].address} a member?"
+                title: "Add #{@username} to SOL?"
                 # text: 'You will not be able to recover this imaginary file!'
                 type: 'warning'
                 animation: false
                 showCancelButton: true
                 # confirmButtonColor: '#DD6B55'
-                confirmButtonText: 'Make Member'
+                confirmButtonText: 'Add to SOL'
                 closeOnConfirm: false
             }, ->
-                Roles.addUsersToRoles self._id, 'member'
-                swal "Made #{self.emails[0].address} an member", "",'success'
+                Roles.addUsersToRoles self._id, 'sol_member'
+                swal "Made #{self.username} a SOL Member", "",'success'
                 return
     
     

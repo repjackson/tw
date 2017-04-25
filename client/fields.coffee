@@ -20,6 +20,10 @@ Template.tags.events
             $pull: tags: tag
         $('#add_tag').val(tag)
 
+Template.tags.helpers
+    tag_subset: ->
+        _.difference(Template.parentData().tags, @filter)
+
 
 
 Template.price.events

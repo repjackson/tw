@@ -4,22 +4,43 @@ if Meteor.isClient
     
     @selected_tags = new ReactiveArray []
 
+    media_tags = ['tori webster', 'quote','poem', 'photo', 'image', 'video', 'essay']
+
     Template.cloud.onCreated ->
-        @autorun => Meteor.subscribe('tags', selected_tags.array(), @data.type)
+        @autorun => Meteor.subscribe('tags', selected_tags.array(), type=null,  filter=@data.filter, limit=10)
     
     Template.cloud.helpers
-        tags: ->
+        media_tags: -> 
+            Tags.find
+                name: $in: media_tags
+            
+        theme_tags: ->
             doc_count = Docs.find().count()
-            if 0 < doc_count < 3 then Tags.find { count: $lt: doc_count } else Tags.find({}, limit: 7)
+            if 0 < doc_count < 3
+                Tags.find { 
+                    count: $lt: doc_count
+                    name: $nin: media_tags
+                    }
+            else
+                # console.log 'media tags?', media_tags
+                Tags.find({name: $nin: media_tags})
+        
+        media_tag_class: -> if @valueOf() in selected_tags.array() then 'teal' else 'basic'
+
+        
+        cloud_tag_class: ->
+            if @name is 'tori webster' then button_class.push ' teal'
+            
     
         cloud_tag_class: ->
-            button_class = switch
-                when @index <= 5 then 'large'
-                when @index <= 12 then ''
-                when @index <= 20 then 'small'
+            button_class = []
+            switch
+                when @index <= 5 then button_class.push ' large'
+                when @index <= 12 then button_class.push ' '
+                when @index <= 20 then button_class.push ' small'
             return button_class
     
-        selected_tags: -> selected_tags.array()
+        selected_tags: -> _.difference(selected_tags.array(), media_tags)
     
         settings: -> {
             position: 'bottom'
@@ -40,6 +61,10 @@ if Meteor.isClient
         'click .select_tag': -> selected_tags.push @name
         'click .unselect_tag': -> selected_tags.remove @valueOf()
         'click #clear_tags': -> selected_tags.clear()
+    
+        'click .select_media_tag': ->  if @valueOf() in selected_tags.array() then selected_tags.remove(@valueOf()) else selected_tags.push(@valueOf())
+        # 'click .unselect_tag': -> selected_tags.remove @valueOf()
+        # 'click #clear_tags': -> selected_tags.clear()
     
         'click #add': ->
             Meteor.call 'add', (err,id)->
@@ -69,14 +94,17 @@ if Meteor.isClient
 
 
 if Meteor.isServer
-    Meteor.publish 'tags', (selected_tags, type)->
+    Meteor.publish 'tags', (selected_tags, type, filter, limit)->
         
         self = @
         match = {}
         
         # match.tags = $all: selected_tags
         if type then match.type = type
+        if filter then selected_tags.push filter
         if selected_tags.length > 0 then match.tags = $all: selected_tags
+        
+        # console.log 'limit:', limit
         
         cloud = Docs.aggregate [
             { $match: match }
@@ -85,7 +113,7 @@ if Meteor.isServer
             { $group: _id: '$tags', count: $sum: 1 }
             { $match: _id: $nin: selected_tags }
             { $sort: count: -1, _id: 1 }
-            { $limit: 10 }
+            { $limit: limit }
             { $project: _id: 0, name: '$_id', count: 1 }
             ]
         # console.log 'cloud, ', cloud

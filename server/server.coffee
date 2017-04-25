@@ -6,7 +6,7 @@ Meteor.users.allow
         #     # console.log 'user allowed to modify own account'
         #     true
 
-Kadira.connect('Dmhg2hdSobHy3fXWE', '940bb181-70ce-42c4-a557-77696e5da41d')
+# Kadira.connect('Dmhg2hdSobHy3fXWE', '940bb181-70ce-42c4-a557-77696e5da41d')
 
 
 

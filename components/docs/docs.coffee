@@ -25,7 +25,7 @@ Docs.helpers
 FlowRouter.route '/lightbank', action: (params) ->
     BlazeLayout.render 'layout',
         # cloud: 'cloud'
-        main: 'docs'
+        main: 'lightbank'
 
 Meteor.methods
     add: (tags=[])->
@@ -42,7 +42,7 @@ if Meteor.isClient
             Docs.find { }, 
                 sort:
                     tag_count: 1
-                limit: 1
+                limit: 10
     
         one_doc: -> 
             Docs.find().count() is 1
@@ -74,11 +74,12 @@ if Meteor.isServer
         remove: (userId, doc) -> Roles.userIsInRole(userId, 'admin')
     
     
-    Meteor.publish 'docs', (selected_tags, type, limit)->
+    Meteor.publish 'docs', (selected_tags, type, filter, limit)->
     
         self = @
         match = {}
         # if selected_tags then match.tags = $all: selected_tags
+        if filter then selected_tags.push filter
         if selected_tags.length > 0 then match.tags = $all: selected_tags
         if type then match.type = type
     
