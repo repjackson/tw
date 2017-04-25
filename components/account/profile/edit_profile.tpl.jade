@@ -35,7 +35,7 @@
                         .ui.input
                             input#location(type='text' value=profile.location)
                     .field
-                        label Tags (anything to identify you with)
+                        label Tags (to find you in the member portal)
                         each tags
                             .ui.basic.circular.button.person_tag
                                 i.minus.icon
@@ -56,6 +56,18 @@
                         label If I am not at work or in class then I am probably…
                         .ui.input
                             input#if_not_working(type='text' value=profile.if_not_working)
+                    .ui.divider
+                    .field
+                        if profile.published
+                            #unpublish.ui.basic.icon.green.button
+                                i.toggle.on.icon
+                        else
+                            #publish.ui.basic.icon.button
+                                i.toggle.off.icon
+                        if profile.published
+                            .ui.basic.label Published in Member Portal
+                        else
+                            .ui.basic.label Not Published in Member Portal
                     // .ui.segment
                     //     +atForm
         // .ui.basic.segment.container

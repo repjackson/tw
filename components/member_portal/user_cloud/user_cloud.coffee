@@ -12,7 +12,7 @@ if Meteor.isClient
 
     Template.user_cloud.helpers
         all_user_tags: ->
-            user_count = Meteor.users.find().count()
+            user_count = Meteor.users.find($ne:Meteor.userId()).count()
             if 0 < user_count < 3 then User_tags.find({ count: $lt: user_count }, {limit:20}) else User_tags.find({}, limit:20)
             # User_tags.find()
     
@@ -43,6 +43,10 @@ if Meteor.isServer
         self = @
         match = {}
         if selected_user_tags.length > 0 then match.tags = $all: selected_user_tags
+        match._id = $ne: @userId
+        match["profile.published"] = true
+
+        
     
         user_cloud = Meteor.users.aggregate [
             { $match: match }

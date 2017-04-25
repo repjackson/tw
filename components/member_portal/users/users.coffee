@@ -1,21 +1,21 @@
 FlowRouter.route '/users', action: (params) ->
     BlazeLayout.render 'layout',
         sub_nav: 'member_nav'
-        main: 'users'
+        main: 'member_portal'
 
 
 
 if Meteor.isClient
-    Template.users.onCreated ->
+    Template.member_portal.onCreated ->
         @autorun -> Meteor.subscribe('people', selected_user_tags.array())
     Template.user.onCreated ->
         @autorun -> Meteor.subscribe('person', @_id)
     
     
-    Template.users.helpers
+    Template.member_portal.helpers
         people: -> 
-            # Meteor.users.find { _id: $ne: Meteor.userId() }, 
-            Meteor.users.find { }, 
+            Meteor.users.find { _id: $ne: Meteor.userId() }, 
+            # Meteor.users.find { }, 
                 sort:
                     tag_count: 1
                 limit: 10
@@ -35,7 +35,8 @@ if Meteor.isServer
     Meteor.publish 'people', (selected_user_tags)->
         match = {}
         if selected_user_tags.length > 0 then match.tags = $all: selected_user_tags
-        # match._id = $ne: @userId
+        match._id = $ne: @userId
+        match["profile.published"] = true
         Meteor.users.find match,
             limit: 20
     

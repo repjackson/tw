@@ -2,7 +2,7 @@ FlowRouter.route '/account/profile/edit/:user_id?',
     action: (params) ->
         if not params.user_id then FlowRouter.go "/account/profile/edit/#{Meteor.userId()}"
         BlazeLayout.render 'layout',
-            sub_nav: 'account_nav'
+            sub_nav: 'member_nav'
             main: 'edit_profile'
 
 
@@ -133,6 +133,11 @@ if Meteor.isClient
                 $set:
                     "profile.subscribe": value
     
+
+
+
+        'click #publish': -> Meteor.users.update FlowRouter.getParam('user_id'), $set: "profile.published": true
+        'click #unpublish': -> Meteor.users.update FlowRouter.getParam('user_id'), $set: "profile.published": false
 
 
 if Meteor.isServer
