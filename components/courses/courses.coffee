@@ -27,10 +27,6 @@ if Meteor.isClient
         #         type: 'course'
         #         published: false
     
-        in_course: ->
-            # console.log @_id
-            @_id in Meteor.user()?.courses
-    
 
     Template.courses.events
         'click #add_course': ->

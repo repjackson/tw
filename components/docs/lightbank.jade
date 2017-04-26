@@ -7,12 +7,17 @@ template(name='lightbank')
 
 
 template(name='doc_view')
-    .ui.container.fluid.center.aligned.segment
+    .ui.container.fluid.segment
         |!{content}
         .meta
             each tags
                 .ui.circular.tiny.button.tag(class=tag_class) #{this}
+        .ui.hidden.fitted.divider
+        a.ui.blue.button(href="/view/#{_id}") 
+            |View
+            i.right.chevron.icon
+        .ui.hidden.fitted.divider
         if can_edit
-            .edit.ui.circular.basic.large.button
+            a.ui.circular.basic.large.button(href="/edit/#{_id}")
                 i.red.configure.icon
                 |Edit

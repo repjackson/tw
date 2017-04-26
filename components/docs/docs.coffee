@@ -48,6 +48,24 @@ if Meteor.isClient
         selected_tags: -> selected_tags.array()
 
     
+    FlowRouter.route '/view/:doc_id', 
+        name: 'view'
+        action: (params) ->
+            BlazeLayout.render 'layout',
+                main: 'doc_page'
+
+    Template.doc_page.onCreated ->
+        @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
+    
+    Template.doc_page.helpers
+        doc: -> Docs.findOne FlowRouter.getParam('doc_id')
+    
+
+    
+    
+    
+    
+    
 
 if Meteor.isServer
     Docs.allow

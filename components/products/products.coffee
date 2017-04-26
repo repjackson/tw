@@ -1,5 +1,5 @@
 if Meteor.isClient
-    FlowRouter.route '/products', action: ->
+    FlowRouter.route '/service', action: ->
         BlazeLayout.render 'layout',
             # sub_nav: 'member_nav'
             main: 'products'
@@ -41,7 +41,7 @@ if Meteor.isClient
         'click #add_product': ->
             id = Docs.insert
                 type: 'product'
-            FlowRouter.go "/product/edit/#{id}"
+            FlowRouter.go "/edit/#{id}"
     
     
         'click #make_list_layout': -> Session.set 'layout_view', 'list'

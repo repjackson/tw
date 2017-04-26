@@ -9,7 +9,7 @@ if Meteor.isClient
 
     Template.lightbank.helpers
         docs: -> 
-            Docs.find { }, 
+            Docs.find {type:'lightbank' }, 
                 sort:
                     tag_count: 1
                 limit: 10
@@ -30,5 +30,3 @@ if Meteor.isClient
 
     Template.doc_view.events
         'click .tag': -> if @valueOf() in selected_tags.array() then selected_tags.remove(@valueOf()) else selected_tags.push(@valueOf())
-
-        'click .edit': -> FlowRouter.go("/doc/#{@_id}/edit")

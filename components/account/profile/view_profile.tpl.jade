@@ -7,10 +7,12 @@ with person
                     a.ui.basic.fluid.button(href="/account/profile/edit/#{_id}") Edit My Profile
                 else
                     +toggle_friend
+                .ui.hidden.divider
                 +staus_indicator
         .ten.wide.column
             h2.ui.center.aligned.header
                 |#{profile.first_name} #{profile.last_name}
+            .ui.center.aligned.sub.header #{username}
             if tags
                 each tags
                     .ui.basic.circular.label #{this}

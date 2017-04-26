@@ -142,6 +142,8 @@ Template.delete_button.events
             confirmButtonColor: '#da5347'
         }, ->
             Docs.remove self._id
+            if FlowRouter.getParam('doc_id') 
+                FlowRouter.go "/#{self.type}"
 Template.delete_link.events
     'click #delete': ->
         self = @
@@ -185,12 +187,12 @@ Template.add_to_cart.events
         # Session.set 'cart_item', @_id
         # FlowRouter.go '/cart'
         if Meteor.userId() then Meteor.call 'add_to_cart', @_id, =>
-            Bert.alert "#{@title} added to cart", 'success', 'growl-top-right'
+            Bert.alert "#{@title} Added to Cart", 'success', 'growl-top-right'
         else FlowRouter.go '/sign-in'
 
     'click #remove_from_cart': ->
         Meteor.call 'remove_from_cart', @_id, =>
-            Bert.alert "#{@title} removed from cart", 'info', 'growl-top-right'
+            Bert.alert "#{@title} Removed from Cart", 'info', 'growl-top-right'
         
 Template.add_to_cart.helpers
     added: ->

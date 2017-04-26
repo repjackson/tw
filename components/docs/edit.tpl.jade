@@ -28,5 +28,4 @@ with doc
             .ui.hidden.divider
         .ui.center.aligned.basic.segment
             a.ui.huge.teal.button(href="/#{type}/#{_id}") Save #{title} #{type}
-            #delete.ui.red.icon.button
-                i.trash.icon
+            +delete_button

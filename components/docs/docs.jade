@@ -5,3 +5,45 @@ template(name='docs')
         each docs
             +doc_view
 
+template(name='doc_page')
+    with doc
+        .ui.container
+            .ui.breadcrumb
+                a.section(href='/') Home
+                .divider  / 
+                a.section(href="/#{type}") #{type}
+                .divider  / 
+                .active.section #{title}
+            .ui.hidden.divider
+            if image_id
+                img.ui.centered.image(src="{{c.url image_id height=500 width=800 background='white' crop='lpad'}}")
+            .ui.stackable.grid
+                .eleven.wide.column
+                    h1.ui.dividing.header #{title}
+                    |!{content}
+                .five.wide.column
+                    if price
+                        .ui.dividing.header Price $#{price}
+                        +add_to_cart
+                    if tags
+                        .ui.dividing.header Tags
+                        each tags
+                            .ui.basic.label #{this}
+                    // +user_card
+                    if can_edit
+                        .ui.dividing.header 
+                            i.red.configure.icon
+                            |Admin
+                        a.ui.basic.fluid.button(href="/edit/#{_id}")
+                            i.pencil.icon
+                            |Edit
+                        .ui.hidden.fitted.divider
+                        .ui.header
+                            |Published:
+                            if published
+                                .ui.green.basic.label True
+                            else
+                                .ui.basic.label False
+                        .ui.header
+                            |Type:
+                            .ui.basic.label #{type}
