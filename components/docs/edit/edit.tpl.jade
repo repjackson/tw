@@ -1,0 +1,32 @@
+with doc
+    .ui.container.basic.segment
+        .ui.center.aligned.header 
+            if title
+                |Edit '#{title}' #{type}
+            else 
+                |Edit #{type}
+        .ui.hidden.divider
+        +title
+        .ui.hidden.divider
+        +subtitle
+        .ui.hidden.divider
+        +tags
+        .ui.hidden.divider
+        +number
+        .ui.hidden.divider
+        +image
+        .ui.hidden.divider
+        +price
+        .ui.hidden.divider
+        +content      
+        .ui.hidden.divider
+        .ui.hidden.divider
+        +published
+        .ui.hidden.divider
+        if isInRole 'admin'
+            +type
+            .ui.hidden.divider
+        .ui.center.aligned.basic.segment
+            a.ui.huge.teal.button(href="/#{type}/#{_id}") Save #{title} #{type}
+            #delete.ui.red.icon.button
+                i.trash.icon

@@ -10,13 +10,13 @@ Template.tags.events
         if e.which is 13
             tag = $('#add_tag').val().toLowerCase().trim()
             if tag.length > 0
-                Docs.update @_id,
+                Docs.update Template.parentData()._id,
                     $addToSet: tags: tag
                 $('#add_tag').val('')
 
     'click .doc_tag': (e,t)->
         tag = @valueOf()
-        Docs.update Template.currentData()._id,
+        Docs.update Template.parentData()._id,
             $pull: tags: tag
         $('#add_tag').val(tag)
 

@@ -22,10 +22,6 @@ Docs.helpers
     parent_doc: -> Docs.findOne @parent_id
 
 
-FlowRouter.route '/lightbank', action: (params) ->
-    BlazeLayout.render 'layout',
-        # cloud: 'cloud'
-        main: 'lightbank'
 
 Meteor.methods
     add: (tags=[])->
@@ -35,7 +31,7 @@ Meteor.methods
 
 if Meteor.isClient
     Template.docs.onCreated -> 
-        @autorun -> Meteor.subscribe('docs', selected_tags.array(), null, 10)
+        @autorun -> Meteor.subscribe('docs', selected_tags.array(), type=null, 5)
 
     Template.docs.helpers
         docs: -> 
@@ -52,20 +48,6 @@ if Meteor.isClient
         selected_tags: -> selected_tags.array()
 
     
-    Template.doc_view.helpers
-        is_author: -> Meteor.userId() and @author_id is Meteor.userId()
-    
-        tag_class: -> if @valueOf() in selected_tags.array() then 'teal' else 'basic'
-    
-        when: -> moment(@timestamp).fromNow()
-
-    Template.doc_view.events
-        'click .tag': -> if @valueOf() in selected_tags.array() then selected_tags.remove(@valueOf()) else selected_tags.push(@valueOf())
-    
-        'click .edit': -> FlowRouter.go("/doc/edit/#{@_id}")
-
-    Template.docs.events
-    
 
 if Meteor.isServer
     Docs.allow
@@ -74,13 +56,12 @@ if Meteor.isServer
         remove: (userId, doc) -> Roles.userIsInRole(userId, 'admin')
     
     
-    Meteor.publish 'docs', (selected_tags, type, filter, limit)->
+    Meteor.publish 'docs', (selected_tags, type, limit)->
     
         self = @
         match = {}
-        # if selected_tags then match.tags = $all: selected_tags
-        if filter then selected_tags.push filter
-        if selected_tags.length > 0 then match.tags = $all: selected_tags
+        match.tags = $all: selected_tags
+        # if selected_tags.length > 0 then match.tags = $all: selected_tags
         if type then match.type = type
     
         if limit

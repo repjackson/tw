@@ -1,0 +1,21 @@
+template(name='colors')
+    .ui.container
+        .ui.dividing.header Colors
+        if isInRole 'admin'
+            #add_color.ui.basic.button
+                i.red.configure.icon
+                |Add color
+        .ui.segments
+            each colors
+                .ui.segment
+                    a.ui.header #{title}
+                    with personality_color
+                        #decrease_index.ui.icon.button
+                            i.chevron.up.icon
+                        #increase_index.ui.icon.button
+                            i.chevron.down.icon
+                        h2 #{my_number}
+                    .meta
+                        each tags
+                            .ui.basic.label #{this}
+                    +edit_button

@@ -21,9 +21,11 @@ db.docs.updateMany( {}, { $rename: { "body": "content" } } )
 
 
 
-db.docs.find({ tags:{$exists:true} }).forEach(
+db.docs.find({ tags:{$in:['lightbank']} }).forEach(
     function(doc) {
-        doc.tags.push("lightbank");
+        var index = doc.tags.indexOf('lightbank');
+        doc.tags.splice(index, 1);
+        doc.type = 'lightbank';
         db.docs.save(doc);
     }
 )
@@ -33,7 +35,7 @@ db.docs.find({ tags:{$exists:true} }).count()
 
 
 
-db.docs.find({ tags:{$in: ['image']} }).count()
+db.docs.find({ tags:{$in: ['lightbank']} }).count()
 
 
 mongo --ssl --sslAllowInvalidCertificates aws-us-east-1-portal.21.dblayer.com:10444/toridb -u toriadmin -pTurnf34ragainst!

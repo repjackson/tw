@@ -7,9 +7,6 @@
             // a.item(href='/articles' class="{{isActivePath '/articles'}}")
             //     i.newspaper.icon
             //     | Articles
-            // a.item(href='/university' class="{{isActivePath '/university'}}")
-            //     i.university.icon
-            //     | InspireU
             // a.item(href='/courses' class="{{isActivePath '/courses'}}")
             //     i.university.icon
             //     | Courses
@@ -28,6 +25,9 @@
             //     | #{currentUser.name}
             // else
             | Profile
+        a.item(href='/colors' class="{{isActivePath '/colors'}}")
+            i.paint.brush.icon
+            | Colors
         a.item(href='/account' class="{{isActivePath '/account'}}")
             i.options.icon
             | Account

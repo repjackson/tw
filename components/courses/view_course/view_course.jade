@@ -16,25 +16,25 @@ template(name='view_course')
             // .centered.row
             //     h4.ui.center.aligned.header #{course.subtitle}
             .five.wide.column
-                .ui.vertical.fluid.pointing.large.menu
-                    with course
+                with course
+                    .ui.vertical.fluid.pointing.large.menu
                         a.item(href="/course/#{_id}/welcome" class="{{isActiveRoute name='course_welcome'}}") Welcome
                         a.item(href="/course/#{_id}/modules" class="{{isActiveRoute name='course_modules'}}") Modules
                         a.item(href="/course/#{_id}/members" class="{{isActiveRoute name='course_members'}}") Members
                         a.item(href="/course/#{_id}/downloads" class="{{isActiveRoute name='course_downloads'}}") Downloads
                         // a.item(href="/course/#{_id}/reminders" class="{{isActiveRoute name='course_reminders'}}") Reminders
-                if isInRole 'admin'
-                    .ui.segment
-                        .ui.header 
-                            i.red.configure.icon
-                            |Admin
-                        #add_module.ui.basic.fluid.button
-                            i.plus.icon
-                            |Module
-                        .ui.hidden.divider
-                        #edit_course.ui.basic.fluid.button
-                            i.pencil.icon
-                            | Edit Course
+                    if isInRole 'admin'
+                        .ui.segment
+                            .ui.header 
+                                i.red.configure.icon
+                                |Admin
+                            #add_module.ui.basic.fluid.button
+                                i.plus.icon
+                                |Module
+                            .ui.hidden.fitted.divider
+                            a.ui.basic.fluid.button(href="/edit/#{_id}")
+                                i.pencil.icon
+                                | Edit Course
             .ten.wide.column
                 +Template.dynamic template=course_content
 
@@ -50,7 +50,7 @@ template(name='course_sales')
     with course
         .ui.text.container
             if isInRole 'admin'
-                a.ui.basic.button(href="/course/#{_id}/modules")
+                a.ui.basic.button(href="/course/#{_id}/welcome")
                     i.red.configure.icon
                     |#{title} Admin
             if image_id
@@ -58,17 +58,19 @@ template(name='course_sales')
             // h1.ui.center.aigned.header #{title}
             h3.ui.center.aigned.header #{subtitle}
             .ui.basic.segment 
-                |!{description}
+                |!{content}
             .ui.centered.grid
-                .six.wide.column
+                .four.wide.column
                     a.ui.teal.large.button(href='http://toriwebster.us11.list-manage.com/subscribe?u=8973e01aca6da499e7e1a63bd&id=9204d04e30')
                         |Sign Up for the SOL Newsletter
-                .six.wide.column
-                    // if currentUser
-                    //     if in_course
-                    //         // .ui.green.basic.label Enrolled
-                    //         a.ui.teal.big.button(href="/course/#{_id}") View Course
-                    //     else
+                .four.wide.column
+                    if in_demo
+                        .ui.disabled.teal.button Already Signed Up for Demo
+                    else
+                        #sign_up_demo.ui.teal.button
+                            |Sign Up for the Demo
+                        
+                .four.wide.column
                     +add_to_cart
                     // a.buy_course.ui.teal.big.button
                     //     |Enroll
@@ -86,6 +88,10 @@ template(name='course_modules')
                 .bar
                 .progress
                 .label Coursework
+            if sol_member
+                i.lock.icon
+            else    
+                i.lock.icon
                 
 template(name='course_members')                
     h2.ui.center.aligned.header Course Members      

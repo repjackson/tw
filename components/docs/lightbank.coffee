@@ -5,7 +5,7 @@ FlowRouter.route '/lightbank', action: (params) ->
 
 if Meteor.isClient
     Template.lightbank.onCreated -> 
-        @autorun -> Meteor.subscribe('docs', selected_tags.array(), type=null, filter='lightbank', limit=10)
+        @autorun -> Meteor.subscribe('docs', selected_tags.array(), type='lightbank', limit=10)
 
     Template.lightbank.helpers
         docs: -> 
@@ -13,9 +13,6 @@ if Meteor.isClient
                 sort:
                     tag_count: 1
                 limit: 10
-    
-        one_doc: -> 
-            Docs.find().count() is 1
     
         tag_class: -> if @valueOf() in selected_tags.array() then 'teal' else 'basic'
 
@@ -29,10 +26,9 @@ if Meteor.isClient
     
         when: -> moment(@timestamp).fromNow()
         
-        lightbank_tags: ->
-            _.difference(@tags, 'lightbank')
+        lightbank_tags: -> _.difference(@tags, 'lightbank')
 
     Template.doc_view.events
         'click .tag': -> if @valueOf() in selected_tags.array() then selected_tags.remove(@valueOf()) else selected_tags.push(@valueOf())
-    
-        'click .edit': -> FlowRouter.go("/doc/edit/#{@_id}")
+
+        'click .edit': -> FlowRouter.go("/doc/#{@_id}/edit")

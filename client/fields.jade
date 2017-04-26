@@ -4,7 +4,7 @@ template(name='title')
         input#title(type='text' value=title)
 
 template(name='subtitle')
-    .ui.labeled.input
+    .ui.labeled.fluid.input
         .ui.basic.label Subtitle
         input#subtitle(type='text' value=subtitle)
 
@@ -46,10 +46,11 @@ template(name='page_name')
 
 
 template(name='type')
-    .field
-        label Type
-        .ui.left.icon.input
+    .ui.labeled.input
+        .ui.basic.label 
             i.red.configure.icon
+            |Type
+        .ui.input
             input#type(type='text' value=type)
 
 template(name='location')

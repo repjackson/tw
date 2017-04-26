@@ -1,7 +1,6 @@
 template(name='lightbank')
     .ui.container
-        +cloud filter='lightbank'
-        // if one_doc
+        +cloud
         each docs
             +doc_view
         
@@ -9,12 +8,9 @@ template(name='lightbank')
 
 template(name='doc_view')
     .ui.container.fluid.center.aligned.segment
-        // a(href="/doc/view/#{_id}")
-        //     .image
-        //         img.ui.large.centered.image(src="{{c.url image_id }}")
         |!{content}
         .meta
-            each lightbank_tags
+            each tags
                 .ui.circular.tiny.button.tag(class=tag_class) #{this}
         if can_edit
             .edit.ui.circular.basic.large.button

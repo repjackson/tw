@@ -7,7 +7,7 @@ if Meteor.isClient
     media_tags = ['tori webster', 'quote','poem', 'photo', 'image', 'video', 'essay']
 
     Template.cloud.onCreated ->
-        @autorun => Meteor.subscribe('tags', selected_tags.array(), type=null,  filter=@data.filter, limit=10)
+        @autorun => Meteor.subscribe('tags', selected_tags.array(), type='lightbank', limit=10)
     
     Template.cloud.helpers
         media_tags: -> 
@@ -25,12 +25,12 @@ if Meteor.isClient
                 # console.log 'media tags?', media_tags
                 Tags.find({name: $nin: media_tags})
         
-        media_tag_class: -> if @valueOf() in selected_tags.array() then 'teal' else 'basic'
+        media_tag_class: -> 
+            button_class = []
+            if @valueOf() in selected_tags.array() then button_class.push 'teal' else button_class.push 'basic'
 
-        
-        cloud_tag_class: ->
-            if @name is 'tori webster' then button_class.push ' teal'
-            
+            if @name is 'tori webster' then button_class.push ' blue'
+            button_class
     
         cloud_tag_class: ->
             button_class = []
@@ -40,7 +40,7 @@ if Meteor.isClient
                 when @index <= 20 then button_class.push ' small'
             return button_class
     
-        selected_tags: -> _.difference(selected_tags.array(), media_tags)
+        selected_tags: -> selected_tags.array()
     
         settings: -> {
             position: 'bottom'
@@ -61,10 +61,6 @@ if Meteor.isClient
         'click .select_tag': -> selected_tags.push @name
         'click .unselect_tag': -> selected_tags.remove @valueOf()
         'click #clear_tags': -> selected_tags.clear()
-    
-        'click .select_media_tag': ->  if @valueOf() in selected_tags.array() then selected_tags.remove(@valueOf()) else selected_tags.push(@valueOf())
-        # 'click .unselect_tag': -> selected_tags.remove @valueOf()
-        # 'click #clear_tags': -> selected_tags.clear()
     
         'click #add': ->
             Meteor.call 'add', (err,id)->
@@ -94,14 +90,13 @@ if Meteor.isClient
 
 
 if Meteor.isServer
-    Meteor.publish 'tags', (selected_tags, type, filter, limit)->
+    Meteor.publish 'tags', (selected_tags, type, limit)->
         
         self = @
         match = {}
         
         # match.tags = $all: selected_tags
         if type then match.type = type
-        if filter then selected_tags.push filter
         if selected_tags.length > 0 then match.tags = $all: selected_tags
         
         # console.log 'limit:', limit

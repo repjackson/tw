@@ -26,8 +26,6 @@ Meteor.publish 'user_status_notification', ->
             console.log "#{id} just logged out"
 
 
-
-
 Cloudinary.config
     cloud_name: 'facet'
     api_key: Meteor.settings.cloudinary_key

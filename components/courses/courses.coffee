@@ -33,13 +33,11 @@ if Meteor.isClient
     
 
     Template.courses.events
-        'click .edit': -> FlowRouter.go("/course/#{@_id}/edit")
-            
         'click #add_course': ->
             id = Docs.insert
                 type: 'course'
                 published: false
-            FlowRouter.go "/course/#{id}/edit"
+            FlowRouter.go "/edit/#{id}"
             
             
 

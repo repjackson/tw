@@ -42,9 +42,10 @@ if Meteor.isClient
     Template.view_course.helpers
         course: -> Docs.findOne FlowRouter.getParam('course_id')
         
-        in_course: -> Meteor.user()?.courses and @_id in Meteor.user().courses
-    
-
+    Template.course_sales.helpers
+        in_sol: -> Roles.userIsInRole(Meteor.userId(), 'sol_member')
+        in_demo: -> Roles.userIsInRole(Meteor.userId(), 'sol_demo_member')
+        course: -> Docs.findOne FlowRouter.getParam('course_id')
 
     Template.course_modules.helpers
         modules: -> Docs.find {type: 'module' }, sort: number: 1
@@ -53,20 +54,13 @@ if Meteor.isClient
     Template.course_sales.onCreated ->
         @autorun -> Meteor.subscribe 'course', FlowRouter.getParam('course_id')
 
-    Template.course_sales.helpers
-        course: -> Docs.findOne FlowRouter.getParam('course_id')
-    
     Template.course_sales.events
-        'click .buy_course': ->
-            Session.set 'cart_item', @_id
-            FlowRouter.go '/cart'
+        'click #sign_up_demo': ->
+            if Meteor.user() then Roles.addUsersToRoles(Meteor.userId(), 'sol_demo_member')
+            else FlowRouter.go '/sign-in'
 
     
     Template.view_course.events
-        'click #edit_course': ->
-            course_id = FlowRouter.getParam('course_id')
-            FlowRouter.go "/course/#{course_id}/edit"
-            
         'click #add_module': ->
             course_id = FlowRouter.getParam('course_id')
             new_module_id = Docs.insert
@@ -200,7 +194,7 @@ if Meteor.isClient
 
 
     Template.course_members.onCreated ->
-        @autorun -> Meteor.subscribe 'course_members', FlowRouter.getParam('course_id')
+        @autorun -> Meteor.subscribe 'sol_members'
         
 
     Template.course_members.helpers
@@ -218,5 +212,4 @@ if Meteor.isServer
                 
     Meteor.publish 'course_members', (course_id) ->
         Meteor.users.find
-            courses: $in: [course_id]
-            
+            roles: $in: ['sol_member', 'sol_demo_member']

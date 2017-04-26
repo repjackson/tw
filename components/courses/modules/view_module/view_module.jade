@@ -12,7 +12,7 @@ template(name='view_module')
             .divider  / 
             .active.section #{module.number}: #{module.title}
         h1.ui.center.aligned.header #{module.number}: #{module.title}
-        .ui.grid
+        .ui.stackable.grid
             .four.wide.column
                 with module
                     .content
