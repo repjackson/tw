@@ -1,4 +1,6 @@
 with person
+    if is_user
+        +member_nav
     .ui.text.container.stackable.grid
         .five.wide.column
             img.ui.centered.image(src="{{c.url profile.image_id width=400 height=400 gravity='face' crop='fill'}}")
@@ -10,6 +12,7 @@ with person
                 .ui.hidden.divider
                 +staus_indicator
                 .ui.hidden.divider
+                .ui.header My True Colors Are
                 +color_dots
         .ten.wide.column
             h2.ui.center.aligned.header

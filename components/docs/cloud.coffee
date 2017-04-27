@@ -64,7 +64,7 @@ if Meteor.isClient
     
         'click #add': ->
             Meteor.call 'add', (err,id)->
-                FlowRouter.go "/doc/edit/#{id}"
+                FlowRouter.go "/edit/#{id}"
 
         'keyup #search': (e,t)->
             e.preventDefault()

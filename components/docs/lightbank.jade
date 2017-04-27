@@ -15,7 +15,7 @@ template(name='doc_view')
                 .ui.circular.tiny.button.tag(class=tag_class) #{this}
         .ui.hidden.divider
         +favorite_button
-        a.ui.blue.basic.button(href="/view/#{_id}") 
+        a.ui.basic.button(href="/view/#{_id}") 
             |View
             i.right.chevron.icon
         if can_edit

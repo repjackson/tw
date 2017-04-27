@@ -5,18 +5,33 @@ Template.subtitle.events
             $set: subtitle: subtitle
             
             
+# Template.child_tags.events
+#     'keydown #add_tag': (e,t)->
+#         if e.which is 13
+#             tag = $('#add_tag').val().toLowerCase().trim()
+#             if tag.length > 0
+#                 Docs.update Template.parentData()._id,
+#                     $addToSet: tags: tag
+#                 $('#add_tag').val('')
+
+#     'click .doc_tag': (e,t)->
+#         tag = @valueOf()
+#         Docs.update Template.parentData()._id,
+#             $pull: tags: tag
+#         $('#add_tag').val(tag)
+
 Template.tags.events
     'keydown #add_tag': (e,t)->
         if e.which is 13
             tag = $('#add_tag').val().toLowerCase().trim()
             if tag.length > 0
-                Docs.update Template.parentData()._id,
+                Docs.update Template.currentData()._id,
                     $addToSet: tags: tag
                 $('#add_tag').val('')
 
     'click .doc_tag': (e,t)->
         tag = @valueOf()
-        Docs.update Template.parentData()._id,
+        Docs.update Template.currentData()._id,
             $pull: tags: tag
         $('#add_tag').val(tag)
 

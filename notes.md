@@ -88,12 +88,32 @@ tests notes
         
         
 meeting notes
-    marketplace
-    inspire u
-        courses
-        tests
-    stable sol link
     
     
 todo today
     change everything to parent_id?
+    
+    
+    
+flow from demo button
+settings under account
+email in profile
+birthday under location
+toggle for email public
+
+
+
+Light purple
+#927379
+Dark purple
+#47334E
+Scarlet red
+#FF414d
+Orange
+#FF9C24
+Turquoise 
+#1AA6b7
+Grey teal
+#357591
+Night blue
+#002d40
