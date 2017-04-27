@@ -30,6 +30,19 @@ if Meteor.isClient
                 $set:
                     "profile.colors": ['gold', 'green', 'blue', 'orange']
 
+
+    Template.color_dots.onRendered ->
+        self = @
+        
+        @autorun =>
+            if @subscriptionsReady()
+                Meteor.setTimeout ->
+                    $('.icon').popup()
+                , 1000
+                # console.log 'subs ready'
+
+
+
     Template.color_dots.helpers
         user: ->
             console.log @profile.colors
@@ -41,6 +54,40 @@ if Meteor.isClient
                 when 'green' then 'green' 
                 when 'orange' then 'orange'
             icon_class
+
+        color_data_title: ->
+            title = switch @valueOf()
+                when 'gold' then 'Gold' 
+                when 'blue' then 'Blue' 
+                when 'green' then 'Green' 
+                when 'orange' then 'Orange'
+            title
+
+            
+        color_data_content: ->
+            content = switch @valueOf()
+                when 'gold' 
+                    "Loyal, Dependable, Prepared <br>
+                    Thorough, Sensible, Punctual <br>
+                    Faithful, Stable, Oranized <br>
+                    Caring, Concerned, Concrete" 
+                when 'blue'
+                    "Enthusiastic, Sympathetic, Personal <br>
+                    Warm, Communicative, Compassionate <br>
+                    Idealistic, Spiritual, Sincere <br>
+                    Peaceful, Flexible, Imaginative"
+                when 'green'
+                    "Analytical, Global, Conceptual <br>
+                     Cool, Calm, Collected <br>
+                     Invnetive, Logical, Perfectionist <br>
+                     Abstract, Hypothetical, Investigative"
+                when 'orange'
+                    "Witty, Charming, Spontaneous <br>
+                    Impulsive, Generous, Impactful <br>
+                    Optimistic, Eager, Bold <br>
+                    Physical, Immediate, Fraternal"
+            content
+            
 
     Template.colors.helpers
         colors: -> Docs.find type: 'personality_color'
