@@ -13,15 +13,29 @@ template(name='rating')
     .ui.massive.star.rating(data-rating=rating_doc.rating)
 
 
+template(name='rank')
+    .ui.tiny.statistic
+        .value #{rank_doc.number}
+        .label Rank
+    #increase_index.ui.icon.basic.circular.button
+        i.chevron.up.icon
+    // #decrease_index.ui.icon.basic.circular.button
+    //     i.chevron.down.icon
+
+
+
+
+
 template(name='toggle_friend')
-    if is_friend
-        #remove_friend.ui.basic.button
-            i.minus.red.icon
-            |Unfriend
-    else
-        #add_friend.ui.basic.button
-            i.plus.green.icon
-            |Friend
+    if currentUser
+        if is_friend
+            #remove_friend.ui.basic.button
+                i.minus.red.icon
+                |Unfriend
+        else
+            #add_friend.ui.basic.button
+                i.plus.green.icon
+                |Friend
 
 
 template(name='published')
@@ -33,22 +47,24 @@ template(name='published')
             |Private
 
 template(name='edit_button')
-    unless is_editing
-        .edit_this.ui.basic.button
-            i.red.configure.icon
-            |Edit
-    else
-        .save_doc.ui.basic.button
-            i.green.check.icon
-            |Save
+    if currentUser
+        unless is_editing
+            .edit_this.ui.basic.button
+                i.red.configure.icon
+                |Edit
+        else
+            .save_doc.ui.basic.button
+                i.green.check.icon
+                |Save
 
 template(name='edit_link')
-    unless is_editing
-        a.edit_this(href='#') Edit
-    else
-        .save_doc.ui.basic.button
-            i.green.check.icon
-            |Save
+    if currentUser
+        unless is_editing
+            a.edit_this(href='#') Edit
+        else
+            .save_doc.ui.basic.button
+                i.green.check.icon
+                |Save
 
 template(name='add_to_cart')
     unless added

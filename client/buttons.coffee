@@ -97,8 +97,51 @@ Template.rating.helpers
                 parent_id: @_id
                 type: 'rating'
                 session_id: session_id
+                author_id: Meteor.userId()
         rating_doc
             
+Template.rank.helpers
+    rank_doc: ->
+        rank_doc = 
+            Docs.findOne
+                parent_id: @_id
+                type: 'rank'
+                author_id: Meteor.userId()
+        rank_doc
+            
+    button_class: ->
+        
+
+Template.rank.events
+    'click #increase_index': ->
+        rank_doc = 
+            Docs.findOne
+                parent_id: @_id
+                type: 'rank'
+                author_id: Meteor.userId()
+                group: 'personality_colors'
+        if rank_doc
+            Docs.update rank_doc._id, 
+                $inc: number: 1
+            one_up = rank_doc.number + 1
+            existing_rank_doc = 
+                Docs.findOne
+                    type: 'rank'
+                    author_id: Meteor.userId()
+                    number: one_up
+                    group: 'personality_colors'
+            console.log existing_rank_doc
+            if existing_rank_doc
+                Docs.update existing_rank_doc._id,
+                    $inc: number: -1
+        else
+            Docs.insert
+                type: 'rank'
+                parent_id: @_id
+                number: 1
+                group: 'personality_colors'
+
+
 
 Template.rating.events
     'click .rating': (e,t)->

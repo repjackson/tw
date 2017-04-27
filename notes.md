@@ -30,6 +30,8 @@ db.docs.find({ tags:{$in:['lightbank']} }).forEach(
     }
 )
 
+facetadmin
+FRHuvjHTCNouzmFJ
 
 db.docs.find({ tags:{$exists:true} }).count()
 

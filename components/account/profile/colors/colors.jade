@@ -1,21 +1,28 @@
 template(name='colors')
     .ui.container
         .ui.dividing.header Colors
-        if isInRole 'admin'
-            #add_color.ui.basic.button
-                i.red.configure.icon
-                |Add color
-        .ui.segments
-            each colors
-                .ui.segment
-                    a.ui.header #{title}
-                    with personality_color
-                        #decrease_index.ui.icon.button
-                            i.chevron.up.icon
-                        #increase_index.ui.icon.button
-                            i.chevron.down.icon
-                        h2 #{my_number}
-                    .meta
-                        each tags
-                            .ui.basic.label #{this}
-                    +edit_button
+        // if isInRole 'admin'
+        //     #add_color.ui.basic.button
+        //         i.red.configure.icon
+        //         |Add color
+        unless me.profile.colors
+            #generate_colors.ui.basic.button Generate Colors
+        else
+            .ui.four.stackable.cards
+                each me.profile.colors
+                    .ui.card(class=color_segment_class)
+                        .content
+                            .ui.header #{this}
+                            .increase_index.ui.icon.basic.circular.button
+                                i.chevron.left.icon
+
+                    // +rank    
+                    // .meta
+                    //     each tags
+                    //         .ui.basic.label #{this}
+                    // a(href="/edit/#{_id}")
+                    
+template(name='color_dots')
+    each this.profile.colors
+        i.circular.inverted.icon(class=color_icon_class)
+        

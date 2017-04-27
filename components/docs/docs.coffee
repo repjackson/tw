@@ -3,10 +3,10 @@
 Docs.before.insert (userId, doc)->
     doc.timestamp = Date.now()
     doc.author_id = Meteor.userId()
-    doc.points = 0
-    doc.upvoters = []
-    doc.downvoters = []
-    doc.published = false
+    # doc.points = 0
+    # doc.upvoters = []
+    # doc.downvoters = []
+    # doc.published = false
     return
 
 
