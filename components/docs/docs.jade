@@ -25,6 +25,9 @@ template(name='doc_page')
                     if price
                         .ui.dividing.header Price $#{price}
                         +add_to_cart
+                    .ui.dividing.header Actions
+                    +favorite_button
+                    +voting
                     if tags
                         .ui.dividing.header Tags
                         each tags

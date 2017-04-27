@@ -11,10 +11,10 @@ if Meteor.isClient
     
     
     Template.favorites.helpers
-        favorites: -> 
-            Docs.find
-                favoriters: $in: [@userId]
-    
+        favorited_items: -> 
+            Docs.find {favoriters: $in: [Meteor.userId()]}
+            
+        five_tags: -> @tags[0..5]
     Template.favorites.events
 
 

@@ -1,5 +1,11 @@
 .ui.dividing.header My Courses
 .ui.list
+    if isInRole 'sol_member'
+        .item
+            a.ui.header(href="/sol") Source of Light
+    if isInRole 'sol_demo_member'
+        .item
+            a.ui.header(href="/sol") Source of Light (demo)
     each my_courses
         .item
             a.ui.header(href="/course/#{_id}") #{title}

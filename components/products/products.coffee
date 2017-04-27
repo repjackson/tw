@@ -4,20 +4,7 @@ if Meteor.isClient
             # sub_nav: 'member_nav'
             main: 'products'
 
-    FlowRouter.route '/product/:doc_id/view', 
-        name: 'view_product'
-        action: (params) ->
-            BlazeLayout.render 'layout',
-                main: 'product_page'
 
-    Template.product_page.onCreated ->
-        @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
-    
-    Template.product_page.helpers
-        product: ->
-            Docs.findOne FlowRouter.getParam('doc_id')
-    
-    
     Template.products.onCreated ->
         @autorun -> Meteor.subscribe('selected_products')
         Session.set 'layout_view', 'list'

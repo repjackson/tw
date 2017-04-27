@@ -1,6 +1,6 @@
 template(name='my_purchases')
     .ui.dividing.header My Purchases
-    table.ui.selectable.table
+    table.ui.selectable.unstackable.table
             thead
                 tr
                     th 
@@ -11,7 +11,7 @@ template(name='my_purchases')
             tbody
                 each purchases
                     tr
-                        td 
+                        td.collapsing 
                             img.ui.small.image(src="{{c.url parent_doc.image_id}}")
                         td 
                             a.ui.header(href="#{parent_doc.type} /#{parent_doc._id}/view") 

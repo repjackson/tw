@@ -1,10 +1,18 @@
 template(name='favorites')
     .ui.dividing.header My Favorites
     .ui.divided.vertical.list
-        each favorites
+        each favorited_items
             .item
-                a(href="/view/#{_id}") #{title} 
-                each tags
-                    .ui.small.basic.label #{this}
-                +favorite
-        
+                .image
+                    +favorite_button
+                .content
+                    .header
+                        if title
+                            a(href="/view/#{_id}") #{title} 
+                        each five_tags
+                            .ui.small.basic.label #{this}
+                    .description
+                        .ui.hidden.fitted.divider
+                        a.ui.basic.small.compact.button(href="/view/#{_id}") 
+                            |View
+                            i.right.chevron.icon    

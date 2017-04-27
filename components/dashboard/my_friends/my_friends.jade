@@ -3,7 +3,9 @@ template(name='my_friends')
     .ui.divided.list
         each my_friends
             .item
-                img.ui.avatar.image(src="{{c.url profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+                .image
+                    a(href="/profile/#{_id}")
+                        img.ui.avatar.image(src="{{c.url profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
                 .content
                     a.header(href="/profile/#{_id}")
                         if profile.name 
@@ -17,6 +19,6 @@ template(name='my_friends')
                     +color_dots
                     .description
                         +staus_indicator
-                        |last login: #{last_login}
+                        |last seen #{last_login}
                                 
                         

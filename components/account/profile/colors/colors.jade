@@ -1,6 +1,7 @@
 template(name='colors')
     .ui.container
-        .ui.dividing.header Colors
+        h1.ui.dividing.header Colors
+        h3.ui.header Order Your Colors
         // if isInRole 'admin'
         //     #add_color.ui.basic.button
         //         i.red.configure.icon
@@ -15,12 +16,17 @@ template(name='colors')
                             .ui.header #{this}
                             .increase_index.ui.icon.basic.circular.button
                                 i.chevron.left.icon
-
-                    // +rank    
-                    // .meta
-                    //     each tags
-                    //         .ui.basic.label #{this}
-                    // a(href="/edit/#{_id}")
+        h3.ui.header Color Information
+        .ui.styled.accordion
+            each colors
+                .title
+                    i.dropdown.icon
+                    | #{title}
+                .content
+                    |!{content}
+                    if isInRole 'admin'
+                        a(href="/edit/#{_id}") Edit Color
+                    
                     
 template(name='color_dots')
     each this.profile.colors

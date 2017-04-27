@@ -38,7 +38,17 @@ if Meteor.isClient
             if @subscriptionsReady()
                 Meteor.setTimeout ->
                     $('.icon').popup()
-                , 1000
+                , 500
+                # console.log 'subs ready'
+
+    Template.colors.onRendered ->
+        self = @
+        
+        @autorun =>
+            if @subscriptionsReady()
+                Meteor.setTimeout ->
+                    $('.ui.accordion').accordion()
+                , 500
                 # console.log 'subs ready'
 
 

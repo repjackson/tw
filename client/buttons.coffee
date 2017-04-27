@@ -204,14 +204,14 @@ Template.delete_link.events
             Docs.remove self._id
 
 
-Template.favorite.helpers
+Template.favorite_button.helpers
     favorite_count: -> @favorite_count
     
     favorite_item_class: -> 
         if Meteor.userId()
             if @favoriters and Meteor.userId() in @favoriters then 'red' else 'outline'
         else 'grey disabled'
-Template.favorite.events
+Template.favorite_button.events
     'click .favorite_item': -> 
         if Meteor.userId() then Meteor.call 'favorite', Template.parentData(0)
         else FlowRouter.go '/sign-in'

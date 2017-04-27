@@ -19,20 +19,21 @@
                             | Username: #{username}
                         each emails
                             |#{address}
-                        // a.ui.basic.button(href="/account/profile/edit/#{_id}")
+                        // a.ui.compact.basic.button(href="/account/profile/edit/#{_id}")
                         //     |Edit Profile
-                        a.ui.basic.button(href="/profile/#{_id}")
+                        .ui.hidden.fitted.divider
+                        a.ui.compact.basic.button(href="/profile/#{_id}")
                             |View Profile
                     td 
                         .ui.list
                             each user_courses
                                 .item #{title}
                         if is_sol_member
-                            .remove_sol_member.ui.basic.red.button
+                            .remove_sol_member.ui.basic.compact.red.button
                                 i.remove.icon 
                                 | Remove from SOL
                         else
-                            .make_sol_member.ui.basic.button
+                            .make_sol_member.ui.compact.basic.button
                                 i.plus.icon 
                                 | Add to SOL
                                 
@@ -41,11 +42,11 @@
                             .ui.basic.label #{this}
                     td 
                         if is_admin
-                            .remove_admin.ui.basic.red.button
+                            .remove_admin.ui.basic.compact.red.button
                                 i.remove.icon 
                                 | Remove Admin Status
                         else
-                            .make_admin.ui.basic.button
+                            .make_admin.ui.compact.basic.button
                                 i.plus.icon 
                                 | Make Admin
                                 

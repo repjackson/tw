@@ -10,13 +10,14 @@ template(name='doc_view')
     .ui.container.fluid.segment
         |!{content}
         .meta
+            i.tags.icon
             each tags
                 .ui.circular.tiny.button.tag(class=tag_class) #{this}
-        .ui.hidden.fitted.divider
-        a.ui.blue.button(href="/view/#{_id}") 
+        .ui.hidden.divider
+        +favorite_button
+        a.ui.blue.basic.button(href="/view/#{_id}") 
             |View
             i.right.chevron.icon
-        .ui.hidden.fitted.divider
         if can_edit
             a.ui.circular.basic.large.button(href="/edit/#{_id}")
                 i.red.configure.icon
