@@ -12,15 +12,17 @@ template(name='cloud')
             each selected_tags
                 .unselect_tag.ui.teal.large.circular.button
                     strong #{this}
+        // .ui.hidden.divider
+        // .ui.circular.large.button.select_tag(class=media_tag_class) Tori Webster
         .ui.hidden.divider
         each media_tags
             .ui.circular.large.button.select_tag(class=media_tag_class) 
                 | #{this.name}
-                if isInRole 'admin'
-                    small #{this.count}
+                // if isInRole 'admin'
+                //     small #{this.count}
         .ui.hidden.fitted.divider
         each theme_tags
             .ui.circular.basic.button.select_tag(class=cloud_tag_class) 
                 | #{this.name}
-                if isInRole 'admin'
-                    small #{this.count}
+                // if isInRole 'admin'
+                //     small #{this.count}

@@ -4,10 +4,10 @@ if Meteor.isClient
     
     @selected_tags = new ReactiveArray []
 
-    media_tags = ['tori webster', 'quote','poem', 'photo', 'image', 'video', 'essay']
+    media_tags = ['tori webster','quote','poem', 'photo', 'image', 'video', 'essay']
 
     Template.cloud.onCreated ->
-        @autorun => Meteor.subscribe('tags', selected_tags.array(), type='lightbank', limit=10)
+        @autorun => Meteor.subscribe('tags', selected_tags.array(), type='lightbank', limit=20)
     
     Template.cloud.helpers
         media_tags: -> 
@@ -20,16 +20,16 @@ if Meteor.isClient
                 Tags.find { 
                     count: $lt: doc_count
                     name: $nin: media_tags
-                    }
+                    }, limit:10
             else
                 # console.log 'media tags?', media_tags
-                Tags.find({name: $nin: media_tags})
+                Tags.find({name: $nin: media_tags}, limit:10)
         
         media_tag_class: -> 
             button_class = []
             if @valueOf() in selected_tags.array() then button_class.push 'teal' else button_class.push 'basic'
 
-            if @name is 'tori webster' then button_class.push ' blue'
+            if @name is 'tori webster' then button_class.push ' teal'
             button_class
     
         cloud_tag_class: ->
@@ -63,8 +63,8 @@ if Meteor.isClient
         'click #clear_tags': -> selected_tags.clear()
     
         'click #add': ->
-            Meteor.call 'add', (err,id)->
-                FlowRouter.go "/edit/#{id}"
+            new_id = Docs.insert type:'lightbank'
+            FlowRouter.go "/edit/#{new_id}"
 
         'keyup #search': (e,t)->
             e.preventDefault()

@@ -18,7 +18,7 @@ template(name='tags')
     .ui.labeled.input
         .ui.basic.label Tags
         input#add_tag(type='text' placeholder='Add Tag' maxlength='50')
-    each tag_subset
+    each tags
         .ui.basic.circular.button.doc_tag
             i.minus.icon
             |#{this}
