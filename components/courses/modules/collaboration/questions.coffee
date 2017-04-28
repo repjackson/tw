@@ -22,6 +22,22 @@ if Meteor.isClient
     
     Template.question.helpers
         answers: -> Docs.find type: 'answer'
+    Template.question.events
+        'click .remove_question': -> 
+            self = @
+            swal {
+                title: 'Delete Question?'
+                text: 'This will delete answers too. [not built]'
+                type: 'error'
+                animation: false
+                showCancelButton: true
+                closeOnConfirm: true
+                cancelButtonText: 'Cancel'
+                confirmButtonText: 'Delete'
+                confirmButtonColor: '#da5347'
+            }, ->
+                Docs.remove self._id
+
     
 
 
@@ -70,7 +86,7 @@ if Meteor.isClient
                 question_id: @_id
                 author_id: Meteor.userId()
             
-            if answer?.published then 'blue' else ''
+            if answer?.published then 'teal' else ''
 
     Template.view_questions.events
         'click #add_answer': (e,t)->

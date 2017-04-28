@@ -25,42 +25,40 @@ template(name='question')
 
                     
 template(name='view_questions')        
-    .ui.header Section Questions
-    #question_menu.ui.top.attached.tabular.stackable.menu
-        a.item(data-tab="my_answers") My Answers
-        each questions
-            if has_answered_question
-                a.item(data-tab="question#{_id}") Collab: #{text}
-    .ui.bottom.attached.tab.segment(data-tab='my_answers')
-        each questions
-            .ui.segment(class=question_segment_class)
-                .ui.header #{text}
-                unless has_answered_question
-                    .ui.action.fluid.input
-                        input#answer(type='text')
-                        #add_answer.ui.basic.button Add Answer
-                each answers
-                    .ui.header 
-                        |#{text}
-                    .ui.divider
-                    if can_edit
-                        .ui.stackable.grid
-                            .five.wide.column
+    .ui.styled.fluid.accordion
+        .title
+            i.dropdown.icon
+            | Section Questions
+        .content
+            each questions
+                .ui.segment(class=question_segment_class)
+                    .ui.header #{text}
+                    unless has_answered_question
+                        .ui.action.fluid.input
+                            input#answer(type='text')
+                            #add_answer.ui.basic.button 
+                                i.green.icon
+                                |Add Answer
+                    each answers
+                        h4 #{text}
+                        .ui.divider
+                        if can_edit
+                            .ui.basic.compact.segment
                                 .toggle_published.ui.slider.checkbox
                                     input(type='checkbox' name='publish_answer' checked=published)
                                     label Publish Answer
-                            .four.wide.column
-                                .remove_answer.ui.basic.button
-                                    i.remove.red.link.icon
-                                    | Delete
-    each questions
-        .ui.bottom.attached.tab.segment(data-tab='question#{_id}')
-            .ui.header Collaboration for #{text}
-            .ui.segments
-                each published_answers
-                    .ui.segment 
-                        .ui.header 
-                            |#{text}
-                        | by 
-                        |{{author.name}}
-                        img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+                            .ui.hidden.fitted.divider
+                            .remove_answer.ui.basic.button
+                                i.remove.red.link.icon
+                                | Delete
+        each questions
+            if has_answered_question
+                .title Collaboration for #{text}
+                .content
+                    .ui.segments
+                        each published_answers
+                            .ui.segment 
+                                h5 #{text}
+                                | by 
+                                |{{author.name}}
+                                img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")

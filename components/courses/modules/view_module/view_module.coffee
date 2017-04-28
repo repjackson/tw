@@ -47,3 +47,11 @@ if Meteor.isClient
             FlowRouter.go "/course/#{course_id}/module/#{module_id}/edit"
 
 
+
+
+    Template.view_section.onRendered ->
+        @autorun =>
+            if @subscriptionsReady()
+                Meteor.setTimeout ->
+                    $('.ui.accordion').accordion()
+                , 500

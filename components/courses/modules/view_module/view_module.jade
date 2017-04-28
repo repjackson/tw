@@ -44,15 +44,17 @@ template(name='module_sections')
             a.item(data-tab="tab#{number}") Section #{number}
     each sections
         .ui.bottom.attached.tab.segment(data-tab='tab#{number}')
-            .ui.header Section #{number}
             +view_section
 
 
 template(name='view_section')
     .ui.basic.segment
-        .ui.header Section Content
         |!{section_content}
-        .ui.header Transcript
-        |!{transcript}
+        .ui.styled.fluid.accordion
+            .title
+                i.dropdown.icon
+                | Transcript
+            .content
+                |!{transcript}
         +view_questions
         

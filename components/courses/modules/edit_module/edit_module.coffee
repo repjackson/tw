@@ -7,9 +7,16 @@ if Meteor.isClient
         @autorun -> Meteor.subscribe 'module', FlowRouter.getParam('module_id')
     
     Template.edit_module.onRendered ->
-        Meteor.setTimeout ->
-            $('.tabular.menu .item').tab()
-        , 2000
+        self = @
+        
+        @autorun =>
+            if @subscriptionsReady()
+                Meteor.setTimeout ->
+                    # $('#section_tabs .item').tab()
+                    $('.ui.accordion').accordion()
+
+                , 1000
+
         
         
         

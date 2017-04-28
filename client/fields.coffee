@@ -51,7 +51,10 @@ Template.price.events
             
 Template.number.events
     'blur #number': (e) ->
-        number = parseInt $('#number').val()
+        # console.log @
+        val = $(e.currentTarget).closest('#number').val()
+        number = parseInt val
+        console.log number
         Docs.update @_id,
             $set: number: number
             
@@ -59,21 +62,21 @@ Template.number.events
 Template.title.events
     'blur #title': ->
         # alert 'hi'
-        title = $('#title').val()
+        title = $(e.currentTarget).closest('#title').val()
         Docs.update @_id,
             $set: title: title
             
             
 Template.link.events
     'blur #link': ->
-        link = $('#link').val()
+        link = $(e.currentTarget).closest('#link').val()
         Docs.update @_id,
             $set: link: link
             
             
 Template.page_name.events
     'blur #name': ->
-        name = $('#name').val()
+        name = $(e.currentTarget).closest('#name').val()
         Docs.update @_id,
             $set: name: name
             

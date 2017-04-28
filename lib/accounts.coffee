@@ -22,10 +22,8 @@ AccountsTemplates.configure
     showAddRemoveServices: false
     showForgotPasswordLink: true
     showLabels: true
-    showPlaceholders: true
+    showPlaceholders: false
     showResendVerificationEmailLink: true
-
-
 
 
     sendVerificationEmail: true
