@@ -1,8 +1,8 @@
 .ui.basic.segment.container
-    h1.ui.center.aligned.header Edit Profile 
     with user
+        h1.ui.center.aligned.header Edit #{username} Profile
         .ui.large.form
-            .ui.grid
+            .ui.stackable.grid
                 .five.wide.column    
                     .field
                         // .field
@@ -15,9 +15,12 @@
                                 a#remove_photo.ui.right.corner.link.label
                                     i.remove.red.link.icon
                         else
-                            label Upload Image
+                            label Add Profile Image
                             input(type='file' name='upload_picture' accept='image/*')
                 .ten.wide.column    
+                    unless first_name
+                        unless last_name
+                            h4.ui.orange.header Thanks for registering! Please finish creating your profile below before continuing on to the course.
                     .field
                         label First Name 
                         .ui.input
@@ -30,6 +33,10 @@
                         label Email
                         each emails
                             .ui.basic.label #{address}
+                            if verified
+                                .ui.basic.green.label Verified
+                            else
+                                .ui.basic.label Unverified
                     .field
                         label Location 
                         .ui.input
