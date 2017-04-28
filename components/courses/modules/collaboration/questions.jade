@@ -24,41 +24,44 @@ template(name='question')
                 i.remove_question.red.big.link.remove.icon
 
                     
-template(name='view_questions')        
+template(name='view_questions')
     .ui.styled.fluid.accordion
-        .title
-            i.dropdown.icon
-            | Section Questions
-        .content
+            .title
+                i.big.help.icon
+                | Section Questions
+            .content
+                each questions
+                    .ui.segment(class=question_segment_class)
+                        h4.ui.header #{text}
+                        unless has_answered_question
+                            .ui.action.fluid.input
+                                input#answer(type='text')
+                                #add_answer.ui.basic.button 
+                                    i.green.plus.icon
+                                    |Add Answer
+                        each answers
+                            h4 #{text}
+                            .ui.divider
+                            if can_edit
+                                .ui.basic.compact.segment
+                                    .toggle_published.ui.slider.checkbox
+                                        input(type='checkbox' name='publish_answer' checked=published)
+                                        label Publish Answer
+                                    i.help.circle.outline.large.icon(data-content="By making this answer public other SOL participants can see it, relate, and collaborate.")
+                                .ui.hidden.fitted.divider
+                                .remove_answer.ui.basic.button
+                                    i.remove.red.link.icon
+                                    | Delete
             each questions
-                .ui.segment(class=question_segment_class)
-                    .ui.header #{text}
-                    unless has_answered_question
-                        .ui.action.fluid.input
-                            input#answer(type='text')
-                            #add_answer.ui.basic.button 
-                                i.green.icon
-                                |Add Answer
-                    each answers
-                        h4 #{text}
-                        .ui.divider
-                        if can_edit
-                            .ui.basic.compact.segment
-                                .toggle_published.ui.slider.checkbox
-                                    input(type='checkbox' name='publish_answer' checked=published)
-                                    label Publish Answer
-                            .ui.hidden.fitted.divider
-                            .remove_answer.ui.basic.button
-                                i.remove.red.link.icon
-                                | Delete
-        each questions
-            if has_answered_question
-                .title Collaboration for #{text}
-                .content
-                    .ui.segments
-                        each published_answers
-                            .ui.segment 
-                                h5 #{text}
-                                | by 
-                                |{{author.name}}
-                                img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+                if has_answered_question
+                    .title 
+                        i.big.unlock.icon
+                        |Collaboration for #{text}
+                    .content
+                        .ui.segments
+                            each published_answers
+                                .ui.segment 
+                                    h5 #{text}
+                                    | by 
+                                    |{{author.name}}
+                                    img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")

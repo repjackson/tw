@@ -36,9 +36,11 @@ if Meteor.isClient
 
     Template.module_sections.helpers
         sections: ->
-            Docs.find
+            Docs.find {
                 type: 'section'
                 module_id: FlowRouter.getParam('module_id')
+            }, sort: number: 1
+
 
     Template.view_module.events
         'click .edit': ->
@@ -54,4 +56,10 @@ if Meteor.isClient
             if @subscriptionsReady()
                 Meteor.setTimeout ->
                     $('.ui.accordion').accordion()
-                , 500
+                , 1000
+    # Template.module_sections.onRendered ->
+    #     @autorun =>
+    #         if @subscriptionsReady()
+    #             Meteor.setTimeout ->
+    #                 $('.ui.accordion').accordion()
+    #             , 500

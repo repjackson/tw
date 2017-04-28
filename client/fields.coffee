@@ -60,7 +60,7 @@ Template.number.events
             
             
 Template.title.events
-    'blur #title': ->
+    'blur #title': (e,t)->
         # alert 'hi'
         title = $(e.currentTarget).closest('#title').val()
         Docs.update @_id,
@@ -68,21 +68,21 @@ Template.title.events
             
             
 Template.link.events
-    'blur #link': ->
+    'blur #link': (e,t)->
         link = $(e.currentTarget).closest('#link').val()
         Docs.update @_id,
             $set: link: link
             
             
 Template.page_name.events
-    'blur #name': ->
+    'blur #name': (e,t)->
         name = $(e.currentTarget).closest('#name').val()
         Docs.update @_id,
             $set: name: name
             
             
 Template.type.events
-    'blur #type': ->
+    'blur #type': (e,t)->
         type = $('#type').val()
         Docs.update @_id,
             $set: type: type

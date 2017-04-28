@@ -55,7 +55,8 @@ if Meteor.isClient
         Meteor.setTimeout ->
             $('#question_menu .item').tab()
             $('.ui.checkbox').checkbox('enable')
-        , 2000
+            $('.help.circle.icon').popup()
+        , 1000
         
     Template.view_questions.helpers
         questions: -> 

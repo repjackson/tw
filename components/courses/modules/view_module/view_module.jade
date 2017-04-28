@@ -39,22 +39,24 @@ template(name='view_module')
                 +Template.dynamic template=module_content
 
 template(name='module_sections')
-    #section_menu.ui.top.attached.tabular.menu
+    #section_menu.ui.top.attached.stackable.tabular.menu
         each sections
-            a.item(data-tab="tab#{number}") Section #{number}
+            a.item(data-tab="tab#{number}") #{title}
     each sections
         .ui.bottom.attached.tab.segment(data-tab='tab#{number}')
             +view_section
 
 
 template(name='view_section')
-    .ui.basic.segment
-        |!{section_content}
-        .ui.styled.fluid.accordion
-            .title
-                i.dropdown.icon
-                | Transcript
-            .content
-                |!{transcript}
-        +view_questions
+    // .ui.basic.segment
+    .ui.center.aligned.header #{title}
+    |!{section_content}
+    .ui.styled.fluid.accordion
+        h3.title
+            i.big.newspaper.icon
+            | Transcript
+        .content
+            |!{transcript}
+    .ui.hidden.divider
+    +view_questions
         
