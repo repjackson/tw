@@ -1,45 +1,53 @@
-with person
-    if is_user
-        +member_nav
-    .ui.text.container.stackable.grid
-        .five.wide.column
-            img.ui.centered.image(src="{{c.url profile.image_id width=400 height=400 gravity='face' crop='fill'}}")
-            .ui.basic.center.aligned.segment
+.ui.container
+    with person
+        .ui.breadcrumb
+            a.section(href='/') Home
+            .divider  / 
+            a.section(href='/people') People
+            .divider  / 
+            .active.section #{username}
+        .ui.hidden.divider    
+        if is_user
+            +member_nav
+        .ui.stackable.grid
+            .five.wide.column
+                img.ui.centered.image(src="{{c.url profile.image_id width=400 height=400 gravity='face' crop='fill'}}")
+                .ui.basic.center.aligned.segment
+                    if is_user
+                        a.ui.basic.fluid.button(href="/account/profile/edit/#{_id}") Edit My Profile
+                    else
+                        +toggle_friend
+                    .ui.hidden.divider
+                    +staus_indicator
+                    .ui.hidden.divider
+                    .ui.header My True Colors Are:
+                    +color_dots
+                    if is_user
+                        unless profile.colors
+                            i.circular.inverted.grey.icon
+                            i.circular.inverted.grey.icon
+                            i.circular.inverted.grey.icon
+                            i.circular.inverted.grey.icon
+                            .ui.hidden.fitted.divider
+                            a.ui.basic.button(href='/colors') Take this short quiz to discover your True Colors!
+            .ten.wide.column
+                h2.ui.center.aligned.header
+                    |#{profile.first_name} #{profile.last_name}
+                .ui.center.aligned.sub.header #{username}
+                if tags
+                    each tags
+                        .ui.basic.circular.label #{this}
+                if profile.location
+                    .ui.header Location 
+                    | #{profile.location}
+                if profile.about_me
+                    .ui.header About Me
+                    |#{profile.about_me}
+                if profile.if_knew_me
+                    .ui.header If you really knew me you would know…
+                    |#{profile.if_knew_me}
+                if profile.if_not_working
+                    .ui.header If I am not at work or in class then I am probably…
+                    |#{profile.if_not_working}
                 if is_user
-                    a.ui.basic.fluid.button(href="/account/profile/edit/#{_id}") Edit My Profile
-                else
-                    +toggle_friend
-                .ui.hidden.divider
-                +staus_indicator
-                .ui.hidden.divider
-                .ui.header My True Colors Are:
-                +color_dots
-                if is_user
-                    unless profile.colors
-                        i.circular.inverted.grey.icon
-                        i.circular.inverted.grey.icon
-                        i.circular.inverted.grey.icon
-                        i.circular.inverted.grey.icon
-                        .ui.hidden.fitted.divider
-                        a.ui.basic.button(href='/colors') Take this short quiz to discover your True Colors!
-        .ten.wide.column
-            h2.ui.center.aligned.header
-                |#{profile.first_name} #{profile.last_name}
-            .ui.center.aligned.sub.header #{username}
-            if tags
-                each tags
-                    .ui.basic.circular.label #{this}
-            if profile.location
-                .ui.header Location 
-                | #{profile.location}
-            if profile.about_me
-                .ui.header About Me
-                |#{profile.about_me}
-            if profile.if_knew_me
-                .ui.header If you really knew me you would know…
-                |#{profile.if_knew_me}
-            if profile.if_not_working
-                .ui.header If I am not at work or in class then I am probably…
-                |#{profile.if_not_working}
-            if is_user
-                +my_courses
+                    +my_courses

@@ -77,22 +77,26 @@ if Meteor.isClient
         color_data_content: ->
             content = switch @valueOf()
                 when 'gold' 
-                    "Loyal, Dependable, Prepared <br>
+                    "<div class='header'>Gold</div>
+                    Loyal, Dependable, Prepared <br>
                     Thorough, Sensible, Punctual <br>
-                    Faithful, Stable, Oranized <br>
+                    Faithful, Stable, Organized <br>
                     Caring, Concerned, Concrete" 
                 when 'blue'
-                    "Enthusiastic, Sympathetic, Personal <br>
+                    "<div class='header'>Blue</div>
+                    Enthusiastic, Sympathetic, Personal <br>
                     Warm, Communicative, Compassionate <br>
                     Idealistic, Spiritual, Sincere <br>
                     Peaceful, Flexible, Imaginative"
                 when 'green'
-                    "Analytical, Global, Conceptual <br>
+                    "<div class='header'>Green</div>
+                     Analytical, Global, Conceptual <br>
                      Cool, Calm, Collected <br>
-                     Invnetive, Logical, Perfectionist <br>
+                     Inventive, Logical, Perfectionist <br>
                      Abstract, Hypothetical, Investigative"
                 when 'orange'
-                    "Witty, Charming, Spontaneous <br>
+                    "<div class='header'>Orange</div>
+                    Witty, Charming, Spontaneous <br>
                     Impulsive, Generous, Impactful <br>
                     Optimistic, Eager, Bold <br>
                     Physical, Immediate, Fraternal"

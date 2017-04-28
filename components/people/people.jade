@@ -1,0 +1,28 @@
+template(name='people')
+    .ui.container
+        +people_cloud
+        .ui.four.centered.stackable.cards
+            each people
+                +person
+
+
+template(name='person')
+    .ui.card
+        .image
+            a(href="/profile/#{_id}")
+                img.ui.image(src="{{c.url profile.image_id width=400 height=400 gravity='face' crop='fill'}}")
+        .content
+            .header
+                if profile.first_name
+                    | #{profile.first_name}
+                if profile.last_name
+                    | #{profile.last_name}
+                // else    
+                //     | #{username}
+            if profile.location
+                .meta
+                    | #{profile.location}
+        .extra.description
+            each five_tags
+                .ui.compact.tiny.circular.compact.basic.button.user_tag(class=user_tag_class) #{this}
+

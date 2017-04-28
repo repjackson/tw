@@ -26,7 +26,7 @@ template(name='question')
                     
 template(name='view_questions')        
     .ui.header Section Questions
-    #question_menu.ui.top.attached.tabular.menu
+    #question_menu.ui.top.attached.tabular.stackable.menu
         a.item(data-tab="my_answers") My Answers
         each questions
             if has_answered_question

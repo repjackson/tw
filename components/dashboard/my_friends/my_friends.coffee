@@ -15,7 +15,8 @@ if Meteor.isClient
 if Meteor.isServer
     Meteor.publish 'my_friends', ->
         me = Meteor.users.findOne @userId
-        Meteor.users.find {_id: $in: me.friends}
+        if me.friends
+            Meteor.users.find {_id: $in: me.friends}
             # fields: 
             #     tags: 1
             #     courses: 1

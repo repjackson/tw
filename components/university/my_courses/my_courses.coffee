@@ -16,6 +16,7 @@ if Meteor.isClient
 if Meteor.isServer
     Meteor.publish 'my_courses', ->
         me = Meteor.users.findOne @userId
-        Docs.find
-            type: 'course'
-            _id: $in: me.courses
+        if me.courses
+            Docs.find
+                type: 'course'
+                _id: $in: me.courses

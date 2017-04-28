@@ -1,11 +1,10 @@
 template(name='footer')
-    .ui.basic.fluid.segment.footer
-        // .ui.divider
+    .ui.fluid.basic.footer.segment
+        .ui.divider
         .ui.container.stackable.grid
             .eight.wide.column
                 .ui.center.aligned.very.padded.basic.segment
-                    .ui.header
-                        |Have we connected on social media?
+                    h4.ui.header Have we connected on social media?
                     a(href='https://twitter.com/_toriwebster' target='_blank')
                         i.big.twitter.link.teal.icon
                     a(href='https://www.snapchat.com/add/tw3bsta' target='_blank')
@@ -19,6 +18,7 @@ template(name='footer')
             .eight.wide.column
                 +mailchimp
         .row
-            .ui.center.aligned.header
-                i.copyright.icon
+            h4.ui.center.aligned.header
+                i.fitted.copyright.icon
                 |Tori Webster Inspires LLC
+        .ui.hidden.divider

@@ -59,13 +59,13 @@ template(name='course_sales')
             h3.ui.center.aigned.header #{subtitle}
             .ui.basic.segment 
                 |!{content}
-            .ui.centered.grid
+            .ui.centered.stackable.grid
                 .four.wide.column
                     a.ui.teal.large.button(href='http://toriwebster.us11.list-manage.com/subscribe?u=8973e01aca6da499e7e1a63bd&id=9204d04e30')
                         |Sign Up for the SOL Newsletter
                 .four.wide.column
                     if in_demo
-                        .ui.disabled.teal.button Already Signed Up for Demo
+                        .ui.disabled.teal.button Signed Up for Demo
                     else
                         #sign_up_demo.ui.teal.button
                             |Sign Up for the Demo
@@ -107,7 +107,7 @@ template(name='course_reminders')
 
 template(name='course_welcome')
     with course
-        #course_welcome_menu.ui.top.attached.tabular.menu
+        #course_welcome_menu.ui.top.attached.tabular.stackable.menu
             a.active.item(data-tab="welcome_tab") Welcome
             a.item(data-tab="terms_tab") Terms of Agreement
             a.item(data-tab="inspiration_tab") What Inspired SOL
