@@ -13,12 +13,13 @@ template(name='person')
                 img.ui.image(src="{{c.url profile.image_id width=400 height=400 gravity='face' crop='fill'}}")
         .content
             .header
-                if profile.first_name
-                    | #{profile.first_name}
-                if profile.last_name
-                    | #{profile.last_name}
-                // else    
-                //     | #{username}
+                a(href="/profile/#{_id}")
+                    if profile.first_name
+                        | #{profile.first_name}
+                    if profile.last_name
+                        | #{profile.last_name}
+                    else    
+                        | #{username}
             if profile.location
                 .meta
                     | #{profile.location}

@@ -199,10 +199,8 @@ if Meteor.isClient
 
     Template.course_members.helpers
         course_members: ->
-            course_id = FlowRouter.getParam('course_id')
             Meteor.users.find
-                courses: $in: [course_id]
-
+                roles: $in: ['sol_member', 'sol_demo_member']
 
 if Meteor.isServer
     Meteor.methods 
@@ -210,6 +208,6 @@ if Meteor.isServer
             Meteor.users.update Meteor.userId(),
                 $addToSet: courses: course_id
                 
-    Meteor.publish 'course_members', (course_id) ->
+    Meteor.publish 'sol_members', (course_id) ->
         Meteor.users.find
             roles: $in: ['sol_member', 'sol_demo_member']

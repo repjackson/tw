@@ -100,7 +100,11 @@ settings under account
 email in profile
 birthday under location
 toggle for email public
-
+zen quotes
+password change
+username change
+tests
+posts in dashboard
 
 
 Light purple

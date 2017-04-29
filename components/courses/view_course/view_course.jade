@@ -96,12 +96,9 @@ template(name='course_modules')
                 
 template(name='course_members')                
     h2.ui.center.aligned.header Course Members      
-    .ui.centered.cards
+    .ui.centered.three.cards
         each course_members
-            .ui.card
-                .content
-                    .header #{name}/#{username}
-
+            +person
 template(name='course_reminders')                
     h2.ui.center.aligned.header Course Reminders            
 
