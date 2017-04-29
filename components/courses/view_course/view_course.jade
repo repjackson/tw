@@ -85,14 +85,14 @@ template(name='course_modules')
         .ui.segment
             a(href="/course/#{course_id}/module/#{_id}")
                 .ui.header  #{number}: #{title}
-            .ui.teal.progress
-                .bar
-                .progress
-                .label Coursework
-            if sol_member
-                i.lock.icon
-            else    
-                i.lock.icon
+                .ui.teal.progress
+                    .bar
+                    .progress
+                    .label Coursework
+                if sol_member
+                    i.lock.icon
+                else    
+                    i.lock.icon
                 
 template(name='course_members')                
     h2.ui.center.aligned.header Course Members      

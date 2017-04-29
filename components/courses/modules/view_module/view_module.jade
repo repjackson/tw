@@ -11,14 +11,17 @@ template(name='view_module')
             a.section(href="/course/#{course._id}/modules") Modules
             .divider  / 
             .active.section #{module.number}: #{module.title}
-        h1.ui.center.aligned.header #{module.number}: #{module.title}
+        h1.ui.center.aligned.header Module #{module.number}: #{module.title}
         .ui.stackable.grid
             .four.wide.column
                 with module
                     .content
                         |!{description}
                     .ui.vertical.fluid.pointing.menu
-                        a.item(href="/course/#{course_id}/module/#{_id}/sections" class="{{isActiveRoute name='module_sections'}}") Sections
+                        .header.item Sections
+                        .menu
+                            each sections
+                                a.item(href="/course/#{../course_id}/module/#{module_id}/section/#{_id}" class="{{isActivePath '/course/#{../course_id}/module/#{module_id}/section/#{_id}'}}")  #{number}: #{title}
                         a.item(href="/course/#{course_id}/module/#{_id}/downloads" class="{{isActiveRoute name='module_downloads'}}") Downloads
                         a.disabled.item Light Work
                     .ui.dividing.header Status
@@ -39,24 +42,25 @@ template(name='view_module')
                 +Template.dynamic template=module_content
 
 template(name='module_sections')
-    #section_menu.ui.top.attached.stackable.tabular.menu
-        each sections
-            a.item(data-tab="tab#{number}") #{title}
-    each sections
-        .ui.bottom.attached.tab.segment(data-tab='tab#{number}')
-            +view_section
+    // #section_menu.ui.top.attached.stackable.tabular.menu
+    //     each sections
+    //         a.item(data-tab="tab#{number}") #{title}
+    // each sections
+    //     .ui.bottom.attached.tab.segment(data-tab='tab#{number}')
+    //         +view_section
 
 
 template(name='view_section')
-    // .ui.basic.segment
-    .ui.center.aligned.header #{title}
-    |!{section_content}
-    .ui.styled.fluid.accordion
-        h3.title
-            i.big.newspaper.icon
-            | Transcript
-        .content
-            |!{transcript}
-    .ui.hidden.divider
-    +view_questions
-        
+    with section_doc
+        // .ui.basic.segment
+        .ui.center.aligned.header #{title}
+        |!{section_content}
+        .ui.styled.fluid.accordion
+            h3.title
+                i.big.newspaper.icon
+                | Transcript
+            .content
+                |!{transcript}
+        .ui.hidden.divider
+        +view_questions
+            

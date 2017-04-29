@@ -4,11 +4,17 @@ FlowRouter.route '/course/:course_id/module/:module_id',
         BlazeLayout.render 'view_module',
             module_content: 'module_sections'
 
-FlowRouter.route '/course/:course_id/module/:module_id/sections', 
+FlowRouter.route '/course/:course_id/module/:module_id/', 
     name:'module_sections'
     action: (params) ->
         BlazeLayout.render 'view_module',
             module_content: 'module_sections'
+
+FlowRouter.route '/course/:course_id/module/:module_id/section/:section_id', 
+    name:'view_section'
+    action: (params) ->
+        BlazeLayout.render 'view_module',
+            module_content: 'view_section'
 
 
 if Meteor.isClient
@@ -33,6 +39,11 @@ if Meteor.isClient
     Template.view_module.helpers
         module: -> Docs.findOne FlowRouter.getParam('module_id')
         course: -> Docs.findOne FlowRouter.getParam('course_id')
+        sections: ->
+            Docs.find {
+                type: 'section'
+                module_id: FlowRouter.getParam('module_id')
+            }, sort: number: 1
 
     Template.module_sections.helpers
         sections: ->
@@ -57,6 +68,16 @@ if Meteor.isClient
                 Meteor.setTimeout ->
                     $('.ui.accordion').accordion()
                 , 1000
+        @autorun -> Meteor.subscribe 'module', FlowRouter.getParam('module_id')
+
+                
+                
+    Template.view_section.helpers
+        section_doc: ->
+            # console.log FlowRouter.getParam 'section_id'
+            Docs.findOne FlowRouter.getParam('section_id')
+
+                
     # Template.module_sections.onRendered ->
     #     @autorun =>
     #         if @subscriptionsReady()
