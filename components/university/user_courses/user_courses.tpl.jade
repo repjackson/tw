@@ -1,4 +1,7 @@
-.ui.dividing.header My Courses
+if is_user
+    .ui.dividing.header My Courses
+else    
+    .ui.dividing.header Course Enrollments
 .ui.list
     if isInRole 'sol_member'
         .item

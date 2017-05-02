@@ -22,8 +22,8 @@ template(name='view_module')
                         .menu
                             each sections
                                 a.item(href="/course/#{../course_id}/module/#{module_id}/section/#{_id}" class="{{isActivePath '/course/#{../course_id}/module/#{module_id}/section/#{_id}'}}")  #{number}: #{title}
+                        a.item(href="/course/#{course_id}/module/#{_id}/lightwork" class="{{isActiveRoute name='module_lightwork'}}") Lightwork
                         a.item(href="/course/#{course_id}/module/#{_id}/downloads" class="{{isActiveRoute name='module_downloads'}}") Downloads
-                        a.disabled.item Light Work
                     .ui.dividing.header Status
                     if complete
                         .ui.teal.fluid.label 

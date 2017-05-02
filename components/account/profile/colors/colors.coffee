@@ -89,7 +89,7 @@ if Meteor.isClient
                 when 'green'
                     "Analytical, Global, Conceptual <br>
                      Cool, Calm, Collected <br>
-                     Invnetive, Logical, Perfectionist <br>
+                     Inventive, Logical, Perfectionist <br>
                      Abstract, Hypothetical, Investigative"
                 when 'orange'
                     "Witty, Charming, Spontaneous <br>

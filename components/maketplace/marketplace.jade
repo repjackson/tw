@@ -1,11 +1,11 @@
-template(name='services')
+template(name='marketplace')
     .ui.container
         .ui.stackable.divided.grid
             .twelve.wide.column
-                h1.ui.dividing.header Tori Webster Services
+                h1.ui.dividing.header Tori Webster products
                 if is_list_view
                     .ui.relaxed.divided.items
-                        each services
+                        each products
                             +product_item
                 if is_grid_view
                     .ui.centered.cards
@@ -28,7 +28,7 @@ template(name='services')
                         |Add Product
 
 
-template(name='service_card')
+template(name='product_card')
     .ui.card
         .ui.centered.image
             a(href="/view/#{_id}")
@@ -45,16 +45,16 @@ template(name='service_card')
                 |!{content}
         .content
             // each tags
-            //     .ui.compact.button.service_tag(class=tag_class) #{this}
+            //     .ui.compact.button.product_tag(class=tag_class) #{this}
             if isInRole 'admin'
-                .edit_service.ui.primary.basic.right.floated.button
+                .edit_product.ui.primary.basic.right.floated.button
                     i.pencil.icon
-                    |Edit service    
+                    |Edit product    
         .content
             +favorite
 
             
-template(name='service_item')
+template(name='product_item')
     .item
         a.image(href="/view/#{_id}")
             img.ui.rounded.image(src="{{c.url image_id  width=175 height=175 crop='fill' gravity='face' }}")
@@ -71,7 +71,7 @@ template(name='service_item')
             // .extra
             //     i.tags.icon
             //     each tags
-            //         .ui.compact.tiny.button.service_tag(class=tag_class) #{this}
+            //         .ui.compact.tiny.button.product_tag(class=tag_class) #{this}
             if isInRole 'admin'
                 .extra
                     i.red.configure.large.icon

@@ -1,18 +1,18 @@
-@Tags = new Meteor.Collection 'tags'
+# @Tags = new Meteor.Collection 'tags'
 
 if Meteor.isClient
-    
-    @selected_tags = new ReactiveArray []
+    Session.setDefault 'lightbank_view_mode', 'all'
+    # @selected_tags = new ReactiveArray []
 
-    # media_tags = ['tori webster','quote','poem', 'photo', 'image', 'video', 'essay']
+    media_tags = ['tori webster','quote','poem', 'photo', 'image', 'video', 'essay']
 
-    Template.cloud.onCreated ->
-        @autorun => Meteor.subscribe('tags', selected_tags.array(), type=null, limit=20, view_mode=Session.get('view_mode'))
+    Template.lightbank_cloud.onCreated ->
+        @autorun => Meteor.subscribe('lightbank_tags', selected_tags.array(), limit=20, lightbank_view_mode=Session.get('lightbank_view_mode'))
     
-    Template.cloud.helpers
-        # media_tags: -> 
-        #     Tags.find
-        #         name: $in: media_tags
+    Template.lightbank_cloud.helpers
+        media_tags: -> 
+            Tags.find
+                name: $in: media_tags
             
         theme_tags: ->
             doc_count = Docs.find().count()
@@ -57,7 +57,7 @@ if Meteor.isClient
     
     
     
-    Template.cloud.events
+    Template.lightbank_cloud.events
         'click .select_tag': -> selected_tags.push @name
         'click .unselect_tag': -> selected_tags.remove @valueOf()
         'click #clear_tags': -> selected_tags.clear()
@@ -90,16 +90,17 @@ if Meteor.isClient
 
 
 if Meteor.isServer
-    Meteor.publish 'tags', (selected_tags, type, limit, view_mode)->
+    Meteor.publish 'lightbank_tags', (selected_tags, limit, lightbank_view_mode)->
         
         self = @
         match = {}
         
-        # match.tags = $all: selected_tags
-        if type then match.type = type
+        match.type = 'lightbank'
         if selected_tags.length > 0 then match.tags = $all: selected_tags
         
-        # console.log 'limit:', limit
+        if lightbank_view_mode is 'resonates'
+            match.favoriters = $in: [@userId]
+        
         
         cloud = Docs.aggregate [
             { $match: match }

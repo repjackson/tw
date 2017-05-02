@@ -217,6 +217,19 @@ Template.favorite_button.events
         else FlowRouter.go '/sign-in'
 
 
+Template.resonate_button.helpers
+    resonate_button_class: -> 
+        if Meteor.userId()
+            if @favoriters and Meteor.userId() in @favoriters then 'teal' else 'basic'
+        else 'grey disabled'
+        
+        
+Template.resonate_button.events
+    'click .resonate_button': -> 
+        if Meteor.userId() then Meteor.call 'favorite', Template.parentData(0)
+        else FlowRouter.go '/sign-in'
+
+
 Template.featured.events
     'click #make_featured': -> Docs.update FlowRouter.getParam('doc_id'), $set: featured: true
     'click #make_unfeatured': -> Docs.update FlowRouter.getParam('doc_id'), $set: featured: false

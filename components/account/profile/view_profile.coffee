@@ -1,8 +1,10 @@
-FlowRouter.route '/profile/:user_id', action: (params) ->
-    BlazeLayout.render 'layout',
-        # sub_nav: 'account_nav'
-        # sub_nav: 'member_nav'
-        main: 'view_profile'
+FlowRouter.route '/profile/:user_id', 
+    name: 'view_profile'
+    action: (params) ->
+        BlazeLayout.render 'layout',
+            # sub_nav: 'account_nav'
+            # sub_nav: 'member_nav'
+            main: 'view_profile'
 
 
 

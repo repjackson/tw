@@ -8,10 +8,10 @@
                 a.item(href='/about' class="{{isActivePath '/about'}}") About
                 a.item(href='/courses' class="{{isActivePath '/courses'}}") Courses
                 a.item(href='/lightbank' class="{{isActivePath '/lightbank'}}") Lightbank
-                if isInRole 'admin'
-                    a.item(href='/service' class="{{isActivePath '/service'}}") 
-                        i.red.configure.icon
-                        |Services
+                // if isInRole 'admin'
+                //     a.item(href='/marketplace' class="{{isActivePath '/marketplace'}}") 
+                //         i.red.configure.icon
+                //         |Marketplace
                 a.item(href='/contact' class="{{isActivePath '/contact'}}") Contact
                 .divider
                 if currentUser
@@ -24,10 +24,10 @@
                             img.ui.avatar.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
                         else
                             i.user.icon
-                        // if currentUser.name
-                        //     | #{currentUser.name}
-                        // else
-                        | #{username}
+                        if currentUser.name
+                            | #{currentUser.name}
+                        else
+                            | #{currentUser.username}
                     a#logout.ui.item(href='#')
                         i.sign.out.icon
                         | Sign Out
@@ -40,10 +40,10 @@
         a.mobile.hidden.item(href='/about' class="{{isActivePath '/about'}}") About
         a.mobile.hidden.item(href='/courses' class="{{isActivePath '/courses'}}") Courses
         a.mobile.hidden.item(href='/lightbank' class="{{isActivePath '/lightbank'}}") Lightbank
-        if isInRole 'admin'
-            a.mobile.hidden.item(href='/service' class="{{isActivePath '/service'}}") 
-                i.red.configure.icon
-                |Services
+        // if isInRole 'admin'
+        //     a.mobile.hidden.item(href='/marketplace' class="{{isActivePath '/marketplace'}}") 
+        //         i.red.configure.icon
+        //         |Marketplace
         a.mobile.hidden.item(href='/contact' class="{{isActivePath '/contact'}}") Contact
         .right.mobile.hidden.menu
             if currentUser
@@ -64,7 +64,7 @@
                     if currentUser.name
                         | #{currentUser.name}
                     else
-                        | #{username}
+                        | #{currentUser.username}
                 a#logout.ui.item(href='#')
                     i.sign.out.icon
                     | Sign Out

@@ -1,13 +1,46 @@
-template(name='member_dashboard')
+template(name='dashboard')
     .ui.container
-        .ui.center.aligned.header #{currentUser.username}'s Dashboard
-        .ui.stackable.grid
-            .eight.wide.column
-                +me_card
-                +my_courses
-                // +my_tests
-                +my_purchases
-            .eight.wide.column
-                +my_friends
-                +favorites
-                
+        h2.ui.center.aligned.header Dashboard
+        .ui.two.centered.stackable.cards
+            a#courses.ui.card
+                .content
+                    .header 
+                        i.university.icon
+                        |My Courses
+            a.ui.card(href='/tests')
+                .content
+                    .header
+                        i.edit.icon
+                        |My Tests
+            a.ui.card(href='/transactions')
+                .content
+                    .header
+                        i.exchange.icon
+                        |Transactions
+            a.ui.card(href='/support')
+                .content
+                    .header
+                        i.help.icon
+                        |Support
+            a.ui.card(href='/friends')
+                .content
+                    .header
+                        i.users.icon
+                        |My Friends
+            a#lightbank.ui.card
+                .content
+                    .header 
+                        i.sun.icon
+                        |My Light Bank
+            a.ui.card(href='/account')
+                .content
+                    .header
+                        i.setting.icon
+                        |Account Preferences
+            // +me_card
+            // +my_courses
+            // +my_tests
+            // +my_purchases
+            // +my_friends
+            // +favorites
+            

@@ -7,9 +7,9 @@ with me
             .header
                 a(href="/profile/#{_id}") #{profile.name}
             .meta
-                | #{profile.position} at #{profile.company}
+                | #{profile.location}
             .description
-                p #{pro_bio}
+                p #{about_me}
         .extra.content
             // h4 Points: #{points}
             +color_dots

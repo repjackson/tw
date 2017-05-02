@@ -61,7 +61,7 @@ template(name='course_sales')
                 |!{content}
             .ui.centered.stackable.grid
                 .four.wide.column
-                    a.ui.teal.large.button(href='http://toriwebster.us11.list-manage.com/subscribe?u=8973e01aca6da499e7e1a63bd&id=9204d04e30')
+                    a.ui.teal.button(href='http://toriwebster.us11.list-manage.com/subscribe?u=8973e01aca6da499e7e1a63bd&id=9204d04e30')
                         |Sign Up for the SOL Newsletter
                 .four.wide.column
                     if in_demo
@@ -69,15 +69,10 @@ template(name='course_sales')
                     else
                         #sign_up_demo.ui.teal.button
                             |Sign Up for the Demo
-                        span Demo available Monday, May 1
+                        // span Demo available Monday, May 1
                         
                 .four.wide.column
                     +add_to_cart
-                    // a.buy_course.ui.teal.big.button
-                    //     |Enroll
-                    // else
-                    //     a.buy_course.ui.teal.big.button
-                    //         |Create an Account and Enroll
     
 template(name='course_modules')        
     h2.ui.center.aligned.header Modules
@@ -177,3 +172,11 @@ template(name='view_inspiration_course')
         .ui.hidden.divider
     |!{course_inspiration_content}
 
+
+
+template(name='register_sol')
+    .ui.text.container
+        h2.ui.center.aligned.header Hi and Welcome to ToriWebster.com!
+        h5.ui.center.aligned.header Please register an account to enroll in the SOL demo or login if you already have one.
+        .ui.basic.segment
+            +atForm state='signUp'

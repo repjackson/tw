@@ -31,12 +31,15 @@
                             .ui.hidden.fitted.divider
                             a.ui.basic.button(href='/colors') Take this short quiz to discover your True Colors!
             .ten.wide.column
-                h2.ui.center.aligned.header
-                    |#{profile.first_name} #{profile.last_name}
-                .ui.center.aligned.sub.header #{username}
+                if profile.first_name
+                    h2.ui.center.aligned.header
+                        |#{profile.first_name} #{profile.last_name}
+                else
+                    .ui.center.aligned.sub.header #{username}
                 if tags
+                    i.tags.icon
                     each tags
-                        .ui.basic.circular.label #{this}
+                        .ui.basic.label #{this}
                 if profile.location
                     .ui.header Location 
                     | #{profile.location}
@@ -49,5 +52,4 @@
                 if profile.if_not_working
                     .ui.header If I am not at work or in class then I am probably…
                     |#{profile.if_not_working}
-                if is_user
-                    +my_courses
+                +user_courses

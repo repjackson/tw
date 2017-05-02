@@ -34,6 +34,12 @@ FlowRouter.route '/course/:course_id/reminders',
         BlazeLayout.render 'view_course',
             course_content: 'course_reminders'
 
+FlowRouter.route '/register-sol', 
+    name: 'register-sol'
+    action: (params) ->
+        BlazeLayout.render 'layout',
+            main: 'register_sol'
+
 
 if Meteor.isClient
     Template.view_course.onCreated ->
@@ -57,7 +63,7 @@ if Meteor.isClient
     Template.course_sales.events
         'click #sign_up_demo': ->
             if Meteor.user() then Roles.addUsersToRoles(Meteor.userId(), 'sol_demo_member')
-            else FlowRouter.go '/sign-in'
+            else FlowRouter.go '/register-sol'
 
     
     Template.view_course.events

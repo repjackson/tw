@@ -1,16 +1,19 @@
 template(name='account')
     .ui.container
         h1.ui.dividing.header Account
-        +my_purchases
-        // .ui.container.segment
-        //     .ui.form
-        //         .field
-        //             label Email
-        //             input(type='text' value=currentUser.emails[0].address)
-        //         .field
-        //             .ui.segment
-        //                 label Change Password
-        //                 input.disabled(type='text' value=currentUser.name)
+
+        .ui.container.segment
+            .ui.form
+                .field
+                    label Email(s)
+                    input(type='text' value=currentUser.emails[0].address)
+                .field
+                    label Change Password
+                    input.disabled(type='text' value=currentUser.name)
+                .field
+                    label Change Username
+                    input#username(type='text' value=currentUser.username)
+                    #submit_username_change.ui.submit.button Submit
             
 template(name='account_nav')
     if isInRole 'admin'
