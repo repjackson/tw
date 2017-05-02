@@ -66,6 +66,8 @@ template(name='course_sales')
                 .four.wide.column
                     if in_demo
                         .ui.disabled.teal.button Signed Up for Demo
+                        // if isInRole 'admin'
+                        //     #unenroll.ui.red.basic.button Unenroll from demo
                     else
                         #sign_up_demo.ui.teal.button
                             |Sign Up for the Demo
@@ -77,17 +79,28 @@ template(name='course_sales')
 template(name='course_modules')        
     h2.ui.center.aligned.header Modules
     each modules
-        .ui.segment
-            a(href="/course/#{course_id}/module/#{_id}")
+        if module_is_available
+            .ui.segment
+                a(href="/course/#{course_id}/module/#{_id}")
+                    .ui.header  #{number}: #{title}
+                    // .ui.teal.progress
+                    //     .bar
+                    //     .progress
+                    //     .label Coursework
+                    // if sol_demo_member
+                    //     i.lock.icon
+                    // else    
+                    //     i.lock.icon
+        else
+            .ui.disabled.segment
+                // a(href="/course/#{course_id}/module/#{_id}")
                 .ui.header  #{number}: #{title}
-                .ui.teal.progress
-                    .bar
-                    .progress
-                    .label Coursework
-                if sol_member
-                    i.lock.icon
-                else    
-                    i.lock.icon
+                    // .ui.teal.progress
+                    //     .bar
+                    //     .progress
+                    //     .label Coursework
+                // i.lock.icon
+            
                 
 template(name='course_members')                
     h2.ui.center.aligned.header Course Members      

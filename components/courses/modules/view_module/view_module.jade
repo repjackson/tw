@@ -11,9 +11,9 @@ template(name='view_module')
             a.section(href="/course/#{course._id}/modules") Modules
             .divider  / 
             .active.section #{module.number}: #{module.title}
-        h1.ui.center.aligned.header Module #{module.number}: #{module.title}
+        h2.ui.header Module #{module.number}: #{module.title}
         .ui.stackable.grid
-            .four.wide.column
+            .five.wide.column
                 with module
                     .content
                         |!{description}
@@ -21,7 +21,7 @@ template(name='view_module')
                         .header.item Sections
                         .menu
                             each sections
-                                a.item(href="/course/#{../course_id}/module/#{module_id}/section/#{_id}" class="{{isActivePath '/course/#{../course_id}/module/#{module_id}/section/#{_id}'}}")  #{number}: #{title}
+                                a.item(href="/course/#{../course_id}/module/#{module_id}/section/#{_id}" )  #{number}: #{title}
                         a.item(href="/course/#{course_id}/module/#{_id}/lightwork" class="{{isActiveRoute name='module_lightwork'}}") Lightwork
                         a.item(href="/course/#{course_id}/module/#{_id}/downloads" class="{{isActiveRoute name='module_downloads'}}") Downloads
                     .ui.dividing.header Status
@@ -38,7 +38,7 @@ template(name='view_module')
                         a.ui.fluid.basic.button(href="/course/#{course_id}/module/#{_id}/edit")
                             i.red.configure.icon
                             |Edit Module
-            .twelve.wide.column
+            .eleven.wide.column
                 +Template.dynamic template=module_content
 
 template(name='module_sections')
@@ -57,7 +57,21 @@ template(name='view_section')
         |!{section_content}
         .ui.styled.fluid.accordion
             h3.title
-                i.big.newspaper.icon
+                i.large.newspaper.icon
+                | Transcript
+            .content
+                |!{transcript}
+        .ui.hidden.divider
+        +view_questions
+            
+template(name='module_lightwork')
+    with lightwork_doc
+        // .ui.basic.segment
+        .ui.center.aligned.header #{title}
+        |!{section_content}
+        .ui.styled.fluid.accordion
+            h3.title
+                i.large.newspaper.icon
                 | Transcript
             .content
                 |!{transcript}

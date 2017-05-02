@@ -73,11 +73,11 @@ if Meteor.isServer
         self = @
         match = {}
         if view_mode is 'mine'
-            if not me.courses
-                Meteor.users.update @userId,
-                    $set: courses: []
-            else
-                match._id = $in: me.courses
+            # if not me.courses
+            #     Meteor.users.update @userId,
+            #         $set: courses: []
+            # else
+            match._id = $in: me.courses
         if not @userId or not Roles.userIsInRole(@userId, ['admin'])
             match.published = true
                 

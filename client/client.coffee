@@ -56,6 +56,15 @@ Template.registerHelper 'is_editing', () ->
 
 Template.registerHelper 'is_dev', () -> Meteor.isDevelopment
 
+FlowRouter.wait()
+Tracker.autorun ->
+  # if the roles subscription is ready, start routing
+  # there are specific cases that this reruns, so we also check
+  # that FlowRouter hasn't initalized already
+  if Roles.subscription.ready() and !FlowRouter._initialized
+     FlowRouter.initialize()
+
+
 
 Template.staus_indicator.helpers
     labelClass: ->

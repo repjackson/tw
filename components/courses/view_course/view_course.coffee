@@ -1,47 +1,73 @@
-FlowRouter.route '/course/:course_id', 
-    name: 'course_home'
-    action: (params) ->
-        BlazeLayout.render 'layout',
-            main: 'course_sales'
-
-FlowRouter.route '/course/:course_id/modules', 
-    name: 'course_modules'
-    action: (params) ->
-        BlazeLayout.render 'view_course',
-            course_content: 'course_modules'
-
-FlowRouter.route '/course/:course_id/members', 
-    name: 'course_members'
-    action: (params) ->
-        BlazeLayout.render 'view_course',
-            course_content: 'course_members'
-
-FlowRouter.route '/course/:course_id/downloads', 
-    name: 'course_downloads'
-    action: (params) ->
-        BlazeLayout.render 'view_course',
-            course_content: 'course_files'
-
-FlowRouter.route '/course/:course_id/welcome', 
-    name: 'course_welcome'
-    action: (params) ->
-        BlazeLayout.render 'view_course',
-            course_content: 'course_welcome'
-
-FlowRouter.route '/course/:course_id/reminders', 
-    name: 'course_reminders'
-    action: (params) ->
-        BlazeLayout.render 'view_course',
-            course_content: 'course_reminders'
-
-FlowRouter.route '/register-sol', 
-    name: 'register-sol'
-    action: (params) ->
-        BlazeLayout.render 'layout',
-            main: 'register_sol'
-
-
 if Meteor.isClient
+    # loggedIn = FlowRouter.group
+    #     triggersEnter: [ ->
+    #         unless Meteor.loggingIn() or Meteor.userId()
+    #             route = FlowRouter.current()
+    #         unless route.route.name is 'login'
+    #             Session.set 'redirectAfterLogin', route.path
+    #             FlowRouter.go 'login'
+    #         ]
+
+    
+    
+    
+    FlowRouter.route '/course/:course_id', 
+        name: 'course_home'
+        triggersEnter: [ (context, redirect) ->
+            if Roles.userIsInRole Meteor.user(), [ 'sol_member', 'sol_demo_member' ]
+                redirect "/course/#{context.params.course_id}/welcome"
+            else 
+                redirect "/course/#{context.params.course_id}/sales"
+        ]
+    
+
+    
+    
+    
+    FlowRouter.route '/course/:course_id/sales', 
+        name: 'course_sale_page'
+        action: (params) ->
+            BlazeLayout.render 'layout',
+                main: 'course_sales'
+    
+    FlowRouter.route '/course/:course_id/modules', 
+        name: 'course_modules'
+        action: (params) ->
+            BlazeLayout.render 'view_course',
+                course_content: 'course_modules'
+    
+    FlowRouter.route '/course/:course_id/members', 
+        name: 'course_members'
+        action: (params) ->
+            BlazeLayout.render 'view_course',
+                course_content: 'course_members'
+    
+    FlowRouter.route '/course/:course_id/downloads', 
+        name: 'course_downloads'
+        action: (params) ->
+            BlazeLayout.render 'view_course',
+                course_content: 'course_files'
+    
+    FlowRouter.route '/course/:course_id/welcome', 
+        name: 'course_welcome'
+        action: (params) ->
+            BlazeLayout.render 'view_course',
+                course_content: 'course_welcome'
+    
+    FlowRouter.route '/course/:course_id/reminders', 
+        name: 'course_reminders'
+        action: (params) ->
+            BlazeLayout.render 'view_course',
+                course_content: 'course_reminders'
+    
+    FlowRouter.route '/register-sol', 
+        name: 'register-sol'
+        action: (params) ->
+            BlazeLayout.render 'layout',
+                main: 'register_sol'
+
+
+
     Template.view_course.onCreated ->
         @autorun -> Meteor.subscribe 'course', FlowRouter.getParam('course_id')
     
@@ -56,14 +82,39 @@ if Meteor.isClient
     Template.course_modules.helpers
         modules: -> Docs.find {type: 'module' }, sort: number: 1
             
+        module_is_available: ->
+            # console.log @number
+            Roles.userIsInRole(Meteor.userId(), 'sol_demo_member') and @number < 2
+            # (href="/course/#{course_id}/module/#{_id}")
 
     Template.course_sales.onCreated ->
         @autorun -> Meteor.subscribe 'course', FlowRouter.getParam('course_id')
 
     Template.course_sales.events
         'click #sign_up_demo': ->
-            if Meteor.user() then Roles.addUsersToRoles(Meteor.userId(), 'sol_demo_member')
-            else FlowRouter.go '/register-sol'
+            if Meteor.user()
+                Roles.addUsersToRoles(Meteor.userId(), 'sol_demo_member')
+                Meteor.users.update Meteor.userId(),
+                    $addToSet:
+                        courses: FlowRouter.getParam 'course_id'
+                swal {
+                    title: "Thank you, #{Meteor.user().name()}."
+                    text: "You're now enrolled in the demo."
+                    type: 'success'
+                    animation: true
+                    confirmButtonText: "Continue to Course",
+                    closeOnConfirm: true
+                }, ->
+                    FlowRouter.go "/course/sW4accx4fvZBK6wLn/welcome"
+
+        
+            else 
+                Session.set 'enrolling_in', 'sol'
+                FlowRouter.go '/register-sol'
+        
+        
+        'click #unenroll': ->
+            Roles.removeUsersFromRoles(Meteor.userId(), 'sol_demo_member')
 
     
     Template.view_course.events

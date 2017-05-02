@@ -64,9 +64,13 @@ if Meteor.isClient
                         type: 'section'
                         number: section_number
                         module_id: module_id
+                        lightwork:false
 
                     $('.tabular.menu .item').tab()
-                
+        
+        
+        
+        
                 
         'click .remove_section': ->
             self = @
@@ -87,3 +91,8 @@ if Meteor.isClient
 
                 Docs.remove self._id
                 
+    Template.edit_section.events
+        'click #make_lightwork': -> 
+            Docs.update @_id, $set: "lightwork": true
+        'click #unmake_lightwork': -> 
+            Docs.update @_id, $set: "lightwork": false
