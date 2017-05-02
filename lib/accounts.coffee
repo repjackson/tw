@@ -6,8 +6,15 @@ FlowRouter.route '/terms-of-use', action: (params) ->
     BlazeLayout.render 'layout',
         main: 'terms-of-use'
 
+if Meteor.isDevelopment
+    AccountsTemplates.configure
+        sendVerificationEmail: false
+        enforceEmailVerification: false
 
-
+if Meteor.isProduction
+    AccountsTemplates.configure
+        sendVerificationEmail: true
+        enforceEmailVerification: false
 
 AccountsTemplates.configure
     defaultLayout: 'layout'
@@ -26,8 +33,6 @@ AccountsTemplates.configure
     showResendVerificationEmailLink: true
 
 
-    sendVerificationEmail: true
-    enforceEmailVerification: false
     confirmPassword: true
     continuousValidation: true
     #displayFormLabels: true

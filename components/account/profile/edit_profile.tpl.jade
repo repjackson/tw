@@ -18,9 +18,8 @@
                             label Add Profile Image
                             input(type='file' name='upload_picture' accept='image/*')
                 .ten.wide.column    
-                    unless profile.first_name
-                        unless profile.last_name
-                            h4.ui.orange.header Thanks for registering! Please finish creating your profile below before continuing on to the course.
+                    if enrolling_in_demo
+                        h4.ui.orange.header Thanks for registering! Please finish creating your profile below before continuing on to the course.
                     .field
                         label First Name 
                         .ui.input

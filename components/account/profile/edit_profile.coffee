@@ -18,6 +18,10 @@ if Meteor.isClient
     Template.edit_profile.helpers
         user: -> Meteor.users.findOne FlowRouter.getParam('user_id')
     
+        enrolling_in_demo: -> Session.get 'enrolling_in', 'sol_demo'
+    
+    
+    
     Template.edit_profile.events
         'blur #first_name': ->
             first_name = $('#first_name').val().trim()
@@ -81,6 +85,12 @@ if Meteor.isClient
             $('#add_tag').val(tag)
     
         'click #save_profile': ->
+            if Session.get 'enrolling_in', 'sol_demo' 
+                console.log 'enrolling'
+                user_id = FlowRouter.getParam('user_id')
+                Roles.addUsersToRoles user_id, 'sol_demo_member'
+                Meteor.users.update user_id,
+                    $addToSet: courses: 'sW4accx4fvZBK6wLn'
             FlowRouter.go "/profile/#{@_id}"
     
         "change input[type='file']": (e) ->

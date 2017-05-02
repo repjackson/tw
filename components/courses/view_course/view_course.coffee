@@ -109,7 +109,7 @@ if Meteor.isClient
 
         
             else 
-                Session.set 'enrolling_in', 'sol'
+                Session.set 'enrolling_in', 'sol_demo'
                 FlowRouter.go '/register-sol'
         
         

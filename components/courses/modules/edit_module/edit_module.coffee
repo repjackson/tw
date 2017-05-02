@@ -25,9 +25,10 @@ if Meteor.isClient
         course: -> Docs.findOne FlowRouter.getParam('course_id')
         
         sections: ->
-            Docs.find
+            Docs.find {
                 type: 'section'
                 module_id: FlowRouter.getParam('module_id')
+            }, sort: number: 1
             
     Template.edit_module.events
         'click #save_module': ->

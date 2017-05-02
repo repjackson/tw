@@ -23,8 +23,11 @@ if Meteor.isClient
                 published: true
     
         all_item_class: -> if Session.equals 'view_mode', 'all' then 'active' else ''
-        mine_item_class: -> if Session.equals 'view_mode', 'mine' then 'active' else ''
-
+        mine_item_class: -> 
+            if Meteor.user()
+                if Session.equals 'view_mode', 'mine' then 'active' else ''
+            else
+                'disabled'
     Template.courses.events
         'click #add_course': ->
             id = Docs.insert
