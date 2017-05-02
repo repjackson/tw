@@ -20,7 +20,7 @@ if Meteor.isClient
         selected_tags: -> selected_tags.array()
 
         all_item_class: -> if Session.equals 'lightbank_view_mode', 'all' then 'active' else ''
-        mine_item_class: -> if Session.equals 'lightbank_view_mode', 'resonates' then 'active' else ''
+        resonates_item_class: -> if Session.equals 'lightbank_view_mode', 'resonates' then 'active' else ''
 
     Template.lightbank.events
         'click #set_mode_to_all': -> 

@@ -24,9 +24,9 @@ template(name='ticket')
                 span.date #{when}
             .text #{body}
             .actions
-                a.reply Reply
-                if is_read
-                    a.mark_unread Mark Unread
-                else    
-                    a.mark_read Mark Read
+                // a.reply Reply
+                // if is_read
+                //     a.mark_unread Mark Unread
+                // else    
+                //     a.mark_read Mark Read
                 +delete_link

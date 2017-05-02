@@ -1,9 +1,9 @@
 template(name='courses')
     .ui.text.container
         h1.ui.center.aligned.header Courses
-        .ui.two.item.menu
-            .item All
-            .item Mine
+        .ui.two.item.teal.menu
+            a#set_mode_to_all.item(class=all_item_class) All
+            a#set_mode_to_mine.item(class=mine_item_class) My Courses
         h4.ui.center.aligned.header I design courses online to spread light farther than the eye can see. People all around the world are looking for hope, inspiration, and guidance in their personal and professional lives. Explore the courses below to see what best fits your needs.
         .ui.hidden.divider
         if isInRole 'admin'

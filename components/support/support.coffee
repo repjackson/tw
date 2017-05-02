@@ -22,10 +22,10 @@ if Meteor.isClient
             Docs.insert
                 body: body
                 type: 'support_ticket'
-                , ->
+                , =>
                     swal {
-                        title: "Thank you, #{currentUser.first_name}."
-                        text: "We'll be in touch soon :)."
+                        title: "Thank you, #{Meteor.user().username}."
+                        text: "We'll be in touch soon."
                         type: 'success'
                         animation: true
                         timer: 2000
