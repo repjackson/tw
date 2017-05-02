@@ -46,35 +46,6 @@ template(name='course_not_ready')
         a.ui.teal.large.button(href='http://toriwebster.us11.list-manage.com/subscribe?u=8973e01aca6da499e7e1a63bd&id=9204d04e30')
             |Sign Up for the SOL Newsletter
     
-template(name='course_sales')
-    with course
-        .ui.text.container
-            if isInRole 'admin'
-                a.ui.basic.button(href="/course/#{_id}/welcome")
-                    i.red.configure.icon
-                    |#{title} Admin
-            if image_id
-                img.ui.centered.image(src="{{c.url image_id }}")
-            // h1.ui.center.aigned.header #{title}
-            h3.ui.center.aigned.header #{subtitle}
-            .ui.basic.segment 
-                |!{content}
-            .ui.centered.stackable.grid
-                .four.wide.column
-                    a.ui.teal.button(href='http://toriwebster.us11.list-manage.com/subscribe?u=8973e01aca6da499e7e1a63bd&id=9204d04e30')
-                        |Sign Up for the SOL Newsletter
-                .four.wide.column
-                    if in_demo
-                        .ui.disabled.teal.button Signed Up for Demo
-                        // if isInRole 'admin'
-                        //     #unenroll.ui.red.basic.button Unenroll from demo
-                    else
-                        #sign_up_demo.ui.teal.button
-                            |Sign Up for the Demo
-                        // span Demo available Monday, May 1
-                        
-                .four.wide.column
-                    +add_to_cart
     
 template(name='course_modules')        
     h2.ui.center.aligned.header Modules
@@ -109,81 +80,6 @@ template(name='course_members')
             +person
 template(name='course_reminders')                
     h2.ui.center.aligned.header Course Reminders            
-
-template(name='course_welcome')
-    with course
-        #course_welcome_menu.ui.top.attached.tabular.stackable.menu
-            a.active.item(data-tab="welcome_tab") Welcome
-            a.item(data-tab="terms_tab") Terms of Agreement
-            a.item(data-tab="inspiration_tab") What Inspired SOL
-        .ui.bottom.attached.tab.active.segment(data-tab='welcome_tab')
-            if is_editing
-                +edit_welcome_course
-            else
-                +view_welcome_course
-        .ui.bottom.attached.tab.segment(data-tab='terms_tab')
-            if is_editing
-                +edit_terms_course
-            else
-                +view_terms_course
-        .ui.bottom.attached.tab.segment(data-tab='inspiration_tab')
-            if is_editing
-                +edit_inspiration_course
-            else
-                +view_inspiration_course
-            
-        
-        
-template(name='edit_welcome_course')
-    .ui.form
-        .field
-            label Content
-            .froala-container
-                +froalaReactive course_welcome_context
-        #save_welcome_content.ui.teal.button Save Welcome Content
-
-
-template(name='view_welcome_course')
-    if isInRole 'admin'
-        #edit_welcome_content.ui.basic.button 
-            i.red.configure.icon
-            |Edit Welcome Content
-        .ui.hidden.divider
-    |!{course_welcome_content}
-
-template(name='edit_terms_course')
-    .ui.form
-        .field
-            label Content
-            .froala-container
-                +froalaReactive course_terms_context
-        #save_terms_content.ui.teal.button Save Terms Content
-
-
-template(name='view_terms_course')
-    if isInRole 'admin'
-        #edit_terms_content.ui.basic.button 
-            i.red.configure.icon
-            |Edit Terms Content
-        .ui.hidden.divider
-    |!{course_terms_content}
-
-template(name='edit_inspiration_course')
-    .ui.form
-        .field
-            label Content
-            .froala-container
-                +froalaReactive course_inspiration_context
-        #save_inspiration_content.ui.teal.button Save Inspiration Content
-
-
-template(name='view_inspiration_course')
-    if isInRole 'admin'
-        #edit_inspiration_content.ui.basic.button 
-            i.red.configure.icon
-            |Edit Inspiration Content
-        .ui.hidden.divider
-    |!{course_inspiration_content}
 
 
 

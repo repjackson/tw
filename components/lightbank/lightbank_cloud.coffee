@@ -29,7 +29,7 @@ if Meteor.isClient
             button_class = []
             if @valueOf() in selected_tags.array() then button_class.push 'teal' else button_class.push 'basic'
 
-            if @name is 'tori webster' then button_class.push ' teal'
+            if @name is 'tori webster' then button_class.push ' blue'
             button_class
     
         cloud_tag_class: ->
