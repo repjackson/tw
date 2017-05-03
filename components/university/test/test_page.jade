@@ -31,7 +31,7 @@ template(name='test_page')
                                     each my_sessions
                                         +session_card
                     // +user_blurb
-                    +comments
+                    // +comments
                 .four.wide.column
                     .ui.dividing.header #{title} Tags
                     each tags
@@ -40,7 +40,7 @@ template(name='test_page')
                         .ui.dividing.header 
                             i.large.red.configure.icon
                             |Admin
-                        a.ui.basic.button(href="{{pathFor 'edit_test' doc_id=_id}}")
+                        a.ui.basic.button(href="/edit/#{_id}")
                             i.pencil.icon
                             |Edit Test
                         if published
@@ -48,9 +48,9 @@ template(name='test_page')
                         else
                             .ui.red.label Unpublished                        
                     .ui.dividing.header Actions
-                    +voting
-                    +favorite
-                    +tag_rating
+                    // +voting
+                    // +favorite
+                    // +tag_rating
 
 
 template(name='session_card')
@@ -65,38 +65,3 @@ template(name='session_card')
                     .bar
                     .progress
                     .label #{category}
-
-                    
-                    
-template(name='edit_test')        
-    with test
-        .ui.container
-            .ui.center.aligned.header Edit #{title} Test
-            .ui.hidden.compact.divider
-            +title
-            .ui.hidden.compact.divider
-            +image
-            .ui.hidden.compact.divider
-            .ui.labeled.input
-                .ui.basic.label Publish Date
-                input#publish_date(type='date' value=publish_date)
-            .ui.hidden.compact.divider
-            +content
-            .ui.hidden.compact.divider
-            +tags
-            .ui.hidden.compact.divider
-            +published
-            .ui.hidden.compact.divider
-            +featured
-            .ui.hidden.compact.divider
-            .ui.basic.center.aligned.segment
-                if title
-                    if tags
-                        #save_test.ui.big.green.button 
-                            i.check.icon
-                            |Save #{title} Test
-                    else
-                        .ui.disabled.basic.green.button Add Tags to Save
-                else
-                    .ui.disabled.basic.green.button Add Title to Save
-                +delete_button

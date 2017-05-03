@@ -177,7 +177,8 @@ template(name='view_terms_course')
         br
 
     if has_agreed
-        #remove_agreement.ui.basic.red.button Remove Agreement
+        if isInRole 'admin'
+            #remove_agreement.ui.basic.red.button Remove Agreement
     else
         #agree_to_terms.ui.green.button Agree to Terms
 

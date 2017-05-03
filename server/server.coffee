@@ -50,6 +50,11 @@ Meteor.methods
 
 
 
+Accounts.onCreateUser (options, user) ->
+    user.courses = []
+    user.tests = []
+    return user
+
 # AccountsMeld.configure
 #     askBeforeMeld: false
 #     # meldDBCallback: meldDBCallback

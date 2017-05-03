@@ -10,12 +10,12 @@ template(name='big_both_voter')
     // |#{points}
 
 template(name='rating')
-    .ui.massive.star.rating(data-rating=rating_doc.rating)
+    .ui.massive.star.rating(data-rating=question_rating)
 
 
 template(name='rank')
     .ui.tiny.statistic
-        .value #{rank_doc.number}
+        .value #{rank_doc}
         .label Rank
     #increase_index.ui.icon.basic.circular.button
         i.chevron.up.icon

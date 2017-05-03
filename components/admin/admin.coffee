@@ -114,5 +114,3 @@ if Meteor.isServer
         match = {}
         Meteor.users.find match
          
-    Accounts.onCreateUser (options, user) ->
-        user

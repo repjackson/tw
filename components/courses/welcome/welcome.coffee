@@ -105,7 +105,7 @@ if Meteor.isClient
             self = @
             swal {
                 title: 'Agree to Terms?'
-                # text: 'Confirm delete?'
+                text: 'This cannot be undone.'
                 type: 'info'
                 animation: true
                 showCancelButton: true
