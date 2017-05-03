@@ -78,11 +78,11 @@ if Meteor.isClient
             
     Template.view_terms_course.helpers
         has_agreed: ->
-            _.where(@agreements, {user_id: Meteor.userId()})
+            _.where(Meteor.user().agreements, {course_id:@_id})
 
         agreed_date: ->
-            if _.where(@agreements, {user_id: Meteor.userId()})
-                agreement = _.where(@agreements, {user_id: Meteor.userId()})
+            if _.where(Meteor.user().agreements, {course_id:@_id})
+                agreement = _.where(Meteor.user().agreements, {course_id:@_id})
                 moment(agreement.date_signed).format("dddd, MMMM Do, h:mm a")
 
     Template.edit_terms_course.events
@@ -114,16 +114,17 @@ if Meteor.isClient
                 confirmButtonText: 'Agree'
                 # confirmButtonColor: '#da5347'
             }, =>
-                Docs.update self._id,
+                Meteor.users.update Meteor.userId(),
                     $addToSet: 
                         agreements: 
+                            course_id: self._id
                             user_id: Meteor.userId()
                             date_signed: new Date()
         
         'click #remove_agreement': ->
-            Docs.update @_id,
+            Meteor.users.update Meteor.userId(),
                 $pull: 
-                    agreements: user_id: Meteor.userId()
+                    agreements: course_id: @_id
             
             
 

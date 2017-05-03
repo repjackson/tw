@@ -35,12 +35,6 @@ if Meteor.isClient
             BlazeLayout.render 'view_course',
                 course_content: 'course_members'
     
-    FlowRouter.route '/course/:course_id/downloads', 
-        name: 'course_downloads'
-        action: (params) ->
-            BlazeLayout.render 'view_course',
-                course_content: 'course_files'
-    
     
     FlowRouter.route '/course/:course_id/reminders', 
         name: 'course_reminders'
@@ -67,9 +61,12 @@ if Meteor.isClient
         modules: -> Docs.find {type: 'module' }, sort: number: 1
             
         module_is_available: ->
-            # console.log @number
-            Roles.userIsInRole(Meteor.userId(), 'sol_demo_member') and @number < 2
-            # (href="/course/#{course_id}/module/#{_id}")
+            if Roles.userIsInRole(Meteor.userId(), ['sol_demo_member']) and @number < 2
+                return true
+            else if Roles.userIsInRole(Meteor.userId(), ['admin', 'sol_member'])
+                return true
+            else 
+                return false
 
 
     

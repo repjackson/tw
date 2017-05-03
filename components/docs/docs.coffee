@@ -69,8 +69,8 @@ if Meteor.isClient
 
 if Meteor.isServer
     Docs.allow
-        insert: (userId, doc) -> Roles.userIsInRole(userId, 'admin')
-        update: (userId, doc) -> Roles.userIsInRole(userId, 'admin')
+        insert: (userId, doc) -> Roles.userIsInRole(userId, 'admin') or userId
+        update: (userId, doc) -> Roles.userIsInRole(userId, 'admin') or userId
         remove: (userId, doc) -> Roles.userIsInRole(userId, 'admin')
     
     

@@ -21,6 +21,7 @@ template(name='view_course')
                         a.item(href="/course/#{_id}/welcome" class="{{isActiveRoute name='course_welcome'}}") Welcome
                         a.item(href="/course/#{_id}/modules" class="{{isActiveRoute name='course_modules'}}") Modules
                         a.item(href="/course/#{_id}/members" class="{{isActiveRoute name='course_members'}}") Members
+                        // a.item(href="/course/#{_id}/collaboration" class="{{isActiveRoute name='course_collaboration'}}") Collaboration
                         a.item(href="/course/#{_id}/downloads" class="{{isActiveRoute name='course_downloads'}}") Downloads
                         // a.item(href="/course/#{_id}/reminders" class="{{isActiveRoute name='course_reminders'}}") Reminders
                     if isInRole 'admin'

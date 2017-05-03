@@ -5,6 +5,16 @@ if Meteor.isClient
             BlazeLayout.render 'view_module',
                 module_content: 'module_files_page'
     
+    FlowRouter.route '/course/:course_id/downloads', 
+        name: 'course_downloads'
+        action: (params) ->
+            BlazeLayout.render 'view_course',
+                course_content: 'course_files'
+    
+
+    
+    
+    
     Session.setDefault 'editing_id', null
     
     Template.module_files.onCreated ->

@@ -1,0 +1,49 @@
+template(name='project_management')
+    .ui.container
+        h2.ui.center.aligned.header Project Management
+        #cloud.ui.basic.center.aligned.segment.container
+            #add.ui.circular.icon.basic.button
+                i.plus.icon
+            .ui.left.icon.large.input
+                i.search.icon
+                +inputAutocomplete settings=settings id="search" class="" autocomplete="off" 
+            if selected_tags
+                #clear_tags.ui.teal.icon.large.circular.button
+                    i.remove.icon
+                each selected_tags
+                    .unselect_tag.ui.teal.large.circular.button
+                        strong #{this}
+            .ui.hidden.divider
+            each admin_tags
+                .ui.circular.large.button.select_tag(class=cloud_tag_class) 
+                    | #{this.name}
+        .ui.centered.cards
+                each admin_docs
+                    +admin_doc_view
+
+
+template(name='admin_doc_view')
+    .ui.card
+        .content
+            .meta
+                each tags
+                    .ui.tiny.button.tag(class=tag_class) #{this}
+            |!{content}
+            .ui.hidden.divider
+            if can_edit
+                a.ui.basic.button(href="/admin_edit/#{_id}")
+                    |Edit
+
+template(name='admin_edit')
+    with doc
+        .ui.container.basic.segment
+            .ui.center.aligned.header Edit Admin Doc
+            .ui.hidden.divider
+            +tags
+            .ui.hidden.divider
+            +content      
+            .ui.hidden.divider
+            .ui.hidden.divider
+            .ui.center.aligned.basic.segment
+                a.ui.huge.teal.button(href="/admin/project_management") Save 
+                +delete_button
