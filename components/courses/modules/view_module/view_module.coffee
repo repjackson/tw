@@ -1,34 +1,42 @@
-FlowRouter.route '/course/:course_id/module/:module_id', 
+FlowRouter.route '/course/:slug/module/:module_number', 
     name:'route_home'
     action: (params) ->
         BlazeLayout.render 'view_module',
             module_content: 'module_sections'
 
-FlowRouter.route '/course/:course_id/module/:module_id/', 
-    name:'module_sections'
-    action: (params) ->
-        BlazeLayout.render 'view_module',
-            module_content: 'module_sections'
+# FlowRouter.route '/course/:slug/module/:module_number/', 
+#     name:'module_sections'
+#     action: (params) ->
+#         BlazeLayout.render 'view_module',
+#             module_content: 'module_sections'
 
-FlowRouter.route '/course/:course_id/module/:module_id/section/:section_id', 
+FlowRouter.route '/course/:slug/module/:module_number/section/:section_number', 
     name:'section'
     action: (params) ->
         BlazeLayout.render 'view_module',
             module_content: 'view_section'
 
-FlowRouter.route '/course/:course_id/module/:module_id/lightwork', 
+FlowRouter.route '/course/:slug/module/:module_number/lightwork', 
     name: 'module_lightwork'
     action: (params) ->
         BlazeLayout.render 'view_module',
             module_content: 'module_lightwork'
     
+FlowRouter.route '/course/:slug/module/:module_number/section/', 
+    triggersEnter: [ (context, redirect) ->
+        redirect "/course/#{context.params.slug}/module/#{context.params.slug}/section/1"
+    ]
+    
+
+
+
 
 if Meteor.isClient
     Template.view_module.onCreated ->
-        @autorun -> Meteor.subscribe 'module', FlowRouter.getParam('module_id')
+        @autorun -> Meteor.subscribe 'module', course=FlowRouter.getParam('slug'), module_number=parseInt FlowRouter.getParam('module_number')
     
     Template.module_sections.onCreated ->
-        @autorun -> Meteor.subscribe 'module', FlowRouter.getParam('module_id')
+        @autorun -> Meteor.subscribe 'module', course=FlowRouter.getParam('slug'), module_number=parseInt FlowRouter.getParam('module_number')
     
     Template.module_sections.onRendered ->
         Meteor.setTimeout ->
@@ -43,45 +51,58 @@ if Meteor.isClient
 
 
     Template.view_module.helpers
-        module: -> Docs.findOne FlowRouter.getParam('module_id')
-        course: -> Docs.findOne FlowRouter.getParam('course_id')
-        sections: ->
+        module: -> 
+            Docs.findOne 
+                number: parseInt FlowRouter.getParam('module_number')
+                course: FlowRouter.getParam('slug')
+        course: -> 
+            Docs.findOne 
+                slug:FlowRouter.getParam('slug')
+        module_sections: ->
             Docs.find {
                 type: 'section'
-                module_id: FlowRouter.getParam('module_id')
+                module_number: parseInt FlowRouter.getParam('module_number')
                 lightwork: $ne: true
 
             }, sort: number: 1
 
         section_path_class: ->
-            # console.log FlowRouter.current()
-            section_path_class = ''
-            # console.log @
             Tracker.autorun =>
+                section_path_class = ''
+                console.log @
                 FlowRouter.watchPathChange()
                 path = FlowRouter.current().path
-                if path is "/course/sW4accx4fvZBK6wLn/module/#{@module_id}/section/#{@_id}"
-                    console.log 'active'
+                module_number = parseInt FlowRouter.getParam('module_number')
+                # section_number = parseInt FlowRouter.getParam('section_number')
+                if path is "/course/sol/module/#{module_number}/section/#{@number}"
+                    console.log 'active', @number
+                    # console.log path
                     section_path_class = 'active' 
                 else
-                    console.log 'not active'
+                    console.log 'not active', @number
+                    # console.log path
                     section_path_class = '' 
-            section_path_class
+                console.log 'final path', section_path_class        
+                section_path_class
+
+        # section_path_class2: ->
+        #     "{{isActiveRoute '/course/#{../course}/module/#{module_number}/section/#{number}'}}"
+
 
     Template.module_sections.helpers
         sections: ->
             Docs.find {
                 type: 'section'
-                module_id: FlowRouter.getParam('module_id')
+                module_number: parseInt FlowRouter.getParam('module_number')
                 lightwork: $ne: true
             }, sort: number: 1
 
 
     Template.view_module.events
         'click .edit': ->
-            module_id = FlowRouter.getParam('module_id')
-            course_id = FlowRouter.getParam('course_id')
-            FlowRouter.go "/course/#{course_id}/module/#{module_id}/edit"
+            module_number = FlowRouter.getParam('module_number')
+            slug = FlowRouter.getParam('slug')
+            FlowRouter.go "/course/#{slug}/module/#{module_number}/edit"
 
 
 
@@ -95,15 +116,17 @@ if Meteor.isClient
     
     
     # Template.module_lightwork.onRendered ->
-    #     @autorun -> Meteor.subscribe 'module_lightwork', FlowRouter.getParam('module_id')
+    #     @autorun -> Meteor.subscribe 'module_lightwork', FlowRouter.getParam('module_number')
 
                 
                 
     Template.view_section.helpers
         section_doc: ->
-            # console.log FlowRouter.getParam 'section_id'
-            Docs.findOne FlowRouter.getParam('section_id'),
-                lightwork: false
+            Docs.findOne 
+                number: parseInt FlowRouter.getParam('section_number')
+                # module_number: parseInt FlowRouter.getParam('module_number')
+                type: 'section'
+                # lightwork: false
 
 
     Template.module_lightwork.onRendered ->
@@ -117,18 +140,18 @@ if Meteor.isClient
                 
     Template.module_lightwork.helpers
         lightwork_doc: ->
-            module_id = FlowRouter.getParam 'module_id'
+            module_number = parseInt FlowRouter.getParam 'module_number'
             doc = Docs.findOne 
                 lightwork: true
                 type: 'section'
-                module_id: module_id
+                module_number: module_number
                 
             doc
             
             
 if Meteor.isServer
-    Meteor.publish 'module_lightwork', (module_id) ->
+    Meteor.publish 'module_lightwork', (module_number) ->
         Docs.find
             type: 'section'
             lightwork: true
-            module_id: module_id
+            module_number: module_id

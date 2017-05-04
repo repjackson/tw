@@ -1,0 +1,17 @@
+template(name='course_members')                
+    h2.ui.center.aligned.header Course Members  
+    #course_member_cloud.ui.basic.segment.center.aligned.container
+        if selected_course_member_tags
+            #clear_tags.ui.primary.circular.icon.big.button
+                i.remove.icon
+            each selected_course_member_tags
+                .unselect_tag.ui.circular.primary.big.button
+                    strong #{this}
+        each course_member_tags
+            .ui.circular.basic.button.select_tag(class=cloud_tag_class) #{this.name}
+                    // small #{this.count}
+                    // small [#{this.index}]
+    .ui.centered.three.stackable.doubling.cards
+        each course_members
+            +person
+            

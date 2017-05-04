@@ -45,23 +45,25 @@ if Meteor.isClient
 
 
 if Meteor.isServer
-    publishComposite 'course', (course_id)->
+    publishComposite 'course', (course_slug)->
         {
             find: ->
-                Docs.find course_id
+                Docs.find 
+                    type: 'course'
+                    slug: course_slug
             children: [
                 { find: (course) ->
                     Docs.find
-                        course_id: course._id
+                        course: course.slug
                         type: 'module'
-                children: [
-                    {
-                        find: (module) ->
-                            Docs.find 
-                                _id: module.section_id
-                                type: 'section'
-                    }
-                ]    
+                # children: [
+                #     {
+                #         find: (module) ->
+                #             Docs.find 
+                #                 _id: module.section_id
+                #                 type: 'section'
+                #     }
+                # ]    
                 }
                 {
                     find: (course) ->
@@ -76,11 +78,7 @@ if Meteor.isServer
         self = @
         match = {}
         if view_mode is 'mine'
-            # if not me.courses
-            #     Meteor.users.update @userId,
-            #         $set: courses: []
-            # else
-            match._id = $in: me.courses
+            match.slug = $in: me.courses
         if not @userId or not Roles.userIsInRole(@userId, ['admin'])
             match.published = true
                 

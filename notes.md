@@ -10,9 +10,10 @@ db.users.find({ image_id:{$exists:true}, profile: {$exists:true} }).forEach(
 )
 
 
-db.docs.find({ body:{$exists:true} }).forEach(
+db.docs.find({ type: 'module', course_id: 'sW4accx4fvZBK6wLn' }).count()
+db.docs.find({ type: 'module', course_id: 'sol' }).forEach(
     function(doc) {
-        doc.type = '
+        doc.course_id = 'sW4accx4fvZBK6wLn'
         db.docs.save(doc);
     }
 )
@@ -34,6 +35,9 @@ facetadmin
 FRHuvjHTCNouzmFJ
 
 db.docs.find({ tags:{$exists:true} }).count()
+
+
+db.users.find({ courses:{$in:["sW4accx4fvZBK6wLn]} }).count()
 
 
 

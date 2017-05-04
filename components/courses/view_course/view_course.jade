@@ -18,12 +18,12 @@ template(name='view_course')
             .five.wide.column
                 with course
                     .ui.vertical.fluid.pointing.large.menu
-                        a.item(href="/course/#{_id}/welcome" class="{{isActiveRoute name='course_welcome'}}") Welcome
-                        a.item(href="/course/#{_id}/modules" class="{{isActiveRoute name='course_modules'}}") Modules
-                        a.item(href="/course/#{_id}/members" class="{{isActiveRoute name='course_members'}}") Members
-                        // a.item(href="/course/#{_id}/collaboration" class="{{isActiveRoute name='course_collaboration'}}") Collaboration
-                        a.item(href="/course/#{_id}/downloads" class="{{isActiveRoute name='course_downloads'}}") Downloads
-                        // a.item(href="/course/#{_id}/reminders" class="{{isActiveRoute name='course_reminders'}}") Reminders
+                        a.item(href="/course/#{slug}/welcome" class="{{isActiveRoute name='course_welcome'}}") Welcome
+                        a.item(href="/course/#{slug}/modules" class="{{isActiveRoute name='course_modules'}}") Modules
+                        a.item(href="/course/#{slug}/members" class="{{isActiveRoute name='course_members'}}") Members
+                        // a.item(href="/course/#{slug}/collaboration" class="{{isActiveRoute name='course_collaboration'}}") Collaboration
+                        a.item(href="/course/#{slug}/downloads" class="{{isActiveRoute name='course_downloads'}}") Downloads
+                        // a.item(href="/course/#{slug}/reminders" class="{{isActiveRoute name='course_reminders'}}") Reminders
                     if isInRole 'admin'
                         .ui.segment
                             .ui.header 
@@ -53,7 +53,7 @@ template(name='course_modules')
     each modules
         if module_is_available
             .ui.segment
-                a(href="/course/#{course_id}/module/#{_id}")
+                a(href="/course/#{course}/module/#{number}")
                     .ui.header  #{number}: #{title}
                     // .ui.teal.progress
                     //     .bar
@@ -65,7 +65,7 @@ template(name='course_modules')
                     //     i.lock.icon
         else
             .ui.disabled.segment
-                // a(href="/course/#{course_id}/module/#{_id}")
+                // a(href="/course/#{course}/module/#{number}")
                 .ui.header  #{number}: #{title}
                     // .ui.teal.progress
                     //     .bar
@@ -74,11 +74,6 @@ template(name='course_modules')
                 // i.lock.icon
             
                 
-template(name='course_members')                
-    h2.ui.center.aligned.header Course Members      
-    .ui.centered.three.cards
-        each course_members
-            +person
 template(name='course_reminders')                
     h2.ui.center.aligned.header Course Reminders            
 

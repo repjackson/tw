@@ -1,5 +1,5 @@
 if Meteor.isClient
-    FlowRouter.route '/course/:course_id/welcome', 
+    FlowRouter.route '/course/:slug/welcome', 
         name: 'course_welcome'
         action: (params) ->
             BlazeLayout.render 'view_course',
@@ -8,10 +8,10 @@ if Meteor.isClient
     
     
     Template.course_welcome.onCreated ->
-        @autorun -> Meteor.subscribe 'course', FlowRouter.getParam('course_id')
+        @autorun -> Meteor.subscribe 'course', FlowRouter.getParam('slug')
 
     Template.course_welcome.helpers
-        course: -> Docs.findOne FlowRouter.getParam('course_id')
+        course: -> Docs.findOne slug: FlowRouter.getParam('slug')
 
 
     Template.course_welcome.onRendered ->
@@ -23,10 +23,10 @@ if Meteor.isClient
     Template.edit_welcome_course.helpers
         course: -> 
             Docs.findOne 
-                _id: FlowRouter.getParam('course_id')
+                slug: FlowRouter.getParam('slug')
                 type: 'course'
         course_welcome_context: ->
-            @current_doc = Docs.findOne FlowRouter.getParam('course_id')
+            @current_doc = Docs.findOne slug: FlowRouter.getParam('slug')
             self = @
             {
                 _value: self.current_doc.course_welcome_content
@@ -43,9 +43,9 @@ if Meteor.isClient
         'blur .froala-container': (e,t)->
             html = t.$('div.froala-reactive-meteorized-override').froalaEditor('html.get', true)
             
-            course_id = FlowRouter.getParam('course_id')
+            slug = FlowRouter.getParam('slug')
     
-            Docs.update course_id,
+            Docs.update slug: slug,
                 $set: course_welcome_content: html
                 
         'click #save_welcome_content': ->
@@ -96,10 +96,10 @@ if Meteor.isClient
 
 
     Template.edit_terms_course.helpers
-        course: -> Docs.findOne FlowRouter.getParam('course_id')
+        course: -> Docs.findOne slug: FlowRouter.getParam('slug')
         
         course_terms_context: ->
-            @current_doc = Docs.findOne FlowRouter.getParam('course_id')
+            @current_doc = Docs.findOne slug: FlowRouter.getParam('slug')
             self = @
             {
                 _value: self.current_doc.course_terms_content
@@ -114,20 +114,20 @@ if Meteor.isClient
             
     Template.view_terms_course.helpers
         has_agreed: ->
-            _.where(Meteor.user().agreements, {course_id:@_id})
+            _.where(Meteor.user().agreements, {slug:@slug})
 
         agreed_date: ->
-            if _.where(Meteor.user().agreements, {course_id:@_id})
-                agreement = _.where(Meteor.user().agreements, {course_id:@_id})
+            if _.where(Meteor.user().agreements, {slug:@slug})
+                agreement = _.where(Meteor.user().agreements, {slug:@slug})
                 moment(agreement.date_signed).format("dddd, MMMM Do, h:mm a")
 
     Template.edit_terms_course.events
         'blur .froala-container': (e,t)->
             html = t.$('div.froala-reactive-meteorized-override').froalaEditor('html.get', true)
             
-            course_id = FlowRouter.getParam('course_id')
+            slug = FlowRouter.getParam('slug')
     
-            Docs.update course_id,
+            Docs.update slug: slug,
                 $set: course_terms_content: html
                 
         'click #save_terms_content': ->
@@ -153,14 +153,14 @@ if Meteor.isClient
                 Meteor.users.update Meteor.userId(),
                     $addToSet: 
                         agreements: 
-                            course_id: self._id
+                            course: self.slug
                             user_id: Meteor.userId()
                             date_signed: new Date()
         
         'click #remove_agreement': ->
             Meteor.users.update Meteor.userId(),
                 $pull: 
-                    agreements: course_id: @_id
+                    agreements: course: @slug
             
             
             
@@ -201,10 +201,10 @@ if Meteor.isClient
             
 
     Template.edit_inspiration_course.helpers
-        course: -> Docs.findOne FlowRouter.getParam('course_id')
+        course: -> Docs.findOne slug: FlowRouter.getParam('slug')
         
         course_inspiration_context: ->
-            @current_doc = Docs.findOne FlowRouter.getParam('course_id')
+            @current_doc = Docs.findOne slug: FlowRouter.getParam('slug')
             self = @
             {
                 _value: self.current_doc.course_inspiration_content
@@ -221,9 +221,9 @@ if Meteor.isClient
         'blur .froala-container': (e,t)->
             html = t.$('div.froala-reactive-meteorized-override').froalaEditor('html.get', true)
             
-            course_id = FlowRouter.getParam('course_id')
+            slug = FlowRouter.getParam('slug')
     
-            Docs.update course_id,
+            Docs.update slug: slug,
                 $set: course_inspiration_content: html
                 
         'click #save_inspiration_content': ->

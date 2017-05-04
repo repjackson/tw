@@ -26,8 +26,8 @@
                             |View Profile
                     td 
                         .ui.list
-                            each user_courses
-                                .item #{title}
+                            each courses
+                                .item #{this}
                         if is_sol_member
                             .remove_sol_member.ui.basic.compact.red.button
                                 i.remove.icon 
@@ -36,6 +36,14 @@
                             .make_sol_member.ui.compact.basic.button
                                 i.plus.icon 
                                 | SOL
+                        if is_sol_demo_member
+                            .remove_sol_demo_member.ui.basic.compact.red.button
+                                i.remove.icon 
+                                | SOL Demo
+                        else
+                            .make_sol_demo_member.ui.compact.basic.button
+                                i.plus.icon 
+                                | SOL Demo
                                 
                     td
                         each roles

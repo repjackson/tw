@@ -64,11 +64,12 @@ if Meteor.isClient
                 type: 'question'
                 section_id: @_id
                 
-        answers: -> 
+        my_answers: -> 
             Docs.find 
                 type: 'answer'
                 question_id: @_id
-        
+                author_id: Meteor.userId()
+
         published_answers: -> 
             Docs.find 
                 type: 'answer'

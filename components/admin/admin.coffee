@@ -25,15 +25,14 @@ if Meteor.isClient
             # console.log @
             Roles.userIsInRole(@_id, 'admin')
     
-        is_sol_member: -> 
+        in_sol: -> 
             # console.log @
-            Roles.userIsInRole(@_id, 'sol_member')
+            Roles.userIsInRole(@_id, 'sol')
     
-        user_courses: ->
-            if @courses
-                Docs.find
-                    type: 'course'
-                    _id: $in: @courses
+        in_sol_demo: -> 
+            # console.log @
+            Roles.userIsInRole(@_id, 'sol_demo')
+    
     
     
     
@@ -71,7 +70,7 @@ if Meteor.isClient
                 swal "Made #{self.username} an Admin", "",'success'
                 return
     
-        'click .remove_sol_member': ->
+        'click .remove_sol': ->
             self = @
             swal {
                 title: "Remove #{@username} from SOL?"
@@ -83,12 +82,13 @@ if Meteor.isClient
                 confirmButtonText: 'Remove Member Status'
                 closeOnConfirm: false
             }, ->
-                Roles.removeUsersFromRoles self._id, 'sol_member'
+                Meteor.users.update self._id,
+                    $pull: courses: 'sol'
                 swal "Removed #{self.username} from SOL", "",'success'
                 return
     
     
-        'click .make_sol_member': ->
+        'click .make_sol': ->
             self = @
             swal {
                 title: "Add #{@username} to SOL?"
@@ -100,8 +100,47 @@ if Meteor.isClient
                 confirmButtonText: 'Add to SOL'
                 closeOnConfirm: false
             }, ->
-                Roles.addUsersToRoles self._id, 'sol_member'
+                Meteor.users.update self._id,
+                    $addToSet: courses: 'sol'
                 swal "Made #{self.username} a SOL Member", "",'success'
+                return
+    
+    
+    
+        'click .remove_sol_demo': ->
+            self = @
+            swal {
+                title: "Remove #{@username} from SOL Demo?"
+                # text: 'You will not be able to recover this imaginary file!'
+                type: 'warning'
+                animation: false
+                showCancelButton: true
+                # confirmButtonColor: '#DD6B55'
+                confirmButtonText: 'Remove Demo Member Status'
+                closeOnConfirm: false
+            }, ->
+                Meteor.users.update self._id,
+                    $pull: courses: 'sol_demo'
+                swal "Removed #{self.username} from SOL Demo", "",'success'
+                return
+    
+    
+        'click .add_sol_demo': ->
+            self = @
+            swal {
+                title: "Add #{@username} to SOL demo?"
+                # text: 'You will not be able to recover this imaginary file!'
+                type: 'warning'
+                animation: false
+                showCancelButton: true
+                # confirmButtonColor: '#DD6B55'
+                confirmButtonText: 'Make Demo Member'
+                closeOnConfirm: false
+            }, ->
+                Meteor.users.update self._id,
+                    $addToSet: courses: 'sol_demo'
+
+                swal "Added #{self.username} to SOL Demo", "",'success'
                 return
     
     

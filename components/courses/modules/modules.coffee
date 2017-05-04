@@ -1,14 +1,18 @@
 if Meteor.isServer    
-    publishComposite 'module', (module_id)->
+    publishComposite 'module', (course, module_number)->
         {
             find: ->
-                Docs.find module_id
+                Docs.find 
+                    type: 'module'
+                    course: course
+                    number: module_number
             children: [
                 { 
                     find: (module) ->
                         Docs.find
                             type: 'section'
-                            module_id: module_id
+                            course: course
+                            module_number: module_number
                     children: [
                         {
                             find: (section) ->
@@ -31,7 +35,7 @@ if Meteor.isServer
                     find: (module) ->
                         Docs.find
                             type: 'course'
-                            _id: module.course_id
+                            slug: module.course
                 }
             ]
         }

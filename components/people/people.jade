@@ -10,7 +10,7 @@ template(name='person')
     .ui.card
         .image
             a(href="/profile/#{_id}")
-                img.ui.image(src="{{c.url profile.image_id width=400 height=400 gravity='face' crop='fill'}}")
+                img.ui.fluid.image(src="{{c.url profile.image_id width=400 height=400 gravity='face' crop='fill'}}")
         .content
             .header
                 a(href="/profile/#{_id}")
@@ -23,7 +23,9 @@ template(name='person')
             if profile.location
                 .meta
                     | #{profile.location}
-        .extra.description
+        .extra.content
+            +color_dots
+        .extra.content
             each five_tags
-                .ui.compact.tiny.circular.compact.basic.button.user_tag(class=user_tag_class) #{this}
+                .ui.compact.tiny.compact.basic.button.user_tag(class=user_tag_class) #{this}
 
