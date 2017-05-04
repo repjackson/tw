@@ -64,7 +64,7 @@ if Meteor.isClient
         }
     
         admin_docs: -> 
-            Docs.find { }, 
+            Docs.find {type: 'admin' }, 
                 sort:
                     tag_count: 1
                 limit: 10
@@ -107,6 +107,12 @@ if Meteor.isClient
             # console.log 'selected ', doc
             selected_admin_tags.push doc.name
             $('#search').val ''
+
+
+    Template.admin_doc_view.helpers
+        project_card_class: ->
+            if 'done' in @tags then 'green'
+
 
 
 if Meteor.isServer

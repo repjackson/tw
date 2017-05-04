@@ -28,7 +28,21 @@ template(name='edit_welcome_course')
             label Content
             .froala-container
                 +froalaReactive course_welcome_context
+        +welcome_transcript this        
         #save_welcome_content.ui.teal.button Save Welcome Content
+
+
+
+template(name='welcome_transcript')
+    .field
+        label Welcome Transcript
+        .transcript
+            +froalaReactive transcript
+
+
+
+
+
 
 
 template(name='view_welcome_course')
@@ -38,6 +52,15 @@ template(name='view_welcome_course')
             |Edit Welcome Content
         .ui.hidden.divider
     |!{course_welcome_content}
+    .ui.styled.fluid.accordion
+        h3.title
+            i.large.newspaper.icon
+            | Transcript
+        .content
+            |!{welcome_transcript}
+    
+    
+    
 
 template(name='edit_terms_course')
     .ui.form
@@ -188,7 +211,18 @@ template(name='edit_inspiration_course')
             label Content
             .froala-container
                 +froalaReactive course_inspiration_context
+        +inspiration_transcript        
         #save_inspiration_content.ui.teal.button Save Inspiration Content
+
+
+template(name='inspiration_transcript')
+    .field
+        label Inspiration Transcript
+        .transcript
+            +froalaReactive transcript
+
+
+
 
 
 template(name='view_inspiration_course')
@@ -198,4 +232,10 @@ template(name='view_inspiration_course')
             |Edit Inspiration Content
         .ui.hidden.divider
     |!{course_inspiration_content}
+    .ui.styled.fluid.accordion
+        h3.title
+            i.large.newspaper.icon
+            | Transcript
+        .content
+            |!{inspiration_transcript}
 

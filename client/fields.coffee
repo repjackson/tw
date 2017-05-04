@@ -67,6 +67,14 @@ Template.title.events
             $set: title: title
             
             
+Template.slug.events
+    'blur #slug': (e,t)->
+        # alert 'hi'
+        slug = $(e.currentTarget).closest('#slug').val()
+        Docs.update @_id,
+            $set: slug: slug
+            
+            
 Template.link.events
     'blur #link': (e,t)->
         link = $(e.currentTarget).closest('#link').val()

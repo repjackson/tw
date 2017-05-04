@@ -19,9 +19,6 @@ if Meteor.isClient
             $('#course_welcome_menu .item').tab()
         , 1000
 
-    # Template.course_welcome.helpers
-    #     agreements: ->
-    #         Agreements.find()
 
     Template.edit_welcome_course.helpers
         course: -> 
@@ -53,6 +50,45 @@ if Meteor.isClient
                 
         'click #save_welcome_content': ->
             Session.set 'editing_id', null
+
+
+
+
+    Template.welcome_transcript.helpers
+        transcript: ->
+            @current_doc = Docs.findOne @_id
+            self = @
+            {
+                _value: self.current_doc.welcome_transcript
+                _keepMarkers: true
+                _className: 'froala-reactive-meteorized-override'
+                toolbarInline: false
+                initOnClick: false
+                imageInsertButtons: ['imageByURL']
+                tabSpaces: false
+                height: 300
+            }
+        
+            
+    Template.welcome_transcript.events
+        'blur .transcript': (e,t)->
+            html = t.$('div.froala-reactive-meteorized-override').froalaEditor('html.get', true)
+            
+            Docs.update @_id,
+                $set: welcome_transcript: html
+
+
+
+
+    Template.view_welcome_course.onRendered ->
+        @autorun =>
+            if @subscriptionsReady()
+                Meteor.setTimeout ->
+                    $('.ui.accordion').accordion()
+                , 1000
+    
+
+
 
     Template.view_welcome_course.events
         'click #edit_welcome_content': ->
@@ -126,6 +162,42 @@ if Meteor.isClient
                 $pull: 
                     agreements: course_id: @_id
             
+            
+            
+            
+    Template.inspiration_transcript.helpers
+        transcript: ->
+            @current_doc = Docs.findOne @_id
+            self = @
+            {
+                _value: self.current_doc.inspiration_transcript
+                _keepMarkers: true
+                _className: 'froala-reactive-meteorized-override'
+                toolbarInline: false
+                initOnClick: false
+                imageInsertButtons: ['imageByURL']
+                tabSpaces: false
+                height: 300
+            }
+        
+            
+    Template.inspiration_transcript.events
+        'blur .transcript': (e,t)->
+            html = t.$('div.froala-reactive-meteorized-override').froalaEditor('html.get', true)
+            
+            Docs.update @_id,
+                $set: inspiration_transcript: html
+
+
+
+
+    Template.view_inspiration_course.onRendered ->
+        @autorun =>
+            if @subscriptionsReady()
+                Meteor.setTimeout ->
+                    $('.ui.accordion').accordion()
+                , 1000
+    
             
 
     Template.edit_inspiration_course.helpers

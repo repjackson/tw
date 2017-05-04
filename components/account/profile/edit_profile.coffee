@@ -86,11 +86,11 @@ if Meteor.isClient
     
         'click #save_profile': ->
             if Session.get 'enrolling_in', 'sol_demo' 
-                console.log 'enrolling'
                 user_id = FlowRouter.getParam('user_id')
                 Roles.addUsersToRoles user_id, 'sol_demo_member'
                 Meteor.users.update user_id,
                     $addToSet: courses: 'sW4accx4fvZBK6wLn'
+                Session.set 'enrolling_in', null
             FlowRouter.go "/profile/#{@_id}"
     
         "change input[type='file']": (e) ->

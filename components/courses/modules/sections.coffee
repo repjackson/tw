@@ -21,3 +21,4 @@ if Meteor.isClient
             
             Docs.update @_id,
                 $set: transcript: html
+                

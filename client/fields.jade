@@ -8,6 +8,12 @@ template(name='subtitle')
         .ui.basic.label Subtitle
         input#subtitle(type='text' value=subtitle)
 
+
+template(name='slug')
+    .ui.labeled.fluid.input
+        .ui.basic.label Slug
+        input#slug(type='text' value=slug placeholder='computer readable name, no spaces, caps or punctuation')
+
 template(name='number')
     .ui.labeled.input
         .ui.basic.label Number

@@ -2,20 +2,19 @@ template(name='project_management')
     .ui.container
         h2.ui.center.aligned.header Project Management
         #cloud.ui.basic.center.aligned.segment.container
-            #add.ui.circular.icon.basic.button
+            #add.ui.icon.basic.button
                 i.plus.icon
             .ui.left.icon.large.input
                 i.search.icon
                 +inputAutocomplete settings=settings id="search" class="" autocomplete="off" 
-            if selected_tags
-                #clear_tags.ui.teal.icon.large.circular.button
+            if selected_admin_tags
+                #clear_tags.ui.active.icon.large.button
                     i.remove.icon
-                each selected_tags
-                    .unselect_tag.ui.teal.large.circular.button
+                each selected_admin_tags
+                    .unselect_tag.ui.active.large.button
                         strong #{this}
-            .ui.hidden.divider
             each admin_tags
-                .ui.circular.large.button.select_tag(class=cloud_tag_class) 
+                .ui.large.button.select_tag(class=cloud_tag_class) 
                     | #{this.name}
         .ui.centered.cards
                 each admin_docs
@@ -23,7 +22,7 @@ template(name='project_management')
 
 
 template(name='admin_doc_view')
-    .ui.card
+    .ui.card(class=project_card_class)
         .content
             .meta
                 each tags
@@ -45,5 +44,5 @@ template(name='admin_edit')
             .ui.hidden.divider
             .ui.hidden.divider
             .ui.center.aligned.basic.segment
-                a.ui.huge.teal.button(href="/admin/project_management") Save 
+                a.ui.huge.active.button(href="/admin/project_management") Save 
                 +delete_button
