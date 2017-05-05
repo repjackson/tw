@@ -1,6 +1,6 @@
 if Meteor.isClient
         
-    FlowRouter.route '/course/:course_id/sales', 
+    FlowRouter.route '/course/:slug/sales', 
         name: 'course_sale_page'
         action: (params) ->
             BlazeLayout.render 'layout',
@@ -12,19 +12,19 @@ if Meteor.isClient
     Template.course_sales.helpers
         in_sol: -> Roles.userIsInRole(Meteor.userId(), 'sol_member')
         in_demo: -> Roles.userIsInRole(Meteor.userId(), 'sol_demo_member')
-        course: -> Docs.findOne FlowRouter.getParam('course_id')
+        course: -> Docs.findOne slug:FlowRouter.getParam('slug')
 
 
     Template.course_sales.onCreated ->
-        @autorun -> Meteor.subscribe 'course', FlowRouter.getParam('course_id')
+        @autorun -> Meteor.subscribe 'course', FlowRouter.getParam('slug')
 
     Template.course_sales.events
         'click #sign_up_demo': ->
             if Meteor.user()
-                Roles.addUsersToRoles(Meteor.userId(), 'sol_demo_member')
+                Roles.addUsersToRoles(Meteor.userId(), 'sol_demo')
                 Meteor.users.update Meteor.userId(),
                     $addToSet:
-                        courses: FlowRouter.getParam 'course_id'
+                        courses: FlowRouter.getParam 'slug'
                 swal {
                     title: "Thank you, #{Meteor.user().name()}."
                     text: "You're now enrolled in the demo."
@@ -33,12 +33,13 @@ if Meteor.isClient
                     confirmButtonText: "Continue to Course",
                     closeOnConfirm: true
                 }, ->
-                    FlowRouter.go "/course/sW4accx4fvZBK6wLn/welcome"
+                    FlowRouter.go "/course/sol/welcome"
 
         
             else 
                 Session.set 'enrolling_in', 'sol_demo'
                 FlowRouter.go '/register-sol'
+                # FlowRouter.go '/sign-up'
         
         
         'click #unenroll': ->

@@ -87,9 +87,9 @@ if Meteor.isClient
         'click #save_profile': ->
             if Session.get 'enrolling_in', 'sol_demo' 
                 user_id = FlowRouter.getParam('user_id')
-                Roles.addUsersToRoles user_id, 'sol_demo_member'
+                Roles.addUsersToRoles user_id, 'sol_demo'
                 Meteor.users.update user_id,
-                    $addToSet: courses: 'sW4accx4fvZBK6wLn'
+                    $addToSet: courses: 'sol'
                 Session.set 'enrolling_in', null
             FlowRouter.go "/profile/#{@_id}"
     

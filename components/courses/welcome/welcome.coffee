@@ -114,7 +114,7 @@ if Meteor.isClient
             
     Template.view_terms_course.helpers
         has_agreed: ->
-            _.where(Meteor.user().agreements, {slug:@slug})
+            _.where(Meteor.user()?.agreements, {slug:@slug})
 
         agreed_date: ->
             if _.where(Meteor.user().agreements, {slug:@slug})
