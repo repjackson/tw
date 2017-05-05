@@ -53,7 +53,7 @@ template(name='course_modules')
     each modules
         if module_is_available
             .ui.segment
-                a(href="/course/#{course}/module/#{number}")
+                a(href="/course/#{course}/module/#{number}/section/1")
                     .ui.header  #{number}: #{title}
                     // .ui.teal.progress
                     //     .bar

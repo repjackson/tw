@@ -18,7 +18,9 @@ template(name='view_module')
                     .content
                         |!{description}
                     .ui.vertical.fluid.pointing.menu
-                        .header.item Sections
+                        if isInRole 'admin'
+                            a.item(href="/course/#{course.slug}/module/#{number}/debrief" class="{{isActiveRoute name='module_lightwork'}}") Debrief
+                        .item Sections
                         .menu
                             each module_sections
                                 a.item(href="/course/#{../course}/module/#{module_number}/section/#{number}" class=section_path_class)  #{number}: #{title}
@@ -35,25 +37,18 @@ template(name='view_module')
                     if isInRole 'admin'
                         .ui.dividing.header 
                             |Admin
-                        a.ui.fluid.basic.button(href="/course/#{course.slug}/module/#{number}/edit")
+                        a.ui.fluid.basic.button(href="/course/#{course_id}/module/#{_id}/edit")
                             i.red.configure.icon
                             |Edit Module
             .eleven.wide.column
                 +Template.dynamic template=module_content
 
-template(name='module_sections')
-    // #section_menu.ui.top.attached.stackable.tabular.menu
-    //     each sections
-    //         a.item(data-tab="tab#{number}") #{title}
-    // each sections
-    //     .ui.bottom.attached.tab.segment(data-tab='tab#{number}')
-    //         +view_section
 
 
 template(name='view_section')
     with section_doc
         // .ui.basic.segment
-        .ui.center.aligned.header Section #{number}: #{title}
+        .ui.header Section #{number}: #{title}
         |!{content}
         .ui.styled.fluid.accordion
             h3.title

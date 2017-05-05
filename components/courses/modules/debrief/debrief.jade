@@ -1,36 +1,10 @@
-template(name='collaboration')
-    +questions
-
-
-template(name='questions')
-    .ui.header Section Questions
-    .ui.action.fluid.input
-        input#new_question(type='text')
-        #add_question.ui.basic.button 
-            i.red.configure.icon
-            |Add Question
-    .ui.divided.segments
-        each questions
-            +question
-
-        
-
-
-template(name='question')
-    .ui.segment
-        h4.ui.header 
-            |Question: #{text}
-            if can_edit
-                i.remove_question.red.big.link.remove.icon
-
-                    
-template(name='view_questions')
+template(name='module_debrief')
     .ui.styled.fluid.accordion
-            .title
+            .active.title
                 i.big.help.icon
-                | Reflective Questions
+                | Lightwork Debrief Questions
             .content
-                each questions
+                each debrief_questions
                     .ui.segment(class=question_segment_class)
                         h4.ui.header #{text}
                         unless has_answered_question
@@ -52,7 +26,7 @@ template(name='view_questions')
                                 .remove_answer.ui.basic.button
                                     i.remove.red.link.icon
                                     | Delete
-            each questions
+            each debrief_questions
                 if has_answered_question
                     .title 
                         i.big.unlock.icon

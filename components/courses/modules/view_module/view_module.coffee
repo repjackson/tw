@@ -4,11 +4,6 @@ FlowRouter.route '/course/:slug/module/:module_number',
         BlazeLayout.render 'view_module',
             module_content: 'module_sections'
 
-# FlowRouter.route '/course/:slug/module/:module_number/', 
-#     name:'module_sections'
-#     action: (params) ->
-#         BlazeLayout.render 'view_module',
-#             module_content: 'module_sections'
 
 FlowRouter.route '/course/:slug/module/:module_number/section/:section_number', 
     name:'section'
@@ -22,9 +17,9 @@ FlowRouter.route '/course/:slug/module/:module_number/lightwork',
         BlazeLayout.render 'view_module',
             module_content: 'module_lightwork'
     
-FlowRouter.route '/course/:slug/module/:module_number/section/', 
+FlowRouter.route '/course/:slug/module/:module_number/', 
     triggersEnter: [ (context, redirect) ->
-        redirect "/course/#{context.params.slug}/module/#{context.params.slug}/section/1"
+        redirect "/course/#{context.params.slug}/module/#{context.params.module_number}/section/1"
     ]
     
 
@@ -35,22 +30,13 @@ if Meteor.isClient
     Template.view_module.onCreated ->
         @autorun -> Meteor.subscribe 'module', course=FlowRouter.getParam('slug'), module_number=parseInt FlowRouter.getParam('module_number')
     
-    Template.module_sections.onCreated ->
-        @autorun -> Meteor.subscribe 'module', course=FlowRouter.getParam('slug'), module_number=parseInt FlowRouter.getParam('module_number')
-    
-    Template.module_sections.onRendered ->
-        Meteor.setTimeout ->
-            $('#section_menu .item').tab()
-        , 1000
-    
-        Meteor.setTimeout ->
-            $.tab('change tab', 'tab1')
-            $('[data-tab~="tab1"]').addClass( "active" )
-        , 1500
-    
 
 
     Template.view_module.helpers
+    
+        is_first_module: ->
+            parseInt FlowRouter.getParam('module_number') is 1
+    
         module: -> 
             Docs.findOne 
                 number: parseInt FlowRouter.getParam('module_number')
@@ -67,35 +53,29 @@ if Meteor.isClient
             }, sort: number: 1
 
         section_path_class: ->
-            Tracker.autorun =>
-                section_path_class = ''
-                console.log @
-                FlowRouter.watchPathChange()
-                path = FlowRouter.current().path
-                module_number = parseInt FlowRouter.getParam('module_number')
-                # section_number = parseInt FlowRouter.getParam('section_number')
-                if path is "/course/sol/module/#{module_number}/section/#{@number}"
-                    console.log 'active', @number
-                    # console.log path
-                    section_path_class = 'active' 
-                else
-                    console.log 'not active', @number
-                    # console.log path
-                    section_path_class = '' 
-                console.log 'final path', section_path_class        
-                section_path_class
+            # Tracker.autorun =>
+            #     section_path_class = ''
+            #     # console.log @
+            #     FlowRouter.watchPathChange()
+            #     path = FlowRouter.current().path
+            #     module_number = parseInt FlowRouter.getParam('module_number')
+            #     # section_number = parseInt FlowRouter.getParam('section_number')
+            #     if path is "/course/sol/module/#{module_number}/section/#{@number}"
+            #         # console.log 'active', @number
+            #         # console.log path
+            #         section_path_class = 'active' 
+            #     else
+            #         # console.log 'not active', @number
+            #         # console.log path
+            #         section_path_class = '' 
+            #     # console.log 'final path', section_path_class        
+            #     return section_path_class
+            # return section_path_class
 
         # section_path_class2: ->
         #     "{{isActiveRoute '/course/#{../course}/module/#{module_number}/section/#{number}'}}"
 
 
-    Template.module_sections.helpers
-        sections: ->
-            Docs.find {
-                type: 'section'
-                module_number: parseInt FlowRouter.getParam('module_number')
-                lightwork: $ne: true
-            }, sort: number: 1
 
 
     Template.view_module.events
@@ -105,6 +85,9 @@ if Meteor.isClient
             FlowRouter.go "/course/#{slug}/module/#{module_number}/edit"
 
 
+    Template.view_section.onCreated ->
+        @autorun -> Meteor.subscribe 'section', course=FlowRouter.getParam('slug'), module_number=parseInt FlowRouter.getParam('module_number'), section_number=parseInt FlowRouter.getParam('section_number')
+    
 
 
     Template.view_section.onRendered ->
@@ -155,3 +138,6 @@ if Meteor.isServer
             type: 'section'
             lightwork: true
             module_number: module_id
+            
+            
+            

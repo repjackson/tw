@@ -21,4 +21,32 @@ if Meteor.isClient
             
             Docs.update @_id,
                 $set: transcript: html
+
+
+if Meteor.isServer    
+    publishComposite 'section', (course, module_number, section_number)->
+        {
+            find: ->
+                Docs.find 
+                    type: 'section'
+                    course: course
+                    module_number: module_number
+                    section_number
+            children: [
+                {
+                    find: (section) ->
+                        Docs.find
+                            section_id: section._id
+                            type: 'question'
+                    children: [
+                        {
+                            find: (question) ->
+                                Docs.find 
+                                    question_id: question._id
+                                    type: 'answer'
+                            }
+                        ]
+                    }
                 
+                ]
+        }
