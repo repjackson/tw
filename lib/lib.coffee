@@ -1,3 +1,41 @@
+@Tags = new Meteor.Collection 'tags'
+@People_tags = new Meteor.Collection 'people_tags'
+
+
+@Docs = new Meteor.Collection 'docs'
+
+Docs.before.insert (userId, doc)->
+    doc.timestamp = Date.now()
+    doc.author_id = Meteor.userId()
+    # doc.points = 0
+    # doc.upvoters = []
+    # doc.downvoters = []
+    # doc.published = false
+    return
+
+
+Docs.after.update ((userId, doc, fieldNames, modifier, options) ->
+    doc.tag_count = doc.tags?.length
+), fetchPrevious: true
+
+
+
+Docs.helpers
+    author: -> Meteor.users.findOne @author_id
+    when: -> moment(@timestamp).fromNow()
+    parent_doc: -> Docs.findOne @parent_id
+
+
+
+Meteor.methods
+    add: (tags=[])->
+        id = Docs.insert {}
+        return id
+
+
+
+
+
 FlowRouter.route '/sol',
   triggersEnter: [ (context, redirect) ->
     redirect '/course/sol'
