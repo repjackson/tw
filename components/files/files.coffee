@@ -1,11 +1,11 @@
 if Meteor.isClient
-    FlowRouter.route '/course/:course_id/module/:module_id/downloads', 
+    FlowRouter.route '/course/:slug/module/:module_id/downloads', 
         name: 'module_files'
         action: (params) ->
             BlazeLayout.render 'view_module',
                 module_content: 'module_files_page'
     
-    FlowRouter.route '/course/:course_id/downloads', 
+    FlowRouter.route '/course/:slug/downloads', 
         name: 'course_downloads'
         action: (params) ->
             BlazeLayout.render 'view_course',
@@ -39,10 +39,10 @@ if Meteor.isClient
     
     Template.course_files.helpers
         modules: ->
-            course_id = FlowRouter.getParam('course_id')
+            slug = FlowRouter.getParam('slug')
             Docs.find
                 type:'module'
-                course_id: course_id
+                course: slug
     
     Template.course_files.onRendered ->
         Meteor.setTimeout ->

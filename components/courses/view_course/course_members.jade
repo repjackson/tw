@@ -13,5 +13,30 @@ template(name='course_members')
                     // small [#{this.index}]
     .ui.centered.three.stackable.doubling.cards
         each course_members
-            +person
+            +course_member
             
+
+
+template(name='course_member')
+    .ui.card
+        .image
+            a(href="/profile/#{_id}")
+                img.ui.fluid.image(src="{{c.url profile.image_id width=400 height=400 gravity='face' crop='fill'}}")
+        .content
+            .header
+                a(href="/profile/#{_id}")
+                    if profile.first_name
+                        | #{profile.first_name}
+                    if profile.last_name
+                        | #{profile.last_name}
+                    else    
+                        | #{username}
+            if profile.location
+                .meta
+                    | #{profile.location}
+        .extra.content
+            +color_dots
+        .extra.content
+            each five_tags
+                .ui.compact.tiny.compact.basic.button.user_tag(class=user_tag_class) #{this}
+

@@ -1,5 +1,5 @@
 if Meteor.isClient
-    FlowRouter.route '/course/:course_slug/members', 
+    FlowRouter.route '/course/:slug/members', 
         name: 'course_members'
         action: (params) ->
             BlazeLayout.render 'view_course',
@@ -9,8 +9,8 @@ if Meteor.isClient
                 
     
     Template.course_members.onCreated ->
-        @autorun -> Meteor.subscribe 'sol_members', FlowRouter.getParam('course_slug'), selected_course_member_tags.array()
-        @autorun -> Meteor.subscribe 'course_member_tags', FlowRouter.getParam('course_slug'), selected_course_member_tags.array()
+        @autorun -> Meteor.subscribe 'sol_members', FlowRouter.getParam('slug'), selected_course_member_tags.array()
+        @autorun -> Meteor.subscribe 'course_member_tags', FlowRouter.getParam('slug'), selected_course_member_tags.array()
         
     Template.course_members.helpers
         course_member_tags: ->
@@ -45,13 +45,25 @@ if Meteor.isClient
 
 
 
+
+
+    Template.course_member.events
+        'click .user_tag': ->
+            if @valueOf() in selected_course_member_tags.array() then selected_course_member_tags.remove @valueOf() else selected_course_member_tags.push @valueOf()
+
+    Template.course_member.helpers
+        five_tags: -> if @tags then @tags[..4]
+    
+
+
+
 if Meteor.isServer
-    Meteor.publish 'sol_members', (course_slug, selected_course_member_tags) ->
+    Meteor.publish 'sol_members', (slug, selected_course_member_tags) ->
         match = {}
         if selected_course_member_tags.length > 0 then match.tags = $all: selected_course_member_tags
         match._id = $ne: @userId
         match["profile.published"] = true
-        match.courses = $in: [course_slug]
+        match.courses = $in: [slug]
         
         Meteor.users.find match
 
@@ -61,13 +73,13 @@ if Meteor.isServer
         #     # roles: $in: ['sol_member', 'sol_demo_member']
             
             
-    Meteor.publish 'course_member_tags', (course_slug, selected_course_member_tags)->
+    Meteor.publish 'course_member_tags', (slug, selected_course_member_tags)->
         self = @
         match = {}
         if selected_course_member_tags.length > 0 then match.tags = $all: selected_course_member_tags
         match._id = $ne: @userId
         # match["profile.published"] = true
-        match.courses = $in: [course_slug]
+        match.courses = $in: [slug]
 
         # console.log match
 
