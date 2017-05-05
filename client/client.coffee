@@ -66,15 +66,15 @@ Tracker.autorun ->
 
 
 
-Template.staus_indicator.helpers
-    labelClass: ->
-        if @status?.idle
-            'yellow'
-        else if @status?.online
-            'green'
-        else
-            'basic'
+# Template.staus_indicator.helpers
+#     labelClass: ->
+#         if @status?.idle
+#             'yellow'
+#         else if @status?.online
+#             'green'
+#         else
+#             'basic'
 
-    online: ->  @status?.online
+#     online: ->  @status?.online
     
-    idle: ->  @status?.idle
+#     idle: ->  @status?.idle

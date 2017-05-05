@@ -25,6 +25,16 @@ FlowRouter.route '/about', action: (params) ->
 
 
 
+Meteor.users.helpers
+    course_ob: -> 
+        Docs.find
+            type: 'course'
+            _id: $in: @courses
+
+
+
+
+
 
 Meteor.users.helpers
     name: -> 

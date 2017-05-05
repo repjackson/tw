@@ -1,5 +1,5 @@
 head
-    title Tori Webster
+    title Tori Webster Inspires
     meta(name='viewport', content='user-scalable=no, initial-scale=1.0, maximum-scale=1.0, width=device-width')
     meta(name='apple-mobile-web-app-capable', content='yes')
     meta(name='apple-mobile-web-app-status-bar-style', content='white')
@@ -12,7 +12,8 @@ head
     link(rel="mask-icon", href="/safari-pinned-tab.svg", color="#5bbad5")
     meta(name="theme-color", content="#ffffff")
 
-    <script type='text/javascript' data-cfasync='false'>window.purechatApi = { l: [], t: [], on: function () { this.l.push(arguments); } }; (function () { var done = false; var script = document.createElement('script'); script.async = true; script.type = 'text/javascript'; script.src = 'https://app.purechat.com/VisitorWidget/WidgetScript'; document.getElementsByTagName('HEAD').item(0).appendChild(script); script.onreadystatechange = script.onload = function (e) { if (!done && (!this.readyState || this.readyState == 'loaded' || this.readyState == 'complete')) { var w = new PCWidget({c: 'cd1f4a84-e7c9-416f-b521-e4eeda628ea4', f: true }); done = true; } }; })();</script>
+    // script(type='text/javascript', data-cfasync='false').
+    //     window.purechatApi = { l: [], t: [], on: function () { this.l.push(arguments); } }; (function () { var done = false; var script = document.createElement('script'); script.async = true; script.type = 'text/javascript'; script.src = 'https://app.purechat.com/VisitorWidget/WidgetScript'; document.getElementsByTagName('HEAD').item(0).appendChild(script); script.onreadystatechange = script.onload = function (e) { if (!done && (!this.readyState || this.readyState == 'loaded' || this.readyState == 'complete')) { var w = new PCWidget({c: 'cd1f4a84-e7c9-416f-b521-e4eeda628ea4', f: true }); done = true; } }; })();
 
     // LayerSlider stylesheet
     link(rel='stylesheet', href='/layerslider/css/layerslider.css', type='text/css')
@@ -24,36 +25,36 @@ head
     script(src='/layerslider/js/layerslider.kreaturamedia.jquery.js', type='text/javascript')
 
 
-body
-    .ui.sidebar.imverted.vertical.menu
-        a.item.toggle_sidebar(href='/' class="{{isActivePath '/'}}")
-            .imogen Tori Webster
-        a.item.toggle_sidebar(href='/about' class="{{isActivePath '/about'}}") About
-        a.icon.item.toggle_sidebar(href='/courses' class="{{isActivePath '/courses'}}") Courses
-        a.item.toggle_sidebar(href='/lightbank' class="{{isActivePath '/lightbank'}}") Lightbank
-        a.item.toggle_sidebar(href='/contact' class="{{isActivePath '/contact'}}") Contact
-        if currentUser
-            // a.icon.item.toggle_sidebar(href='/cart' class="{{isActivePath '/cart'}}") 
-            //     i.cart.icon
-            // a.icon.item.toggle_sidebar(href='/users' class="{{isActivePath '/users'}}") 
-            //     i.users.icon
-            if isInRole 'admin'
-                a.item.toggle_sidebar(href='/admin/members' class="{{isActivePath '/admin/members'}}")
-                    i.configure.icon
-                    | Admin
-            a.item.toggle_sidebar(href="/profile/#{currentUser._id}" class="{{isActivePath '/profile/#{currentUser._id}'}}")
-                if currentUser.profile.image_id
-                    img.ui.avatar.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
-                else
-                    i.user.icon
-                | #{currentUser.username}
-            a#logout.ui.item.toggle_sidebar(href='#')
-                i.sign.out.icon
-                | Sign Out
-        else
-            a.ui.item.toggle_sidebar(href='/sign-in') 
-                i.sign.in.icon
-                | Sign In
+// body
+//     .ui.sidebar.imverted.vertical.menu
+//         a.item.toggle_sidebar(href='/' class="{{isActivePath '/'}}")
+//             .imogen Tori Webster
+//         a.item.toggle_sidebar(href='/about' class="{{isActivePath '/about'}}") About
+//         a.icon.item.toggle_sidebar(href='/courses' class="{{isActivePath '/courses'}}") Courses
+//         a.item.toggle_sidebar(href='/lightbank' class="{{isActivePath '/lightbank'}}") Lightbank
+//         a.item.toggle_sidebar(href='/contact' class="{{isActivePath '/contact'}}") Contact
+//         if currentUser
+//             // a.icon.item.toggle_sidebar(href='/cart' class="{{isActivePath '/cart'}}") 
+//             //     i.cart.icon
+//             // a.icon.item.toggle_sidebar(href='/users' class="{{isActivePath '/users'}}") 
+//             //     i.users.icon
+//             if isInRole 'admin'
+//                 a.item.toggle_sidebar(href='/admin/members' class="{{isActivePath '/admin/members'}}")
+//                     i.configure.icon
+//                     | Admin
+//             a.item.toggle_sidebar(href="/profile/#{currentUser._id}" class="{{isActivePath '/profile/#{currentUser._id}'}}")
+//                 if currentUser.profile.image_id
+//                     img.ui.avatar.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+//                 else
+//                     i.user.icon
+//                 | #{currentUser.username}
+//             a#logout.ui.item.toggle_sidebar(href='#')
+//                 i.sign.out.icon
+//                 | Sign Out
+//         else
+//             a.ui.item.toggle_sidebar(href='/sign-in') 
+//                 i.sign.in.icon
+//                 | Sign In
 
 
 
@@ -76,11 +77,11 @@ template(name='not_found')
         .ui.center.aligned.header Page Not Found
         
         
-template(name='staus_indicator')
-    .ui.label(class='{{labelClass}}') 
-        if online 
-            |Online
-        else if idle
-            |Idle
-        else 
-            |Offline
+// template(name='staus_indicator')
+//     .ui.label(class='{{labelClass}}') 
+//         if online 
+//             |Online
+//         else if idle
+//             |Idle
+//         else 
+//             |Offline

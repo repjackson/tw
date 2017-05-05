@@ -52,7 +52,7 @@ if Meteor.isClient
 
             }, sort: number: 1
 
-        section_path_class: ->
+        # section_path_class: ->
             # Tracker.autorun =>
             #     section_path_class = ''
             #     # console.log @
@@ -75,7 +75,11 @@ if Meteor.isClient
         # section_path_class2: ->
         #     "{{isActiveRoute '/course/#{../course}/module/#{module_number}/section/#{number}'}}"
 
+        section_path_class: ->
+            module_number = parseInt FlowRouter.getParam('module_number')
 
+            if @ is module_number then 'active' else ''
+            
 
 
     Template.view_module.events
