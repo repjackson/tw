@@ -28,7 +28,11 @@ template(name='edit_module')
                     each sections
                         .title
                             i.dropdown.icon
-                            | #{title}
+                            if lightwork
+                                i.idea.icon
+                            else
+                                | #{number}:
+                            |#{title}
                         .content
                             .ui.form
                                 +edit_section this

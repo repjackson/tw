@@ -1,10 +1,10 @@
-FlowRouter.route '/course/:course_id/module/:module_id/edit', action: (params) ->
+FlowRouter.route '/course/:slug/module/:module_number/edit', action: (params) ->
     BlazeLayout.render 'layout',
         main: 'edit_module'
 
 if Meteor.isClient
     Template.edit_module.onCreated ->
-        @autorun -> Meteor.subscribe 'module', FlowRouter.getParam('module_id')
+        @autorun -> Meteor.subscribe 'module', course=FlowRouter.getParam('slug'), module_number=parseInt FlowRouter.getParam('module_number')
     
     Template.edit_module.onRendered ->
         self = @
@@ -21,18 +21,25 @@ if Meteor.isClient
         
         
     Template.edit_module.helpers
-        module: -> Docs.findOne FlowRouter.getParam('module_id')
-        course: -> Docs.findOne FlowRouter.getParam('course_id')
+        module: -> 
+            module_number = parseInt FlowRouter.getParam('module_number')
+
+            Docs.findOne
+                type: 'module'
+                number: module_number
+        course: -> Docs.findOne slug:FlowRouter.getParam('slug')
         
         sections: ->
+            module_number = parseInt FlowRouter.getParam('module_number')
+
             Docs.find {
                 type: 'section'
-                module_id: FlowRouter.getParam('module_id')
+                module_number: module_number
             }, sort: number: 1
             
     Template.edit_module.events
         'click #save_module': ->
-            FlowRouter.go "/module/#{module_id}"        
+            FlowRouter.go "/course/sol/module/#{module_number}"        
     
     
         'click #delete': ->
@@ -47,16 +54,22 @@ if Meteor.isClient
                 confirmButtonText: 'Delete'
                 confirmButtonColor: '#da5347'
             }, ->
-                module = Modules.findOne FlowRouter.getParam('module_id')
+                module = 
+                    Docs.findOne 
+                        type: 'module'
+                        number:FlowRouter.getParam('module_number')
                 Docs.remove module._id, ->
-                    FlowRouter.go "/course/#{course_id}"
+                    FlowRouter.go "/course/#{slug}"
                     
         'click #add_section': ->
-            module_id = FlowRouter.getParam('module_id')
+            module_number = parseInt FlowRouter.getParam('module_number')
             
-            module = Docs.findOne module_id
+            module =
+                Docs.findOne 
+                    type: 'module'
+                    number:module_number
             
-            Docs.update module_id,
+            Docs.update module_number,
                 $inc: section_count: 1
                 , ->
                     section_number = module.section_count + 1
@@ -64,7 +77,7 @@ if Meteor.isClient
                     Docs.insert
                         type: 'section'
                         number: section_number
-                        module_id: module_id
+                        module_number: module_number
                         lightwork:false
 
                     $('.tabular.menu .item').tab()
