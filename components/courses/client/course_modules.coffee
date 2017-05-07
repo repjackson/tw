@@ -7,7 +7,7 @@ FlowRouter.route '/course/:slug/modules',
 
 
 Template.course_modules.helpers
-    modules: -> Docs.find {type: 'module' }, sort: number: 1
+    modules: -> Courses.find {type: 'module' }, sort: number: 1
         
     module_is_available: ->
         # if 'sol_demo' in Meteor.user().courses  or 'sol_demo' in Meteor.user().roles and @number < 2

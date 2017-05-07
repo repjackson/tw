@@ -1,0 +1,68 @@
+template(name='courses')
+    .ui.text.container
+        h1.ui.center.aligned.header Courses
+        .ui.two.item.teal.menu
+            a#set_mode_to_all.item(class=all_item_class) All
+            a#set_mode_to_mine.item(class=mine_item_class) My Courses
+        h4.ui.center.aligned.header I design courses online to spread light farther than the eye can see. People all around the world are looking for hope, inspiration, and guidance in their personal and professional lives. Explore the courses below to see what best fits your needs.
+        .ui.hidden.divider
+        if isInRole 'admin'
+            #add_course.ui.basic.button 
+                i.red.configure.icon
+                |Add Course
+        .ui.divided.items
+            each courses
+                .item
+                    .image
+                        a(href="/course/#{slug}") 
+                            img.ui.image(src="{{c.url image_id }}")
+                    .content
+                        a.header(href="/course/#{slug}") 
+                            |#{title}
+                            // if in_course
+                            //     .ui.basic.green.label Enrolled
+                        .description #{subtitle}
+                        .extra
+                            if published
+                                #unpublish.ui.green.basic.label
+                                    |Published
+                            else
+                                #publish.ui.basic.label
+                                    |Unpublished
+
+                            a(href='/course/#{_id}/edit') Edit Course
+                            a.ui.right.floated.red.button(href="/course/#{slug}") 
+                                |View
+                                i.right.chevron.icon
+            if isInRole 'admin'
+                .ui.dividing.header 
+                    i.red.configure.icon
+                    |Unpublished Courses
+                each unpublished_courses
+                    .item
+                        .image
+                            a(href="/course/#{slug}") 
+                                img.ui.image(src="{{c.url image_id }}")
+                        .content
+                            a.header(href="/course/#{slug}") 
+                                |#{title}
+                                // if in_course
+                                //     .ui.basic.green.label Enrolled
+                            .description #{subtitle}
+                            .extra
+                                // if in_course
+                                //     .ui.right.floated.primary.button(href="/course/#{slug}")
+                                //         |Dashboard
+                                //         i.dashboard.icon
+                                // else
+                                if published
+                                    #unpublish.ui.green.basic.label
+                                        |Published
+                                else
+                                    #publish.ui.basic.label
+                                        |Unpublished
+
+                                a(href='/course/#{_id}/edit') Edit Course
+                                a.ui.right.floated.primary.button(href="/course/#{slug}") 
+                                    |View
+                                    i.right.chevron.icon

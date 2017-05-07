@@ -13,7 +13,7 @@
 FlowRouter.route '/course/:slug', 
     name: 'course_home'
     triggersEnter: [ (context, redirect) ->
-        if Meteor.user() and Meteor.user().courses and 'sol' in Meteor.user().courses
+        if Meteor.user() and Meteor.user().courses and context.params.slug in Meteor.user().courses
             redirect "/course/#{context.params.slug}/welcome"
         else 
             redirect "/course/#{context.params.slug}/sales"
@@ -38,12 +38,11 @@ FlowRouter.route '/register-sol',
 
 
 Template.view_course.onCreated ->
-    @autorun -> Meteor.subscribe 'course', FlowRouter.getParam('slug')
+    @autorun -> Meteor.subscribe 'course_by_slug', FlowRouter.getParam('slug')
 
 Template.view_course.helpers
     course: -> 
-        Docs.findOne
-            type: 'course'
+        Courses.findOne
             slug: FlowRouter.getParam('slug')
     
 
@@ -52,8 +51,7 @@ Template.view_course.helpers
 Template.view_course.events
     'click #add_module': ->
         slug = FlowRouter.getParam('slug')
-        new_module_id = Docs.insert
-            type: 'module'
-            course:slug 
+        new_module_id = Modules.insert
+            parent_course_slug:slug 
         FlowRouter.go "/course/#{slug}/module/#{new_module_id}/edit"
             

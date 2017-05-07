@@ -6,11 +6,14 @@ FlowRouter.route '/courses', action: (params) ->
 Template.courses.onCreated -> 
     @autorun => Meteor.subscribe('courses', view_mode=Session.get('view_mode'))
 
+
 Template.courses.helpers
     courses: -> 
-        Docs.find
-            type: 'course'
+        Courses.find
             published: true
+    unpublished_courses: -> 
+        Courses.find
+            published: false
 
     all_item_class: -> if Session.equals 'view_mode', 'all' then 'active' else ''
     mine_item_class: -> 
@@ -20,10 +23,9 @@ Template.courses.helpers
             'disabled'
 Template.courses.events
     'click #add_course': ->
-        id = Docs.insert
-            type: 'course'
+        id = Courses.insert
             published: false
-        FlowRouter.go "/edit/#{id}"
+        FlowRouter.go "/course/#{id}/edit"
         
     'click #set_mode_to_all': -> 
         if Meteor.userId() then Session.set 'view_mode', 'all'

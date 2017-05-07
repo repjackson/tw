@@ -7,10 +7,10 @@ FlowRouter.route '/course/:slug/welcome',
 
 
 Template.course_welcome.onCreated ->
-    @autorun -> Meteor.subscribe 'course', FlowRouter.getParam('slug')
+    @autorun -> Meteor.subscribe 'course_by_slug', FlowRouter.getParam('slug')
 
 Template.course_welcome.helpers
-    course: -> Docs.findOne slug: FlowRouter.getParam('slug')
+    course: -> Courses.findOne slug: FlowRouter.getParam('slug')
 
 
 Template.course_welcome.onRendered ->
@@ -21,11 +21,10 @@ Template.course_welcome.onRendered ->
 
 Template.edit_welcome_course.helpers
     course: -> 
-        Docs.findOne 
+        Courses.findOne 
             slug: FlowRouter.getParam('slug')
-            type: 'course'
     course_welcome_context: ->
-        @current_doc = Docs.findOne slug: FlowRouter.getParam('slug')
+        @current_doc = Courses.findOne slug: FlowRouter.getParam('slug')
         self = @
         {
             _value: self.current_doc.course_welcome_content
@@ -42,7 +41,7 @@ Template.edit_welcome_course.events
     'blur .froala-container': (e,t)->
         html = t.$('div.froala-reactive-meteorized-override').froalaEditor('html.get', true)
         
-        Docs.update @_id,
+        Courses.update @_id,
             $set: course_welcome_content: html
             
     'click #save_welcome_content': ->
@@ -53,7 +52,7 @@ Template.edit_welcome_course.events
 
 Template.welcome_transcript.helpers
     transcript: ->
-        @current_doc = Docs.findOne @_id
+        @current_doc = Courses.findOne @_id
         self = @
         {
             _value: self.current_doc.welcome_transcript
@@ -71,7 +70,7 @@ Template.welcome_transcript.events
     'blur .transcript': (e,t)->
         html = t.$('div.froala-reactive-meteorized-override').froalaEditor('html.get', true)
         
-        Docs.update @_id,
+        Courses.update @_id,
             $set: welcome_transcript: html
 
 
@@ -93,10 +92,10 @@ Template.view_welcome_course.events
 
 
 Template.edit_terms_course.helpers
-    course: -> Docs.findOne slug: FlowRouter.getParam('slug')
+    course: -> Courses.findOne slug: FlowRouter.getParam('slug')
     
     course_terms_context: ->
-        @current_doc = Docs.findOne slug: FlowRouter.getParam('slug')
+        @current_doc = Courses.findOne slug: FlowRouter.getParam('slug')
         self = @
         {
             _value: self.current_doc.course_terms_content
@@ -111,11 +110,11 @@ Template.edit_terms_course.helpers
         
 Template.view_terms_course.helpers
     has_agreed: ->
-        _.where(Meteor.user()?.agreements, {slug:@slug})
+        _.where(@agreements, user_id: Meteor.userId() )
 
     agreed_date: ->
-        if _.where(Meteor.user().agreements, {slug:@slug})
-            agreement = _.where(Meteor.user().agreements, {slug:@slug})
+        if _.where(@agreements, user_id: Meteor.userId())
+            agreement = _.where(@agreements, user_id: Meteor.userId())
             moment(agreement.date_signed).format("dddd, MMMM Do, h:mm a")
 
 Template.edit_terms_course.events
@@ -124,7 +123,7 @@ Template.edit_terms_course.events
         
         slug = FlowRouter.getParam('slug')
 
-        Docs.update slug: slug,
+        Courses.update slug: slug,
             $set: course_terms_content: html
             
     'click #save_terms_content': ->
@@ -147,24 +146,24 @@ Template.view_terms_course.events
             confirmButtonText: 'Agree'
             # confirmButtonColor: '#da5347'
         }, =>
-            Meteor.users.update Meteor.userId(),
+            Courses.update @_id,
                 $addToSet: 
                     agreements: 
-                        course: self.slug
                         user_id: Meteor.userId()
                         date_signed: new Date()
     
     'click #remove_agreement': ->
-        Meteor.users.update Meteor.userId(),
+        Courses.update @_id,
             $pull: 
-                agreements: course: @slug
+                agreements: 
+                    user_id: Meteor.userId()
         
         
         
         
 Template.inspiration_transcript.helpers
     transcript: ->
-        @current_doc = Docs.findOne @_id
+        @current_doc = Courses.findOne @_id
         self = @
         {
             _value: self.current_doc.inspiration_transcript
@@ -182,7 +181,7 @@ Template.inspiration_transcript.events
     'blur .transcript': (e,t)->
         html = t.$('div.froala-reactive-meteorized-override').froalaEditor('html.get', true)
         
-        Docs.update @_id,
+        Courses.update @_id,
             $set: inspiration_transcript: html
 
 
@@ -198,10 +197,10 @@ Template.view_inspiration_course.onRendered ->
         
 
 Template.edit_inspiration_course.helpers
-    course: -> Docs.findOne slug: FlowRouter.getParam('slug')
+    course: -> Courses.findOne slug: FlowRouter.getParam('slug')
     
     course_inspiration_context: ->
-        @current_doc = Docs.findOne slug: FlowRouter.getParam('slug')
+        @current_doc = Courses.findOne slug: FlowRouter.getParam('slug')
         self = @
         {
             _value: self.current_doc.course_inspiration_content
@@ -218,7 +217,7 @@ Template.edit_inspiration_course.events
     'blur .froala-container': (e,t)->
         html = t.$('div.froala-reactive-meteorized-override').froalaEditor('html.get', true)
         
-        Docs.update @_id,
+        Courses.update @_id,
             $set: course_inspiration_content: html
             
     'click #save_inspiration_content': ->
