@@ -1,0 +1,16 @@
+template(name='edit_file')
+    .ui.segment
+        .ui.form
+            .field
+                label Title
+                input#title(type='text' value=title)
+            .field
+                label Description
+                textarea#description(rows='5') #{description}
+            .field
+                label Link (include http://)
+                input#link(type='text' value=link)
+        .ui.center.aligned.basic.segment
+            #save_file.ui.teal.button Save #{title} File
+            #delete_file.ui.red.icon.button
+                i.remove.icon

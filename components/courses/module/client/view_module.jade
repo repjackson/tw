@@ -1,0 +1,75 @@
+template(name='view_module')
+    +nav
+    .ui.container
+        .ui.breadcrumb
+            a.section(href='/') Home
+            .divider  / 
+            a.section(href='/courses') Courses
+            .divider  / 
+            a.section(href="/course/#{course.slug}") #{course.title}
+            .divider  / 
+            a.section(href="/course/#{course.slug}/modules") Modules
+            .divider  / 
+            .active.section #{module.number}: #{module.title}
+        h2.ui.header Module #{module.number}: #{module.title}
+        .ui.stackable.grid
+            .five.wide.column
+                with module
+                    .content
+                        |!{description}
+                    .ui.vertical.fluid.pointing.menu
+                        if isInRole 'admin'
+                            a.item(href="/course/#{course.slug}/module/#{number}/debrief" class="{{isActiveRoute name='module_lightwork'}}") Debrief
+                        .item Sections
+                        .menu
+                            each module_sections
+                                a.item(href="/course/#{../course}/module/#{module_number}/section/#{number}" class=section_path_class)  #{number}: #{title}
+                        a.item(href="/course/#{course.slug}/module/#{number}/lightwork" class="{{isActiveRoute name='module_lightwork'}}") Lightwork
+                        a.item(href="/course/#{course.slug}/module/#{number}/downloads" class="{{isActiveRoute name='module_downloads'}}") Downloads
+                    .ui.dividing.header Status
+                    if complete
+                        .ui.teal.fluid.label 
+                            i.check.icon
+                            |Complete
+                    else
+                        .ui.teal.basic.fluid.label 
+                            |Incomplete
+                    if isInRole 'admin'
+                        .ui.dividing.header 
+                            |Admin
+                        a.ui.fluid.basic.button(href="/course/sol/module/#{_id}/edit")
+                            i.red.configure.icon
+                            |Edit Module
+            .eleven.wide.column
+                +Template.dynamic template=module_content
+
+
+
+template(name='view_section')
+    with section_doc
+        // .ui.basic.segment
+        .ui.header Section #{number}: #{title}
+        |!{content}
+        .ui.styled.fluid.accordion
+            h3.title
+                i.large.newspaper.icon
+                | Transcript
+            .content
+                |!{transcript}
+        .ui.hidden.divider
+        +view_questions
+            
+template(name='module_lightwork')
+    with lightwork_doc
+        // .ui.basic.segment
+        .ui.center.aligned.header #{title}
+        |!{section_content}
+        .ui.styled.fluid.accordion
+            h3.title
+                i.large.newspaper.icon
+                | Transcript
+            .content
+                |!{transcript}
+        .ui.hidden.divider
+        +view_questions
+            

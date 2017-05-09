@@ -1,0 +1,29 @@
+template(name='course_sales')
+    with course
+        .ui.text.container
+            if isInRole 'admin'
+                a.ui.basic.button(href="/course/#{slug}/welcome")
+                    i.red.configure.icon
+                    |#{title} Admin
+            if image_id
+                img.ui.centered.image(src="{{c.url image_id }}")
+            // h1.ui.center.aigned.header #{title}
+            h3.ui.center.aigned.header #{subtitle}
+            .ui.basic.segment 
+                |!{description}
+            .ui.centered.stackable.grid
+                .four.wide.column
+                    a.ui.teal.button(href='http://toriwebster.us11.list-manage.com/subscribe?u=8973e01aca6da499e7e1a63bd&id=9204d04e30')
+                        |Sign Up for the SOL Newsletter
+                .four.wide.column
+                    if in_demo
+                        .ui.disabled.teal.button Signed Up for Demo
+                        // if isInRole 'admin'
+                        //     #unenroll.ui.red.basic.button Unenroll from demo
+                    else
+                        #sign_up_demo.ui.teal.button
+                            |Sign Up for the Demo
+                        // span Demo available Monday, May 1
+                        
+                .four.wide.column
+                    +add_to_cart

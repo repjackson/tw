@@ -1,0 +1,11 @@
+template(name='course_files')
+    .ui.text.container
+        h1.ui.center.aligned.header Courses Files
+        #course_modules_files_menu.ui.top.attached.tabular.menu
+            each modules
+                a.item(data-tab="tab#{number}") #{number}
+        each modules
+            .ui.bottom.attached.tab.segment(data-tab='tab#{number}')
+                +module_files this
+            
+            
