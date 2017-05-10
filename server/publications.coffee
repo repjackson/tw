@@ -227,15 +227,15 @@ Meteor.publish 'people_tags', (selected_people_tags)->
         
 
 
-publishComposite 'transactions', ->
-    {
-        find: ->
-            Docs.find
-                type: 'transaction'
-                author_id: @userId            
-        children: [
-            { find: (transaction) ->
-                Docs.find transaction.parent_id
-                }
-            ]    
-    }
+# publishComposite 'transactions', ->
+#     {
+#         find: ->
+#             Docs.find
+#                 type: 'transaction'
+#                 author_id: @userId            
+#         children: [
+#             { find: (transaction) ->
+#                 Docs.find transaction.parent_id
+#                 }
+#             ]    
+#     }

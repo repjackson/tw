@@ -4,6 +4,7 @@ FlowRouter.route '/course/:course_slug/module/:module_id/edit', action: (params)
 
 Template.edit_module.onCreated ->
     @autorun -> Meteor.subscribe 'module', FlowRouter.getParam('module_id')
+    @autorun -> Meteor.subscribe 'course_by_slug', FlowRouter.getParam('course_slug')
 
 Template.edit_module.onRendered ->
     self = @
@@ -26,15 +27,15 @@ Template.edit_module.helpers
     
     course: -> 
         
-        Courses.findOne slug:FlowRouter.getParam('slug')
+        Courses.findOne slug:FlowRouter.getParam('course_slug')
     
-    sections: ->
-        module_number = parseInt FlowRouter.getParam('module_id')
+    # sections: ->
+    #     module_number = parseInt FlowRouter.getParam('module_id')
 
-        Docs.find {
-            type: 'section'
-            module_number: module_number
-        }, sort: number: 1
+    #     Docs.find {
+    #         type: 'section'
+    #         module_number: module_number
+    #     }, sort: number: 1
         
 Template.edit_module.events
     'click #save_module': ->

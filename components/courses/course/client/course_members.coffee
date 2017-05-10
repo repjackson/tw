@@ -1,4 +1,4 @@
-FlowRouter.route '/course/:slug/members', 
+FlowRouter.route '/course/:course_slug/members', 
     name: 'course_members'
     action: (params) ->
         BlazeLayout.render 'view_course',
@@ -8,8 +8,8 @@ FlowRouter.route '/course/:slug/members',
             
 
 Template.course_members.onCreated ->
-    @autorun -> Meteor.subscribe 'sol_members', FlowRouter.getParam('slug'), selected_course_member_tags.array()
-    @autorun -> Meteor.subscribe 'course_member_tags', FlowRouter.getParam('slug'), selected_course_member_tags.array()
+    @autorun -> Meteor.subscribe 'sol_members', FlowRouter.getParam('course_slug'), selected_course_member_tags.array()
+    @autorun -> Meteor.subscribe 'course_member_tags', FlowRouter.getParam('course_slug'), selected_course_member_tags.array()
     
 Template.course_members.helpers
     course_member_tags: ->

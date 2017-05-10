@@ -1,0 +1,37 @@
+template(name='doc_debrief')
+    .ui.header Lightwork Debrief Questions
+    #add_debrief_question.ui.basic.button Add Debrief Question
+    .ui.dividing.header Admin view
+    each debrief_questions
+        +thing
+    .ui.dividing.header User View
+    each debrief_questions
+        .ui.header #{body}
+        unless has_answered_question
+            .add_debrief_answer.ui.basic.button 
+                i.plus.icon
+                |Add Answer
+        +answers
+        
+template(name='answers')
+    each answers
+        .ui.segment
+            if is_author
+                if is_editing
+                    .ui.form
+                        .field
+                            label Answer
+                            input#body(type='text' value=body)
+                else
+                    h4 #{body}
+                .ui.divider
+                if can_edit
+                    .ui.basic.compact.segment
+                        +published
+                        // .toggle_published.ui.slider.checkbox
+                        //     input(type='checkbox' name='publish_answer' checked=published)
+                        //     label Publish Answer
+                        // i.help.circle.outline.large.icon(data-content="By making this answer public other SOL participants can see it, relate, and collaborate.")
+                    .ui.hidden.fitted.divider
+                    +edit_button
+                    +delete_button

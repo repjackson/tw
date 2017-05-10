@@ -7,10 +7,10 @@ template(name='course_sales')
                     |#{title} Admin
             if image_id
                 img.ui.centered.image(src="{{c.url image_id }}")
-            // h1.ui.center.aigned.header #{title}
-            h3.ui.center.aigned.header #{subtitle}
-            .ui.basic.segment 
-                |!{description}
+            // +doc tags='sol,logo' classes='ui centered image'
+            +doc tags='sol,subtitle' classes='ui center aligned header'
+            +doc tags='sol,sales' classes=''
+            
             .ui.centered.stackable.grid
                 .four.wide.column
                     a.ui.teal.button(href='http://toriwebster.us11.list-manage.com/subscribe?u=8973e01aca6da499e7e1a63bd&id=9204d04e30')

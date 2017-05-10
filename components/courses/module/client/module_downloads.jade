@@ -1,4 +1,4 @@
-template(name='module_files_page')
+template(name='module_downloads')
     with module_ob
         +module_files this
     
@@ -6,7 +6,7 @@ template(name='module_files_page')
 template(name='module_files')
     .ui.center.aligned.header #{title} Downloads
     if isInRole 'admin'
-        unless $.Session.get is_editing
+        unless $.Session.get 'is_editing'
             #add_file.ui.basic.button 
                 i.red.configure.icon
                 |Add #{title} File

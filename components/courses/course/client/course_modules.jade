@@ -1,0 +1,40 @@
+template(name='course_modules')        
+    h2.ui.center.aligned.header Modules
+    if isInRole 'admin'
+        #add_sol_module.ui.button Add Module
+    each sol_modules
+        .ui.segment
+            .ui.header #{title}
+            |!{content}
+            each tags
+                .ui.basic.label #{this}
+    
+    
+    
+    
+    
+    
+    // old modules
+        each modules
+            if module_is_available
+                .ui.segment
+                    a(href="/course/#{parent_course_slug}/module/#{number}/section/1")
+                        .ui.header  #{number}: #{title}
+                        // .ui.teal.progress
+                        //     .bar
+                        //     .progress
+                        //     .label Coursework
+                        // if sol_demo_member
+                        //     i.lock.icon
+                        // else    
+                        //     i.lock.icon
+            else
+                .ui.disabled.segment
+                    // a(href="/course/#{course}/module/#{number}")
+                    .ui.header  #{number}: #{title}
+                        // .ui.teal.progress
+                        //     .bar
+                        //     .progress
+                        //     .label Coursework
+                    // i.lock.icon
+                

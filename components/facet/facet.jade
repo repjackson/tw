@@ -1,0 +1,76 @@
+template(name='facet')
+    .ui.container
+        .ui.header Courses
+        +doc_content tags='courses,page,blurb'
+        
+        +doc_content tags='course,sol,logo'
+    
+        +doc_body tags='sol,subtitle' classes='ui center aligned header'
+
+    
+template(name='doc_content')
+    if doc
+        with doc
+            if is_editing
+                +edit_content
+            else
+                span(class=doc_classes)
+                    |!{content}
+                    i.edit_content.pencil.link.icon(title=tags)
+    else
+        if isInRole 'admin'
+            .ui.header No Doc Found
+            .create_doc.ui.basic.button
+                i.plus.icon
+                |Create HTML with #{template_tags}
+            
+template(name='doc_body')
+    if doc
+        with doc
+            if is_editing
+                +edit_body
+            else
+                span(class=doc_classes)
+                    |#{body}
+                    i.edit_content.pencil.link.icon(title=tags)
+    else
+        if isInRole 'admin'
+            .ui.header No Doc Found
+            .create_doc.ui.basic.button
+                i.plus.icon
+                |Create Plain with #{template_tags}
+            
+template(name='edit_content')
+    .ui.segment
+        .ui.form
+            .field
+                each tags
+                    .ui.basic.label #{this}
+            .field
+                // label Content
+                .froala-container
+                    +froalaReactive edit_doc_context
+            .save_content.ui.green.icon.button
+                i.check.icon
+
+
+template(name='edit_body')
+    .ui.segment
+        .ui.form
+            .field
+                each tags
+                    .ui.basic.label #{this}
+            .field
+                // label Body
+                input#body(type='text' value=body)
+            .save_content.ui.green.icon.button
+                i.check.icon
+                
+template(name='thing')
+    if is_editing
+        .ui.form
+            .field
+                input#body(type='text' value=body)
+    else
+        h4 #{body}
+    +edit_button

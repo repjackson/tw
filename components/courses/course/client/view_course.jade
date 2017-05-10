@@ -48,31 +48,6 @@ template(name='course_not_ready')
             |Sign Up for the SOL Newsletter
     
     
-template(name='course_modules')        
-    h2.ui.center.aligned.header Modules
-    each modules
-        if module_is_available
-            .ui.segment
-                a(href="/course/#{course}/module/#{number}/section/1")
-                    .ui.header  #{number}: #{title}
-                    // .ui.teal.progress
-                    //     .bar
-                    //     .progress
-                    //     .label Coursework
-                    // if sol_demo_member
-                    //     i.lock.icon
-                    // else    
-                    //     i.lock.icon
-        else
-            .ui.disabled.segment
-                // a(href="/course/#{course}/module/#{number}")
-                .ui.header  #{number}: #{title}
-                    // .ui.teal.progress
-                    //     .bar
-                    //     .progress
-                    //     .label Coursework
-                // i.lock.icon
-            
                 
 template(name='course_reminders')                
     h2.ui.center.aligned.header Course Reminders            

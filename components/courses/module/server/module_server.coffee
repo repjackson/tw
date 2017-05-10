@@ -11,8 +11,9 @@ publishComposite 'module_downloads', (course_slug, module_number)->
                 Modules.findOne
                     parent_course_slug: course_slug
                     number: module_number
-            Files.find 
-                parent_module_id: module._id
+            if module 
+                Files.find 
+                    parent_module_id: module._id
         # children: [
         #     { find: (question) ->
         #         Answers.find

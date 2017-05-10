@@ -1,19 +1,3 @@
-publishComposite 'debrief_questions', (module_number)->
-    {
-        find: ->
-            Docs.find 
-                type: 'question'
-                debrief: true
-                module_number: module_number
-        children: [
-            { find: (question) ->
-                Docs.find
-                    type: 'answer'
-                    question_id: question._id
-            }
-        ]
-    }    
-
 
     
 publishComposite 'course_by_id', (course_id)->
@@ -127,6 +111,10 @@ Meteor.publish 'course_member_tags', (slug, selected_course_member_tags)->
 
     self.ready()
 
+
+Meteor.publish 'sol_modules', ->
+    Docs.find
+        tags: $all: ['sol','module']
 
 
 

@@ -9,6 +9,15 @@ if Meteor.isClient
     
     Template.admin_edit.helpers
         doc: -> Docs.findOne FlowRouter.getParam('doc_id')
+    
+    
+    Template.admin_edit.events
+        'click #save_admin_doc': ->
+            selected_admin_tags.clear()
+            for tag in @tags
+                selected_admin_tags.push tag
+            FlowRouter.go '/admin/project_management'
+    
         
     FlowRouter.route '/admin/project_management', action: (params) ->
         BlazeLayout.render 'layout',
@@ -20,8 +29,8 @@ if Meteor.isClient
     @selected_admin_tags = new ReactiveArray []
 
     Template.project_management.onCreated ->
-        @autorun => Meteor.subscribe('tags', selected_admin_tags.array(), type='admin', limit=20, )
-        @autorun -> Meteor.subscribe('admin_docs', selected_admin_tags.array(), limit=5)
+        @autorun => Meteor.subscribe('admin_tags', selected_admin_tags.array(), limit=20, )
+        @autorun -> Meteor.subscribe('admin_docs', selected_admin_tags.array(), limit=3)
 
     Template.project_management.helpers
             
@@ -41,11 +50,10 @@ if Meteor.isClient
             button_class
     
         cloud_tag_class: ->
-            button_class = []
-            switch
-                when @index <= 5 then button_class.push ' large'
-                when @index <= 12 then button_class.push ' '
-                when @index <= 20 then button_class.push ' small'
+            button_class = switch
+                when @index <= 5 then 'large'
+                when @index <= 12 then ''
+                when @index <= 20 then 'small'
             return button_class
 
         selected_admin_tags: -> selected_admin_tags.array()
@@ -67,7 +75,7 @@ if Meteor.isClient
             Docs.find {type: 'admin' }, 
                 sort:
                     tag_count: 1
-                limit: 10
+                limit: 3
     
         one_doc: -> 
             Docs.find().count() is 1
@@ -83,7 +91,9 @@ if Meteor.isClient
         'click #clear_tags': -> selected_admin_tags.clear()
     
         'click #add': ->
-            new_id = Docs.insert type:'admin'
+            new_id = Docs.insert 
+                type:'admin'
+                tags: selected_admin_tags.array()
             FlowRouter.go "/admin_edit/#{new_id}"
 
         'keyup #search': (e,t)->
@@ -120,8 +130,8 @@ if Meteor.isServer
     
         self = @
         match = {}
-        # match.tags = $all: selected_admin_tags
-        if selected_admin_tags.length > 0 then match.tags = $all: selected_admin_tags
+        match.tags = $all: selected_admin_tags
+        # if selected_admin_tags.length > 0 then match.tags = $all: selected_admin_tags
         match.type = 'admin'
         # console.log view_mode
         if limit
@@ -129,3 +139,37 @@ if Meteor.isServer
                 limit: limit
         else
             Docs.find match
+
+
+    
+    
+    Meteor.publish 'admin_tags', (selected_tags, limit, view_mode)->
+        
+        self = @
+        match = {}
+        
+        # match.tags = $all: selected_tags
+        match.type = 'admin'
+        if selected_tags.length > 0 then match.tags = $all: selected_tags
+        
+        # console.log 'limit:', limit
+        
+        cloud = Docs.aggregate [
+            { $match: match }
+            { $project: tags: 1 }
+            { $unwind: "$tags" }
+            { $group: _id: '$tags', count: $sum: 1 }
+            { $match: _id: $nin: selected_tags }
+            { $sort: count: -1, _id: 1 }
+            { $limit: limit }
+            { $project: _id: 0, name: '$_id', count: 1 }
+            ]
+        # console.log 'cloud, ', cloud
+        cloud.forEach (tag, i) ->
+            self.added 'tags', Random.id(),
+                name: tag.name
+                count: tag.count
+                index: i
+    
+        self.ready()
+            

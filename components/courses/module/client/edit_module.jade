@@ -5,11 +5,11 @@ template(name='edit_module')
             .divider  / 
             a.section(href='/courses') Courses
             .divider  / 
-            a.section(href="/course/#{course._id}") #{course.title}
+            a.section(href="/course/#{course.slug}") #{course.title}
             .divider  / 
-            a.section(href="/course/#{course._id}/modules") Modules
+            a.section(href="/course/#{course.slug}/modules") Modules
             .divider  / 
-            a.section(href="/course/#{course._id}/module/#{module._id}") #{module.number}: #{module.title}
+            a.section(href="/course/#{course.slug}/module/#{module.number}") #{module.number}: #{module.title}
             .divider  / 
             .active.section Edit
         with module
@@ -28,24 +28,24 @@ template(name='edit_module')
                 .field
                     label Parent Course Slug
                     .ui.basic.label #{parent_course_slug}
-            .ui.segment
-                h2.ui.header Sections
-                #add_section.ui.basic.button
-                    i.plus.icon
-                    |Add Section
-                .ui.hidden.divider
-                .ui.styled.fluid.accordion
-                    each sections
-                        .title
-                            i.dropdown.icon
-                            if lightwork
-                                i.idea.icon
-                            else
-                                | #{number}:
-                            |#{title}
-                        .content
-                            .ui.form
-                                +edit_section this
+            // .ui.segment
+            //     h2.ui.header Sections
+            //     #add_section.ui.basic.button
+            //         i.plus.icon
+            //         |Add Section
+            //     .ui.hidden.divider
+            //     .ui.styled.fluid.accordion
+            //         each sections
+            //             .title
+            //                 i.dropdown.icon
+            //                 if lightwork
+            //                     i.idea.icon
+            //                 else
+            //                     | #{number}:
+            //                 |#{title}
+            //             .content
+            //                 .ui.form
+            //                     +edit_section this
                 // #section_tabs.ui.top.attached.tabular.menu
                 //     a#add_section.icon.item(data-tab='tab0') 
                 //         i.plus.icon

@@ -1,16 +1,21 @@
-FlowRouter.route '/course/:slug/modules', 
+FlowRouter.route '/course/:course_slug/modules', 
     name: 'course_modules'
     action: (params) ->
         BlazeLayout.render 'view_course',
             course_content: 'course_modules'
 
 Template.course_modules.onCreated ->
-    @autorun -> Meteor.subscribe 'course_modules', FlowRouter.getParam('slug')
+    # @autorun -> Meteor.subscribe 'course_modules', FlowRouter.getParam('course_slug')
+    @autorun -> Meteor.subscribe 'sol_modules'
 
 
 
 Template.course_modules.helpers
-    modules: -> Modules.find { }, sort: number: 1
+    # modules: -> Modules.find { }, sort: number: 1
+    
+    sol_modules: ->
+        Docs.find
+            tags: $all: ['sol','module']
         
     module_is_available: ->
         # if 'sol_demo' in Meteor.user().courses  or 'sol_demo' in Meteor.user().roles and @number < 2
@@ -22,3 +27,8 @@ Template.course_modules.helpers
         else 
             return false
 
+
+Template.course_modules.events
+    'click #add_sol_module': ->
+        Docs.insert
+            tags: ['sol','module']
