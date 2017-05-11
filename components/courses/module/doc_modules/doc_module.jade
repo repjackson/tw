@@ -20,12 +20,12 @@ template(name='doc_module')
                     .content
                         |!{description}
                     .ui.vertical.fluid.pointing.menu
-                        if isInRole 'admin'
-                            a.item(href="/course/sol/#{number}/debrief" class="{{isActiveRoute name='doc_debrief'}}") Debrief
-                        .item Sections
-                        .menu
-                            each module_sections
-                                a.item(href="/course/#{../course}/#{module_number}/section/#{number}" class=section_path_class)  #{number}: #{title}
+                        a.item(href="/course/sol/#{number}/debrief" class="{{isActiveRoute name='doc_debrief'}}") Debrief
+                        a.item(href="/course/sol/#{number}/sections" class="{{isActiveRoute name='doc_sections'}}") Sections
+                        // .item Sections
+                        // .menu
+                        //     each module_sections
+                        //         a.item(href="/course/#{../course}/#{module_number}/section/#{number}" class=section_path_class)  #{number}: #{title}
                         a.item(href="/course/sol/#{number}/lightwork" class="{{isActiveRoute name='doc_lightwork'}}") Lightwork
                         a.item(href="/course/sol/#{number}/downloads" class="{{isActiveRoute name='doc_downloads'}}") Downloads
                     .ui.dividing.header Status

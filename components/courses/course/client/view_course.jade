@@ -6,7 +6,7 @@ template(name='view_course')
             .divider  / 
             a.section(href='/courses') Courses
             .divider  / 
-            .active.section #{course.title}
+            .active.section Source of Light
         .ui.hidden.divider
         .ui.stackable.grid
             .centered.row
@@ -16,26 +16,22 @@ template(name='view_course')
             // .centered.row
             //     h4.ui.center.aligned.header #{course.subtitle}
             .five.wide.column
-                with course
-                    .ui.vertical.fluid.pointing.large.menu
-                        a.item(href="/course/#{slug}/welcome" class="{{isActiveRoute name='course_welcome'}}") Welcome
-                        a.item(href="/course/#{slug}/modules" class="{{isActiveRoute name='course_modules'}}") Modules
-                        a.item(href="/course/#{slug}/members" class="{{isActiveRoute name='course_members'}}") Members
-                        // a.item(href="/course/#{slug}/collaboration" class="{{isActiveRoute name='course_collaboration'}}") Collaboration
-                        a.item(href="/course/#{slug}/downloads" class="{{isActiveRoute name='course_downloads'}}") Downloads
-                        // a.item(href="/course/#{slug}/reminders" class="{{isActiveRoute name='course_reminders'}}") Reminders
-                    if isInRole 'admin'
-                        .ui.segment
-                            .ui.header 
-                                i.red.configure.icon
-                                |Admin
-                            #add_module.ui.basic.fluid.button
-                                i.plus.icon
-                                |Module
-                            .ui.hidden.fitted.divider
-                            a.ui.basic.fluid.button(href="/course/#{_id}/edit")
-                                i.pencil.icon
-                                | Edit Course
+                .ui.vertical.fluid.pointing.large.menu
+                    a.item(href="/course/sol/welcome" class="{{isActiveRoute name='course_welcome'}}") Welcome
+                    a.item(href="/course/sol/modules" class="{{isActiveRoute name='course_modules'}}") Modules
+                    a.item(href="/course/sol/members" class="{{isActiveRoute name='course_members'}}") Members
+                    // a.item(href="/course/#{slug}/collaboration" class="{{isActiveRoute name='course_collaboration'}}") Collaboration
+                    a.item(href="/course/sol/downloads" class="{{isActiveRoute name='course_downloads'}}") Downloads
+                    // a.item(href="/course/#{slug}/reminders" class="{{isActiveRoute name='course_reminders'}}") Reminders
+                if isInRole 'admin'
+                    .ui.segment
+                        .ui.header 
+                            i.red.configure.icon
+                            |Admin
+                        .ui.hidden.fitted.divider
+                        a.ui.basic.fluid.button(href="/course/sol/edit")
+                            i.pencil.icon
+                            | Edit Course
             .ten.wide.column
                 +Template.dynamic template=course_content
 
@@ -56,7 +52,7 @@ template(name='course_reminders')
 
 template(name='register_sol')
     .ui.text.container
-        h2.ui.center.aligned.header Hi and Welcome to ToriWebster.com!
+        h2.ui.center.aligned.header Hello and welcome to ToriWebster.com!
         h5.ui.center.aligned.header Please register an account to enroll in the SOL demo or login if you already have one.
         .ui.basic.segment
             +atForm state='signUp'

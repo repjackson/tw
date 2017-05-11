@@ -1,57 +1,17 @@
 template(name='course_welcome')
-    with course
-        #course_welcome_menu.ui.top.attached.tabular.stackable.menu
-            a.active.item(data-tab="welcome_tab") Welcome
-            a.item(data-tab="terms_tab") Terms of Agreement
-            a.item(data-tab="inspiration_tab") What Inspired SOL
-        .ui.bottom.attached.tab.active.segment(data-tab='welcome_tab')
-            if is_editing
-                +edit_welcome_course
-            else
-                +view_welcome_course
-        .ui.bottom.attached.tab.segment(data-tab='terms_tab')
-            if is_editing
-                +edit_terms_course
-            else
-                +view_terms_course
-        .ui.bottom.attached.tab.segment(data-tab='inspiration_tab')
-            if is_editing
-                +edit_inspiration_course
-            else
-                +view_inspiration_course
+    #course_welcome_menu.ui.top.attached.tabular.stackable.menu
+        a.active.item(data-tab="welcome_tab") Welcome
+        a.item(data-tab="terms_tab") Terms of Agreement
+        a.item(data-tab="inspiration_tab") What Inspired SOL
+    .ui.bottom.attached.tab.active.segment(data-tab='welcome_tab')
+        +view_welcome_course
+    .ui.bottom.attached.tab.segment(data-tab='terms_tab')
+        +view_terms_course
+    .ui.bottom.attached.tab.segment(data-tab='inspiration_tab')
+        +view_inspiration_course
             
         
-        
-// template(name='edit_welcome_course')
-//     .ui.form
-//         .field
-//             label Content
-//             .froala-container
-//                 +froalaReactive course_welcome_context
-//         +welcome_transcript this        
-//         #save_welcome_content.ui.teal.button Save Welcome Content
-
-
-
-// template(name='welcome_transcript')
-//     .field
-//         label Welcome Transcript
-//         .transcript
-//             +froalaReactive transcript
-
-
-
-
-
-
-
 template(name='view_welcome_course')
-    // if isInRole 'admin'
-    //     #edit_welcome_content.ui.basic.button 
-    //         i.red.configure.icon
-    //         |Edit Welcome Content
-    //     .ui.hidden.divider
-    // |!{course_welcome_content}
     +doc_content tags='sol,welcome,content'
     .ui.styled.fluid.accordion
         h3.title
@@ -59,27 +19,11 @@ template(name='view_welcome_course')
             | Transcript
         .content
             +doc_content tags='sol,welcome,transcript'
-            // |!{welcome_transcript}
     
     
     
-
-template(name='edit_terms_course')
-    .ui.form
-        .field
-            label Content
-            .froala-container
-                +froalaReactive course_terms_context
-        #save_terms_content.ui.teal.button Save Terms Content
-
 
 template(name='view_terms_course')
-    // if isInRole 'admin'
-    //     #edit_terms_content.ui.basic.button 
-    //         i.red.configure.icon
-    //         |Edit Terms Content
-    //     .ui.hidden.divider
-    // |!{course_terms_content}
     p(dir='ltr')
         strong Student Commitment Agreement 
         span
@@ -207,33 +151,7 @@ template(name='view_terms_course')
     else
         #agree_to_terms.ui.green.button Agree to Terms
 
-// template(name='edit_inspiration_course')
-//     .ui.form
-//         .field
-//             label Content
-//             .froala-container
-//                 +froalaReactive course_inspiration_context
-//         +inspiration_transcript        
-//         #save_inspiration_content.ui.teal.button Save Inspiration Content
-
-
-// template(name='inspiration_transcript')
-//     .field
-//         label Inspiration Transcript
-//         .transcript
-//             +froalaReactive transcript
-
-
-
-
-
 template(name='view_inspiration_course')
-    // if isInRole 'admin'
-    //     #edit_inspiration_content.ui.basic.button 
-    //         i.red.configure.icon
-    //         |Edit Inspiration Content
-    //     .ui.hidden.divider
-    // |!{course_inspiration_content}
     +doc_content tags='sol,inspiration,content'
     .ui.styled.fluid.accordion
         h3.title
@@ -241,5 +159,4 @@ template(name='view_inspiration_course')
             | Transcript
         .content
             +doc_content tags='sol,inspiration,transcript'
-            // |!{inspiration_transcript}
 

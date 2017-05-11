@@ -1,0 +1,48 @@
+template(name='doc_section')
+    +nav
+    .ui.container
+        .ui.breadcrumb
+            a.section(href='/') Home
+            .divider  / 
+            a.section(href='/courses') Courses
+            .divider  / 
+            a.section(href="/course/sol") Source of Light
+            .divider  / 
+            a.section(href="/course/sol/modules") Modules
+            .divider  / 
+            a.section(href="/course/sol/#{module.number}") #{module.number}: #{module.title}
+            .divider  / 
+            a.section(href="/course/sol/#{module.number}/sections") Sections
+            .divider  / 
+            .section #{section.number}: #{section.title}
+
+        h2.ui.header 
+            |Section #{section.number}: #{section.title}
+        .ui.stackable.grid
+            .five.wide.column
+                .content
+                    |!{description}
+                .ui.vertical.fluid.pointing.menu
+                    a.item(href="/course/sol/#{number}/#{section_number}" class="{{isActiveRoute name='doc_lightwork'}}") View
+                    a.item(href="/course/sol/#{number}/collaboration" class="{{isActiveRoute name='section_collaboration'}}") Collaboration
+                .ui.dividing.header Status
+                if complete
+                    .ui.teal.fluid.label 
+                        i.check.icon
+                        |Complete
+                else
+                    .ui.teal.basic.fluid.label 
+                        |Incomplete
+            .eleven.wide.column
+                // .ui.basic.segment
+                .ui.header Section #{number}: #{title}
+                +doc_content tags=section_content_tags
+                .ui.styled.fluid.accordion
+                    h3.title
+                        i.large.newspaper.icon
+                        | Transcript
+                    .content
+                        +doc_content tags=section_transcript_tags
+                .ui.hidden.divider
+                +view_questions
+                        

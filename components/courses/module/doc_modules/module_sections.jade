@@ -1,0 +1,20 @@
+template(name='module_sections')        
+    h2.ui.center.aligned.header Sections
+    if isInRole 'admin'
+        #add_section.ui.button Add Section
+    each module_sections
+        .ui.segment
+            if is_editing
+                +title
+                +number
+            else
+                a.ui.header(href="/course/sol/#{module_number}/#{number}") #{number}: #{title}
+                // |!{content}
+                if isInRole 'admin'
+                    .ui.dividing.header Admin
+                    each tags
+                        .ui.basic.label #{this}
+            +edit_button
+    
+    
+    

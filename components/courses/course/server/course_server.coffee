@@ -1,69 +1,16 @@
 
     
-publishComposite 'course_by_id', (course_id)->
-    {
-        find: ->
-            Courses.find course_id
-        # children: [
-        #     { find: (course) ->
-        #         Docs.find
-        #             course: course.slug
-        #             type: 'module'
-        #     # children: [
-        #     #     {
-        #     #         find: (module) ->
-        #     #             Docs.find 
-        #     #                 _id: module.section_id
-        #     #                 type: 'section'
-        #     #     }
-        #     # ]    
-        #     }
-        #     {
-        #         find: (course) ->
-        #             Meteor.users.find course.author_id
-        #     }
-        # ]
-    }          
+# Meteor.publish 'courses', (view_mode)->
     
-publishComposite 'course_by_slug', (course_slug)->
-    {
-        find: ->
-            Courses.find 
-                slug: course_slug
-        # children: [
-        #     { find: (course) ->
-        #         Modules.find
-        #             course: course.slug
-        #             type: 'module'
-        #     # children: [
-        #     #     {
-        #     #         find: (module) ->
-        #     #             Docs.find 
-        #     #                 _id: module.section_id
-        #     #                 type: 'section'
-        #     #     }
-        #     # ]    
-        #     }
-        #     {
-        #         find: (course) ->
-        #             Meteor.users.find course.author_id
-        #     }
-        # ]
-    }            
-    
-    
-    
-Meteor.publish 'courses', (view_mode)->
-    
-    me = Meteor.users.findOne @userId
-    self = @
-    match = {}
-    if view_mode is 'mine'
-        match.slug = $in: me.courses
-    if not @userId or not Roles.userIsInRole(@userId, ['admin'])
-        match.published = true
+#     me = Meteor.users.findOne @userId
+#     self = @
+#     match = {}
+#     if view_mode is 'mine'
+#         match.slug = $in: me.courses
+#     if not @userId or not Roles.userIsInRole(@userId, ['admin'])
+#         match.published = true
             
-    Courses.find match
+#     Courses.find match
     
     
     
@@ -116,11 +63,6 @@ Meteor.publish 'sol_modules', ->
     Docs.find
         tags: $all: ['sol','module']
 
-
-
-Courses.allow
-    insert: (userId, doc) -> Roles.userIsInRole(userId, 'admin') or userId
-    update: (userId, doc) -> Roles.userIsInRole(userId, 'admin') or userId
-    remove: (userId, doc) -> 
-        Roles.userIsInRole(userId, 'admin')
-        # need prevention of deletion if remaing moduels language
+Meteor.publish 'sol_course', ->
+    Docs.find
+        tags: ['course','sol']
