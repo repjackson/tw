@@ -17,19 +17,19 @@ template(name='module_files')
             else 
                 +file_item
                 
-template(name='file_item')                
-    .ui.item
-        .content
-            .header #{title}
-            .meta #{link}
-            .description
-                |!{description}
-            .extra
-                a.ui.basic.button(href=link)
-                    i.download.icon
-                    |Download #{title}
-                if isInRole 'admin'
-                    .edit_file.ui.basic.button 
-                        i.red.configure.icon
-                        |Edit #{title} File
+// template(name='file_item')                
+//     .ui.item
+//         .content
+//             .header #{title}
+//             .meta #{link}
+//             .description
+//                 |!{description}
+//             .extra
+//                 a.ui.basic.button(href=link)
+//                     i.download.icon
+//                     |Download #{title}
+//                 if isInRole 'admin'
+//                     .edit_file.ui.basic.button 
+//                         i.red.configure.icon
+//                         |Edit #{title} File
                 

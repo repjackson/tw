@@ -6,17 +6,14 @@ template(name='doc_module')
             .divider  / 
             a.section(href='/courses') Courses
             .divider  / 
-            a.section(href="/course/#{course.slug}") #{course.title}
+            a.section(href="/course/sol") Source of Light
             .divider  / 
-            a.section(href="/course/#{course.slug}/modules") Modules
+            a.section(href="/course/sol/modules") Modules
             .divider  / 
-            .active.section 
-                |#{module.number}:
-                +doc_body tags=title_tags
+            .active.section #{module.number}: #{module.title}
 
         h2.ui.header 
-            |Module #{module_number}: 
-            +doc_body tags=title_tags
+            |Module #{module_number}: #{module.title}
         .ui.stackable.grid
             .five.wide.column
                 with module
@@ -24,13 +21,13 @@ template(name='doc_module')
                         |!{description}
                     .ui.vertical.fluid.pointing.menu
                         if isInRole 'admin'
-                            a.item(href="/course/#{course.slug}/#{number}/debrief" class="{{isActiveRoute name='doc_debrief'}}") Debrief
+                            a.item(href="/course/sol/#{number}/debrief" class="{{isActiveRoute name='doc_debrief'}}") Debrief
                         .item Sections
                         .menu
                             each module_sections
                                 a.item(href="/course/#{../course}/#{module_number}/section/#{number}" class=section_path_class)  #{number}: #{title}
-                        a.item(href="/course/#{course.slug}/#{number}/lightwork" class="{{isActiveRoute name='doc_lightwork'}}") Lightwork
-                        a.item(href="/course/#{course.slug}/#{number}/downloads" class="{{isActiveRoute name='doc_downloads'}}") Downloads
+                        a.item(href="/course/sol/#{number}/lightwork" class="{{isActiveRoute name='doc_lightwork'}}") Lightwork
+                        a.item(href="/course/sol/#{number}/downloads" class="{{isActiveRoute name='doc_downloads'}}") Downloads
                     .ui.dividing.header Status
                     if complete
                         .ui.teal.fluid.label 

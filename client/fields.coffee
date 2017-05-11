@@ -54,7 +54,7 @@ Template.number.events
         # console.log @
         val = $(e.currentTarget).closest('#number').val()
         number = parseInt val
-        console.log number
+        # console.log number
         Docs.update @_id,
             $set: number: number
             

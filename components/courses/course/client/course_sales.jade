@@ -8,8 +8,8 @@ template(name='course_sales')
             if image_id
                 img.ui.centered.image(src="{{c.url image_id }}")
             // +doc tags='sol,logo' classes='ui centered image'
-            +doc tags='sol,subtitle' classes='ui center aligned header'
-            +doc tags='sol,sales' classes=''
+            +doc_content tags='sol,subtitle' classes='ui center aligned header'
+            +doc_content tags='sol,sales' classes=''
             
             .ui.centered.stackable.grid
                 .four.wide.column

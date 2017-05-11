@@ -1,5 +1,5 @@
 if Meteor.isClient    
-    FlowRouter.route '/course/:course_slug/:module_number', 
+    FlowRouter.route '/course/sol/:module_number', 
         name:'doc_module'
         action: (params) ->
             BlazeLayout.render 'doc_module',
@@ -8,9 +8,10 @@ if Meteor.isClient
     
     
     Template.doc_module.onCreated ->
-        @autorun -> Meteor.subscribe 'module_by_course_slug', course_slug=FlowRouter.getParam('course_slug'), module_number=parseInt FlowRouter.getParam('module_number')
-        @autorun -> Meteor.subscribe 'course_by_slug', FlowRouter.getParam('course_slug')
-    
+        # @autorun -> Meteor.subscribe 'module_by_course_slug', course_slug=FlowRouter.getParam('course_slug'), module_number=parseInt FlowRouter.getParam('module_number')
+        # @autorun -> Meteor.subscribe 'course_by_slug', FlowRouter.getParam('course_slug')
+        @autorun -> Meteor.subscribe 'module', parseInt FlowRouter.getParam('module_number')
+        
     
     
     Template.doc_module.helpers
@@ -23,12 +24,13 @@ if Meteor.isClient
             "sol,module #{FlowRouter.getParam('module_number')},title"
     
         module: -> 
-            Modules.findOne 
+            Docs.findOne 
+                tags: $in: ['module']
                 number: parseInt FlowRouter.getParam('module_number')
-                parent_course_slug: FlowRouter.getParam('course_slug')
-        course: -> 
-            Courses.findOne 
-                slug:FlowRouter.getParam('course_slug')
+                # parent_course_slug: FlowRouter.getParam('course_slug')
+        # course: -> 
+        #     Courses.findOne 
+        #         slug:FlowRouter.getParam('course_slug')
             
     
     
@@ -40,7 +42,7 @@ if Meteor.isClient
     
     
     Template.view_section.onCreated ->
-        @autorun -> Meteor.subscribe 'section', course=FlowRouter.getParam('course_slug'), module_number=parseInt FlowRouter.getParam('module_number'), section_number=parseInt FlowRouter.getParam('section_number')
+        @autorun -> Meteor.subscribe 'section', module_number=parseInt FlowRouter.getParam('module_number'), section_number=parseInt FlowRouter.getParam('section_number')
     
     
     
@@ -66,3 +68,8 @@ if Meteor.isClient
                 # lightwork: false
     
     
+if Meteor.isServer
+    Meteor.publish 'module', (module_number)->
+        Docs.find
+            tags: $in: ['module']
+            number: module_number

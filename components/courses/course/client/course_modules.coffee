@@ -14,8 +14,10 @@ Template.course_modules.helpers
     # modules: -> Modules.find { }, sort: number: 1
     
     sol_modules: ->
-        Docs.find
-            tags: $all: ['sol','module']
+        Docs.find {
+            tags: $all: ['sol','module'] },
+            sort: number: 1
+            
         
     module_is_available: ->
         # if 'sol_demo' in Meteor.user().courses  or 'sol_demo' in Meteor.user().roles and @number < 2

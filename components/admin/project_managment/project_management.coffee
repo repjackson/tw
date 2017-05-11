@@ -132,7 +132,7 @@ if Meteor.isServer
         match = {}
         match.tags = $all: selected_admin_tags
         # if selected_admin_tags.length > 0 then match.tags = $all: selected_admin_tags
-        match.type = 'admin'
+        # match.type = 'admin'
         # console.log view_mode
         if limit
             Docs.find match, 
@@ -149,7 +149,7 @@ if Meteor.isServer
         match = {}
         
         # match.tags = $all: selected_tags
-        match.type = 'admin'
+        # match.type = 'admin'
         if selected_tags.length > 0 then match.tags = $all: selected_tags
         
         # console.log 'limit:', limit

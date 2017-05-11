@@ -1,7 +1,8 @@
 template(name='title')
-    .ui.labeled.fluid.input
-        .ui.basic.label Title
-        input#title(type='text' value=title)
+    .field
+        .ui.labeled.fluid.input
+            .ui.basic.label Title
+            input#title(type='text' value=title)
 
 template(name='subtitle')
     .ui.labeled.fluid.input
@@ -41,7 +42,7 @@ template(name='link')
         .ui.basic.label Link (include http://)
         .ui.left.icon.input
             i.linkify.icon
-            input#link(type='text' value=url)
+            input#link(type='text' value=link)
 
 
 template(name='page_name')

@@ -52,13 +52,13 @@ template(name='view_welcome_course')
     //         |Edit Welcome Content
     //     .ui.hidden.divider
     // |!{course_welcome_content}
-    +doc tags='sol,welcome,content'
+    +doc_content tags='sol,welcome,content'
     .ui.styled.fluid.accordion
         h3.title
             i.large.newspaper.icon
             | Transcript
         .content
-            +doc tags='sol,welcome,transcript'
+            +doc_content tags='sol,welcome,transcript'
             // |!{welcome_transcript}
     
     
@@ -234,12 +234,12 @@ template(name='view_inspiration_course')
     //         |Edit Inspiration Content
     //     .ui.hidden.divider
     // |!{course_inspiration_content}
-    +doc tags='sol,inspiration,content'
+    +doc_content tags='sol,inspiration,content'
     .ui.styled.fluid.accordion
         h3.title
             i.large.newspaper.icon
             | Transcript
         .content
-            +doc tags='sol,inspiration,transcript'
+            +doc_content tags='sol,inspiration,transcript'
             // |!{inspiration_transcript}
 

@@ -1,0 +1,13 @@
+template(name='doc_lightwork')
+    // .ui.basic.segment
+    .ui.center.aligned.header Lightwork
+    +doc_content tags=lightwork_tags
+    .ui.styled.fluid.accordion
+        h3.title
+            i.large.newspaper.icon
+            | Transcript
+        .content
+            +doc_content tags=lightwork_transcript_tags
+    .ui.hidden.divider
+    +view_questions
+            
