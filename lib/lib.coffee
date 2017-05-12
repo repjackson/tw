@@ -7,6 +7,7 @@
 Docs.before.insert (userId, doc)->
     doc.timestamp = Date.now()
     doc.author_id = Meteor.userId()
+    doc.tag_count = doc.tags.length
     # doc.points = 0
     # doc.upvoters = []
     # doc.downvoters = []
@@ -14,9 +15,16 @@ Docs.before.insert (userId, doc)->
     return
 
 
-Docs.after.update ((userId, doc, fieldNames, modifier, options) ->
-    doc.tag_count = doc.tags.length
-), fetchPrevious: true
+# Docs.after.update ((userId, doc, fieldNames, modifier, options) ->
+#     doc.tag_count = doc.tags.length
+#     # console.log doc
+# ), fetchPrevious: true
+
+
+# Docs.before.update (userId, doc, fieldNames, modifier, options) ->
+#   modifier.$set = modifier.$set or {}
+#   modifier.$set.tag_count = doc.tags.length
+#   return
 
 
 

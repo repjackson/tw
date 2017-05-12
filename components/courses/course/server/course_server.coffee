@@ -45,9 +45,6 @@ Meteor.publish 'course_member_tags', (slug, selected_course_member_tags)->
     self.ready()
 
 
-Meteor.publish 'sol_modules', ->
-    Docs.find
-        tags: $all: ['sol','module']
 
 Meteor.publish 'sol_course', ->
     Docs.find

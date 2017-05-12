@@ -1,39 +1,46 @@
 template(name='doc_debrief')
     .ui.header Lightwork Debrief Questions
     if isInRole 'admin'
-        #add_debrief_question.ui.basic.button Add Debrief Question
-        .ui.dividing.header Admin View
-        each debrief_questions
-            +thing
-        .ui.dividing.header User View
+        #add_debrief_question.ui.basic.button 
+            i.red.configure.icon
+            |Add Debrief Question
     each debrief_questions
-        .ui.header #{body}
-        if currentUser
-            unless has_answered_question
-                .add_debrief_answer.ui.basic.button 
-                    i.plus.icon
-                    |Add Answer
-        +answers
-        
-template(name='answers')
-    each answers
         .ui.segment
-            if is_author
-                if is_editing
-                    .ui.form
-                        .field
-                            label Answer
-                            input#body(type='text' value=body)
+            if isInRole 'admin'
+                +thing
+            else
+                .ui.header #{body}
+            if currentUser
+                if has_answered_question
+                    +answers
                 else
+                    .add_debrief_answer.ui.basic.button 
+                        i.plus.icon
+                        |Add Answer
+template(name='answers')
+    with my_answer
+        .ui.segment
+            .ui.header Your Answer
+            if is_editing
+                .ui.form
+                    .field
+                        input#body(type='text' value=body)
+            else
+                h4 #{body}
+            if can_edit
+                +published
+                    // .toggle_published.ui.slider.checkbox
+                    //     input(type='checkbox' name='publish_answer' checked=published)
+                    //     label Publish Answer
+                    // i.help.circle.outline.large.icon(data-content="By making this answer public other SOL participants can see it, relate, and collaborate.")
+                +edit_button
+                +delete_button
+    unless is_editing_my_answer
+        .ui.header All Published Answers
+        .ui.segments
+            each all_answers
+                .ui.segment
                     h4 #{body}
-                .ui.divider
-                if can_edit
-                    .ui.basic.compact.segment
-                        +published
-                        // .toggle_published.ui.slider.checkbox
-                        //     input(type='checkbox' name='publish_answer' checked=published)
-                        //     label Publish Answer
-                        // i.help.circle.outline.large.icon(data-content="By making this answer public other SOL participants can see it, relate, and collaborate.")
-                    .ui.hidden.fitted.divider
-                    +edit_button
-                    +delete_button
+                    a(href='/profile/#{author._id}')
+                        img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+                        |{{author.name}}

@@ -1,7 +1,9 @@
 template(name='course_modules')        
     h2.ui.center.aligned.header Modules
     if isInRole 'admin'
-        #add_sol_module.ui.button Add Module
+        #add_sol_module.ui.button 
+            i.red.configure.icon
+            |Add Module
     each sol_modules
         .ui.segment
             if is_editing
