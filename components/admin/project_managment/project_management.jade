@@ -29,7 +29,9 @@ template(name='project_management')
 template(name='admin_doc_view')
     .ui.fluid.card(class=project_card_class)
         .content
+            .header #{title}
             .meta
+                .subheader #{subtitle}
                 each tags
                     .ui.tiny.button.tag(class=tag_class) #{this}
             |!{content}
@@ -42,11 +44,17 @@ template(name='admin_edit')
     with doc
         .ui.container.basic.segment
             .ui.center.aligned.header Edit Admin Doc
+            +image
+            .ui.hidden.divider
+            +title
+            .ui.hidden.divider
+            +subtitle
             .ui.hidden.divider
             +tags
             .ui.hidden.divider
             +content      
             .ui.hidden.divider
+            +published
             .ui.hidden.divider
             .ui.center.aligned.basic.segment
                 a#save_admin_doc.ui.huge.active.button Save 

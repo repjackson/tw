@@ -16,7 +16,7 @@ template(name='doc_content')
             else
                 span(class=doc_classes)
                     |!{content}
-                    i.edit_content.pencil.link.icon(title=tags)
+            +edit_button        
     else
         if isInRole 'admin'
             .ui.header No Doc Found
@@ -32,7 +32,7 @@ template(name='doc_body')
             else
                 span(class=doc_classes)
                     |#{body}
-                    i.edit_content.pencil.link.icon(title=tags)
+            +edit_button        
     else
         if isInRole 'admin'
             .ui.header No Doc Found
@@ -50,8 +50,6 @@ template(name='edit_content')
                 // label Content
                 .froala-container
                     +froalaReactive edit_doc_context
-            .save_content.ui.green.icon.button
-                i.check.icon
 
 
 template(name='edit_body')
@@ -63,8 +61,6 @@ template(name='edit_body')
             .field
                 // label Body
                 input#body(type='text' value=body)
-            .save_content.ui.green.icon.button
-                i.check.icon
                 
 template(name='thing')
     if is_editing

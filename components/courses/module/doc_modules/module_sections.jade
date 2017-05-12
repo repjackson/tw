@@ -9,7 +9,6 @@ template(name='module_sections')
                 +number
             else
                 a.ui.header(href="/course/sol/#{module_number}/#{number}") #{number}: #{title}
-                // |!{content}
                 if isInRole 'admin'
                     .ui.dividing.header Admin
                     each tags

@@ -11,9 +11,6 @@ Template.courses.helpers
     courses: -> 
         Courses.find
             published: true
-    unpublished_courses: -> 
-        Courses.find
-            published: false
 
     all_item_class: -> if Session.equals 'view_mode', 'all' then 'active' else ''
     mine_item_class: -> 
@@ -22,11 +19,6 @@ Template.courses.helpers
         else
             'disabled'
 Template.courses.events
-    'click #add_course': ->
-        id = Courses.insert
-            published: false
-        FlowRouter.go "/course/#{id}/edit"
-        
     'click #set_mode_to_all': -> 
         if Meteor.userId() then Session.set 'view_mode', 'all'
         else FlowRouter.go '/sign-in'

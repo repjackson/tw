@@ -41,31 +41,31 @@ if Meteor.isClient
             FlowRouter.go "/course/#{course_slug}/module/#{@_id}/edit"
     
     
-    Template.view_section.onCreated ->
-        @autorun -> Meteor.subscribe 'section', module_number=parseInt FlowRouter.getParam('module_number'), section_number=parseInt FlowRouter.getParam('section_number')
+    # Template.view_section.onCreated ->
+    #     @autorun -> Meteor.subscribe 'section', module_number=parseInt FlowRouter.getParam('module_number'), section_number=parseInt FlowRouter.getParam('section_number')
     
     
     
-    Template.view_section.onRendered ->
-        @autorun =>
-            if @subscriptionsReady()
-                Meteor.setTimeout ->
-                    $('.ui.accordion').accordion()
-                , 1000
+    # Template.view_section.onRendered ->
+    #     @autorun =>
+    #         if @subscriptionsReady()
+    #             Meteor.setTimeout ->
+    #                 $('.ui.accordion').accordion()
+    #             , 1000
     
     
-    # Template.module_lightwork.onRendered ->
-    #     @autorun -> Meteor.subscribe 'module_lightwork', FlowRouter.getParam('module_number')
+    # # Template.module_lightwork.onRendered ->
+    # #     @autorun -> Meteor.subscribe 'module_lightwork', FlowRouter.getParam('module_number')
     
                 
                 
-    Template.view_section.helpers
-        section_doc: ->
-            Docs.findOne 
-                number: parseInt FlowRouter.getParam('section_number')
-                # module_number: parseInt FlowRouter.getParam('module_number')
-                type: 'section'
-                # lightwork: false
+    # Template.view_section.helpers
+    #     section_doc: ->
+    #         Docs.findOne 
+    #             number: parseInt FlowRouter.getParam('section_number')
+    #             # module_number: parseInt FlowRouter.getParam('module_number')
+    #             type: 'section'
+    #             # lightwork: false
     
     
 if Meteor.isServer

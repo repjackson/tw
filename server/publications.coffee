@@ -123,6 +123,9 @@ Meteor.publish 'docs', (selected_tags, type, limit, view_mode)->
 Meteor.publish 'doc', (id)->
     Docs.find id
 
+Meteor.publish 'doc_by_tags', (tags)->
+    Docs.find
+        tags: tags
 
     
 publishComposite 'questions', (section_id)->

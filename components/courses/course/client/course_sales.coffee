@@ -1,4 +1,4 @@
-FlowRouter.route '/course/:slug/sales', 
+FlowRouter.route '/course/sol/sales', 
     name: 'course_sale_page'
     action: (params) ->
         BlazeLayout.render 'layout',
@@ -9,12 +9,11 @@ FlowRouter.route '/course/:slug/sales',
 
 Template.course_sales.helpers
     in_sol: -> Roles.userIsInRole(Meteor.userId(), 'sol_member')
-    in_demo: -> Roles.userIsInRole(Meteor.userId(), 'sol_demo_member')
-    course: -> Courses.findOne slug:FlowRouter.getParam('slug')
+    in_demo: -> Roles.userIsInRole(Meteor.userId(), 'sol_demo')
 
 
 Template.course_sales.onCreated ->
-    @autorun -> Meteor.subscribe 'course_by_slug', FlowRouter.getParam('slug')
+    @autorun -> Meteor.subscribe 'doc_by_tags', tags=['course', 'sol']
 
 Template.course_sales.events
     'click #sign_up_demo': ->
@@ -22,7 +21,7 @@ Template.course_sales.events
             Roles.addUsersToRoles(Meteor.userId(), 'sol_demo')
             Meteor.users.update Meteor.userId(),
                 $addToSet:
-                    courses: FlowRouter.getParam 'slug'
+                    courses: 'sol'
             swal {
                 title: "Thank you, #{Meteor.user().name()}."
                 text: "You're now enrolled in the demo."
@@ -41,4 +40,4 @@ Template.course_sales.events
     
     
     'click #unenroll': ->
-        Roles.removeUsersFromRoles(Meteor.userId(), 'sol_demo_member')
+        Roles.removeUsersFromRoles(Meteor.userId(), 'sol_demo')

@@ -1,19 +1,5 @@
 
     
-# Meteor.publish 'courses', (view_mode)->
-    
-#     me = Meteor.users.findOne @userId
-#     self = @
-#     match = {}
-#     if view_mode is 'mine'
-#         match.slug = $in: me.courses
-#     if not @userId or not Roles.userIsInRole(@userId, ['admin'])
-#         match.published = true
-            
-#     Courses.find match
-    
-    
-    
 Meteor.publish 'sol_members', (slug, selected_course_member_tags) ->
     match = {}
     if selected_course_member_tags.length > 0 then match.tags = $all: selected_course_member_tags

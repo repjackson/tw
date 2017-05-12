@@ -49,13 +49,11 @@ template(name='published')
 template(name='edit_button')
     if currentUser
         unless is_editing
-            .edit_this.ui.basic.button
-                i.red.configure.icon
-                |Edit
+            .edit_this.ui.basic.icon.button(title=tags)
+                i.pencil.icon
         else
-            .save_doc.ui.basic.button
+            .save_doc.ui.basic.icon.button
                 i.green.check.icon
-                |Save
 
 template(name='edit_link')
     if currentUser

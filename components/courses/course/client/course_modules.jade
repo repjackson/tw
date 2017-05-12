@@ -8,7 +8,7 @@ template(name='course_modules')
                 +title
                 +number
             else
-                a.ui.header(href="/course/sol/#{number}") #{number}: #{title}
+                a.ui.header(href="/course/sol/module/#{number}") #{number}: #{title}
                 // |!{content}
                 if isInRole 'admin'
                     .ui.dividing.header Admin

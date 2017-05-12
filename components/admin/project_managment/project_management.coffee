@@ -130,7 +130,7 @@ if Meteor.isServer
     
         self = @
         match = {}
-        match.tags = $all: selected_admin_tags
+        match.tags = selected_admin_tags
         # if selected_admin_tags.length > 0 then match.tags = $all: selected_admin_tags
         # match.type = 'admin'
         # console.log view_mode

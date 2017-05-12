@@ -1,5 +1,5 @@
 if Meteor.isClient    
-    FlowRouter.route '/course/sol/:module_number/:section_number', 
+    FlowRouter.route '/course/sol/module/:module_number/section/:section_number', 
         name:'doc_section'
         action: (params) ->
             BlazeLayout.render 'doc_section'
@@ -18,7 +18,6 @@ if Meteor.isClient
         @autorun =>
             if @subscriptionsReady()
                 Meteor.setTimeout ->
-                    # $('#section_tabs .item').tab()
                     $('.ui.accordion').accordion()
                 , 1000
 

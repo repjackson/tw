@@ -15,7 +15,7 @@ Docs.before.insert (userId, doc)->
 
 
 Docs.after.update ((userId, doc, fieldNames, modifier, options) ->
-    doc.tag_count = doc.tags?.length
+    doc.tag_count = doc.tags.length
 ), fetchPrevious: true
 
 
