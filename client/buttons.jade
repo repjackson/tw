@@ -52,15 +52,15 @@ template(name='edit_button')
             .edit_this.ui.basic.icon.button(title=tags)
                 i.pencil.icon
         else
-            .save_doc.ui.basic.icon.button
-                i.green.check.icon
+            .save_doc.ui.icon.green.basic.button
+                i.check.icon
 
 template(name='edit_link')
     if currentUser
         unless is_editing
             a.edit_this(href='#') Edit
         else
-            .save_doc.ui.basic.button
+            .save_doc.ui.basic.large.button
                 i.green.check.icon
                 |Save
 
@@ -83,7 +83,7 @@ template(name='add_to_cart')
         
 
 template(name='delete_button')
-    #delete.ui.red.icon.button
+    #delete.ui.icon.basic.button
         i.remove.icon
         
 template(name='delete_link')

@@ -67,7 +67,8 @@ template(name='thing')
         .ui.form
             .field
                 input#body(type='text' value=body)
+            +edit_button
             +delete_button
     else
         h4 #{body}
-    +edit_button
+        +edit_button

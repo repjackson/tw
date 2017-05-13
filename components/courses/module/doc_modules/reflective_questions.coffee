@@ -1,13 +1,13 @@
 if Meteor.isClient
-    FlowRouter.route '/course/sol/:module_number/debrief', 
-        name: 'doc_debrief'
-        action: (params) ->
-            BlazeLayout.render 'doc_module',
-                module_content: 'doc_debrief'
+    # FlowRouter.route '/course/sol/:module_number/debrief', 
+    #     name: 'section_reflective_questions'
+    #     action: (params) ->
+    #         BlazeLayout.render 'doc_module',
+    #             module_content: 'section_reflective_questions'
         
     
-    Template.doc_debrief.onCreated ->
-        @autorun -> Meteor.subscribe 'debrief_questions', FlowRouter.getParam('module_number')
+    Template.section_reflective_questions.onCreated ->
+        @autorun -> Meteor.subscribe 'reflective_questions', FlowRouter.getParam('module_number'), FlowRouter.getParam('section_number')
     
     # Template.answers.onCreated ->
         # @autorun => Meteor.subscribe 'answers', @data._id
@@ -16,13 +16,13 @@ if Meteor.isClient
 
     
     
-    Template.doc_debrief.helpers
-        debrief_questions: -> 
+    Template.section_reflective_questions.helpers
+        reflective_questions: -> 
             Docs.find
-                tags: ["sol","module #{FlowRouter.getParam('module_number')}", "debrief","question"]
+                tags: ["sol","module #{FlowRouter.getParam('module_number')}","section #{FlowRouter.getParam('section_number')}","reflective question"]
                 
-        # debrief_questions_tags: ->
-        #     "sol,module #{FlowRouter.getParam('module_number')},debrief,question"
+        # reflective_questions_tags: ->
+        #     "sol","module #{FlowRouter.getParam('module_number')}","section #{FlowRouter.getParam('section_number')}","reflective question"
     
     
         has_answered_question: ->
@@ -32,8 +32,8 @@ if Meteor.isClient
                 author_id: Meteor.userId()
 
     
-    Template.answers.helpers
-        all_answers: ->
+    Template.reflective_answers.helpers
+        all_reflective_answers: ->
             Docs.find
                 parent_id: @_id
                 tags: $in: ["answer"]
@@ -53,7 +53,7 @@ if Meteor.isClient
                     author_id: Meteor.userId()
             Session.equals 'editing_id', my_answer._id
 
-    Template.answers.events
+    Template.reflective_answers.events
         'blur #body': (e,t)->
             body = $(e.currentTarget).closest('#body').val()
             Docs.update @_id,
@@ -62,12 +62,12 @@ if Meteor.isClient
     
     
     
-    Template.doc_debrief.events
-        'click #add_debrief_question': ->
+    Template.section_reflective_questions.events
+        'click #add_reflective_question': ->
             Docs.insert
-                tags: ["sol","module #{FlowRouter.getParam('module_number')}", "debrief","question"]
+                tags: ["sol","module #{FlowRouter.getParam('module_number')}","section #{FlowRouter.getParam('section_number')}","reflective question"]
 
-        'click .add_debrief_answer': ->
+        'click .add_reflective_answer': ->
             answer_tags = @tags
             answer_tags.push 'answer'
             # console.log 'answer tags', answer_tags
@@ -77,11 +77,11 @@ if Meteor.isClient
             Session.set 'editing_id', new_id
 
 if Meteor.isServer
-    publishComposite 'debrief_questions', (module_number)->
+    publishComposite 'reflective_questions', (module_number, section_number)->
         {
             find: ->
                 Docs.find 
-                    tags: ["sol","module #{module_number}", "debrief","question"]
+                    tags: ["sol","module #{module_number}", "section #{section_number}","reflective question"]
             children: [
                 { 
                     find: (question) ->

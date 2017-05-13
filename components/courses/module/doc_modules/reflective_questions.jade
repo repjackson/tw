@@ -1,33 +1,34 @@
-template(name='doc_debrief')
-    .ui.header Lightwork Debrief Questions
+template(name='section_reflective_questions')
+    .ui.header Reflective Questions
     if isInRole 'admin'
-        #add_debrief_question.ui.basic.button 
+        #add_reflective_question.ui.basic.button 
             i.red.configure.icon
-            |Add Debrief Question
-    each debrief_questions
+            |Add Reflective Question
+    each reflective_questions
         .ui.segment
             if isInRole 'admin'
                 +thing
             else
-                .ui.header #{body}
+                h1.ui.header #{body}
             .ui.divider
             if currentUser
                 if has_answered_question
-                    +answers
+                    +reflective_answers
                 else
-                    .add_debrief_answer.ui.basic.button 
+                    .add_reflective_answer.ui.basic.button 
                         i.plus.icon
                         |Add Answer
-template(name='answers')
+
+template(name='reflective_answers')
     with my_answer
         .ui.segment
-            .ui.header Your Answer
+            h4.ui.header Your Answer
             if is_editing
                 .ui.form
                     .field
                         input#body(type='text' value=body)
             else
-                h4 #{body}
+                span #{body}
             if can_edit
                 +published
                     // .toggle_published.ui.slider.checkbox
@@ -37,11 +38,11 @@ template(name='answers')
                 +edit_button
                 +delete_button
     unless is_editing_my_answer
-        .ui.header All Published Answers
+        h4.ui.header All Published Reflective Answers
         .ui.segments
-            each all_answers
+            each all_reflective_answers
                 .ui.segment
-                    h4 #{body}
+                    span #{body}
                     a(href='/profile/#{author._id}')
                         img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
                         |{{author.name}}

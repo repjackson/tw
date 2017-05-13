@@ -20,11 +20,9 @@ template(name='doc_section')
             |Section #{section.number}: #{section.title}
         .ui.stackable.grid
             .five.wide.column
-                .content
-                    |!{description}
                 .ui.vertical.fluid.pointing.menu
-                    a.item(href="/course/sol/#{number}/#{section_number}" class="{{isActiveRoute name='doc_lightwork'}}") View
-                    a.item(href="/course/sol/#{number}/collaboration" class="{{isActiveRoute name='section_collaboration'}}") Collaboration
+                    a.item(href="/course/sol/module/#{module.number}/section/#{section.number}" class="{{isActiveRoute name='doc_section'}}") View
+                    // a.item(href="/course/sol/module/#{module.number}/section/#{section.number}/reflective_questions" class="{{isActiveRoute name='section_reflective_questions'}}") Collaboration
                 .ui.dividing.header Status
                 if complete
                     .ui.teal.fluid.label 
@@ -35,7 +33,6 @@ template(name='doc_section')
                         |Incomplete
             .eleven.wide.column
                 // .ui.basic.segment
-                .ui.header Section #{number}: #{title}
                 +doc_content tags=section_content_tags
                 .ui.styled.fluid.accordion
                     h3.title
@@ -44,5 +41,7 @@ template(name='doc_section')
                     .content
                         +doc_content tags=section_transcript_tags
                 .ui.hidden.divider
-                +view_questions
+                +section_reflective_questions
                         
+
+
