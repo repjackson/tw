@@ -16,7 +16,8 @@ template(name='course_modules')
                     .ui.dividing.header Admin
                     each tags
                         .ui.basic.label #{this}
-            +edit_button
+            if isInRole 'admin'
+                +edit_button
     
     
     

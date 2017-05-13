@@ -6,38 +6,74 @@ template(name='view_course')
             .divider  / 
             a.section(href='/courses') Courses
             .divider  / 
-            .active.section 
-                +doc_title tags='course,sol'
+            .active.section #{course.title}
         .ui.hidden.divider
         .ui.stackable.grid
             .centered.row
-                img.ui.image(src="{{c.url 'sol' }}")
+                img.ui.image(src="{{c.url course.image_id }}")
 
                 // h1.ui.center.aligned.header #{course.title}
             // .centered.row
             //     h4.ui.center.aligned.header #{course.subtitle}
             .five.wide.column
-                .ui.vertical.fluid.pointing.large.menu
-                    a.item(href="/course/sol/welcome" class="{{isActiveRoute name='course_welcome'}}") Welcome
-                    a.item(href="/course/sol/modules" class="{{isActiveRoute name='course_modules'}}") Modules
-                    a.item(href="/course/sol/members" class="{{isActiveRoute name='course_members'}}") Members
-                    // a.item(href="/course/#{slug}/collaboration" class="{{isActiveRoute name='course_collaboration'}}") Collaboration
-                    a.item(href="/course/sol/downloads" class="{{isActiveRoute name='course_downloads'}}") Downloads
-                    // a.item(href="/course/#{slug}/reminders" class="{{isActiveRoute name='course_reminders'}}") Reminders
-                if isInRole 'admin'
-                    .ui.segment
-                        .ui.dividing.header 
-                            i.red.configure.icon
-                            |Admin
-                        .ui.header Title:
-                        +doc_title tags='course,sol'
-                        .ui.header Subtitle:
-                        +doc_subtitle tags='course,sol'
-                        // +doc_price tags='course,sol'
+                with course
+                    .ui.vertical.fluid.pointing.large.menu
+                        a.item(href="/course/sol/welcome" class="{{isActiveRoute name='course_welcome'}}") Welcome
+                        a.item(href="/course/sol/modules" class="{{isActiveRoute name='course_modules'}}") Modules
+                        a.item(href="/course/sol/members" class="{{isActiveRoute name='course_members'}}") Members
+                        // a.item(href="/course/sol/collaboration" class="{{isActiveRoute name='course_collaboration'}}") Collaboration
+                        // a.item(href="/course/sol/downloads" class="{{isActiveRoute name='course_downloads'}}") Downloads
+                        // a.item(href="/course/sol/reminders" class="{{isActiveRoute name='course_reminders'}}") Reminders
+                    // if isInRole 'admin'
+                    //     .ui.segment
+                    //         .ui.header 
+                    //             i.red.configure.icon
+                    //             |Admin
+                            // #add_module.ui.basic.fluid.button
+                            //     i.plus.icon
+                            //     |Module
+                            // .ui.hidden.fitted.divider
+                            // a.ui.basic.fluid.button(href="/course/#{_id}/edit")
+                            //     i.pencil.icon
+                            //     | Edit Course
             .ten.wide.column
                 +Template.dynamic template=course_content
 
     
+template(name='course_not_ready')    
+    .ui.text.center.aligned.basic.segment.container
+        h1.ui.header Thank you for Enrolling in SOL!
+        h3.ui.header We're launching on April 2, please sign up below for updates and notifications.
+        a.ui.teal.large.button(href='http://toriwebster.us11.list-manage.com/subscribe?u=8973e01aca6da499e7e1a63bd&id=9204d04e30')
+            |Sign Up for the SOL Newsletter
+    
+    
+// template(name='course_modules')        
+//     h2.ui.center.aligned.header Modules
+//     each modules
+//         if module_is_available
+//             .ui.segment
+//                 a(href="/course/#{course}/module/#{number}/section/1")
+//                     .ui.header  #{number}: #{title}
+//                     // .ui.teal.progress
+//                     //     .bar
+//                     //     .progress
+//                     //     .label Coursework
+//                     // if sol_demo_member
+//                     //     i.lock.icon
+//                     // else    
+//                     //     i.lock.icon
+//         else
+//             .ui.disabled.segment
+//                 // a(href="/course/#{course}/module/#{number}")
+//                 .ui.header  #{number}: #{title}
+//                     // .ui.teal.progress
+//                     //     .bar
+//                     //     .progress
+//                     //     .label Coursework
+//                 // i.lock.icon
+            
+                
 template(name='course_reminders')                
     h2.ui.center.aligned.header Course Reminders            
 
@@ -45,7 +81,7 @@ template(name='course_reminders')
 
 template(name='register_sol')
     .ui.text.container
-        h2.ui.center.aligned.header Hello and welcome to ToriWebster.com!
+        h2.ui.center.aligned.header Hi and Welcome to ToriWebster.com!
         h5.ui.center.aligned.header Please register an account to enroll in the SOL demo or login if you already have one.
         .ui.basic.segment
             +atForm state='signUp'

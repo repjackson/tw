@@ -17,7 +17,8 @@ template(name='module_sections')
                         |Admin
                     each tags
                         .ui.basic.label #{this}
-            +edit_button
+            if isInRole 'admin'
+                +edit_button
     
     
     

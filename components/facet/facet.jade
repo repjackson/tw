@@ -16,7 +16,8 @@ template(name='doc_content')
             else
                 span(class=doc_classes)
                     |!{content}
-            +edit_button        
+            if isInRole 'admin'
+                +edit_button        
     else
         if isInRole 'admin'
             .ui.header No Doc Found
@@ -32,7 +33,8 @@ template(name='doc_body')
             else
                 span(class=doc_classes)
                     |#{body}
-            +edit_button        
+            if isInRole 'admin'
+                +edit_button        
     else
         if isInRole 'admin'
             .ui.header No Doc Found
@@ -71,4 +73,5 @@ template(name='thing')
             +delete_button
     else
         h4 #{body}
-        +edit_button
+        if isInRole 'admin'
+            +edit_button

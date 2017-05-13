@@ -13,7 +13,7 @@
 FlowRouter.route '/course/sol', 
     name: 'course_home'
     triggersEnter: [ (context, redirect) ->
-        if Meteor.user() and Meteor.user().courses and 'sol' in Meteor.user().courses
+        if Meteor.user() and Meteor.user().courses and context.params.slug in Meteor.user().courses
             redirect "/course/sol/welcome"
         else 
             redirect "/course/sol/sales"
@@ -23,14 +23,34 @@ FlowRouter.route '/course/sol',
 
 
 
-FlowRouter.route '/course/sol/reminders', 
-    name: 'course_reminders'
-    action: (params) ->
-        BlazeLayout.render 'view_course',
-            course_content: 'course_reminders'
+# FlowRouter.route '/course/:slug/reminders', 
+#     name: 'course_reminders'
+#     action: (params) ->
+#         BlazeLayout.render 'view_course',
+#             course_content: 'course_reminders'
 
 FlowRouter.route '/register-sol', 
     name: 'register-sol'
     action: (params) ->
         BlazeLayout.render 'layout',
             main: 'register_sol'
+
+
+
+Template.view_course.onCreated ->
+    @autorun -> Meteor.subscribe 'doc_by_tags', ['course','sol']
+
+Template.view_course.helpers
+    course: -> 
+        Docs.findOne tags: ['course','sol']
+    
+
+
+
+Template.view_course.events
+    # 'click #add_module': ->
+    #     slug = FlowRouter.getParam('slug')
+    #     new_module_id = Modules.insert
+    #         parent_course_slug:slug 
+    #     FlowRouter.go "/course/#{slug}/module/#{new_module_id}/edit"
+            

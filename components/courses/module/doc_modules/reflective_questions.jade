@@ -9,7 +9,7 @@ template(name='section_reflective_questions')
             if isInRole 'admin'
                 +thing
             else
-                h1.ui.header #{body}
+                h3.ui.header #{body}
             .ui.divider
             if currentUser
                 if has_answered_question

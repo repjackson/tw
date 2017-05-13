@@ -20,7 +20,8 @@ template(name='doc_module')
                     .content
                         |!{description}
                     .ui.vertical.fluid.pointing.menu
-                        a.item(href="/course/sol/#{number}/debrief" class="{{isActiveRoute name='doc_debrief'}}") Debrief
+                        unless is_first_module
+                            a.item(href="/course/sol/#{number}/debrief" class="{{isActiveRoute name='doc_debrief'}}") Debrief
                         a.item(href="/course/sol/#{number}/sections" class="{{isActiveRoute name='doc_sections'}}") Sections
                         // .item Sections
                         // .menu
