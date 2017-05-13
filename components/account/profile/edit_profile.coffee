@@ -169,3 +169,4 @@ if Meteor.isServer
                 username: 1
                 image_id: 1
                 courses: 1
+                points: 1

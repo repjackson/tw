@@ -46,3 +46,6 @@ template(name='reflective_answers')
                     a(href='/profile/#{author._id}')
                         img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
                         |{{author.name}}
+                    // .ui.divider
+                    unless is_author
+                        +voting

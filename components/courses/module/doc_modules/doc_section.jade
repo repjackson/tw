@@ -23,14 +23,21 @@ template(name='doc_section')
                 .ui.vertical.fluid.pointing.menu
                     a.item(href="/course/sol/module/#{module.number}/section/#{section.number}" class="{{isActiveRoute name='doc_section'}}") View
                     // a.item(href="/course/sol/module/#{module.number}/section/#{section.number}/reflective_questions" class="{{isActiveRoute name='section_reflective_questions'}}") Collaboration
-                .ui.dividing.header Status
-                if complete
+                .ui.dividing.header Progress
+                if video_complete
                     .ui.teal.fluid.label 
                         i.check.icon
-                        |Complete
+                        |Video
                 else
                     .ui.teal.basic.fluid.label 
-                        |Incomplete
+                        |Video
+                if reflective_questions_answered
+                    .ui.teal.fluid.label 
+                        i.check.icon
+                        |Reflective Questions
+                else
+                    .ui.teal.basic.fluid.label 
+                        |Reflective Questions
             .eleven.wide.column
                 // .ui.basic.segment
                 +doc_content tags=section_content_tags
@@ -42,7 +49,15 @@ template(name='doc_section')
                     .content
                         +doc_content tags=section_transcript_tags
                 .ui.hidden.divider
-                +section_reflective_questions
+                if video_complete
+                    .unmark_video_complete.ui.teal.fluid.button 
+                        i.check.icon
+                        |Video Watched
+                else
+                    .mark_video_complete.ui.basic.fluid.button Mark Video Watched
+                .ui.hidden.divider
+                if video_complete
+                    +section_reflective_questions
                         
 
 

@@ -9,8 +9,8 @@ Template.courses.onCreated ->
 
 Template.courses.helpers
     courses: -> 
-        Courses.find
-            published: true
+        Docs.find
+            tags: $all:['course']
 
     all_item_class: -> if Session.equals 'view_mode', 'all' then 'active' else ''
     mine_item_class: -> 

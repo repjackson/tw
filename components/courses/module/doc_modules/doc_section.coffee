@@ -11,6 +11,7 @@ if Meteor.isClient
         section_num = parseInt FlowRouter.getParam('section_number')
         @autorun -> Meteor.subscribe 'module', module_num
         @autorun -> Meteor.subscribe 'section', module_num, section_num
+        @autorun -> Meteor.subscribe 'section_complete_docs', module_num, section_num
         
     Template.doc_section.onRendered ->
         self = @
@@ -33,6 +34,13 @@ if Meteor.isClient
         section_transcript_tags: ->
             "sol,module #{FlowRouter.getParam('module_number')},section #{FlowRouter.getParam('section_number')},transcript"
 
+        video_complete: ->
+            module_num = parseInt FlowRouter.getParam('module_number')
+            section_num = parseInt FlowRouter.getParam('section_number')
+
+            Docs.findOne
+                tags: $all: ['completion', 'sol', "module #{module_num}", "section #{section_num}", 'video']
+    
     
         module: -> 
             Docs.findOne 
@@ -52,6 +60,23 @@ if Meteor.isClient
             module_number = FlowRouter.getParam('module_number')
             course_slug = FlowRouter.getParam('course_slug')
             FlowRouter.go "/course/#{course_slug}/module/#{@_id}/edit"
+            
+            
+        'click .mark_video_complete': ->
+            module_num = parseInt FlowRouter.getParam('module_number')
+            section_num = parseInt FlowRouter.getParam('section_number')
+
+            Docs.insert
+                tags: ['completion', 'sol', "module #{module_num}", "section #{section_num}", 'video']
+            
+    
+        'click .unmark_video_complete': ->
+            module_num = parseInt FlowRouter.getParam('module_number')
+            section_num = parseInt FlowRouter.getParam('section_number')
+
+            complete_doc = Docs.findOne
+                tags: $all:['completion', 'sol', "module #{module_num}", "section #{section_num}", 'video']
+            Docs.remove complete_doc._id
     
     
 if Meteor.isServer
@@ -60,3 +85,9 @@ if Meteor.isServer
             tags: $in: ['section']
             module_number: module_number
             number: section_number
+            
+    Meteor.publish 'section_complete_docs', (module_number, section_number)->
+        Docs.find
+            tags: ['completion', 'sol', "module #{module_number}", "section #{section_number}", 'video']
+            
+        

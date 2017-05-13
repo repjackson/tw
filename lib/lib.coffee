@@ -8,10 +8,10 @@ Docs.before.insert (userId, doc)->
     doc.timestamp = Date.now()
     doc.author_id = Meteor.userId()
     doc.tag_count = doc.tags.length
-    # doc.points = 0
-    # doc.upvoters = []
+    doc.points = 0
+    doc.upvoters = []
     # doc.downvoters = []
-    # doc.published = false
+    doc.published = false
     return
 
 
@@ -108,7 +108,7 @@ Meteor.methods
                 $pull: upvoters: Meteor.userId()
                 $inc: points: -1
             Meteor.users.update doc.author_id, $inc: points: -1
-            Meteor.users.update Meteor.userId(), $inc: points: 1
+            # Meteor.users.update Meteor.userId(), $inc: points: 1
 
         else if Meteor.userId() in doc.downvoters #switch downvote to upvote
             Docs.update id,
@@ -122,7 +122,7 @@ Meteor.methods
                 $addToSet: upvoters: Meteor.userId()
                 $inc: points: 1
             Meteor.users.update doc.author_id, $inc: points: 1
-            Meteor.users.update Meteor.userId(), $inc: points: -1
+            # Meteor.users.update Meteor.userId(), $inc: points: -1
         Meteor.call 'generate_upvoted_cloud', Meteor.userId()
 
 
@@ -138,7 +138,7 @@ Meteor.methods
                 $pull: downvoters: Meteor.userId()
                 $inc: points: 1
             Meteor.users.update doc.author_id, $inc: points: 1
-            Meteor.users.update Meteor.userId(), $inc: points: 1
+            # Meteor.users.update Meteor.userId(), $inc: points: 1
 
         else if Meteor.userId() in doc.upvoters #switch upvote to downvote
             Docs.update id,
@@ -152,7 +152,7 @@ Meteor.methods
                 $addToSet: downvoters: Meteor.userId()
                 $inc: points: -1
             Meteor.users.update doc.author_id, $inc: points: -1
-            Meteor.users.update Meteor.userId(), $inc: points: -1
+            # Meteor.users.update Meteor.userId(), $inc: points: -1
         Meteor.call 'generate_downvoted_cloud', Meteor.userId()
 
 
