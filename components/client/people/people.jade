@@ -26,6 +26,6 @@ template(name='person')
         .extra.content
             +color_dots
         .extra.content
-            each five_tags
-                .ui.compact.tiny.compact.basic.button.user_tag(class=user_tag_class) #{this}
+            each ten_tags
+                .ui.compact.tiny.circular.button.user_tag(class=person_tag_class) #{this}
 

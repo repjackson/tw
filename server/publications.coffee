@@ -128,20 +128,20 @@ Meteor.publish 'doc_by_tags', (tags)->
         tags: tags
 
     
-publishComposite 'questions', (section_id)->
-    {
-        find: ->
-            Docs.find 
-                type: 'question'
-                section_id: section_id
-        children: [
-            { find: (question) ->
-                Docs.find
-                    type: 'answer'
-                    question_id: question._id
-            }
-        ]
-    }
+# publishComposite 'questions', (section_id)->
+#     {
+#         find: ->
+#             Docs.find 
+#                 type: 'question'
+#                 section_id: section_id
+#         children: [
+#             { find: (question) ->
+#                 Docs.find
+#                     type: 'answer'
+#                     question_id: question._id
+#             }
+#         ]
+#     }
     
         
 Meteor.publish 'my_friends', ->
@@ -195,7 +195,7 @@ Meteor.publish 'people', (selected_people_tags)->
     match = {}
     if selected_people_tags.length > 0 then match.tags = $all: selected_people_tags
     match._id = $ne: @userId
-    match["profile.published"] = true
+    # match["profile.published"] = true
     Meteor.users.find match,
         limit: 20
 

@@ -19,12 +19,12 @@ Template.people.helpers
                 tag_count: 1
             limit: 10
 
-    tag_class: -> if @valueOf() in selected_people_tags.array() then 'teal' else ''
 
 Template.person.events
     'click .user_tag': ->
         if @valueOf() in selected_people_tags.array() then selected_people_tags.remove @valueOf() else selected_people_tags.push @valueOf()
 
 Template.person.helpers
-    five_tags: -> if @tags then @tags[..4]
+    ten_tags: -> if @tags then @tags[..9]
 
+    person_tag_class: -> if @valueOf() in selected_people_tags.array() then 'teal' else 'basic'

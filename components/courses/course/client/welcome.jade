@@ -135,7 +135,7 @@ template(name='view_terms_course')
         unless has_agreed
             span _____________________________
         else 
-            strong #{currentUser.name}
+            strong.signature #{currentUser.name}
     p(dir='ltr')
         span Date: 
         unless has_agreed
