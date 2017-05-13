@@ -5,14 +5,20 @@ if Meteor.isClient
 
 
     Template.doc_content.onCreated ->
+        @editing = new ReactiveVar(false)
+
         @autorun => Meteor.subscribe 'facet_doc', @data.tags 
         
         
     Template.doc_body.onCreated ->
+        @editing = new ReactiveVar(false)
+
         @autorun => Meteor.subscribe 'facet_doc', @data.tags 
         
         
     Template.doc_content.helpers
+        editing: -> Template.instance().editing.get()
+
         doc: ->
             tags = Template.currentData().tags
             split_array = tags.split ','
@@ -28,6 +34,8 @@ if Meteor.isClient
 
     
     Template.doc_body.helpers
+        editing: -> Template.instance().editing.get()
+
         doc: ->
             tags = Template.currentData().tags
             split_array = tags.split ','
@@ -44,6 +52,9 @@ if Meteor.isClient
     
     
     Template.doc_content.events
+        'click .edit_this': (e,t)-> t.editing.set true
+        'click .save_doc': (e,t)-> t.editing.set false
+
         'click .edit_content': ->
             Session.set 'editing_id', @_id
 
@@ -56,6 +67,9 @@ if Meteor.isClient
 
             
     Template.doc_body.events
+        'click .edit_this': (e,t)-> t.editing.set true
+        'click .save_doc': (e,t)-> t.editing.set false
+
         'click .edit_content': ->
             Session.set 'editing_id', @_id
 

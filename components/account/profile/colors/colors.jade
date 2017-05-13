@@ -1,21 +1,12 @@
 template(name='colors')
     .ui.container
-        h1.ui.dividing.header Colors
-        h3.ui.header Order Your Colors
+        h1.ui.dividing.header True Colors
+        +doc_content tags='colors,intro'
+        +doc_content tags='colors,transcript'
         // if isInRole 'admin'
         //     #add_color.ui.basic.button
         //         i.red.configure.icon
         //         |Add color
-        unless me.profile.colors
-            #generate_colors.ui.basic.button Generate Colors
-        else
-            .ui.four.stackable.cards
-                each me.profile.colors
-                    .ui.card(class=color_segment_class)
-                        .content
-                            .ui.header #{this}
-                            .increase_index.ui.icon.basic.circular.button
-                                i.chevron.left.icon
         h3.ui.header Color Information
         .ui.styled.fluid.accordion
             each colors
@@ -26,6 +17,17 @@ template(name='colors')
                     |!{content}
                     if isInRole 'admin'
                         a(href="/edit/#{_id}") Edit Color
+        unless me.profile.colors
+            #generate_colors.ui.basic.button Generate Colors
+        else
+            h3.ui.header Order Your Colors
+            .ui.four.stackable.cards
+                each me.profile.colors
+                    .ui.card(class=color_segment_class)
+                        .content
+                            .ui.header #{this}
+                            .increase_index.ui.icon.basic.circular.button
+                                i.chevron.left.icon
                     
                     
 template(name='color_dots')

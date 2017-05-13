@@ -91,14 +91,6 @@ tests notes
         any business related/beneficial skill, aim is to build ability, empower people
         
         
-meeting notes
-    
-    
-todo today
-    change everything to parent_id?
-    
-    
-    
 flow from demo button
 settings under account
 email in profile
