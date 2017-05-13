@@ -1,5 +1,5 @@
 if Meteor.isClient
-    FlowRouter.route '/course/sol/:module_number/downloads', 
+    FlowRouter.route '/course/sol/module/:module_number/downloads', 
         name: 'doc_downloads'
         action: (params) ->
             BlazeLayout.render 'doc_module',

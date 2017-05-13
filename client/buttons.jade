@@ -46,6 +46,15 @@ template(name='published')
         #publish.ui.basic.button
             |Private
 
+template(name='session_edit_button')
+    if currentUser
+        unless is_editing
+            .edit_this.ui.basic.icon.button(title=tags)
+                i.pencil.icon
+        else
+            .save_doc.ui.icon.green.basic.button
+                i.check.icon
+                
 template(name='edit_button')
     if currentUser
         unless editing

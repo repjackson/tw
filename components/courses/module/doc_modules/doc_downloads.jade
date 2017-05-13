@@ -1,5 +1,5 @@
 template(name='doc_downloads')
-    .ui.center.aligned.header Module #{module.title} Downloads
+    .ui.horizontal.divider.header Module #{module.title} Downloads
     if isInRole 'admin'
         unless $.Session.get 'is_editing'
             #add_file.ui.basic.button 
@@ -23,7 +23,7 @@ template(name='file_item')
                     a.ui.basic.button(href=link)
                         i.download.icon
                         |Download #{title}
-        +edit_button
+        +session_edit_button
                 
 template(name='edit_file')
     .ui.form

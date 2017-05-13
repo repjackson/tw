@@ -1,5 +1,5 @@
 template(name='doc_debrief')
-    .ui.header Lightwork Debrief Questions
+    .ui.horizontal.divider.header Lightwork Debrief Questions
     if isInRole 'admin'
         #add_debrief_question.ui.basic.button 
             i.red.configure.icon
@@ -13,12 +13,13 @@ template(name='doc_debrief')
             .ui.divider
             if currentUser
                 if has_answered_question
-                    +answers
+                    +debrief_answers
                 else
                     .add_debrief_answer.ui.basic.button 
                         i.plus.icon
                         |Add Answer
-template(name='answers')
+
+template(name='debrief_answers')
     with my_answer
         .ui.segment
             .ui.header Your Answer
@@ -34,7 +35,7 @@ template(name='answers')
                     //     input(type='checkbox' name='publish_answer' checked=published)
                     //     label Publish Answer
                     // i.help.circle.outline.large.icon(data-content="By making this answer public other SOL participants can see it, relate, and collaborate.")
-                +edit_button
+                +session_edit_button
                 +delete_button
     unless is_editing_my_answer
         .ui.header All Published Answers

@@ -1,6 +1,6 @@
 template(name='doc_lightwork')
     // .ui.basic.segment
-    .ui.center.aligned.header Lightwork
+    .ui.horizontal.divider.header Lightwork
     +doc_content tags=lightwork_tags
     .ui.hidden.divider
     .ui.styled.fluid.accordion
@@ -10,5 +10,53 @@ template(name='doc_lightwork')
         .content
             +doc_content tags=lightwork_transcript_tags
     .ui.hidden.divider
-    +view_questions
-            
+    +lightwork_questions_template
+    
+template(name='lightwork_questions_template')
+    .ui.horizontal.divider.header Lightwork Debrief Questions
+    if isInRole 'admin'
+        #add_lightwork_question.ui.basic.button 
+            i.red.configure.icon
+            |Add Lightwork Question
+    each lightwork_questions
+        .ui.segment
+            if isInRole 'admin'
+                +thing
+            else
+                .ui.header #{body}
+            .ui.divider
+            if currentUser
+                if has_answered_question
+                    +lightwork_answers
+                else
+                    .add_lightwork_answer.ui.basic.button 
+                        i.plus.icon
+                        |Add Answer
+
+template(name='lightwork_answers')
+    with my_answer
+        .ui.segment
+            .ui.header Your Answer
+            if is_editing
+                .ui.form
+                    .field
+                        input#body(type='text' value=body)
+            else
+                h4 #{body}
+            if can_edit
+                +published
+                    // .toggle_published.ui.slider.checkbox
+                    //     input(type='checkbox' name='publish_answer' checked=published)
+                    //     label Publish Answer
+                    // i.help.circle.outline.large.icon(data-content="By making this answer public other SOL participants can see it, relate, and collaborate.")
+                +session_edit_button
+                +delete_button
+    unless is_editing_my_answer
+        .ui.header All Published Answers
+        .ui.segments
+            each all_answers
+                .ui.segment
+                    h4 #{body}
+                    a(href='/profile/#{author._id}')
+                        img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+                        |{{author.name}}

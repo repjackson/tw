@@ -10,9 +10,9 @@ template(name='doc_section')
             .divider  / 
             a.section(href="/course/sol/modules") Modules
             .divider  / 
-            a.section(href="/course/sol/#{module.number}") #{module.number}: #{module.title}
+            a.section(href="/course/sol/module/#{module.number}") #{module.number}: #{module.title}
             .divider  / 
-            a.section(href="/course/sol/#{module.number}/sections") Sections
+            a.section(href="/course/sol/module/#{module.number}/sections") Sections
             .divider  / 
             .section #{section.number}: #{section.title}
 

@@ -1,24 +1,32 @@
 template(name='module_sections')        
-    h2.ui.center.aligned.header Sections
+    .ui.horizontal.divider.header Sections
     if isInRole 'admin'
         #add_section.ui.basic.button 
             i.red.configure.icon
             |Add Section
     each module_sections
-        .ui.segment
-            if is_editing
-                +title
-                +number
-            else
-                a.ui.header(href="/course/sol/module/#{module_number}/section/#{number}") #{number}: #{title}
-                if isInRole 'admin'
-                    .ui.horizontal.divider.header.header 
-                        i.red.configure.small.icon
-                        |Admin
-                    each tags
-                        .ui.basic.label #{this}
+        +module_section
+        
+        
+template(name='module_section')        
+    .ui.segment
+        if editing
+            +title
+            +number
+        else
+            a.ui.header(href="/course/sol/module/#{module_number}/section/#{number}") #{number}: #{title}
             if isInRole 'admin'
-                +edit_button
-    
+                .ui.horizontal.divider.header.header 
+                    i.red.configure.small.icon
+                    |Admin
+                each tags
+                    .ui.basic.label #{this}
+        if isInRole 'admin'
+            unless editing
+                i.edit_this.large.pencil.link.icon(title=tags)
+            else
+                .save_doc.ui.icon.green.basic.button
+                    i.check.icon
+
     
     

@@ -1,5 +1,5 @@
 if Meteor.isClient
-    FlowRouter.route '/course/sol/:module_number/sections', 
+    FlowRouter.route '/course/sol/module/:module_number/sections', 
         name: 'module_sections'
         action: (params) ->
             BlazeLayout.render 'doc_module',
@@ -7,7 +7,12 @@ if Meteor.isClient
     
     Template.module_sections.onCreated ->
         @autorun -> Meteor.subscribe 'module_sections', parseInt FlowRouter.getParam('module_number')
-    
+    Template.module_section.onCreated ->
+        @editing = new ReactiveVar(false)
+
+    Template.module_section.helpers
+        editing: -> Template.instance().editing.get()
+
     Template.module_sections.helpers
         module_sections: ->
             Docs.find {
@@ -20,6 +25,15 @@ if Meteor.isClient
             Docs.insert
                 tags: ['section']
                 module_number: module_number
+                
+    Template.module_section.events
+        'click .edit_this': (e,t)-> 
+            # console.log t.editing
+            t.editing.set true
+        'click .save_doc': (e,t)-> 
+            # console.log t.editing
+            t.editing.set false
+        
                 
                 
 if Meteor.isServer

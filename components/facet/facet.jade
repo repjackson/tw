@@ -77,9 +77,9 @@ template(name='thing')
         .ui.form
             .field
                 input#body(type='text' value=body)
-            +edit_button
+            +session_edit_button
             +delete_button
     else
         h4 #{body}
         if isInRole 'admin'
-            +edit_button
+            +session_edit_button

@@ -23,7 +23,7 @@ template(name='doc_image')
                 img.ui.image(src="{{c.url image_id }}" class=doc_classes)
                 // i.edit_content.pencil.link.icon(title=tags)
             if isInRole 'admin'
-                +edit_button
+                +session_edit_button
     else
         if isInRole 'admin'
             .ui.header No Doc Found

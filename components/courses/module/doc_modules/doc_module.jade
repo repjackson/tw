@@ -21,14 +21,14 @@ template(name='doc_module')
                         |!{description}
                     .ui.vertical.fluid.pointing.menu
                         unless is_first_module
-                            a.item(href="/course/sol/#{number}/debrief" class="{{isActiveRoute name='doc_debrief'}}") Debrief
-                        a.item(href="/course/sol/#{number}/sections" class="{{isActiveRoute name='doc_sections'}}") Sections
+                            a.item(href="/course/sol/module/#{number}/debrief" class="{{isActiveRoute name='doc_debrief'}}") Debrief
+                        a.item(href="/course/sol/module/#{number}/sections" class="{{isActiveRoute name='doc_sections'}}") Sections
                         // .item Sections
                         // .menu
                         //     each module_sections
                         //         a.item(href="/course/#{../course}/#{module_number}/section/#{number}" class=section_path_class)  #{number}: #{title}
-                        a.item(href="/course/sol/#{number}/lightwork" class="{{isActiveRoute name='doc_lightwork'}}") Lightwork
-                        a.item(href="/course/sol/#{number}/downloads" class="{{isActiveRoute name='doc_downloads'}}") Downloads
+                        a.item(href="/course/sol/module/#{number}/lightwork" class="{{isActiveRoute name='doc_lightwork'}}") Lightwork
+                        a.item(href="/course/sol/module/#{number}/downloads" class="{{isActiveRoute name='doc_downloads'}}") Downloads
                     .ui.dividing.header Status
                     if complete
                         .ui.teal.fluid.label 
@@ -37,11 +37,11 @@ template(name='doc_module')
                     else
                         .ui.teal.basic.fluid.label 
                             |Incomplete
-                    if isInRole 'admin'
-                        .ui.dividing.header 
-                            |Admin
-                        a.ui.fluid.basic.button(href="/course/sol/module/#{_id}/edit")
-                            i.red.configure.icon
-                            |Edit Module
+                    // if isInRole 'admin'
+                    //     .ui.dividing.header 
+                    //         |Admin
+                    //     a.ui.fluid.basic.button(href="/course/sol/module/#{_id}/edit")
+                    //         i.red.configure.icon
+                            // |Edit Module
             .eleven.wide.column
                 +Template.dynamic template=module_content

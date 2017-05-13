@@ -1,5 +1,5 @@
 if Meteor.isClient
-    FlowRouter.route '/course/sol/:module_number/debrief', 
+    FlowRouter.route '/course/sol/module/:module_number/debrief', 
         name: 'doc_debrief'
         action: (params) ->
             BlazeLayout.render 'doc_module',
@@ -9,7 +9,7 @@ if Meteor.isClient
     Template.doc_debrief.onCreated ->
         @autorun -> Meteor.subscribe 'debrief_questions', FlowRouter.getParam('module_number')
     
-    # Template.answers.onCreated ->
+    # Template.debrief_answers.onCreated ->
         # @autorun => Meteor.subscribe 'answers', @data._id
     
     
@@ -32,7 +32,7 @@ if Meteor.isClient
                 author_id: Meteor.userId()
 
     
-    Template.answers.helpers
+    Template.debrief_answers.helpers
         all_answers: ->
             Docs.find
                 parent_id: @_id
@@ -53,7 +53,7 @@ if Meteor.isClient
                     author_id: Meteor.userId()
             Session.equals 'editing_id', my_answer._id
 
-    Template.answers.events
+    Template.debrief_answers.events
         'blur #body': (e,t)->
             body = $(e.currentTarget).closest('#body').val()
             Docs.update @_id,

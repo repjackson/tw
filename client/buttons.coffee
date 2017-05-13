@@ -69,11 +69,20 @@ Template.edit_link.helpers
 
 Template.edit_button.events
     'click .edit_this': (e,t)-> 
-        console.log t.editing
+        # console.log t.editing
         t.editing.set true
     'click .save_doc': (e,t)-> 
-        console.log t.editing
+        # console.log t.editing
         t.editing.set false
+
+
+
+Template.session_edit_button.events
+    'click .edit_this': -> Session.set 'editing_id', @_id
+    'click .save_doc': -> Session.set 'editing_id', null
+
+
+
 Template.edit_icon.events
     'click .edit_this': (e,t)-> 
         console.log t.editing

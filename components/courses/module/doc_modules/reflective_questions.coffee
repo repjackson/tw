@@ -1,5 +1,5 @@
 if Meteor.isClient
-    # FlowRouter.route '/course/sol/:module_number/debrief', 
+    # FlowRouter.route '/course/sol/module/:module_number/debrief', 
     #     name: 'section_reflective_questions'
     #     action: (params) ->
     #         BlazeLayout.render 'doc_module',
