@@ -54,13 +54,40 @@ Template.published.events
     'click #unpublish': -> Docs.update @_id, $set: published: false
 
 
-Template.edit_button.events
-    'click .edit_this': -> Session.set 'editing_id', @_id
-    'click .save_doc': -> Session.set 'editing_id', null
+Template.edit_button.onCreated ->
+    @editing = new ReactiveVar(false)
+Template.edit_button.helpers
+    editing: -> Template.instance().editing.get()
+Template.edit_icon.onCreated ->
+    @editing = new ReactiveVar(false)
+Template.edit_icon.helpers
+    editing: -> Template.instance().editing.get()
+Template.edit_link.onCreated ->
+    @editing = new ReactiveVar(false)
+Template.edit_link.helpers
+    editing: -> Template.instance().editing.get()
 
+Template.edit_button.events
+    'click .edit_this': (e,t)-> 
+        console.log t.editing
+        t.editing.set true
+    'click .save_doc': (e,t)-> 
+        console.log t.editing
+        t.editing.set false
+Template.edit_icon.events
+    'click .edit_this': (e,t)-> 
+        console.log t.editing
+        t.editing.set true
+    'click .save_doc': (e,t)-> 
+        console.log t.editing
+        t.editing.set false
 Template.edit_link.events
-    'click .edit_this': -> Session.set 'editing_id', @_id
-    'click .save_doc': -> Session.set 'editing_id', null
+    'click .edit_this': (e,t)-> 
+        console.log t.editing
+        t.editing.set true
+    'click .save_doc': (e,t)-> 
+        console.log t.editing
+        t.editing.set false
 
 
 Template.rating.onRendered ->
@@ -87,14 +114,11 @@ Template.rating.onRendered ->
                     #     console.log value
             , 2000
             # console.log 'subs ready'
-
-    
 Template.rating.helpers
     question_rating: ->
         session_doc = Docs.findOne FlowRouter.getParam('session_id')
         rating = _.findWhere(session_doc.ratings, {question_id: @_id}).rating
         rating
-            
 # Template.rank.helpers
 #     rank_doc: ->
 #         rank_doc = 
@@ -135,9 +159,6 @@ Template.rating.helpers
 #                 parent_id: @_id
 #                 number: 1
 #                 group: 'personality_colors'
-
-
-
 Template.rating.events
     'click .rating': (e,t)->
         session_id = FlowRouter.getParam('session_id')
@@ -241,8 +262,6 @@ Template.resonate_button.helpers
         if Meteor.userId()
             if @favoriters and Meteor.userId() in @favoriters then 'teal' else 'basic'
         else 'grey disabled'
-        
-        
 Template.resonate_button.events
     'click .resonate_button': -> 
         if Meteor.userId() then Meteor.call 'favorite', Template.parentData(0)
@@ -258,7 +277,8 @@ Template.add_to_cart.onCreated ->
     @autorun => Meteor.subscribe 'cart'
 
 Template.add_to_cart.events
-    'click #add_to_cart': -> 
+    'click #add_to_cart': (e,t)-> 
+        # console.log t.data.tags
         # Session.set 'cart_item', @_id
         # FlowRouter.go '/cart'
         if Meteor.userId() then Meteor.call 'add_to_cart', @_id, =>

@@ -24,18 +24,17 @@ template(name='view_course')
                         // a.item(href="/course/sol/collaboration" class="{{isActiveRoute name='course_collaboration'}}") Collaboration
                         // a.item(href="/course/sol/downloads" class="{{isActiveRoute name='course_downloads'}}") Downloads
                         // a.item(href="/course/sol/reminders" class="{{isActiveRoute name='course_reminders'}}") Reminders
-                    // if isInRole 'admin'
-                    //     .ui.segment
-                    //         .ui.header 
-                    //             i.red.configure.icon
-                    //             |Admin
-                            // #add_module.ui.basic.fluid.button
-                            //     i.plus.icon
-                            //     |Module
-                            // .ui.hidden.fitted.divider
-                            // a.ui.basic.fluid.button(href="/course/#{_id}/edit")
-                            //     i.pencil.icon
-                            //     | Edit Course
+                    if isInRole 'admin'
+                        .ui.segment
+                            .ui.header 
+                                i.red.configure.icon
+                                |Admin
+                            .ui.header Title
+                            +doc_title tags='course,sol'
+                            .ui.header Subtitle
+                            +doc_subtitle tags='course,sol'
+                            .ui.header Price
+                            +doc_price tags='course,sol'
             .ten.wide.column
                 +Template.dynamic template=course_content
 

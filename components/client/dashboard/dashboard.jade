@@ -11,6 +11,7 @@ template(name='dashboard')
                 a.ui.card(href='/tests')
                     .content
                         .header
+                            i.red.configure.icon
                             i.edit.icon
                             |My Tests
             a.ui.card(href='/transactions')
@@ -28,11 +29,13 @@ template(name='dashboard')
                     .header 
                         i.sun.icon
                         |My Light Bank
-            a.ui.card(href='/support')
-                .content
-                    .header
-                        i.help.icon
-                        |Support
+            if isInRole 'admin'
+                a.ui.card(href='/support')
+                    .content
+                        .header
+                            i.red.configure.icon
+                            i.help.icon
+                            |Support
             // a.ui.card(href='/account')
             //     .content
             //         .header

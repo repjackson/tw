@@ -102,8 +102,6 @@ if Meteor.isClient
 
 
 if Meteor.isServer
-    # Meteor.publish 'cart', (course_id)->
-    #     Courses.find course_id
     Meteor.methods
         'add_to_cart': (doc_id)->
             Docs.insert

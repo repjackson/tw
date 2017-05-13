@@ -7,7 +7,7 @@
 Docs.before.insert (userId, doc)->
     doc.timestamp = Date.now()
     doc.author_id = Meteor.userId()
-    doc.tag_count = doc.tags.length
+    doc.tag_count = doc.tags?.length
     doc.points = 0
     doc.upvoters = []
     # doc.downvoters = []

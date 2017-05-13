@@ -89,5 +89,5 @@ if Meteor.isServer
     Meteor.publish 'section_complete_docs', (module_number, section_number)->
         Docs.find
             tags: ['completion', 'sol', "module #{module_number}", "section #{section_number}", 'video']
-            
+            author_id: @userId
         
