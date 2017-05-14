@@ -1,60 +1,58 @@
 .ui.container
-    table.ui.table
+    table.ui.selectable.striped.table
         thead
             tr
                 th Image
                 th Profile
-                th Courses
-                th Roles
-                th Actions
+                th SOL
+                th SOL Demo
+                th Admin
         tbody
             each members
                 tr
                     td 
-                        img.ui.tiny.image(src="{{c.url image_id width=100 height=100 gravity='face' crop='fill'}}")
+                        img.ui.tiny.image(src="{{c.url profile.image_id width=400 height=400 gravity='face' crop='fill'}}")
                     td 
                         .ui.header 
-                            |#{profile.name}
-                        div 
-                            | Username: #{username}
+                            |#{name} (#{username})
                         each emails
                             |#{address}
+                            if verified
+                                i.green.check.icon
                         // a.ui.compact.basic.button(href="/account/profile/edit/#{_id}")
                         //     |Edit Profile
                         .ui.hidden.fitted.divider
                         a.ui.compact.basic.button(href="/profile/#{_id}")
-                            |View Profile
+                            | Profile
+                            i.right.chevron.icon
                     td 
-                        .ui.list
-                            each courses
-                                .item #{this}
-                        if is_sol_member
-                            .remove_sol_member.ui.basic.compact.red.button
+                        if in_sol
+                            .ui.green.label SOL
+                            .remove_sol.ui.basic.compact.icon.button
                                 i.remove.icon 
-                                | SOL
+                                // | SOL
                         else
-                            .make_sol_member.ui.compact.basic.button
+                            .add_sol.ui.compact.basic.button
                                 i.plus.icon 
                                 | SOL
-                        if is_sol_demo_member
-                            .remove_sol_demo_member.ui.basic.compact.red.button
-                                i.remove.icon 
-                                | SOL Demo
-                        else
-                            .make_sol_demo_member.ui.compact.basic.button
-                                i.plus.icon 
-                                | SOL Demo
-                                
                     td
-                        each roles
-                            .ui.basic.label #{this}
+                        if in_sol_demo
+                            .ui.green.label SOL Demo
+                            .remove_sol_demo.ui.basic.compact.icon.button
+                                i.remove.icon 
+                        else
+                            .add_sol_demo.ui.compact.basic.button
+                                i.plus.icon 
+                                | SOL Demo
+                                // | SOL Demo
                     td 
                         if is_admin
-                            .remove_admin.ui.basic.compact.red.button
+                            .ui.green.label Admin
+                            .remove_admin.ui.basic.compact.icon.button
                                 i.remove.icon 
-                                | Admin
+                                // | Admin
                         else
-                            .make_admin.ui.compact.basic.button
+                            .make_admin.ui.compact.basic.icon.button
                                 i.plus.icon 
                                 | Admin
                                 

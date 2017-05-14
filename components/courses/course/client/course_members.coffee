@@ -1,4 +1,4 @@
-FlowRouter.route '/course/:course_slug/members', 
+FlowRouter.route '/course/sol/members', 
     name: 'course_members'
     action: (params) ->
         BlazeLayout.render 'view_course',
@@ -8,8 +8,8 @@ FlowRouter.route '/course/:course_slug/members',
             
 
 Template.course_members.onCreated ->
-    @autorun -> Meteor.subscribe 'sol_members', FlowRouter.getParam('course_slug'), selected_course_member_tags.array()
-    @autorun -> Meteor.subscribe 'course_member_tags', FlowRouter.getParam('course_slug'), selected_course_member_tags.array()
+    @autorun -> Meteor.subscribe 'sol_members', selected_course_member_tags.array()
+    @autorun -> Meteor.subscribe 'course_member_tags', selected_course_member_tags.array()
     
 Template.course_members.helpers
     course_member_tags: ->
@@ -31,7 +31,8 @@ Template.course_members.helpers
 
     course_members: ->
         Meteor.users.find
-            courses: $in: ['sol', 'sol_demo']
+            roles: $in: ['sol', 'sol_demo']
+            _id: $ne: Meteor.userId()
 
 
 
@@ -41,8 +42,10 @@ Template.course_members.events
     'click .unselect_tag': -> selected_course_member_tags.remove @valueOf()
     'click #clear_tags': -> selected_course_member_tags.clear()
 
-
-
+Template.course_member.onRendered ->
+    $('.profile.image').dimmer({
+        on: 'hover'
+      })
 
 
 
@@ -51,4 +54,6 @@ Template.course_member.events
         if @valueOf() in selected_course_member_tags.array() then selected_course_member_tags.remove @valueOf() else selected_course_member_tags.push @valueOf()
 
 Template.course_member.helpers
-    five_tags: -> if @tags then @tags[..4]
+    seven_tags: -> if @tags then @tags[..6]
+
+    member_tag_class: -> if @valueOf() in selected_course_member_tags.array() then 'blue' else 'basic'

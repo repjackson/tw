@@ -1,11 +1,11 @@
 
     
-Meteor.publish 'sol_members', (slug, selected_course_member_tags) ->
+Meteor.publish 'sol_members', (selected_course_member_tags) ->
     match = {}
     if selected_course_member_tags.length > 0 then match.tags = $all: selected_course_member_tags
     match._id = $ne: @userId
-    match["profile.published"] = true
-    match.courses = $in: [slug]
+    # match["profile.published"] = true
+    match.roles = $in: ['sol','sol_demo']
     
     Meteor.users.find match
 
@@ -15,13 +15,13 @@ Meteor.publish 'sol_members', (slug, selected_course_member_tags) ->
     #     # roles: $in: ['sol_member', 'sol_demo_member']
         
         
-Meteor.publish 'course_member_tags', (slug, selected_course_member_tags)->
+Meteor.publish 'course_member_tags', (selected_course_member_tags)->
     self = @
     match = {}
     if selected_course_member_tags.length > 0 then match.tags = $all: selected_course_member_tags
     match._id = $ne: @userId
     # match["profile.published"] = true
-    match.courses = $in: [slug]
+    match.roles = $in: ['sol','sol_demo']
 
     # console.log match
 
@@ -37,7 +37,7 @@ Meteor.publish 'course_member_tags', (slug, selected_course_member_tags)->
         ]
     # console.log 'cloud, ', people_cloud
     people_cloud.forEach (tag, i) ->
-        self.added 'course_member_tags', Random.id(),
+        self.added 'people_tags', Random.id(),
             name: tag.name
             count: tag.count
             index: i

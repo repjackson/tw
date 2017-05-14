@@ -81,6 +81,8 @@ Template.session_edit_button.events
     'click .edit_this': -> Session.set 'editing_id', @_id
     'click .save_doc': -> Session.set 'editing_id', null
 
+Template.session_edit_button.helpers
+    button_classes: -> Template.currentData().classes
 
 
 Template.edit_icon.events

@@ -1,5 +1,5 @@
 template(name='course_members')                
-    h2.ui.center.aligned.header Course Members  
+    .ui.horizontal.divider.header Course Members  
     #course_member_cloud.ui.basic.segment.center.aligned.container
         if selected_course_member_tags
             #clear_tags.ui.primary.circular.icon.big.button
@@ -19,7 +19,13 @@ template(name='course_members')
 
 template(name='course_member')
     .ui.card
-        .image
+        .blurring.dimmable.profile.image
+            .ui.inverted.dimmer.transition.hidden
+                .content
+                    .center
+                        a(href="/profile/#{_id}").ui.blue.button 
+                            |View Profile
+                            // i.right.chevron.icon
             a(href="/profile/#{_id}")
                 img.ui.fluid.image(src="{{c.url profile.image_id width=400 height=400 gravity='face' crop='fill'}}")
         .content
@@ -37,6 +43,6 @@ template(name='course_member')
         .extra.content
             +color_dots
         .extra.content
-            each five_tags
-                .ui.compact.tiny.compact.basic.button.user_tag(class=user_tag_class) #{this}
+            each seven_tags
+                .ui.compact.tiny.compact.button.user_tag(class=member_tag_class) #{this}
 

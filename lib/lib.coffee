@@ -1,7 +1,5 @@
 @Tags = new Meteor.Collection 'tags'
 @People_tags = new Meteor.Collection 'people_tags'
-
-
 @Docs = new Meteor.Collection 'docs'
 
 Docs.before.insert (userId, doc)->

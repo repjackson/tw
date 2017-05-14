@@ -82,13 +82,12 @@ if Meteor.isClient
                 confirmButtonText: 'Remove Member Status'
                 closeOnConfirm: false
             }, ->
-                Meteor.users.update self._id,
-                    $pull: courses: 'sol'
+                Roles.removeUsersFromRoles self._id, 'sol'
                 swal "Removed #{self.username} from SOL", "",'success'
                 return
     
     
-        'click .make_sol': ->
+        'click .add_sol': ->
             self = @
             swal {
                 title: "Add #{@username} to SOL?"
@@ -100,8 +99,7 @@ if Meteor.isClient
                 confirmButtonText: 'Add to SOL'
                 closeOnConfirm: false
             }, ->
-                Meteor.users.update self._id,
-                    $addToSet: courses: 'sol'
+                Roles.addUsersToRoles self._id, 'sol'
                 swal "Made #{self.username} a SOL Member", "",'success'
                 return
     
@@ -119,8 +117,7 @@ if Meteor.isClient
                 confirmButtonText: 'Remove Demo Member Status'
                 closeOnConfirm: false
             }, ->
-                Meteor.users.update self._id,
-                    $pull: courses: 'sol_demo'
+                Roles.addUsersToRoles self._id, 'sol_demo'
                 swal "Removed #{self.username} from SOL Demo", "",'success'
                 return
     
@@ -137,8 +134,7 @@ if Meteor.isClient
                 confirmButtonText: 'Make Demo Member'
                 closeOnConfirm: false
             }, ->
-                Meteor.users.update self._id,
-                    $addToSet: courses: 'sol_demo'
+                Roles.addUsersToRoles self._id, 'sol_demo'
 
                 swal "Added #{self.username} to SOL Demo", "",'success'
                 return

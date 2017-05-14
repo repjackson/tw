@@ -5,10 +5,11 @@ template(name='reflective_questions')
             i#add_reflective_question.green.plus.link.icon(title='Add Reflective Question')
     each reflective_questions
         .ui.segment(class=segment_class)
-            if published
-                .ui.top.right.attached.blue.label Published
-            else
-                .ui.top.right.attached.basic.label Hidden
+            if isInRole 'admin'
+                if published
+                    .ui.top.right.attached.blue.label Published
+                else
+                    .ui.top.right.attached.basic.label Hidden
             if is_editing
                 .ui.form
                     .field
@@ -37,30 +38,26 @@ template(name='reflective_questions')
 template(name='reflective_answers')
     with my_answer
         .ui.segment(class=segment_class)
-            .ui.blue.ribbon.label(class=ribbon_class)
+            .ui.blue.ribbon.large.label(class=ribbon_class)
                 | Your Answer
                 if published
                     |(public)
                 else
                     |(private)
+            if can_edit
+                unless is_editing
+                    +session_edit_button
             if is_editing
                 .ui.basic.segment
                     .ui.form
                         .field
                             // label Answer
-                            input#body(type='text' value=body)
+                            textarea#body(rows='3') #{body}
                 +session_edit_button
                 +published
                 +delete_button
             else
                 .ui.basic.segment #{body}
-                if can_edit
-                        // .toggle_published.ui.slider.checkbox
-                        //     input(type='checkbox' name='publish_answer' checked=published)
-                        //     label Publish Answer
-                        // i.help.circle.outline.large.icon(data-content="By making this answer public other SOL participants can see it, relate, and collaborate.")
-                    +session_edit_button
-    // unless is_editing_my_answer
     .ui.styled.fluid.accordion
         .title
             i.large.users.icon
@@ -79,10 +76,10 @@ template(name='reflective_answers')
                                     +voting
                             .text
                                 | #{body}
-                            .actions
+                            // .actions
                                 // a.reply(href='#') Reply
                                 // +favorite
                                 // +voting
-                                if is_author
-                                    +delete_link
-                                    a.edit_comment(href='#') Edit
+                                // if is_author
+                                //     +delete_link
+                                //     +edit_link

@@ -42,11 +42,11 @@ template(name='toggle_friend')
 template(name='session_edit_button')
     if currentUser
         unless is_editing
-            .edit_this.ui.basic.button(title=tags)
+            .edit_this.ui.basic.button(title=tags class=button_classes)
                 i.blue.pencil.icon
                 |Edit
         else
-            .save_doc.ui.basic.button
+            .save_doc.ui.basic.button(class=button_classes)
                 i.green.check.icon
                 |Save
 template(name='edit_button')
