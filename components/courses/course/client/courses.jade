@@ -10,17 +10,17 @@ template(name='courses')
         .ui.divided.items
             .item
                 .image
-                    // a(href="/course/sol") 
+                    a(href="/course/sol") 
+                        +doc_image tags='course,sol'
                         // img.ui.image(src="{{c.url 'sol' }}")
-                    +doc_image tags='course,sol'
                 .content
-                    // a.header(href="/course/sol") 
-                    +doc_title tags='course,sol' classes='header'    
+                    a.header(href="/course/sol") 
+                        +doc_title tags='course,sol' classes='header'    
                         // +doc_subtitle tags='course,sol'
                         // if in_course
                         //     .ui.basic.green.label Enrolled
                     .description
                         +doc_subtitle tags='course,sol'
-                    a.ui.right.floated.red.button(href="/course/sol") 
+                    a.ui.right.floated.teal.button(href="/course/sol") 
                         |View
                         i.right.chevron.icon

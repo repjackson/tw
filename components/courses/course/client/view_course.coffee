@@ -13,7 +13,7 @@
 FlowRouter.route '/course/sol', 
     name: 'course_home'
     triggersEnter: [ (context, redirect) ->
-        if Meteor.user() and Meteor.user().courses and context.params.slug in Meteor.user().courses
+        if Meteor.user() and Roles.userIsInRole(Meteor.userId(), 'sol_member') or Roles.userIsInRole(Meteor.userId(), 'sol_demo')
             redirect "/course/sol/welcome"
         else 
             redirect "/course/sol/sales"
