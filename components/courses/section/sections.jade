@@ -1,0 +1,29 @@
+template(name='sections')        
+    .ui.horizontal.divider.header Sections
+        if isInRole 'admin'
+            i#add_section.green.plus.link.icon(title='Add Section')
+    each sections
+        +section
+        
+        
+template(name='section')        
+    .ui.segment
+        if editing
+            .ui.form
+                .field
+                    +number
+                .field
+                    +title
+                .field
+        else
+            a.ui.header(href="/course/sol/module/#{module_number}/section/#{number}") #{number}: #{title}
+        if isInRole 'admin'
+            +session_edit_button
+            // unless editing
+            //     i.edit_this.large.pencil.link.icon(title=tags)
+            // else
+            //     .save_doc.ui.icon.green.basic.button
+            //         i.check.icon
+
+    
+    

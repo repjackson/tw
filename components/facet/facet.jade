@@ -18,16 +18,19 @@ template(name='doc_content')
                     |!{content}
             if isInRole 'admin'
                 unless editing
-                    i.edit_this.large.pencil.link.icon(title=tags)
+                    .edit_this.ui.basic.small.icon.button(title=tags)
+                        i.red.pencil.icon
+                        // |Edit #{tags} Content
                 else
-                    .save_doc.ui.icon.green.basic.button
+                    .save_doc.ui.green.basic.button
                         i.check.icon
+                        |Save Content
     else
         if isInRole 'admin'
-            .ui.header No Doc Found
+            .ui.header No Content Found
             .create_doc.ui.basic.button
                 i.plus.icon
-                |Create HTML with #{template_tags}
+                |Create Content with #{template_tags}
             
 template(name='doc_body')
     if doc

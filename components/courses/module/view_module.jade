@@ -21,14 +21,14 @@ template(name='doc_module')
                         |!{description}
                     .ui.vertical.fluid.pointing.menu
                         unless is_first_module
-                            a.item(href="/course/sol/module/#{number}/debrief" class="{{isActiveRoute name='doc_debrief'}}") Debrief
+                            a.item(href="/course/sol/module/#{number}/debrief" class="{{isActiveRoute name='debrief'}}") Debrief
                         a.item(href="/course/sol/module/#{number}/sections" class="{{isActiveRoute name='doc_sections'}}") Sections
                         // .item Sections
                         // .menu
-                        //     each module_sections
+                        //     each sections
                         //         a.item(href="/course/#{../course}/#{module_number}/section/#{number}" class=section_path_class)  #{number}: #{title}
-                        a.item(href="/course/sol/module/#{number}/lightwork" class="{{isActiveRoute name='doc_lightwork'}}") Lightwork
-                        a.item(href="/course/sol/module/#{number}/downloads" class="{{isActiveRoute name='doc_downloads'}}") Downloads
+                        a.item(href="/course/sol/module/#{number}/lightwork" class="{{isActiveRoute name='lightwork'}}") Lightwork
+                        a.item(href="/course/sol/module/#{number}/downloads" class="{{isActiveRoute name='downloads'}}") Downloads
                     .ui.dividing.header Status
                     if complete
                         .ui.teal.fluid.label 

@@ -4,6 +4,12 @@ Template.subtitle.events
         Docs.update @_id,
             $set: subtitle: subtitle
             
+Template.plain.events
+    'blur #plain': ->
+        plain = $('#plain').val()
+        Docs.update @_id,
+            $set: plain: plain
+            
             
 # Template.child_tags.events
 #     'keydown #add_tag': (e,t)->

@@ -1,48 +1,34 @@
-template(name='doc_lightwork')
-    // .ui.basic.segment
-    .ui.horizontal.divider.header Lightwork
-    +doc_content tags=lightwork_tags
-    .ui.hidden.divider
-    .ui.styled.fluid.accordion
-        h3.title
-            i.large.newspaper.icon
-            | Transcript
-        .content
-            +doc_content tags=lightwork_transcript_tags
-    .ui.hidden.divider
-    +lightwork_questions_template
-    
-template(name='lightwork_questions_template')
-    .ui.horizontal.divider.header Lightwork Debrief Questions
+template(name='reflective_questions')
+    .ui.header Reflective Questions
     if isInRole 'admin'
-        #add_lightwork_question.ui.basic.button 
+        #add_reflective_question.ui.basic.button 
             i.red.configure.icon
-            |Add Lightwork Question
-    each lightwork_questions
+            |Add Reflective Question
+    each reflective_questions
         .ui.segment
             if isInRole 'admin'
                 +thing
             else
-                .ui.header #{body}
+                h3.ui.header #{body}
             .ui.divider
             if currentUser
                 if has_answered_question
-                    +lightwork_answers
+                    +reflective_answers
                 else
-                    .add_lightwork_answer.ui.basic.button 
+                    .add_reflective_answer.ui.basic.button 
                         i.plus.icon
                         |Add Answer
 
-template(name='lightwork_answers')
+template(name='reflective_answers')
     with my_answer
         .ui.segment
-            .ui.header Your Answer
+            h4.ui.header Your Answer
             if is_editing
                 .ui.form
                     .field
                         input#body(type='text' value=body)
             else
-                h4 #{body}
+                span #{body}
             if can_edit
                 +published
                     // .toggle_published.ui.slider.checkbox
@@ -52,11 +38,14 @@ template(name='lightwork_answers')
                 +session_edit_button
                 +delete_button
     unless is_editing_my_answer
-        .ui.header All Published Answers
+        h4.ui.header All Published Reflective Answers
         .ui.segments
-            each all_answers
+            each all_reflective_answers
                 .ui.segment
-                    h4 #{body}
+                    span #{body}
                     a(href='/profile/#{author._id}')
                         img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
                         |{{author.name}}
+                    // .ui.divider
+                    unless is_author
+                        +voting

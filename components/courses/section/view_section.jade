@@ -22,7 +22,7 @@ template(name='doc_section')
             .five.wide.column
                 .ui.vertical.fluid.pointing.menu
                     a.item(href="/course/sol/module/#{module.number}/section/#{section.number}" class="{{isActiveRoute name='doc_section'}}") View
-                    // a.item(href="/course/sol/module/#{module.number}/section/#{section.number}/reflective_questions" class="{{isActiveRoute name='section_reflective_questions'}}") Collaboration
+                    // a.item(href="/course/sol/module/#{module.number}/section/#{section.number}/reflective_questions" class="{{isActiveRoute name='reflective_questions'}}") Collaboration
                 .ui.dividing.header Progress
                 if video_complete
                     .ui.teal.fluid.label 
@@ -57,7 +57,7 @@ template(name='doc_section')
                     .mark_video_complete.ui.basic.fluid.button Mark Video Watched
                 .ui.hidden.divider
                 if video_complete
-                    +section_reflective_questions
+                    +reflective_questions
                         
 
 

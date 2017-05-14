@@ -1,12 +1,12 @@
 if Meteor.isClient
     FlowRouter.route '/course/sol/module/:module_number/debrief', 
-        name: 'doc_debrief'
+        name: 'debrief'
         action: (params) ->
             BlazeLayout.render 'doc_module',
-                module_content: 'doc_debrief'
+                module_content: 'debrief'
         
     
-    Template.doc_debrief.onCreated ->
+    Template.debrief.onCreated ->
         @autorun -> Meteor.subscribe 'debrief_questions', FlowRouter.getParam('module_number')
     
     # Template.debrief_answers.onCreated ->
@@ -16,7 +16,7 @@ if Meteor.isClient
 
     
     
-    Template.doc_debrief.helpers
+    Template.debrief.helpers
         debrief_questions: -> 
             Docs.find
                 tags: ["sol","module #{FlowRouter.getParam('module_number')}", "debrief","question"]
@@ -62,7 +62,7 @@ if Meteor.isClient
     
     
     
-    Template.doc_debrief.events
+    Template.debrief.events
         'click #add_debrief_question': ->
             Docs.insert
                 tags: ["sol","module #{FlowRouter.getParam('module_number')}", "debrief","question"]

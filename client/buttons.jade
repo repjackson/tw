@@ -38,31 +38,27 @@ template(name='toggle_friend')
                 |Friend
 
 
-template(name='published')
-    if published
-        #unpublish.ui.green.basic.button
-            |Published
-    else
-        #publish.ui.basic.button
-            |Private
 
 template(name='session_edit_button')
     if currentUser
         unless is_editing
-            .edit_this.ui.basic.icon.button(title=tags)
+            .edit_this.ui.basic.button(title=tags)
                 i.pencil.icon
+                |Edit
         else
-            .save_doc.ui.icon.green.basic.button
+            .save_doc.ui.basic.button
                 i.check.icon
-                
+                |Save
 template(name='edit_button')
     if currentUser
         unless editing
-            .edit_this.ui.basic.icon.button(title=tags)
+            .edit_this.ui.basic.button(title=tags)
                 i.pencil.icon
+                |Edit
         else
-            .save_doc.ui.icon.green.basic.button
+            .save_doc.ui.basic.button
                 i.check.icon
+                |Save
                 
 template(name='edit_icon')
     if currentUser
@@ -100,11 +96,23 @@ template(name='add_to_cart')
         
 
 template(name='delete_button')
-    #delete.ui.icon.basic.button
+    #delete.ui.basic.button
         i.remove.icon
+        |Delete
         
 template(name='delete_link')
     a#delete(href='#') Delete
+
+template(name='published')
+    if published
+        #unpublish.ui.basic.button
+            // i.toggle.on.green.icon
+            i.hide.icon
+            | Hide
+    else
+        #publish.ui.basic.button
+            i.unhide.icon
+            | Show
 
 template(name='featured')
     .field

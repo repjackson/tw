@@ -3,7 +3,7 @@ if Meteor.isClient
         name:'doc_module'
         action: (params) ->
             BlazeLayout.render 'doc_module',
-                module_content: 'module_sections'
+                module_content: 'sections'
     
     
     

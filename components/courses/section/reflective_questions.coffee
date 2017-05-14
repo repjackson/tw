@@ -1,12 +1,12 @@
 if Meteor.isClient
     # FlowRouter.route '/course/sol/module/:module_number/debrief', 
-    #     name: 'section_reflective_questions'
+    #     name: 'reflective_questions'
     #     action: (params) ->
     #         BlazeLayout.render 'doc_module',
-    #             module_content: 'section_reflective_questions'
+    #             module_content: 'reflective_questions'
         
     
-    Template.section_reflective_questions.onCreated ->
+    Template.reflective_questions.onCreated ->
         @autorun -> Meteor.subscribe 'reflective_questions', FlowRouter.getParam('module_number'), FlowRouter.getParam('section_number')
     
     # Template.answers.onCreated ->
@@ -16,7 +16,7 @@ if Meteor.isClient
 
     
     
-    Template.section_reflective_questions.helpers
+    Template.reflective_questions.helpers
         reflective_questions: -> 
             Docs.find
                 tags: ["sol","module #{FlowRouter.getParam('module_number')}","section #{FlowRouter.getParam('section_number')}","reflective question"]
@@ -62,7 +62,7 @@ if Meteor.isClient
     
     
     
-    Template.section_reflective_questions.events
+    Template.reflective_questions.events
         'click #add_reflective_question': ->
             Docs.insert
                 tags: ["sol","module #{FlowRouter.getParam('module_number')}","section #{FlowRouter.getParam('section_number')}","reflective question"]

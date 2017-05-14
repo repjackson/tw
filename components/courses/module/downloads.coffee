@@ -1,18 +1,18 @@
 if Meteor.isClient
     FlowRouter.route '/course/sol/module/:module_number/downloads', 
-        name: 'doc_downloads'
+        name: 'downloads'
         action: (params) ->
             BlazeLayout.render 'doc_module',
-                module_content: 'doc_downloads'
+                module_content: 'downloads'
     
     
     
-    Template.doc_downloads.onCreated ->
+    Template.downloads.onCreated ->
         @autorun -> Meteor.subscribe 'module_downloads', FlowRouter.getParam('module_number')
         @autorun -> Meteor.subscribe 'module', parseInt FlowRouter.getParam('module_number')
     
     
-    Template.doc_downloads.helpers
+    Template.downloads.helpers
         module: -> 
             Docs.findOne
                 tags: $in: ["module"]
@@ -25,7 +25,7 @@ if Meteor.isClient
             
                 
 
-    Template.doc_downloads.events
+    Template.downloads.events
         'click #add_file': (e,t)->
             module_number = FlowRouter.getParam('module_number')
             new_id = Docs.insert

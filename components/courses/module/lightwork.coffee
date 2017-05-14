@@ -1,13 +1,13 @@
 if Meteor.isClient
     FlowRouter.route '/course/sol/module/:module_number/lightwork', 
-        name: 'doc_lightwork'
+        name: 'lightwork'
         action: (params) ->
             BlazeLayout.render 'doc_module',
-                module_content: 'doc_lightwork'
+                module_content: 'lightwork'
     
     
     
-    Template.doc_lightwork.onRendered ->
+    Template.lightwork.onRendered ->
         @autorun =>
             if @subscriptionsReady()
                 Meteor.setTimeout ->
@@ -16,7 +16,7 @@ if Meteor.isClient
     
     
                 
-    Template.doc_lightwork.helpers
+    Template.lightwork.helpers
         lightwork_doc: ->
             console.log Template.parentData()
             module_number = parseInt FlowRouter.getParam 'module_number'
@@ -34,13 +34,13 @@ if Meteor.isClient
 
 
 
-    Template.lightwork_questions_template.onCreated ->
+    Template.lightwork_questions.onCreated ->
         @autorun -> Meteor.subscribe 'lightwork_questions', FlowRouter.getParam('module_number')
     
     # Template.lightwork_answers.onCreated ->
         # @autorun => Meteor.subscribe 'answers', @data._id
     
-    Template.lightwork_questions_template.events
+    Template.lightwork_questions.events
         'click #add_lightwork_question': ->
             Docs.insert
                 tags: ["sol","module #{FlowRouter.getParam('module_number')}", "lightwork","question"]
@@ -57,10 +57,16 @@ if Meteor.isClient
 
     
     
-    Template.lightwork_questions_template.helpers
+    Template.lightwork_questions.helpers
         lightwork_questions: -> 
-            Docs.find
-                tags: ["sol","module #{FlowRouter.getParam('module_number')}", "lightwork","question"]
+            if Roles.userIsInRole(Meteor.userId(), 'admin')
+                Docs.find
+                    tags: ["sol","module #{FlowRouter.getParam('module_number')}", "lightwork","question"]
+            else
+                Docs.find
+                    tags: ["sol","module #{FlowRouter.getParam('module_number')}", "lightwork","question"]
+                    published: true
+                
                 
         # lightwork_questions_tags: ->
         #     "sol,module #{FlowRouter.getParam('module_number')},lightwork,question"
@@ -71,6 +77,16 @@ if Meteor.isClient
                 tags: $in: ['answer']
                 parent_id: @_id
                 author_id: Meteor.userId()
+    
+    
+    Template.lightwork_answers.onRendered ->
+        @autorun =>
+            if @subscriptionsReady()
+                Meteor.setTimeout ->
+                    $('.ui.accordion').accordion()
+                , 500
+                # console.log 'subs ready'
+
     
     
     Template.lightwork_answers.events
@@ -103,7 +119,7 @@ if Meteor.isClient
                     author_id: Meteor.userId()
             Session.equals 'editing_id', my_answer._id
 
-
+        
 if Meteor.isServer
     publishComposite 'lightwork_questions', (module_number)->
         {

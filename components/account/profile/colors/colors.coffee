@@ -32,8 +32,6 @@ if Meteor.isClient
 
 
     Template.color_dots.onRendered ->
-        self = @
-        
         @autorun =>
             if @subscriptionsReady()
                 Meteor.setTimeout ->
@@ -42,8 +40,6 @@ if Meteor.isClient
                 # console.log 'subs ready'
 
     Template.colors.onRendered ->
-        self = @
-        
         @autorun =>
             if @subscriptionsReady()
                 Meteor.setTimeout ->

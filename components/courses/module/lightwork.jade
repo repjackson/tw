@@ -1,0 +1,86 @@
+template(name='lightwork')
+    // .ui.basic.segment
+    .ui.horizontal.divider.header Lightwork
+    +doc_content tags=lightwork_tags
+    .ui.hidden.divider
+    .ui.styled.fluid.accordion
+        h3.title
+            i.large.newspaper.icon
+            | Transcript
+        .content
+            +doc_content tags=lightwork_transcript_tags
+    .ui.hidden.divider
+    +lightwork_questions
+    
+template(name='lightwork_questions')
+    .ui.horizontal.divider.header 
+        |Lightwork Debrief Questions
+        if isInRole 'admin'
+            i#add_lightwork_question.green.plus.link.icon(title='Add Lightwork Question')
+    each lightwork_questions
+        .ui.segment(class=segment_class)
+            if published
+                .ui.top.right.attached.teal.label Published
+            else
+                .ui.top.right.attached.basic.label Hidden
+            if is_editing
+                .ui.form
+                    .field
+                        +number
+                    .field
+                        .ui.labeled.input 
+                            .ui.basic.label Lightwork Question
+                            input#body(type='text' value=body)
+                    .ui.divider
+                    +session_edit_button
+                    +published
+                    +delete_button
+            else
+                .ui.header #{body}
+                if isInRole 'admin'
+                    +session_edit_button
+            .ui.divider
+            if currentUser
+                if has_answered_question
+                    +lightwork_answers
+                else
+                    .add_lightwork_answer.ui.basic.button 
+                        i.plus.icon
+                        |Add Answer
+
+template(name='lightwork_answers')
+    with my_answer
+        .ui.segment(class=segment_class)
+            .ui.blue.ribbon.label
+                |Your Answer
+                if published
+                    |(public)
+                else
+                    |(private)
+            if is_editing
+                .ui.form
+                    .field
+                        input#body(type='text' value=body)
+            else
+                h4 #{body}
+            if can_edit
+                +published
+                    // .toggle_published.ui.slider.checkbox
+                    //     input(type='checkbox' name='publish_answer' checked=published)
+                    //     label Publish Answer
+                    // i.help.circle.outline.large.icon(data-content="By making this answer public other SOL participants can see it, relate, and collaborate.")
+                +session_edit_button
+                +delete_button
+    unless is_editing_my_answer
+        .ui.styled.fluid.accordion
+            .title
+                i.dropdown.icon
+                | All Public Answers
+            .content
+                .ui.segments
+                    each all_answers
+                        .ui.segment
+                            h4 #{body}
+                            a(href='/profile/#{author._id}')
+                                img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+                                |{{author.name}}
