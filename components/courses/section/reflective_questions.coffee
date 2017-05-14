@@ -18,8 +18,11 @@ if Meteor.isClient
     
     Template.reflective_questions.helpers
         reflective_questions: -> 
-            Docs.find
-                tags: ["sol","module #{FlowRouter.getParam('module_number')}","section #{FlowRouter.getParam('section_number')}","reflective question"]
+            mod_num = FlowRouter.getParam('module_number')
+            sec_num = FlowRouter.getParam('section_number')
+            Docs.find {
+                tags: ["sol","module #{mod_num}","section #{sec_num}","reflective question"] }
+                , { sort: number: 1} 
                 
         # reflective_questions_tags: ->
         #     "sol","module #{FlowRouter.getParam('module_number')}","section #{FlowRouter.getParam('section_number')}","reflective question"

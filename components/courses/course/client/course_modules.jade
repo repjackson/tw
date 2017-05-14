@@ -1,21 +1,17 @@
 template(name='course_modules')        
-    h2.ui.center.aligned.header Modules
-    if isInRole 'admin'
-        #add_sol_module.ui.button 
-            i.red.configure.icon
-            |Add Module
+    .ui.horizontal.divider.header 
+        |Modules
+        if isInRole 'admin'
+            i#add_sol_module.green.plus.link.icon(title='Add Module')
     each sol_modules
         .ui.segment
             if is_editing
-                +title
                 +number
+                +title
+                +delete_button
             else
                 a.ui.header(href="/course/sol/module/#{number}") #{number}: #{title}
                 // |!{content}
-                if isInRole 'admin'
-                    .ui.dividing.header Admin
-                    each tags
-                        .ui.basic.label #{this}
             if isInRole 'admin'
                 +session_edit_button
     

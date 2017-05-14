@@ -1,51 +1,88 @@
 template(name='reflective_questions')
-    .ui.header Reflective Questions
-    if isInRole 'admin'
-        #add_reflective_question.ui.basic.button 
-            i.red.configure.icon
-            |Add Reflective Question
+    .ui.horizontal.divider.header 
+        |Reflective Questions
+        if isInRole 'admin'
+            i#add_reflective_question.green.plus.link.icon(title='Add Reflective Question')
     each reflective_questions
-        .ui.segment
-            if isInRole 'admin'
-                +thing
+        .ui.segment(class=segment_class)
+            if published
+                .ui.top.right.attached.blue.label Published
             else
-                h3.ui.header #{body}
+                .ui.top.right.attached.basic.label Hidden
+            if is_editing
+                .ui.form
+                    .field
+                        +number
+                    .field
+                        .ui.labeled.input 
+                            .ui.basic.label Lightwork Question
+                            input#body(type='text' value=body)
+                    .ui.divider
+                    +session_edit_button
+                    +published
+                    +delete_button
+            else
+                .ui.header #{number}: #{body}
+                if isInRole 'admin'
+                    +session_edit_button
             .ui.divider
             if currentUser
                 if has_answered_question
                     +reflective_answers
                 else
-                    .add_reflective_answer.ui.basic.button 
+                    .add_reflective_answer.ui.basic.fluid.button 
                         i.plus.icon
                         |Add Answer
 
 template(name='reflective_answers')
     with my_answer
-        .ui.segment
-            h4.ui.header Your Answer
+        .ui.segment(class=segment_class)
+            .ui.blue.ribbon.label(class=ribbon_class)
+                | Your Answer
+                if published
+                    |(public)
+                else
+                    |(private)
             if is_editing
-                .ui.form
-                    .field
-                        input#body(type='text' value=body)
-            else
-                span #{body}
-            if can_edit
-                +published
-                    // .toggle_published.ui.slider.checkbox
-                    //     input(type='checkbox' name='publish_answer' checked=published)
-                    //     label Publish Answer
-                    // i.help.circle.outline.large.icon(data-content="By making this answer public other SOL participants can see it, relate, and collaborate.")
+                .ui.basic.segment
+                    .ui.form
+                        .field
+                            // label Answer
+                            input#body(type='text' value=body)
                 +session_edit_button
+                +published
                 +delete_button
-    unless is_editing_my_answer
-        h4.ui.header All Published Reflective Answers
-        .ui.segments
-            each all_reflective_answers
-                .ui.segment
-                    span #{body}
-                    a(href='/profile/#{author._id}')
-                        img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
-                        |{{author.name}}
-                    // .ui.divider
-                    unless is_author
-                        +voting
+            else
+                .ui.basic.segment #{body}
+                if can_edit
+                        // .toggle_published.ui.slider.checkbox
+                        //     input(type='checkbox' name='publish_answer' checked=published)
+                        //     label Publish Answer
+                        // i.help.circle.outline.large.icon(data-content="By making this answer public other SOL participants can see it, relate, and collaborate.")
+                    +session_edit_button
+    // unless is_editing_my_answer
+    .ui.styled.fluid.accordion
+        .title
+            i.large.users.icon
+            | All Public Answers
+        .content
+            .ui.threaded.comments
+                each all_reflective_answers
+                    .comment
+                        a(href='/profile/#{author._id}').avatar
+                            img.ui.avatar.image(src="{{c.url author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                        .content
+                            a(href='/profile/#{author._id}').author #{author.name}
+                            .metadata
+                                span.date #{from_now}
+                                unless is_author
+                                    +voting
+                            .text
+                                | #{body}
+                            .actions
+                                // a.reply(href='#') Reply
+                                // +favorite
+                                // +voting
+                                if is_author
+                                    +delete_link
+                                    a.edit_comment(href='#') Edit

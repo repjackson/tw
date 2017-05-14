@@ -1,4 +1,4 @@
-FlowRouter.route '/course/:slug/welcome', 
+FlowRouter.route '/course/sol/welcome', 
     name: 'course_welcome'
     action: (params) ->
         BlazeLayout.render 'view_course',
@@ -35,9 +35,6 @@ Template.view_terms_course.helpers
             moment(agreement.date_signed).format("dddd, MMMM Do, h:mm a")
 
 Template.view_terms_course.events
-    'click #edit_terms_content': ->
-        Session.set 'editing_id', @_id
-
     'click #agree_to_terms': ->
         self = @
         swal {

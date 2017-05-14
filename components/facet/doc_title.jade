@@ -9,7 +9,7 @@ template(name='doc_title')
                 div(class=doc_classes)
                     |#{title}
             if isInRole 'admin'
-                +edit_icon
+                +session_edit_button
     else
         if isInRole 'admin'
             .ui.header No Doc Found

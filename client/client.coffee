@@ -38,7 +38,8 @@ Template.registerHelper 'can_edit', () ->  Meteor.userId() is @author_id or Role
 Template.registerHelper 'publish_when', () -> moment(@publish_date).fromNow()
 
         
-Template.registerHelper 'segment_class', () -> if @published then 'teal' else ''
+Template.registerHelper 'segment_class', () -> if @published then 'raised' else ''
+Template.registerHelper 'ribbon_class', () -> if @published then 'blue' else 'basic'
 
 Template.registerHelper 'from_now', () -> moment(@timestamp).fromNow()
 

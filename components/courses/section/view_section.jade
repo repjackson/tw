@@ -25,18 +25,18 @@ template(name='doc_section')
                     // a.item(href="/course/sol/module/#{module.number}/section/#{section.number}/reflective_questions" class="{{isActiveRoute name='reflective_questions'}}") Collaboration
                 .ui.dividing.header Progress
                 if video_complete
-                    .ui.teal.fluid.label 
+                    .ui.blue.fluid.label 
                         i.check.icon
                         |Video
                 else
-                    .ui.teal.basic.fluid.label 
+                    .ui.blue.basic.fluid.label 
                         |Video
                 if reflective_questions_answered
-                    .ui.teal.fluid.label 
+                    .ui.blue.fluid.label 
                         i.check.icon
                         |Reflective Questions
                 else
-                    .ui.teal.basic.fluid.label 
+                    .ui.blue.basic.fluid.label 
                         |Reflective Questions
             .eleven.wide.column
                 // .ui.basic.segment
@@ -50,7 +50,7 @@ template(name='doc_section')
                         +doc_content tags=section_transcript_tags
                 .ui.hidden.divider
                 if video_complete
-                    .unmark_video_complete.ui.teal.fluid.button 
+                    .unmark_video_complete.ui.blue.fluid.button 
                         i.check.icon
                         |Video Watched
                 else
