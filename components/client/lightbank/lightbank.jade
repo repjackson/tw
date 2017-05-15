@@ -5,8 +5,9 @@ template(name='lightbank')
                 a#set_mode_to_all.item(class=all_item_class) All
                 a#set_mode_to_resonates.item(class=resonates_item_class) Resonates with Me
         +lightbank_cloud
-        each docs
-            +lightbank_doc_view
+        .ui.text.container
+            each docs
+                +lightbank_doc_view
         
 
 

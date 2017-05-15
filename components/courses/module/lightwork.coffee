@@ -55,7 +55,12 @@ if Meteor.isClient
             Session.set 'editing_id', new_id
 
 
-    
+        'blur #body': (e,t)->
+            body = $(e.currentTarget).closest('#body').val()
+            Docs.update @_id,
+                $set: body: body
+            
+
     
     Template.lightwork_questions.helpers
         lightwork_questions: -> 

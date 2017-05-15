@@ -74,24 +74,24 @@ if Meteor.isClient
             content = switch @valueOf()
                 when 'gold' 
                     "Loyal, Dependable, Prepared <br>
-                    Thorough, Sensible, Punctual <br>
-                    Faithful, Stable, Oranized <br>
-                    Caring, Concerned, Concrete" 
+                    Thorough, Sensible, Punctual <br>"
+                    # Faithful, Stable, Organized <br>
+                    # Caring, Concerned, Concrete" 
                 when 'blue'
                     "Enthusiastic, Sympathetic, Personal <br>
-                    Warm, Communicative, Compassionate <br>
-                    Idealistic, Spiritual, Sincere <br>
-                    Peaceful, Flexible, Imaginative"
+                    Warm, Communicative, Compassionate <br>"
+                    # Idealistic, Spiritual, Sincere <br>
+                    # Peaceful, Flexible, Imaginative"
                 when 'green'
                     "Analytical, Global, Conceptual <br>
-                     Cool, Calm, Collected <br>
-                     Inventive, Logical, Perfectionist <br>
-                     Abstract, Hypothetical, Investigative"
+                     Cool, Calm, Collected <br>"
+                    #  Inventive, Logical, Perfectionist <br>
+                    #  Abstract, Hypothetical, Investigative"
                 when 'orange'
                     "Witty, Charming, Spontaneous <br>
-                    Impulsive, Generous, Impactful <br>
-                    Optimistic, Eager, Bold <br>
-                    Physical, Immediate, Fraternal"
+                    Impulsive, Generous, Impactful <br>"
+                    # Optimistic, Eager, Bold <br>
+                    # Physical, Immediate, Fraternal"
             content
             
 

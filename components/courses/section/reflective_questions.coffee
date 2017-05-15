@@ -66,6 +66,12 @@ if Meteor.isClient
     
     
     Template.reflective_questions.events
+        'blur #body': (e,t)->
+            body = $(e.currentTarget).closest('#body').val()
+            Docs.update @_id,
+                $set: body: body
+            
+    
         'click #add_reflective_question': ->
             Docs.insert
                 tags: ["sol","module #{FlowRouter.getParam('module_number')}","section #{FlowRouter.getParam('section_number')}","reflective question"]

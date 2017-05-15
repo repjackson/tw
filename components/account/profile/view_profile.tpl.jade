@@ -46,9 +46,9 @@
                 else
                     .ui.center.aligned.sub.header #{username}
                 if tags
-                    i.tags.icon
-                    each tags
-                        .ui.basic.label #{this}
+                    .ui.basic.center.aligned.segment
+                        each tags
+                            .user_tag.ui.circular.large.basic.label #{this}
                 if profile.location
                     .ui.header Location 
                     | #{profile.location}

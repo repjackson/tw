@@ -15,9 +15,8 @@ template(name='reflective_questions')
                     .field
                         +number
                     .field
-                        .ui.labeled.input 
-                            .ui.basic.label Lightwork Question
-                            input#body(type='text' value=body)
+                        label Reflective Question
+                        textarea#body(rows='3') #{body}
                     .ui.divider
                     +session_edit_button
                     +published
@@ -26,14 +25,14 @@ template(name='reflective_questions')
                 .ui.header #{number}: #{body}
                 if isInRole 'admin'
                     +session_edit_button
-            .ui.divider
-            if currentUser
-                if has_answered_question
-                    +reflective_answers
-                else
-                    .add_reflective_answer.ui.basic.fluid.button 
-                        i.plus.icon
-                        |Add Answer
+                .ui.divider
+                if currentUser
+                    if has_answered_question
+                        +reflective_answers
+                    else
+                        .add_reflective_answer.ui.basic.fluid.button 
+                            i.plus.icon
+                            |Add Answer
 
 template(name='reflective_answers')
     with my_answer
@@ -66,10 +65,10 @@ template(name='reflective_answers')
             .ui.threaded.comments
                 each all_reflective_answers
                     .comment
-                        a(href='/profile/#{author._id}').avatar
+                        a(href='/profile/#{author.username}').avatar
                             img.ui.avatar.image(src="{{c.url author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
                         .content
-                            a(href='/profile/#{author._id}').author #{author.name}
+                            a(href='/profile/#{author.username}').author #{author.name}
                             .metadata
                                 span.date #{from_now}
                                 unless is_author

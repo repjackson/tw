@@ -1,4 +1,4 @@
-FlowRouter.route '/profile/:user_id', 
+FlowRouter.route '/profile/:username', 
     name: 'view_profile'
     action: (params) ->
         BlazeLayout.render 'layout',
@@ -12,11 +12,11 @@ FlowRouter.route '/profile/:user_id',
 
 if Meteor.isClient
     Template.view_profile.onCreated ->
-        @autorun -> Meteor.subscribe('user_profile', FlowRouter.getParam('user_id'))
+        @autorun -> Meteor.subscribe('user_profile', FlowRouter.getParam('username'))
         
     
     Template.view_profile.helpers
-        person: -> Meteor.users.findOne FlowRouter.getParam('user_id') 
-        is_user: -> FlowRouter.getParam('user_id') is Meteor.userId()
+        person: -> Meteor.users.findOne username:FlowRouter.getParam('username') 
+        is_user: -> FlowRouter.getParam('username') is Meteor.user().username
         
     Template.view_profile.events

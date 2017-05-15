@@ -63,6 +63,6 @@ template(name='view_questions')
                                 .ui.segment 
                                     h5 #{text}
                                     | by 
-                                    a(href='/profile/#{author._id}')
+                                    a(href='/profile/#{author.username}')
                                         |{{author.name}}
                                         img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")

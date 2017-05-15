@@ -23,14 +23,14 @@ template(name='course_member')
             .ui.inverted.dimmer.transition.hidden
                 .content
                     .center
-                        a(href="/profile/#{_id}").ui.blue.button 
+                        a(href="/profile/#{username}").ui.blue.button 
                             |View Profile
                             // i.right.chevron.icon
-            a(href="/profile/#{_id}")
+            a(href="/profile/#{username}")
                 img.ui.fluid.image(src="{{c.url profile.image_id width=400 height=400 gravity='face' crop='fill'}}")
         .content
             .header
-                a(href="/profile/#{_id}")
+                a(href="/profile/#{username}")
                     if profile.first_name
                         | #{profile.first_name}
                     if profile.last_name

@@ -161,8 +161,8 @@ if Meteor.isServer
                 courses: 1
     
     
-    Meteor.publish 'user_profile', (id)->
-        Meteor.users.find id,
+    Meteor.publish 'user_profile', (username)->
+        Meteor.users.find username:username,
             fields:
                 tags: 1
                 profile: 1

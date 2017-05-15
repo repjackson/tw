@@ -14,7 +14,7 @@ template(name='lightwork')
     
 template(name='lightwork_questions')
     .ui.horizontal.divider.header 
-        |Lightwork Debrief Questions
+        |Lightwork Questions
         if isInRole 'admin'
             i#add_lightwork_question.green.plus.link.icon(title='Add Lightwork Question')
     each lightwork_questions
@@ -28,15 +28,14 @@ template(name='lightwork_questions')
                     .field
                         +number
                     .field
-                        .ui.labeled.input 
-                            .ui.basic.label Lightwork Question
-                            input#body(type='text' value=body)
+                        label Lightwork Question
+                        textarea#body(rows='3') #{body}
                     .ui.divider
                     +session_edit_button
                     +published
                     +delete_button
             else
-                .ui.header #{body}
+                .ui.header #{number}: #{body}
                 if isInRole 'admin'
                     +session_edit_button
             .ui.divider
@@ -81,6 +80,6 @@ template(name='lightwork_answers')
                     each all_answers
                         .ui.segment
                             h4 #{body}
-                            a(href='/profile/#{author._id}')
+                            a(href='/profile/#{author.username}')
                                 img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
                                 |{{author.name}}

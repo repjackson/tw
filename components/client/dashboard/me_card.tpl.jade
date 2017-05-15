@@ -1,11 +1,11 @@
 with me
     .ui.fluid.card
         .ui.centered.medium.image
-            a(href="/profile/#{_id}")
+            a(href="/profile/#{username}")
                 img(src="{{c.url profile.image_id width=300 height=300 gravity='face' crop='fill'}}")
         .content
             .header
-                a(href="/profile/#{_id}") #{profile.name}
+                a(href="/profile/#{username}") #{profile.name}
             .meta
                 | #{profile.location}
             .description

@@ -67,6 +67,14 @@ if Meteor.isClient
             Docs.insert
                 tags: ["sol","module #{FlowRouter.getParam('module_number')}", "debrief","question"]
 
+        'blur #body': (e,t)->
+            body = $(e.currentTarget).closest('#body').val()
+            Docs.update @_id,
+                $set: body: body
+            
+    
+
+
         'click .add_debrief_answer': ->
             answer_tags = @tags
             answer_tags.push 'answer'

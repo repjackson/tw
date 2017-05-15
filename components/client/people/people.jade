@@ -9,11 +9,11 @@ template(name='people')
 template(name='person')
     .ui.card
         .image
-            a(href="/profile/#{_id}")
+            a(href="/profile/#{username}")
                 img.ui.fluid.image(src="{{c.url profile.image_id width=400 height=400 gravity='face' crop='fill'}}")
         .content
             .header
-                a(href="/profile/#{_id}")
+                a(href="/profile/#{username}")
                     if profile.first_name
                         | #{profile.first_name}
                     if profile.last_name
