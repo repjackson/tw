@@ -97,11 +97,6 @@ Meteor.publish 'tags', (selected_tags, type, limit, view_mode)->
 
     self.ready()
         
-Docs.allow
-    insert: (userId, doc) -> Roles.userIsInRole(userId, 'admin') or userId
-    update: (userId, doc) -> Roles.userIsInRole(userId, 'admin') or userId
-    remove: (userId, doc) -> Roles.userIsInRole(userId, 'admin')
-
 
 Meteor.publish 'docs', (selected_tags, type, limit, view_mode)->
 

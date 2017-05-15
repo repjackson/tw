@@ -12,7 +12,8 @@ if Meteor.isClient
         @autorun -> Meteor.subscribe 'module', module_num
         @autorun -> Meteor.subscribe 'section', module_num, section_num
         @autorun -> Meteor.subscribe 'section_complete_docs', module_num, section_num
-        
+        @autorun -> Meteor.subscribe 'reflective_questions', FlowRouter.getParam('module_number'), FlowRouter.getParam('section_number')
+
     Template.doc_section.onRendered ->
         self = @
         
@@ -41,7 +42,33 @@ if Meteor.isClient
             Docs.findOne
                 tags: $all: ['completion', 'sol', "module #{module_num}", "section #{section_num}", 'video']
     
-    
+        reflective_question_docs: -> 
+            mod_num = FlowRouter.getParam('module_number')
+            sec_num = FlowRouter.getParam('section_number')
+            Docs.find {
+                tags: ["sol","module #{mod_num}","section #{sec_num}","reflective question"] }
+                , { sort: number: 1} 
+                
+        any_reflective_questions: ->
+            mod_num = FlowRouter.getParam('module_number')
+            sec_num = FlowRouter.getParam('section_number')
+            Docs.find({
+                tags: ["sol","module #{mod_num}","section #{sec_num}","reflective question"] }).count()
+
+
+        reflective_question_answered: ->
+            found_answer = Docs.findOne
+                tags: $in: ['answer']
+                parent_id: @_id
+                author_id: Meteor.userId()
+
+            if found_answer
+                console.log "has answered question #{@number}"
+                return true
+            else
+                console.log "has NOT answered question #{@number}"
+                return false
+                
         module: -> 
             Docs.findOne 
                 tags: $in: ['module']

@@ -31,13 +31,15 @@ template(name='doc_section')
                 else
                     .ui.blue.basic.fluid.label 
                         |Video
-                if reflective_questions_answered
-                    .ui.blue.fluid.label 
-                        i.check.icon
-                        |Reflective Questions
-                else
-                    .ui.blue.basic.fluid.label 
-                        |Reflective Questions
+                if reflective_question_docs.count
+                    each reflective_question_docs
+                        if reflective_question_answered
+                            .ui.blue.fluid.label 
+                                i.check.icon
+                                |Reflective Questions
+                        else
+                            .ui.blue.basic.fluid.label 
+                                |Reflective Question #{number}
             .eleven.wide.column
                 // .ui.basic.segment
                 +doc_content tags=section_content_tags
@@ -56,7 +58,9 @@ template(name='doc_section')
                 else
                     .mark_video_complete.ui.basic.fluid.button Mark Video Watched
                 .ui.hidden.divider
-                if video_complete
+                if isInRole 'admin'
+                    +reflective_questions
+                else if video_complete
                     +reflective_questions
                         
 

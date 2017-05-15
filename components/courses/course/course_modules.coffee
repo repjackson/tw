@@ -21,11 +21,9 @@ if Meteor.isClient
                 
             
         module_is_available: ->
-            # if 'sol_demo' in Meteor.user().courses  or 'sol_demo' in Meteor.user().roles and @number < 2
-            #     return true
-            if 'sol' in Meteor.user()?.courses and @number < 2
+            if Roles.userIsInRole(Meteor.userId(), 'sol_demo') and @number < 2
                 return true
-            else if 'admin' in Meteor.user().roles 
+            else if Roles.userIsInRole(Meteor.userId(), ['sol', 'admin']) 
                 return true
             else 
                 return false

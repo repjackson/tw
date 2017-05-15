@@ -17,7 +17,7 @@ if Meteor.isClient
     
     
     Template.reflective_questions.helpers
-        reflective_questions: -> 
+        reflective_question_docs: -> 
             mod_num = FlowRouter.getParam('module_number')
             sec_num = FlowRouter.getParam('section_number')
             Docs.find {
@@ -27,13 +27,55 @@ if Meteor.isClient
         # reflective_questions_tags: ->
         #     "sol","module #{FlowRouter.getParam('module_number')}","section #{FlowRouter.getParam('section_number')}","reflective question"
     
-    
+        any_reflective_questions: ->
+            mod_num = FlowRouter.getParam('module_number')
+            sec_num = FlowRouter.getParam('section_number')
+            Docs.find({
+                tags: ["sol","module #{mod_num}","section #{sec_num}","reflective question"] }).count()
+
+            
+            
+        has_answered_previous: ->
+            # console.log @number
+            # console.log @body
+            if Roles.userIsInRole Meteor.userId(), 'admin' then true
+            else
+                mod_num = FlowRouter.getParam('module_number')
+                sec_num = FlowRouter.getParam('section_number')
+                if @number is 1 then true
+                else
+                    previous_number = @number - 1
+                    
+                    previous_question = Docs.findOne
+                        tags: ["sol","module #{mod_num}","section #{sec_num}","reflective question"]
+                        number: previous_number
+                    
+                    if previous_question
+                        previous_question_answer = 
+                            Docs.findOne
+                                tags: $in: ['answer']
+                                parent_id: previous_question._id
+                                author_id: Meteor.userId()
+                        if previous_question_answer 
+                            if Session.get('editing_id') isnt previous_question_answer._id
+                                # console.log 'has answered question', previous_question.number
+                                return true
+                        else
+                            # console.log 'has NOT answered question', previous_question.number
+                            return false    
+                        
+                            
         has_answered_question: ->
-            Docs.findOne
+            found_answer = Docs.findOne
                 tags: $in: ['answer']
                 parent_id: @_id
                 author_id: Meteor.userId()
 
+            # if found_answer
+            #     console.log "has answered question #{@number}"
+            # else
+            #     console.log "has NOT answered question #{@number}"
+                
     
     Template.reflective_answers.helpers
         all_reflective_answers: ->

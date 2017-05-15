@@ -59,3 +59,10 @@ Accounts.onCreateUser (options, user) ->
 #     askBeforeMeld: false
 #     # meldDBCallback: meldDBCallback
 #     # serviceAddedCallback: serviceAddedCallback
+
+
+Docs.allow
+    insert: (userId, doc) -> Roles.userIsInRole(userId, 'admin') or doc.author_id is userId
+    update: (userId, doc) -> Roles.userIsInRole(userId, 'admin') or doc.author_id is userId
+    remove: (userId, doc) -> Roles.userIsInRole(userId, 'admin') or doc.author_id is userId
+

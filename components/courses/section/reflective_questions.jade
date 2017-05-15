@@ -1,38 +1,46 @@
 template(name='reflective_questions')
-    .ui.horizontal.divider.header 
-        |Reflective Questions
+    // .ui.embed(data-source='vimeo', data-id='215750115', data-placeholder='/toriwebster-logotype-04.png')
+    unless reflective_question_docs.count
         if isInRole 'admin'
-            i#add_reflective_question.green.plus.link.icon(title='Add Reflective Question')
-    each reflective_questions
-        .ui.segment(class=segment_class)
+            #add_reflective_question.ui.basic.blue.button 
+                i.plus.icon
+                |Add Reflective Question
+    else
+        .ui.horizontal.divider.header 
+            |Reflective Questions
             if isInRole 'admin'
-                if published
-                    .ui.top.right.attached.blue.label Published
-                else
-                    .ui.top.right.attached.basic.label Hidden
-            if is_editing
-                .ui.form
-                    .field
-                        +number
-                    .field
-                        label Reflective Question
-                        textarea#body(rows='3') #{body}
-                    .ui.divider
-                    +session_edit_button
-                    +published
-                    +delete_button
-            else
-                .ui.header #{number}: #{body}
-                if isInRole 'admin'
-                    +session_edit_button
-                .ui.divider
-                if currentUser
-                    if has_answered_question
-                        +reflective_answers
+                i#add_reflective_question.green.plus.link.icon(title='Add Reflective Question')
+        each reflective_question_docs
+            if has_answered_previous
+                .ui.segment(class=segment_class)
+                    if isInRole 'admin'
+                        if published
+                            .ui.top.right.attached.blue.label Published
+                        else
+                            .ui.top.right.attached.basic.label Hidden
+                    if is_editing
+                        .ui.form
+                            .field
+                                +number
+                            .field
+                                label Reflective Question
+                                textarea#body(rows='3') #{body}
+                            .ui.divider
+                            +session_edit_button
+                            +published
+                            +delete_button
                     else
-                        .add_reflective_answer.ui.basic.fluid.button 
-                            i.plus.icon
-                            |Add Answer
+                        .ui.header #{number}: #{body}
+                        if isInRole 'admin'
+                            +session_edit_button
+                        .ui.divider
+                        if currentUser
+                            if has_answered_question
+                                +reflective_answers
+                            else
+                                .add_reflective_answer.ui.basic.fluid.button 
+                                    i.plus.icon
+                                    |Add Answer
 
 template(name='reflective_answers')
     with my_answer
@@ -61,6 +69,7 @@ template(name='reflective_answers')
         .title
             i.large.users.icon
             | All Public Answers
+            i.dropdown.icon
         .content
             .ui.threaded.comments
                 each all_reflective_answers

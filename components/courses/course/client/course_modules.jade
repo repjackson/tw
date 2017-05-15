@@ -4,17 +4,27 @@ template(name='course_modules')
         if isInRole 'admin'
             i#add_sol_module.green.plus.link.icon(title='Add Module')
     each sol_modules
-        .ui.segment
-            if is_editing
-                +number
-                +title
-                +delete_button
-            else
-                a.ui.header(href="/course/sol/module/#{number}") #{number}: #{title}
-                // |!{content}
-            if isInRole 'admin'
-                +session_edit_button
-    
+        if module_is_available
+            .ui.segment
+                if is_editing
+                    +number
+                    +title
+                    +delete_button
+                else
+                    a.ui.header(href="/course/sol/module/#{number}") #{number}: #{title}
+                    // |!{content}
+                if isInRole 'admin'
+                    +session_edit_button
+        else
+            .ui.disabled.segment
+                // a(href="/course/#{course}/module/#{number}")
+                .ui.header  #{number}: #{title}
+                    // .ui.teal.progress
+                    //     .bar
+                    //     .progress
+                    //     .label Coursework
+                // i.lock.icon
+
     
     
     
