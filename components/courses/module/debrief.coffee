@@ -59,7 +59,16 @@ if Meteor.isClient
             Docs.update @_id,
                 $set: body: body
             
+    Template.debrief_answers.onRendered ->
+        @autorun =>
+            if @subscriptionsReady()
+                Meteor.setTimeout ->
+                    $('.ui.accordion').accordion()
+                , 500
+                # console.log 'subs ready'
+
     
+
     
     
     Template.debrief.events

@@ -19,10 +19,11 @@ template(name='lightwork_questions')
             i#add_lightwork_question.green.plus.link.icon(title='Add Lightwork Question')
     each lightwork_questions
         .ui.segment(class=segment_class)
-            if published
-                .ui.top.right.attached.teal.label Published
-            else
-                .ui.top.right.attached.basic.label Hidden
+            if isInRole 'admin'
+                if published
+                    .ui.top.right.attached.teal.label Published
+                else
+                    .ui.top.right.attached.basic.label Hidden
             if is_editing
                 .ui.form
                     .field
@@ -50,36 +51,47 @@ template(name='lightwork_questions')
 template(name='lightwork_answers')
     with my_answer
         .ui.segment(class=segment_class)
-            .ui.blue.ribbon.label
+            .ui.blue.ribbon.label(class=ribbon_class)
                 |Your Answer
                 if published
                     |(public)
                 else
                     |(private)
             if is_editing
-                .ui.form
-                    .field
-                        input#body(type='text' value=body)
+                .ui.basic.segment
+                    .ui.form
+                        .field
+                            // label Answer
+                            textarea#body(rows='3') #{body}
+                    +session_edit_button
+                    +published
+                    +delete_button
             else
                 h4 #{body}
-            if can_edit
-                +published
-                    // .toggle_published.ui.slider.checkbox
-                    //     input(type='checkbox' name='publish_answer' checked=published)
-                    //     label Publish Answer
-                    // i.help.circle.outline.large.icon(data-content="By making this answer public other SOL participants can see it, relate, and collaborate.")
-                +session_edit_button
-                +delete_button
-    unless is_editing_my_answer
-        .ui.styled.fluid.accordion
-            .title
-                i.dropdown.icon
-                | All Public Answers
-            .content
-                .ui.segments
-                    each all_answers
-                        .ui.segment
-                            h4 #{body}
-                            a(href='/profile/#{author.username}')
-                                img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
-                                |{{author.name}}
+                if can_edit
+                    +session_edit_button
+    .ui.styled.fluid.accordion
+        .title
+            i.dropdown.icon
+            | All Public Answers
+        .content
+            .ui.threaded.comments
+                each all_answers
+                    .comment
+                        a(href='/profile/#{author.username}').avatar
+                            img.ui.avatar.image(src="{{c.url author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                        .content
+                            a(href='/profile/#{author.username}').author #{author.name}
+                            .metadata
+                                span.date #{from_now}
+                                unless is_author
+                                    +voting
+                            .text
+                                | #{body}
+                            // .actions
+                                // a.reply(href='#') Reply
+                                // +favorite
+                                // +voting
+                                // if is_author
+                                //     +delete_link
+                                //     +edit_link
