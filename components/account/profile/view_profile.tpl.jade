@@ -37,7 +37,7 @@
                     .ui.small.teal.statistic
                         .value #{points}
                         .label Comment Karma
-                        
+                    +tag_person this    
                     
             .ten.wide.column
                 if profile.first_name
@@ -48,7 +48,7 @@
                 if tags
                     .ui.basic.center.aligned.segment
                         each tags
-                            .user_tag.ui.circular.large.basic.label #{this}
+                            .user_tag.ui.circular.basic.label #{this}
                 if profile.location
                     .ui.header Location 
                     | #{profile.location}
@@ -62,3 +62,7 @@
                     .ui.header If I am not at work or in class then I am probably…
                     |#{profile.if_not_working}
                 +user_courses
+                if isInRole 'beta'
+                    +messages_with_user 
+                
+                

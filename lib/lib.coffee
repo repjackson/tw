@@ -163,3 +163,21 @@ Meteor.methods
             Docs.update doc._id,
                 $addToSet: favoriters: Meteor.userId()
                 $inc: favorite_count: 1
+    
+    
+    mark_complete: (doc)->
+        if Meteor.user().completed_ids and doc._id in Meteor.user().completed_ids
+            Meteor.users.update Meteor.userId(),
+                $pull: completed_ids: doc._id
+        else
+            Meteor.users.update Meteor.userId(),
+                $addToSet: completed_ids: doc._id
+    
+    
+    bookmark: (doc)->
+        if Meteor.user().bookmarked_ids and doc._id in Meteor.user().bookmarked_ids
+            Meteor.users.update Meteor.userId(),
+                $pull: bookmarked_ids: doc._id
+        else
+            Meteor.users.update Meteor.userId(),
+                $addToSet: bookmarked_ids: doc._id

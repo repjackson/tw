@@ -25,6 +25,10 @@ if Meteor.isClient
             # console.log @
             Roles.userIsInRole(@_id, 'admin')
     
+        is_beta: -> 
+            # console.log @
+            Roles.userIsInRole(@_id, 'beta')
+    
         in_sol: -> 
             # console.log @
             Roles.userIsInRole(@_id, 'sol')
@@ -68,6 +72,39 @@ if Meteor.isClient
             }, ->
                 Roles.addUsersToRoles self._id, 'admin'
                 swal "Made #{self.username} an Admin", "",'success'
+                return
+    
+        'click .remove_beta': ->
+            self = @
+            swal {
+                title: "Remove #{@username} from beta users?"
+                # text: 'You will not be able to recover this imaginary file!'
+                type: 'warning'
+                animation: false
+                showCancelButton: true
+                # confirmButtonColor: '#DD6B55'
+                confirmButtonText: 'Remove Privilages'
+                closeOnConfirm: false
+            }, ->
+                Roles.removeUsersFromRoles self._id, 'beta'
+                swal "Removed beta Privilages from #{self.username}", "",'success'
+                return
+    
+    
+        'click .make_beta': ->
+            self = @
+            swal {
+                title: "Make #{@username} a beta user?"
+                # text: 'You will not be able to recover this imaginary file!'
+                type: 'warning'
+                animation: false
+                showCancelButton: true
+                # confirmButtonColor: '#DD6B55'
+                confirmButtonText: 'Make beta'
+                closeOnConfirm: false
+            }, ->
+                Roles.addUsersToRoles self._id, 'beta'
+                swal "Made #{self.username} a beta user", "",'success'
                 return
     
         'click .remove_sol': ->

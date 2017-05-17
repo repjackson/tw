@@ -279,6 +279,33 @@ Template.resonate_button.events
         else FlowRouter.go '/sign-in'
 
 
+
+
+
+Template.mark_complete_button.helpers
+    complete_button_class: -> 
+        if Meteor.userId()
+            if Meteor.user().completed_ids and @_id in Meteor.user().completed_ids then 'teal' else 'basic'
+        else 'grey disabled'
+Template.mark_complete_button.events
+    'click .mark_complete': -> 
+        if Meteor.userId() then Meteor.call 'mark_complete', Template.parentData(0)
+        else FlowRouter.go '/sign-in'
+
+
+
+
+Template.bookmark_button.helpers
+    bookmark_button_class: -> 
+        if Meteor.userId()
+            if Meteor.user().bookmarked_ids and @_id in Meteor.user().bookmarked_ids then 'teal' else 'basic'
+        else 'grey disabled'
+Template.bookmark_button.events
+    'click .bookmark_button': -> 
+        if Meteor.userId() then Meteor.call 'bookmark', Template.parentData(0)
+        else FlowRouter.go '/sign-in'
+
+
 Template.featured.events
     'click #make_featured': -> Docs.update FlowRouter.getParam('doc_id'), $set: featured: true
     'click #make_unfeatured': -> Docs.update FlowRouter.getParam('doc_id'), $set: featured: false

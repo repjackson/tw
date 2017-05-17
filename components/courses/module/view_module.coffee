@@ -15,8 +15,7 @@ if Meteor.isClient
     
     
     Template.doc_module.helpers
-        is_first_module: ->
-            parseInt FlowRouter.getParam('module_number') is 1
+        is_first_module: -> FlowRouter.getParam('module_number') is '1'
     
         module_number: -> FlowRouter.getParam('module_number')
     

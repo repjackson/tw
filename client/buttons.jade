@@ -136,3 +136,26 @@ template(name='resonate_button')
     .resonate_button.ui.button(class=resonate_button_class) 
         i.heartbeat.large.icon
         | This Resonates with Me
+        
+template(name='mark_complete_button')
+    if completed
+        .mark_complete.ui.button(class=complete_button_class) 
+            i.checkmark.box.large.icon
+            | Completed
+    else
+        .mark_complete.ui.button(class=complete_button_class) 
+            i.square.outline.large.icon
+            | Mark Complete
+        
+template(name='bookmark_button')
+    if bookmarked
+        .bookmakmark_button.ui.button(class=bookmark_button_class) 
+            i.remove.bookmark.large.icon
+            | Bookmarked
+    else
+        .bookmakmark_button.ui.button(class=bookmark_button_class) 
+            i.bookmark.large.icon
+            | Bookmark
+        
+        
+        

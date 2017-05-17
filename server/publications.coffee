@@ -63,8 +63,8 @@ Meteor.publish 'me', ->
             points: 1
             status: 1
             cart: 1
-
-
+            completed_ids: 1
+            bookmarked_ids: 1
     
     
 Meteor.publish 'tags', (selected_tags, type, limit, view_mode)->

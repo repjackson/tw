@@ -20,6 +20,8 @@ template(name='lightbank_doc_view')
                 .ui.tiny.button.tag(class=tag_class) #{this}
         .ui.hidden.divider
         +resonate_button
+        +mark_complete_button
+        +bookmark_button
         // a.ui.basic.button(href="/view/#{_id}") 
         //     |View
         //     i.right.chevron.icon
@@ -27,3 +29,4 @@ template(name='lightbank_doc_view')
             a.ui.basic.button(href="/edit/#{_id}")
                 i.red.configure.icon
                 |Edit
+        

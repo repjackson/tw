@@ -17,6 +17,6 @@ if Meteor.isClient
     
     Template.view_profile.helpers
         person: -> Meteor.users.findOne username:FlowRouter.getParam('username') 
-        is_user: -> FlowRouter.getParam('username') is Meteor.user().username
+        is_user: -> FlowRouter.getParam('username') is Meteor.user()?.username
         
     Template.view_profile.events

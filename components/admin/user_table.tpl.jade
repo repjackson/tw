@@ -7,6 +7,7 @@
                 th SOL
                 th SOL Demo
                 th Admin
+                th Beta
         tbody
             each members
                 tr
@@ -50,9 +51,19 @@
                             .ui.green.label Admin
                             .remove_admin.ui.basic.compact.icon.button
                                 i.remove.icon 
-                                // | Admin
+                                | Admin
                         else
                             .make_admin.ui.compact.basic.icon.button
                                 i.plus.icon 
                                 | Admin
+                    td 
+                        if is_beta
+                            .ui.green.label Beta
+                            .remove_beta.ui.basic.compact.icon.button
+                                i.remove.icon 
+                                | Beta
+                        else
+                            .make_beta.ui.compact.basic.icon.button
+                                i.plus.icon 
+                                | Beta
                                 

@@ -29,13 +29,20 @@ template(name='dashboard')
                     .header 
                         i.sun.icon
                         |My Light Bank
-            if isInRole 'admin'
+            if isInRole 'beta'
                 a.ui.card(href='/support')
                     .content
                         .header
                             i.red.configure.icon
                             i.help.icon
                             |Support
+            if isInRole 'beta'
+                a.ui.card(href='/messages')
+                    .content
+                        .header
+                            i.red.configure.icon
+                            i.mail.icon
+                            |Messages
             // a.ui.card(href='/account')
             //     .content
             //         .header

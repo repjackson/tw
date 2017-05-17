@@ -14,7 +14,8 @@ Template.lightbank_cloud.helpers
             name: $in: media_tags
         
     theme_tags: ->
-        doc_count = Docs.find().count()
+        doc_count = Docs.find(type:'lightbank').count()
+        # if selected_tags.array().length
         if 0 < doc_count < 3
             Tags.find { 
                 count: $lt: doc_count
@@ -22,8 +23,8 @@ Template.lightbank_cloud.helpers
                 }, limit:10
         else
             # console.log 'media tags?', media_tags
-            Tags.find({name: $nin: media_tags}, limit:10)
-    
+            cursor = Tags.find({name: $nin: media_tags}, limit:10)
+            
     media_tag_class: -> 
         button_class = []
         if @valueOf() in selected_tags.array() then button_class.push 'teal' else button_class.push 'basic'
