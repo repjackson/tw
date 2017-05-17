@@ -72,16 +72,16 @@ template(name='doc_section')
                         else
                             .mark_video_complete.ui.basic.fluid.button Mark Video Watched
                     .ui.hidden.divider
-                    if isInRole 'admin'
-                        +reflective_questions
-                    else if video_complete
-                        +reflective_questions
-                            
                     if section_complete
-                        .ui.dividing.header
+                        .ui.horizontal.divider.header
                             i.green.check.circle.icon
                             |Section Complete
                         a.ui.basic.fluid.button(href="/course/sol/module/#{module_number}/section/#{next_section_number}")
                             | Continue to Section #{next_section_number}
                             i.right.chevron.icon
+                    if isInRole 'admin'
+                        +reflective_questions
+                    else if video_complete
+                        +reflective_questions
+                            
 

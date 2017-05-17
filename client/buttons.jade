@@ -138,23 +138,21 @@ template(name='resonate_button')
         | This Resonates with Me
         
 template(name='mark_complete_button')
-    if completed
-        .mark_complete.ui.button(class=complete_button_class) 
+    .mark_complete.ui.button(class=complete_button_class) 
+        if completed
             i.checkmark.box.large.icon
-            | Completed
-    else
-        .mark_complete.ui.button(class=complete_button_class) 
+            | Complete
+        else
             i.square.outline.large.icon
-            | Mark Complete
+            | Complete
         
 template(name='bookmark_button')
-    if bookmarked
-        .bookmakmark_button.ui.button(class=bookmark_button_class) 
-            i.remove.bookmark.large.icon
-            | Bookmarked
-    else
-        .bookmakmark_button.ui.button(class=bookmark_button_class) 
+    .bookmark_button.ui.button(class=bookmark_button_class) 
+        if bookmarked
             i.bookmark.large.icon
+            | Bookmark
+        else
+            i.remove.bookmark.large.icon
             | Bookmark
         
         
