@@ -7,25 +7,54 @@ template(name='sections')
         
         
 template(name='section')        
-    .ui.segment
-        if editing
-            .ui.form
-                .field
-                    +number
-                .field
-                    +title
-                .field
-                    +delete_button
-                    +published
-        else
-            a.ui.header(href="/course/sol/module/#{module_number}/section/#{number}") #{number}: #{title}
-        if isInRole 'admin'
-            +session_edit_button
-            // unless editing
-            //     i.edit_this.large.pencil.link.icon(title=tags)
-            // else
-            //     .save_doc.ui.icon.green.basic.button
-            //         i.check.icon
+    if section_is_available
+        .ui.segment
+            if editing
+                .ui.form
+                    .field
+                        +number
+                    .field
+                        +title
+                    .field
+                        +delete_button
+                        +published
+            else
+                a.ui.header(href="/course/sol/module/#{module_number}/section/#{number}") #{number}: #{title}
+            if isInRole 'admin'
+                .right.floated
+                    +session_edit_button
+            .ui.divider
+            .section_percent_complete_bar.ui.indicating.progress(data-percent=user_progress)
+                .bar
+                    .progress
+                .label
+            .ui.horizontal.relaxed.list
+                .item
+                    if section_progress_doc.video_complete
+                        i.green.large.film.icon
+                    else
+                        i.disabled.large.film.icon
+                    .content
+                        if section_progress_doc.video_complete
+                            |Video Watched
+                        else
+                            |Video Not Watched
+                .item
+                    .content
+                        strong 3/5
+                        |Questions Answered
+                .item
+                    if section_progress_doc.lightwork_complete
+                        i.sun.large.icon
+                    else
+                        i.yellow.sun.large.icon
+                    .content
+                        if section_progress_doc.lightwork_complete
+                            |Lightwork Complete
+                        else
+                            |Lightwork Not Complete
+    else
+        .ui.disabled.segment
+            .ui.header  #{number}: #{title}
 
-    
     

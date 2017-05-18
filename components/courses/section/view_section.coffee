@@ -25,7 +25,7 @@ if Meteor.isClient
         self = @
         
         @autorun =>
-            console.log Session.get 'section_number'
+            # console.log Session.get 'section_number'
             # if @subscriptionsReady()
             Meteor.setTimeout ->
                 $('.ui.accordion').accordion()
