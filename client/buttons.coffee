@@ -10,8 +10,10 @@ Template.voting.helpers
         else 'outline'
 
 Template.voting.events
-    'click .vote_up': -> 
-        if Meteor.userId() then Meteor.call 'vote_up', @_id
+    'click .vote_up': (e,t)-> 
+        if Meteor.userId()
+            Meteor.call 'vote_up', @_id
+            $(e.currentTarget).closest('.vote_up').transition('bounce')
         else FlowRouter.go '/sign-in'
 
     'click .vote_down': -> 
@@ -284,9 +286,9 @@ Template.resonate_button.events
 
 
 Template.mark_complete_button.helpers
-    completed: -> Meteor.user().completed_ids and @_id in Meteor.user().completed_ids
+    completed: -> Meteor.user()?.completed_ids and @_id in Meteor.user().completed_ids
     complete_button_class: -> 
-        if Meteor.userId()
+        if Meteor.user()
             if Meteor.user().completed_ids and @_id in Meteor.user().completed_ids then 'teal' else 'basic'
         else 'grey disabled'
 Template.mark_complete_button.events
@@ -300,7 +302,7 @@ Template.mark_complete_button.events
 
 Template.bookmark_button.helpers
     bookmark_button_class: -> 
-        if Meteor.userId()
+        if Meteor.user()
             if Meteor.user().bookmarked_ids and @_id in Meteor.user().bookmarked_ids then 'teal' else 'basic'
         else 'grey disabled'
         

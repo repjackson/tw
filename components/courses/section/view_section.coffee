@@ -7,24 +7,35 @@ if Meteor.isClient
     
     
     Template.doc_section.onCreated ->
-        module_num = parseInt FlowRouter.getParam('module_number')
-        section_num = parseInt FlowRouter.getParam('section_number')
-        @autorun -> Meteor.subscribe 'module', module_num
-        @autorun -> Meteor.subscribe 'sections', module_num
-        @autorun -> Meteor.subscribe 'section_content', module_num, section_num
-        @autorun -> Meteor.subscribe 'section', module_num, section_num
-        @autorun -> Meteor.subscribe 'section_progress_doc', module_num, section_num
-        @autorun -> Meteor.subscribe 'reflective_questions', FlowRouter.getParam('module_number'), FlowRouter.getParam('section_number')
+        Session.setDefault('module_number', parseInt(FlowRouter.getParam('module_number')))
+        Session.setDefault('section_number', parseInt(FlowRouter.getParam('section_number')))
+        # module_num = parseInt FlowRouter.getParam('module_number')
+        # section_num = parseInt FlowRouter.getParam('section_number')
+        @autorun -> Meteor.subscribe 'module', parseInt(Session.get('module_number'))
+        @autorun -> Meteor.subscribe 'sections', parseInt(Session.get('module_number'))
+        @autorun -> Meteor.subscribe 'section_content', parseInt(Session.get('module_number')), parseInt(Session.get('section_number'))
+        @autorun -> Meteor.subscribe 'section_transcript', parseInt(Session.get('module_number')), parseInt(Session.get('section_number'))
+        @autorun -> Meteor.subscribe 'section', parseInt(Session.get('module_number')), parseInt(Session.get('section_number'))
+        @autorun -> Meteor.subscribe 'section_progress_doc', parseInt(Session.get('module_number')), parseInt(Session.get('section_number'))
+        @autorun -> Meteor.subscribe 'reflective_questions', parseInt(Session.get('module_number')), parseInt(Session.get('section_number'))
+        
+
 
     Template.doc_section.onRendered ->
         self = @
         
         @autorun =>
-            if @subscriptionsReady()
-                Meteor.setTimeout ->
-                    $('.ui.accordion').accordion()
-                    $('#section_percent_complete_bar').progress();
-                , 1000
+            console.log Session.get 'section_number'
+            # if @subscriptionsReady()
+            Meteor.setTimeout ->
+                $('.ui.accordion').accordion()
+                section_progress_doc =  Docs.findOne(tags: $in: ["section progress"])
+                # console.log section_progress_doc
+                $('#section_percent_complete_bar').progress(
+                    percent: section_progress_doc.percent_complete
+                    autoSuccess: false
+                    );
+            , 1000
 
     
     Template.doc_section.helpers
@@ -33,8 +44,13 @@ if Meteor.isClient
         title_tags: -> "sol,module #{FlowRouter.getParam('module_number')},title"
     
         section_content_tags: ->
-            "sol,module #{FlowRouter.getParam('module_number')},section #{FlowRouter.getParam('section_number')},content"
+            mod_num = Session.get('module_number')
+            sec_num = Session.get('section_number')
+            "sol,module #{mod_num},section #{sec_num},content"
         section_transcript_tags: ->
+            mod_num = Session.get('module_number')
+            sec_num = Session.get('section_number')
+
             "sol,module #{FlowRouter.getParam('module_number')},section #{FlowRouter.getParam('section_number')},transcript"
 
         section_progress_doc: ->
@@ -80,19 +96,24 @@ if Meteor.isClient
                 return false
                 
         module: -> 
+            module_num = parseInt FlowRouter.getParam('module_number')
             Docs.findOne 
                 tags: $in: ['module']
-                number: parseInt FlowRouter.getParam('module_number')
+                number: module_num
 
         section: -> 
-            Docs.findOne 
+            section_number = parseInt(FlowRouter.getParam('section_number'))
+
+            section = Docs.findOne 
                 tags: $in: ['section']
-                number: parseInt FlowRouter.getParam('section_number')
-            
+                number: section_number
+            # console.log section_number
+            section
             
         previous_section: ->
-            module_num = parseInt FlowRouter.getParam('module_number')
             section_number = parseInt(FlowRouter.getParam('section_number'))
+            module_num = parseInt FlowRouter.getParam('module_number')
+
             previous_section_number = section_number - 1
             Docs.findOne
                 tags: ['section']
@@ -135,9 +156,11 @@ if Meteor.isClient
                 tags: ['sol', "module #{module_num}", "section #{section_num}", 'section progress']
                 author_id: Meteor.userId()
             Docs.update section_progress_doc?._id,
-                $set: video_complete: true
-            Meteor.call 'calculate_section_progress', module_num, section_num, ->
-                $('#section_percent_complete_bar').progress('set percent', 100);
+                $set: 
+                    video_complete: true
+            Meteor.call 'calculate_section_progress', module_num, section_num, (err,res)->
+                # console.log res
+                $('#section_percent_complete_bar').progress('set percent', res);
                 # console.log $('#section_percent_complete_bar').progress('get percent');
 
     
@@ -150,21 +173,64 @@ if Meteor.isClient
                 author_id: Meteor.userId()
             Docs.update section_progress_doc._id,
                 $set: video_complete: false
-            Meteor.call 'calculate_section_progress', module_num, section_num, ->
-                $('#section_percent_complete_bar').progress('set percent', 0);
+            Meteor.call 'calculate_section_progress', module_num, section_num, (err,res)->
+                # console.log res
+                $('#section_percent_complete_bar').progress('set percent', res);
                 # console.log $('#section_percent_complete_bar').progress('get percent');
+
+        'click #go_to_previous_section': ->
+            current_section_number = parseInt FlowRouter.getParam('section_number')
+            previous_section_number = current_section_number - 1
+            $('#section_percent_complete_bar').progress('reset');
+            Session.set 'section_number', previous_section_number
+            FlowRouter.setParams({section_number: previous_section_number})
+            
+        'click .go_to_next_section': ->
+            current_section_number = parseInt FlowRouter.getParam('section_number')
+            next_section_number = current_section_number + 1
+            Session.set 'section_number', next_section_number
+            $('#section_percent_complete_bar').progress('reset');
+
+            FlowRouter.setParams({section_number: next_section_number})
 
     
 if Meteor.isServer
     Meteor.publish 'section', (module_number, section_number)->
+        
         Docs.find
             tags: $in: ['section']
             module_number: module_number
             number: section_number
             
+    # publishComposite 'section', (module_number, section_number)->
+    #     {
+    #         find: ->
+    #             Docs.find
+    #                 tags: $in: ['section']
+    #                 module_number: module_number
+    #                 number: section_number
+    #         children: [
+    #             { find: (section) ->
+    #                 Docs.find 
+    #                     tags: $all: ['sol', "module #{module_number}", "section #{section_number}","content"]
+    #                 }
+    #             ]    
+    #     }
+            
+            
+            
+            
+            
     Meteor.publish 'section_content', (module_number, section_number)->
         Docs.find
-            tags: $in: ['sol', "module #{module_number}", "section #{section_number}"]
+            tags: $all: ['sol', "module #{module_number}", "section #{section_number}", "content"]
+                # tags: $all: ['sol', "module #{module_number}", "section #{section_number}", "transcript"]
+    
+    Meteor.publish 'section_transcript', (module_number, section_number)->
+        Docs.find
+            tags: $all: ['sol', "module #{module_number}", "section #{section_number}", "transcript"]
+    
+            
             
     Meteor.publish 'section_progress_doc', (module_number, section_number)->
         Docs.find
@@ -177,7 +243,10 @@ if Meteor.isServer
             # console.log module_number
             # console.log section_number
             section_question_count = 
-                Docs.find( tags: $all: ['sol', "module #{module_number}", "section #{section_number}", 'reflective question']).count()
+                Docs.find( 
+                    tags: $all: ['sol', "module #{module_number}", "section #{section_number}", 'reflective question']
+                    tag_count: 4
+                ).count()
         
             # console.log section_question_count
 
@@ -203,12 +272,20 @@ if Meteor.isServer
                 if section_question_count is 0    
                     Docs.update section_progress_doc._id,
                         $set:percent_complete: 100
+                    return 100
+                else
+                    Docs.update section_progress_doc._id,
+                        $set:percent_complete: 50
+                    return 50
             else
                 Docs.update section_progress_doc._id,
                     $set:video_complete: false
                 if section_question_count is 0    
                     Docs.update section_progress_doc._id,
                         $set:percent_complete: 0
+                    return 0
+                else
+                    return 0
             
                 
 

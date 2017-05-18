@@ -32,9 +32,21 @@ template(name='admin_doc_view')
             .header #{title}
             .meta
                 .subheader #{subtitle}
+                .date
+                    |by 
+                    img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+                    |#{author.name} #{when}
                 each tags
                     .ui.tiny.button.tag(class=tag_class) #{this}
-            |!{content}
+            if body
+                .label Body
+                |#{body}
+            if content
+                .label Content
+                |!{content}
+            if price
+                .label Price
+                |#{price}
             .ui.hidden.divider
             if can_edit
                 a.ui.basic.button(href="/admin_edit/#{_id}")

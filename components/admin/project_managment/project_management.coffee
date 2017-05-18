@@ -29,8 +29,8 @@ if Meteor.isClient
     @selected_admin_tags = new ReactiveArray []
 
     Template.project_management.onCreated ->
-        @autorun => Meteor.subscribe('admin_tags', selected_admin_tags.array(), limit=20, )
-        @autorun -> Meteor.subscribe('admin_docs', selected_admin_tags.array(), limit=3)
+        @autorun => Meteor.subscribe('admin_tags', selected_admin_tags.array(), limit=20)
+        @autorun -> Meteor.subscribe('admin_docs', selected_admin_tags.array(), limit=10)
 
     Template.project_management.helpers
             
@@ -72,11 +72,12 @@ if Meteor.isClient
         }
     
         admin_docs: -> 
-            Docs.find {type: 'admin' }, 
+            # Docs.find {type: 'admin' }, 
+            Docs.find {}, 
                 sort:
                     tag_count: 1
-                limit: 3
-    
+
+
         one_doc: -> 
             Docs.find().count() is 1
     
@@ -126,23 +127,25 @@ if Meteor.isClient
 
 
 if Meteor.isServer
-    Meteor.publish 'admin_docs', (selected_admin_tags, limit)->
-    
-        self = @
-        match = {}
-        match.tags = selected_admin_tags
-        # if selected_admin_tags.length > 0 then match.tags = $all: selected_admin_tags
-        # match.type = 'admin'
-        # console.log view_mode
-        if limit
-            Docs.find match, 
-                limit: limit
-        else
-            Docs.find match
+    publishComposite 'admin_docs', (selected_admin_tags, limit)->
+        {
+            find: ->
+                self = @
+                match = {}
+                match.tags = $all: selected_admin_tags
+                # if selected_admin_tags.length > 0 then match.tags = $all: selected_admin_tags
+                # match.type = 'admin'
+                # console.log view_mode
+                Docs.find match, 
+                    limit: limit
+            children: [
+                { find: (doc) ->
+                    Meteor.users.find 
+                        _id: doc.author_id
+                    }
+                ]    
+        }
 
-
-    
-    
     Meteor.publish 'admin_tags', (selected_tags, limit, view_mode)->
         
         self = @
