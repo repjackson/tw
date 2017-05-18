@@ -95,6 +95,16 @@ if Meteor.isClient
                 # console.log "has NOT answered question #{@number}"
                 return false
                 
+                
+        all_questions_answered: ->
+            mod_num = FlowRouter.getParam('module_number')
+            sec_num = FlowRouter.getParam('section_number')
+            question_count = Docs.find({tags: ["sol","module #{mod_num}","section #{sec_num}","reflective question"] }).count()
+            answer_count = Docs.find( tags: ["sol","module #{mod_num}","section #{sec_num}","reflective question",'answer'], author_id:Meteor.userId()).count()
+            # console.log question_count
+            # console.log answer_count
+            question_count is answer_count    
+                
         module: -> 
             module_num = parseInt FlowRouter.getParam('module_number')
             Docs.findOne 
@@ -193,6 +203,15 @@ if Meteor.isClient
 
             FlowRouter.setParams({section_number: next_section_number})
 
+
+        'click #mark_section_complete': ->
+            module_num = parseInt FlowRouter.getParam('module_number')
+            section_num = parseInt FlowRouter.getParam('section_number')
+
+            Meteor.call 'calculate_section_progress', module_num, section_num, (err,res)->
+                # console.log res
+                $('#section_percent_complete_bar').progress('set percent', res);
+                # console.log $('#section_percent_complete_bar').progress('get percent');
     
 if Meteor.isServer
     Meteor.publish 'section', (module_number, section_number)->
@@ -248,12 +267,23 @@ if Meteor.isServer
                     tag_count: 4
                 ).count()
         
-            # console.log section_question_count
+        
+            section_answer_count = 
+                Docs.find( 
+                    tags: $all: ['sol', "module #{module_number}", "section #{section_number}", 'reflective question','answer']
+                    author_id: Meteor.userId()
+                ).count()
+                
+            # console.log 'question count',section_question_count
+            # console.log 'answer count',section_answer_count
+            
+            
 
             section_progress_doc = 
                 Docs.findOne
                     tags: $all: ['sol', "module #{module_number}", "section #{section_number}", 'section progress']
-            
+
+
             if not section_progress_doc
                 new_progress_doc_id = 
                     Docs.insert
@@ -266,6 +296,20 @@ if Meteor.isServer
             section_progress_doc = 
                 Docs.findOne
                     tags: ['sol', "module #{module_number}", "section #{section_number}", 'section progress']
+
+            if section_question_count is section_answer_count
+                questions_complete = true
+            else
+                questions_complete = false
+                
+                
+            Docs.update section_progress_doc._id,
+                $set: 
+                    section_question_count: section_question_count
+                    section_answer_count: section_answer_count
+                    questions_complete: questions_complete
+            
+
     
                 
             if section_progress_doc?.video_complete
@@ -273,10 +317,15 @@ if Meteor.isServer
                     Docs.update section_progress_doc._id,
                         $set:percent_complete: 100
                     return 100
-                else
+                else if questions_complete is false
                     Docs.update section_progress_doc._id,
                         $set:percent_complete: 50
                     return 50
+                else if questions_complete is true
+                    Docs.update section_progress_doc._id,
+                        $set:percent_complete: 100
+                    return 100
+                    
             else
                 Docs.update section_progress_doc._id,
                     $set:video_complete: false

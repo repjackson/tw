@@ -13,7 +13,7 @@ Template.voting.events
     'click .vote_up': (e,t)-> 
         if Meteor.userId()
             Meteor.call 'vote_up', @_id
-            $(e.currentTarget).closest('.vote_up').transition('bounce')
+            $(e.currentTarget).closest('.vote_up').transition('pulse')
         else FlowRouter.go '/sign-in'
 
     'click .vote_down': -> 
@@ -84,6 +84,13 @@ Template.session_edit_button.events
     'click .save_doc': -> Session.set 'editing_id', null
 
 Template.session_edit_button.helpers
+    button_classes: -> Template.currentData().classes
+
+Template.session_edit_icon.events
+    'click .edit_this': -> Session.set 'editing_id', @_id
+    'click .save_doc': -> Session.set 'editing_id', null
+
+Template.session_edit_icon.helpers
     button_classes: -> Template.currentData().classes
 
 

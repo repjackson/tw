@@ -46,15 +46,14 @@ template(name='doc_section')
                 else
                     .ui.basic.fluid.label 
                         |Video
+                .ui.sub.dividing.header #{section_progress_doc.section_answer_count}/ #{section_progress_doc.section_question_count} Questions Answered
                 if reflective_question_docs.count
-                    each reflective_question_docs
-                        if reflective_question_answered
-                            .ui.basic.fluid.label 
-                                i.green.check.icon
-                                |Reflective Question #{number}
-                        else
-                            .ui.basic.fluid.label 
-                                |Reflective Question #{number}
+                    .ui.list
+                        each reflective_question_docs
+                                .item 
+                                    if reflective_question_answered
+                                        i.green.check.icon
+                                    | #{number}: #{body}
             .eleven.wide.column
                 // if Template.subscriptionsReady
                 +doc_content tags=section_content_tags
@@ -74,6 +73,15 @@ template(name='doc_section')
                     else
                         .mark_video_complete.ui.basic.fluid.button Mark Video Watched
                 .ui.hidden.divider
+                    .ui.hidden.divider
+                if isInRole 'admin'
+                    +reflective_questions
+                else if video_complete
+                    +reflective_questions
+                if all_questions_answered
+                    #mark_section_complete.ui.basic.large.fluid.button 
+                        i.circle.outline.icon
+                        |Mark Section Complete
                 if section_complete
                     .ui.horizontal.divider.header
                         i.green.check.circle.icon
@@ -81,10 +89,3 @@ template(name='doc_section')
                     a.go_to_next_section.ui.basic.fluid.button(href="#")
                         | Continue to Section #{next_section_number}
                         i.right.chevron.icon
-                    .ui.hidden.divider
-                if isInRole 'admin'
-                    +reflective_questions
-                else if video_complete
-                    +reflective_questions
-                        
-

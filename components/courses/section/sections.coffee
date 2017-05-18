@@ -41,8 +41,11 @@ if Meteor.isClient
                 section_progress_doc.percent_complete
             else
                 0
-        section_progress_doc: -> Docs.findOne(tags: $all: ["section #{@number}", "section progress"])
-
+        section_progress_doc: -> 
+            progress_doc = Docs.findOne(tags: $all: ["section #{@number}", "section progress"])
+            # console.log progress_doc
+            progress_doc
+            
         section_is_available: ->
             if @number is 1 then true
             else
@@ -72,12 +75,12 @@ if Meteor.isClient
             # console.log t.editing
             t.editing.set false
         
-        'mouseover .item': (e,t)->
-            $(e.currentTarget).closest('.item').transition('pulse')
+        # 'mouseover .item': (e,t)->
+        #     $(e.currentTarget).closest('.item').transition('pulse')
 
                 
-        'mouseover .header': (e,t)->
-            $(e.currentTarget).closest('.header').transition('tada')
+        # 'mouseover .header': (e,t)->
+        #     $(e.currentTarget).closest('.header').transition('tada')
 
                 
                 

@@ -37,6 +37,11 @@ Meteor.methods
     add: (tags=[])->
         id = Docs.insert {}
         return id
+    add_checkin: (tags=[])->
+        id = Docs.insert
+            tags: tags
+            type: 'checkin'
+        return id
 
 
 

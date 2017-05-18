@@ -15,6 +15,41 @@ template(name='course_modules')
                     // |!{content}
                 if isInRole 'admin'
                     +session_edit_button
+                .ui.divider
+                .section_percent_complete_bar.ui.indicating.progress(data-percent=user_progress)
+                    .bar
+                        .progress
+                    .label
+                .ui.horizontal.relaxed.list
+                    .item
+                        if section_progress_doc.debrief_complete
+                            i.green.large.idea.icon
+                        else
+                            i.disabled.large.idea.icon
+                        .content
+                            if section_progress_doc.debrief_complete
+                                |Debrief Not Complete
+                            else
+                                |Debrief Complete
+                    .item
+                        if section_progress_doc.sections_complete
+                            i.green.large.tasks.icon
+                        else
+                            i.disabled.large.tasks.icon
+                        .content
+                            strong #{module_progress_doc.completed_sections}/#{module_progress_doc.section_count}
+                            |Sections Complete
+                    .item
+                        if section_progress_doc.lightwork_complete
+                            i.sun.large.icon
+                        else
+                            i.yellow.sun.large.icon
+                        .content
+                            if section_progress_doc.lightwork_complete
+                                |Lightwork Complete
+                            else
+                                |Lightwork Not Complete
+
         else
             .ui.disabled.segment
                 // a(href="/course/#{course}/module/#{number}")

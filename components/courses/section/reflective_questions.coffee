@@ -84,6 +84,13 @@ if Meteor.isClient
                 tags: $in: ["answer"]
                 published: true
                 
+        all_private_reflective_answers: ->        
+            Docs.find
+                parent_id: @_id
+                tags: $in: ["answer"]
+                published: false
+                
+                
         my_answer: ->
             Docs.findOne
                 parent_id: @_id
@@ -130,10 +137,12 @@ if Meteor.isClient
         'click .add_reflective_answer': ->
             answer_tags = @tags
             answer_tags.push 'answer'
+            answer_tags.push "question #{@number}"
             # console.log 'answer tags', answer_tags
             new_id = Docs.insert
                 tags: answer_tags
                 parent_id: @_id
+                question_number: @number
             Session.set 'editing_id', new_id
 
 if Meteor.isServer

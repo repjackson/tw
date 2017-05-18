@@ -11,9 +11,9 @@ db.users.find({ image_id:{$exists:true}, profile: {$exists:true} }).forEach(
 
 
 db.docs.find({ type: 'module', course_id: 'sW4accx4fvZBK6wLn' }).count()
-db.docs.find({ type: 'module', course_id: 'sol' }).forEach(
+db.docs.find({ parent_id: 'HQ3qAPuBijtZ8LGiX' }).forEach(
     function(doc) {
-        doc.course_id = 'sW4accx4fvZBK6wLn'
+        doc.parent_id = 'njW3pz6w5QenaDwMw'
         db.docs.save(doc);
     }
 )

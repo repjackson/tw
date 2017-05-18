@@ -28,7 +28,6 @@ template(name='reflective_questions')
                             .ui.divider
                             +session_edit_button
                             +published
-                            +delete_button
                     else
                         .ui.header #{number}: #{body}
                         if isInRole 'admin'
@@ -68,7 +67,7 @@ template(name='reflective_answers')
     .ui.styled.fluid.accordion
         .title
             i.large.users.icon
-            | All Public Answers
+            | All Public Answers (#{all_reflective_answers.count})
             i.dropdown.icon
         .content
             .ui.threaded.comments
@@ -91,3 +90,32 @@ template(name='reflective_answers')
                                 // if is_author
                                 //     +delete_link
                                 //     +edit_link
+    
+    if isInRole 'admin' 
+        .ui.styled.fluid.accordion
+            .title
+                i.red.configure.icon
+                | All Private Answers (#{all_private_reflective_answers.count})
+                
+                i.dropdown.icon
+            .content
+                .ui.threaded.comments
+                    each all_private_reflective_answers
+                        .comment
+                            a(href='/profile/#{author.username}').avatar
+                                img.ui.avatar.image(src="{{c.url author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                            .content
+                                a(href='/profile/#{author.username}').author #{author.name}
+                                .metadata
+                                    span.date #{from_now}
+                                    unless is_author
+                                        +voting
+                                .text
+                                    | #{body}
+                                // .actions
+                                    // a.reply(href='#') Reply
+                                    // +favorite
+                                    // +voting
+                                    // if is_author
+                                    //     +delete_link
+                                    //     +edit_link
