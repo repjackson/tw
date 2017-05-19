@@ -29,7 +29,7 @@ Docs.before.insert (userId, doc)->
 Docs.helpers
     author: -> Meteor.users.findOne @author_id
     when: -> moment(@timestamp).fromNow()
-    parent_doc: -> Docs.findOne @parent_id
+    parent: -> Docs.findOne @parent_id
 
 
 

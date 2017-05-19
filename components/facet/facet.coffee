@@ -109,7 +109,7 @@ if Meteor.isClient
             
             
             
-    Template.thing.events        
+    Template.edit_body_field.events        
         'blur #body': (e,t)->
             body = $(e.currentTarget).closest('#body').val()
             Docs.update @_id,
@@ -121,6 +121,19 @@ if Meteor.isClient
                 Docs.update @_id,
                     $set: body: body
                 Session.set 'editing_id', null
+                            
+    Template.edit_parentid_field.events        
+        'blur #parent_id': (e,t)->
+            parent_id = $(e.currentTarget).closest('#parent_id').val()
+            Docs.update @_id,
+                $set: parent_id: parent_id
+                
+        # 'keyup #body': (e,t)->
+        #     if e.which is 13
+        #         body = $(e.currentTarget).closest('#body').val()
+        #         Docs.update @_id,
+        #             $set: body: body
+        #         Session.set 'editing_id', null
                             
             
     Template.edit_body.events            

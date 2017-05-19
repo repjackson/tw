@@ -72,10 +72,10 @@ if Meteor.isClient
         }
     
         admin_docs: -> 
-            # Docs.find {type: 'admin' }, 
-            Docs.find {}, 
+            Docs.find {type: 'admin' }, 
                 sort:
                     tag_count: 1
+            # Docs.find {}, 
 
 
         one_doc: -> 

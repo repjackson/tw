@@ -104,9 +104,8 @@ template(name='add_to_cart')
         
 
 template(name='delete_button')
-    #delete.ui.basic.button
+    #delete.ui.basic.icon.button
         i.red.remove.icon
-        |Delete
         
 template(name='delete_link')
     a#delete(href='#') Delete
@@ -153,6 +152,15 @@ template(name='mark_complete_button')
         else
             i.square.outline.large.icon
             | Mark Complete
+        
+template(name='mark_doc_complete_button')
+    .mark_complete.ui.button(class=complete_button_class) 
+        if complete
+            i.checkmark.box.large.icon
+            | Completed
+        else
+            i.square.outline.large.icon
+            | Complete
         
 template(name='bookmark_button')
     .bookmark_button.ui.button(class=bookmark_button_class) 

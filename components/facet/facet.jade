@@ -75,7 +75,7 @@ template(name='edit_body')
                 // label Body
                 input#body(type='text' value=body)
                 
-template(name='thing')
+template(name='edit_body_field')
     if is_editing
         .ui.form
             .field
@@ -84,5 +84,18 @@ template(name='thing')
             +delete_button
     else
         h4 #{body}
+        if isInRole 'admin'
+            +session_edit_button
+
+
+template(name='edit_parentid_field')
+    if is_editing
+        .ui.form
+            .field
+                input#parent_id(type='text' value=parent_id)
+            +session_edit_button
+            +delete_button
+    else
+        h4 parent id: #{parent_id}
         if isInRole 'admin'
             +session_edit_button

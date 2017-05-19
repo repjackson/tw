@@ -34,10 +34,12 @@
                             div
                                 a(href='/colors') Edit Your Colors
                     .ui.hidden.divider
-                    .ui.small.teal.statistic
-                        .value #{points}
-                        .label Comment Karma
-                    +tag_person this    
+                    if points
+                        .ui.small.teal.statistic
+                            .value #{points}
+                            .label Comment Karma
+                    if isInRole 'admin'
+                        +tag_person this    
                     
             .ten.wide.column
                 if profile.first_name

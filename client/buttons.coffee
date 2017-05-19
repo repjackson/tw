@@ -305,6 +305,12 @@ Template.mark_complete_button.events
         $(e.currentTarget).closest('.mark_complete').transition('pulse')
 
 
+Template.mark_doc_complete_button.helpers
+    complete_button_class: -> if @complete then 'active' else 'basic'
+Template.mark_doc_complete_button.events
+    'click .mark_complete': (e,t)-> 
+        if @complete is true then Docs.update @_id, $set: complete: false else  Docs.update @_id, $set:complete: true
+
 
 
 Template.bookmark_button.helpers

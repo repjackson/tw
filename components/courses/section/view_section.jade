@@ -42,12 +42,12 @@ template(name='doc_section')
                 if video_complete
                     .ui.fluid.basic.label 
                         i.check.icon
-                        |Video
+                        |Video Watched
                 else
                     .ui.basic.fluid.label 
                         |Video
-                .ui.sub.dividing.header #{section_progress_doc.section_answer_count}/ #{section_progress_doc.section_question_count} Questions Answered
                 if reflective_question_docs.count
+                    .ui.sub.dividing.header #{section_progress_doc.section_answer_count}/ #{section_progress_doc.section_question_count} Questions Answered
                     .ui.list
                         each reflective_question_docs
                                 .item 
@@ -73,19 +73,31 @@ template(name='doc_section')
                     else
                         .mark_video_complete.ui.basic.fluid.button Mark Video Watched
                 .ui.hidden.divider
-                    .ui.hidden.divider
-                if isInRole 'admin'
-                    +reflective_questions
-                else if video_complete
+                    // .ui.hidden.divider
+                // if isInRole 'admin'
+                //     +reflective_questions
+                // else if video_complete
+                if video_complete
                     +reflective_questions
                 if all_questions_answered
-                    #mark_section_complete.ui.basic.large.fluid.button 
-                        i.circle.outline.icon
-                        |Mark Section Complete
+                    unless section_complete
+                        if reflective_question_docs.count
+                            #mark_section_complete.ui.basic.large.fluid.button 
+                                i.circle.outline.icon
+                                |Calculate Section Progress
                 if section_complete
                     .ui.horizontal.divider.header
                         i.green.check.circle.icon
                         |Section Complete
-                    a.go_to_next_section.ui.basic.fluid.button(href="#")
-                        | Continue to Section #{next_section_number}
-                        i.right.chevron.icon
+                    if next_section_exists
+                        a.go_to_next_section.ui.basic.fluid.button(href="#")
+                            | Continue to Section #{next_section_number}
+                            i.right.chevron.icon
+                    else
+                        .ui.header All Module #{module.number} Sections Complete
+                        a.ui.basic.fluid.button(href="/course/sol/module/#{module.number}") 
+                            i.reply.icon
+                            | Return to Module #{module.number}: #{module.title}
+
+    if isInRole 'admin'
+        +admin_footer

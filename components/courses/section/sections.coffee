@@ -91,7 +91,7 @@ if Meteor.isServer
         {
             find: ->
                 Docs.find
-                    tags: $all: ['section']
+                    tags: ['section']
                     module_number: module_number
             children: [
                 { find: (section) ->

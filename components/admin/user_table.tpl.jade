@@ -23,6 +23,9 @@
                         // a.ui.compact.basic.button(href="/account/profile/edit/#{_id}")
                         //     |Edit Profile
                         .ui.hidden.fitted.divider
+                        each tags
+                            .ui.tiny.basic.label #{this}
+                        .ui.hidden.fitted.divider
                         a.ui.compact.basic.button(href="/profile/#{username}")
                             | Profile
                             i.right.chevron.icon

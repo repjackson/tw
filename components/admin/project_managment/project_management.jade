@@ -21,13 +21,15 @@ template(name='project_management')
                 .ui.button.select_tag(class=cloud_tag_class) 
                     | #{this.name}
                     // | #{this.index}
-                    // | [#{this.count}]
-            each admin_docs
-                +admin_doc_view
+                    small #{this.count}
+            .ui.hidden.divider
+            .ui.centered.cards
+                each admin_docs
+                    +admin_doc_view
 
 
 template(name='admin_doc_view')
-    .ui.fluid.card(class=project_card_class)
+    .ui.card(class=project_card_class)
         .content
             .header #{title}
             .meta
@@ -39,15 +41,17 @@ template(name='admin_doc_view')
                 each tags
                     .ui.tiny.button.tag(class=tag_class) #{this}
             if body
-                .label Body
+                .description Body
                 |#{body}
             if content
-                .label Content
+                .description Content
                 |!{content}
             if price
-                .label Price
-                |#{price}
+                | Price #{price}
+            if type
+                | Type: #{type}
             .ui.hidden.divider
+            +mark_doc_complete_button
             if can_edit
                 a.ui.basic.button(href="/admin_edit/#{_id}")
                     |Edit
