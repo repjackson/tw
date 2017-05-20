@@ -4,10 +4,8 @@
             tr
                 th Image
                 th Profile
-                th SOL
-                th SOL Demo
-                th Admin
-                th Beta
+                th Colors
+                th Roles
         tbody
             each members
                 tr
@@ -30,43 +28,45 @@
                             | Profile
                             i.right.chevron.icon
                     td 
-                        if in_sol
-                            .ui.green.label SOL
-                            .remove_sol.ui.basic.compact.icon.button
-                                i.remove.icon 
-                                // | SOL
-                        else
-                            .add_sol.ui.compact.basic.button
-                                i.plus.icon 
-                                | SOL
-                    td
-                        if in_sol_demo
-                            .ui.green.label SOL Demo
-                            .remove_sol_demo.ui.basic.compact.icon.button
-                                i.remove.icon 
-                        else
-                            .add_sol_demo.ui.compact.basic.button
-                                i.plus.icon 
-                                | SOL Demo
-                                // | SOL Demo
+                        +color_dots
                     td 
-                        if is_admin
-                            .ui.green.label Admin
-                            .remove_admin.ui.basic.compact.icon.button
-                                i.remove.icon 
-                                | Admin
-                        else
-                            .make_admin.ui.compact.basic.icon.button
-                                i.plus.icon 
-                                | Admin
-                    td 
-                        if is_beta
-                            .ui.green.label Beta
-                            .remove_beta.ui.basic.compact.icon.button
-                                i.remove.icon 
-                                | Beta
-                        else
-                            .make_beta.ui.compact.basic.icon.button
-                                i.plus.icon 
-                                | Beta
-                                
+                        .ui.hidden.fitted.divider
+                        .ui.left.labeled.button
+                                if in_sol
+                                    .ui.green.label SOL
+                                    .remove_sol.ui.basic.icon.button
+                                        i.remove.icon 
+                                else
+                                    .ui.basic.label SOL
+                                    .add_sol.ui.basic.icon.button
+                                        i.plus.icon 
+                        .ui.hidden.fitted.divider
+                        .ui.left.labeled.button
+                                if in_sol_demo
+                                    .ui.green.label Demo
+                                    .remove_sol_demo.ui.basic.icon.button
+                                        i.remove.icon 
+                                else
+                                    .ui.basic.label Demo
+                                    .add_sol_demo.ui.basic.icon.button
+                                        i.plus.icon 
+                        .ui.hidden.fitted.divider
+                        .ui.left.labeled.button
+                                if is_admin
+                                    .ui.green.label Admin
+                                    .remove_admin.ui.basic.icon.button
+                                        i.remove.icon 
+                                else
+                                    .ui.basic.label Admin
+                                    .make_admin.ui.basic.icon.button
+                                        i.plus.icon 
+                        .ui.hidden.fitted.divider
+                        .ui.left.labeled.button
+                                if is_beta
+                                    .ui.green.label Beta
+                                    .remove_beta.ui.basic.icon.button
+                                        i.remove.icon 
+                                else
+                                    .ui.basic.label Beta
+                                    .make_beta.ui.basic.icon.button
+                                        i.plus.icon 

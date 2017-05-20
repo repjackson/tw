@@ -28,9 +28,12 @@ if Meteor.isClient
             # console.log Session.get 'section_number'
             # if @subscriptionsReady()
             Meteor.setTimeout ->
-                $('.ui.accordion').accordion()
-                section_progress_doc =  Docs.findOne(tags: $in: ["section progress"])
-                # console.log section_progress_doc
+                $('.ui.accordion').accordion()            
+                mod_num = Session.get('module_number')
+                sec_num = Session.get('section_number')
+
+                section_progress_doc =  Docs.findOne(tags: $all: ["section progress","module #{mod_num}", "section #{sec_num}"])
+                console.log section_progress_doc
                 $('#section_percent_complete_bar').progress(
                     percent: section_progress_doc.percent_complete
                     autoSuccess: false
@@ -100,7 +103,10 @@ if Meteor.isClient
             mod_num = FlowRouter.getParam('module_number')
             sec_num = FlowRouter.getParam('section_number')
             question_count = Docs.find({tags: ["sol","module #{mod_num}","section #{sec_num}","reflective question"] }).count()
-            answer_count = Docs.find( tags: ["sol","module #{mod_num}","section #{sec_num}","reflective question",'answer'], author_id:Meteor.userId()).count()
+            answer_count = 
+                Docs.find( 
+                    tags: $all: ["sol","module #{mod_num}","section #{sec_num}","reflective question",'answer']
+                    author_id:Meteor.userId()).count()
             # console.log question_count
             # console.log answer_count
             question_count is answer_count    
@@ -162,7 +168,8 @@ if Meteor.isClient
                     module_number: module_number
             if next_section_doc then true else false
                     
-                    
+                
+        is_editing: -> Session.get 'editing_id'    
     Template.doc_section.events
         'click .edit': ->
             module_number = FlowRouter.getParam('module_number')
@@ -290,7 +297,7 @@ if Meteor.isServer
                     tags: ['sol', "module #{module_number}", "section #{section_number}", 'section progress']
                     author_id: Meteor.userId()
 
-            console.log 'first found progress doc', section_progress_doc
+            # console.log 'first found progress doc', section_progress_doc
             
 
             # Meteor.call 'calculate_section_progress', module_number, section_number
@@ -306,7 +313,7 @@ if Meteor.isServer
                     tags: ['sol', "module #{module_number}", "section #{section_number}", 'section progress']
                     author_id: Meteor.userId()
         
-            console.log 'second found progress doc', section_progress_doc
+            # console.log 'second found progress doc', section_progress_doc
             
             
             section_question_count = 
@@ -354,10 +361,10 @@ if Meteor.isServer
 
             if section_question_count is section_answer_count
                 questions_complete = true
-                console.log 'questions complete'
+                # console.log 'questions complete'
             else
                 questions_complete = false
-                console.log 'questions not complete'
+                # console.log 'questions not complete'
                 
                 
             Docs.update section_progress_doc._id,
@@ -366,7 +373,7 @@ if Meteor.isServer
                     section_answer_count: section_answer_count
                     questions_complete: questions_complete
             
-            console.log section_progress_doc
+            # console.log section_progress_doc
     
                 
             if section_progress_doc.video_complete

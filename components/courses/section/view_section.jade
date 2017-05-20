@@ -41,7 +41,7 @@ template(name='doc_section')
                             | #{section_progress_doc.percent_complete}%
                 if video_complete
                     .ui.fluid.basic.label 
-                        i.check.icon
+                        i.green.check.icon
                         |Video Watched
                 else
                     .ui.basic.fluid.label 
@@ -79,25 +79,29 @@ template(name='doc_section')
                 // else if video_complete
                 if video_complete
                     +reflective_questions
-                if all_questions_answered
-                    unless section_complete
-                        if reflective_question_docs.count
-                            #mark_section_complete.ui.basic.large.fluid.button 
-                                i.circle.outline.icon
-                                |Calculate Section Progress
-                if section_complete
-                    .ui.horizontal.divider.header
-                        i.green.check.circle.icon
-                        |Section Complete
-                    if next_section_exists
-                        a.go_to_next_section.ui.basic.fluid.button(href="#")
-                            | Continue to Section #{next_section_number}
-                            i.right.chevron.icon
-                    else
-                        .ui.header All Module #{module.number} Sections Complete
-                        a.ui.basic.fluid.button(href="/course/sol/module/#{module.number}") 
-                            i.reply.icon
-                            | Return to Module #{module.number}: #{module.title}
+                // if all_questions_answered
+                //     unless section_complete
+                //         if reflective_question_docs.count
+                //             #mark_section_complete.ui.basic.large.fluid.button 
+                //                 i.circle.outline.icon
+                //                 |Calculate Section Progress
+                unless is_editing
+                    if all_questions_answered
+                        if video_complete
+                            .ui.horizontal.divider.header
+                                i.green.check.circle.icon
+                                |Section Complete
+                            if next_section_exists
+                                a.go_to_next_section.ui.basic.fluid.button(href="#")
+                                    | Continue to Section #{next_section_number}
+                                    i.right.chevron.icon 
+                            else
+                                .ui.horizontal.divider.header
+                                    i.green.check.circle.icon
+                                    | All Module #{module.number} Sections Complete
+                                a.ui.basic.fluid.button(href="/course/sol/module/#{module.number}") 
+                                    i.reply.icon
+                                    | Return to Module #{module.number}: #{module.title}
 
     if isInRole 'admin'
         +admin_footer

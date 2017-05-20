@@ -144,6 +144,13 @@ if Meteor.isClient
                 parent_id: @_id
                 question_number: @number
             Session.set 'editing_id', new_id
+            module_num = parseInt FlowRouter.getParam('module_number')
+            section_num = parseInt FlowRouter.getParam('section_number')
+
+            Meteor.call 'calculate_section_progress', module_num, section_num, (err,res)->
+                # console.log res
+                $('#section_percent_complete_bar').progress('set percent', res);
+                # console.log $('#section_percent_complete_bar').progress('get percent');
 
 if Meteor.isServer
     publishComposite 'reflective_questions', (module_number, section_number)->
