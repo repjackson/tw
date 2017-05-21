@@ -31,6 +31,14 @@ db.docs.find({ tags:{$in:['lightbank']} }).forEach(
     }
 )
 
+
+db.docs.find({ test_id: "daj5G56YWA35mGLYL" }).forEach(
+    function(doc) {
+        doc.quiz_slug = 'lightquiz';
+        db.docs.save(doc);
+    }
+)
+
 facetadmin
 FRHuvjHTCNouzmFJ
 
@@ -41,7 +49,7 @@ db.users.find({ courses:{$in:["sW4accx4fvZBK6wLn]} }).count()
 
 
 
-db.docs.find({ question_id: "xq3oA57TAdqpYWbFT" }).count()
+db.docs.find({ test_id: "daj5G56YWA35mGLYL" }).count()
 
 
 mongo --ssl --sslAllowInvalidCertificates aws-us-east-1-portal.21.dblayer.com:10444/toridb -u toriadmin -pTurnf34ragainst!

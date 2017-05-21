@@ -1,10 +1,10 @@
 if Meteor.isClient
     @selected_authors = new ReactiveArray []
 
-    Template.admin_footer.onCreated ->
-        @autorun => Meteor.subscribe('page_tags', selected_tags.array(),selected_authors.array())
+    Template.dev_footer.onCreated ->
+        @autorun => Meteor.subscribe('page_tags', selected_tags.array(), selected_authors.array())
     
-    Template.admin_footer.helpers
+    Template.dev_footer.helpers
         page_tags: ->
             Tags.find({}, limit:10)
                 
@@ -43,16 +43,16 @@ if Meteor.isClient
                         tag_count: 1
   
     
-    Template.admin_doc.events
+    Template.dev_doc.events
         'click .sel': (e)->
             if e.target.innerHTML in selected_authors.array() then selected_authors.remove e.target.innerHTML else selected_authors.push e.target.innerHTML
         'click .tag': -> if @valueOf() in selected_tags.array() then selected_tags.remove(@valueOf()) else selected_tags.push(@valueOf())
 
-    Template.admin_doc.helpers
+    Template.dev_doc.helpers
         tag_class: -> if @valueOf() in selected_tags.array() then 'active' else ''
     
     
-    Template.admin_footer.events
+    Template.dev_footer.events
         'click .select_tag': -> selected_tags.push @name
         'click .unselect_tag': -> selected_tags.remove @valueOf()
         'click #clear_tags': -> selected_tags.clear()

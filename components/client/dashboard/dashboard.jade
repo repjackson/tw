@@ -8,17 +8,12 @@ template(name='dashboard')
                         i.university.icon
                         |My Courses
             if isInRole 'admin'
-                a.ui.card(href='/tests')
+                a.ui.card(href='/quizes')
                     .content
                         .header
                             i.red.configure.icon
                             i.edit.icon
-                            |My Tests
-            a.ui.card(href='/transactions')
-                .content
-                    .header
-                        i.exchange.icon
-                        |Transactions
+                            |My Quizes
             a.ui.card(href='/people')
                 .content
                     .header
@@ -29,21 +24,24 @@ template(name='dashboard')
                     .header 
                         i.sun.icon
                         |My Light Bank
-            if isInRole 'beta'
+            if isInRole 'dev'
+                a.ui.card(href='/transactions')
+                    .content
+                        .header
+                            i.exchange.icon
+                            |Transactions
                 a.ui.card(href='/support')
                     .content
                         .header
                             i.red.configure.icon
                             i.help.icon
                             |Support
-            if isInRole 'beta'
                 a.ui.card(href='/messages')
                     .content
                         .header
                             i.red.configure.icon
                             i.mail.icon
                             |Messages
-            if isInRole 'beta'
                 a.ui.card(href='/checkin')
                     .content
                         .header
@@ -57,7 +55,7 @@ template(name='dashboard')
             //             |Account Preferences
             // +me_card
             // +my_courses
-            // +my_tests
+            // +my_quizes
             // +my_purchases
             // +my_friends
             // +favorites

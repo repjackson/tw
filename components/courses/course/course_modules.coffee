@@ -28,6 +28,9 @@ if Meteor.isClient
             else 
                 return false
     
+        module_progress_doc: ->
+            
+    
     
     Template.course_modules.events
         'click #add_sol_module': ->

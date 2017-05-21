@@ -1,0 +1,115 @@
+template(name='quiz_page')
+    with quiz
+        .ui.container
+            .ui.breadcrumb
+                a.section(href='/') Home
+                .divider  / 
+                // a.section(href='/courses') Inspire U
+                // .divider  / 
+                a.section(href="/quizes") quizes
+                .divider  / 
+                .active.section #{title}
+            if image_id
+                img.ui.centered.image(src="{{c.url image_id height=500 width=800 background='white' crop='lpad'}}")
+            h1.ui.header
+                |#{title}
+                if isInRole 'admin'
+                    a.ui.basic.button(href="/edit/#{_id}")
+                        i.red.configure.icon
+                        |Edit
+                each tags
+                    .ui.basic.label #{this}
+
+            // .ui.stackable.divided.grid
+                // .twelve.wide.column
+            .content
+                if publish_date
+                    h4.ui.header Published #{publish_when}
+                .ui.basic.segment
+                    h3.ui.dividing.header Description
+                    |!{content}
+                    h3.ui.dividing.header Statistics
+                    if currentUser
+                        h3.ui.dividing.header Your Sessions
+                        #new_session.ui.basic.teal.button
+                            i.plus.icon
+                            | New Session
+                        .ui.hidden.divider
+                        .ui.cards
+                            each my_sessions
+                                +session_card
+                    if isInRole 'admin'
+                        h3.ui.dividing.header 
+                            i.red.configure.icon
+                            |Quiz Questions
+                        unless is_editing    
+                            #add_quiz_question.ui.button(class=add_quiz_question_button_class)
+                                i.red.configure.icon
+                                |Add Quiz Question
+                            if selected_quiz_question_tags
+                                #clear_tags.ui.active.icon.large.button
+                                    i.remove.icon
+                                each selected_quiz_question_tags
+                                    .unselect_tag.ui.active.large.button
+                                        strong #{this}
+                            each quiz_cloud_tags
+                                .ui.button.select_tag(class=cloud_tag_class) 
+                                    | #{this.name}
+                                    small #{this.count}
+                        .ui.stackable.cards
+                            each quiz_questions
+                                +admin_quiz_question
+                // .four.wide.column
+                //     .ui.dividing.header #{title} Tags
+                //     each tags
+                //         .ui.basic.label #{this}
+                //     if isInRole 'admin'
+                //         .ui.dividing.header 
+                //             i.large.red.configure.icon
+                //             |Admin
+                //         a.ui.basic.button(href="/edit/#{_id}")
+                //             i.pencil.icon
+                //             |Edit Quiz
+                //         if published
+                //             .ui.green.label Published
+                //         else
+                //             .ui.red.label Unpublished                        
+                //     .ui.dividing.header Actions
+                    // +voting
+                    // +favorite
+                    // +tag_rating
+
+
+template(name='session_card')
+    .ui.card
+        .content
+            a.header(href="/quiz/#{quiz_slug}/session/#{_id}") #{long_date}
+            // .description
+            //     |#{long_date}
+        .content
+            each results
+                .ui.teal.tiny.progress(data-percent=category_percent)
+                    .bar
+                    .progress
+                    .label #{category}
+                    
+                    
+template(name='admin_quiz_question')
+    .ui.card
+        .content
+            unless is_editing
+                h4.ui.center.aligned.header #{number}: #{title}
+                .ui.divider
+                each tags
+                    .ui.label #{this}
+            else
+                +title
+                .ui.hidden.fitted.divider
+                +tags
+                .ui.hidden.fitted.divider
+                +number
+                .ui.hidden.fitted.divider
+                +delete_button
+                .ui.hidden.fitted.divider
+            if isInRole 'admin' 
+                +session_edit_button

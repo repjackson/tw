@@ -1,87 +1,96 @@
 if Meteor.isClient
-    FlowRouter.route '/test/:doc_id/session/:session_id/', 
-        name: 'edit_test_session'
+    FlowRouter.route '/quiz/:quiz_slug/session/:session_id/', 
+        name: 'edit_quiz_session'
         action: (params) ->
             BlazeLayout.render 'layout',
-                sub_nav: 'member_nav'
-                main: 'test_session'
+                # sub_nav: 'member_nav'
+                main: 'quiz_session'
 
-    Template.test_session.onCreated -> 
-        @autorun -> Meteor.subscribe('test_questions', FlowRouter.getParam('doc_id'))
-        @autorun -> Meteor.subscribe('test_session', FlowRouter.getParam('session_id'))
-    
+    Template.quiz_session.onCreated -> 
+        @autorun => Meteor.subscribe 'quiz_by_slug', FlowRouter.getParam('quiz_slug')
+        @autorun -> Meteor.subscribe('quiz_questions', selected_quiz_question_tags.array(), FlowRouter.getParam('quiz_slug'))
+        @autorun -> Meteor.subscribe('quiz_session', FlowRouter.getParam('session_id'))
+        @autorun => Meteor.subscribe('quiz_tags', selected_quiz_question_tags.array(), FlowRouter.getParam('quiz_slug'))
+
+    Template.quiz_session.onRendered -> 
+        Meteor.setTimeout ->
+            $('.ui.accordion').accordion()
+        , 1000
+
     Template.results.onRendered -> 
         Meteor.setTimeout ->
             $('.progress').progress()
         , 1000
 
     Template.results.helpers
-        test_session: -> 
-            test_session = Docs.findOne type: 'test_session'
-            # console.log test_session
-            # test_session
+        quiz_session: -> 
+            quiz_session = Docs.findOne type: 'quiz_session'
+            # console.log quiz_session
+            # quiz_session
         
         
-    Template.test_session.helpers
-        test_session: -> Docs.findOne type: 'test_session'
-        test: -> Docs.findOne type: 'test'
+    Template.quiz_session.helpers
+        quiz_session: -> Docs.findOne type: 'quiz_session'
+        quiz: -> Docs.findOne type: 'quiz'
         questions: -> Docs.find type: 'question'
-        test_finished: -> Session.get 'test_finished'
+        quiz_finished: -> Session.get 'quiz_finished'
+        quiz_cloud_tags: -> Tags.find({})
+        selected_quiz_question_tags: -> selected_quiz_question_tags.array()
+
         unanswered_questions: ->
-            session_id = FlowRouter.getParam('session_id')
-            rating_docs = Docs.find({type:'rating', session_id: session_id}, {fields:parent_id:1}).fetch()
-            rating_parent_ids = []
-            rating_parent_ids.push rating_doc.parent_id for rating_doc in rating_docs
-            # console.log rating_parent_ids
-            Docs.find
-                type: 'test_question'
-                test_id: FlowRouter.getParam('doc_id')
-                _id: $nin: rating_parent_ids
+            session_doc = Docs.findOne FlowRouter.getParam('session_id')
+            if session_doc
+                ratings = session_doc.ratings
+                rating_question_ids = []
+                rating_question_ids.push rating.question_id for rating in ratings
+                # console.log rating_parent_ids
+                Docs.find
+                    type: 'quiz_question'
+                    quiz_slug: FlowRouter.getParam('quiz_slug')
+                    _id: $nin: rating_question_ids
                 
         answered_questions: ->
-            session_id = FlowRouter.getParam('session_id')
-            rating_docs = Docs.find({type:'rating', session_id: session_id}, {fields:parent_id:1}).fetch()
-            rating_parent_ids = []
-            rating_parent_ids.push rating_doc.parent_id for rating_doc in rating_docs
-            # console.log rating_parent_ids
-            Docs.find
-                type: 'test_question'
-                test_id: FlowRouter.getParam('doc_id')
-                _id: $in: rating_parent_ids
+            session_doc = Docs.findOne FlowRouter.getParam('session_id')
+            if session_doc
+                ratings = session_doc.ratings
+                rating_question_ids = []
+                rating_question_ids.push rating.question_id for rating in ratings
+                # console.log rating_parent_ids
+                Docs.find
+                    type: 'quiz_question'
+                    quiz_slug: FlowRouter.getParam('quiz_slug')
+                    _id: $in: rating_question_ids
     
     
-    Template.test_session.events
-        'click #add_test_question': ->
-            new_id = Docs.insert
-                type: 'test_question'
-                test_id: FlowRouter.getParam('doc_id')
-            Session.set 'editing_id', new_id
-                
+    Template.quiz_session.events
         'click #calculate_answers': ->
-            Session.set 'test_finished', true
+            Session.set 'quiz_finished', true
             session_id = FlowRouter.getParam('session_id')
             Meteor.call 'calculate_life_assessment_answers', session_id
                 
         'click #delete_session': ->
             session_id = FlowRouter.getParam('session_id')
-            test_id = FlowRouter.getParam('doc_id')
+            quiz_slug = FlowRouter.getParam('quiz_slug')
 
             self = @
             swal {
-                title: 'End Session?'
+                title: 'Cancel Session?'
                 text: 'This will clear all of the answers.'
                 type: 'error'
                 animation: false
                 showCancelButton: true
                 closeOnConfirm: true
-                cancelButtonText: 'Cancel'
-                confirmButtonText: 'End Session'
+                cancelButtonText: 'Nevermind'
+                confirmButtonText: 'Cancel Session'
                 confirmButtonColor: '#da5347'
             }, ->
                 Meteor.call 'delete_session', session_id, ->
-                    swal("Deleted", "Your session has been deleted.", "success")
-                    FlowRouter.go("/test/#{test_id}/view")
+                    swal("Canceled", "Your session has been canceled.", "success")
+                    FlowRouter.go("/quiz/#{quiz_slug}/view")
 
+        'click .select_tag': -> selected_quiz_question_tags.push @name
+        'click .unselect_tag': -> selected_quiz_question_tags.remove @valueOf()
+        'click #clear_tags': -> selected_quiz_question_tags.clear()
 
 Meteor.methods
     'delete_session': (session_id)->
@@ -132,7 +141,7 @@ if Meteor.isServer
             #         results: life_assessment_results
 
 
-    publishComposite 'test_session', (session_id)->
+    publishComposite 'quiz_session', (session_id)->
         {
             find: -> Docs.find session_id
             children: [
@@ -142,10 +151,10 @@ if Meteor.isServer
                         session_id: session._id
                 # children: [
                 #     {
-                #         find: (test) ->
+                #         find: (quiz) ->
                 #             Docs.find
                 #                 type: 'question'
-                #                 test_id: test._id
+                #                 quiz_slug: quiz._id
                 #     }
                 # ]    
                 }

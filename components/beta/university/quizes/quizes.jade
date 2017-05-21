@@ -1,16 +1,16 @@
-template(name='tests')
+template(name='quizes')
     .ui.container
-        h1.ui.dividing.header Tests
+        h1.ui.dividing.header Quizes
         .ui.stackable.divided.grid
             .twelve.wide.column
                 // if is_list_view
                 //     .ui.relaxed.divided.items
-                //         each tests
-                //             +test_item
+                //         each quizes
+                //             +quiz_item
                 // if is_grid_view
                 .ui.cards
-                    each tests
-                        +test_card
+                    each quizes
+                        +quiz_card
             .four.wide.column
                 // .ui.dividing.header Layouts
                 // #make_list_layout.ui.large.icon.button(class=list_layout_button_class)
@@ -18,19 +18,19 @@ template(name='tests')
                 // #make_grid_layout.ui.large.icon.button(class=grid_layout_button_class)
                 //     i.grid.layout.icon
                 // .ui.dividing.header Tag Filter
-                // +cloud type='test'
+                // +cloud type='quiz'
                 if isInRole 'admin'
                     .ui.dividing.header 
                         i.red.configure.icon
                         |Admin
-                    #add_test.ui.basic.fluid.button
+                    #add_quiz.ui.basic.fluid.button
                         i.large.icons
                             i.sticky.note.outline.icon
                             i.green.plus.corner.icon
-                        |Add Test
+                        |Add Quiz
 
 
-template(name='test_card')
+template(name='quiz_card')
     .ui.card
         .content
             .right.floated.meta
@@ -39,7 +39,7 @@ template(name='test_card')
                 else
                     i.big.square.outline.icon
             .header
-                a(href="{{pathFor 'view_test' doc_id=_id}}")
+                a(href="{{pathFor 'view_quiz' quiz_slug=slug}}")
                     h2.ui.header #{title}
             .description
                 |!{body}
@@ -47,4 +47,4 @@ template(name='test_card')
             if isInRole 'admin'
                 a.ui.basic.right.floated.button(href="/edit/#{_id}")
                     i.red.configure.icon
-                    |Edit Test    
+                    |Edit quiz    

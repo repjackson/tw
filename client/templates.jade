@@ -66,9 +66,7 @@ template(name='layout')
             +Template.dynamic template=sub_sub_nav
             +Template.dynamic template=cloud
             +Template.dynamic template=main
-    if isInRole 'admin'
-        +admin_footer
-    else
+    unless isInRole 'dev'
         +footer
 
 template(name="tag_result")

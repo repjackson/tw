@@ -137,8 +137,9 @@ Template.rating.onRendered ->
 Template.rating.helpers
     question_rating: ->
         session_doc = Docs.findOne FlowRouter.getParam('session_id')
-        rating = _.findWhere(session_doc.ratings, {question_id: @_id}).rating
-        rating
+        if session_doc
+            rating = _.findWhere(session_doc.ratings, {question_id: @_id})?.rating
+            rating
 # Template.rank.helpers
 #     rank_doc: ->
 #         rank_doc = 
@@ -184,12 +185,11 @@ Template.rating.events
         session_id = FlowRouter.getParam('session_id')
         rating = $(e.currentTarget).closest('.rating').rating('get rating')
         if Docs.findOne({_id: session_id, 'ratings.question_id': @_id})
-            alert @_id, ' found'
-            alert rating
-            Docs.update {_id:session_id,  "ratings.question_id": @_id},
-                $set: "ratings.$.rating": rating
+            # alert @_id, ' found'
+            # alert rating
+            Meteor.call 'update_rating', session_id, rating, @_id
         else
-            alert 'doc not found'
+            # alert 'rating not found'
             Docs.update {_id:session_id},
                 $addToSet:
                     ratings:
@@ -197,7 +197,7 @@ Template.rating.events
                         question_id: @_id
                         tags: @tags
 
-        
+
 
 
 

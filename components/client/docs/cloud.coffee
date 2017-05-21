@@ -1,33 +1,19 @@
 @selected_tags = new ReactiveArray []
 
-# media_tags = ['tori webster','quote','poem', 'photo', 'image', 'video', 'essay']
-
 Template.cloud.onCreated ->
-    @autorun => Meteor.subscribe('tags', selected_tags.array(), type=null, limit=20, view_mode=Session.get('view_mode'))
-
+    @autorun => Meteor.subscribe('tags', selected_tags.array(), type=@data.type, parent_id=@data.parent_id, limit=20, view_mode=Session.get('view_mode'))
+    console.log @data
 Template.cloud.helpers
-    # media_tags: -> 
-    #     Tags.find
-    #         name: $in: media_tags
-        
-    theme_tags: ->
+    cloud_tags: ->
         doc_count = Docs.find().count()
         if 0 < doc_count < 3
             Tags.find { 
                 count: $lt: doc_count
-                name: $nin: media_tags
                 }, limit:10
         else
             # console.log 'media tags?', media_tags
-            Tags.find({name: $nin: media_tags}, limit:10)
+            Tags.find({}, limit:10)
     
-    media_tag_class: -> 
-        button_class = []
-        if @valueOf() in selected_tags.array() then button_class.push 'teal' else button_class.push 'basic'
-
-        if @name is 'tori webster' then button_class.push ' teal'
-        button_class
-
     cloud_tag_class: ->
         button_class = []
         switch
@@ -58,9 +44,9 @@ Template.cloud.events
     'click .unselect_tag': -> selected_tags.remove @valueOf()
     'click #clear_tags': -> selected_tags.clear()
 
-    'click #add': ->
-        new_id = Docs.insert type:'lightbank'
-        FlowRouter.go "/edit/#{new_id}"
+    # 'click #add': ->
+    #     new_id = Docs.insert type:'lightbank'
+    #     FlowRouter.go "/edit/#{new_id}"
 
     'keyup #search': (e,t)->
         e.preventDefault()

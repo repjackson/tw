@@ -44,6 +44,9 @@ Meteor.methods
         return id
 
 
+    update_rating: (session_id, rating, question_id)->
+        Docs.update {_id:session_id,  "ratings.question_id": question_id},
+            $set: "ratings.$.rating": rating
 
 
 

@@ -32,41 +32,51 @@
                     td 
                         .ui.hidden.fitted.divider
                         .ui.left.labeled.button
-                                if in_sol
-                                    .ui.green.label SOL
-                                    .remove_sol.ui.basic.icon.button
-                                        i.remove.icon 
-                                else
-                                    .ui.basic.label SOL
-                                    .add_sol.ui.basic.icon.button
-                                        i.plus.icon 
+                            if in_sol
+                                .ui.green.label SOL
+                                .remove_sol.ui.basic.icon.button
+                                    i.remove.icon 
+                            else
+                                .ui.basic.label SOL
+                                .add_sol.ui.basic.icon.button
+                                    i.plus.icon 
                         .ui.hidden.fitted.divider
                         .ui.left.labeled.button
-                                if in_sol_demo
-                                    .ui.green.label Demo
-                                    .remove_sol_demo.ui.basic.icon.button
-                                        i.remove.icon 
-                                else
-                                    .ui.basic.label Demo
-                                    .add_sol_demo.ui.basic.icon.button
-                                        i.plus.icon 
+                            if in_sol_demo
+                                .ui.green.label Demo
+                                .remove_sol_demo.ui.basic.icon.button
+                                    i.remove.icon 
+                            else
+                                .ui.basic.label Demo
+                                .add_sol_demo.ui.basic.icon.button
+                                    i.plus.icon 
                         .ui.hidden.fitted.divider
                         .ui.left.labeled.button
-                                if is_admin
-                                    .ui.green.label Admin
-                                    .remove_admin.ui.basic.icon.button
-                                        i.remove.icon 
-                                else
-                                    .ui.basic.label Admin
-                                    .make_admin.ui.basic.icon.button
-                                        i.plus.icon 
+                            if is_dev
+                                .ui.green.label Dev
+                                .remove_dev.ui.basic.icon.button
+                                    i.remove.icon 
+                            else
+                                .ui.basic.label Dev
+                                .add_dev.ui.basic.icon.button
+                                    i.plus.icon 
                         .ui.hidden.fitted.divider
                         .ui.left.labeled.button
-                                if is_beta
-                                    .ui.green.label Beta
-                                    .remove_beta.ui.basic.icon.button
-                                        i.remove.icon 
-                                else
-                                    .ui.basic.label Beta
-                                    .make_beta.ui.basic.icon.button
-                                        i.plus.icon 
+                            if is_admin
+                                .ui.green.label Admin
+                                .remove_admin.ui.basic.icon.button
+                                    i.remove.icon 
+                            else
+                                .ui.basic.label Admin
+                                .make_admin.ui.basic.icon.button
+                                    i.plus.icon 
+                        .ui.hidden.fitted.divider
+                        .ui.left.labeled.button
+                            if is_beta
+                                .ui.green.label Beta
+                                .remove_beta.ui.basic.icon.button
+                                    i.remove.icon 
+                            else
+                                .ui.basic.label Beta
+                                .make_beta.ui.basic.icon.button
+                                    i.plus.icon 

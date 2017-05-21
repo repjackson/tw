@@ -34,7 +34,7 @@ template(name='lightwork_questions')
                     .ui.divider
                     +session_edit_button
                     +published
-                    +delete_button
+                    // +delete_button
             else
                 .ui.header #{number}: #{body}
                 if isInRole 'admin'

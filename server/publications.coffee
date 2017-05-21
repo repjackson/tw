@@ -67,16 +67,18 @@ Meteor.publish 'me', ->
             bookmarked_ids: 1
     
     
-Meteor.publish 'tags', (selected_tags, type, limit, view_mode)->
+Meteor.publish 'tags', (selected_tags, type, parent_id, manual_limit, view_mode)->
     
     self = @
     match = {}
     
     # match.tags = $all: selected_tags
     if type then match.type = type
+    if parent_id then match.parent_id = parent_id
     if selected_tags.length > 0 then match.tags = $all: selected_tags
     
-    # console.log 'limit:', limit
+    console.log 'limit:', manual_limit
+    if manual_limit then limit=manual_limit else limit=50
     
     cloud = Docs.aggregate [
         { $match: match }
