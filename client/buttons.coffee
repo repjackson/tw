@@ -33,12 +33,16 @@ Template.big_both_voter.helpers
         else 'outline'
 
 Template.big_both_voter.events
-    'click .vote_up': -> 
-        if Meteor.userId() then Meteor.call 'vote_up', @_id
+    'click .vote_up': (e,t)-> 
+        if Meteor.userId() 
+            Meteor.call 'vote_up', @_id
+            # $(e.currentTarget).closest('.vote_up').transition('pulse')
         else FlowRouter.go '/sign-in'
 
-    'click .vote_down': -> 
-        if Meteor.userId() then Meteor.call 'vote_down', @_id
+    'click .vote_down': (e,t)-> 
+        if Meteor.userId() 
+            Meteor.call 'vote_down', @_id
+            # $(e.currentTarget).closest('.vote_down').transition('pulse')
         else FlowRouter.go '/sign-in'
 
 

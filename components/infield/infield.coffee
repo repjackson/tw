@@ -1,9 +1,4 @@
 if Meteor.isClient
-    FlowRouter.route '/facet', action: (params) ->
-        BlazeLayout.render 'layout',
-            main: 'facet'
-
-
     Template.doc_content.onCreated ->
         @editing = new ReactiveVar(false)
 

@@ -1,13 +1,3 @@
-template(name='facet')
-    .ui.container
-        .ui.header Courses
-        +doc_content tags='courses,page,blurb'
-        
-        +doc_content tags='course,sol,logo'
-    
-        +doc_body tags='sol,subtitle' classes='ui center aligned header'
-
-    
 template(name='doc_content')
     if doc
         with doc

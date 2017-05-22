@@ -27,7 +27,7 @@ template(name='number')
 template(name='tags')
     .field
         label Tags
-        input#add_tag(type='text' placeholder='Add Tag' maxlength='50')
+        input#add_tag(type='text' placeholder='Add Tag' maxlength='50' autofocus='')
     each tags
         a.ui.tag.label.doc_tag
             i.minus.icon

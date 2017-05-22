@@ -34,6 +34,7 @@ Template.tags.events
                 Docs.update Template.currentData()._id,
                     $addToSet: tags: tag
                 $('#add_tag').val('')
+            
 
     'click .doc_tag': (e,t)->
         tag = @valueOf()
