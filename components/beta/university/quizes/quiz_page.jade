@@ -89,8 +89,8 @@ template(name='session_card')
             // .description
             //     |#{long_date}
         .content
-            each results
-                .ui.teal.tiny.progress(data-percent=category_percent)
+            each sorted_results
+                .ui.tiny.progress(data-percent=category_percent class=progress_class)
                     .bar
                     .progress
                     .label #{category}

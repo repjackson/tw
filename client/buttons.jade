@@ -140,35 +140,35 @@ template(name='favorite_button')
     //     | #{favorite_count}
 
 template(name='resonate_button')
-    .resonate_button.ui.button(class=resonate_button_class) 
-        i.heartbeat.large.icon
+    .resonate_button.ui.circular.button(class=resonate_button_class) 
+        i.heartbeat.icon
         | This Resonates with Me
         
 template(name='mark_complete_button')
-    .mark_complete.ui.button(class=complete_button_class) 
+    .mark_complete.ui.circular.button(class=complete_button_class) 
         if completed
-            i.checkmark.box.large.icon
+            i.checkmark.box.icon
             | Completed
         else
-            i.square.outline.large.icon
+            i.square.outline.icon
             | Mark Complete
         
 template(name='mark_doc_complete_button')
-    .mark_complete.ui.button(class=complete_button_class) 
+    .mark_complete.ui.circular.button(class=complete_button_class) 
         if complete
-            i.checkmark.box.large.icon
+            i.checkmark.box.icon
             | Completed
         else
-            i.square.outline.large.icon
+            i.square.outline.icon
             | Complete
         
 template(name='bookmark_button')
-    .bookmark_button.ui.button(class=bookmark_button_class) 
+    .bookmark_button.ui.circular.button(class=bookmark_button_class) 
         if bookmarked
-            i.bookmark.large.icon
+            i.bookmark.icon
             | Bookmarked
         else
-            i.remove.bookmark.large.icon
+            i.bookmark.icon
             | Bookmark
         
         

@@ -10,9 +10,10 @@ template(name='colors')
         h3.ui.header Color Information
         .ui.styled.fluid.accordion
             each colors
-                .title
-                    i.dropdown.icon
+                h3.title
+                    i.circular.inverted.small.icon(class=color_icon_class)
                     | #{title}
+                    i.large.dropdown.icon
                 .content
                     |!{content}
                     if isInRole 'admin'
@@ -26,10 +27,16 @@ template(name='colors')
                     .ui.card(class=color_segment_class)
                         .content
                             .ui.header #{this}
-                            .increase_index.ui.icon.basic.circular.button
-                                i.chevron.left.icon
-                    
-                    
+                            if can_increase
+                                .increase_index.ui.icon.basic.circular.button
+                                    i.chevron.left.icon
+                            if can_decrease
+                                .decrease_index.ui.icon.basic.circular.button
+                                    i.chevron.right.icon
+            .ui.hidden.divider
+            a(href='/quiz/personality-colors/view').ui.teal.button
+                |Take the full personality colors quiz
+                i.right.arrow.icon
 template(name='color_dots')
     each this.profile.colors
         i.circular.inverted.icon(class=color_icon_class data-title=color_data_title data-html=color_data_content)

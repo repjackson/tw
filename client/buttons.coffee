@@ -196,14 +196,14 @@ Template.rating.events
         else
             # alert 'rating not found'
             $(e.currentTarget).closest('.ui.card').transition('horizontal flip')
-            # Meteor.setTimeout =>
-            Docs.update {_id:session_id},
-                $addToSet:
-                    ratings:
-                        rating: rating
-                        question_id: @_id
-                        tags: @tags
-            # , 100
+            Meteor.setTimeout =>
+                Docs.update {_id:session_id},
+                    $addToSet:
+                        ratings:
+                            rating: rating
+                            question_id: @_id
+                            tags: @tags
+            , 250
 
 
 

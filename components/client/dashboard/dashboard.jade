@@ -7,13 +7,11 @@ template(name='dashboard')
                     .header 
                         i.university.icon
                         |My Courses
-            if isInRole 'admin'
-                a.ui.card(href='/quizes')
-                    .content
-                        .header
-                            i.red.configure.icon
-                            i.edit.icon
-                            |My Quizes
+            a.ui.card(href='/quizes')
+                .content
+                    .header
+                        i.edit.icon
+                        |My Quizes
             a.ui.card(href='/people')
                 .content
                     .header

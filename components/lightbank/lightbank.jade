@@ -42,7 +42,7 @@ template(name='lightbank_doc_view')
         .meta
             i.tags.icon
             each tags
-                .ui.tiny.button.tag(class=tag_class) #{this}
+                .ui.tiny.circular.button.tag(class=tag_class) #{this}
         .ui.hidden.divider
         +resonate_button
         +mark_complete_button

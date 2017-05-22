@@ -28,6 +28,19 @@ if Meteor.isClient
             # console.log quiz_session
             # quiz_session
         
+        sorted_results: -> 
+            sorted_results = _.sortBy(@results, 'category_percent').reverse()
+            # console.log sorted_results
+            sorted_results
+            
+        progress_class: ->
+            switch @category
+                when 'green' then 'green' 
+                when 'gold' then 'yellow' 
+                when 'blue' then 'blue' 
+                when 'orange' then 'orange' 
+                else 'teal'
+
         
     Template.quiz_session.helpers
         quiz_session: -> Docs.findOne type: 'quiz_session'

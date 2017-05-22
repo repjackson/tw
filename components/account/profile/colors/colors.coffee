@@ -9,13 +9,33 @@ if Meteor.isClient
     Template.colors.onCreated -> 
         @autorun -> Meteor.subscribe('personality_colors')
 
+    Template.colors.helpers
+        color_icon_class: ->
+            icon_class = switch @title
+                when 'Gold' then 'yellow' 
+                when 'Blue' then 'blue' 
+                when 'Green' then 'green' 
+                when 'Orange' then 'orange'
+            icon_class
+
+        can_increase: ->
+            if Meteor.user()
+                colors =  Meteor.user().profile.colors
+                index = colors.indexOf @valueOf() 
+                index > 0
+        
+        can_decrease: ->
+            if Meteor.user()
+                colors =  Meteor.user().profile.colors
+                index = colors.indexOf @valueOf() 
+                index < 3
 
     Template.colors.events
         'click #add_color': ->
             id = Docs.insert type: 'personality_color'
             FlowRouter.go "/edit/#{id}"
 
-        'click .increase_index': ->
+        'click .increase_index': (e,t)->
             if Meteor.user().profile.colors
                 colors = Meteor.user().profile.colors
                 current_index = colors.indexOf @valueOf() 
@@ -23,6 +43,18 @@ if Meteor.isClient
         	    colors.splice(new_index, 0, colors.splice(current_index, 1)[0] )
         	    Meteor.users.update Meteor.userId(),
         	        $set: "profile.colors": colors
+                $(e.currentTarget).closest('.ui.card').transition('shake')
+
+            
+        'click .decrease_index': (e,t)->
+            if Meteor.user().profile.colors
+                colors = Meteor.user().profile.colors
+                current_index = colors.indexOf @valueOf() 
+                new_index = current_index + 1
+        	    colors.splice(new_index, 0, colors.splice(current_index, 1)[0] )
+        	    Meteor.users.update Meteor.userId(),
+        	        $set: "profile.colors": colors
+                $(e.currentTarget).closest('.ui.card').transition('shake')
 
             
         'click #generate_colors': ->

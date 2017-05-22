@@ -70,15 +70,25 @@ if Meteor.isClient
                 quiz_slug: FlowRouter.getParam('quiz_slug')
                 number: max + 1
             Session.set 'editing_id', new_id
-                
+
+
+    Template.session_card.helpers
+        sorted_results: -> _.sortBy(@results, 'category_percent').reverse()
 
     Template.session_card.onRendered -> 
         Meteor.setTimeout ->
             $('.progress').progress()
         , 1000
 
-    
-    
+    Template.session_card.helpers
+        progress_class: ->
+            # console.log @
+            switch @category
+                when 'green' then 'green' 
+                when 'gold' then 'yellow' 
+                when 'blue' then 'blue' 
+                when 'orange' then 'orange' 
+                else 'teal'
 
 if Meteor.isServer
     Meteor.publish 'quiz_sessions', (quiz_slug)->

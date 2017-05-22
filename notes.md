@@ -32,10 +32,9 @@ db.docs.find({ tags:{$in:['lightbank']} }).forEach(
 )
 
 
-db.docs.find({ type: "test_question" }).forEach(
+db.docs.find({ tags:["green"]} }).forEach(
     function(doc) {
-        doc.quiz_slug = 'personality-colors';
-        doc.type = 'quiz_question';
+        doc.tags = "[green]";
         db.docs.save(doc);
     }
 )

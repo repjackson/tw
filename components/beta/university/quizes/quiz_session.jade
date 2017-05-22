@@ -52,6 +52,13 @@ template(name='quiz_session')
                     i.delete.icon
                     |Delete Results
                 +results
+                div
+                    if published
+                        .ui.header These results WILL be shown on your profile.
+                    else
+                        .ui.header These results will NOT be shown on your profile.
+                    +published
+                .ui.hidden.divider
                 a.ui.teal.labeled.icon.button(href="/quiz/#{quiz.slug}/view") 
                     i.reply.icon
                     | Back to #{quiz.title} Dashboard
@@ -61,10 +68,10 @@ template(name='quiz_session')
 template(name='results')
     with quiz_session
         .ui.dividing.header Results
-        each results
+        each sorted_results
             // .ui.header Category #{category}
             // .ui.header Score #{category_score}
-            .ui.teal.progress(data-percent=category_percent)
+            .ui.progress(data-percent=category_percent class=progress_class)
                 .bar
                 .progress
                 .label #{category}
