@@ -14,13 +14,13 @@ if Meteor.isClient
         @autorun => Meteor.subscribe 'quiz_questions', selected_quiz_question_tags.array(), FlowRouter.getParam('quiz_slug')
         @autorun => Meteor.subscribe('quiz_tags', selected_quiz_question_tags.array(), FlowRouter.getParam('quiz_slug'))
     
-
-    Template.quiz_page.onRendered -> 
-        Meteor.setTimeout ->
-            $('.ui.accordion').accordion()
-        , 1000
-
-
+    Template.quiz_page.onRendered ->
+        @autorun =>
+            if @subscriptionsReady()
+                Meteor.setTimeout ->
+                    $('.ui.accordion').accordion()
+                , 500
+                # console.log 'subs ready'
 
     Template.quiz_page.helpers
         quiz_cloud_tags: -> Tags.find({})
@@ -59,10 +59,16 @@ if Meteor.isClient
         'click #clear_tags': -> selected_quiz_question_tags.clear()
         'click #add_quiz_question': ->
             new_tags = selected_quiz_question_tags.array()
+            questions_with_tag = Docs.find(tags: $in: new_tags).fetch()
+            question_numbers = _.pluck questions_with_tag, 'number'
+            # console.log question_numbers
+            max = _.max question_numbers
+        
             new_id = Docs.insert
                 type: 'quiz_question'
                 tags: new_tags
                 quiz_slug: FlowRouter.getParam('quiz_slug')
+                number: max + 1
             Session.set 'editing_id', new_id
                 
 

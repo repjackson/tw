@@ -5,31 +5,24 @@ with doc
                 |Edit '#{title}' #{type}
             else 
                 |Edit #{type}
-        .ui.hidden.divider
-        +title
-        .ui.hidden.divider
-        +subtitle
-        .ui.hidden.divider
-        +slug
-        .ui.hidden.divider
-        +tags
-        .ui.hidden.divider
-        +number
-        .ui.hidden.divider
-        +image
-        .ui.hidden.divider
-        +price
-        .ui.hidden.divider
-        .ui.header edit_body_field
-        +edit_body_field
-        +content      
-        .ui.hidden.divider
-        .ui.hidden.divider
-        +published
-        .ui.hidden.divider
-        if isInRole 'admin'
-            +type
+        .ui.form
+            +title
+            +subtitle
+            +slug
+            .ui.basic.segment
+                +tags
+            +number
+            +image
+            +price
+            .ui.header edit_body_field
+            +edit_body_field
+            +content      
             .ui.hidden.divider
+            +published
+            .ui.hidden.divider
+            if isInRole 'admin'
+                +type
+                .ui.hidden.divider
         .ui.center.aligned.basic.segment
             a.ui.huge.teal.button(href="/view/#{_id}") Save #{title} #{type}
             +delete_button

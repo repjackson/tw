@@ -1,9 +1,34 @@
 template(name='lightbank')
     .ui.container
         .ui.text.container
-            .ui.teal.two.item.menu
-                a#set_mode_to_all.item(class=all_item_class) All
-                a#set_mode_to_resonates.item(class=resonates_item_class) Resonates with Me
+            if isInRole 'admin'
+                .ui.two.item.menu
+                    a#toggle_published.item(class=published_item_class) 
+                        i.red.configure.icon
+                        i.unhide.icon
+                        |Published (#{published_count})
+                    a#toggle_unpublished.item(class=unpublished_item_class) 
+                        i.red.configure.icon
+                        i.hide.icon
+                        |Unpublished (#{unpublished_count})
+            .ui.teal.four.item.large.pointing.menu
+                a#set_mode_to_all.item(class=all_item_class) 
+                    i.sun.yellow.icon
+                    |All
+                a#toggle_resonates.item(class=resonates_item_class) 
+                    i.heartbeat.icon
+                    |Resonates
+                a#toggle_bookmarked.item(class=bookmarked_item_class) 
+                    i.bookmark.icon
+                    |Bookmarked
+                a#toggle_completed.item(class=completed_item_class) 
+                    i.checkmark.box.icon
+                    |Completed
+
+                // a#set_mode_to_resonates.item(class=mine_class) 
+                //     img.ui.avatar.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+                //     |Mine
+            // .ui.teal.three.item.menu
         +lightbank_cloud
         .ui.text.container
             each docs
@@ -25,6 +50,18 @@ template(name='lightbank_doc_view')
         // a.ui.basic.button(href="/view/#{_id}") 
         //     |View
         //     i.right.chevron.icon
+        if isInRole 'admin'
+            .ui.segment
+                .ui.horizontal.divider.header Admin
+                if published
+                    .ui.green.label Published
+                else
+                    .ui.basic.label
+                        i.hide.icon
+                        |Unpublished
+                +published
+                +delete_button
+                +user_blurb
         if can_edit
             a.ui.basic.button(href="/edit/#{_id}")
                 i.red.configure.icon

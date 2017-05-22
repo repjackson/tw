@@ -174,18 +174,22 @@ Meteor.methods
     
     
     mark_complete: (doc)->
-        if Meteor.user().completed_ids and doc._id in Meteor.user().completed_ids
-            Meteor.users.update Meteor.userId(),
-                $pull: completed_ids: doc._id
+        if doc.completed_ids and Meteor.userId() in doc.completed_ids
+            Docs.update doc._id,
+                $pull: completed_ids: Meteor.userId()
+                $inc: completed_count: -1
         else
-            Meteor.users.update Meteor.userId(),
-                $addToSet: completed_ids: doc._id
+            Docs.update doc._id,
+                $addToSet: completed_ids: Meteor.userId()
+                $inc: completed_count: 1
     
     
     bookmark: (doc)->
-        if Meteor.user().bookmarked_ids and doc._id in Meteor.user().bookmarked_ids
-            Meteor.users.update Meteor.userId(),
-                $pull: bookmarked_ids: doc._id
+        if doc.bookmarked_ids and Meteor.userId() in doc.bookmarked_ids
+            Docs.update doc._id,
+                $pull: bookmarked_ids: Meteor.userId()
+                $inc: bookmarked_coun: -1
         else
-            Meteor.users.update Meteor.userId(),
-                $addToSet: bookmarked_ids: doc._id
+            Docs.update doc._id,
+                $addToSet: bookmarked_ids: Meteor.userId()
+                $inc: bookmarked_coun: 1

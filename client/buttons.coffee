@@ -196,14 +196,14 @@ Template.rating.events
         else
             # alert 'rating not found'
             $(e.currentTarget).closest('.ui.card').transition('horizontal flip')
-            Meteor.setTimeout =>
-                Docs.update {_id:session_id},
-                    $addToSet:
-                        ratings:
-                            rating: rating
-                            question_id: @_id
-                            tags: @tags
-            , 250
+            # Meteor.setTimeout =>
+            Docs.update {_id:session_id},
+                $addToSet:
+                    ratings:
+                        rating: rating
+                        question_id: @_id
+                        tags: @tags
+            # , 100
 
 
 
@@ -306,16 +306,20 @@ Template.resonate_button.events
 
 
 Template.mark_complete_button.helpers
-    completed: -> Meteor.user()?.completed_ids and @_id in Meteor.user().completed_ids
     complete_button_class: -> 
         if Meteor.user()
-            if Meteor.user().completed_ids and @_id in Meteor.user().completed_ids then 'teal' else 'basic'
+            if @completed_ids and Meteor.userId() in @completed_ids then 'teal' else 'basic'
         else 'grey disabled'
+    completed: -> 
+        if Meteor.user()
+            if @completed_ids and Meteor.userId() in @completed_ids then true else false
+        else false
 Template.mark_complete_button.events
     'click .mark_complete': (e,t)-> 
-        if Meteor.userId() then Meteor.call 'mark_complete', Template.parentData(0)
+        if Meteor.userId() 
+            Meteor.call 'mark_complete', Template.parentData(0)
+            $(e.currentTarget).closest('.mark_complete').transition('pulse')
         else FlowRouter.go '/sign-in'
-        $(e.currentTarget).closest('.mark_complete').transition('pulse')
 
 
 Template.mark_doc_complete_button.helpers
@@ -329,15 +333,16 @@ Template.mark_doc_complete_button.events
 Template.bookmark_button.helpers
     bookmark_button_class: -> 
         if Meteor.user()
-            if Meteor.user().bookmarked_ids and @_id in Meteor.user().bookmarked_ids then 'teal' else 'basic'
+            if @bookmarked_ids and Meteor.userId() in  @bookmarked_ids then 'teal' else 'basic'
         else 'grey disabled'
         
     bookmarked: -> Meteor.user().bookmarked_ids and @_id in Meteor.user().bookmarked_ids
 Template.bookmark_button.events
     'click .bookmark_button': (e,t)-> 
-        if Meteor.userId() then Meteor.call 'bookmark', Template.parentData(0)
+        if Meteor.userId() 
+            Meteor.call 'bookmark', Template.parentData(0)
+            $(e.currentTarget).closest('.bookmark_button').transition('pulse')
         else FlowRouter.go '/sign-in'
-        $(e.currentTarget).closest('.bookmark_button').transition('pulse')
 
 
 Template.featured.events

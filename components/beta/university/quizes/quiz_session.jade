@@ -13,22 +13,21 @@ template(name='quiz_session')
 
         h1.ui.dividing.center.aligned.header #{quiz.title}
         unless quiz_session.results
-            .ui.header Question Filter:
-            if selected_quiz_question_tags
-                #clear_tags.ui.teal.icon.large.button
-                    i.remove.icon
-                each selected_quiz_question_tags
-                    .unselect_tag.ui.teal.large.button
-                        strong #{this}
-            each quiz_cloud_tags
-                .ui.basic.button.select_tag(class=cloud_tag_class) 
-                    | #{this.name}
-                    small #{this.count}
-            unless all_answered
-                .ui.dividing.header Unanswered Questions
-                .ui.stackable.cards
-                    each unanswered_questions
-                        +quiz_question
+            // .ui.header Question Filter:
+            // if selected_quiz_question_tags
+            //     #clear_tags.ui.teal.icon.large.button
+            //         i.remove.icon
+            //     each selected_quiz_question_tags
+            //         .unselect_tag.ui.teal.large.button
+            //             strong #{this}
+            // each quiz_cloud_tags
+            //     .ui.basic.button.select_tag(class=cloud_tag_class) 
+            //         | #{this.name}
+            //         small #{this.count}
+            .ui.dividing.header Unanswered Questions
+            .ui.stackable.cards
+                each unanswered_questions
+                    +quiz_question
             .ui.hidden.divider
             .ui.styled.fluid.accordion
                 h2.title
@@ -40,14 +39,20 @@ template(name='quiz_session')
                             +quiz_question
             if all_answered
                 .ui.hidden.divider
-                #calculate_answers.ui.teal.button Calculate Answers
+                #calculate_answers.ui.teal.labeled.icon.button 
+                    i.calculator.icon
+                    |Calculate Answers
             .ui.hidden.divider
-            #delete_session.ui.yellow.button Cancel Session
+            #delete_session.ui.red.labeled.icon.button 
+                i.ban.icon
+                |Cancel Session
         with quiz_session
             if results
-                #delete_results.ui.red.button Delete Results
+                #delete_results.ui.red.labeled.icon.button 
+                    i.delete.icon
+                    |Delete Results
                 +results
-                a.ui.teal.button(href="/quiz/#{quiz.slug}/view") 
+                a.ui.teal.labeled.icon.button(href="/quiz/#{quiz.slug}/view") 
                     i.reply.icon
                     | Back to #{quiz.title} Dashboard
         
@@ -59,34 +64,16 @@ template(name='results')
         each results
             // .ui.header Category #{category}
             // .ui.header Score #{category_score}
-            .ui.teal.active.progress(data-percent=category_percent)
+            .ui.teal.progress(data-percent=category_percent)
                 .bar
-                    .progress
+                .progress
                 .label #{category}
 
-
+            
             
 template(name='quiz_question')
     .ui.card
         .content
-            .center.aligned.header
-                each tags
-                    |#{this}
-            unless is_editing
-                h4.ui.center.aligned.header #{number}: #{title}
-                .ui.basic.center.aligned.compact.segment
-                    +rating
-                .ui.divider
-                // each tags
-                //     .ui.basic.teal.label #{this}
-            else
-                +title
-                .ui.hidden.fitted.divider
-                +tags
-                .ui.hidden.fitted.divider
-                +number
-                .ui.hidden.fitted.divider
-                +delete_button
-                .ui.hidden.fitted.divider
-            if isInRole 'admin' 
-                +session_edit_button
+            .header #{title}
+            .ui.basic.center.aligned.segment
+                +rating

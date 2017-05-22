@@ -42,12 +42,12 @@ template(name='toggle_friend')
 template(name='session_edit_button')
     if currentUser
         unless is_editing
-            .edit_this.ui.basic.button(title=tags class=button_classes)
-                i.blue.pencil.icon
-                |Edit
+            .edit_this.ui.blue.icon.button(title="Edit #{tags}" class=button_classes)
+                i.pencil.icon
+                // |Edit
         else
-            .save_doc.ui.basic.large.button(class=button_classes)
-                i.green.check.icon
+            .save_doc.ui.green.button(class=button_classes)
+                i.check.icon
                 |Save
 template(name='session_edit_icon')
     if currentUser
@@ -104,8 +104,8 @@ template(name='add_to_cart')
         
 
 template(name='delete_button')
-    #delete.ui.basic.icon.button
-        i.red.remove.icon
+    #delete.ui.icon.red.button
+        i.remove.icon
         
 template(name='delete_link')
     a#delete(href='#') Delete

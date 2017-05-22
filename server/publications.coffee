@@ -5,55 +5,6 @@ Meteor.publish 'my_tickets', ->
         type: 'support_ticket'
         
     
-Meteor.publish 'lightbank', (selected_tags, limit, lightbank_view_mode)->
-
-    self = @
-    match = {}
-    match.tags = $all: selected_tags
-    # if selected_tags.length > 0 then match.tags = $all: selected_tags
-    match.type = 'lightbank'
-    if lightbank_view_mode is 'resonates'
-        match.favoriters = $in: [@userId]
-    
-    if lightbank_view_mode and lightbank_view_mode is 'mine'
-        match.author_id
-
-    if limit
-        Docs.find match, 
-            limit: limit
-    else
-        Docs.find match
-
-Meteor.publish 'lightbank_tags', (selected_tags, limit, lightbank_view_mode)->
-    
-    self = @
-    match = {}
-    
-    match.type = 'lightbank'
-    if selected_tags.length > 0 then match.tags = $all: selected_tags
-    
-    if lightbank_view_mode is 'resonates'
-        match.favoriters = $in: [@userId]
-    
-    
-    cloud = Docs.aggregate [
-        { $match: match }
-        { $project: tags: 1 }
-        { $unwind: "$tags" }
-        { $group: _id: '$tags', count: $sum: 1 }
-        { $match: _id: $nin: selected_tags }
-        { $sort: count: -1, _id: 1 }
-        { $limit: limit }
-        { $project: _id: 0, name: '$_id', count: 1 }
-        ]
-    # console.log 'cloud, ', cloud
-    cloud.forEach (tag, i) ->
-        self.added 'tags', Random.id(),
-            name: tag.name
-            count: tag.count
-            index: i
-
-    self.ready()
     
 Meteor.publish 'me', ->
     Meteor.users.find @userId,
