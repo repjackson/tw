@@ -6,7 +6,7 @@ template(name='quiz_page')
                 .divider  / 
                 // a.section(href='/courses') Inspire U
                 // .divider  / 
-                a.section(href="/quizes") quizes
+                a.section(href="/quizes") Quizes
                 .divider  / 
                 .active.section #{title}
             if image_id
@@ -28,37 +28,40 @@ template(name='quiz_page')
                 .ui.basic.segment
                     h3.ui.dividing.header Description
                     |!{content}
-                    h3.ui.dividing.header Statistics
+                    // h3.ui.dividing.header Statistics
                     if currentUser
                         h3.ui.dividing.header Your Sessions
-                        #new_session.ui.basic.teal.button
+                        #new_session.ui.teal.button
                             i.plus.icon
                             | New Session
                         .ui.hidden.divider
                         .ui.cards
                             each my_sessions
                                 +session_card
+                    .ui.hidden.divider
                     if isInRole 'admin'
-                        h3.ui.dividing.header 
-                            i.red.configure.icon
-                            |Quiz Questions
-                        unless is_editing    
-                            #add_quiz_question.ui.button(class=add_quiz_question_button_class)
+                        .ui.fluid.styled.accordion
+                            .title
                                 i.red.configure.icon
-                                |Add Quiz Question
-                            if selected_quiz_question_tags
-                                #clear_tags.ui.active.icon.large.button
-                                    i.remove.icon
-                                each selected_quiz_question_tags
-                                    .unselect_tag.ui.active.large.button
-                                        strong #{this}
-                            each quiz_cloud_tags
-                                .ui.button.select_tag(class=cloud_tag_class) 
-                                    | #{this.name}
-                                    small #{this.count}
-                        .ui.stackable.cards
-                            each quiz_questions
-                                +admin_quiz_question
+                                |Quiz Questions
+                            .content
+                                unless is_editing    
+                                    #add_quiz_question.ui.button(class=add_quiz_question_button_class)
+                                        i.red.configure.icon
+                                        |Add Quiz Question
+                                    if selected_quiz_question_tags
+                                        #clear_tags.ui.active.icon.large.button
+                                            i.remove.icon
+                                        each selected_quiz_question_tags
+                                            .unselect_tag.ui.active.large.button
+                                                strong #{this}
+                                    each quiz_cloud_tags
+                                        .ui.button.select_tag(class=cloud_tag_class) 
+                                            | #{this.name}
+                                            small #{this.count}
+                                .ui.stackable.cards
+                                    each quiz_questions
+                                        +admin_quiz_question
                 // .four.wide.column
                 //     .ui.dividing.header #{title} Tags
                 //     each tags

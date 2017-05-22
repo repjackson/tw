@@ -15,6 +15,13 @@ if Meteor.isClient
         @autorun => Meteor.subscribe('quiz_tags', selected_quiz_question_tags.array(), FlowRouter.getParam('quiz_slug'))
     
 
+    Template.quiz_page.onRendered -> 
+        Meteor.setTimeout ->
+            $('.ui.accordion').accordion()
+        , 1000
+
+
+
     Template.quiz_page.helpers
         quiz_cloud_tags: -> Tags.find({})
         selected_quiz_question_tags: -> selected_quiz_question_tags.array()

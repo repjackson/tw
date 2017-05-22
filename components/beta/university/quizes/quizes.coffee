@@ -8,9 +8,13 @@ if Meteor.isClient
     
     Template.quizes.onCreated -> 
         @autorun -> Meteor.subscribe('quizes')
-    
     Template.quizes.helpers
         quizes: -> Docs.find { type: 'quiz'}
+    
+    Template.quiz_card.onCreated -> 
+        @autorun => Meteor.subscribe('quiz_sessions', @data.slug)
+    Template.quiz_card.helpers
+        completed: -> Docs.findOne { type: 'quiz_session', quiz_slug: @slug}
     
     Template.quizes.events
         'click #add_quiz': ->
