@@ -33,7 +33,7 @@ if Meteor.isClient
                 sec_num = Session.get('section_number')
 
                 section_progress_doc =  Docs.findOne(tags: $all: ["section progress","module #{mod_num}", "section #{sec_num}"])
-                console.log section_progress_doc
+                # console.log section_progress_doc
                 $('#section_percent_complete_bar').progress(
                     percent: section_progress_doc.percent_complete
                     autoSuccess: false

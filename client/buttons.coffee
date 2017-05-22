@@ -47,8 +47,13 @@ Template.toggle_friend.helpers
     is_friend: -> if Meteor.user()?.friends then @_id in Meteor.user().friends
         
 Template.toggle_friend.events
-    'click #add_friend': -> Meteor.users.update Meteor.userId(), $addToSet: friends: @_id
-    'click #remove_friend': -> Meteor.users.update Meteor.userId(), $pull: friends: @_id
+    'click #add_friend': (e,t)-> 
+        Meteor.users.update Meteor.userId(), $addToSet: friends: @_id
+        $(e.currentTarget).closest('#add_friend').transition('pulse')
+
+    'click #remove_friend': (e,t)-> 
+        Meteor.users.update Meteor.userId(), $pull: friends: @_id
+        $(e.currentTarget).closest('#remove_friend').transition('pulse')
 
 
 Template.published.events
@@ -190,12 +195,16 @@ Template.rating.events
             Meteor.call 'update_rating', session_id, rating, @_id
         else
             # alert 'rating not found'
-            Docs.update {_id:session_id},
-                $addToSet:
-                    ratings:
-                        rating: rating
-                        question_id: @_id
-                        tags: @tags
+            $(e.currentTarget).closest('.ui.card').transition('horizontal flip')
+            Meteor.setTimeout =>
+                Docs.update {_id:session_id},
+                    $addToSet:
+                        ratings:
+                            rating: rating
+                            question_id: @_id
+                            tags: @tags
+            , 250
+
 
 
 
@@ -272,8 +281,11 @@ Template.favorite_button.helpers
             if @favoriters and Meteor.userId() in @favoriters then 'red' else 'outline'
         else 'grey disabled'
 Template.favorite_button.events
-    'click .favorite_item': -> 
-        if Meteor.userId() then Meteor.call 'favorite', Template.parentData(0)
+    'click .favorite_item': (e,t)-> 
+        if Meteor.userId()
+            Meteor.call 'favorite', Template.parentData(0)
+            $(e.currentTarget).closest('.favorite_item').transition('pulse')
+
         else FlowRouter.go '/sign-in'
 
 
@@ -284,9 +296,10 @@ Template.resonate_button.helpers
         else 'grey disabled'
 Template.resonate_button.events
     'click .resonate_button': (e,t)-> 
-        if Meteor.userId() then Meteor.call 'favorite', Template.parentData(0)
+        if Meteor.userId() 
+            Meteor.call 'favorite', Template.parentData(0)
+            $(e.currentTarget).closest('.resonate_button').transition('pulse')
         else FlowRouter.go '/sign-in'
-        $(e.currentTarget).closest('.resonate_button').transition('pulse')
 
 
 

@@ -73,12 +73,11 @@ template(name='doc_section')
                     else
                         .mark_video_complete.ui.basic.fluid.button Mark Video Watched
                 .ui.hidden.divider
-                    // .ui.hidden.divider
-                // if isInRole 'admin'
-                //     +reflective_questions
-                // else if video_complete
-                if video_complete
+                    .ui.hidden.divider
+                if isInRole 'admin'
                     +reflective_questions
+                // else if video_complete
+                //     +reflective_questions
                 // if all_questions_answered
                 //     unless section_complete
                 //         if reflective_question_docs.count
@@ -103,5 +102,5 @@ template(name='doc_section')
                                     i.reply.icon
                                     | Return to Module #{module.number}: #{module.title}
 
-    if isInRole 'admin'
-        +dev_footer
+    // if isInRole 'admin'
+    //     +dev_footer

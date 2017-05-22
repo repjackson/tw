@@ -34,7 +34,7 @@ template(name='reflective_questions')
                             +session_edit_button
                         .ui.divider
                         if isInRole 'admin'
-                            +reflective_questions
+                            +reflective_answers
                         else if currentUser
                             if has_answered_question
                                 +reflective_answers
