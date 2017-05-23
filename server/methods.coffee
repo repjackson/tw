@@ -5,8 +5,13 @@ Meteor.methods
             
             
     generate_upvoted_cloud: ->
+        match = {}
+        match.upvoters = $in: [Meteor.userId()]
+        match.type = 'facet'
+
+        
         upvoted_cloud = Docs.aggregate [
-            { $match: upvoters: $in: [Meteor.userId()] }
+            { $match: match }
             { $project: tags: 1 }
             { $unwind: '$tags' }
             { $group: _id: '$tags', count: $sum: 1 }
@@ -23,8 +28,11 @@ Meteor.methods
 
 
     generate_downvoted_cloud: ->
+        match = {}
+        match.downvoters = $in: [Meteor.userId()]
+        match.type = 'facet'
         downvoted_cloud = Docs.aggregate [
-            { $match: downvoters: $in: [Meteor.userId()] }
+            { $match: match }
             { $project: tags: 1 }
             { $unwind: '$tags' }
             { $group: _id: '$tags', count: $sum: 1 }

@@ -30,13 +30,18 @@ if Meteor.isClient
     
     Template.lightbank.helpers
         docs: -> 
-            Docs.find {type:'lightbank' }, 
-                sort:
-                    tag_count: 1
-                limit: 10
+            if Session.get 'editing_id'
+                Docs.find Session.get('editing_id')
+            else
+                Docs.find {type:'lightbank' }, 
+                    sort:
+                        tag_count: 1
+                    limit: 10
     
         tag_class: -> if @valueOf() in selected_tags.array() then 'teal' else 'basic'
         selected_tags: -> selected_tags.array()
+        is_editing: -> Session.get 'editing_id'
+
         all_item_class: -> 
             if Session.equals('view_resonates', false) and Session.equals('view_bookmarked', false) and Session.equals('view_completed', false)
                 'active' 

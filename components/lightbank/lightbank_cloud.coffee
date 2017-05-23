@@ -71,9 +71,12 @@ if Meteor.isClient
         'click #clear_tags': -> selected_tags.clear()
     
         'click #add': ->
-            new_id = Docs.insert type:'lightbank'
-            FlowRouter.go "/edit/#{new_id}"
-    
+            new_id = Docs.insert 
+                type:'lightbank'
+                tags: selected_tags.array()
+            Session.set 'view_unpublished', true
+            Session.set 'editing_id', new_id
+
         'keyup #search': (e,t)->
             e.preventDefault()
             val = $('#search').val().toLowerCase().trim()
