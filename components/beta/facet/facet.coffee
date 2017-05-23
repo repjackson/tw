@@ -6,14 +6,21 @@ if Meteor.isClient
     @selected_facet_tags = new ReactiveArray []
 
     Template.facet.onCreated ->
-        @autorun => Meteor.subscribe('facet_tags', selected_facet_tags.array(), limit=20)
-        @autorun -> Meteor.subscribe('facet_docs', selected_facet_tags.array())
-        Meteor.subscribe('facet_docs', 
-            selected_facet_tags.array(), 
-            limit=null, 
-            view_unvoted=Session.get('view_unvoted'), 
-            view_voted_up=Session.get('view_voted_up'), 
-            view_voted_down=Session.get('view_voted_down'), 
+        @autorun => 
+            Meteor.subscribe('facet_tags', 
+                selected_facet_tags.array()
+                limit=20
+                view_unvoted=Session.get('view_unvoted') 
+                view_upvoted=Session.get('view_upvoted') 
+                view_downvoted=Session.get('view_downvoted')
+            )
+        @autorun => 
+            Meteor.subscribe('facet_docs', 
+                selected_facet_tags.array() 
+                limit=null 
+                view_unvoted=Session.get('view_unvoted') 
+                view_upvoted=Session.get('view_upvoted') 
+                view_downvoted=Session.get('view_downvoted') 
             )
         @autorun -> Meteor.subscribe 'unvoted_facet_count'
         @autorun -> Meteor.subscribe 'voted_up_facet_count'
@@ -75,6 +82,21 @@ if Meteor.isClient
         tag_class: -> if @valueOf() in selected_facet_tags.array() then 'teal' else 'basic'
 
         selected_facet_tags: -> selected_facet_tags.array()
+        
+        voted_up_facet_count: -> Counts.get('voted_up_facet_count')
+        voted_down_facet_count: -> Counts.get('voted_down_facet_count')
+    
+        voted_up_class: -> 
+            if Session.equals 'view_upvoted', true then 'active' else ''
+        voted_down_class: -> 
+            if Session.equals 'view_downvoted', true then 'active' else ''
+        unvoted_item_class: -> 
+            if Session.equals('view_unvoted', true) and Session.equals('view_upvoted', false) and Session.equals('view_downvoted', false) then 'active' else ''
+        
+        all_item_class: -> 
+            if Session.equals('view_unvoted', false) and Session.equals('view_upvoted', false) and Session.equals('view_unvoted', false)
+                'active' 
+            else ''
 
     
     Template.facet.events
@@ -110,6 +132,39 @@ if Meteor.isClient
             selected_facet_tags.push doc.name
             $('#search').val ''
 
+        'click #set_mode_to_all': -> 
+            if Meteor.userId() 
+                Session.set 'view_unvoted', false
+                Session.set 'view_upvoted', false
+                Session.set 'view_downvoted', false
+            else FlowRouter.go '/sign-in'
+    
+        'click #select_unvoted': -> 
+            if Meteor.userId() 
+                Session.set 'view_unvoted', true
+                Session.set 'view_upvoted', false
+                Session.set 'view_downvoted', false
+            else FlowRouter.go '/sign-in'
+        
+        'click #toggle_voted_up': -> 
+            if Meteor.userId() 
+                if Session.equals 'view_upvoted', true
+                    Session.set 'view_upvoted', false
+                else 
+                    Session.set 'view_upvoted', true
+                    Session.set 'view_downvoted', false
+                    Session.set 'view_unvoted', false
+            else FlowRouter.go '/sign-in'
+        
+        'click #toggle_voted_down': -> 
+            if Meteor.userId() 
+                if Session.equals 'view_downvoted', true
+                    Session.set 'view_downvoted', false
+                else 
+                    Session.set 'view_downvoted', true
+                    Session.set 'view_upvoted', false
+                    Session.set 'view_unvoted', false
+            else FlowRouter.go '/sign-in'
 
     Template.facet_doc_view.helpers
         facet_card_class: ->
@@ -119,12 +174,21 @@ if Meteor.isClient
 
 
 if Meteor.isServer
-    publishComposite 'facet_docs', (selected_facet_tags, limit=null)->
+    publishComposite 'facet_docs', (selected_facet_tags, limit=null, view_unvoted, view_upvoted, view_downvoted)->
         {
             find: ->
                 self = @
                 match = {}
                 # match.tags = $all: selected_facet_tags
+                if view_unvoted 
+                    match.$or =
+                        [
+                            upvoters: $nin: [@userId]
+                            downvoters: $nin: [@userId]
+                            ]
+                if view_upvoted then match.upvoters = $in: [@userId]
+                if view_downvoted then match.downvoters = $in: [@userId]
+                
                 if selected_facet_tags.length > 0 then match.tags = $all: selected_facet_tags
                 match.type = 'facet'
                 # console.log view_mode
@@ -142,11 +206,19 @@ if Meteor.isServer
                 ]    
         }
 
-    Meteor.publish 'facet_tags', (selected_tags, limit, view_mode)->
+    Meteor.publish 'facet_tags', (selected_tags, limit, view_unvoted, view_upvoted, view_downvoted)->
         
         self = @
         match = {}
-        
+        if view_unvoted 
+            match.$or =
+                [
+                    upvoters: $nin: [@userId]
+                    downvoters: $nin: [@userId]
+                    ]
+        if view_upvoted then match.upvoters = $in: [@userId]
+        if view_downvoted then match.downvoters = $in: [@userId]
+
         # match.tags = $all: selected_tags
         match.type = 'facet'
         if selected_tags.length > 0 then match.tags = $all: selected_tags
@@ -172,3 +244,15 @@ if Meteor.isServer
     
         self.ready()
             
+            
+            
+    Meteor.publish 'unvoted_facet_count', ->
+        Counts.publish this, 'unpublished_lightbank_count', Docs.find(type: 'facet', $or:[{upvoters: $in: [@userId]},{downvoters: $in: [@userId]} ])
+        return undefined    # otherwise coffeescript returns a Counts.publish
+    Meteor.publish 'voted_up_facet_count', ->
+        Counts.publish this, 'voted_up_facet_count', Docs.find(type: 'facet', upvoters: $in: [@userId])
+        return undefined    # otherwise coffeescript returns a Counts.publish
+    Meteor.publish 'voted_down_facet_count', ->
+        Counts.publish this, 'voted_down_facet_count', Docs.find(type: 'facet', downvoters: $in: [@userId])
+        return undefined    # otherwise coffeescript returns a Counts.publish
+    

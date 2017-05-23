@@ -65,6 +65,10 @@
                     |#{profile.if_not_working}
                 +user_courses
                 if isInRole 'beta'
-                    +messages_with_user 
+                    .ui.horizontal.divider.header
+                        i.red.configure.icon
+                        |Admin
+                    +messages_with_user
+                    +clouds
                 
                 

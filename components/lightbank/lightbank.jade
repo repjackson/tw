@@ -50,20 +50,25 @@ template(name='lightbank_doc_view')
         // a.ui.basic.button(href="/view/#{_id}") 
         //     |View
         //     i.right.chevron.icon
+        .ui.hidden.divider
         if isInRole 'admin'
-            .ui.segment
-                .ui.horizontal.divider.header Admin
-                if published
-                    .ui.green.label Published
-                else
-                    .ui.basic.label
-                        i.hide.icon
-                        |Unpublished
-                +published
-                +delete_button
-                +user_blurb
-        if can_edit
-            a.ui.basic.button(href="/edit/#{_id}")
-                i.red.configure.icon
-                |Edit
-        
+            .ui.fluid.styled.accordion
+                .title 
+                    i.red.configure.icon
+                    |Admin
+                .content    
+                    if published
+                        .ui.green.label Published
+                    else
+                        .ui.basic.label
+                            i.hide.icon
+                            |Unpublished
+                    +published
+                    +delete_button
+                    // +user_blurb
+                    .ui.header by #{author.name}
+                    if can_edit
+                        a.ui.basic.button(href="/edit/#{_id}")
+                            i.red.configure.icon
+                            |Edit
+            

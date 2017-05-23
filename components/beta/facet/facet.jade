@@ -4,14 +4,14 @@ template(name='facet')
         .ui.teal.four.item.large.pointing.menu
             a#set_mode_to_all.item(class=all_item_class) 
                 |All
-            a#toggle_unvoted.item(class=unvoted_item_class) 
+            a#select_unvoted.item(class=unvoted_item_class) 
                 |Unvoted
             a#toggle_voted_up.item(class=voted_up_class) 
                 i.thumbs.up.icon
-                |Voted Up
+                |Voted Up (#{voted_up_facet_count})
             a#toggle_voted_down.item(class=voted_down_class) 
                 i.thumbs.down.icon
-                |Voted Down
+                |Voted Down (#{voted_down_facet_count})
 
         #cloud.ui.basic.segment.container
             if selected_facet_tags

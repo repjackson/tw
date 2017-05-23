@@ -20,6 +20,14 @@ if Meteor.isClient
         @autorun -> Meteor.subscribe 'published_lightbank_count'
     
     
+    Template.lightbank_doc_view.onRendered ->
+        @autorun =>
+            if @subscriptionsReady()
+                Meteor.setTimeout ->
+                    $('.ui.accordion').accordion()
+                , 500
+
+    
     Template.lightbank.helpers
         docs: -> 
             Docs.find {type:'lightbank' }, 
