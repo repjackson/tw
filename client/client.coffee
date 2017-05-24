@@ -95,6 +95,6 @@ Template.layout.onRendered ->
                     .sidebar({
                         context: $('.context.example .bottom.segment')
                     })
-                    .sidebar('attach events', '.context.example .menu .item')
+                    .sidebar('attach events', '.context.example .menu .toggle_sidebar.item')
                     ;
             , 500

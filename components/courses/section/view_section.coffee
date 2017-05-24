@@ -239,6 +239,7 @@ if Meteor.isClient
                 # console.log res
                 $('#section_percent_complete_bar').progress('set percent', res);
                 # console.log $('#section_percent_complete_bar').progress('get percent');
+
     
 if Meteor.isServer
     Meteor.publish 'section', (module_number, section_number)->
@@ -378,24 +379,24 @@ if Meteor.isServer
                 
             if section_progress_doc.video_complete
                 if section_question_count is 0    
-                    Docs.update section_progress_doc._id,
-                        $set:percent_complete: 100
+                    Docs.update section_progress_doc._id,$set:percent_complete: 100
+                    Meteor.call 'calculate_module_progress', module_number
                     return 100
                 else if questions_complete is false
-                    Docs.update section_progress_doc._id,
-                        $set:percent_complete: 50
+                    Docs.update section_progress_doc._id,$set:percent_complete: 50
+                    Meteor.call 'calculate_module_progress', module_number
                     return 50
                 else if questions_complete is true
-                    Docs.update section_progress_doc._id,
-                        $set:percent_complete: 100
+                    Docs.update section_progress_doc._id,$set:percent_complete: 100
+                    Meteor.call 'calculate_module_progress', module_number
                     return 100
                     
             else
-                Docs.update section_progress_doc._id,
-                    $set:video_complete: false
+                Docs.update section_progress_doc._id,$set:video_complete: false
                 if section_question_count is 0    
-                    Docs.update section_progress_doc._id,
-                        $set:percent_complete: 0
+                    Docs.update section_progress_doc._id,$set:percent_complete: 0
+                    Meteor.call 'calculate_module_progress', module_number
                     return 0
                 else
+                    Meteor.call 'calculate_module_progress', module_number
                     return 0

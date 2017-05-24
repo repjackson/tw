@@ -7,11 +7,6 @@ template(name='dashboard')
                     .header 
                         i.university.icon
                         |My Courses
-            a.ui.card(href='/quizes')
-                .content
-                    .header
-                        i.edit.icon
-                        |My Quizes
             a.ui.card(href='/people')
                 .content
                     .header
@@ -22,37 +17,43 @@ template(name='dashboard')
                     .header 
                         i.sun.icon
                         |My Light Bank
-            if isInRole 'dev'
-                a.ui.card(href='/transactions')
-                    .content
-                        .header
-                            i.red.configure.icon
-                            i.exchange.icon
-                            |Transactions
-                a.ui.card(href='/support')
-                    .content
-                        .header
-                            i.red.configure.icon
-                            i.help.icon
-                            |Support
-                a.ui.card(href='/messages')
-                    .content
-                        .header
-                            i.red.configure.icon
-                            i.mail.icon
-                            |Messages
-                a.ui.card(href='/checkin')
-                    .content
-                        .header
-                            i.red.configure.icon
-                            i.lightning.icon
-                            |Check In
-                a.ui.card(href='/facet')
-                    .content
-                        .header
-                            i.red.configure.icon
-                            i.connectdevelop.icon
-                            |Facet
+        if isInRole 'dev'
+            .ui.segment
+                .ui.header 
+                    i.red.configure.icon
+                    |Dev
+                .ui.two.centered.stackable.cards
+                    a.ui.card(href='/quizes')
+                        .content
+                            .header
+                                i.edit.icon
+                                |My Quizes
+                    a.ui.card(href='/transactions')
+                        .content
+                            .header
+                                i.exchange.icon
+                                |Transactions
+                    a.ui.card(href='/support')
+                        .content
+                            .header
+                                i.help.icon
+                                |Support
+                    a.ui.card(href='/messages')
+                        .content
+                            .header
+                                i.mail.icon
+                                |Messages
+                    a.ui.card(href='/checkin')
+                        .content
+                            .header
+                                i.lightning.icon
+                                |Check In
+                    a.ui.card(href='/facet')
+                        .content
+                            .header
+                                i.red.configure.icon
+                                i.connectdevelop.icon
+                                |Facet
             // a.ui.card(href='/account')
             //     .content
             //         .header

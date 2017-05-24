@@ -30,13 +30,19 @@ template(name='doc_module')
                         a.item(href="/course/sol/module/#{number}/lightwork" class="{{isActiveRoute name='lightwork'}}") Lightwork
                         a.item(href="/course/sol/module/#{number}/downloads" class="{{isActiveRoute name='downloads'}}") Downloads
                     .ui.dividing.header Status
-                    if complete
-                        .ui.teal.fluid.label 
-                            i.check.icon
-                            |Complete
-                    else
-                        .ui.teal.basic.fluid.label 
-                            |Incomplete
+                    // #calculate_module_progress.ui.button Calculate Module Progress
+                    #module_percent_complete_bar.ui.blue.indicating.progress(data-percent=section_progress_doc.percent_complete)
+                        .bar
+                            .progress
+                                | #{module_progress_doc.module_progress_percent}%
+                    
+                    // if complete
+                    //     .ui.teal.fluid.label 
+                    //         i.check.icon
+                    //         |Complete
+                    // else
+                    //     .ui.teal.basic.fluid.label 
+                    //         |Incomplete
                     // if isInRole 'admin'
                     //     .ui.dividing.header 
                     //         |Admin

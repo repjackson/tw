@@ -79,10 +79,11 @@ template(name='lightbank_doc_view')
                                         each five_tags
                                             .ui.basic.label #{this}
             .ui.hidden.divider
-            .ui.fluid.styled.accordion
-                .title Comments
-                .content
-                    // each doc_comments
+            if isInRole 'dev'
+                .ui.fluid.styled.accordion
+                    .title Comments
+                    .content
+                        // each doc_comments
             .ui.hidden.divider
             if isInRole 'admin'
                 .ui.fluid.styled.accordion
