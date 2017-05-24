@@ -21,6 +21,7 @@ template(name='doc_page')
                 .eleven.wide.column
                     h1.ui.dividing.header #{title}
                     |!{content}
+                    +comments
                 .five.wide.column
                     if price
                         .ui.dividing.header Price $#{price}

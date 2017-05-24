@@ -60,6 +60,9 @@ head
 
 template(name='layout')
     .Site
+        .ui.black.big.launch.right.attached.fixed.button
+            i.content.icon
+            span.text Menu
         .Site-content
             +nav
             +Template.dynamic template=sub_nav
@@ -68,6 +71,34 @@ template(name='layout')
             +Template.dynamic template=main
     unless isInRole 'dev'
         +footer
+    else
+        .ui.segment.context.example
+            .ui.top.attached.demo.menu
+                a.item
+                    i.sidebar.icon
+                    |     Menu
+            .ui.bottom.attached.segment.pushable
+                .ui.inverted.labeled.icon.left.inline.vertical.visible.sidebar.menu
+                    a.item
+                        i.home.icon
+                        |       Home
+                    a.item
+                        i.block.layout.icon
+                        |       Topics
+                    a.item
+                        i.smile.icon
+                        |       Friends
+                    a.item
+                        i.calendar.icon
+                        |       History
+                .pusher
+                    .ui.basic.segment
+                        h3.ui.header Application Content
+                        .ui.divider
+                        .ui.divider
+                        .ui.divider
+                        .ui.divider
+
 
 template(name="tag_result")
     .ui.large.basic.label #{name}

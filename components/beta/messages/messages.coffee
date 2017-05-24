@@ -15,11 +15,6 @@ if Meteor.isClient
             Docs.find
                 tags: $in: ['message']
                 author_id: Meteor.userId()  
-  
-       
-    
-    
-    
     
        
     Template.messages_with_user.onCreated ->
@@ -35,10 +30,6 @@ if Meteor.isClient
                 recipient_username: username
   
   
-  
-  
-  
-        
     Template.send_message.events
         'click #submit_new_message': ->
             username = FlowRouter.getParam('username')
@@ -72,10 +63,15 @@ if Meteor.isServer
             recipient_username: username
             author_id: @userId
             
-    Meteor.publish 'my_messages', ->
+    Meteor.publish 'my_sent_messages', ->
         Docs.find
             tags: $in: ['message']
             author_id: @userId
+            
+    Meteor.publish 'my_received_messages', ->
+        Docs.find
+            tags: $in: ['message']
+            parent_id: @userId
             
             
             

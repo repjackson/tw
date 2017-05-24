@@ -70,6 +70,14 @@ if Meteor.isClient
                     $('.icon').popup()
                 , 500
                 # console.log 'subs ready'
+    
+    Template.tiny_color_dots.onRendered ->
+        @autorun =>
+            if @subscriptionsReady()
+                Meteor.setTimeout ->
+                    $('.icon').popup()
+                , 500
+                # console.log 'subs ready'
 
     Template.colors.onRendered ->
         @autorun =>
@@ -81,11 +89,59 @@ if Meteor.isClient
 
 
 
+    Template.tiny_color_dots.helpers
+        user: ->
+            console.log @profile.colors
+    
+        color_icon_class: ->
+            # console.log Template.currentData()
+            icon_class = switch @valueOf()
+                when 'gold' then 'yellow' 
+                when 'blue' then 'blue' 
+                when 'green' then 'green' 
+                when 'orange' then 'orange'
+            icon_class
+
+        color_data_title: ->
+            title = switch @valueOf()
+                when 'gold' then 'Gold' 
+                when 'blue' then 'Blue' 
+                when 'green' then 'Green' 
+                when 'orange' then 'Orange'
+            title
+
+            
+        color_data_content: ->
+            content = switch @valueOf()
+                when 'gold' 
+                    "Loyal, Dependable, Prepared <br>
+                    Thorough, Sensible, Punctual <br>"
+                    # Faithful, Stable, Organized <br>
+                    # Caring, Concerned, Concrete" 
+                when 'blue'
+                    "Enthusiastic, Sympathetic, Personal <br>
+                    Warm, Communicative, Compassionate <br>"
+                    # Idealistic, Spiritual, Sincere <br>
+                    # Peaceful, Flexible, Imaginative"
+                when 'green'
+                    "Analytical, Global, Conceptual <br>
+                     Cool, Calm, Collected <br>"
+                    #  Inventive, Logical, Perfectionist <br>
+                    #  Abstract, Hypothetical, Investigative"
+                when 'orange'
+                    "Witty, Charming, Spontaneous <br>
+                    Impulsive, Generous, Impactful <br>"
+                    # Optimistic, Eager, Bold <br>
+                    # Physical, Immediate, Fraternal"
+            content
+            
+
     Template.color_dots.helpers
         user: ->
             console.log @profile.colors
     
         color_icon_class: ->
+            # console.log Template.currentData()
             icon_class = switch @valueOf()
                 when 'gold' then 'yellow' 
                 when 'blue' then 'blue' 

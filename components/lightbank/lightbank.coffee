@@ -7,7 +7,7 @@ if Meteor.isClient
     # Session.setDefault 'lightbank_view_mode', 'all'
     Template.lightbank.onCreated -> 
         @autorun -> 
-            Meteor.subscribe('lightbank', 
+            Meteor.subscribe('lightbank_docs', 
                 selected_tags.array(), 
                 limit=10, 
                 view_resonates=Session.get('view_resonates'), 
@@ -98,36 +98,60 @@ if Meteor.isClient
     
     Template.lightbank_doc_view.helpers
         is_author: -> Meteor.userId() and @author_id is Meteor.userId()
-    
         tag_class: -> if @valueOf() in selected_tags.array() then 'teal' else 'basic'
-    
         when: -> moment(@timestamp).fromNow()
+        resonates_with_people: ->
+            if @favoriters
+                if @favoriters.length > 0
+            # console.log @favoriters
+                    Meteor.users.find _id: $in: @favoriters
         
-        lightbank_tags: -> _.difference(@tags, 'lightbank')
-    
+        
+            
     Template.lightbank_doc_view.events
         'click .tag': -> if @valueOf() in selected_tags.array() then selected_tags.remove(@valueOf()) else selected_tags.push(@valueOf())
 
 if Meteor.isServer
-    Meteor.publish 'lightbank', (selected_tags, limit, view_resonates, view_bookmarked, view_completed, view_published, view_unpublished)->
-        self = @
-        match = {}
-        # match.tags = $all: selected_tags
-        if selected_tags.length > 0 then match.tags = $all: selected_tags
-        match.type = 'lightbank'
-        if view_resonates then match.favoriters = $in: [@userId]
-        if view_bookmarked then match.bookmarked_ids = $in: [@userId]
-        if view_completed then match.completed_ids = $in: [@userId]
-        if view_published then match.published = true
-        if view_unpublished then match.published = false
-        # if lightbank_view_mode and lightbank_view_mode is 'mine'
-        #     match.author_id
     
-        if limit
-            Docs.find match, 
-                limit: limit
-        else
-            Docs.find match
+    publishComposite 'lightbank_docs', (selected_tags, limit, view_resonates, view_bookmarked, view_completed, view_published, view_unpublished)->
+        {
+            find: ->
+                self = @
+                match = {}
+                # match.tags = $all: selected_tags
+                if selected_tags.length > 0 then match.tags = $all: selected_tags
+                match.type = 'lightbank'
+                if view_resonates then match.favoriters = $in: [@userId]
+                if view_bookmarked then match.bookmarked_ids = $in: [@userId]
+                if view_completed then match.completed_ids = $in: [@userId]
+                if view_published then match.published = true
+                if view_unpublished then match.published = false
+                # if lightbank_view_mode and lightbank_view_mode is 'mine'
+                #     match.author_id
+            
+                if limit
+                    Docs.find match, 
+                        limit: limit
+                else
+                    Docs.find match
+            children: [
+                { find: (doc) ->
+                    Meteor.users.find 
+                        _id: doc.author_id
+                    }
+                { find: (doc) ->
+                    if doc.favoriters
+                        Meteor.users.find 
+                            _id: $in: doc.favoriters
+                    }
+                
+                ]    
+        }
+
+
+
+
+
 
 
     Meteor.publish 'unpublished_lightbank_count', ->

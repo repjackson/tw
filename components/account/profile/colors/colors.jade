@@ -37,7 +37,14 @@ template(name='colors')
             a(href='/quiz/personality-colors/view').ui.teal.button
                 |Take the full personality colors quiz
                 i.right.arrow.icon
+
+
 template(name='color_dots')
     each this.profile.colors
         i.circular.inverted.icon(class=color_icon_class data-title=color_data_title data-html=color_data_content)
+
+template(name='tiny_color_dots')
+    each this.profile.colors
+        i.circular.inverted.small.icon(class=color_icon_class data-title=color_data_title data-html=color_data_content)
+
         

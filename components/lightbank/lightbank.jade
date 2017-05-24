@@ -64,6 +64,26 @@ template(name='lightbank_doc_view')
             //     |View
             //     i.right.chevron.icon
             .ui.hidden.divider
+            .ui.fluid.styled.accordion
+                .title This Resonates With...
+                .content
+                    .ui.list
+                        each resonates_with_people
+                            .item
+                                img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                                .content
+                                    .header
+                                        |#{name}
+                                    .description
+                                        +tiny_color_dots
+                                        each five_tags
+                                            .ui.basic.label #{this}
+            .ui.hidden.divider
+            .ui.fluid.styled.accordion
+                .title Comments
+                .content
+                    // each doc_comments
+            .ui.hidden.divider
             if isInRole 'admin'
                 .ui.fluid.styled.accordion
                     .title 

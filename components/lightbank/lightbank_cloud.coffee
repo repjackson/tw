@@ -28,10 +28,10 @@ if Meteor.isClient
                 Tags.find { 
                     count: $lt: doc_count
                     name: $nin: media_tags
-                    }, limit:20
+                    }, limit:15
             else
                 # console.log 'media tags?', media_tags
-                cursor = Tags.find({name: $nin: media_tags}, limit:20)
+                cursor = Tags.find({name: $nin: media_tags}, limit:15)
                 
         media_tag_class: -> 
             button_class = []

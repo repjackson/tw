@@ -97,7 +97,7 @@ Meteor.users.helpers
     last_login: -> 
         moment(@status?.lastLogin.date).fromNow()
 
-    five_tags: -> @tags[0..3]
+    five_tags: -> if @tags then @tags[0..3]
     
             
             
@@ -188,8 +188,15 @@ Meteor.methods
         if doc.bookmarked_ids and Meteor.userId() in doc.bookmarked_ids
             Docs.update doc._id,
                 $pull: bookmarked_ids: Meteor.userId()
-                $inc: bookmarked_coun: -1
+                $inc: bookmarked_count: -1
         else
             Docs.update doc._id,
                 $addToSet: bookmarked_ids: Meteor.userId()
-                $inc: bookmarked_coun: 1
+                $inc: bookmarked_count: 1
+    
+    update_username: (username)->
+        existing_user = Meteor.users.findOne username:username
+        if existing_user then throw new Meteor.Error 500, 'Username exists'
+        else
+            Meteor.users.update Meteor.userId(),
+                $set: username: username

@@ -85,3 +85,16 @@ Tracker.autorun ->
 #     online: ->  @status?.online
     
 #     idle: ->  @status?.idle
+
+
+Template.layout.onRendered ->
+    @autorun =>
+        if @subscriptionsReady()
+            Meteor.setTimeout ->
+                $('.context.example .ui.sidebar')
+                    .sidebar({
+                        context: $('.context.example .bottom.segment')
+                    })
+                    .sidebar('attach events', '.context.example .menu .item')
+                    ;
+            , 500
