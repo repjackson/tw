@@ -39,10 +39,10 @@ FlowRouter.route '/register-sol',
 
 Template.view_course.onCreated ->
     @autorun -> Meteor.subscribe 'doc_by_tags', ['course','sol']
+    @autorun -> Meteor.subscribe 'sol_members'
 
 Template.view_course.helpers
-    course: -> 
-        Docs.findOne tags: ['course','sol']
+    course: -> Docs.findOne tags: ['course','sol']
     
 
 

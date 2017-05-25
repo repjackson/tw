@@ -1,5 +1,8 @@
-.ui.borderless.blue.menu
+.ui.borderless.blue.top.attached.menu
     .ui.container
+        a.toggle_sidebar.item
+            i.sidebar.icon
+            // |     Menu
         a.ui.mobile.only.dropdown.item 
             i.content.icon
             .imogen Tori Webster
@@ -35,9 +38,6 @@
                     a.ui.item(href='/sign-in') 
                         i.sign.in.icon
                         | Sign In
-        a.toggle_sidebar.item
-            i.sidebar.icon
-            // |     Menu
         a.mobile.hidden.item(href='/' class="{{isActivePath '/'}}")
             .imogen Tori Webster
         a.mobile.hidden.item(href='/about' class="{{isActivePath '/about'}}") About

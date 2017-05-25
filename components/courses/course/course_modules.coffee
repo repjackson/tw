@@ -9,7 +9,11 @@ if Meteor.isClient
         # @autorun -> Meteor.subscribe 'course_modules', FlowRouter.getParam('course_slug')
         @autorun -> Meteor.subscribe 'sol_modules'
     
-    
+    Template.course_modules.onRendered ->
+        Meteor.setTimeout ->
+            $('.module_percent_complete_bar').progress()
+        , 1000
+
     
     Template.course_modules.helpers
         # modules: -> Modules.find { }, sort: number: 1
@@ -28,9 +32,14 @@ if Meteor.isClient
             else 
                 return false
     
-        module_progress_doc: ->
-            
-    
+        user_progress: ->
+            progress_doc = Docs.findOne 
+                tags: ['sol', "module #{@number}", 'module progress']
+                author_id: Meteor.userId()
+            if progress_doc
+                 progress_doc.module_progress_percent
+            else
+                0
     
     Template.course_modules.events
         'click #add_sol_module': ->
@@ -39,6 +48,14 @@ if Meteor.isClient
             
             
 if Meteor.isServer
-    Meteor.publish 'sol_modules', ->
-        Docs.find
-            tags: $all: ['sol','module']
+    publishComposite 'sol_modules', ->
+        {
+            find: -> Docs.find tags: $all: ['sol','module']
+            children: [
+                { find: (module) ->
+                    Docs.find 
+                        tags: ['sol', "module #{module.number}", 'module progress']
+                        author_id: @userId
+                    }
+                ]    
+        }

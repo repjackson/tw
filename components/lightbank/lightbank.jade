@@ -3,7 +3,7 @@ template(name='lightbank')
         .ui.text.container
             unless is_editing
                 if isInRole 'admin'
-                    .ui.two.item.menu
+                    .ui.two.item.stackable.menu
                         a#toggle_published.item(class=published_item_class) 
                             i.red.configure.icon
                             i.unhide.icon
@@ -12,7 +12,7 @@ template(name='lightbank')
                             i.red.configure.icon
                             i.hide.icon
                             |Unpublished (#{unpublished_count})
-                .ui.teal.four.item.large.pointing.menu
+                .ui.teal.four.item.large.pointing.stackable.menu
                     a#set_mode_to_all.item(class=all_item_class) 
                         i.sun.yellow.icon
                         |All
@@ -65,9 +65,11 @@ template(name='lightbank_doc_view')
             //     i.right.chevron.icon
             .ui.hidden.divider
             .ui.fluid.styled.accordion
-                .title This Resonates With...
+                .title 
+                    |This Resonates With... (#{resonates_with_people.count})
+                    i.dropdown.icon
                 .content
-                    .ui.list
+                    .ui.divided.list
                         each resonates_with_people
                             .item
                                 img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
@@ -79,17 +81,15 @@ template(name='lightbank_doc_view')
                                         each five_tags
                                             .ui.basic.label #{this}
             .ui.hidden.divider
-            if isInRole 'dev'
-                .ui.fluid.styled.accordion
-                    .title Comments
-                    .content
-                        // each doc_comments
+            // if isInRole 'dev'
+            +comments
             .ui.hidden.divider
             if isInRole 'admin'
                 .ui.fluid.styled.accordion
                     .title 
                         i.red.configure.icon
                         |Admin
+                        i.dropdown.icon
                     .content    
                         if published
                             .ui.green.label Published

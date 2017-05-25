@@ -48,16 +48,19 @@ template(name='quiz_session')
                 |Cancel Session
         with quiz_session
             if results
-                #delete_results.ui.red.labeled.icon.button 
-                    i.delete.icon
-                    |Delete Results
-                +results
-                div
-                    if published
-                        .ui.header These results WILL be shown on your profile.
-                    else
-                        .ui.header These results will NOT be shown on your profile.
+                if is_author
+                    #delete_results.ui.red.labeled.icon.button 
+                        i.delete.icon
+                        |Delete Results
+                    div
+                        if published
+                            .ui.header These results WILL be shown on your profile.
+                        else
+                            .ui.header These results will NOT be shown on your profile.
                     +published
+                else
+                    +user_blurb
+                +results
                 .ui.hidden.divider
                 a.ui.teal.labeled.icon.button(href="/quiz/#{quiz.slug}/view") 
                     i.reply.icon

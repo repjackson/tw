@@ -12,6 +12,8 @@ Template.course_welcome.onRendered ->
         $('#course_welcome_menu .item').tab()
     , 1000
 
+Template.view_welcome_course.onCreated ->
+    @autorun -> Meteor.subscribe 'sol_signers'
 
 
 Template.view_welcome_course.onRendered ->
@@ -34,6 +36,18 @@ Template.view_terms_course.helpers
             agreement = _.where(course.agreements, user_id: Meteor.userId())
             moment(agreement.date_signed).format("dddd, MMMM Do, h:mm a")
 
+    agreements: ->
+        course = Docs.findOne tags: ['course', 'sol']
+        if course then course.agreements
+            
+        # if course 
+        #     console.log course.agreements
+        #     Meteor.users.find _id: $in: [course.agreements]
+    user_object: ->
+        # console.log @
+        Meteor.users.findOne @user_id
+        
+        
 Template.view_terms_course.events
     'click #agree_to_terms': ->
         self = @

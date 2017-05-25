@@ -14,20 +14,20 @@ if Meteor.isClient
         
     Template.doc_module.onRendered ->
         self = @
-        
-        @autorun =>
+        if @subscriptionsReady()
+            @autorun =>
             # console.log Session.get 'section_number'
-            if @subscriptionsReady()
                 Meteor.setTimeout ->
                     $('.ui.accordion').accordion()            
-                    module_number = Session.get('module_number')
-    
+                    module_number = if Session.get('module_number') then Session.get('module_number') else parseInt FlowRouter.getParam('module_number')
+                    # console.log module_number
                     module_progress_doc =  Docs.findOne(tags: $all: ["sol", "module progress","module #{module_number}"])
                     # console.log module_progress_doc
-                    $('#module_percent_complete_bar').progress(
-                        percent: module_progress_doc.module_progress_percent
-                        autoSuccess: false
-                        );
+                    if module_progress_doc
+                        $('#module_percent_complete_bar').progress(
+                            percent: module_progress_doc.module_progress_percent
+                            autoSuccess: false
+                            );
                 , 1000
 
     

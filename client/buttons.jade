@@ -108,7 +108,7 @@ template(name='delete_button')
         i.remove.icon
         
 template(name='delete_link')
-    a#delete(href='#') Delete
+    a#delete Delete
 
 template(name='published')
     if published
@@ -136,8 +136,8 @@ template(name='featured')
 
 template(name='favorite_button')
     i.heart.large.link.icon.favorite_item(class=favorite_item_class)
-    // if favorite_count
-    //     | #{favorite_count}
+    if favorite_count
+        | #{favorite_count}
 
 template(name='resonate_button')
     .resonate_button.ui.circular.button(class=resonate_button_class) 

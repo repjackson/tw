@@ -151,6 +151,20 @@ template(name='view_terms_course')
             #remove_agreement.ui.basic.red.button Remove Agreement
     else
         #agree_to_terms.ui.green.fluid.button Agree to Terms
+    if isInRole 'admin'
+        .ui.horizontal.divider.header
+            i.red.configure.icon
+            |Admin
+        .ui.header Signers:
+        .ui.divided.list
+            each agreements
+                .item
+                    .content
+                        .header 
+                            with user_object
+                                +user_list_item
+                        .description #{date_signed}
+
 
 template(name='view_inspiration_course')
     +doc_content tags='sol,inspiration,content'

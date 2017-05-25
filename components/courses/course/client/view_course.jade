@@ -1,13 +1,13 @@
 template(name='view_course')
     +nav
     .ui.container
+        .ui.hidden.divider
         .ui.breadcrumb
             a.section(href='/') Home
             .divider  / 
             a.section(href='/courses') Courses
             .divider  / 
             .active.section #{course.title}
-        .ui.hidden.divider
         .ui.stackable.grid
             .centered.row
                 img.ui.image(src="{{c.url course.image_id }}")
@@ -25,27 +25,21 @@ template(name='view_course')
                         // a.item(href="/course/sol/downloads" class="{{isActiveRoute name='course_downloads'}}") Downloads
                         // a.item(href="/course/sol/reminders" class="{{isActiveRoute name='course_reminders'}}") Reminders
                     if isInRole 'admin'
-                        .ui.segment
-                            .ui.header 
+                        .ui.styled.fluid.accordion
+                            .title
                                 i.red.configure.icon
                                 |Admin
-                            .ui.header Title
-                            +doc_title tags='course,sol'
-                            .ui.header Subtitle
-                            +doc_subtitle tags='course,sol'
-                            .ui.header Price
-                            +doc_price tags='course,sol'
+                                i.dropdown.icon
+                            .content
+                                .ui.header Title
+                                +doc_title tags='course,sol'
+                                .ui.header Subtitle
+                                +doc_subtitle tags='course,sol'
+                                .ui.header Price
+                                +doc_price tags='course,sol'
             .ten.wide.column
                 +Template.dynamic template=course_content
 
-    
-template(name='course_not_ready')    
-    .ui.text.center.aligned.basic.segment.container
-        h1.ui.header Thank you for Enrolling in SOL!
-        h3.ui.header We're launching on April 2, please sign up below for updates and notifications.
-        a.ui.teal.large.button(href='http://toriwebster.us11.list-manage.com/subscribe?u=8973e01aca6da499e7e1a63bd&id=9204d04e30')
-            |Sign Up for the SOL Newsletter
-    
     
 // template(name='course_modules')        
 //     h2.ui.center.aligned.header Modules

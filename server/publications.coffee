@@ -124,11 +124,6 @@ Meteor.publish 'person', (id)->
             points: 1            
             
             
-Meteor.publish 'comments', (parent_id)->
-    Docs.find
-        type: 'comment'
-        parent_id: parent_id            
-        
         
 Meteor.publish 'person_card', (id)->
     # console.log id

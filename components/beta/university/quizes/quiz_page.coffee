@@ -74,7 +74,9 @@ if Meteor.isClient
 
     Template.session_card.helpers
         sorted_results: -> _.sortBy(@results, 'category_percent').reverse()
-
+        session_card_class: -> if @published then 'green' else ''
+        
+        
     Template.session_card.onRendered -> 
         Meteor.setTimeout ->
             $('.progress').progress()

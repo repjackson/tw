@@ -106,7 +106,6 @@ if Meteor.isClient
             # console.log @favoriters
                     Meteor.users.find _id: $in: @favoriters
         
-        
             
     Template.lightbank_doc_view.events
         'click .tag': -> if @valueOf() in selected_tags.array() then selected_tags.remove(@valueOf()) else selected_tags.push(@valueOf())

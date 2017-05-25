@@ -17,17 +17,17 @@ template(name='dashboard')
                     .header 
                         i.sun.icon
                         |My Light Bank
+            a.ui.card(href='/quizes')
+                .content
+                    .header
+                        i.edit.icon
+                        |My Quizes
         if isInRole 'dev'
             .ui.segment
                 .ui.header 
                     i.red.configure.icon
                     |Dev
                 .ui.two.centered.stackable.cards
-                    a.ui.card(href='/quizes')
-                        .content
-                            .header
-                                i.edit.icon
-                                |My Quizes
                     a.ui.card(href='/transactions')
                         .content
                             .header

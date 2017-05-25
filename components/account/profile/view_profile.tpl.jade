@@ -38,8 +38,10 @@
                         .ui.small.teal.statistic
                             .value #{points}
                             .label Comment Karma
-                    if isInRole 'admin'
+                    if isInRole 'dev'
                         +tag_person this    
+                    if is_user
+                        +my_friends
                     
             .ten.wide.column
                 if profile.first_name
@@ -69,6 +71,6 @@
                         i.red.configure.icon
                         |Admin
                     +messages_with_user
-                    +clouds
-                
-                
+                    if is_user
+                        +clouds
+                +my_public_quiz_sessions

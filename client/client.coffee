@@ -94,6 +94,8 @@ Template.layout.onRendered ->
                 $('.context.example .ui.sidebar')
                     .sidebar({
                         context: $('.context.example .bottom.segment')
+                        dimPage: false
+                        transition:  'overlay'
                     })
                     .sidebar('attach events', '.context.example .menu .toggle_sidebar.item')
                     ;

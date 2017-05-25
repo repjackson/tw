@@ -49,3 +49,10 @@ Meteor.publish 'course_member_tags', (selected_course_member_tags)->
 Meteor.publish 'sol_course', ->
     Docs.find
         tags: ['course','sol']
+
+
+Meteor.publish 'sol_signers', ->
+    course = Docs.findOne tags: ['course', 'sol']
+    user_id_list =  _.pluck(course.agreements, 'user_id' )
+    Meteor.users.find
+        _id: $in: user_id_list

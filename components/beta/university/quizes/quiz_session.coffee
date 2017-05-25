@@ -261,5 +261,17 @@ if Meteor.isServer
                 #     }
                 # ]    
                 }
+                { find: (session) ->
+                    Meteor.users.find
+                        _id: session.author_id
+                # children: [
+                #     {
+                #         find: (quiz) ->
+                #             Docs.find
+                #                 type: 'question'
+                #                 quiz_slug: quiz._id
+                #     }
+                # ]    
+                }
             ]
         }            
