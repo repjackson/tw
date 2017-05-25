@@ -7,8 +7,8 @@ if Meteor.isClient
     
     
     Template.doc_section.onCreated ->
-        Session.setDefault('module_number', parseInt(FlowRouter.getParam('module_number')))
-        Session.setDefault('section_number', parseInt(FlowRouter.getParam('section_number')))
+        Session.set('module_number', parseInt(FlowRouter.getParam('module_number')))
+        Session.set('section_number', parseInt(FlowRouter.getParam('section_number')))
         # module_num = parseInt FlowRouter.getParam('module_number')
         # section_num = parseInt FlowRouter.getParam('section_number')
         @autorun -> Meteor.subscribe 'module', parseInt(Session.get('module_number'))
@@ -34,10 +34,11 @@ if Meteor.isClient
 
                 section_progress_doc =  Docs.findOne(tags: $all: ["section progress","module #{mod_num}", "section #{sec_num}"])
                 # console.log section_progress_doc
-                $('#section_percent_complete_bar').progress(
-                    percent: section_progress_doc.percent_complete
-                    autoSuccess: false
-                    );
+                if section_progress_doc
+                    $('#section_percent_complete_bar').progress(
+                        percent: section_progress_doc.percent_complete
+                        autoSuccess: false
+                        );
             , 1000
 
     

@@ -33,15 +33,16 @@ template(name='reflective_questions')
                         if isInRole 'admin'
                             +session_edit_button
                         .ui.divider
-                        if isInRole 'admin'
+                        // if isInRole 'admin'
+                            // +reflective_answers
+                        // else 
+                        // if currentUser
+                        if has_answered_question
                             +reflective_answers
-                        else if currentUser
-                            if has_answered_question
-                                +reflective_answers
-                            else
-                                .add_reflective_answer.ui.basic.fluid.button 
-                                    i.plus.icon
-                                    |Add Answer
+                        else
+                            .add_reflective_answer.ui.basic.fluid.button 
+                                i.plus.icon
+                                |Add Answer
                             
 
 template(name='reflective_answers')
