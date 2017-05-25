@@ -340,7 +340,7 @@ Template.bookmark_button.helpers
             if @bookmarked_ids and Meteor.userId() in  @bookmarked_ids then 'teal' else 'basic'
         else 'grey disabled'
         
-    bookmarked: -> Meteor.user().bookmarked_ids and @_id in Meteor.user().bookmarked_ids
+    bookmarked: -> Meteor.user()?.bookmarked_ids and @_id in Meteor.user().bookmarked_ids
 Template.bookmark_button.events
     'click .bookmark_button': (e,t)-> 
         if Meteor.userId() 

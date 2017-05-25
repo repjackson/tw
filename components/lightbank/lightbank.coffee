@@ -50,11 +50,21 @@ if Meteor.isClient
         published_count: -> Counts.get('published_lightbank_count')
         unpublished_count: -> Counts.get('unpublished_lightbank_count')
     
-        resonates_item_class: -> if Session.equals 'view_resonates', true then 'active' else ''
-        bookmarked_item_class: -> if Session.equals 'view_bookmarked', true then 'active' else ''
-        completed_item_class: -> if Session.equals 'view_completed', true then 'active' else ''
-        published_item_class: -> if Session.equals 'view_published', true then 'active' else ''
-        unpublished_item_class: -> if Session.equals 'view_unpublished', true then 'active' else ''
+        resonates_item_class: -> 
+            if not Meteor.userId() then 'disabled'
+            else if Session.equals 'view_resonates', true then 'active' else ''
+        bookmarked_item_class: -> 
+            if not Meteor.userId() then 'disabled'
+            else if Session.equals 'view_bookmarked', true then 'active' else ''
+        completed_item_class: -> 
+            if not Meteor.userId() then 'disabled'
+            else if Session.equals 'view_completed', true then 'active' else ''
+        published_item_class: -> 
+            if not Meteor.userId() then 'disabled'
+            else if Session.equals 'view_published', true then 'active' else ''
+        unpublished_item_class: -> 
+            if not Meteor.userId() then 'disabled'
+            else if Session.equals 'view_unpublished', true then 'active' else ''
     
     Template.lightbank.events
         'click #set_mode_to_all': -> 
