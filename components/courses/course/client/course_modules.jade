@@ -15,12 +15,12 @@ template(name='course_modules')
                     // |!{content}
                 if isInRole 'admin'
                     +session_edit_button
-                    .ui.divider
-                    if user_progress
-                        .module_percent_complete_bar.ui.indicating.progress(data-percent=user_progress)
-                            .bar
-                                .progress
-                            .label
+                .ui.divider
+                if user_progress
+                    .module_percent_complete_bar.ui.indicating.progress(data-percent=user_progress)
+                        .bar
+                            .progress
+                        .label
                     // .ui.horizontal.relaxed.list
                     //     .item
                     //         if section_progress_doc.debrief_complete

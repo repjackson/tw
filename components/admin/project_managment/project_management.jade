@@ -60,17 +60,9 @@ template(name='admin_edit')
     with doc
         .ui.container.basic.segment
             .ui.center.aligned.header Edit Admin Doc
-            +image
-            .ui.hidden.divider
-            +title
-            .ui.hidden.divider
-            +subtitle
-            .ui.hidden.divider
-            +tags
-            .ui.hidden.divider
-            +content      
-            .ui.hidden.divider
-            +published
+            .ui.form
+                +tags
+                +content      
             .ui.hidden.divider
             .ui.center.aligned.basic.segment
                 a#save_admin_doc.ui.huge.active.button Save 

@@ -76,14 +76,14 @@ template(name='doc_section')
                     .ui.hidden.divider
                 if isInRole 'admin'
                     +reflective_questions
-                // else if video_complete
-                //     +reflective_questions
-                // if all_questions_answered
-                //     unless section_complete
-                //         if reflective_question_docs.count
-                //             #mark_section_complete.ui.basic.large.fluid.button 
-                //                 i.circle.outline.icon
-                //                 |Calculate Section Progress
+                else if video_complete
+                    +reflective_questions
+                if all_questions_answered
+                    unless section_complete
+                        if reflective_question_docs.count
+                            #mark_section_complete.ui.basic.large.fluid.button 
+                                i.circle.outline.icon
+                                |Calculate Section Progress
                 unless is_editing
                     if all_questions_answered
                         if video_complete
