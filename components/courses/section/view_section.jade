@@ -34,26 +34,27 @@ template(name='doc_section')
             // a.item(href="/course/sol/module/#{module.number}/section/#{section.number}/reflective_questions" class="{{isActiveRoute name='reflective_questions'}}") Collaboration
         .ui.stackable.grid
             .five.wide.column
-                .ui.dividing.header Progress
-                #section_percent_complete_bar.ui.blue.indicating.progress(data-percent=section_progress_doc.percent_complete)
-                    .bar
-                        .progress
-                            | #{section_progress_doc.percent_complete}%
-                if video_complete
-                    .ui.fluid.basic.label 
-                        i.green.check.icon
-                        |Video Watched
-                else
-                    .ui.basic.fluid.label 
-                        |Video
-                if reflective_question_docs.count
-                    .ui.sub.dividing.header #{section_progress_doc.section_answer_count}/ #{section_progress_doc.section_question_count} Questions Answered
-                    .ui.list
-                        each reflective_question_docs
-                                .item 
-                                    if reflective_question_answered
-                                        i.green.check.icon
-                                    | #{number}: #{body}
+                .ui.rail
+                    .ui.dividing.header Progress
+                    #section_percent_complete_bar.ui.blue.indicating.progress(data-percent=section_progress_doc.percent_complete)
+                        .bar
+                            .progress
+                                | #{section_progress_doc.percent_complete}%
+                    if video_complete
+                        .ui.fluid.basic.label 
+                            i.green.check.icon
+                            |Video Watched
+                    else
+                        .ui.basic.fluid.label 
+                            |Video
+                    if reflective_question_docs.count
+                        .ui.sub.dividing.header #{section_progress_doc.section_answer_count}/ #{section_progress_doc.section_question_count} Questions Answered
+                        .ui.list
+                            each reflective_question_docs
+                                    .item 
+                                        if reflective_question_answered
+                                            i.green.check.icon
+                                        | #{number}: #{body}
             .eleven.wide.column
                 // if Template.subscriptionsReady
                 +doc_content tags=section_content_tags

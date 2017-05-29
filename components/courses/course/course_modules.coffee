@@ -27,9 +27,16 @@ if Meteor.isClient
         module_is_available: ->
             if Roles.userIsInRole(Meteor.userId(), 'sol_demo') and @number < 2
                 return true
-            else if Roles.userIsInRole(Meteor.userId(), ['sol', 'admin']) 
+            else if Roles.userIsInRole(Meteor.userId(), ['admin']) 
                 return true
             else 
+                if @number is 1 then return true
+                else
+                    previous_module_number = @number - 1
+                    previous_module_progress_doc = 
+                        Docs.findOne(tags: $all: ["module #{previous_module_number}", "module progress"])
+                    if previous_module_progress_doc and previous_module_progress_doc.module_progress_percent is 100 then return true else return false
+
                 return false
     
         user_progress: ->
@@ -54,7 +61,7 @@ if Meteor.isServer
             children: [
                 { find: (module) ->
                     Docs.find 
-                        tags: ['sol', "module #{module.number}", 'module progress']
+                        tags: $all: ['sol', 'module progress']
                         author_id: @userId
                     }
                 ]    

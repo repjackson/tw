@@ -30,19 +30,6 @@ if Meteor.isClient
                 recipient_username: username
   
   
-    Template.send_message.events
-        'click #submit_new_message': ->
-            username = FlowRouter.getParam('username')
-            message_text = $('#new_message_body').val()
-            # console.log username
-            # console.log message_text
-            Docs.insert
-                tags: ['message']
-                recipient_username: username
-                read: false
-                body: message_text
-            $('#new_message_body').val('')
-                
             
     Template.message.events
         'click .mark_read': ->

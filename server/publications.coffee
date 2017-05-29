@@ -4,6 +4,9 @@ Meteor.publish 'my_tickets', ->
         author_id: @userId 
         type: 'support_ticket'
         
+Meteor.publish 'child_docs', (parent_id)->
+    Docs.find
+        parent_id: parent_id
     
     
 Meteor.publish 'me', ->
@@ -55,8 +58,8 @@ Meteor.publish 'docs', (selected_tags, type, limit, view_mode)->
 
     self = @
     match = {}
-    match.tags = $all: selected_tags
-    # if selected_tags.length > 0 then match.tags = $all: selected_tags
+    # match.tags = $all: selected_tags
+    if selected_tags.length > 0 then match.tags = $all: selected_tags
     if type then match.type = type
     # console.log view_mode
     if view_mode and view_mode is 'mine'

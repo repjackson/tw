@@ -11,7 +11,7 @@
             +member_nav
         .ui.stackable.grid
             .five.wide.column
-                img.ui.centered.image(src="{{c.url profile.image_id width=400 height=400 gravity='face' crop='fill'}}")
+                img.ui.centered.rounded.image(src="{{c.url profile.image_id width=400 height=400 gravity='face' crop='fill'}}")
                 .ui.basic.center.aligned.segment
                     if is_user
                         a.ui.basic.fluid.button(href="/account/profile/edit/#{_id}") Edit My Profile
@@ -34,14 +34,12 @@
                             div
                                 a(href='/colors') Edit Your Colors
                     .ui.hidden.divider
-                    if points
-                        .ui.small.teal.statistic
-                            .value #{points}
-                            .label Comment Karma
-                    if isInRole 'dev'
-                        +tag_person this    
-                    if is_user
-                        +my_friends
+                    // if points
+                    //     .ui.small.teal.statistic
+                    //         .value #{points}
+                    //         .label Comment Karma
+                    // if isInRole 'dev'
+                    //     +tag_person this    
                     
             .ten.wide.column
                 if profile.first_name
@@ -66,11 +64,15 @@
                     .ui.header If I am not at work or in class then I am probably…
                     |#{profile.if_not_working}
                 +user_courses
-                if isInRole 'beta'
-                    .ui.horizontal.divider.header
-                        i.red.configure.icon
-                        |Admin
-                    +messages_with_user
-                    if is_user
-                        +clouds
+                if is_user
+                    +my_friends
+                if isInRole 'dev'
+                    +user_docs
+                // if isInRole 'beta'
+                //     .ui.horizontal.divider.header
+                //         i.red.configure.icon
+                //         |Admin
+                //     +messages_with_user
+                //     if is_user
+                //         +clouds
                 // +public_quiz_sessions

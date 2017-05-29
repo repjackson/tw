@@ -6,10 +6,13 @@ template(name='messages_with_user')
             +message
             
 
-template(name='send_message')
+template(name='compose')
     .ui.form
         .field
             label Send Private Message
+            .ui.left.icon.large.input
+                i.search.icon
+                +inputAutocomplete settings=compose_settings id="username" class="" autocomplete="off" 
             textarea#new_message_body(rows='2')
             #submit_new_message.ui.basic.button
                 i.right.arrow.chevron.icon
@@ -17,8 +20,8 @@ template(name='send_message')
         
         
 template(name='my_messages')
-    // .ui.container
-    //     +send_message
+    .ui.container
+        +send_message
     .ui.horizontal.divider.header My Messages
     .ui.threaded.comments
         each my_messages
@@ -56,3 +59,8 @@ template(name='message')
                     a.mark_read Mark Read
                 +delete_link
                 a.edit_comment(href='#') Edit
+
+
+
+template(name='user_pill')
+    span #{username}

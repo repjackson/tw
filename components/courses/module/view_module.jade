@@ -1,6 +1,6 @@
 template(name='doc_module')
     +nav
-    .ui.container
+    .ui.basic.segment.container
         .ui.breadcrumb
             a.section(href='/') Home
             .divider  / 
@@ -11,9 +11,24 @@ template(name='doc_module')
             a.section(href="/course/sol/modules") Modules
             .divider  / 
             .active.section #{module.number}: #{module.title}
+        .ui.hidden.divider
+        .ui.grid
+            .center.aligned.row
+                .four.wide.column
+                    if previous_module
+                        // a.ui.basic.small.button(href="/course/sol/module/#{module.number}/section/#{previous_section.number}")
+                        a#go_to_previous_module.ui.basic.small.button(href="#")
+                            i.left.chevron.icon
+                            |#{previous_module.number}: #{previous_module.title}
+                .eight.wide.column
+                    h1.ui.center.aligned.header Module #{module_number}: #{module.title}
 
-        h2.ui.header 
-            |Module #{module_number}: #{module.title}
+                .four.wide.column
+                    if module_complete
+                        a.go_to_next_module.ui.basic.small.button(href="#")
+                            |#{next_module.number}: #{next_module.title}
+                            i.right.chevron.icon
+            // a.item(href="/course/sol/module/#{module.number}/section/#{section.number}/reflective_questions" class="{{isActiveRoute name='reflective_questions'}}") Collaboration
         .ui.stackable.grid
             .five.wide.column
                 with module

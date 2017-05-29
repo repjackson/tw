@@ -46,3 +46,12 @@ Meteor.methods
                 downvoted_cloud: downvoted_cloud
                 downvoted_list: downvoted_list
             
+            
+            
+    add_doc: (body, parent_id, tags) ->
+        result = Docs.insert
+            body: body
+            parent_id: parent_id
+            tags: tags
+        console.log result
+                

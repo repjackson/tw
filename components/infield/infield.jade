@@ -23,25 +23,28 @@ template(name='doc_content')
                 |Create Content with #{template_tags}
             
 template(name='doc_body')
-    if doc
-        with doc
-            if editing
-                +edit_body
-            else
-                span(class=doc_classes)
-                    |#{body}
-            if isInRole 'admin'
-                unless editing
-                    i.edit_this.large.pencil.link.icon(title=tags)
+    if subscriptionsReady
+        if doc
+            with doc
+                if editing
+                    +edit_body
                 else
-                    .save_doc.ui.icon.green.basic.button
-                        i.check.icon
+                    span(class=doc_classes)
+                        |#{body}
+                if isInRole 'admin'
+                    unless editing
+                        i.edit_this.large.pencil.link.icon(title=tags)
+                    else
+                        .save_doc.ui.icon.green.basic.button
+                            i.check.icon
+        else
+            if isInRole 'admin'
+                .ui.header No Doc Found
+                .create_doc.ui.basic.button
+                    i.plus.icon
+                    |Create Plain with #{template_tags}
     else
-        if isInRole 'admin'
-            .ui.header No Doc Found
-            .create_doc.ui.basic.button
-                i.plus.icon
-                |Create Plain with #{template_tags}
+        .ui.text.loader
             
 template(name='edit_content')
     .ui.segment

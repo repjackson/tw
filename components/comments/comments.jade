@@ -12,20 +12,21 @@ template(name='comments')
                         input#body(type='text' value=body)
                 #save_comment.ui.green.button Save Comment
             else if currentUser
-                #add_comment.ui.smsall.compact.teal.button
-                    i.plus.icon
-                    |Comment
+                unless editing_comment
+                    #add_comment.ui.smsall.compact.teal.button
+                        i.plus.icon
+                        |Comment
             .ui.threaded.comments
                 each comments
                     +comment
         
 template(name='comment')
-    unless editing_comment
-        .comment
+    .comment
+        unless editing_comment
             a.avatar
                 img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
             .content
-                a.author #{author.username}
+                a.author #{author.name}
                 .metadata
                     span.date #{from_now}
                 .text
@@ -59,12 +60,13 @@ template(name='comment')
             //                         if is_author
             //                             +delete_link
             //                             a.edit_comment(href='#') Edit
-    else
-        .ui.header Edit comment
-        .ui.form
-            .field
-                // label Body
-                input#body(type='text' value=body)
-        #save_comment.ui.green.button Save Comment
+        else
+            .ui.form
+                .field
+                    // label Body
+                    .ui.left.icon.action.input
+                        i.blue.pencil.icon
+                        input#body(type='text' value=body)
+                        #save_comment.ui.green.button Save
         
     

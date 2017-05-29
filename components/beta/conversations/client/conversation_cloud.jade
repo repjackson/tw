@@ -1,0 +1,20 @@
+template(name='conversation_cloud')
+    .ui.grid.container
+        .eleven.wide.column
+            .ui.header 
+                |Browse Conversations
+            if selected_conversation_tags
+                #clear_tags.ui.primary.big.compact.icon.button
+                    i.remove.icon
+            if selected_conversation_tags
+                each selected_conversation_tags
+                    a.ui.primary.big.compact.button.unselect_tag
+                        strong #{this}
+            each conversation_tags
+                .ui.compact.basic.button.select_tag(class=conversation_tag_class) #{this.name}
+                    small #{this.count}
+        .five.wide.column
+            if currentUser
+                #create_conversation.ui.basic.fluid.button
+                    i.plus.icon
+                    |Create Conversation

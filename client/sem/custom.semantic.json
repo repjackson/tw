@@ -44,7 +44,7 @@
     "state": false,
     "statistic": true,
     "step": true,
-    "sticky": false,
+    "sticky": true,
     "tab": true,
     "table": true,
     "transition": true,

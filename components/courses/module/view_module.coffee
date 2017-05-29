@@ -1,11 +1,20 @@
 if Meteor.isClient    
+    # FlowRouter.route '/course/sol/module/:module_number', 
+    #     name:'doc_module'
+    #     action: (params) ->
+    #         BlazeLayout.render 'doc_module',
+    #             module_content: 'sections'
+    
     FlowRouter.route '/course/sol/module/:module_number', 
-        name:'doc_module'
-        action: (params) ->
-            BlazeLayout.render 'doc_module',
-                module_content: 'sections'
-    
-    
+        name: 'doc_module'
+        triggersEnter: [ (context, redirect) ->
+            console.log context
+            if context.params.module_number is "1"
+                redirect "/course/sol/module/#{context.params.module_number}/sections"
+            else 
+                redirect "/course/sol/module/#{context.params.module_number}/debrief"
+        ]
+
     
     Template.doc_module.onCreated ->
         # @autorun -> Meteor.subscribe 'module_by_course_slug', course_slug=FlowRouter.getParam('course_slug'), module_number=parseInt FlowRouter.getParam('module_number')
@@ -50,6 +59,44 @@ if Meteor.isClient
                 tags: ['sol', "module #{module_number}", 'module progress']
                 author_id: Meteor.userId()
 
+        previous_section: ->
+            module_num = parseInt FlowRouter.getParam('module_number')
+
+            previous_module_number = module_number - 1
+            Docs.findOne
+                tags: ['module']
+                number: previous_module_number
+                
+        next_module: ->
+            module_num = parseInt FlowRouter.getParam('module_number')
+            next_module_number = module_number + 1
+            Docs.findOne
+                tags: ['module']
+                number: next_module_number
+
+        module_complete: ->
+            module_num = parseInt FlowRouter.getParam('module_number')
+            module_progress_doc = 
+                Docs.findOne
+                    tags: $all: ['sol', "module #{module_num}", 'module progress']
+                    author_id: Meteor.userId()
+            module_progress_doc?.module_percent_complete is 100
+    
+        next_module_number: -> 
+            parseInt(FlowRouter.getParam('module_number')) + 1
+    
+        next_module_exists: ->
+            next_module_number = parseInt(FlowRouter.getParam('module_number')) + 1
+            module_number = parseInt FlowRouter.getParam('module_number')
+
+            next_module_doc = 
+                Docs.findOne
+                    tags: ['module']
+                    number: next_module_number
+                    module_number: module_number
+            if next_module_doc then true else false
+    
+    
     
     Template.doc_module.events
         'click .edit': ->
@@ -74,7 +121,7 @@ if Meteor.isServer
     Meteor.publish 'module_progress', (module_number)->
         Docs.find
             tags: $all: ['sol', "module #{module_number}", "module progress"]
-            # number: module_number
+            author_id: @userId
             
             
     Meteor.methods

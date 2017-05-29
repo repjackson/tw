@@ -36,7 +36,7 @@ if Meteor.isClient
                 Docs.find {type:'lightbank' }, 
                     sort:
                         tag_count: 1
-                    limit: 10
+                    limit: 5
     
         tag_class: -> if @valueOf() in selected_tags.array() then 'teal' else 'basic'
         selected_tags: -> selected_tags.array()
