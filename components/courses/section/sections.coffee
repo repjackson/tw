@@ -47,7 +47,8 @@ if Meteor.isClient
             progress_doc
             
         section_is_available: ->
-            if @number is 1 then true
+            if Roles.userIsInRole(Meteor.userId(), 'admin') then true
+            else if @number is 1 then true
             else
                 previous_section_number = @number - 1
                 previous_section_progress_doc = 

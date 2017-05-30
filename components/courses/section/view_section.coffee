@@ -361,7 +361,7 @@ if Meteor.isServer
 
             # if section_progress_doc then console.log 'found' else console.log 'not'
 
-            if section_question_count is section_answer_count
+            if section_question_count is section_answer_count or section_question_count < section_answer_count
                 questions_complete = true
                 # console.log 'questions complete'
             else

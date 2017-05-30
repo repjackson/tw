@@ -29,8 +29,8 @@ if Meteor.isClient
     @selected_admin_tags = new ReactiveArray []
 
     Template.project_management.onCreated ->
-        @autorun => Meteor.subscribe('admin_tags', selected_admin_tags.array(), limit=20)
-        @autorun -> Meteor.subscribe('admin_docs', selected_admin_tags.array(), limit=10)
+        @autorun => Meteor.subscribe('admin_tags', selected_admin_tags.array(), limit=20, view_mode=Session.get('view_mode'))
+        @autorun -> Meteor.subscribe('admin_docs', selected_admin_tags.array(), limit=10, view_mode=Session.get('view_mode'))
 
     Template.project_management.helpers
             
@@ -78,15 +78,28 @@ if Meteor.isClient
             # Docs.find {}, 
 
 
-        one_doc: -> 
-            Docs.find().count() is 1
-    
+        one_doc: -> Docs.find().count() is 1
         tag_class: -> if @valueOf() in selected_admin_tags.array() then 'teal' else 'basic'
-
         selected_admin_tags: -> selected_admin_tags.array()
-
+        all_item_class: -> if Session.equals 'view_mode', 'all' then 'active' else ''
+        mine_item_class: -> 
+            if Meteor.user()
+                if Session.equals 'view_mode', 'completed' then 'active' else ''
+            else
+                'disabled'
+    
+    
     
     Template.project_management.events
+        'click #set_mode_to_all': -> 
+            if Meteor.userId() then Session.set 'view_mode', 'all'
+            else FlowRouter.go '/sign-in'
+    
+        'click #set_mode_to_mine': -> 
+            if Meteor.userId() then Session.set 'view_mode', 'mine'
+            else FlowRouter.go '/sign-in'
+
+    
         'click .select_tag': -> selected_admin_tags.push @name
         'click .unselect_tag': -> selected_admin_tags.remove @valueOf()
         'click #clear_tags': -> selected_admin_tags.clear()
@@ -127,7 +140,7 @@ if Meteor.isClient
 
 
 if Meteor.isServer
-    publishComposite 'admin_docs', (selected_admin_tags, limit)->
+    publishComposite 'admin_docs', (selected_admin_tags, limit, view_mode)->
         {
             find: ->
                 self = @
@@ -136,6 +149,7 @@ if Meteor.isServer
                 if selected_admin_tags.length > 0 then match.tags = $all: selected_admin_tags
                 match.type = 'admin'
                 # console.log view_mode
+                if view_mode is 'completed' then match.completed = true
                 Docs.find match, 
                     limit: limit
             children: [
@@ -155,7 +169,7 @@ if Meteor.isServer
         match.type = 'admin'
         if selected_tags.length > 0 then match.tags = $all: selected_tags
         
-        # console.log 'limit:', limit
+        if view_mode is 'completed' then match.completed = true
         
         cloud = Docs.aggregate [
             { $match: match }

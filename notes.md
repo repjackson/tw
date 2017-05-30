@@ -86,25 +86,11 @@ notes
     
 
 
-tests notes
-    each answer is a document with sessionID, question_id, answer, userID, makes it easy for any analytics
-    each test has a dashboard showing sessions, statistics (user and total), 
-    test creater app, add questions, add type of answer
-    each session has results doc? probably just in the same doc, with finished boolean
-    when finished, can publish results, adds badge to user profile
-    future tests
-        english competency
-        math skills
-        office skills
-        any business related/beneficial skill, aim is to build ability, empower people
-        
-        
 flow from demo button
 settings under account
 email in profile
 birthday under location
 toggle for email public
-zen quotes
 password change
 username change
 tests
@@ -125,3 +111,7 @@ Grey teal
 #357591
 Night blue
 #002d40
+
+
+todo
+    comparison with tags and colors

@@ -17,56 +17,53 @@ template(name='quiz_page')
                     a.ui.basic.button(href="/edit/#{_id}")
                         i.red.configure.icon
                         |Edit
-                each tags
-                    .ui.basic.label #{this}
+                // each tags
+                //     .ui.basic.label #{this}
 
             .ui.stackable.divided.grid
                 .twelve.wide.column
-                    .content
-                        if publish_date
-                            h4.ui.header Published #{publish_when}
-                        .ui.basic.segment
-                            h3.ui.dividing.header Description
-                            |!{content}
-                            // h3.ui.dividing.header Statistics
-                            if currentUser
-                                h3.ui.dividing.header Your Sessions
-                                #new_session.ui.teal.labeled.icon.button
-                                    i.plus.icon
-                                    | New Session
-                                .ui.hidden.divider
-                                .ui.cards
-                                    each my_sessions
-                                        +session_card
-                            else
-                                .ui.header Log in to take quiz and track results.
+                    .ui.basic.segment
+                        h3.ui.dividing.header Description
+                        |!{content}
+                        // h3.ui.dividing.header Statistics
+                        if currentUser
+                            h3.ui.dividing.header Your Sessions
+                            #new_session.ui.teal.button
+                                | Take the Quiz
                             .ui.hidden.divider
-                            if isInRole 'admin'
-                                .ui.fluid.styled.accordion
-                                    .title
-                                        i.red.configure.icon
-                                        |Quiz Questions
-                                        i.dropdown.icon
-                                    .content
-                                        unless is_editing    
-                                            #add_quiz_question.ui.icon.button(class=add_quiz_question_button_class)
-                                                i.plus.icon
-                                            if selected_quiz_question_tags
-                                                each selected_quiz_question_tags
-                                                    .unselect_tag.ui.active.button
-                                                        strong #{this}
-                                            each quiz_cloud_tags
-                                                .ui.button.select_tag(class=cloud_tag_class) 
-                                                    | #{this.name}
-                                                    small #{this.count}
-                                        .ui.hidden.divider
-                                        .ui.stackable.cards
-                                            each quiz_questions
-                                                +admin_quiz_question
+                            .ui.cards
+                                each my_sessions
+                                    +session_card
+                        else
+                            .ui.header Log in to take quiz and track results.
+                        .ui.hidden.divider
+                        if isInRole 'admin'
+                            .ui.fluid.styled.accordion
+                                .title
+                                    i.red.configure.icon
+                                    |Quiz Questions
+                                    i.dropdown.icon
+                                .content
+                                    unless is_editing    
+                                        #add_quiz_question.ui.icon.button(class=add_quiz_question_button_class)
+                                            i.plus.icon
+                                        if selected_quiz_question_tags
+                                            each selected_quiz_question_tags
+                                                .unselect_tag.ui.active.button
+                                                    strong #{this}
+                                        each quiz_cloud_tags
+                                            .ui.button.select_tag(class=cloud_tag_class) 
+                                                | #{this.name}
+                                                small #{this.count}
+                                    .ui.hidden.divider
+                                    .ui.stackable.cards
+                                        each quiz_questions
+                                            +admin_quiz_question
+                    +comments
                 .four.wide.column
-                    .ui.dividing.header #{title} Tags
-                    each tags
-                        .ui.basic.label #{this}
+                    // .ui.dividing.header #{title} Tags
+                    // each tags
+                    //     .ui.basic.label #{this}
                     // if isInRole 'admin'
                     //     .ui.dividing.header 
                     //         i.large.red.configure.icon
@@ -83,7 +80,6 @@ template(name='quiz_page')
                     +favorite_button
                     // +tag_rating
                     .ui.hidden.divider
-                    +comments
 
 
 template(name='session_card')

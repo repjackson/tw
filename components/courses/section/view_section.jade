@@ -28,9 +28,17 @@ template(name='doc_section')
                     h1.ui.center.aligned.header Section #{section.number}: #{section.title}
                 .four.wide.column
                     if section_complete
-                        a.go_to_next_section.ui.basic.small.button(href="#")
-                            |#{next_section.number}: #{next_section.title}
-                            i.right.chevron.icon
+                        if next_section_exists
+                            a.go_to_next_section.ui.basic.small.button(href="#")
+                                |#{next_section.number}: #{next_section.title}
+                                i.right.chevron.icon
+                        else
+                            a.ui.basic.fluid.button(href="/course/sol/module/#{module.number}") 
+                                i.large.icons
+                                    i.green.check.circle.icon
+                                    i.reply.corner.icon
+                                | Module #{module.number} Sections Complete
+
             // a.item(href="/course/sol/module/#{module.number}/section/#{section.number}/reflective_questions" class="{{isActiveRoute name='reflective_questions'}}") Collaboration
         .ui.stackable.grid
             .five.wide.column

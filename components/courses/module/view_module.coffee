@@ -8,7 +8,7 @@ if Meteor.isClient
     FlowRouter.route '/course/sol/module/:module_number', 
         name: 'doc_module'
         triggersEnter: [ (context, redirect) ->
-            console.log context
+            # console.log context
             if context.params.module_number is "1"
                 redirect "/course/sol/module/#{context.params.module_number}/sections"
             else 
@@ -20,7 +20,8 @@ if Meteor.isClient
         # @autorun -> Meteor.subscribe 'module_by_course_slug', course_slug=FlowRouter.getParam('course_slug'), module_number=parseInt FlowRouter.getParam('module_number')
         @autorun -> Meteor.subscribe 'module_progress', parseInt FlowRouter.getParam('module_number')
         @autorun -> Meteor.subscribe 'module', parseInt FlowRouter.getParam('module_number')
-        
+        @autorun -> Meteor.subscribe 'sol_modules'
+
     Template.doc_module.onRendered ->
         self = @
         if @subscriptionsReady()
@@ -59,8 +60,8 @@ if Meteor.isClient
                 tags: ['sol', "module #{module_number}", 'module progress']
                 author_id: Meteor.userId()
 
-        previous_section: ->
-            module_num = parseInt FlowRouter.getParam('module_number')
+        previous_module: ->
+            module_number = parseInt FlowRouter.getParam('module_number')
 
             previous_module_number = module_number - 1
             Docs.findOne
@@ -68,22 +69,27 @@ if Meteor.isClient
                 number: previous_module_number
                 
         next_module: ->
-            module_num = parseInt FlowRouter.getParam('module_number')
+            module_number = parseInt FlowRouter.getParam('module_number')
             next_module_number = module_number + 1
             Docs.findOne
-                tags: ['module']
+                tags: $in: ['module']
                 number: next_module_number
+            
+
+
 
         module_complete: ->
-            module_num = parseInt FlowRouter.getParam('module_number')
+            module_number = parseInt FlowRouter.getParam('module_number')
             module_progress_doc = 
                 Docs.findOne
-                    tags: $all: ['sol', "module #{module_num}", 'module progress']
+                    tags: $all: ['sol', "module #{module_number}", 'module progress']
                     author_id: Meteor.userId()
-            module_progress_doc?.module_percent_complete is 100
-    
-        next_module_number: -> 
-            parseInt(FlowRouter.getParam('module_number')) + 1
+            if module_progress_doc 
+                module_progress_doc.module_progress_percent is 100
+            else
+                Meteor.call 'calculate_module_progress', module_number
+        
+        next_module_number: -> parseInt(FlowRouter.getParam('module_number')) + 1
     
         next_module_exists: ->
             next_module_number = parseInt(FlowRouter.getParam('module_number')) + 1
