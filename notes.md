@@ -115,3 +115,5 @@ Night blue
 
 todo
     comparison with tags and colors
+    
+meteor add bundle-visualizer

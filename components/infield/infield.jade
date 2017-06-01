@@ -85,6 +85,7 @@ template(name='edit_parentid_field')
     if is_editing
         .ui.form
             .field
+                label parent id
                 input#parent_id(type='text' value=parent_id)
             +session_edit_button
             +delete_button

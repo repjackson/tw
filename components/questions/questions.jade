@@ -1,16 +1,16 @@
-template(name='reflective_questions')
+template(name='questions')
     // .ui.embed(data-source='vimeo', data-id='215750115', data-placeholder='/toriwebster-logotype-04.png')
-    unless reflective_question_docs.count
+    unless question_docs.count
         if isInRole 'admin'
-            #add_reflective_question.ui.basic.blue.button 
+            #add_question.ui.basic.blue.button 
                 i.plus.icon
-                |Add Reflective Question
+                |Add Question
     else
         .ui.horizontal.divider.header 
-            |Reflective Questions
+            |Questions
             if isInRole 'admin'
-                i#add_reflective_question.green.plus.link.icon(title='Add Reflective Question')
-        each reflective_question_docs
+                i#add_question.green.plus.link.icon(title='Add Question')
+        each question_docs
             if has_answered_previous
                 .ui.segment(class=segment_class)
                     if isInRole 'admin'
@@ -23,29 +23,35 @@ template(name='reflective_questions')
                             .field
                                 +number
                             .field
-                                label Reflective Question
+                                label Question
                                 textarea#body(rows='3') #{body}
+                            +edit_parentid_field
                             .ui.divider
                             +session_edit_button
                             +published
                     else
-                        .ui.header #{number}: #{body}
+                        .ui.header 
+                            |#{number}: #{body}
+                            if has_answered_question
+                                .ui.right.corner.green.label
+                                    i.check.icon
                         if isInRole 'admin'
                             +session_edit_button
+                            |parent_id #{parent_id}
                         .ui.divider
                         // if isInRole 'admin'
-                            // +reflective_answers
+                            // +answers
                         // else 
                         // if currentUser
                         if has_answered_question
-                            +reflective_answers
+                            +answers
                         else
-                            .add_reflective_answer.ui.basic.fluid.button 
+                            .add_answer.ui.basic.fluid.button 
                                 i.plus.icon
                                 |Add Answer
                             
 
-template(name='reflective_answers')
+template(name='answers')
     with my_answer
         .ui.segment(class=segment_class)
             .ui.blue.ribbon.large.label(class=ribbon_class)
@@ -71,11 +77,11 @@ template(name='reflective_answers')
     .ui.styled.fluid.accordion
         .title
             i.large.users.icon
-            | All Public Answers (#{all_reflective_answers.count})
+            | All Public Answers (#{all_answers.count})
             i.dropdown.icon
         .content
             .ui.threaded.comments
-                each all_reflective_answers
+                each all_answers
                     .comment
                         a(href='/profile/#{author.username}').avatar
                             img.ui.avatar.image(src="{{c.url author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
@@ -99,12 +105,12 @@ template(name='reflective_answers')
         .ui.styled.fluid.accordion
             .title
                 i.red.configure.icon
-                | All Private Answers (#{all_private_reflective_answers.count})
+                | All Private Answers (#{all_private_answers.count})
                 
                 i.dropdown.icon
             .content
                 .ui.threaded.comments
-                    each all_private_reflective_answers
+                    each all_private_answers
                         .comment
                             a(href='/profile/#{author.username}').avatar
                                 img.ui.avatar.image(src="{{c.url author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")

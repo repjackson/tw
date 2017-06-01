@@ -25,6 +25,39 @@ if Meteor.isClient
         #     "sol,module #{FlowRouter.getParam('module_number')},debrief,question"
     
     
+        has_answered_previous: ->
+            # console.log @number
+            # console.log @body
+            if Roles.userIsInRole Meteor.userId(), 'admin' then true
+            else
+                mod_num = FlowRouter.getParam('module_number')
+                sec_num = FlowRouter.getParam('section_number')
+                if @number is 1 then true
+                else
+                    previous_number = @number - 1
+                    
+                    previous_question = Docs.findOne
+                        tags: ["sol","module #{mod_num}","section #{sec_num}","reflective question"]
+                        number: previous_number
+                    
+                    if previous_question
+                        previous_question_answer = 
+                            Docs.findOne
+                                tags: $in: ['answer']
+                                parent_id: previous_question._id
+                                author_id: Meteor.userId()
+                        if previous_question_answer 
+                            if Session.get('editing_id') isnt previous_question_answer._id
+                                # console.log 'has answered question', previous_question.number
+                                return true
+                        else
+                            # console.log 'has NOT answered question', previous_question.number
+                            return false    
+                        
+                            
+    
+    
+    
         has_answered_question: ->
             Docs.findOne
                 tags: $in: ['answer']

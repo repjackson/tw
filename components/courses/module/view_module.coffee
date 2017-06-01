@@ -21,6 +21,7 @@ if Meteor.isClient
         @autorun -> Meteor.subscribe 'module_progress', parseInt FlowRouter.getParam('module_number')
         @autorun -> Meteor.subscribe 'module', parseInt FlowRouter.getParam('module_number')
         @autorun -> Meteor.subscribe 'sol_modules'
+        @autorun -> Meteor.subscribe 'module_downloads', FlowRouter.getParam('module_number')
 
     Template.doc_module.onRendered ->
         self = @
@@ -54,12 +55,20 @@ if Meteor.isClient
                 tags: $in: ['module']
                 number: parseInt FlowRouter.getParam('module_number')
             
+            
+        download_count: ->
+            module_number = FlowRouter.getParam('module_number')
+            Docs.find(tags: $all: ["sol", "module #{module_number}", "download"]).count()
+
+            
+            
         module_progress_doc: ->
             module_number = FlowRouter.getParam('module_number')
-            Docs.findOne
+            module_progress_doc = Docs.findOne
                 tags: ['sol', "module #{module_number}", 'module progress']
                 author_id: Meteor.userId()
-
+            # if module_progress_doc then alert 'hi' else alert 'no'
+            # module_progress_doc
         previous_module: ->
             module_number = parseInt FlowRouter.getParam('module_number')
 
@@ -78,7 +87,7 @@ if Meteor.isClient
 
 
 
-        module_complete: ->
+        module_sections_complete: ->
             module_number = parseInt FlowRouter.getParam('module_number')
             module_progress_doc = 
                 Docs.findOne
@@ -110,11 +119,11 @@ if Meteor.isClient
             course_slug = FlowRouter.getParam('course_slug')
             FlowRouter.go "/course/#{course_slug}/module/#{@_id}/edit"
     
-        # 'click #calculate_module_progress': ->
-        #     Meteor.call 'calculate_module_progress', parseInt(FlowRouter.getParam('module_number')), (err,res)->
-        #         # console.log res
-        #         $('#module_percent_complete_bar').progress('set percent', res);
-        #         # console.log $('#module_percent_complete_bar').progress('get percent');
+        'click #calculate_module_progress': ->
+            Meteor.call 'calculate_module_progress', parseInt(FlowRouter.getParam('module_number')), (err,res)->
+                # console.log res
+                $('#module_percent_complete_bar').progress('set percent', res);
+                # console.log $('#module_percent_complete_bar').progress('get percent');
 
     
     
@@ -153,15 +162,24 @@ if Meteor.isServer
             module_progress = 0
             module_progress_increment = 100/module_section_count
             # console.log module_progress_increment
+            section_complete_count = 0
             for section_number in [1..module_section_count]
                 section_progress_doc = 
                     Docs.findOne
                         tags: ['sol', "module #{module_number}", "section #{section_number}", 'section progress']
                         author_id: Meteor.userId()
+                if section_progress_doc then section_complete_count++
                 adding_amount = section_progress_doc.percent_complete*.01*module_progress_increment
                 module_progress += adding_amount
                 
-            # console.log module_progress
+                
+                
+            if section_complete_count is module_section_count
+                module_sections_complete = true
+            else
+                module_sections_complete = false
+                
+            console.log module_sections_complete
             # Docs.update module_progress_doc._id, 
             #     module_progress_percent: module_progress
                 
@@ -169,7 +187,12 @@ if Meteor.isServer
                 tags: ['sol', "module #{module_number}", 'module progress']
                 author_id: Meteor.userId() 
             },
-            { $set: module_progress_percent: module_progress },
+            { $set: 
+                module_progress_percent: module_progress
+                module_section_count: module_section_count
+                section_complete_count: section_complete_count
+                module_sections_complete: module_sections_complete
+                },
             { upsert: true }
     
             # console.log module_progress

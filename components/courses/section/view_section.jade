@@ -39,7 +39,7 @@ template(name='doc_section')
                                     i.reply.corner.icon
                                 | Module #{module.number} Sections Complete
 
-            // a.item(href="/course/sol/module/#{module.number}/section/#{section.number}/reflective_questions" class="{{isActiveRoute name='reflective_questions'}}") Collaboration
+            // a.item(href="/course/sol/module/#{module.number}/section/#{section.number}/questions" class="{{isActiveRoute name='questions'}}") Collaboration
         .ui.stackable.grid
             .five.wide.column
                 .ui.rail
@@ -55,12 +55,12 @@ template(name='doc_section')
                     else
                         .ui.basic.fluid.label 
                             |Video
-                    if reflective_question_docs.count
+                    if question_docs.count
                         .ui.sub.dividing.header #{section_progress_doc.section_answer_count}/ #{section_progress_doc.section_question_count} Questions Answered
                         .ui.list
-                            each reflective_question_docs
+                            each question_docs
                                     .item 
-                                        if reflective_question_answered
+                                        if question_answered
                                             i.green.check.icon
                                         | #{number}: #{body}
             .eleven.wide.column
@@ -83,13 +83,14 @@ template(name='doc_section')
                         .mark_video_complete.ui.basic.fluid.button Mark Video Watched
                 .ui.hidden.divider
                     .ui.hidden.divider
-                if isInRole 'admin'
-                    +reflective_questions
-                else if video_complete
-                    +reflective_questions
+                with section
+                    if isInRole 'admin'
+                        +questions
+                    else if video_complete
+                        +questions
                 if all_questions_answered
                     unless section_complete
-                        if reflective_question_docs.count
+                        if question_docs.count
                             #mark_section_complete.ui.basic.large.fluid.button 
                                 i.circle.outline.icon
                                 |Calculate Section Progress

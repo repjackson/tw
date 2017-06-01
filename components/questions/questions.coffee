@@ -1,33 +1,21 @@
 if Meteor.isClient
-    # FlowRouter.route '/course/sol/module/:module_number/debrief', 
-    #     name: 'reflective_questions'
-    #     action: (params) ->
-    #         BlazeLayout.render 'doc_module',
-    #             module_content: 'reflective_questions'
-        
+    Template.questions.onCreated ->
+        # @autorun -> Meteor.subscribe 'questions', FlowRouter.getParam('module_number'), FlowRouter.getParam('section_number')
+        @autorun => Meteor.subscribe 'questions', @data._id
+        # console.log @data._id
     
-    Template.reflective_questions.onCreated ->
-        @autorun -> Meteor.subscribe 'reflective_questions', FlowRouter.getParam('module_number'), FlowRouter.getParam('section_number')
-    
-    # Template.answers.onCreated ->
-        # @autorun => Meteor.subscribe 'answers', @data._id
-    
-    
-
-    
-    
-    Template.reflective_questions.helpers
-        reflective_question_docs: -> 
+    Template.questions.helpers
+        question_docs: -> 
             mod_num = FlowRouter.getParam('module_number')
             sec_num = FlowRouter.getParam('section_number')
             Docs.find {
                 tags: ["sol","module #{mod_num}","section #{sec_num}","reflective question"] }
                 , { sort: number: 1} 
                 
-        # reflective_questions_tags: ->
+        # questions_tags: ->
         #     "sol","module #{FlowRouter.getParam('module_number')}","section #{FlowRouter.getParam('section_number')}","reflective question"
     
-        any_reflective_questions: ->
+        any_questions: ->
             mod_num = FlowRouter.getParam('module_number')
             sec_num = FlowRouter.getParam('section_number')
             Docs.find({
@@ -77,14 +65,14 @@ if Meteor.isClient
             #     console.log "has NOT answered question #{@number}"
                 
     
-    Template.reflective_answers.helpers
-        all_reflective_answers: ->
+    Template.answers.helpers
+        all_answers: ->
             Docs.find
                 parent_id: @_id
                 tags: $in: ["answer"]
                 published: true
                 
-        all_private_reflective_answers: ->        
+        all_private_answers: ->        
             Docs.find
                 parent_id: @_id
                 tags: $in: ["answer"]
@@ -105,13 +93,13 @@ if Meteor.isClient
                     author_id: Meteor.userId()
             Session.equals 'editing_id', my_answer._id
 
-    Template.reflective_answers.events
+    Template.answers.events
         'blur #body': (e,t)->
             body = $(e.currentTarget).closest('#body').val()
             Docs.update @_id,
                 $set: body: body
             
-    Template.reflective_answers.onRendered ->
+    Template.answers.onRendered ->
         @autorun =>
             if @subscriptionsReady()
                 Meteor.setTimeout ->
@@ -123,24 +111,26 @@ if Meteor.isClient
 
     
     
-    Template.reflective_questions.events
+    Template.questions.events
         'blur #body': (e,t)->
             body = $(e.currentTarget).closest('#body').val()
             Docs.update @_id,
                 $set: body: body
             
     
-        'click #add_reflective_question': ->
-            Docs.insert
-                tags: ["sol","module #{FlowRouter.getParam('module_number')}","section #{FlowRouter.getParam('section_number')}","reflective question"]
+        'click #add_question': ->
+            console.log @_id
+            # Docs.insert
+            #     parent_id: @_id
+            #     tags: ["question"]
 
-        'click .add_reflective_answer': ->
-            answer_tags = @tags
-            answer_tags.push 'answer'
-            answer_tags.push "question #{@number}"
+        'click .add_answer': ->
+            # answer_tags = @tags
+            # answer_tags.push 'answer'
+            # answer_tags.push "question #{@number}"
             # console.log 'answer tags', answer_tags
             new_id = Docs.insert
-                tags: answer_tags
+                tags: ["answer"]
                 parent_id: @_id
                 question_number: @number
             Session.set 'editing_id', new_id
@@ -153,11 +143,13 @@ if Meteor.isClient
                 # console.log $('#section_percent_complete_bar').progress('get percent');
 
 if Meteor.isServer
-    publishComposite 'reflective_questions', (module_number, section_number)->
+    # publishComposite 'questions', (module_number, section_number)->
+    publishComposite 'questions', (parent_id)->
         {
             find: ->
                 Docs.find 
-                    tags: ["sol","module #{module_number}", "section #{section_number}","reflective question"]
+                    parent_id: parent_id
+                    # tags: ["sol","module #{module_number}", "section #{section_number}","reflective question"]
             children: [
                 { 
                     find: (question) ->

@@ -35,29 +35,31 @@ template(name='debrief')
 template(name='debrief_answers')
     with my_answer
         .ui.segment(class=segment_class)
-            .ui.blue.ribbon.label(class=ribbon_class)
-                |Your Answer
+            .ui.blue.ribbon.large.label(class=ribbon_class)
+                | Your Answer
                 if published
                     |(public)
                 else
                     |(private)
+            if can_edit
+                unless is_editing
+                    +session_edit_button
             if is_editing
                 .ui.basic.segment
                     .ui.form
                         .field
                             // label Answer
                             textarea#body(rows='3') #{body}
-                    +session_edit_button
-                    +published
-                    +delete_button
+                +session_edit_button
+                +published
+                +delete_button
             else
-                h4 #{body}
-                if can_edit
-                    +session_edit_button
+                .ui.basic.segment #{body}
     .ui.styled.fluid.accordion
         .title
+            i.large.users.icon
+            | All Public Answers (#{all_answers.count})
             i.dropdown.icon
-            | All Public Answers
         .content
             .ui.threaded.comments
                 each all_answers
@@ -79,3 +81,32 @@ template(name='debrief_answers')
                                 // if is_author
                                 //     +delete_link
                                 //     +edit_link
+    
+    if isInRole 'admin' 
+        .ui.styled.fluid.accordion
+            .title
+                i.red.configure.icon
+                | All Private Answers (#{all_private_answers.count})
+                
+                i.dropdown.icon
+            .content
+                .ui.threaded.comments
+                    each all_private_reflective_answers
+                        .comment
+                            a(href='/profile/#{author.username}').avatar
+                                img.ui.avatar.image(src="{{c.url author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                            .content
+                                a(href='/profile/#{author.username}').author #{author.name}
+                                .metadata
+                                    span.date #{from_now}
+                                    unless is_author
+                                        +voting
+                                .text
+                                    | #{body}
+                                // .actions
+                                    // a.reply(href='#') Reply
+                                    // +favorite
+                                    // +voting
+                                    // if is_author
+                                    //     +delete_link
+                                    //     +edit_link

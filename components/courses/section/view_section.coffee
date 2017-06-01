@@ -2,6 +2,7 @@ if Meteor.isClient
     FlowRouter.route '/course/sol/module/:module_number/section/:section_number', 
         name:'doc_section'
         action: (params) ->
+            BlazeLayout.reset()
             BlazeLayout.render 'doc_section'
     
     
@@ -10,7 +11,6 @@ if Meteor.isClient
         Session.set('module_number', parseInt(FlowRouter.getParam('module_number')))
         Session.set('section_number', parseInt(FlowRouter.getParam('section_number')))
         # module_num = parseInt FlowRouter.getParam('module_number')
-        # section_num = parseInt FlowRouter.getParam('section_number')
         @autorun -> Meteor.subscribe 'module', parseInt(Session.get('module_number'))
         @autorun -> Meteor.subscribe 'sections', parseInt(Session.get('module_number'))
         @autorun -> Meteor.subscribe 'section_content', parseInt(Session.get('module_number')), parseInt(Session.get('section_number'))
@@ -119,7 +119,9 @@ if Meteor.isClient
                 number: module_num
 
         section: -> 
-            section_number = parseInt(FlowRouter.getParam('section_number'))
+            # section_number = parseInt(FlowRouter.getParam('section_number'))
+            section_number = Session.get 'section_number'
+            console.log 'section number', FlowRouter.getParam('section_number')
 
             section = Docs.findOne 
                 tags: $in: ['section']
