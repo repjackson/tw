@@ -10,7 +10,14 @@ template(name='lightwork')
         .content
             +doc_content tags=lightwork_transcript_tags
     .ui.hidden.divider
-    +lightwork_questions
+    // .ui.segment
+        // .ui.header new
+    with module
+        +questions tag='lightwork' parent_id=this._id title='Lightwork Questions'
+    // .ui.segment
+    //     .ui.header old
+    //     +lightwork_questions
+    // +dev_footer
     
 template(name='lightwork_questions')
     .ui.horizontal.divider.header 
@@ -32,6 +39,7 @@ template(name='lightwork_questions')
                         label Lightwork Question
                         textarea#body(rows='3') #{body}
                     .ui.divider
+                    +edit_parentid_field
                     +session_edit_button
                     +published
                     // +delete_button
@@ -39,10 +47,13 @@ template(name='lightwork_questions')
                 .ui.header #{number}: #{body}
                 if isInRole 'admin'
                     +session_edit_button
+                    .item parent_id #{parent_id}
+                    .item this id #{_id}
+
             .ui.divider
             if currentUser
                 if has_answered_question
-                    +lightwork_answers
+                    +answers
                 else
                     .add_lightwork_answer.ui.basic.fluid.button 
                         i.plus.icon

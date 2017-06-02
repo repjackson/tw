@@ -2,12 +2,12 @@ template(name='questions')
     // .ui.embed(data-source='vimeo', data-id='215750115', data-placeholder='/toriwebster-logotype-04.png')
     unless question_docs.count
         if isInRole 'admin'
-            #add_question.ui.basic.blue.button 
+            #add_question.ui.basic.button 
                 i.plus.icon
                 |Add Question
     else
         .ui.horizontal.divider.header 
-            |Questions
+            |#{questions_title}
             if isInRole 'admin'
                 i#add_question.green.plus.link.icon(title='Add Question')
         each question_docs
@@ -25,6 +25,7 @@ template(name='questions')
                             .field
                                 label Question
                                 textarea#body(rows='3') #{body}
+                            // +tags
                             +edit_parentid_field
                             .ui.divider
                             +session_edit_button
@@ -37,7 +38,9 @@ template(name='questions')
                                     i.check.icon
                         if isInRole 'admin'
                             +session_edit_button
-                            |parent_id #{parent_id}
+                            .ui.list
+                                .item parent_id #{parent_id}
+                                .item this id #{_id}
                         .ui.divider
                         // if isInRole 'admin'
                             // +answers

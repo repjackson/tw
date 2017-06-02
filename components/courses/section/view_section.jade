@@ -44,6 +44,7 @@ template(name='doc_section')
             .five.wide.column
                 .ui.rail
                     .ui.dividing.header Progress
+                    #calculate_section_progress.ui.fluid.basic.button Calculate Section Progress
                     #section_percent_complete_bar.ui.blue.indicating.progress(data-percent=section_progress_doc.percent_complete)
                         .bar
                             .progress
@@ -85,9 +86,9 @@ template(name='doc_section')
                     .ui.hidden.divider
                 with section
                     if isInRole 'admin'
-                        +questions
+                        +questions tag='reflection' parent_id=this._id
                     else if video_complete
-                        +questions
+                        +questions tag='reflection' parent_id=this._id
                 if all_questions_answered
                     unless section_complete
                         if question_docs.count

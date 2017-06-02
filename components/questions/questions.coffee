@@ -1,26 +1,30 @@
 if Meteor.isClient
     Template.questions.onCreated ->
         # @autorun -> Meteor.subscribe 'questions', FlowRouter.getParam('module_number'), FlowRouter.getParam('section_number')
-        @autorun => Meteor.subscribe 'questions', @data._id
-        # console.log @data._id
+        @autorun => Meteor.subscribe 'questions', @data.tag, @data.parent_id
+        console.log @data
     
     Template.questions.helpers
         question_docs: -> 
-            mod_num = FlowRouter.getParam('module_number')
-            sec_num = FlowRouter.getParam('section_number')
+            parent_id = Template.currentData().parent_id
             Docs.find {
-                tags: ["sol","module #{mod_num}","section #{sec_num}","reflective question"] }
+                # tags: ["question"]
+                parent_id: parent_id
+                }
+                # tags: ["sol","module #{mod_num}","section #{sec_num}","reflective question"] }
                 , { sort: number: 1} 
                 
         # questions_tags: ->
         #     "sol","module #{FlowRouter.getParam('module_number')}","section #{FlowRouter.getParam('section_number')}","reflective question"
     
         any_questions: ->
-            mod_num = FlowRouter.getParam('module_number')
-            sec_num = FlowRouter.getParam('section_number')
             Docs.find({
-                tags: ["sol","module #{mod_num}","section #{sec_num}","reflective question"] }).count()
+                # tags: ["question"]
+                parent_id: Template.currentData().parent_id
+                }).count()
 
+        questions_title: ->
+            if Template.currentData().title then Template.currentData().title else 'Questions'
             
             
         has_answered_previous: ->
@@ -28,14 +32,15 @@ if Meteor.isClient
             # console.log @body
             if Roles.userIsInRole Meteor.userId(), 'admin' then true
             else
-                mod_num = FlowRouter.getParam('module_number')
-                sec_num = FlowRouter.getParam('section_number')
+                # mod_num = FlowRouter.getParam('module_number')
+                # sec_num = FlowRouter.getParam('section_number')
                 if @number is 1 then true
                 else
                     previous_number = @number - 1
                     
                     previous_question = Docs.findOne
-                        tags: ["sol","module #{mod_num}","section #{sec_num}","reflective question"]
+                        # tags: ["sol","module #{mod_num}","section #{sec_num}","reflective question"]
+                        parent_id: @_id
                         number: previous_number
                     
                     if previous_question
@@ -61,6 +66,7 @@ if Meteor.isClient
 
             # if found_answer
             #     console.log "has answered question #{@number}"
+            #     console.log found_answer
             # else
             #     console.log "has NOT answered question #{@number}"
                 
@@ -119,10 +125,11 @@ if Meteor.isClient
             
     
         'click #add_question': ->
-            console.log @_id
-            # Docs.insert
-            #     parent_id: @_id
-            #     tags: ["question"]
+            console.log Template.parentData()
+            console.log Template.currentData()
+            Docs.insert
+                parent_id: Template.parentData()._id
+                tags: ["question",Template.currentData().tag]
 
         'click .add_answer': ->
             # answer_tags = @tags
@@ -134,20 +141,14 @@ if Meteor.isClient
                 parent_id: @_id
                 question_number: @number
             Session.set 'editing_id', new_id
-            module_num = parseInt FlowRouter.getParam('module_number')
-            section_num = parseInt FlowRouter.getParam('section_number')
-
-            Meteor.call 'calculate_section_progress', module_num, section_num, (err,res)->
-                # console.log res
-                $('#section_percent_complete_bar').progress('set percent', res);
-                # console.log $('#section_percent_complete_bar').progress('get percent');
 
 if Meteor.isServer
     # publishComposite 'questions', (module_number, section_number)->
-    publishComposite 'questions', (parent_id)->
+    publishComposite 'questions', (tag, parent_id)->
         {
             find: ->
                 Docs.find 
+                    tags: $all: [tag, 'question']
                     parent_id: parent_id
                     # tags: ["sol","module #{module_number}", "section #{section_number}","reflective question"]
             children: [

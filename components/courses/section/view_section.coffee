@@ -8,16 +8,16 @@ if Meteor.isClient
     
     
     Template.doc_section.onCreated ->
-        Session.set('module_number', parseInt(FlowRouter.getParam('module_number')))
-        Session.set('section_number', parseInt(FlowRouter.getParam('section_number')))
+        # Session.set('module_number', parseInt(FlowRouter.getParam('module_number')))
+        # Session.set('section_number', parseInt(FlowRouter.getParam('section_number')))
         # module_num = parseInt FlowRouter.getParam('module_number')
-        @autorun -> Meteor.subscribe 'module', parseInt(Session.get('module_number'))
-        @autorun -> Meteor.subscribe 'sections', parseInt(Session.get('module_number'))
-        @autorun -> Meteor.subscribe 'section_content', parseInt(Session.get('module_number')), parseInt(Session.get('section_number'))
-        @autorun -> Meteor.subscribe 'section_transcript', parseInt(Session.get('module_number')), parseInt(Session.get('section_number'))
-        @autorun -> Meteor.subscribe 'section', parseInt(Session.get('module_number')), parseInt(Session.get('section_number'))
-        @autorun -> Meteor.subscribe 'section_progress_doc', parseInt(Session.get('module_number')), parseInt(Session.get('section_number'))
-        @autorun -> Meteor.subscribe 'reflective_questions', parseInt(Session.get('module_number')), parseInt(Session.get('section_number'))
+        @autorun -> Meteor.subscribe 'module', parseInt(FlowRouter.getParam('module_number'))
+        @autorun -> Meteor.subscribe 'sections', parseInt(FlowRouter.getParam('module_number'))
+        @autorun -> Meteor.subscribe 'section_content', parseInt(FlowRouter.getParam('module_number')), parseInt(FlowRouter.getParam('section_number'))
+        @autorun -> Meteor.subscribe 'section_transcript', parseInt(FlowRouter.getParam('module_number')), parseInt(FlowRouter.getParam('section_number'))
+        @autorun -> Meteor.subscribe 'section', parseInt(FlowRouter.getParam('module_number')), parseInt(FlowRouter.getParam('section_number'))
+        @autorun -> Meteor.subscribe 'section_progress_doc', parseInt(FlowRouter.getParam('module_number')), parseInt(FlowRouter.getParam('section_number'))
+        # @autorun -> Meteor.subscribe 'reflective_questions', parseInt(FlowRouter.getParam('module_number')), parseInt(FlowRouter.getParam('section_number'))
         
 
 
@@ -29,8 +29,8 @@ if Meteor.isClient
             # if @subscriptionsReady()
             Meteor.setTimeout ->
                 $('.ui.accordion').accordion()            
-                mod_num = Session.get('module_number')
-                sec_num = Session.get('section_number')
+                mod_num = FlowRouter.getParam('module_number')
+                sec_num = FlowRouter.getParam('section_number')
 
                 section_progress_doc =  Docs.findOne(tags: $all: ["section progress","module #{mod_num}", "section #{sec_num}"])
                 # console.log section_progress_doc
@@ -48,12 +48,12 @@ if Meteor.isClient
         title_tags: -> "sol,module #{FlowRouter.getParam('module_number')},title"
     
         section_content_tags: ->
-            mod_num = Session.get('module_number')
-            sec_num = Session.get('section_number')
+            mod_num = FlowRouter.getParam('module_number')
+            sec_num = FlowRouter.getParam('section_number')
             "sol,module #{mod_num},section #{sec_num},content"
         section_transcript_tags: ->
-            mod_num = Session.get('module_number')
-            sec_num = Session.get('section_number')
+            mod_num = FlowRouter.getParam('module_number')
+            sec_num = FlowRouter.getParam('section_number')
 
             "sol,module #{FlowRouter.getParam('module_number')},section #{FlowRouter.getParam('section_number')},transcript"
 
@@ -119,9 +119,7 @@ if Meteor.isClient
                 number: module_num
 
         section: -> 
-            # section_number = parseInt(FlowRouter.getParam('section_number'))
-            section_number = Session.get 'section_number'
-            console.log 'section number', FlowRouter.getParam('section_number')
+            section_number = parseInt(FlowRouter.getParam('section_number'))
 
             section = Docs.findOne 
                 tags: $in: ['section']
@@ -173,6 +171,8 @@ if Meteor.isClient
                     
                 
         is_editing: -> Session.get 'editing_id'    
+    
+    
     Template.doc_section.events
         'click .edit': ->
             module_number = FlowRouter.getParam('module_number')
@@ -207,7 +207,7 @@ if Meteor.isClient
             current_section_number = parseInt FlowRouter.getParam('section_number')
             previous_section_number = current_section_number - 1
             $('#section_percent_complete_bar').progress('reset');
-            Session.set 'section_number', previous_section_number
+            # Session.set 'section_number', previous_section_number
             FlowRouter.setParams({section_number: previous_section_number})
             Meteor.setTimeout ->
                 section_progress_doc =  Docs.findOne(tags: $in: ["section progress"])
@@ -221,7 +221,7 @@ if Meteor.isClient
         'click .go_to_next_section': ->
             current_section_number = parseInt FlowRouter.getParam('section_number')
             next_section_number = current_section_number + 1
-            Session.set 'section_number', next_section_number
+            # Session.set 'section_number', next_section_number
             # $('#section_percent_complete_bar').progress('reset');
             FlowRouter.setParams({section_number: next_section_number})
             Meteor.setTimeout ->
@@ -232,6 +232,14 @@ if Meteor.isClient
                     );
             , 1000
 
+        'click #calculate_section_progress': ->
+            module_num = parseInt FlowRouter.getParam('module_number')
+            section_num = parseInt FlowRouter.getParam('section_number')
+
+            Meteor.call 'calculate_section_progress', module_num, section_num, (err,res)->
+                # console.log res
+                $('#section_percent_complete_bar').progress('set percent', res);
+                # console.log $('#section_percent_complete_bar').progress('get percent');
 
 
         'click #mark_section_complete': ->

@@ -26,6 +26,12 @@ if Meteor.isClient
                 
             doc
             
+        module: -> 
+            Docs.findOne 
+                tags: $in: ['module']
+                number: parseInt FlowRouter.getParam('module_number')
+    
+            
         lightwork_tags: ->
             "sol,module #{FlowRouter.getParam('module_number')},lightwork"
             
@@ -36,7 +42,8 @@ if Meteor.isClient
 
     Template.lightwork_questions.onCreated ->
         @autorun -> Meteor.subscribe 'lightwork_questions', FlowRouter.getParam('module_number')
-    
+        @autorun -> Meteor.subscribe 'module', parseInt FlowRouter.getParam('module_number')
+
     # Template.lightwork_answers.onCreated ->
         # @autorun => Meteor.subscribe 'answers', @data._id
     
@@ -75,7 +82,7 @@ if Meteor.isClient
                 
         # lightwork_questions_tags: ->
         #     "sol,module #{FlowRouter.getParam('module_number')},lightwork,question"
-    
+
     
         has_answered_question: ->
             Docs.findOne

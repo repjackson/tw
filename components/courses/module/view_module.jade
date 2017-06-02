@@ -48,7 +48,8 @@ template(name='doc_module')
                                     i.green.check.icon
                                 else
                                     i.circle.outline.icon
-                                |Sections (#{section_complete_count}/#{module_section_count})
+                                .ui.label #{section_complete_count}/#{module_section_count}
+                                |Sections 
                         // .item Sections
                         // .menu
                         //     each sections
@@ -58,7 +59,7 @@ template(name='doc_module')
                             |Downloads
                             .ui.label #{download_count}
                     .ui.dividing.header Status
-                    #calculate_module_progress.ui.button Calculate Module Progress
+                    #calculate_module_progress.ui.fluid.basic.button Calculate Module Progress
                     #module_percent_complete_bar.ui.blue.indicating.progress(data-percent=section_progress_doc.percent_complete)
                         .bar
                             .progress

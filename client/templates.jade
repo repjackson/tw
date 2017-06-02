@@ -121,6 +121,8 @@ template(name='layout')
                         +Template.dynamic template=main
                         unless isInRole 'dev'
                             +footer
+                        // else
+                            // +dev_footer
 
 
 template(name="tag_result")

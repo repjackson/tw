@@ -10,8 +10,9 @@ db.users.find({ image_id:{$exists:true}, profile: {$exists:true} }).forEach(
 )
 
 
+<!--db.docs.find({ type: 'module', course_id: 'sW4accx4fvZBK6wLn' }).count()-->
 db.docs.find({ type: 'module', course_id: 'sW4accx4fvZBK6wLn' }).count()
-db.docs.find({ parent_id: 'HQ3qAPuBijtZ8LGiX' }).forEach(
+db.docs.find({ tags }).forEach(
     function(doc) {
         doc.parent_id = 'njW3pz6w5QenaDwMw'
         db.docs.save(doc);
@@ -22,7 +23,8 @@ db.docs.updateMany( {}, { $rename: { "body": "content" } } )
 
 
 
-db.docs.find({ tags:{$in:['lightbank']} }).forEach(
+db.docs.find({ tags:{$in:['reflective', 'question']} }).forEach(
+db.docs.find({ tags:"['reflection', 'question']" }).forEach(
     function(doc) {
         var index = doc.tags.indexOf('lightbank');
         doc.tags.splice(index, 1);
@@ -32,9 +34,9 @@ db.docs.find({ tags:{$in:['lightbank']} }).forEach(
 )
 
 
-db.docs.find({ tags:["green"]} }).forEach(
+db.docs.find({ tags:"['reflection', 'question']"}).forEach(
     function(doc) {
-        doc.tags = "[green]";
+        doc.tags = ['reflection', 'question'];
         db.docs.save(doc);
     }
 )
@@ -117,3 +119,10 @@ todo
     comparison with tags and colors
     
 meteor add bundle-visualizer
+
+
+
+
+today todo
+    replace lw answers with typical
+    
