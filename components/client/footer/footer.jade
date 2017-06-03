@@ -2,7 +2,15 @@ template(name='footer')
     .ui.fluid.basic.footer.segment
         .ui.divider
         .ui.container.stackable.grid
-            .eight.wide.column
+            .three.wide.column
+                .ui.header Site Map
+                .ui.link.list
+                    a.item(href='/about') About
+                    a.item(href='/courses') Courses
+                    a.item(href='/lightbank') Lightbank
+                    a.item(href='/people') People
+                    a.item(href='/contact') Contact
+            .six.wide.column
                 .ui.center.aligned.very.padded.basic.segment
                     h4.ui.header Have we connected on social media?
                     a(href='https://twitter.com/_toriwebster' target='_blank')
@@ -19,10 +27,10 @@ template(name='footer')
                 //     a.item(href='/contact') Contact
                 //     a.item(href='/terms-of-use') Terms of Use
 
-            .eight.wide.column
+            .six.wide.column
                 +mailchimp
-                    
         .row
+            .ui.divider
             h4.ui.center.aligned.header
                 i.fitted.copyright.icon
                 |Tori Webster Inspires LLC

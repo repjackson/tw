@@ -1,6 +1,8 @@
 template(name='course_members')                
-    .ui.horizontal.divider.header Course Members  
-    #course_member_cloud.ui.basic.segment.center.aligned.container
+    .ui.horizontal.divider.header 
+        i.users.icon
+        |Course Members  
+    #course_member_cloud.ui.basic.center.aligned.segment
         if selected_course_member_tags
             #clear_tags.ui.primary.circular.icon.big.button
                 i.remove.icon

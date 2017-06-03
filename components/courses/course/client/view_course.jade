@@ -18,9 +18,15 @@ template(name='view_course')
             .five.wide.column
                 with course
                     .ui.vertical.fluid.pointing.large.menu
-                        a.item(href="/course/sol/welcome" class="{{isActiveRoute name='course_welcome'}}") Welcome
-                        a.item(href="/course/sol/modules" class="{{isActiveRoute name='course_modules'}}") Modules
-                        a.item(href="/course/sol/members" class="{{isActiveRoute name='course_members'}}") Members
+                        a.item(href="/course/sol/welcome" class="{{isActiveRoute name='course_welcome'}}") 
+                            i.smile.icon
+                            |Welcome
+                        a.item(href="/course/sol/modules" class="{{isActiveRoute name='course_modules'}}") 
+                            i.list.layout.icon
+                            |Modules
+                        a.item(href="/course/sol/members" class="{{isActiveRoute name='course_members'}}") 
+                            i.users.icon
+                            |Members
                         // a.item(href="/course/sol/collaboration" class="{{isActiveRoute name='course_collaboration'}}") Collaboration
                         // a.item(href="/course/sol/downloads" class="{{isActiveRoute name='course_downloads'}}") Downloads
                         // a.item(href="/course/sol/reminders" class="{{isActiveRoute name='course_reminders'}}") Reminders

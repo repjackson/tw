@@ -51,6 +51,13 @@
                     .ui.basic.center.aligned.segment
                         each tags
                             .user_tag.ui.circular.basic.label #{this}
+                if isInRole 'dev'
+                    .ui.pointing.five.item.stackable.menu
+                        .item About
+                        .item Courses
+                        .item Quizes
+                        .item Social
+                        .item Contact
                 if profile.location
                     .ui.header Location 
                     | #{profile.location}

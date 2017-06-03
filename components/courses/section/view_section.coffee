@@ -5,6 +5,22 @@ if Meteor.isClient
             BlazeLayout.reset()
             BlazeLayout.render 'doc_section'
     
+    Template.user_section_progress_list.onRendered ->
+        Meteor.setTimeout ->
+            $('.progress').progress();
+        , 1000
+
+    Template.user_section_progress_list.onCreated ->
+        @autorun -> Meteor.subscribe 'user_section_progress_docs', parseInt(FlowRouter.getParam('module_number')), parseInt(FlowRouter.getParam('section_number'))
+
+    Template.user_section_progress_list.helpers
+        user_section_progress_docs: ->
+            module_number = FlowRouter.getParam('module_number')
+            section_number = FlowRouter.getParam('section_number')
+            Docs.find {
+                tags: ['sol', "module #{module_number}", "section #{section_number}", 'section progress']
+            },
+            sort: percent_complete: 1
     
     
     Template.doc_section.onCreated ->
@@ -295,6 +311,21 @@ if Meteor.isServer
             tags: ['sol', "module #{module_number}", "section #{section_number}", 'section progress']
             author_id: @userId
         
+    publishComposite 'user_section_progress_docs', (module_number, section_number)->
+        {
+            find: ->
+                Docs.find
+                    tags: ['sol', "module #{module_number}", "section #{section_number}", 'section progress']
+            children: [
+                { 
+                    find: (progress_doc) ->
+                        Meteor.users.find
+                            _id: progress_doc.author_id
+                }
+            ]
+        }    
+
+
         
     Meteor.methods 
         'toggle_video_complete': (module_number, section_number, boolean)->    

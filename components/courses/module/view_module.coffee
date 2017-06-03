@@ -55,12 +55,9 @@ if Meteor.isClient
                 tags: $in: ['module']
                 number: parseInt FlowRouter.getParam('module_number')
             
-            
         download_count: ->
             module_number = FlowRouter.getParam('module_number')
             Docs.find(tags: $all: ["sol", "module #{module_number}", "download"]).count()
-
-            
             
         module_progress_doc: ->
             module_number = FlowRouter.getParam('module_number')
@@ -125,7 +122,22 @@ if Meteor.isClient
                 $('#module_percent_complete_bar').progress('set percent', res);
                 # console.log $('#module_percent_complete_bar').progress('get percent');
 
-    
+
+    Template.user_module_progress_list.onRendered ->
+        Meteor.setTimeout ->
+            $('.progress').progress();
+        , 1000
+
+    Template.user_module_progress_list.onCreated ->
+        @autorun -> Meteor.subscribe 'user_module_progress_docs', parseInt FlowRouter.getParam('module_number')
+
+    Template.user_module_progress_list.helpers
+        user_progress_docs: ->
+            module_number = FlowRouter.getParam('module_number')
+            Docs.find {
+                tags: $all: ['sol', "module #{module_number}", "module progress"]
+            },
+            sort: module_progress_percent: 1
     
 if Meteor.isServer
     Meteor.publish 'module', (module_number)->
@@ -138,6 +150,21 @@ if Meteor.isServer
             tags: $all: ['sol', "module #{module_number}", "module progress"]
             author_id: @userId
             
+            
+    publishComposite 'user_module_progress_docs', (module_number)->
+        {
+            find: ->
+                Docs.find
+                    tags: $all: ['sol', "module #{module_number}", "module progress"]
+            children: [
+                { 
+                    find: (progress_doc) ->
+                        Meteor.users.find
+                            _id: progress_doc.author_id
+                }
+            ]
+        }    
+        
             
     Meteor.methods
         'calculate_module_progress': (module_number)->

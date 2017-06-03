@@ -87,7 +87,7 @@ Tracker.autorun ->
 #     idle: ->  @status?.idle
 
 
-Template.layout.onRendered ->
+Template.sidebar.onRendered ->
     @autorun =>
         if @subscriptionsReady()
             Meteor.setTimeout ->

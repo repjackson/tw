@@ -64,6 +64,8 @@ template(name='doc_section')
                                         if question_answered
                                             i.green.check.icon
                                         | #{number}: #{body}
+                    if isInRole 'admin'
+                        +user_section_progress_list
             .eleven.wide.column
                 // if Template.subscriptionsReady
                 +doc_content tags=section_content_tags
@@ -115,3 +117,20 @@ template(name='doc_section')
 
     if isInRole 'admin'
         +dev_footer
+        
+        
+template(name='user_section_progress_list')
+    .ui.horizontal.divider.header
+        i.red.configure.icon
+        |Member Progress
+    .ui.list    
+        each user_section_progress_docs
+            .item
+                .header #{author.name}
+                .content
+                    .ui.indicating.tiny.progress(data-percent=percent_complete)
+                        .bar
+                        .label
+                            // .progress
+                            //     | #{module_progress_doc.module_progress_percent}%
+        
