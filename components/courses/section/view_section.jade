@@ -86,9 +86,9 @@ template(name='doc_section')
                     .ui.hidden.divider
                 with section
                     if isInRole 'admin'
-                        +questions tag='reflection' parent_id=this._id
+                        +questions tag='reflection' parent_id=this._id title='Reflection Questions'
                     else if video_complete
-                        +questions tag='reflection' parent_id=this._id
+                        +questions tag='reflection' parent_id=this._id title='Reflection Questions'
                 if all_questions_answered
                     unless section_complete
                         if question_docs.count
@@ -113,5 +113,5 @@ template(name='doc_section')
                                     i.reply.icon
                                     | Return to Module #{module.number}: #{module.title}
 
-    // if isInRole 'admin'
-    //     +dev_footer
+    if isInRole 'admin'
+        +dev_footer

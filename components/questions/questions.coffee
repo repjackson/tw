@@ -81,20 +81,20 @@ if Meteor.isClient
         all_answers: ->
             Docs.find
                 parent_id: @_id
-                tags: $in: ["answer"]
+                # tags: $in: ["answer"]
                 published: true
                 
         all_private_answers: ->        
             Docs.find
                 parent_id: @_id
-                tags: $in: ["answer"]
+                # tags: $in: ["answer"]
                 published: false
                 
                 
         my_answer: ->
             Docs.findOne
                 parent_id: @_id
-                tags: $in: ["answer"]
+                # tags: $in: ["answer"]
                 author_id: Meteor.userId()
                 
         is_editing_my_answer: ->
@@ -161,7 +161,7 @@ if Meteor.isServer
                 { 
                     find: (question) ->
                         Docs.find
-                            tags: $in: ["answer"]
+                            # tags: $in: ["answer"]
                             parent_id: question._id
                     children: [
                         find: (answer) ->

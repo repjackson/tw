@@ -17,7 +17,7 @@ if Meteor.isClient
         @autorun -> Meteor.subscribe 'section_transcript', parseInt(FlowRouter.getParam('module_number')), parseInt(FlowRouter.getParam('section_number'))
         @autorun -> Meteor.subscribe 'section', parseInt(FlowRouter.getParam('module_number')), parseInt(FlowRouter.getParam('section_number'))
         @autorun -> Meteor.subscribe 'section_progress_doc', parseInt(FlowRouter.getParam('module_number')), parseInt(FlowRouter.getParam('section_number'))
-        # @autorun -> Meteor.subscribe 'reflective_questions', parseInt(FlowRouter.getParam('module_number')), parseInt(FlowRouter.getParam('section_number'))
+        @autorun -> Meteor.subscribe 'reflective_questions', parseInt(FlowRouter.getParam('module_number')), parseInt(FlowRouter.getParam('section_number'))
         
 
 
