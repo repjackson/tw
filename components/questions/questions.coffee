@@ -40,7 +40,7 @@ if Meteor.isClient
                     
                     previous_question = Docs.findOne
                         # tags: ["sol","module #{mod_num}","section #{sec_num}","reflective question"]
-                        parent_id: @_id
+                        parent_id: Template.currentData().parent_id
                         number: previous_number
                     
                     if previous_question
@@ -63,12 +63,18 @@ if Meteor.isClient
                 tags: $in: ['answer']
                 parent_id: @_id
                 author_id: Meteor.userId()
-
             # if found_answer
             #     console.log "has answered question #{@number}"
             #     console.log found_answer
             # else
             #     console.log "has NOT answered question #{@number}"
+
+        question_segment_class: ->
+            found_answer = Docs.findOne
+                tags: $in: ['answer']
+                parent_id: @_id
+                author_id: Meteor.userId()
+            if found_answer then 'raised green' else ''
                 
     
     Template.answers.helpers

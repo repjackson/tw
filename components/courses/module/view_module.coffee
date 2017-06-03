@@ -148,7 +148,6 @@ if Meteor.isServer
 
             # console.log module_progress_doc
 
-            third = 100/3
 
             module_section_count = 
                 Docs.find( 
@@ -186,6 +185,9 @@ if Meteor.isServer
                 ).count()
             # console.log debrief_question_count
             
+            module_chunk_size = if debrief_question_count then 100/3 else 50
+
+            
             debrief_answer_count = 0
             for debrief_question in debrief_questions
                 # console.log debrief_question
@@ -196,18 +198,18 @@ if Meteor.isServer
 
                 if debrief_answer then debrief_answer_count++
                 
-            console.log debrief_answer_count
+            # console.log debrief_answer_count
             if debrief_answer_count is debrief_question_count
                 module_debrief_complete = true
             else
                 module_debrief_complete = false
+            if debrief_question_count
+                debrief_answered_fraction = debrief_answer_count/debrief_question_count
+                debrief_adding_amount = debrief_answered_fraction * module_chunk_size
+                module_progress += debrief_adding_amount
             
-            debrief_answered_fraction = debrief_answer_count/debrief_question_count
-            debrief_adding_amount = debrief_answered_fraction * third
-            module_progress += debrief_adding_amount
-            
-            console.log 'module_progress', module_progress
-            console.log 'debrief_adding_amount', debrief_adding_amount
+            # console.log 'module_progress', module_progress
+            # console.log 'debrief_adding_amount', debrief_adding_amount
             
             
 
@@ -245,9 +247,9 @@ if Meteor.isServer
                 module_lightwork_complete = false
             
             lightwork_answered_fraction = lightwork_answer_count/lightwork_question_count
-            console.log 'lightwork_answered_fraction', lightwork_answered_fraction
-            lightwork_adding_amount = lightwork_answered_fraction * third
-            console.log 'lightwork_adding_amount', lightwork_adding_amount
+            # console.log 'lightwork_answered_fraction', lightwork_answered_fraction
+            lightwork_adding_amount = lightwork_answered_fraction * module_chunk_size
+            # console.log 'lightwork_adding_amount', lightwork_adding_amount
             
             module_progress += lightwork_adding_amount
             
@@ -259,7 +261,7 @@ if Meteor.isServer
             # sections
             # 
             
-            module_section_progress_increment = third/module_section_count
+            module_section_progress_increment = module_chunk_size/module_section_count
             # console.log module_section_progress_increment
             section_complete_count = 0
             for section_number in [1..module_section_count]
@@ -268,7 +270,8 @@ if Meteor.isServer
                         tags: ['sol', "module #{module_number}", "section #{section_number}", 'section progress']
                         author_id: Meteor.userId()
                 if section_progress_doc then section_complete_count++
-                adding_amount = section_progress_doc.percent_complete*.01*module_section_progress_increment
+                if section_progress_doc
+                    adding_amount = section_progress_doc.percent_complete*.01*module_section_progress_increment
                 module_progress += adding_amount
                 
                 

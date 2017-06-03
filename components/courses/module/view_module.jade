@@ -40,44 +40,50 @@ template(name='doc_module')
                     .ui.vertical.fluid.pointing.menu
                         unless is_first_module
                             a.item(href="/course/sol/module/#{number}/debrief" class="{{isActiveRoute name='debrief'}}") 
-                                with module_progress_doc
-                                    if module_debrief_complete
-                                        i.green.check.icon
-                                    else
-                                        i.circle.outline.icon
-                                    .ui.label #{debrief_answer_count}/#{debrief_question_count}
-                                    |Debrief 
-                        a.item(href="/course/sol/module/#{number}/sections" class="{{isActiveRoute name='doc_sections'}}") 
-                            with module_progress_doc
-                                if module_sections_complete
+                                if module_progress_doc.module_debrief_complete
                                     i.green.check.icon
                                 else
-                                    i.circle.outline.icon
-                                .ui.label #{section_complete_count}/#{module_section_count}
-                                |Sections 
+                                    i.square.outline.icon
+                                .ui.label #{module_progress_doc.debrief_answer_count}/#{module_progress_doc.debrief_question_count}
+                                |Debrief 
+                        a.item(href="/course/sol/module/#{number}/sections" class="{{isActiveRoute name='doc_sections'}}") 
+                            if module_progress_doc.module_sections_complete
+                                i.green.check.icon
+                            else
+                                i.square.outline.icon
+                            .ui.label #{module_progress_doc.section_complete_count}/#{module_progress_doc.module_section_count}
+                            |Sections 
                             // .item Sections
                             // .menu
                             //     each sections
                             //         a.item(href="/course/#{../course}/#{module_number}/section/#{number}" class=section_path_class)  #{number}: #{title}
                         a.item(href="/course/sol/module/#{number}/lightwork" class="{{isActiveRoute name='lightwork'}}") 
-                            with module_progress_doc
-                                if module_lightwork_complete
-                                    i.green.check.icon
-                                else
-                                    i.circle.outline.icon
-                                .ui.label #{lightwork_answer_count}/#{lightwork_question_count}
-                                |Lightwork 
+                            if module_progress_doc.module_lightwork_complete
+                                i.green.check.icon
+                            else
+                                i.square.outline.icon
+                            .ui.label #{module_progress_doc.lightwork_answer_count}/#{module_progress_doc.lightwork_question_count}
+                            |Lightwork 
                         a.item(href="/course/sol/module/#{number}/downloads" class="{{isActiveRoute name='downloads'}}")
                             |Downloads
                             .ui.label #{download_count}
                     .ui.dividing.header Status
-                    #calculate_module_progress.ui.fluid.basic.button Calculate Module Progress
+                    #calculate_module_progress.ui.fluid.basic.button 
+                        i.refresh.icon
+                        |Calculate Module Progress
                     #module_percent_complete_bar.ui.blue.indicating.progress(data-percent=section_progress_doc.percent_complete)
                         .bar
                             .progress
                                 | #{module_progress_doc.module_progress_percent}%
+                    if isInRole 'admin'
+                        +user_module_progress_list
             .eleven.wide.column
                 +Template.dynamic template=module_content
+                
+                
+template(name='user_module_progress_list')
+    each user_progress_doc
+        #{this}
 
 
 

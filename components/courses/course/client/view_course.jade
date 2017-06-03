@@ -25,48 +25,17 @@ template(name='view_course')
                         // a.item(href="/course/sol/downloads" class="{{isActiveRoute name='course_downloads'}}") Downloads
                         // a.item(href="/course/sol/reminders" class="{{isActiveRoute name='course_reminders'}}") Reminders
                     if isInRole 'admin'
-                        .ui.styled.fluid.accordion
-                            .title
+                        .ui.segment
+                            .ui.header
                                 i.red.configure.icon
                                 |Admin
-                                i.dropdown.icon
-                            .content
-                                .ui.header Title
-                                +doc_title tags='course,sol'
-                                .ui.header Subtitle
-                                +doc_subtitle tags='course,sol'
-                                .ui.header Price
-                                +doc_price tags='course,sol'
+                            +doc_title tags='course,sol'
+                            +doc_subtitle tags='course,sol'
+                            +doc_price tags='course,sol'
             .ten.wide.column
                 +Template.dynamic template=course_content
 
     
-// template(name='course_modules')        
-//     h2.ui.center.aligned.header Modules
-//     each modules
-//         if module_is_available
-//             .ui.segment
-//                 a(href="/course/#{course}/module/#{number}/section/1")
-//                     .ui.header  #{number}: #{title}
-//                     // .ui.teal.progress
-//                     //     .bar
-//                     //     .progress
-//                     //     .label Coursework
-//                     // if sol_demo_member
-//                     //     i.lock.icon
-//                     // else    
-//                     //     i.lock.icon
-//         else
-//             .ui.disabled.segment
-//                 // a(href="/course/#{course}/module/#{number}")
-//                 .ui.header  #{number}: #{title}
-//                     // .ui.teal.progress
-//                     //     .bar
-//                     //     .progress
-//                     //     .label Coursework
-//                 // i.lock.icon
-            
-                
 template(name='course_reminders')                
     h2.ui.center.aligned.header Course Reminders            
 

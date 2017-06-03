@@ -33,7 +33,7 @@ Template.course_members.helpers
         Meteor.users.find
             roles: $in: ['sol', 'sol_demo']
             _id: $ne: Meteor.userId()
-
+            username: $ne: 'admin'
 
 
 

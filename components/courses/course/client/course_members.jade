@@ -24,8 +24,8 @@ template(name='course_member')
                 .content
                     .center
                         a(href="/profile/#{username}").ui.blue.button 
-                            |View Profile
-                            // i.right.chevron.icon
+                            i.external.icon
+                            | Profile
             a(href="/profile/#{username}")
                 img.ui.fluid.image(src="{{c.url profile.image_id width=400 height=400 gravity='face' crop='fill'}}")
         .content

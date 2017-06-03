@@ -12,7 +12,7 @@ template(name='questions')
                 i#add_question.green.plus.link.icon(title='Add Question')
         each question_docs
             if has_answered_previous
-                .ui.segment(class=segment_class)
+                .ui.segment(class=question_segment_class)
                     if isInRole 'admin'
                         if published
                             .ui.top.right.attached.blue.label Published
@@ -33,9 +33,9 @@ template(name='questions')
                     else
                         .ui.header 
                             |#{number}: #{body}
-                            if has_answered_question
-                                .ui.right.corner.green.label
-                                    i.checkmark.icon
+                            // if has_answered_question
+                            //     .ui.right.corner.green.label
+                            //         i.checkmark.icon
                         if isInRole 'admin'
                             +session_edit_button
                             if isInRole 'dev'

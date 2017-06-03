@@ -35,10 +35,16 @@ if Meteor.isClient
                     previous_module_number = @number - 1
                     previous_module_progress_doc = 
                         Docs.findOne(tags: $all: ["module #{previous_module_number}", "module progress"])
-                    if previous_module_progress_doc and previous_module_progress_doc.module_progress_percent is 100 then return true else return false
+                    if previous_module_progress_doc and previous_module_progress_doc.module_progress_percent > 99 then return true else return false
 
                 return false
     
+        module_progress_doc: ->
+            Docs.findOne 
+                tags: ['sol', "module #{@number}", 'module progress']
+                author_id: Meteor.userId()
+        
+        
         user_progress: ->
             progress_doc = Docs.findOne 
                 tags: ['sol', "module #{@number}", 'module progress']
