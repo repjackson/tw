@@ -35,12 +35,13 @@ template(name='questions')
                             |#{number}: #{body}
                             if has_answered_question
                                 .ui.right.corner.green.label
-                                    i.check.icon
+                                    i.checkmark.icon
                         if isInRole 'admin'
                             +session_edit_button
-                            .ui.list
-                                .item parent_id #{parent_id}
-                                .item this id #{_id}
+                            if isInRole 'dev'
+                                .ui.list
+                                    .item parent_id #{parent_id}
+                                    .item this id #{_id}
                         .ui.divider
                         // if isInRole 'admin'
                             // +answers

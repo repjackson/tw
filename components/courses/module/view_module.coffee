@@ -20,7 +20,7 @@ if Meteor.isClient
         # @autorun -> Meteor.subscribe 'module_by_course_slug', course_slug=FlowRouter.getParam('course_slug'), module_number=parseInt FlowRouter.getParam('module_number')
         @autorun -> Meteor.subscribe 'module_progress', parseInt FlowRouter.getParam('module_number')
         @autorun -> Meteor.subscribe 'module', parseInt FlowRouter.getParam('module_number')
-        @autorun -> Meteor.subscribe 'sol_modules'
+        # @autorun -> Meteor.subscribe 'sol_modules'
         @autorun -> Meteor.subscribe 'module_downloads', FlowRouter.getParam('module_number')
 
     Template.doc_module.onRendered ->
@@ -87,16 +87,16 @@ if Meteor.isClient
 
 
 
-        module_sections_complete: ->
-            module_number = parseInt FlowRouter.getParam('module_number')
-            module_progress_doc = 
-                Docs.findOne
-                    tags: $all: ['sol', "module #{module_number}", 'module progress']
-                    author_id: Meteor.userId()
-            if module_progress_doc 
-                module_progress_doc.module_progress_percent is 100
-            else
-                Meteor.call 'calculate_module_progress', module_number
+        # module_sections_complete: ->
+        #     module_number = parseInt FlowRouter.getParam('module_number')
+        #     module_progress_doc = 
+        #         Docs.findOne
+        #             tags: $all: ['sol', "module #{module_number}", 'module progress']
+        #             author_id: Meteor.userId()
+        #     if module_progress_doc 
+        #         module_progress_doc.module_progress_percent is 100
+        #     else
+        #         Meteor.call 'calculate_module_progress', module_number
         
         next_module_number: -> parseInt(FlowRouter.getParam('module_number')) + 1
     
@@ -148,6 +148,8 @@ if Meteor.isServer
 
             # console.log module_progress_doc
 
+            third = 100/3
+
             module_section_count = 
                 Docs.find( 
                     tags: $in: ['section']
@@ -160,8 +162,105 @@ if Meteor.isServer
             #     console.log module_number
             
             module_progress = 0
-            module_progress_increment = 100/module_section_count
-            # console.log module_progress_increment
+            
+            module_doc = Docs.findOne
+                tags: $in: ['module']
+                number: module_number
+
+
+            # 
+            # debrief
+            # 
+                
+            debrief_questions = 
+                Docs.find(
+                    tags: $all: ['debrief', 'question']
+                    parent_id: module_doc._id
+                ).fetch()
+                
+                
+            debrief_question_count = 
+                Docs.find(
+                    tags: $all: ['debrief', 'question']
+                    parent_id: module_doc._id
+                ).count()
+            # console.log debrief_question_count
+            
+            debrief_answer_count = 0
+            for debrief_question in debrief_questions
+                # console.log debrief_question
+                debrief_answer = Docs.findOne
+                    tags: $in: ['answer']
+                    parent_id: debrief_question._id
+                    author_id: Meteor.userId()
+
+                if debrief_answer then debrief_answer_count++
+                
+            console.log debrief_answer_count
+            if debrief_answer_count is debrief_question_count
+                module_debrief_complete = true
+            else
+                module_debrief_complete = false
+            
+            debrief_answered_fraction = debrief_answer_count/debrief_question_count
+            debrief_adding_amount = debrief_answered_fraction * third
+            module_progress += debrief_adding_amount
+            
+            console.log 'module_progress', module_progress
+            console.log 'debrief_adding_amount', debrief_adding_amount
+            
+            
+
+            # 
+            # lightwork
+            # 
+                
+            lightwork_questions = 
+                Docs.find(
+                    tags: $all: ['lightwork', 'question']
+                    parent_id: module_doc._id
+                ).fetch()
+                
+                
+            lightwork_question_count = 
+                Docs.find(
+                    tags: $all: ['lightwork', 'question']
+                    parent_id: module_doc._id
+                ).count()
+            # console.log lightwork_question_count
+            
+            lightwork_answer_count = 0
+            for lightwork_question in lightwork_questions
+                # console.log lightwork_question
+                lightwork_answer = Docs.findOne
+                    tags: $in: ['answer']
+                    parent_id: lightwork_question._id
+                    author_id: Meteor.userId()
+                if lightwork_answer then lightwork_answer_count++
+                
+            console.log lightwork_answer_count
+            if lightwork_answer_count is lightwork_question_count
+                module_lightwork_complete = true
+            else
+                module_lightwork_complete = false
+            
+            lightwork_answered_fraction = lightwork_answer_count/lightwork_question_count
+            console.log 'lightwork_answered_fraction', lightwork_answered_fraction
+            lightwork_adding_amount = lightwork_answered_fraction * third
+            console.log 'lightwork_adding_amount', lightwork_adding_amount
+            
+            module_progress += lightwork_adding_amount
+            
+            # console.log 'module_progress', module_progress
+            # console.log 'lightwork_adding_amount', lightwork_adding_amount
+            
+            
+            # 
+            # sections
+            # 
+            
+            module_section_progress_increment = third/module_section_count
+            # console.log module_section_progress_increment
             section_complete_count = 0
             for section_number in [1..module_section_count]
                 section_progress_doc = 
@@ -169,7 +268,7 @@ if Meteor.isServer
                         tags: ['sol', "module #{module_number}", "section #{section_number}", 'section progress']
                         author_id: Meteor.userId()
                 if section_progress_doc then section_complete_count++
-                adding_amount = section_progress_doc.percent_complete*.01*module_progress_increment
+                adding_amount = section_progress_doc.percent_complete*.01*module_section_progress_increment
                 module_progress += adding_amount
                 
                 
@@ -179,7 +278,7 @@ if Meteor.isServer
             else
                 module_sections_complete = false
                 
-            console.log module_sections_complete
+            # console.log module_sections_complete
             # Docs.update module_progress_doc._id, 
             #     module_progress_percent: module_progress
                 
@@ -192,6 +291,13 @@ if Meteor.isServer
                 module_section_count: module_section_count
                 section_complete_count: section_complete_count
                 module_sections_complete: module_sections_complete
+                debrief_question_count: debrief_question_count
+                debrief_answer_count: debrief_answer_count
+                module_debrief_complete: module_debrief_complete
+                lightwork_question_count: lightwork_question_count
+                lightwork_answer_count: lightwork_answer_count
+                module_lightwork_complete: module_lightwork_complete
+                
                 },
             { upsert: true }
     

@@ -40,8 +40,13 @@ template(name='doc_module')
                     .ui.vertical.fluid.pointing.menu
                         unless is_first_module
                             a.item(href="/course/sol/module/#{number}/debrief" class="{{isActiveRoute name='debrief'}}") 
-                                
-                                |Debrief
+                                with module_progress_doc
+                                    if module_debrief_complete
+                                        i.green.check.icon
+                                    else
+                                        i.circle.outline.icon
+                                    .ui.label #{debrief_answer_count}/#{debrief_question_count}
+                                    |Debrief 
                         a.item(href="/course/sol/module/#{number}/sections" class="{{isActiveRoute name='doc_sections'}}") 
                             with module_progress_doc
                                 if module_sections_complete
@@ -50,11 +55,18 @@ template(name='doc_module')
                                     i.circle.outline.icon
                                 .ui.label #{section_complete_count}/#{module_section_count}
                                 |Sections 
-                        // .item Sections
-                        // .menu
-                        //     each sections
-                        //         a.item(href="/course/#{../course}/#{module_number}/section/#{number}" class=section_path_class)  #{number}: #{title}
-                        a.item(href="/course/sol/module/#{number}/lightwork" class="{{isActiveRoute name='lightwork'}}") Lightwork
+                            // .item Sections
+                            // .menu
+                            //     each sections
+                            //         a.item(href="/course/#{../course}/#{module_number}/section/#{number}" class=section_path_class)  #{number}: #{title}
+                        a.item(href="/course/sol/module/#{number}/lightwork" class="{{isActiveRoute name='lightwork'}}") 
+                            with module_progress_doc
+                                if module_lightwork_complete
+                                    i.green.check.icon
+                                else
+                                    i.circle.outline.icon
+                                .ui.label #{lightwork_answer_count}/#{lightwork_question_count}
+                                |Lightwork 
                         a.item(href="/course/sol/module/#{number}/downloads" class="{{isActiveRoute name='downloads'}}")
                             |Downloads
                             .ui.label #{download_count}
@@ -66,3 +78,26 @@ template(name='doc_module')
                                 | #{module_progress_doc.module_progress_percent}%
             .eleven.wide.column
                 +Template.dynamic template=module_content
+
+
+
+template(name='debrief')
+    with module
+        +questions tag='debrief' parent_id=this._id title='Lightwork Debrief Questions'
+
+
+
+template(name='lightwork')
+    // .ui.basic.segment
+    .ui.horizontal.divider.header Lightwork
+    +doc_content tags=lightwork_tags
+    .ui.hidden.divider
+    .ui.styled.fluid.accordion
+        h3.title
+            i.large.newspaper.icon
+            | Transcript
+        .content
+            +doc_content tags=lightwork_transcript_tags
+    .ui.hidden.divider
+    with module
+        +questions tag='lightwork' parent_id=this._id title='Lightwork Questions'

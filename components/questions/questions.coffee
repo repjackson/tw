@@ -2,7 +2,7 @@ if Meteor.isClient
     Template.questions.onCreated ->
         # @autorun -> Meteor.subscribe 'questions', FlowRouter.getParam('module_number'), FlowRouter.getParam('section_number')
         @autorun => Meteor.subscribe 'questions', @data.tag, @data.parent_id
-        console.log @data
+        # console.log @data
     
     Template.questions.helpers
         question_docs: -> 
