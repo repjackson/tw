@@ -2,7 +2,7 @@ if Meteor.isClient
     FlowRouter.route '/course/sol/module/:module_number/sections', 
         name: 'sections'
         action: (params) ->
-            BlazeLayout.render 'doc_module',
+            BlazeLayout.render 'view_module',
                 module_content: 'sections'
     
     Template.sections.onCreated ->

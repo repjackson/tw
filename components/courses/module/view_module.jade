@@ -1,4 +1,4 @@
-template(name='doc_module')
+template(name='view_module')
     .context.example
         +nav
         // .ui.top.attached.demo.menu
@@ -56,7 +56,7 @@ template(name='doc_module')
                                                         i.square.outline.icon
                                                     .ui.label #{module_progress_doc.debrief_answer_count}/#{module_progress_doc.debrief_question_count}
                                                     |Debrief 
-                                            a.item(href="/course/sol/module/#{number}/sections" class="{{isActiveRoute name='doc_sections'}}") 
+                                            a.item(href="/course/sol/module/#{number}/sections" class="{{isActiveRoute name='view_sections'}}") 
                                                 if module_progress_doc.module_sections_complete
                                                     i.green.check.icon
                                                 else
@@ -74,9 +74,14 @@ template(name='doc_module')
                                                     i.square.outline.icon
                                                 .ui.label #{module_progress_doc.lightwork_answer_count}/#{module_progress_doc.lightwork_question_count}
                                                 |Lightwork 
-                                            a.item(href="/course/sol/module/#{number}/downloads" class="{{isActiveRoute name='downloads'}}")
-                                                |Downloads
-                                                .ui.label #{download_count}
+                                            if download_count
+                                                a.item(href="/course/sol/module/#{number}/downloads" class="{{isActiveRoute name='downloads'}}")
+                                                    |Downloads
+                                                    .ui.label #{download_count}
+                                            else if isInRole 'admin'        
+                                                a.item(href="/course/sol/module/#{number}/downloads" class="{{isActiveRoute name='downloads'}}")
+                                                    |Downloads
+                                                    .ui.label #{download_count}
                                         .ui.dividing.header Status
                                         #calculate_module_progress.ui.fluid.basic.button 
                                             i.refresh.icon

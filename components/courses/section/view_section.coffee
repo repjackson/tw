@@ -1,9 +1,9 @@
 if Meteor.isClient    
     FlowRouter.route '/course/sol/module/:module_number/section/:section_number', 
-        name:'doc_section'
+        name:'view_section'
         action: (params) ->
             BlazeLayout.reset()
-            BlazeLayout.render 'doc_section'
+            BlazeLayout.render 'view_section'
     
     Template.user_section_progress_list.onRendered ->
         Meteor.setTimeout ->
@@ -23,7 +23,7 @@ if Meteor.isClient
             sort: percent_complete: 1
     
     
-    Template.doc_section.onCreated ->
+    Template.view_section.onCreated ->
         # Session.set('module_number', parseInt(FlowRouter.getParam('module_number')))
         # Session.set('section_number', parseInt(FlowRouter.getParam('section_number')))
         # module_num = parseInt FlowRouter.getParam('module_number')
@@ -37,7 +37,7 @@ if Meteor.isClient
         
 
 
-    Template.doc_section.onRendered ->
+    Template.view_section.onRendered ->
         self = @
         
         @autorun =>
@@ -58,7 +58,7 @@ if Meteor.isClient
             , 1000
 
     
-    Template.doc_section.helpers
+    Template.view_section.helpers
         module_number: -> FlowRouter.getParam('module_number')
     
         title_tags: -> "sol,module #{FlowRouter.getParam('module_number')},title"
@@ -87,46 +87,61 @@ if Meteor.isClient
             section_progress_doc = Docs.findOne
                 tags: $all: ['sol', "module #{module_num}", "section #{section_num}", 'section progress']
                 author_id: Meteor.userId()
-            section_progress_doc?.video_complete
+            if section_progress_doc
+                section_progress_doc.video_complete
     
-        reflective_question_docs: -> 
-            mod_num = FlowRouter.getParam('module_number')
-            sec_num = FlowRouter.getParam('section_number')
-            Docs.find {
-                tags: ["sol","module #{mod_num}","section #{sec_num}","reflective question"] }
-                , { sort: number: 1} 
+        # reflective_question_docs: -> 
+        #     module_number = FlowRouter.getParam('module_number')
+        #     section_number = FlowRouter.getParam('section_number')
+                
+        #     section_doc = Docs.findOne
+        #         tags: $in: ['section']
+        #         number: section_number
+        #         module_number: module_number
+
+        #     # if section_doc
+        #     Docs.find {
+        #         # tags: $all: ['reflection', 'question']
+        #         parent_id: section_doc._id }
+        #     , { sort: number: 1} 
+                
+                
                 
         any_reflective_questions: ->
-            mod_num = FlowRouter.getParam('module_number')
-            sec_num = FlowRouter.getParam('section_number')
-            Docs.find({
-                tags: ["sol","module #{mod_num}","section #{sec_num}","reflective question"] }).count()
+            module_number = FlowRouter.getParam('module_number')
+            section_number = FlowRouter.getParam('section_number')
+                
+            section_doc = Docs.findOne
+                tags: $in: ['section']
+                number: section_number
+                module_number: module_number
 
-        reflective_question_answered: ->
-            found_answer = Docs.findOne
-                tags: $in: ['answer']
-                parent_id: @_id
-                author_id: Meteor.userId()
+            Docs.find(
+                # tags: $all: ['reflection', 'question']
+                parent_id: section_doc._id 
+            ).count()
+                
 
-            if found_answer
-                # console.log "has answered question #{@number}"
-                return true
-            else
-                # console.log "has NOT answered question #{@number}"
-                return false
+        # reflective_question_answered: ->
+        #     found_answer = Docs.findOne
+        #         # tags: $in: ['answer']
+        #         parent_id: @_id
+        #         author_id: Meteor.userId()
+
+        #     if found_answer
+        #         console.log "has answered question #{@number}"
+        #         return true
+        #     else
+        #         console.log "has NOT answered question #{@number}"
+        #         return false
                 
                 
-        all_questions_answered: ->
-            mod_num = FlowRouter.getParam('module_number')
-            sec_num = FlowRouter.getParam('section_number')
-            question_count = Docs.find({tags: ["sol","module #{mod_num}","section #{sec_num}","reflective question"] }).count()
-            answer_count = 
-                Docs.find( 
-                    tags: $all: ["sol","module #{mod_num}","section #{sec_num}","reflective question",'answer']
-                    author_id:Meteor.userId()).count()
-            # console.log question_count
-            # console.log answer_count
-            question_count is answer_count    
+        # all_questions_answered: ->
+        #     module_number = FlowRouter.getParam('module_number')
+        #     section_number = FlowRouter.getParam('section_number')
+        #     console.log question_count
+        #     console.log answer_count
+        #     question_count is answer_count    
                 
         module: -> 
             module_num = parseInt FlowRouter.getParam('module_number')
@@ -189,7 +204,7 @@ if Meteor.isClient
         is_editing: -> Session.get 'editing_id'    
     
     
-    Template.doc_section.events
+    Template.view_section.events
         'click .edit': ->
             module_number = FlowRouter.getParam('module_number')
             course_slug = FlowRouter.getParam('course_slug')
@@ -351,34 +366,100 @@ if Meteor.isServer
         'calculate_section_progress': (module_number, section_number)->
             # console.log module_number
             # console.log section_number
+            section_doc = Docs.findOne
+                tags: $in: ['section']
+                number: section_number
+                module_number: module_number
+
+            reflection_questions = 
+                Docs.find(
+                    # tags: $all: ['reflection', 'question']
+                    parent_id: section_doc._id
+                ).fetch()
+            
+            reflection_question_count = 
+                Docs.find(
+                    # tags: $all: ['reflection', 'question']
+                    parent_id: section_doc._id
+                ).count()
+            console.log 'reflection_question_count', reflection_question_count
+            
+            reflection_answer_count = 0
+            for reflection_question in reflection_questions
+                console.log reflection_question
+                reflection_answer = Docs.findOne
+                    # tags: $in: ['answer']
+                    parent_id: reflection_question._id
+                    author_id: Meteor.userId()
+
+                if reflection_answer 
+                    reflection_answer_count++
+                    # console.log reflection_answer
+                    
+            # console.log reflection_answer_count
+            if reflection_answer_count is reflection_question_count
+                questions_complete = true
+            else
+                questions_complete = false
+            if reflection_question_count
+                section_answered_fraction = reflection_answer_count/reflection_question_count
+                section_progress = section_answered_fraction*100
+                
             section_progress_doc = 
                 Docs.findOne
                     tags: ['sol', "module #{module_number}", "section #{section_number}", 'section progress']
                     author_id: Meteor.userId()
-        
+            if not section_progress_doc
+                new_progress_doc_id = 
+                    Docs.insert
+                        percent_complete: 0
+                        tags: ["sol", "module #{module_number}", "section #{section_number}", "section progress"]
+                        questions_complete: 0
+                        reflection_question_count: reflection_question_count
+                console.log 'new progress doc id', new_progress_doc_id
+
             # console.log 'second found progress doc', section_progress_doc
+                            
+            Docs.update section_progress_doc._id,
+                $set: 
+                    reflection_question_count: reflection_question_count
+                    reflection_answer_count: reflection_answer_count
+                    questions_complete: questions_complete
+                    percent_complete: section_progress
+                    
+            return section_progress
+            ###            
+            
+            module_chunk_size = if debrief_question_count then 100/3 else 50
+
+            
+###
             
             
-            section_question_count = 
-                Docs.find( 
-                    tags: $all: ['sol', "module #{module_number}", "section #{section_number}", 'reflective question']
-                    tag_count: 4
-                ).count()
+            
+            
+            
+            
+            # reflection_question_count = 
+            #     Docs.find( 
+            #         tags: $all: ['sol', "module #{module_number}", "section #{section_number}", 'reflective question']
+            #         tag_count: 4
+            #     ).count()
         
         
-            section_answer_count = 
-                Docs.find( 
-                    tags: $all: ['sol', "module #{module_number}", "section #{section_number}", 'reflective question','answer']
-                    author_id: Meteor.userId()
-                ).count()
+            # reflection_answer_count = 
+            #     Docs.find( 
+            #         tags: $all: ['sol', "module #{module_number}", "section #{section_number}", 'reflective question','answer']
+            #         author_id: Meteor.userId()
+            #     ).count()
                 
-            # console.log 'question count',section_question_count
-            # console.log 'answer count',section_answer_count
+            # console.log 'question count',reflection_question_count
+            # console.log 'answer count',reflection_answer_count
             
-            found_answers = Docs.find( 
-                    tags: $all: ['sol', "module #{module_number}", "section #{section_number}", 'reflective question','answer']
-                    author_id: Meteor.userId()
-                ).fetch()
+            # found_answers = Docs.find( 
+            #         tags: $all: ['sol', "module #{module_number}", "section #{section_number}", 'reflective question','answer']
+            #         author_id: Meteor.userId()
+            #     ).fetch()
             # console.log 'found_answers', found_answers
 
             # section_progress_doc = 
@@ -392,53 +473,47 @@ if Meteor.isServer
             #             percent_complete: 0
             #             tags: ["sol", "module #{module_number}", "section #{section_number}", "section progress"]
             #             questions_complete: 0
-            #             section_question_count: section_question_count
+            #             reflection_question_count: reflection_question_count
             #     console.log 'new progress doc id', new_progress_doc_id
             
-            section_progress_doc = 
-                Docs.findOne
-                    tags: ['sol', "module #{module_number}", "section #{section_number}", 'section progress']
-                    author_id: Meteor.userId()
+            # section_progress_doc = 
+            #     Docs.findOne
+            #         tags: ['sol', "module #{module_number}", "section #{section_number}", 'section progress']
+            #         author_id: Meteor.userId()
 
             # if section_progress_doc then console.log 'found' else console.log 'not'
 
-            if section_question_count is section_answer_count or section_question_count < section_answer_count
-                questions_complete = true
-                # console.log 'questions complete'
-            else
-                questions_complete = false
-                # console.log 'questions not complete'
+            # if reflection_question_count is reflection_answer_count or reflection_question_count < reflection_answer_count
+            #     questions_complete = true
+            #     # console.log 'questions complete'
+            # else
+            #     questions_complete = false
+            #     # console.log 'questions not complete'
                 
-                
-            Docs.update section_progress_doc._id,
-                $set: 
-                    section_question_count: section_question_count
-                    section_answer_count: section_answer_count
-                    questions_complete: questions_complete
             
             # console.log section_progress_doc
     
                 
-            if section_progress_doc.video_complete
-                if section_question_count is 0    
-                    Docs.update section_progress_doc._id,$set:percent_complete: 100
-                    Meteor.call 'calculate_module_progress', module_number
-                    return 100
-                else if questions_complete is false
-                    Docs.update section_progress_doc._id,$set:percent_complete: 50
-                    Meteor.call 'calculate_module_progress', module_number
-                    return 50
-                else if questions_complete is true
-                    Docs.update section_progress_doc._id,$set:percent_complete: 100
-                    Meteor.call 'calculate_module_progress', module_number
-                    return 100
+            # if section_progress_doc.video_complete
+            #     if reflection_question_count is 0    
+            #         Docs.update section_progress_doc._id,$set:percent_complete: 100
+            #         Meteor.call 'calculate_module_progress', module_number
+            #         return 100
+            #     else if questions_complete is false
+            #         Docs.update section_progress_doc._id,$set:percent_complete: 50
+            #         Meteor.call 'calculate_module_progress', module_number
+            #         return 50
+            #     else if questions_complete is true
+            #         Docs.update section_progress_doc._id,$set:percent_complete: 100
+            #         Meteor.call 'calculate_module_progress', module_number
+            #         return 100
                     
-            else
-                Docs.update section_progress_doc._id,$set:video_complete: false
-                if section_question_count is 0    
-                    Docs.update section_progress_doc._id,$set:percent_complete: 0
-                    Meteor.call 'calculate_module_progress', module_number
-                    return 0
-                else
-                    Meteor.call 'calculate_module_progress', module_number
-                    return 0
+            # else
+            #     Docs.update section_progress_doc._id,$set:video_complete: false
+            #     if reflection_question_count is 0    
+            #         Docs.update section_progress_doc._id,$set:percent_complete: 0
+            #         Meteor.call 'calculate_module_progress', module_number
+            #         return 0
+            #     else
+            #         Meteor.call 'calculate_module_progress', module_number
+            #         return 0

@@ -2,7 +2,7 @@ if Meteor.isClient
     FlowRouter.route '/course/sol/module/:module_number/debrief', 
         name: 'debrief'
         action: (params) ->
-            BlazeLayout.render 'doc_module',
+            BlazeLayout.render 'view_module',
                 module_content: 'debrief'
         
     

@@ -1,12 +1,12 @@
 if Meteor.isClient    
     # FlowRouter.route '/course/sol/module/:module_number', 
-    #     name:'doc_module'
+    #     name:'view_module'
     #     action: (params) ->
-    #         BlazeLayout.render 'doc_module',
+    #         BlazeLayout.render 'view_module',
     #             module_content: 'sections'
     
     FlowRouter.route '/course/sol/module/:module_number', 
-        name: 'doc_module'
+        name: 'view_module'
         triggersEnter: [ (context, redirect) ->
             # console.log context
             if context.params.module_number is "1"
@@ -16,14 +16,14 @@ if Meteor.isClient
         ]
 
     
-    Template.doc_module.onCreated ->
+    Template.view_module.onCreated ->
         # @autorun -> Meteor.subscribe 'module_by_course_slug', course_slug=FlowRouter.getParam('course_slug'), module_number=parseInt FlowRouter.getParam('module_number')
         @autorun -> Meteor.subscribe 'module_progress', parseInt FlowRouter.getParam('module_number')
         @autorun -> Meteor.subscribe 'module', parseInt FlowRouter.getParam('module_number')
         # @autorun -> Meteor.subscribe 'sol_modules'
         @autorun -> Meteor.subscribe 'module_downloads', FlowRouter.getParam('module_number')
 
-    Template.doc_module.onRendered ->
+    Template.view_module.onRendered ->
         self = @
         if @subscriptionsReady()
             @autorun =>
@@ -42,7 +42,7 @@ if Meteor.isClient
                 , 1000
 
     
-    Template.doc_module.helpers
+    Template.view_module.helpers
         is_first_module: -> FlowRouter.getParam('module_number') is '1'
     
         module_number: -> FlowRouter.getParam('module_number')
@@ -110,7 +110,7 @@ if Meteor.isClient
     
     
     
-    Template.doc_module.events
+    Template.view_module.events
         'click .edit': ->
             module_number = FlowRouter.getParam('module_number')
             course_slug = FlowRouter.getParam('course_slug')
@@ -307,6 +307,11 @@ if Meteor.isServer
                 module_sections_complete = true
             else
                 module_sections_complete = false
+                
+                
+            if module_sections_complete and module_lightwork_complete and module_debrief_complete
+                # console.log 'hi'
+                module_progress = 100
                 
             # console.log module_sections_complete
             # Docs.update module_progress_doc._id, 

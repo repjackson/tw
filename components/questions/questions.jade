@@ -7,7 +7,7 @@ template(name='questions')
                 |Add Question
     else
         .ui.horizontal.divider.header 
-            |#{questions_title}
+            |#{questions_title} (#{question_docs.count})
             if isInRole 'admin'
                 i#add_question.green.plus.link.icon(title='Add Question')
         each question_docs
@@ -77,7 +77,9 @@ template(name='answers')
                 +published
                 +delete_button
             else
-                .ui.basic.segment #{body}
+                .ui.basic.segment 
+                    if body
+                        |{{nl2br body}}
     .ui.styled.fluid.accordion
         .title
             i.large.users.icon
@@ -96,7 +98,8 @@ template(name='answers')
                                 unless is_author
                                     +voting
                             .text
-                                | #{body}
+                                if body
+                                    | {{nl2br body}}
                             // .actions
                                 // a.reply(href='#') Reply
                                 // +favorite

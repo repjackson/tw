@@ -60,7 +60,7 @@ if Meteor.isClient
                             
         has_answered_question: ->
             found_answer = Docs.findOne
-                tags: $in: ['answer']
+                # tags: $in: ['answer']
                 parent_id: @_id
                 author_id: Meteor.userId()
             # if found_answer
@@ -71,7 +71,7 @@ if Meteor.isClient
 
         question_segment_class: ->
             found_answer = Docs.findOne
-                tags: $in: ['answer']
+                # tags: $in: ['answer']
                 parent_id: @_id
                 author_id: Meteor.userId()
             if found_answer then 'raised green' else ''
@@ -101,7 +101,7 @@ if Meteor.isClient
             my_answer =             
                 Docs.findOne
                     parent_id: @_id
-                    tags: $in: ["answer"]
+                    # tags: $in: ["answer"]
                     author_id: Meteor.userId()
             Session.equals 'editing_id', my_answer._id
 
@@ -131,8 +131,8 @@ if Meteor.isClient
             
     
         'click #add_question': ->
-            console.log Template.parentData()
-            console.log Template.currentData()
+            # console.log Template.parentData()
+            # console.log Template.currentData()
             Docs.insert
                 parent_id: Template.parentData()._id
                 tags: ["question",Template.currentData().tag]
