@@ -16,9 +16,9 @@ template(name='file_item')
         else 
             .content
                 .header #{title}
-                .meta #{link}
+                // .meta #{link}
                 .description
-                    |!{description}
+                    |!{content}
                 .extra
                     a.ui.basic.button(href=link)
                         i.download.icon

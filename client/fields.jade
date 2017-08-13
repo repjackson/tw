@@ -28,10 +28,10 @@ template(name='tags')
     .field
         label Tags
         input#add_tag(type='text' placeholder='Add Tag' maxlength='50' autofocus='')
-    each tags
-        a.ui.tag.label.doc_tag
-            i.minus.icon
-            |#{this}
+        each tags
+            a.ui.basic.large.label.doc_tag
+                i.minus.icon
+                |#{this}
 
 
 template(name='price')
@@ -96,3 +96,15 @@ template(name='image')
                         label or Choose Cloudinary Image Id
                         input#input_image_id(type='text')
     
+template(name='youtube')
+    .field
+        label Youtube Id
+        .ui.left.icon.action.input
+            i.youtube.icon
+            input#youtube(type='text' value=youtube)
+            .ui.icon.button#clear_youtube
+                i.remove.icon
+
+template(name='view_youtube')
+    // .ui.embed(data-source="youtube" data-id=youtube data-icon="video" data-placeholder="/images/video_placeholder.png")
+    .ui.embed(data-source="youtube" data-id=youtube)

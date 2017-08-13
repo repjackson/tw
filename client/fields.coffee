@@ -198,3 +198,20 @@ Template.content.helpers
             tabSpaces: false
             height: 300
         }
+
+
+Template.youtube.events
+    'blur #youtube': (e,t)->
+        youtube = $(e.currentTarget).closest('#youtube').val()
+        Docs.update @_id,
+            $set: youtube: youtube
+            
+    'click #clear_youtube': (e,t)->
+        $(e.currentTarget).closest('#youtube').val('')
+        Docs.update @_id,
+            $unset: youtube: 1
+            
+Template.view_youtube.onRendered ->
+    Meteor.setTimeout (->
+        $('.ui.embed').embed()
+    ), 2000

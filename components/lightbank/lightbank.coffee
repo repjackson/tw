@@ -4,6 +4,7 @@ if Meteor.isClient
             # cloud: 'cloud'
             main: 'lightbank'
     
+    
     # Session.setDefault 'lightbank_view_mode', 'all'
     Template.lightbank.onCreated -> 
         @autorun -> 
@@ -30,13 +31,13 @@ if Meteor.isClient
     
     Template.lightbank.helpers
         docs: -> 
-            if Session.get 'editing_id'
-                Docs.find Session.get('editing_id')
-            else
-                Docs.find {type:'lightbank' }, 
-                    sort:
-                        tag_count: 1
-                    limit: 5
+            # if Session.get 'editing_id'
+            #     Docs.find Session.get('editing_id')
+            # else
+            Docs.find {type:'lightbank' }, 
+                sort:
+                    tag_count: 1
+                limit: 5
     
         tag_class: -> if @valueOf() in selected_tags.array() then 'teal' else 'basic'
         selected_tags: -> selected_tags.array()
@@ -67,6 +68,14 @@ if Meteor.isClient
             else if Session.equals 'view_unpublished', true then 'active' else ''
     
     Template.lightbank.events
+    
+        'click #add': ->
+            new_id = Docs.insert 
+                type:'lightbank'
+                tags: selected_tags.array()
+            Session.set 'view_unpublished', true
+            Session.set 'editing_id', new_id
+    
         'click #set_mode_to_all': -> 
             if Meteor.userId() 
                 Session.set 'view_bookmarked', false
@@ -110,18 +119,11 @@ if Meteor.isClient
         is_author: -> Meteor.userId() and @author_id is Meteor.userId()
         tag_class: -> if @valueOf() in selected_tags.array() then 'teal' else 'basic'
         when: -> moment(@timestamp).fromNow()
-        resonates_with_people: ->
-            if @favoriters
-                if @favoriters.length > 0
-            # console.log @favoriters
-                    Meteor.users.find _id: $in: @favoriters
-        
             
     Template.lightbank_doc_view.events
         'click .tag': -> if @valueOf() in selected_tags.array() then selected_tags.remove(@valueOf()) else selected_tags.push(@valueOf())
 
 if Meteor.isServer
-    
     publishComposite 'lightbank_docs', (selected_tags, limit, view_resonates, view_bookmarked, view_completed, view_published, view_unpublished)->
         {
             find: ->

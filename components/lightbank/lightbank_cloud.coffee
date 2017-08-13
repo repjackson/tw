@@ -35,9 +35,9 @@ if Meteor.isClient
                 
         media_tag_class: -> 
             button_class = []
-            if @valueOf() in selected_tags.array() then button_class.push 'teal' else button_class.push 'basic'
+            if @valueOf() in selected_tags.array() then button_class.push 'blue' else button_class.push 'basic'
     
-            if @name is 'tori webster' then button_class.push ' blue'
+            if @name is 'tori webster' then button_class.push 'basic blue'
             button_class
     
         cloud_tag_class: ->
@@ -70,12 +70,6 @@ if Meteor.isClient
         'click .unselect_tag': -> selected_tags.remove @valueOf()
         'click #clear_tags': -> selected_tags.clear()
     
-        'click #add': ->
-            new_id = Docs.insert 
-                type:'lightbank'
-                tags: selected_tags.array()
-            Session.set 'view_unpublished', true
-            Session.set 'editing_id', new_id
 
         'keyup #search': (e,t)->
             e.preventDefault()
