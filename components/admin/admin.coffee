@@ -13,7 +13,7 @@ if Meteor.isClient
             main: 'pages'
  
     Template.user_table.onCreated ->
-        @autorun -> Meteor.subscribe 'members'
+        @autorun -> Meteor.subscribe('people', selected_people_tags.array())
         @autorun -> Meteor.subscribe 'courses'
     
     
@@ -218,8 +218,8 @@ if Meteor.isClient
  
  
         
-if Meteor.isServer
-    Meteor.publish 'members', ->
-        match = {}
-        Meteor.users.find match
+# if Meteor.isServer
+#     Meteor.publish 'members', ->
+#         match = {}
+#         Meteor.users.find match
          

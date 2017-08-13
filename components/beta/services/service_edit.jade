@@ -1,0 +1,78 @@
+template(name='service_edit')
+    with doc
+        .ui.container
+            h1.ui.center.aligned.header Edit #{title} Service
+            .ui.divided.grid
+                .eleven.wide.column
+                    .ui.form
+                        .ui.segment
+                            +tags
+                        +title
+                        +price
+                        if has_youtube
+                            .ui.segment
+                                +youtube
+                                if youtube
+                                    +view_youtube
+                        if has_image
+                            .ui.segment
+                                .field
+                                    if image_id
+                                        label image
+                                        .ui.large.image
+                                            img(src="{{c.url image_id width=500 crop='fit'}}")
+                                            a#remove_photo.ui.top.left.attached.link.blue.label remove
+                                            .ui.bottom.right.attached.blue.label Image Id: #{image_id}
+                                    else
+                                        unless image_url
+                                            label Upload Image
+                                            input(type='file' name='upload_picture' accept='image/*')
+                                    if image_url
+                                        label image
+                                        .ui.large.image
+                                            img(src=image_url)
+                                            a#remove_photo.ui.top.left.attached.link.blue.label remove
+                                        .ui.label Image URL: #{image_url}
+                                    else
+                                        unless image_id
+                                            label Image URL
+                                            input#image_url(type='text' value=image_url)
+                        if has_content
+                            .ui.segment
+                                +content
+                .five.wide.column
+                    .ui.segment
+                        .ui.form
+                            .grouped.fields
+                                .label Components
+                                .field
+                                    a.ui.toggle.checkbox
+                                        input#toggle_youtube(type='checkbox' checked=has_youtube)
+                                        label(for='toggle_youtube') Video
+                                .field
+                                    a.ui.toggle.checkbox
+                                        input#toggle_image(type='checkbox' checked=has_image)
+                                        label(for='toggle_image') Image
+                                .field
+                                    a.ui.toggle.checkbox
+                                        input#toggle_content(type='checkbox' checked=has_content)
+                                        label(for='toggle_content') Text
+                    .ui.segment
+                        .ui.form
+                            .grouped.fields
+                                .label Buttons
+                                .field
+                                    a.ui.toggle.checkbox
+                                        input#toggle_resonates(type='checkbox' checked=can_resonate)
+                                        label(for='toggle_resonates') This Resonates with Me
+                                .field
+                                    a.ui.toggle.checkbox
+                                        input#toggle_bookmarkable(type='checkbox' checked=can_bookmark)
+                                        label(for='bookmark') Bookmark
+                                .field
+                                    a.ui.toggle.checkbox
+                                        input#toggle_complete(type='checkbox' checked=can_complete)
+                                        label(for='complete') Complete
+                    +published
+                    #saveDoc.ui.fluid.green.big.button Save
+                    #deleteDoc.ui.small.fluid.red.basic.button Delete

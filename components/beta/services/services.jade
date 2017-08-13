@@ -1,19 +1,19 @@
-template(name='marketplace')
+template(name='services')
     .ui.container
         .ui.stackable.divided.grid
             .twelve.wide.column
-                h1.ui.dividing.header Tori Webster products
+                h1.ui.dividing.header Tori Webster Services
                 if is_list_view
                     .ui.relaxed.divided.items
-                        each products
-                            +product_item
+                        each services
+                            +service_item
                 if is_grid_view
                     .ui.centered.cards
-                        each products
-                            +product_card
+                        each services
+                            +service_card
             .four.wide.column
                 // .ui.dividing.header Tag Filter
-                // +cloud type='product'
+                // +cloud type='service'
                 .ui.dividing.header Layouts
                 #make_list_layout.ui.large.icon.button(class=list_layout_button_class)
                     i.list.layout.icon
@@ -23,21 +23,21 @@ template(name='marketplace')
                     .ui.dividing.header
                         i.red.configure.icon
                         |Admin
-                    #add_product.ui.large.basic.fluid.button
+                    #add_service.ui.large.basic.fluid.button
                         i.plus.icon
-                        |Add Product
+                        |Add Service
 
 
-template(name='product_card')
+template(name='service_card')
     .ui.card
         .ui.centered.image
-            a(href="/view/#{_id}")
+            a(href="/service/view/#{_id}")
                 img(src="{{c.url image_id  height=300 crop='fill' gravity='face' }}")
         .content
             .header
-                a(href="/view/#{_id}")
+                a(href="/service/view/#{_id}")
                     h2.ui.header #{title}
-            if publish_date
+            if price
                 .meta
                     // | published #{publish_when}
                     | Price: $#{price}
@@ -45,33 +45,33 @@ template(name='product_card')
                 |!{content}
         .content
             // each tags
-            //     .ui.compact.button.product_tag(class=tag_class) #{this}
+            //     .ui.compact.button.service_tag(class=tag_class) #{this}
             if isInRole 'admin'
-                .edit_product.ui.primary.basic.right.floated.button
+                .edit_service.ui.primary.basic.right.floated.button
                     i.pencil.icon
-                    |Edit product    
+                    |Edit Service    
         .content
             +favorite_button
 
             
-template(name='product_item')
+template(name='service_item')
     .item
-        a.image(href="/view/#{_id}")
+        a.image(href="/service/view/#{_id}")
             img.ui.rounded.image(src="{{c.url image_id  width=175 height=175 crop='fill' gravity='face' }}")
         .content
-            a.header(href="/view/#{_id}") #{title}
+            a.header(href="/service/view/#{_id}") #{title}
             .meta
                 // | published #{publish_when}
                 | Price: $#{price}
             .description
                 p #{snippet}
-                a(href="/view/#{_id}") 
+                a(href="/service/view/#{_id}") 
                     |View More
                     i.arrow.right.icon
             // .extra
             //     i.tags.icon
             //     each tags
-            //         .ui.compact.tiny.button.product_tag(class=tag_class) #{this}
+            //         .ui.compact.tiny.button.service_tag(class=tag_class) #{this}
             if isInRole 'admin'
                 .extra
                     i.red.configure.large.icon

@@ -1,16 +1,16 @@
 if Meteor.isClient
-    FlowRouter.route '/marketplace', action: ->
+    FlowRouter.route '/services', action: ->
         BlazeLayout.render 'layout',
             # sub_nav: 'member_nav'
-            main: 'marketplace'
+            main: 'services'
 
-    Template.marketplace.onCreated ->
-        @autorun -> Meteor.subscribe('selected_products')
+    Template.services.onCreated ->
+        @autorun -> Meteor.subscribe('selected_services')
         Session.set 'layout_view', 'list'
     
-    Template.marketplace.helpers
-        products: -> 
-            Docs.find {type: 'product'},
+    Template.services.helpers
+        services: -> 
+            Docs.find {type: 'service'},
                 sort:
                     publish_date: -1
                 limit: 5
@@ -21,38 +21,34 @@ if Meteor.isClient
         list_layout_button_class: -> if Session.get('layout_view') is 'list' then 'teal' else 'basic'
         grid_layout_button_class: -> if Session.get('layout_view') is 'grid' then 'teal' else 'basic'
                 
-    Template.marketplace.events
-        'click #add_product': ->
+    Template.services.events
+        'click #add_service': ->
             id = Docs.insert
-                type: 'product'
+                type: 'service'
             FlowRouter.go "/edit/#{id}"
     
         'click #make_list_layout': -> Session.set 'layout_view', 'list'
         'click #make_grid_layout': -> Session.set 'layout_view', 'grid'
         
-    Template.product_item.helpers
+    Template.service_item.helpers
         tag_class: -> if @valueOf() in selected_tags.array() then 'teal' else 'basic'
     
         can_edit: -> @author_id is Meteor.userId()
     
-    Template.product_item.events
-        'click .product_tag': ->
+    Template.service_item.events
+        'click .service_tag': ->
             if @valueOf() in selected_tags.array() then selected_tags.remove @valueOf() else selected_tags.push @valueOf()
     
 if Meteor.isServer
-    Meteor.publish 'selected_products', ->
+    Meteor.publish 'selected_services', ->
         
         self = @
         match = {}
-        match.type = 'product'
+        match.type = 'service'
         if not @userId or not Roles.userIsInRole(@userId, ['admin'])
             match.published = true
         
     
         Docs.find match
     
-    
-    Meteor.publish 'product', (doc_id)->
-        Docs.find doc_id
-
     

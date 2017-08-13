@@ -44,10 +44,10 @@
         a.mobile.hidden.item(href='/about' class="{{isActivePath '/about'}}") About
         a.mobile.hidden.item(href='/courses' class="{{isActivePath '/courses'}}") Courses
         a.mobile.hidden.item(href='/lightbank' class="{{isActivePath '/lightbank'}}") Lightbank
-        // if isInRole 'admin'
-        //     a.mobile.hidden.item(href='/marketplace' class="{{isActivePath '/marketplace'}}") 
-        //         i.red.configure.icon
-        //         |Marketplace
+        if isInRole 'admin'
+            a.mobile.hidden.item(href='/services' class="{{isActivePath '/services'}}") 
+                i.red.configure.icon
+                |Services
         a.mobile.hidden.item(href='/contact' class="{{isActivePath '/contact'}}") Contact
         .right.mobile.hidden.menu
             if currentUser

@@ -1,0 +1,48 @@
+template(name='service_view')
+    a.ui.basic.button(href='/services')
+        i.left.chevron.icon
+        |Service
+    with doc
+        .ui.container
+            h1.ui.center.aligned.header View Service
+            .ui.grid
+                .ten.wide.column
+                    if has_youtube
+                        if youtube
+                            +view_youtube
+                    if has_image
+                        if image_id
+                            .ui.large.image
+                                img(src="{{c.url image_id width=500 crop='fit'}}")
+                        if image_url
+                            .ui.fluid.image
+                                img(src=image_url)
+                    if has_content
+                        |!{content}
+                .five.wide.column
+                    .ui.header Price: $#{price}
+                    if can_resonate
+                        div
+                            +resonate_button
+                    if can_complete
+                        div
+                            +mark_complete_button
+                    if can_bookmark
+                        div
+                            +bookmark_button
+        
+                    .ui.header Tags
+                    each tags
+                        .ui.basic.large.label.doc_tag #{this}
+                    
+                    if isInRole 'admin'
+                        .ui.dividing.header Admin
+                        if published
+                            .ui.basic.green.label Published
+                        else
+                            .ui.basic.label Unpublished
+                        .ui.hidden.fitted.divider
+                        a.ui.basic.button(href="/service/edit/#{_id}") 
+                            i.pencil.icon
+                            |Edit
+                        .ui.header by #{author.name}

@@ -133,4 +133,5 @@ useraccounts:flow-routing@1.14.2
 useraccounts:semantic-ui@1.14.2
 webapp@1.3.17
 webapp-hashing@1.0.9
+yasaricli:slugify@0.0.7
 zimme:active-route@2.3.2
