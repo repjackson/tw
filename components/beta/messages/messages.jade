@@ -1,27 +1,43 @@
 template(name='messages_with_user')
     .ui.horizontal.divider.header Conversation with #{person.username}
-    +send_message
+    // +send_message
     .ui.threaded.comments
         each conversation_messages_with_user
             +message
             
 
-template(name='compose')
-    .ui.form
-        .field
-            label Send Private Message
-            .ui.left.icon.large.input
-                i.search.icon
-                +inputAutocomplete settings=compose_settings id="username" class="" autocomplete="off" 
-            textarea#new_message_body(rows='2')
-            #submit_new_message.ui.basic.button
-                i.right.arrow.chevron.icon
-                |Submit
+template(name='message_edit')
+    with message
+        .ui.form
+            .field
+                label Send Private Message
+                if recipient_id
+                    |#{recipient.username}
+                    |#{recipient_id} 
+                    #remove_recipient.ui.icon.button
+                        i.remove.icon
+                else
+                    .ui.left.icon.large.input
+                        i.search.icon
+                        +inputAutocomplete settings=compose_settings id="username" class="" autocomplete="off" 
+                textarea#new_message_body(rows='2')
+                #submit_new_message.ui.basic.button
+                    i.right.arrow.chevron.icon
+                    |Submit
         
         
 template(name='my_messages')
     .ui.container
-        +send_message
+        .ui.stackable.divided.grid
+            .five.wide.column
+                a#compose.ui.fluid.basic.button Compose
+                .ui.vertical.menu
+                    a.item Inbox
+                    a.item Sent
+                    a.item Drafts
+                    a.item All
+            .eleven.wide.column
+        // +send_message
     .ui.horizontal.divider.header My Messages
     .ui.threaded.comments
         each my_messages

@@ -36,18 +36,28 @@ template(name='dashboard')
                     a.ui.card(href='/support')
                         .content
                             .header
-                                i.help.icon
+                                i.help.circle.icon
                                 |Support
                     a.ui.card(href='/messages')
                         .content
                             .header
                                 i.mail.icon
                                 |Messages
-            // a.ui.card(href='/account')
-            //     .content
-            //         .header
-            //             i.setting.icon
-            //             |Account Preferences
+                    a.ui.card(href='/journal')
+                        .content
+                            .header
+                                i.write.square.icon
+                                |My Journal
+                    a.ui.card(href='/checkin')
+                        .content
+                            .header
+                                i.checkmark.icon
+                                |Check In
+                    a.ui.card(href='/account')
+                        .content
+                            .header
+                                i.setting.icon
+                                |Account Preferences
             // +me_card
             // +my_courses
             // +my_quizes

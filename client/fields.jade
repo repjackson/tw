@@ -56,11 +56,9 @@ template(name='page_name')
 
 
 template(name='type')
-    .ui.labeled.input
-        label 
-            i.red.configure.icon
-            |Type
-        .ui.input
+    .ui.form
+        .field
+            label Type
             input#type(type='text' value=type)
 
 template(name='location')

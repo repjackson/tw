@@ -75,7 +75,19 @@ if Meteor.isClient
         'click .save_doc': (e,t)-> 
             # console.log t.editing
             t.editing.set false
-        
+        'click .section_summary': ->
+            swal {
+                title: "Section #{@number}:#{@title} Summary"
+                html: true
+                text: @content
+                animation: true
+                showCancelButton: false
+                closeOnConfirm: true
+                confirmButtonText: 'Back'
+            }
+
+            
+            
         # 'mouseover .item': (e,t)->
         #     $(e.currentTarget).closest('.item').transition('pulse')
 

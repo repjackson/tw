@@ -1,0 +1,26 @@
+template(name='checkin')
+    .ui.divided.grid
+        .five.wide.column
+            +checkin_cloud
+        .eleven.wide.column
+            .ui.centered.stackable.cards
+                each docs
+                    +checkin_doc_view
+        
+
+
+template(name='checkin_doc_view')
+    .ui.card
+        .content
+            .meta
+                i.tags.icon
+                each tags
+                    .ui.tiny.button.tag(class=tag_class) #{this}
+            .ui.hidden.divider
+        .content
+            |#{when}
+            if can_edit
+                a.ui.basic.button(href="/edit/#{_id}")
+                    i.red.configure.icon
+                    |Edit
+        

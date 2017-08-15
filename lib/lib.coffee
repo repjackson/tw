@@ -1,7 +1,6 @@
 @Tags = new Meteor.Collection 'tags'
 @People_tags = new Meteor.Collection 'people_tags'
 @Docs = new Meteor.Collection 'docs'
-@Messages = new Meteor.Collection 'messages'
 
 Docs.before.insert (userId, doc)->
     doc.timestamp = Date.now()
@@ -11,11 +10,6 @@ Docs.before.insert (userId, doc)->
     doc.upvoters = []
     doc.downvoters = []
     doc.published = false
-    return
-
-Messages.before.insert (userId, doc)->
-    doc.timestamp = Date.now()
-    doc.author_id = Meteor.userId()
     return
 
 
@@ -37,10 +31,6 @@ Docs.helpers
     when: -> moment(@timestamp).fromNow()
     parent: -> Docs.findOne @parent_id
 
-Messages.helpers
-    author: -> Meteor.users.findOne @author_id
-    when: -> moment(@timestamp).fromNow()
-    recipient: -> Meteor.users.findOne @recipient
 
 
 

@@ -1,15 +1,20 @@
 if Meteor.isClient
-    FlowRouter.route '/compose', 
-        name: 'compose_message'
+    FlowRouter.route '/message/edit/:message_id', 
+        name: 'message_edit'
         action: (params) ->
             BlazeLayout.render 'layout',
-                main: 'compose'
+                main: 'message_edit'
 
-    Template.compose.onCreated ->
+    Template.message_edit.onCreated ->
         @autorun -> Meteor.subscribe('usernames')
+        @autorun -> Meteor.subscribe('message', FlowRouter.getParam('message_id'))
         
-    Template.compose.helpers
-        compose_settings: -> {
+        
+    Template.message_edit.helpers
+        message: -> Messages.findOne {}
+        
+        
+        message_edit_settings: -> {
             position: 'bottom'
             limit: 10
             rules: [
@@ -23,7 +28,14 @@ if Meteor.isClient
         }
     
 
-    Template.compose.events
+    Template.message_edit.events
+        "autocompleteselect input": (event, template, doc) ->
+            console.log("selected ", doc)
+            Messages.update FlowRouter.getParam('message_id'),
+                $set: recipient_id: doc._id
+                
+                
+    
         'click #submit_new_message': ->
             username = FlowRouter.getParam('username')
             message_text = $('#new_message_body').val()

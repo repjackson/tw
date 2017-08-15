@@ -60,10 +60,10 @@
                     a.item(href='/admin/members' class="{{isActivePath '/admin/members'}}")
                         i.configure.icon
                         // | Admin
-                // if isInRole 'dev'
-                //     a.item(href='/messages' class="{{isActivePath '/messages'}}")
-                //         i.mail.outline.icon
-                //         // | Admin
+                if isInRole 'dev'
+                    a.item(href='/messages' class="{{isActivePath '/messages'}}")
+                        i.mail.outline.icon
+                        // | Admin
                 a.item(href="/dashboard" class="{{isActivePath '/dashboard'}}")
                     if currentUser.profile.image_id
                         img.ui.avatar.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")

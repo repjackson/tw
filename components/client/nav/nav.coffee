@@ -19,3 +19,33 @@ Template.nav.onCreated ->
 Template.nav.helpers
     cart_items: -> Docs.find({type: 'cart_item'},{author_id: Meteor.userId()}).count()
 
+
+Template.left_sidebar.onRendered ->
+    @autorun =>
+        if @subscriptionsReady()
+            Meteor.setTimeout ->
+                $('.context.example .ui.sidebar')
+                    .sidebar({
+                        context: $('.context.example .bottom.segment')
+                        dimPage: false
+                        transition:  'push'
+                    })
+                    .sidebar('attach events', '.context.example .menu .toggle_sidebar.item')
+                    ;
+            , 500
+            
+# Template.right_sidebar.onRendered ->
+#     @autorun =>
+#         if @subscriptionsReady()
+#             Meteor.setTimeout ->
+#                 $('.context.example .ui.sidebar')
+#                     .sidebar({
+#                         context: $('.context.example .bottom.segment')
+#                         dimPage: false
+#                         transition:  'overlay'
+#                     })
+#                     .sidebar('attach events', '.context.example .menu .toggle_sidebar.item')
+#                     ;
+#             , 500
+            
+            

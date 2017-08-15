@@ -87,16 +87,3 @@ Tracker.autorun ->
 #     idle: ->  @status?.idle
 
 
-Template.sidebar.onRendered ->
-    @autorun =>
-        if @subscriptionsReady()
-            Meteor.setTimeout ->
-                $('.context.example .ui.sidebar')
-                    .sidebar({
-                        context: $('.context.example .bottom.segment')
-                        dimPage: false
-                        transition:  'push'
-                    })
-                    .sidebar('attach events', '.context.example .menu .toggle_sidebar.item')
-                    ;
-            , 500
