@@ -16,6 +16,7 @@ template(name='section')
                     .field
                         +title
                     .field
+                        .label Takeaways
                         +content
                     .field
                         +delete_button
@@ -49,10 +50,11 @@ template(name='section')
                                 i.tasks.icon
                                 strong #{section_progress_doc.section_answer_count}/#{section_progress_doc.section_question_count}
                                 |Questions Answered
-                    .item
-                        .section_summary.ui.basic.button 
-                            i.external.icon
-                            |Section Summary
+                    if content
+                        .item
+                            .section_summary.ui.basic.button 
+                                i.external.icon
+                                |Takeaways
     else
         .ui.disabled.segment
             .ui.header  #{number}: #{title}

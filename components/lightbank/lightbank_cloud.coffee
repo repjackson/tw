@@ -2,7 +2,7 @@ if Meteor.isClient
     Session.setDefault 'lightbank_view_mode', 'all'
     # @selected_tags = new ReactiveArray []
     
-    media_tags = ['tori webster','quote','poem', 'photo', 'image', 'video', 'essay']
+    media_tags = ['tori webster','quote','poem', 'photo', 'image', 'video', 'essay', 'journal prompt']
     
     Template.lightbank_cloud.onCreated ->
         @autorun => 
@@ -28,10 +28,10 @@ if Meteor.isClient
                 Tags.find { 
                     count: $lt: doc_count
                     name: $nin: media_tags
-                    }, limit:10
+                    }, limit:20
             else
                 # console.log 'media tags?', media_tags
-                cursor = Tags.find({name: $nin: media_tags}, limit:10)
+                cursor = Tags.find({name: $nin: media_tags}, limit:20)
                 
         media_tag_class: -> 
             button_class = []

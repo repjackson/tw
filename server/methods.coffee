@@ -55,3 +55,20 @@ Meteor.methods
             tags: tags
         console.log result
                 
+                
+                
+    update_username:  (username) ->
+        userId = Meteor.userId()
+        if not userId
+            throw new Meteor.Error(401, "Unauthorized")
+        Accounts.setUsername(userId, username)
+        return "Updated Username: #{username}"
+        
+        
+    update_email: (new_email) ->
+        userId = Meteor.userId();
+        if !userId
+            throw new Meteor.Error(401, "Unauthorized");
+        Accounts.addEmail(userId, new_email);
+        return "Updated Email: #{new_email}"
+        

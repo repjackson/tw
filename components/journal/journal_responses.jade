@@ -1,0 +1,37 @@
+template(name='journal_responses')
+    .ui.segment
+        .ui.dividing.header Journal Responses
+        if my_response
+            .ui.header Public Responses
+            .ui.divided.list
+                each public_responses
+                    .item #{content}
+            with my_response
+                .ui.segment(class=segment_class)
+                    .ui.blue.ribbon.large.label(class=ribbon_class)
+                        | Your Response
+                        if published
+                            |(public)
+                        else
+                            |(private)
+                    if can_edit
+                        unless is_editing
+                            +session_edit_button
+                    if is_editing
+                        .ui.basic.segment
+                            .ui.form
+                                .field
+                                    // label Answer
+                                    textarea#body(rows='3') #{body}
+                        +session_edit_button
+                        +published
+                        +delete_button
+                    else
+                        .ui.basic.segment 
+                            if body
+                                |{{nl2br body}}
+        else
+            #write_response.ui.teal.button Write Journal Response
+            
+            
+            

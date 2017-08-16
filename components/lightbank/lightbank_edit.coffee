@@ -120,6 +120,12 @@ if Meteor.isClient
                 $set:
                     has_content: value
         
+        'change #toggle_journal_prompt': (e,t)->
+            value = $('#toggle_journal_prompt').is(":checked")
+            Docs.update FlowRouter.getParam('doc_id'), 
+                $set:
+                    journal_prompt: value
+        
         # button toggles
         
         'change #toggle_resonates': (e,t)->

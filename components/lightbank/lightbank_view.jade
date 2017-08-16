@@ -19,6 +19,8 @@ template(name='lightbank_view')
                                 img(src=image_url)
                     if has_content
                         |!{content}
+                    if journal_prompt
+                        +journal_responses
                 .five.wide.column
                     if can_resonate
                         div

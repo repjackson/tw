@@ -1,19 +1,30 @@
 template(name='account')
-    .ui.container
+    .ui.text.container
         h1.ui.dividing.header Account
-
-        .ui.container.segment
-            .ui.form
-                .field
-                    label Email(s)
-                    input(type='text' value=currentUser.emails[0].address)
-                .field
-                    label Change Password
-                    input.disabled(type='text' value=currentUser.name)
-                .field
-                    label Change Username
-                    input#username(type='text' value=currentUser.username)
-                    #submit_username_change.ui.submit.button Submit
+        // .ui.header Change Password
+        |{{> atForm state='changePwd'}}
+        .ui.segment
+            .ui.header Email(s)
+            .ui.divided.list
+                each currentUser.emails
+                    .item 
+                        // unless verified
+                        //     .right.floated.content
+                        //         .ui.basic.button Verify
+                        .content
+                            |#{address}
+                            if verified
+                                .ui.green.basic.label Verified
+                            else
+                                .ui.basic.label Unverified
+            .ui.action.fluid.input
+                input#new_email(type='email')
+                #add_email.ui.submit.blue.button Add Email Address
+        .ui.segment
+            .ui.header Change Username (current: #{currentUser.username})
+            .ui.action.fluid.input
+                input#username(type='text')
+                #change_username.ui.submit.blue.button Submit
             
 template(name='account_nav')
     if isInRole 'admin'

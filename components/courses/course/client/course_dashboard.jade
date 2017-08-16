@@ -2,7 +2,7 @@ template(name='course_dashboard')
     .ui.container
         h2.ui.center.aligned.header Dashboard
         .ui.two.centered.stackable.cards
-            a.ui.card(href='/courses/sol/welcome')
+            a.ui.raised.card(href='/courses/sol/welcome')
                 .content
                     .header 
                         i.smile.icon
@@ -13,7 +13,7 @@ template(name='course_dashboard')
                             .item Terms of Agreement
                             .item SOL Inspiration
                             
-            a.ui.card(href='/course/sol/modules')
+            a.ui.raised.card(href='/course/sol/modules')
                 .content
                     .header
                         i.users.icon
@@ -24,7 +24,7 @@ template(name='course_dashboard')
                             .item Terms of Agreement
                             .item SOL Inspiration
 
-            a.ui.card(href='/courses/sol/members')
+            a.ui.raised.card(href='/course/sol/members')
                 .content
                     .header 
                         i.users.icon
@@ -34,7 +34,7 @@ template(name='course_dashboard')
                             .item Welcome Video
                             .item Terms of Agreement
                             .item SOL Inspiration
-            a.ui.card(href='/courses/sol/stats')
+            .ui.disabled.card
                 .content
                     .header
                         i.line.chart.icon

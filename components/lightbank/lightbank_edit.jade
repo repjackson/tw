@@ -55,6 +55,10 @@ template(name='lightbank_edit')
                                     a.ui.toggle.checkbox
                                         input#toggle_content(type='checkbox' checked=has_content)
                                         label(for='toggle_content') Text
+                                .field
+                                    a.ui.toggle.checkbox
+                                        input#toggle_journal_prompt(type='checkbox' checked=journal_prompt)
+                                        label(for='toggle_journal_prompt') Journal Prompt
                     .ui.segment
                         .ui.form
                             .grouped.fields
