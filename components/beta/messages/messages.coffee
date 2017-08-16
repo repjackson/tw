@@ -2,6 +2,7 @@
 Messages.before.insert (userId, doc)->
     doc.timestamp = Date.now()
     doc.author_id = Meteor.userId()
+    doc.status = 'draft'
     return
 
 Messages.helpers
@@ -11,40 +12,14 @@ Messages.helpers
 
 
 if Meteor.isClient
-    FlowRouter.route '/messages', 
-        name: 'messages'
-        action: (params) ->
-            BlazeLayout.render 'layout',
-                # sub_nav: 'account_nav'
-                # sub_nav: 'member_nav'
-                main: 'my_messages'
-
-    Template.my_messages.onCreated ->
-        @autorun -> Meteor.subscribe('my_messages')
-        
-    Template.my_messages.helpers
-        my_messages: ->
-            Docs.find
-                tags: $in: ['message']
-                author_id: Meteor.userId()  
     
-    
-            
-    Template.my_messages.events
+    Template.messages_layout.events
         'click #compose': (e,t)->
             message_id = Messages.insert({})
             FlowRouter.go "/message/edit/#{message_id}"
-       
-        'click .mark_read': ->
-            Docs.update @_id,
-                $set: read: true
-            
-            
-        'click .mark_unread': ->
-            Docs.update @_id,
-                $set: read: false
-            
-            
+
+    
+    
     Template.messages_with_user.onCreated ->
         @autorun -> Meteor.subscribe('messages_with_user', FlowRouter.getParam('username'))
        

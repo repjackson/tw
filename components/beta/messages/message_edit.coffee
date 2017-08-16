@@ -1,55 +1,23 @@
 if Meteor.isClient
-    FlowRouter.route '/message/edit/:message_id', 
-        name: 'message_edit'
+    FlowRouter.route '/messages/drafts', 
+        name: 'drafts'
         action: (params) ->
-            BlazeLayout.render 'layout',
-                main: 'message_edit'
+            BlazeLayout.render 'messages_layout',
+                message_content: 'drafts'
 
-    Template.message_edit.onCreated ->
-        @autorun -> Meteor.subscribe('usernames')
-        @autorun -> Meteor.subscribe('message', FlowRouter.getParam('message_id'))
+    Template.drafts.onCreated ->
+        @autorun -> Meteor.subscribe('drafts')
         
         
-    Template.message_edit.helpers
-        message: -> Messages.findOne {}
+    Template.drafts.helpers
+        drafts: -> Messages.find status: 'draft'
         
         
-        message_edit_settings: -> {
-            position: 'bottom'
-            limit: 10
-            rules: [
-                {
-                    collection: Meteor.users
-                    field: 'username'
-                    matchAll: false
-                    template: Template.user_pill
-                }
-                ]
-        }
-    
-
-    Template.message_edit.events
-        "autocompleteselect input": (event, template, doc) ->
-            console.log("selected ", doc)
-            Messages.update FlowRouter.getParam('message_id'),
-                $set: recipient_id: doc._id
-                
-                
-    
-        'click #submit_new_message': ->
-            username = FlowRouter.getParam('username')
-            message_text = $('#new_message_body').val()
-            # console.log username
-            # console.log message_text
-            Messages.insert
-                tags: ['message']
-                recipient_username: username
-                read: false
-                body: message_text
-            $('#new_message_body').val('')
+    Template.drafts.events
                 
 
 if Meteor.isServer
-    Meteor.publish 'usernames', ->
-        Meteor.users.find {},
-            fields: username: 1
+    Meteor.publish 'drafts', ->
+        Messages.find
+            status: 'draft'
+            author_id: Meteor.userId()

@@ -1,5 +1,19 @@
 template(name='notifications')
-    .ui.header Notifications
-    .ui.divided.list
-        each notifications
-            .item Notification: #{text}
+    .ui.container
+        .ui.header Notifications
+        .ui.feed
+            each notifications
+                .event
+                    .label
+                        img(src='/images/avatar/small/elliot.jpg')
+                    .content
+                        .summary
+                            a.user
+                                | Elliot Fu
+                                |  #{text}
+                            .date
+                                | 1 Hour Ago
+                            .meta
+                                a.like
+                                i.like.icon
+                                |  4 Likes
