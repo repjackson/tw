@@ -71,9 +71,13 @@ if Meteor.isClient
             
     
         'click #send_message': ->
-            Messages.update FlowRouter.getParam('message_id'),
+            message = Messages.findOne FlowRouter.getParam('message_id')
+            Messages.update message._id,
                 $set: status: 'sent'
             swal "Message Sent", "",'success'
+            Meteor.call 'notify', message.recipient_id, 'message sent test', (err, res)->
+                if err then console.error err
+                else console.log res
 
 
 if Meteor.isServer

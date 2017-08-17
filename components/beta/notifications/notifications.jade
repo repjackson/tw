@@ -1,19 +1,28 @@
 template(name='notifications')
     .ui.container
-        .ui.header Notifications
-        .ui.feed
-            each notifications
-                .event
-                    .label
-                        img(src='/images/avatar/small/elliot.jpg')
-                    .content
-                        .summary
-                            a.user
-                                | Elliot Fu
-                                |  #{text}
-                            .date
-                                | 1 Hour Ago
-                            .meta
-                                a.like
-                                i.like.icon
-                                |  4 Likes
+        .ui.dividing.header Notifications
+        .ui.grid
+            .five.wide.column
+                .ui.header Admin
+            .eleven.wide.column
+                .ui.header Notifications
+                .ui.feed
+                    each notifications
+                        +notification
+            
+            
+template(name='notification')            
+    .event
+        .label
+            img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+        .content
+            .summary
+                a.user
+                    | #{author.name} #{author.username}
+                    | #{text}
+                .date
+                    | #{when}
+                .meta
+                    a.like
+                    i.like.icon
+                    |  4 Likes

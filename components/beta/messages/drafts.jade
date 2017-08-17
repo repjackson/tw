@@ -1,0 +1,31 @@
+template(name='drafts')
+    .ui.horizontal.divider.header Drafts
+    .ui.threaded.comments
+        each drafts
+            unless is_editing
+                +draft_message
+            else
+                +edit_message
+        
+template(name='draft_message')
+    .comment
+        a.avatar
+            img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+        .content
+            a.author 
+                | #{author.username}
+                i.right.chevron.icon
+                | #{recipient.username}
+            .metadata
+                span.date #{from_now}
+            .text
+                .ui.segment
+                    | !{content}
+            .actions
+                // a.reply(href='#') Reply
+                // +favorite
+                // +voting
+                // if is_author
+                a.delete_message
+                a.edit_comment(href="/message/edit/#{_id}") Edit
+

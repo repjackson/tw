@@ -77,33 +77,6 @@ template(name='message_edit')
                     i.large.send.icon
         
         
-
-template(name='inbox')
-    .ui.horizontal.divider.header Inbox
-    .ui.threaded.comments
-        each received_messages
-            unless is_editing
-                +message
-            else
-                +edit_message
-        
-template(name='drafts')
-    .ui.horizontal.divider.header Drafts
-    .ui.threaded.comments
-        each drafts
-            unless is_editing
-                +message
-            else
-                +edit_message
-        
-template(name='sent')
-    .ui.horizontal.divider.header Sent
-    .ui.threaded.comments
-        each sent_messages
-            unless is_editing
-                +message
-            else
-                +edit_message
         
 template(name='all_messages')
     .ui.horizontal.divider.header All Messages
@@ -114,34 +87,6 @@ template(name='all_messages')
             else
                 +edit_message
         
-template(name='message')
-    .comment
-        a.avatar
-            img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
-        .content
-            a.author 
-                | #{author.username}
-                i.right.chevron.icon
-                | #{recipient.username}
-            .metadata
-                span.date #{from_now}
-                unless read
-                    .ui.basic.blue.label Unread
-            .text
-                .ui.segment
-                    | !{content}
-            .actions
-                // a.reply(href='#') Reply
-                // +favorite
-                // +voting
-                // if is_author
-                if read
-                    a.mark_unread Mark Unread
-                else
-                    a.mark_read Mark Read
-                a.delete_message
-                a.edit_comment(href="/message/edit/#{_id}") Edit
-
 
 
 template(name='user_pill')

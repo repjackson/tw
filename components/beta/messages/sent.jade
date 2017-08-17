@@ -1,0 +1,33 @@
+template(name='sent')
+    .ui.horizontal.divider.header Sent
+    .ui.threaded.comments
+        each sent_messages
+            unless is_editing
+                +sent_message
+            else
+                +edit_message
+
+
+
+template(name='sent_message')
+    .comment
+        a.avatar
+            img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+        .content
+            a.author 
+                | #{author.username}
+                i.right.chevron.icon
+                | #{recipient.username}
+            .metadata
+                span.date #{from_now}
+            .text
+                .ui.segment(class=message_segment_class)
+                    | !{content}
+            .actions
+                // a.reply(href='#') Reply
+                // +favorite
+                // +voting
+                // if is_author
+                // a.delete_message
+                // a.edit_comment(href="/message/edit/#{_id}") Edit
+

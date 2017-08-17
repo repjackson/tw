@@ -22,18 +22,20 @@ if Meteor.isClient
             Messages.find
                 recipient_id: Meteor.userId()  
     
-    
             
     Template.inbox.events
-       
         'click .mark_read': ->
-            Docs.update @_id,
+            Messages.update @_id,
                 $set: read: true
             
             
         'click .mark_unread': ->
-            Docs.update @_id,
+            Messages.update @_id,
                 $set: read: false
+    
+    Template.inbox_message.helpers
+        message_segment_class: -> 
+            if @read then '' else 'blue'
             
 
 # if Meteor.isServer
