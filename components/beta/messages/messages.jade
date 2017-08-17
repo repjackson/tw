@@ -15,10 +15,18 @@ template(name='messages_layout')
                             .five.wide.column
                                 a#compose.ui.fluid.basic.button Compose
                                 .ui.vertical.fluid.menu
-                                    a.item(href='/messages/inbox' class="{{isActiveRoute name='inbox'}}")  Inbox
-                                    a.item(href='/messages/sent' class="{{isActiveRoute name='sent_messages'}}") Sent
-                                    a.item(href='/messages/drafts' class="{{isActiveRoute name='drafts'}}") Drafts
-                                    a.item(href='/messages/all' class="{{isActiveRoute name='all_messages'}}") All
+                                    a.item(href='/messages/inbox' class="{{isActiveRoute name='inbox'}}")
+                                        i.inbox.icon
+                                        |Inbox
+                                    a.item(href='/messages/sent' class="{{isActiveRoute name='sent_messages'}}") 
+                                        i.send.icon
+                                        |Sent
+                                    a.item(href='/messages/drafts' class="{{isActiveRoute name='drafts'}}") 
+                                        i.edit.icon
+                                        |Drafts
+                                    a.item(href='/messages/all' class="{{isActiveRoute name='all_messages'}}") 
+                                        i.archive.icon
+                                        | All
                             .eleven.wide.column
                                 +Template.dynamic template=message_content
 
@@ -36,29 +44,44 @@ template(name='messages_with_user')
 
 template(name='message_edit')
     with message
+        .ui.dividing.header Send Private Message
         .ui.form
             .field
-                label Send Private Message
                 if recipient_id
-                    |#{recipient.username}
-                    |#{recipient_id} 
-                    #remove_recipient.ui.icon.button
-                        i.remove.icon
+                    label Recipient: 
+                    .ui.large.basic.label
+                        img.ui.avatar.image(src="{{c.url recipient.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                        |#{recipient.username}
+                    if is_draft
+                        #remove_recipient.ui.icon.basic.button
+                            i.red.remove.icon
                 else
                     .ui.left.icon.large.input
                         i.search.icon
-                        +inputAutocomplete settings=message_edit_settings id="username" class="" autocomplete="off" 
-                textarea#new_message_body(rows='2')
-                #submit_new_message.ui.basic.button
-                    i.right.arrow.chevron.icon
-                    |Submit
+                        +inputAutocomplete settings=message_edit_settings id="username" class="" autocomplete="off" placeholder='Search Username...'
+            .inline.field
+                label Status
+                .ui.large.label(class=status_label_class) #{status}
+            if is_draft
+                .field
+                    .froala-container
+                        +froalaReactive getFEContext
+            if is_sent
+                .ui.basic.segment
+                    |!{content}
+            if is_draft
+                #delete_message.ui.red.icon.button
+                    i.remove.icon
+                #send_message.ui.right.floated.teal.labeled.icon.button
+                    |Send
+                    i.large.send.icon
         
         
 
 template(name='inbox')
     .ui.horizontal.divider.header Inbox
     .ui.threaded.comments
-        each my_messages
+        each received_messages
             unless is_editing
                 +message
             else
@@ -73,6 +96,24 @@ template(name='drafts')
             else
                 +edit_message
         
+template(name='sent')
+    .ui.horizontal.divider.header Sent
+    .ui.threaded.comments
+        each sent_messages
+            unless is_editing
+                +message
+            else
+                +edit_message
+        
+template(name='all_messages')
+    .ui.horizontal.divider.header All Messages
+    .ui.threaded.comments
+        each all_messages
+            unless is_editing
+                +message
+            else
+                +edit_message
+        
 template(name='message')
     .comment
         a.avatar
@@ -81,16 +122,14 @@ template(name='message')
             a.author 
                 | #{author.username}
                 i.right.chevron.icon
-                | #{recipient_username}
+                | #{recipient.username}
             .metadata
                 span.date #{from_now}
                 unless read
                     .ui.basic.blue.label Unread
             .text
-                if read
-                    | #{body}
-                else
-                    strong #{body}
+                .ui.segment
+                    | !{content}
             .actions
                 // a.reply(href='#') Reply
                 // +favorite
@@ -100,10 +139,12 @@ template(name='message')
                     a.mark_unread Mark Unread
                 else
                     a.mark_read Mark Read
-                +delete_link
+                a.delete_message
                 a.edit_comment(href="/message/edit/#{_id}") Edit
 
 
 
 template(name='user_pill')
-    span #{username}
+    span 
+        img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+        |#{username}

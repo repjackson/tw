@@ -58,14 +58,14 @@
                             i.corner.teal.asterisk.icon
                 if isInRole 'admin'
                     a.item(href='/admin/members' class="{{isActivePath '/admin/members'}}")
-                        i.configure.icon
+                        i.configure.red.icon
                         // | Admin
                 if isInRole 'dev'
                     a.item(href='/messages' class="{{isActivePath '/messages'}}")
-                        i.mail.outline.icon
+                        i.mail.outline.red.icon
                         // | Admin
                     a.item(href='/notifications' class="{{isActivePath '/notifications'}}")
-                        i.alarm.outline.icon
+                        i.alarm.outline.red.icon
                         // | Admin
                 a.item(href="/dashboard" class="{{isActivePath '/dashboard'}}")
                     if currentUser.profile.image_id

@@ -8,11 +8,15 @@ Messages.before.insert (userId, doc)->
 Messages.helpers
     author: -> Meteor.users.findOne @author_id
     when: -> moment(@timestamp).fromNow()
-    recipient: -> Meteor.users.findOne @recipient
+    recipient: -> Meteor.users.findOne @recipient_id
 
 
 if Meteor.isClient
-    
+    Template.messages_layout.onCreated ->
+        @autorun -> Meteor.subscribe('sent_messages')
+        @autorun -> Meteor.subscribe('received_messages')
+
+
     Template.messages_layout.events
         'click #compose': (e,t)->
             message_id = Messages.insert({})
@@ -33,24 +37,47 @@ if Meteor.isClient
                 recipient_username: username
   
   
+  
+  
             
 if Meteor.isServer
-    Meteor.publish 'messages_with_user', (username)->
+    Meteor.publish 'messages_with_user', (recipient_id)->
         Messages.find
-            recipient_username: username
-            author_id: @userId
+            recipient_id: recipient_id
+            author_id: Meteor.userId()
             
     Meteor.publish 'message', (message_id)->
         Messages.find message_id
             
-    Meteor.publish 'my_sent_messages', ->
-        Messages.find
-            author_id: @userId
             
-    Meteor.publish 'my_received_messages', ->
-        Messages.find
-            parent_id: @userId
-            
+    publishComposite 'received_messages', ->
+        {
+            find: ->
+                Messages.find
+                    recipient_id: Meteor.userId()
+            children: [
+                { find: (message) ->
+                    Meteor.users.find 
+                        _id: message.author_id
+                    }
+                ]    
+        }
+
+    
+    publishComposite 'sent_messages', ->
+        {
+            find: ->
+                Messages.find
+                    author_id: Meteor.userId()
+            children: [
+                { find: (message) ->
+                    Meteor.users.find 
+                        _id: message.recipient_id
+                    }
+                ]    
+        }
+
+    
             
     Messages.allow
         insert: (userId, doc) -> Roles.userIsInRole(userId, 'admin') or doc.author_id is userId

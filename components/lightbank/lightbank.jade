@@ -2,20 +2,19 @@ template(name='lightbank')
     .ui.container
         .ui.center.aligned.basic.segment
             +doc_content tags='lightbank,blurb'
-            unless is_editing
-                .ui.teal.four.item.stackable.menu
-                    a#set_mode_to_all.item(class=all_item_class) 
-                        i.sun.yellow.icon
-                        |All
-                    a#toggle_resonates.item(class=resonates_item_class) 
-                        i.heartbeat.icon
-                        |Resonates
-                    a#toggle_bookmarked.item(class=bookmarked_item_class) 
-                        i.bookmark.icon
-                        |Bookmarked
-                    a#toggle_completed.item(class=completed_item_class) 
-                        i.checkmark.box.icon
-                        |Completed
+            // .ui.teal.four.item.stackable.menu
+            //     a#set_mode_to_all.item(class=all_item_class) 
+            //         i.sun.yellow.icon
+            //         |All
+            //     a#toggle_resonates.item(class=resonates_item_class) 
+            //         i.heartbeat.icon
+            //         |Resonates
+            //     a#toggle_bookmarked.item(class=bookmarked_item_class) 
+            //         i.bookmark.icon
+            //         |Bookmarked
+            //     a#toggle_completed.item(class=completed_item_class) 
+            //         i.checkmark.box.icon
+            //         |Completed
     
         .ui.grid
             .five.wide.column
@@ -40,8 +39,9 @@ template(name='lightbank')
                             |Add Lightbank Item
             
             .eleven.wide.column
-                each docs
-                    +lightbank_doc_view
+                .ui.centered.stackable.cards
+                    each docs
+                        +lightbank_doc_view
         
 
 
@@ -70,12 +70,12 @@ template(name='lightbank_doc_view')
                     .ui.tiny.circular.button.tag(class=tag_class) #{this}
         .content
             // .ui.hidden.divider
-            if can_resonate
-                +resonate_button
+            // if can_resonate
+            +resonate_button
             if can_complete
                 +mark_complete_button
-            if can_bookmark
-                +bookmark_button
+            // if can_bookmark
+            +bookmark_button
             .ui.center.aligned.basic.segment
                 a.ui.basic.teal.button(href="/lightbank/view/#{_id}")
                     |View
