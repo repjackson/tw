@@ -59,7 +59,7 @@ Meteor.publish 'sol_signers', ->
         
         
         
-Meteor.publish 'sol', ()->
+Meteor.publish 'sol_progress', ()->
     Docs.find
         tags: $all: ['sol', "course progress"]
         author_id: @userId
@@ -70,12 +70,25 @@ Meteor.methods
     'calculate_sol_progress': ()->
         sol_progress_doc = 
             Docs.findOne
+                tags: $all: ['sol', 'course progress']
+                author_id: Meteor.userId()
+        if sol_progress_doc then console.log 'found progress doc'
+        else
+            console.log 'didnt find progress doc, creating'
+            Docs.insert
                 tags: ['sol', 'course progress']
                 author_id: Meteor.userId()
 
-        # console.log module_progress_doc
+            sol_progress_doc = 
+                Docs.findOne
+                    tags: $all: ['sol', 'course progress']
+                    author_id: Meteor.userId()
+            console.log 'new progress doc:', sol_progress_doc
 
-        sol_progress = 0
+
+        sol_progress_percent = 0
+        module_complete_count = 0
+        current_module = 0
 
         sol_module_count = 
             Docs.find( 
@@ -90,6 +103,17 @@ Meteor.methods
             if module_progress_doc
                 console.log typeof module_progress_doc.module_progress_percent
                 if module_progress_doc.module_progress_percent > 0
-                    sol_progress += 100/sol_module_count*module_progress_doc.module_progress_percent/100
-        console.log 'sol progress', sol_progress
-        return sol_progress
+                    if Math.round(module_progress_doc.module_progress_percent) is 100 then module_complete_count += 1
+                    else current_module = number
+                    sol_progress_percent += 100/sol_module_count*module_progress_doc.module_progress_percent/100
+        console.log 'sol progress', sol_progress_percent
+        console.log 'module_complete_count', module_complete_count
+        console.log 'current_module', current_module
+        Docs.update sol_progress_doc._id,
+            $set:
+                sol_progress_percent: sol_progress_percent
+                current_module: current_module
+                module_complete_count: module_complete_count
+            
+        
+        return sol_progress_percent

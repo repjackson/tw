@@ -4,14 +4,14 @@ template(name='course_welcome')
         a.item(data-tab="terms_tab") Terms of Agreement
         a.item(data-tab="inspiration_tab") What Inspired SOL
     .ui.bottom.attached.tab.active.segment(data-tab='welcome_tab')
-        +view_welcome_course
+        +welcome_video
     .ui.bottom.attached.tab.segment(data-tab='terms_tab')
         +view_terms_course
     .ui.bottom.attached.tab.segment(data-tab='inspiration_tab')
         +view_inspiration_course
             
         
-template(name='view_welcome_course')
+template(name='welcome_video')
     +doc_content tags='sol,welcome,content'
     .ui.styled.fluid.accordion
         h3.title
@@ -19,7 +19,15 @@ template(name='view_welcome_course')
             | Transcript
         .content
             +doc_content tags='sol,welcome,transcript'
-    
+    .ui.hidden.divider
+    if currentUser
+        if welcome_video_watched
+            #unmark_welcome_video_complete.ui.blue.fluid.button 
+                i.check.icon
+                |Welcome Video Watched
+        else
+            #mark_welcome_video_complete.ui.basic.fluid.button Mark Welcome Video Watched
+
     
     
 
@@ -174,4 +182,12 @@ template(name='view_inspiration_course')
             | Transcript
         .content
             +doc_content tags='sol,inspiration,transcript'
+    .ui.hidden.divider
+    if currentUser
+        if inspiration_video_watched
+            .unmark_inspiration_video_complete.ui.blue.fluid.button 
+                i.check.icon
+                |Inspiration Video Watched
+        else
+            .mark_inspiration_video_complete.ui.basic.fluid.button Mark Inspiration ideo Watched
 

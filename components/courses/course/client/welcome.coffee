@@ -12,16 +12,62 @@ Template.course_welcome.onRendered ->
         $('#course_welcome_menu .item').tab()
     , 1000
 
-Template.view_welcome_course.onCreated ->
+Template.welcome_video.onCreated ->
     @autorun -> Meteor.subscribe 'sol_signers'
+    @autorun -> Meteor.subscribe 'sol_progress'
 
 
-Template.view_welcome_course.onRendered ->
+Template.welcome_video.onRendered ->
     @autorun =>
         if @subscriptionsReady()
             Meteor.setTimeout ->
                 $('.ui.accordion').accordion()
             , 1000
+
+Template.welcome_video.helpers
+    welcome_video_watched: ->
+        sol_progress_doc = 
+            Docs.findOne
+                tags: $all: ["sol", "course progress"]
+                author_id: Meteor.userId()
+        console.log sol_progress_doc
+        if sol_progress_doc then return sol_progress_doc.watched_welcome_video
+
+
+Template.welcome_video.helpers
+    'click #mark_welcome_video_complete': ->
+        sol_progress_doc = 
+            Docs.findOne
+                tags: $all: ["sol", "course progress"]
+                author_id: Meteor.userId()
+        console.log sol_progress_doc
+        Docs.update sol_progress_doc._id, 
+            $set:
+                watched_welcome_video: true
+        
+        
+        # Meteor.call 'calculate_sol_progress', (err,res)->
+        #     # console.log res
+        #     $('#section_percent_complete_bar').progress('set percent', res);
+        #     # console.log $('#section_percent_complete_bar').progress('get percent');
+
+
+    'click #unmark_video_complete': ->
+        sol_progress_doc = 
+            Docs.findOne
+                tags: $all: ["sol", "course progress"]
+                author_id: Meteor.userId()
+        console.log sol_progress_doc
+        Docs.update sol_progress_doc._id, 
+            $set:
+                watched_welcome_video: false
+        
+        # Meteor.call 'calculate_sol_progress', (err,res)->
+        #     # console.log res
+        #     $('#section_percent_complete_bar').progress('set percent', res);
+        #     # console.log $('#section_percent_complete_bar').progress('get percent');
+
+
 
 
 Template.view_terms_course.helpers

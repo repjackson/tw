@@ -19,14 +19,14 @@ template(name='view_section')
         .ui.grid
             .center.aligned.row
                 .sixteen.wide.column
-                    a.ui.basic.labeled.icon.button(href="/course/sol/module/#{module.number}/sections") 
+                    a.ui.basic.button(href="/course/sol/module/#{module.number}/sections") 
                         i.up.chevron.arrow.icon
                         |#{module.number}: #{module.title}
             .center.aligned.row
                 .four.wide.column
                     if previous_section
-                        // a.ui.basic.small.labeled.icon.button(href="/course/sol/module/#{module.number}/section/#{previous_section.number}")
-                        a#go_to_previous_section.ui.basic.small.labeled.icon.button(href="#")
+                        // a.ui.basic.small.button(href="/course/sol/module/#{module.number}/section/#{previous_section.number}")
+                        a#go_to_previous_section.ui.basic.small.button(href="#")
                             i.left.chevron.icon
                             |#{previous_section.number}: #{previous_section.title}
                 .eight.wide.column
@@ -34,7 +34,7 @@ template(name='view_section')
                 .four.wide.column
                     if section_complete
                         if next_section_exists
-                            a.go_to_next_section.ui.basic.small.right.labeled.icon.button(href="#")
+                            a.go_to_next_section.ui.basic.small.right.button(href="#")
                                 |#{next_section.number}: #{next_section.title}
                                 i.right.chevron.icon
                         else
@@ -90,7 +90,7 @@ template(name='view_section')
                     else
                         .mark_video_complete.ui.basic.fluid.button Mark Video Watched
                 .ui.hidden.divider
-                    .ui.hidden.divider
+                .ui.hidden.divider
                 with section
                     if isInRole 'admin'
                         +questions tag='reflection' parent_id=this._id title='Reflection Questions'
@@ -129,8 +129,8 @@ template(name='view_section')
                             | #{section_progress_doc.percent_complete}%
 
 
-    if isInRole 'dev'
-        +dev_footer
+    // if isInRole 'dev'
+    //     +dev_footer
         
         
 template(name='user_section_progress_list')

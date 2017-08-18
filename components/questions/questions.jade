@@ -38,10 +38,10 @@ template(name='questions')
                             //         i.checkmark.icon
                         if isInRole 'admin'
                             +session_edit_button
-                            if isInRole 'dev'
-                                .ui.list
-                                    .item parent_id #{parent_id}
-                                    .item this id #{_id}
+                            // if isInRole 'dev'
+                            //     .ui.list
+                            //         .item parent_id #{parent_id}
+                            //         .item this id #{_id}
                         .ui.divider
                         // if isInRole 'admin'
                             // +answers

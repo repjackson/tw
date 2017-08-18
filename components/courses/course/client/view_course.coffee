@@ -41,14 +41,24 @@ Template.view_course.onCreated ->
     @autorun -> Meteor.subscribe 'doc_by_tags', ['course','sol']
     @autorun -> Meteor.subscribe 'sol_members', selected_course_member_tags.array()
     @autorun -> Meteor.subscribe 'sol_signers'
-    @autorun -> Meteor.subscribe 'course_progress', 'sol'
+    @autorun -> Meteor.subscribe 'sol_progress'
 
 
 Template.view_course.onRendered ->
-    Meteor.setTimeout ->
-        $('.progress').progress();
-    , 1000
-
+    self = @
+    if @subscriptionsReady()
+        @autorun =>
+        # console.log Session.get 'section_number'
+            Meteor.setTimeout ->
+                # $('.ui.accordion').accordion()            
+                sol_progress_doc =  Docs.findOne(tags: $all: ["sol", "course progress"])
+                # console.log sol_progress_doc
+                if sol_progress_doc
+                    $('#sol_percent_complete_bar').progress(
+                        percent: sol_progress_doc.sol_progress_percent
+                        autoSuccess: false
+                        );
+            , 1000
 
 
 Template.view_course.helpers
@@ -59,7 +69,9 @@ Template.view_course.helpers
         if course
             _.where(course.agreements, user_id: Meteor.userId() )
 
-
+    sol_progress_doc: ->
+        Docs.findOne(tags: $all: ["sol", "course progress"])
+        
 
 Template.view_course.events
     # 'click #add_module': ->
