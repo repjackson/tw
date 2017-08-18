@@ -10,6 +10,20 @@ FlowRouter.route '/course/sol/welcome',
 Template.course_welcome.onRendered ->
     Meteor.setTimeout ->
         $('#course_welcome_menu .item').tab()
+        sol_progress_doc = 
+            Docs.findOne
+                tags: $all: ["sol", "course progress"]
+                author_id: Meteor.userId()
+        # console.log sol_progress_doc
+        if not sol_progress_doc
+            Docs.insert
+                tags: ["sol", "course progress"]
+                author_id: Meteor.userId()
+        sol_progress_doc = 
+            Docs.findOne
+                tags: $all: ["sol", "course progress"]
+                author_id: Meteor.userId()
+
     , 1000
 
 Template.welcome_video.onCreated ->
@@ -30,47 +44,46 @@ Template.welcome_video.helpers
             Docs.findOne
                 tags: $all: ["sol", "course progress"]
                 author_id: Meteor.userId()
-        console.log sol_progress_doc
+        # console.log sol_progress_doc
         if sol_progress_doc then return sol_progress_doc.watched_welcome_video
 
 
-Template.welcome_video.helpers
+Template.welcome_video.events
     'click #mark_welcome_video_complete': ->
         sol_progress_doc = 
             Docs.findOne
                 tags: $all: ["sol", "course progress"]
                 author_id: Meteor.userId()
-        console.log sol_progress_doc
         Docs.update sol_progress_doc._id, 
             $set:
                 watched_welcome_video: true
         
         
-        # Meteor.call 'calculate_sol_progress', (err,res)->
-        #     # console.log res
-        #     $('#section_percent_complete_bar').progress('set percent', res);
-        #     # console.log $('#section_percent_complete_bar').progress('get percent');
+        Meteor.call 'calculate_sol_progress', (err,res)->
+            # console.log res
+            $('#sol_percent_complete_bar').progress('set percent', res);
+            # console.log $('#section_percent_complete_bar').progress('get percent');
 
 
-    'click #unmark_video_complete': ->
+    'click #unmark_welcome_video_complete': ->
         sol_progress_doc = 
             Docs.findOne
                 tags: $all: ["sol", "course progress"]
                 author_id: Meteor.userId()
-        console.log sol_progress_doc
+            
         Docs.update sol_progress_doc._id, 
             $set:
                 watched_welcome_video: false
         
-        # Meteor.call 'calculate_sol_progress', (err,res)->
-        #     # console.log res
-        #     $('#section_percent_complete_bar').progress('set percent', res);
-        #     # console.log $('#section_percent_complete_bar').progress('get percent');
+        Meteor.call 'calculate_sol_progress', (err,res)->
+            # console.log res
+            $('#sol_percent_complete_bar').progress('set percent', res);
+            # console.log $('#section_percent_complete_bar').progress('get percent');
 
 
 
 
-Template.view_terms_course.helpers
+Template.sol_terms.helpers
     has_agreed: ->
         course = Docs.findOne tags: ['course', 'sol']
         if course
@@ -94,7 +107,7 @@ Template.view_terms_course.helpers
         Meteor.users.findOne @user_id
         
         
-Template.view_terms_course.events
+Template.sol_terms.events
     'click #agree_to_terms': ->
         self = @
         swal {
@@ -115,19 +128,82 @@ Template.view_terms_course.events
                     agreements: 
                         user_id: Meteor.userId()
                         date_signed: new Date()
-    
+            sol_progress_doc = 
+                Docs.findOne
+                    tags: $all: ["sol", "course progress"]
+                    author_id: Meteor.userId()
+            # console.log sol_progress_doc
+            Docs.update sol_progress_doc._id, 
+                $set:
+                    has_agreed: true
+            Meteor.call 'calculate_sol_progress'
+            
     'click #remove_agreement': ->
         course = Docs.findOne tags: ['course', 'sol']
         Docs.update course._id,
             $pull: 
                 agreements: 
                     user_id: Meteor.userId()
+        sol_progress_doc = 
+            Docs.findOne
+                tags: $all: ["sol", "course progress"]
+                author_id: Meteor.userId()
+        # console.log sol_progress_doc
+        Docs.update sol_progress_doc._id, 
+            $set:
+                has_agreed: false
+
         
         
-        
-Template.view_inspiration_course.onRendered ->
+Template.inspiration_video.onRendered ->
     @autorun =>
         if @subscriptionsReady()
             Meteor.setTimeout ->
                 $('.ui.accordion').accordion()
             , 1000
+            
+            
+Template.inspiration_video.helpers
+    inspiration_video_watched: ->
+        sol_progress_doc = 
+            Docs.findOne
+                tags: $all: ["sol", "course progress"]
+                author_id: Meteor.userId()
+        # console.log sol_progress_doc
+        if sol_progress_doc then return sol_progress_doc.watched_inspiration_video
+
+
+Template.inspiration_video.events
+    'click #mark_inspiration_video_complete': ->
+        sol_progress_doc = 
+            Docs.findOne
+                tags: $all: ["sol", "course progress"]
+                author_id: Meteor.userId()
+        # console.log sol_progress_doc
+        Docs.update sol_progress_doc._id, 
+            $set:
+                watched_inspiration_video: true
+        
+        
+        # Meteor.call 'calculate_sol_progress', (err,res)->
+        #     # console.log res
+        #     $('#section_percent_complete_bar').progress('set percent', res);
+        #     # console.log $('#section_percent_complete_bar').progress('get percent');
+
+
+    'click #unmark_inspiration_video_complete': ->
+        sol_progress_doc = 
+            Docs.findOne
+                tags: $all: ["sol", "course progress"]
+                author_id: Meteor.userId()
+        # console.log sol_progress_doc
+        Docs.update sol_progress_doc._id, 
+            $set:
+                watched_inspiration_video: false
+        
+        # Meteor.call 'calculate_sol_progress', (err,res)->
+        #     # console.log res
+        #     $('#section_percent_complete_bar').progress('set percent', res);
+        #     # console.log $('#section_percent_complete_bar').progress('get percent');
+
+            

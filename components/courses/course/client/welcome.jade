@@ -6,9 +6,9 @@ template(name='course_welcome')
     .ui.bottom.attached.tab.active.segment(data-tab='welcome_tab')
         +welcome_video
     .ui.bottom.attached.tab.segment(data-tab='terms_tab')
-        +view_terms_course
+        +sol_terms
     .ui.bottom.attached.tab.segment(data-tab='inspiration_tab')
-        +view_inspiration_course
+        +inspiration_video
             
         
 template(name='welcome_video')
@@ -31,7 +31,7 @@ template(name='welcome_video')
     
     
 
-template(name='view_terms_course')
+template(name='sol_terms')
     +doc_content tags='sol,welcome,terms,instructions'
     p(dir='ltr')
         strong Student Commitment Agreement 
@@ -174,7 +174,7 @@ template(name='view_terms_course')
                         .description #{date_signed}
 
 
-template(name='view_inspiration_course')
+template(name='inspiration_video')
     +doc_content tags='sol,inspiration,content'
     .ui.styled.fluid.accordion
         h3.title
@@ -185,9 +185,9 @@ template(name='view_inspiration_course')
     .ui.hidden.divider
     if currentUser
         if inspiration_video_watched
-            .unmark_inspiration_video_complete.ui.blue.fluid.button 
+            #unmark_inspiration_video_complete.ui.blue.fluid.button 
                 i.check.icon
                 |Inspiration Video Watched
         else
-            .mark_inspiration_video_complete.ui.basic.fluid.button Mark Inspiration ideo Watched
+            #mark_inspiration_video_complete.ui.basic.fluid.button Mark Inspiration Video Watched
 

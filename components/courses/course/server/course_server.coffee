@@ -101,19 +101,39 @@ Meteor.methods
                     tags: ['sol', "module #{number}", 'module progress']
                     author_id: Meteor.userId()
             if module_progress_doc
-                console.log typeof module_progress_doc.module_progress_percent
+                # console.log typeof module_progress_doc.module_progress_percent
                 if module_progress_doc.module_progress_percent > 0
                     if Math.round(module_progress_doc.module_progress_percent) is 100 then module_complete_count += 1
                     else current_module = number
                     sol_progress_percent += 100/sol_module_count*module_progress_doc.module_progress_percent/100
-        console.log 'sol progress', sol_progress_percent
-        console.log 'module_complete_count', module_complete_count
-        console.log 'current_module', current_module
+        # console.log 'sol progress', sol_progress_percent
+        # console.log 'module_complete_count', module_complete_count
+        # console.log 'current_module', current_module
+        
+        if sol_module_count is module_complete_count
+            sol_modules_complete = true
+        else
+            sol_modules_complete = false
+        
+        
+        
+        # welcome calculation
+        
+        welcome_count = 0
+        if sol_progress_doc.watched_inspiration_video then welcome_count++
+        if sol_progress_doc.watched_welcome_video then welcome_count++
+        if sol_progress_doc.has_agreed then welcome_count++
+        
+        if welcome_count is 3 then welcome_complete = true else welcome_complete = false
+        
+        
         Docs.update sol_progress_doc._id,
             $set:
                 sol_progress_percent: sol_progress_percent
                 current_module: current_module
                 module_complete_count: module_complete_count
-            
-        
+                sol_module_count: sol_module_count
+                sol_modules_complete: sol_modules_complete
+                welcome_complete: welcome_complete
+                welcome_count: welcome_count
         return sol_progress_percent
