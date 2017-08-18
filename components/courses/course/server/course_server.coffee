@@ -56,3 +56,40 @@ Meteor.publish 'sol_signers', ->
     user_id_list =  _.pluck(course.agreements, 'user_id' )
     Meteor.users.find
         _id: $in: user_id_list
+        
+        
+        
+Meteor.publish 'sol', ()->
+    Docs.find
+        tags: $all: ['sol', "course progress"]
+        author_id: @userId
+        
+
+
+Meteor.methods
+    'calculate_sol_progress': ()->
+        sol_progress_doc = 
+            Docs.findOne
+                tags: ['sol', 'course progress']
+                author_id: Meteor.userId()
+
+        # console.log module_progress_doc
+
+        sol_progress = 0
+
+        sol_module_count = 
+            Docs.find( 
+                tags: $all: ['sol', 'module']
+            ).count()
+        
+        for number in [1..sol_module_count]
+            module_progress_doc = 
+                Docs.findOne
+                    tags: ['sol', "module #{number}", 'module progress']
+                    author_id: Meteor.userId()
+            if module_progress_doc
+                console.log typeof module_progress_doc.module_progress_percent
+                if module_progress_doc.module_progress_percent > 0
+                    sol_progress += 100/sol_module_count*module_progress_doc.module_progress_percent/100
+        console.log 'sol progress', sol_progress
+        return sol_progress

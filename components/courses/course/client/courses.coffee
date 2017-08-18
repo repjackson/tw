@@ -18,6 +18,8 @@ Template.courses.helpers
             if Session.equals 'view_mode', 'mine' then 'active' else ''
         else
             'disabled'
+            
+            
 Template.courses.events
     'click #set_mode_to_all': -> 
         if Meteor.userId() then Session.set 'view_mode', 'all'

@@ -14,6 +14,10 @@ Template.course_dashboard.onRendered ->
 
 
 Template.course_dashboard.helpers
-        
+    has_agreed: ->
+        course = Docs.findOne tags: ['course', 'sol']
+        if course
+            _.where(course.agreements, user_id: Meteor.userId() )
+    
         
 Template.course_dashboard.events

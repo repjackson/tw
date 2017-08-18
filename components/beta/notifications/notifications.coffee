@@ -17,6 +17,7 @@ Meteor.methods
         new_id = Notifications.insert
             recipient_id: recipient_id
             text: text
+            author_id: Meteor.userId()
         return new_id
 
             

@@ -18,15 +18,27 @@ template(name='view_course')
             .five.wide.column
                 with course
                     .ui.vertical.fluid.pointing.large.menu
+                        a.item(href="/course/sol/dashboard" class="{{isActiveRoute name='course_dashboard'}}") 
+                            i.dashboard.icon
+                            |Dashboard
                         a.item(href="/course/sol/welcome" class="{{isActiveRoute name='course_welcome'}}") 
-                            i.smile.icon
+                            i.star.icon
                             |Welcome
-                        a.item(href="/course/sol/modules" class="{{isActiveRoute name='course_modules'}}") 
-                            i.list.layout.icon
-                            |Modules
-                        a.item(href="/course/sol/members" class="{{isActiveRoute name='course_members'}}") 
-                            i.users.icon
-                            |Members
+                        if has_agreed
+                            a.item(href="/course/sol/modules" class="{{isActiveRoute name='course_modules'}}") 
+                                i.list.layout.icon
+                                |Modules
+                            a.item(href="/course/sol/members" class="{{isActiveRoute name='course_members'}}") 
+                                i.users.icon
+                                |Members
+                        else
+                            .disabled.item 
+                                i.list.layout.icon
+                                |Modules (please agree to terms)
+                            .disabled.item 
+                                i.users.icon
+                                |Members (please agree to terms)
+                        
                         // a.item(href="/course/sol/collaboration" class="{{isActiveRoute name='course_collaboration'}}") Collaboration
                         // a.item(href="/course/sol/downloads" class="{{isActiveRoute name='course_downloads'}}") Downloads
                         // a.item(href="/course/sol/reminders" class="{{isActiveRoute name='course_reminders'}}") Reminders
@@ -38,6 +50,12 @@ template(name='view_course')
                             +doc_title tags='course,sol'
                             +doc_subtitle tags='course,sol'
                             +doc_price tags='course,sol'
+                            #calculate_sol_progress.ui.basic.fluid.button Calc SOL Progress
+                            #sol_percent_complete_bar.ui.blue.indicating.progress(data-percent=section_progress_doc.percent_complete)
+                                .bar
+                                    .progress
+                                        | #{sol_progress_doc.sol_progress_percent}%
+
             .ten.wide.column
                 +Template.dynamic template=course_content
 

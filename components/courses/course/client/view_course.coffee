@@ -40,10 +40,24 @@ FlowRouter.route '/register-sol',
 Template.view_course.onCreated ->
     @autorun -> Meteor.subscribe 'doc_by_tags', ['course','sol']
     @autorun -> Meteor.subscribe 'sol_members', selected_course_member_tags.array()
+    @autorun -> Meteor.subscribe 'sol_signers'
+    @autorun -> Meteor.subscribe 'course_progress', 'sol'
+
+
+Template.view_course.onRendered ->
+    Meteor.setTimeout ->
+        $('.progress').progress();
+    , 1000
+
+
 
 Template.view_course.helpers
     course: -> Docs.findOne tags: ['course','sol']
     
+    has_agreed: ->
+        course = Docs.findOne tags: ['course', 'sol']
+        if course
+            _.where(course.agreements, user_id: Meteor.userId() )
 
 
 
@@ -54,3 +68,6 @@ Template.view_course.events
     #         parent_course_slug:slug 
     #     FlowRouter.go "/course/#{slug}/module/#{new_module_id}/edit"
             
+    'click #calculate_sol_progress': ->
+        Meteor.call 'calculate_sol_progress', (err, res)->
+            $('#sol_percent_complete_bar').progress('set percent', res);

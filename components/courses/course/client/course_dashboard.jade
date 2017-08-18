@@ -2,45 +2,71 @@ template(name='course_dashboard')
     .ui.container
         h2.ui.center.aligned.header Dashboard
         .ui.two.centered.stackable.cards
-            a.ui.raised.card(href='/courses/sol/welcome')
+            a.ui.raised.card(href='/course/sol/welcome')
                 .content
                     .header 
-                        i.smile.icon
+                        i.star.icon
                         |Welcome
                     .description
                         .ui.list
                             .item Welcome Video
                             .item Terms of Agreement
                             .item SOL Inspiration
-                            
-            a.ui.raised.card(href='/course/sol/modules')
-                .content
-                    .header
-                        i.users.icon
-                        |Modules
-                    .description
-                        .ui.list
-                            .item Welcome Video
-                            .item Terms of Agreement
-                            .item SOL Inspiration
-
-            a.ui.raised.card(href='/course/sol/members')
-                .content
-                    .header 
-                        i.users.icon
-                        |Members
-                    .description
-                        .ui.list
-                            .item Welcome Video
-                            .item Terms of Agreement
-                            .item SOL Inspiration
-            .ui.disabled.card
-                .content
-                    .header
-                        i.line.chart.icon
-                        |Stats
-                    .description
-                        .ui.list
-                            .item Welcome Video
-                            .item Terms of Agreement
-                            .item SOL Inspiration
+            if has_agreed  
+                a.ui.raised.card(href='/course/sol/modules')
+                    .content
+                        .header
+                            i.users.icon
+                            |Modules
+                        .description
+                            .ui.list
+                                .item Welcome Video
+                                .item Terms of Agreement
+                                .item SOL Inspiration
+    
+                a.ui.raised.card(href='/course/sol/members')
+                    .content
+                        .header 
+                            i.users.icon
+                            |Members
+                        .description
+                            .ui.list
+                                .item Welcome Video
+                                .item Terms of Agreement
+                                .item SOL Inspiration
+                // .ui.disabled.card
+                //     .content
+                //         .header
+                //             i.line.chart.icon
+                //             |Stats
+                //         .description
+                //             .ui.list
+                //                 .item Welcome Video
+                //                 .item Terms of Agreement
+                //                 .item SOL Inspiration
+            else
+                .ui.raised.card
+                    .content
+                        .ui.grey.header
+                            i.list.icon
+                            |Modules
+                        .description
+                            .ui.list
+                                .item Please agree to SOL Terms
+    
+                .ui.raised.card
+                    .content
+                        .ui.grey.header 
+                            i.users.icon
+                            |Members
+                        .description
+                            .ui.list
+                                .item Please agree to SOL Terms
+                .ui.disabled.card
+                    .content
+                        .ui.grey.header
+                            i.line.chart.icon
+                            |Stats
+                        .description
+                            .ui.list
+                                .item Please agree to SOL Terms
