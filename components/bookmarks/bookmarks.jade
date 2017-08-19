@@ -1,0 +1,40 @@
+template(name='bookmarks')
+    .ui.container
+        .ui.dividing.header 
+            i.bookmarks.icon
+            |My Bookmarks (#{bookmarks_count})
+        .ui.list
+            each bookmark_docs
+                +bookmark
+                .ui.hidden.divider
+                .ui.divider
+                
+template(name='bookmark')
+    .item
+        .content
+            .header
+                each tags
+                    .ui.basic.label #{this}
+            .avatar
+                a
+                    | by
+                    img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+                    |#{author.name}
+                span.date #{from_now}
+            .description
+                .ui.basic.segment
+                    if content
+                        |!{content}
+                    if image_url
+                        img.ui.small.image(src=image_url)
+            .extra
+                .ui.horizontal.list
+                    .item
+                        .ui.blue.basic.button
+                            | View
+                            i.right.chevron.icon
+                    .item
+                        +bookmark_button   
+                    .item
+                        span Type: 
+                        .ui.basic.label #{type}

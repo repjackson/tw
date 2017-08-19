@@ -12,6 +12,12 @@ template(name='course_dashboard')
                             .item Welcome Video
                             .item Terms of Agreement
                             .item SOL Inspiration
+                            .ui.basic.label 
+                                |#{sol_progress_doc.welcome_count}
+                            |/
+                            .ui.basic.label 3
+                            |Completed
+
             if has_agreed  
                 a.ui.raised.card(href='/course/sol/modules')
                     .content
@@ -19,31 +25,35 @@ template(name='course_dashboard')
                             i.users.icon
                             |Modules
                         .description
-                            .ui.list
-                                .item Welcome Video
-                                .item Terms of Agreement
-                                .item SOL Inspiration
+                            .ui.basic.label #{sol_progress_doc.module_complete_count}
+                            |/
+                            .ui.basic.label #{sol_progress_doc.sol_module_count}
+                            |Completed
+                        //     .ui.list
+                        //         .item Welcome Video
+                        //         .item Terms of Agreement
+                        //         .item SOL Inspiration
     
                 a.ui.raised.card(href='/course/sol/members')
                     .content
                         .header 
                             i.users.icon
                             |Members
+                        // .description
+                        //     .ui.list
+                        //         .item Welcome Video
+                        //         .item Terms of Agreement
+                        //         .item SOL Inspiration
+                .ui.disabled.card
+                    .content
+                        .header
+                            i.line.chart.icon
+                            |Stats
                         .description
                             .ui.list
                                 .item Welcome Video
                                 .item Terms of Agreement
                                 .item SOL Inspiration
-                // .ui.disabled.card
-                //     .content
-                //         .header
-                //             i.line.chart.icon
-                //             |Stats
-                //         .description
-                //             .ui.list
-                //                 .item Welcome Video
-                //                 .item Terms of Agreement
-                //                 .item SOL Inspiration
             else
                 .ui.raised.card
                     .content

@@ -5,6 +5,8 @@ FlowRouter.route '/course/sol/dashboard',
             course_content: 'course_dashboard'
 
 
+Template.course_dashboard.onCreated ->
+    @autorun -> Meteor.subscribe 'sol_progress'
 
 
 Template.course_dashboard.onRendered ->
@@ -19,5 +21,12 @@ Template.course_dashboard.helpers
         if course
             _.where(course.agreements, user_id: Meteor.userId() )
     
+    sol_progress_doc: ->
+        Docs.findOne
+            tags: $all: ['sol', 'course progress']
+            author_id: Meteor.userId()
+        
+        
+        
         
 Template.course_dashboard.events

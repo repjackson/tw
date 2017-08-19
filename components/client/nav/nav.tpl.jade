@@ -1,85 +1,87 @@
-.ui.borderless.blue.top.attached.menu
-    .ui.container
-        a.toggle_sidebar.mobile.only.item
-            i.sidebar.icon
-            .imogen Tori Webster
-            // |     Menu
-        // a.ui.mobile.only.dropdown.item 
-        //     i.content.icon
-        //     .imogen Tori Webster
-        //     .menu
-        //         a.item(href='/' class="{{isActivePath '/'}}") Home
-        //         a.item(href='/about' class="{{isActivePath '/about'}}") About
-        //         a.item(href='/courses' class="{{isActivePath '/courses'}}") Courses
-        //         a.item(href='/lightbank' class="{{isActivePath '/lightbank'}}") Lightbank
-        //         // if isInRole 'admin'
-        //         //     a.item(href='/marketplace' class="{{isActivePath '/marketplace'}}") 
-        //         //         i.red.configure.icon
-        //         //         |Marketplace
-        //         a.item(href='/contact' class="{{isActivePath '/contact'}}") Contact
-        //         .divider
-        //         if currentUser
-        //             if isInRole 'admin'
-        //                 a.item(href='/admin/members' class="{{isActivePath '/admin/members'}}")
-        //                     i.configure.icon
-        //                     | Admin
-        //             a.item(href="/dashboard" class="{{isActivePath '/dashboard'}}")
-        //                 if currentUser.profile.image_id
-        //                     img.ui.avatar.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
-        //                 else
-        //                     i.user.icon
-        //                 if currentUser.name
-        //                     | #{currentUser.name}
-        //                 else
-        //                     | #{currentUser.username}
-        //             a#logout.ui.item(href='#')
-        //                 i.sign.out.icon
-        //                 | Sign Out
-        //         else
-        //             a.ui.item(href='/sign-in') 
-        //                 i.sign.in.icon
-        //                 | Sign In
-        a.mobile.hidden.item(href='/' class="{{isActivePath '/'}}")
-            .imogen Tori Webster
-        a.mobile.hidden.item(href='/about' class="{{isActivePath '/about'}}") About
-        a.mobile.hidden.item(href='/courses' class="{{isActivePath '/courses'}}") Courses
-        a.mobile.hidden.item(href='/lightbank' class="{{isActivePath '/lightbank'}}") Lightbank
-        if isInRole 'admin'
-            a.mobile.hidden.item(href='/services' class="{{isActivePath '/services'}}") 
-                i.red.configure.icon
-                |Services
-        a.mobile.hidden.item(href='/contact' class="{{isActivePath '/contact'}}") Contact
-        .right.mobile.hidden.menu
-            if currentUser
-                if cart_items
-                    a.icon.item(href='/cart' class="{{isActivePath '/cart'}}")
-                        i.large.icons
-                            i.cart.icon
-                            i.corner.teal.asterisk.icon
-                if isInRole 'admin'
-                    a.item(href='/admin/members' class="{{isActivePath '/admin/members'}}")
-                        i.configure.red.icon
-                        // | Admin
-                if isInRole 'dev'
-                    a.item(href='/messages' class="{{isActivePath '/messages'}}")
-                        i.mail.outline.red.icon
-                        // | Admin
-                    a.item(href='/notifications' class="{{isActivePath '/notifications'}}")
-                        i.alarm.outline.red.icon
-                        // | Admin
-                a.item(href="/dashboard" class="{{isActivePath '/dashboard'}}")
-                    if currentUser.profile.image_id
-                        img.ui.avatar.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
-                    else
-                        i.user.icon
-                    if currentUser.name
-                        | #{currentUser.name}
-                    else
-                        | #{currentUser.username}
-                a#logout.ui.item(href='#')
-                    i.sign.out.icon
-                    | Sign Out
-            else
-                a.ui.item(href='/sign-in') 
-                    i.sign.in.icon
-                    | Sign In
+.ui.blue.top.attached.menu
+    a.toggle_sidebar.mobile.only.item
+        i.sidebar.icon
+        .imogen Tori Webster
+        // |     Menu
+    // a.ui.mobile.only.dropdown.item 
+    //     i.content.icon
+    //     .imogen Tori Webster
+    //     .menu
+    //         a.item(href='/' class="{{isActivePath '/'}}") Home
+    //         a.item(href='/about' class="{{isActivePath '/about'}}") About
+    //         a.item(href='/courses' class="{{isActivePath '/courses'}}") Courses
+    //         a.item(href='/lightbank' class="{{isActivePath '/lightbank'}}") Lightbank
+    //         // if isInRole 'admin'
+    //         //     a.item(href='/marketplace' class="{{isActivePath '/marketplace'}}") 
+    //         //         i.red.configure.icon
+    //         //         |Marketplace
+    //         a.item(href='/contact' class="{{isActivePath '/contact'}}") Contact
+    //         .divider
+    //         if currentUser
+    //             if isInRole 'admin'
+    //                 a.item(href='/admin/members' class="{{isActivePath '/admin/members'}}")
+    //                     i.configure.icon
+    //                     | Admin
+    //             a.item(href="/dashboard" class="{{isActivePath '/dashboard'}}")
+    //                 if currentUser.profile.image_id
+    //                     img.ui.avatar.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+    //                 else
+    //                     i.user.icon
+    //                 if currentUser.name
+    //                     | #{currentUser.name}
+    //                 else
+    //                     | #{currentUser.username}
+    //             a#logout.ui.item(href='#')
+    //                 i.sign.out.icon
+    //                 | Sign Out
+    //         else
+    //             a.ui.item(href='/sign-in') 
+    //                 i.sign.in.icon
+    //                 | Sign In
+    a.mobile.hidden.item(href='/' class="{{isActivePath '/'}}")
+        .imogen Tori Webster
+    a.mobile.hidden.item(href='/about' class="{{isActivePath '/about'}}") About
+    a.mobile.hidden.item(href='/courses' class="{{isActivePath '/courses'}}") Courses
+    a.mobile.hidden.item(href='/lightbank' class="{{isActivePath '/lightbank'}}") Lightbank
+    if isInRole 'admin'
+        a.mobile.hidden.item(href='/services' class="{{isActivePath '/services'}}") 
+            i.red.configure.icon
+            |Services
+    a.mobile.hidden.item(href='/contact' class="{{isActivePath '/contact'}}") Contact
+    .right.mobile.hidden.menu
+        if currentUser
+            if cart_items
+                a.icon.item(href='/cart' class="{{isActivePath '/cart'}}")
+                    i.large.icons
+                        i.cart.icon
+                        i.corner.teal.asterisk.icon
+            if isInRole 'admin'
+                a.item(href='/admin/members' class="{{isActivePath '/admin/members'}}")
+                    i.configure.red.icon
+                    // | Admin
+            if isInRole 'dev'
+                a.item(href='/messages' class="{{isActiveRoute name='message_layout'}}")
+                    i.mail.outline.red.icon
+                    // | Admin
+                a.item(href='/notifications' class="{{isActivePath '/notifications'}}")
+                    i.alarm.outline.red.icon
+                    // | Admin
+            a.item(href='/bookmarks' class="{{isActivePath '/bookmarks'}}")
+                i.bookmark.outline.icon
+                // | Admin
+            a.item(href="/dashboard" class="{{isActivePath '/dashboard'}}")
+                if currentUser.profile.image_id
+                    img.ui.avatar.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+                else
+                    i.user.icon
+                if currentUser.name
+                    | #{currentUser.name}
+                else
+                    | #{currentUser.username}
+            a#logout.ui.item(href='#')
+                i.sign.out.icon
+                | Sign Out
+        else
+            a.ui.item(href='/sign-in') 
+                i.sign.in.icon
+                | Sign In
