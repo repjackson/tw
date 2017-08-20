@@ -56,6 +56,12 @@ Template.registerHelper 'in_sol', () -> Roles.userIsInRole 'sol_member'
 Template.registerHelper 'in_demo', () -> Roles.userIsInRole 'sol_demo_member'
 
 
+
+# messages
+Template.registerHelper 'message_segment_class', -> if @read then '' else 'blue raised'
+
+
+
 Template.registerHelper 'is_editing', () -> 
     # console.log 'this', @
     Session.equals 'editing_id', @_id

@@ -1,0 +1,24 @@
+template(name='archived_messages')
+    .ui.horizontal.divider.header All Messages
+    .ui.threaded.comments
+        each archived_messages
+            +message
+        
+
+template(name='message')
+    .comment
+        a.avatar
+            img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+        .content
+            a.author 
+                | #{author.username}
+                i.right.chevron.icon
+                | #{recipient.username}
+            .metadata
+                span.date #{from_now}
+            .text
+                .ui.segment(class=message_segment_class)
+                    | !{content}
+            .actions
+                +read_link
+                +archive_link

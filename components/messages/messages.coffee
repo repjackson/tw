@@ -3,6 +3,8 @@ Messages.before.insert (userId, doc)->
     doc.timestamp = Date.now()
     doc.author_id = Meteor.userId()
     doc.status = 'draft'
+    doc.read = false
+    doc.archived = false
     return
 
 Messages.helpers
@@ -27,18 +29,29 @@ if Meteor.isClient
         unread_inbox_count: ->
             Messages.find(
                 recipient_id: Meteor.userId()
+                archived: false
                 read: false
                 ).count()
     
         sent_count: ->
             Messages.find(
                 author_id: Meteor.userId()
+                status: 'sent'
                 ).count()
     
         drafts_count: ->
             Messages.find(
                 author_id: Meteor.userId()
                 status: 'draft'
+                ).count()
+    
+        archived_count: ->
+            Messages.find(
+                $or: [
+                    author_id: Meteor.userId()
+                    recipient_id: Meteor.userId()
+                    ]
+                archived: true
                 ).count()
     
     
@@ -103,6 +116,6 @@ if Meteor.isServer
     
             
     Messages.allow
-        insert: (userId, doc) -> Roles.userIsInRole(userId, 'admin') or doc.author_id is userId
-        update: (userId, doc) -> Roles.userIsInRole(userId, 'admin') or doc.author_id is userId
-        remove: (userId, doc) -> Roles.userIsInRole(userId, 'admin') or doc.author_id is userId
+        insert: (userId, doc) -> Roles.userIsInRole(userId, 'admin') or doc.author_id is userId or doc.recipient_id is userId
+        update: (userId, doc) -> Roles.userIsInRole(userId, 'admin') or doc.author_id is userId or doc.recipient_id is userId
+        remove: (userId, doc) -> Roles.userIsInRole(userId, 'admin') or doc.author_id is userId or doc.recipient_id is userId

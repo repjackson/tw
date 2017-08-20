@@ -19,23 +19,15 @@ if Meteor.isClient
         
     Template.inbox.helpers
         received_messages: ->
-            Messages.find
-                recipient_id: Meteor.userId()  
+            Messages.find {
+                recipient_id: Meteor.userId()
+                archived: false
+                }, sort: timestamp: -1
     
             
     Template.inbox.events
-        'click .mark_read': ->
-            Messages.update @_id,
-                $set: read: true
-            
-            
-        'click .mark_unread': ->
-            Messages.update @_id,
-                $set: read: false
     
     Template.inbox_message.helpers
-        message_segment_class: -> 
-            if @read then '' else 'blue raised'
             
 
 # if Meteor.isServer

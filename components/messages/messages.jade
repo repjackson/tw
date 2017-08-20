@@ -30,9 +30,9 @@ template(name='messages_layout')
                                         |Drafts
                                         if drafts_count
                                             .ui.white.label #{drafts_count}
-                                    a.item(href='/messages/all' class="{{isActiveRoute name='all_messages'}}") 
+                                    a.item(href='/messages/archived' class="{{isActiveRoute name='all_messages'}}") 
                                         i.archive.icon
-                                        | All #{all_count}
+                                        | Archived (#{archived_count})
                             .eleven.wide.column
                                 +Template.dynamic template=message_content
 

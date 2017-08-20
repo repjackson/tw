@@ -2,3 +2,24 @@ template(name='message_reply_button')
     .reply_to_message.ui.basic.button 
         i.reply.icon
         |Reply
+        
+        
+template(name='read_link')
+    if read
+        a.mark_unread 
+            i.open.envelope.outline.icon
+            |Mark Unread
+    else
+        a.mark_read 
+            i.mail.outline.icon
+            |Mark Read
+
+template(name='archive_link')
+    if archived
+        a.unarchive 
+            i.inbox.icon
+            |Unarchive
+    else
+        a.archive 
+            i.archive.icon
+            |Archive

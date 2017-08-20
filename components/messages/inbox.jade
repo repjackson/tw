@@ -5,6 +5,7 @@ template(name='inbox')
     .ui.threaded.comments
         each received_messages
             +inbox_message
+            .ui.divider
 
 
 template(name='inbox_message')
@@ -24,11 +25,11 @@ template(name='inbox_message')
                 .ui.hidden.fitted.divider    
             .actions
                 // a.reply(href='#') Reply
+                +read_link
+                +archive_link
                 +message_reply_button
-                if read
-                    a.mark_unread Mark Unread
-                else
-                    a.mark_read Mark Read
                 a.delete_message
-                a.edit_comment(href="/message/edit/#{_id}") Edit
+                a.edit_comment(href="/message/edit/#{_id}") 
+                    i.pencil.icon
+                    |Edit
 

@@ -1,0 +1,27 @@
+template(name='karma')
+    .ui.container
+        h1.ui.horizontal.dividing.header 
+            i.heartbeat.outline.icon
+            |Karma (#{karma_count})
+        .ui.stackable.grid
+            .four.wide.column
+                .ui.dividing.header Actions
+                #send_karma.ui.basic.fluid.button
+                    i.send.icon
+                    |Send Karma
+                .ui.dividing.header Sharing
+                .ui.slider.checkbox
+                    input#share_bookmarks(type='checkbox' checked=currentUser.profile.share_bookmarks)
+                    label(for='share_bookmarks') Share Stats in Profile
+            .twelve.wide.column
+                .ui.dividing.header History
+                .ui.dividing.header Trends
+                .ui.four.column.stackable.grid
+                    .column
+                        .ui.dividing.header Top Posts
+                    .column
+                        .ui.dividing.header Top Rising
+                    .column
+                        .ui.dividing.header Top Given Users
+                    .column
+                        .ui.dividing.header Top Received Users

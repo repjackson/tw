@@ -13,7 +13,7 @@
     //         a.item(href='/lightbank' class="{{isActivePath '/lightbank'}}") Lightbank
     //         // if isInRole 'admin'
     //         //     a.item(href='/marketplace' class="{{isActivePath '/marketplace'}}") 
-    //         //         i.red.configure.icon
+    //         //         i.configure.icon
     //         //         |Marketplace
     //         a.item(href='/contact' class="{{isActivePath '/contact'}}") Contact
     //         .divider
@@ -45,7 +45,7 @@
     a.mobile.hidden.item(href='/lightbank' class="{{isActivePath '/lightbank'}}") Lightbank
     if isInRole 'admin'
         a.mobile.hidden.item(href='/services' class="{{isActivePath '/services'}}") 
-            i.red.configure.icon
+            i.configure.icon
             |Services
     a.mobile.hidden.item(href='/contact' class="{{isActivePath '/contact'}}") Contact
     .right.mobile.hidden.menu
@@ -59,23 +59,28 @@
                 a.icon.item(href='/admin/members' class="{{isActivePath '/admin/members'}}")
                     i.configure.red.icon
                     // | Admin
-            if isInRole 'dev'
-                a.icon.item(href='/messages' class="{{isActiveRoute name='message_layout'}}" data-content="Messages")
-                    if unread_message_count
-                        i.mail.teal.icon
-                    else
-                        i.mail.outline.icon
-                    // | Admin
-                a.ui.icon.dropdown.item(class="{{isActivePath '/notifications'}}" data-content="Notifications")
-                    i.alarm.outline.red.icon
-                    .ui.menu
-                        a.item(href='/notifications') View All
-                        .ui.divider
-                        each unread_notifications
-                            a.unread_notification.item #{text}
+            a.icon.item(href='/messages' class="{{isActiveRoute name='message_layout'}}" data-content="Messages")
+                if unread_message_count
+                    i.mail.teal.icon
+                else
+                    i.mail.outline.icon
+                // | Admin
+            a.ui.icon.dropdown.item(class="{{isActivePath '/notifications'}}" data-content="Notifications")
+                i.alarm.outline.icon
+                .ui.menu
+                    a.item(href='/notifications') View All
+                    .ui.divider
+                    each unread_notifications
+                        a.unread_notification.item #{text}
             // a.ui.icon.dropdown.item(href='/bookmarks' class="{{isActivePath '/bookmarks'}}")
             a.icon.item(href='/bookmarks' class="{{isActivePath '/bookmarks'}}" data-content="Bookmarks")
                 i.bookmark.outline.icon
+                // .ui.menu
+                //     each bookmark_docs
+                //         each tags
+                //             .ui.tiny.basic.label #{this}
+            a.icon.item(href='/karma' class="{{isActivePath '/karma'}}" data-content="Karma")
+                i.heartbeat.outline.icon
                 // .ui.menu
                 //     each bookmark_docs
                 //         each tags
