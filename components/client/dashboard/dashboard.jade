@@ -1,7 +1,7 @@
 template(name='dashboard')
     .ui.container
         h2.ui.center.aligned.header Dashboard
-        .ui.two.centered.stackable.cards
+        .ui.three.centered.stackable.cards
             a#courses.ui.card
                 .content
                     .header 
@@ -22,53 +22,60 @@ template(name='dashboard')
                     .header
                         i.edit.icon
                         |My Quizes
-            a.ui.card(href='/bookmarks')
+            a.ui.card(href='/support')
                 .content
                     .header
-                        i.bookmark.icon
-                        |My Bookmarks
+                        i.help.circle.icon
+                        |Support
             a.ui.card(href='/account')
                 .content
                     .header
                         i.setting.icon
                         |Account Settings
+            a.ui.card(href='/bookmarks')
+                .content
+                    .header
+                        i.bookmark.outline.icon
+                        |My Bookmarks
+            a.ui.card(href='/karma')
+                .content
+                    .header
+                        i.heart.outline.icon
+                        |Karma
                         
-        if isInRole 'dev'
+        if isInRole 'admin'
             .ui.segment
-                .ui.header 
-                    i.red.configure.icon
-                    |Dev
-                .ui.two.centered.stackable.cards
+                .ui.red.header Beta
+                .ui.three.centered.stackable.cards
                     a.ui.card(href='/notifications')
                         .content
                             .header
                                 i.alarm.outline.icon
                                 | Notifications
-                    a.ui.card(href='/transactions')
-                        .content
-                            .header
-                                i.exchange.icon
-                                |Transactions
-                    a.ui.card(href='/support')
-                        .content
-                            .header
-                                i.help.circle.icon
-                                |Support
                     a.ui.card(href='/messages')
                         .content
                             .header
                                 i.mail.icon
                                 |Messages
+                    a.ui.card(href='/checkin')
+                            .content
+                                .header
+                                    i.checkmark.icon
+                                    |Check In
+        if isInRole 'dev'
+            .ui.segment
+                .ui.red.header Dev
+                .ui.three.centered.stackable.cards
+                    a.ui.card(href='/transactions')
+                        .content
+                            .header
+                                i.exchange.icon
+                                |Transactions
                     a.ui.card(href='/journal')
                         .content
                             .header
                                 i.write.square.icon
                                 |My Journal
-                    a.ui.card(href='/checkin')
-                        .content
-                            .header
-                                i.checkmark.icon
-                                |Check In
             // +me_card
             // +my_courses
             // +my_quizes

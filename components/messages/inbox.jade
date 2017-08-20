@@ -1,11 +1,10 @@
 template(name='inbox')
-    .ui.horizontal.divider.header Inbox
+    .ui.horizontal.divider.header 
+        i.inbox.icon
+        |Inbox
     .ui.threaded.comments
         each received_messages
-            unless is_editing
-                +inbox_message
-            else
-                +edit_message
+            +inbox_message
 
 
 template(name='inbox_message')
@@ -19,14 +18,13 @@ template(name='inbox_message')
                 | #{recipient.username}
             .metadata
                 span.date #{from_now}
-            .text
+            a.text(href="/message/view/#{_id}")
                 .ui.segment(class=message_segment_class)
                     | !{content}
+                .ui.hidden.fitted.divider    
             .actions
                 // a.reply(href='#') Reply
-                // +favorite
-                // +voting
-                // if is_author
+                +message_reply_button
                 if read
                     a.mark_unread Mark Unread
                 else

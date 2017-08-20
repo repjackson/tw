@@ -1,0 +1,30 @@
+template(name='notifications')
+    .ui.container
+        .ui.dividing.header Notifications
+        .ui.grid
+            .five.wide.column
+                .ui.header Admin
+            .eleven.wide.column
+                // .ui.feed
+                each notifications
+                    +notification
+            
+            
+template(name='notification')
+    .ui.segment(class=notification_segment_class)
+        .ui.feed
+            .event
+                .label
+                    img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+                .content
+                    .summary
+                        a.user
+                            | #{author.name} #{author.username}
+                            | #{text}
+                        .date
+                            | #{when}
+                        .meta
+                            if read
+                                a.mark_unread Mark Unread
+                            else
+                                a.mark_read Mark Read

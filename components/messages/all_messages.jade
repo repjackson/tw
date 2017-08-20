@@ -1,0 +1,26 @@
+template(name='all_messages')
+    .ui.horizontal.divider.header All Messages
+    each all_messages
+        +message
+        
+
+template(name='message')
+    .ui.segment(class=message_segment_class)
+        .comment
+            a.avatar
+                img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+            .content
+                a.author 
+                    | #{author.username}
+                    i.right.chevron.icon
+                    | #{recipient.username}
+                .metadata
+                    span.date #{from_now}
+                .text
+                    .ui.basic.segment
+                        | !{content}
+                .actions
+                    if read
+                        a.mark_unread Mark Unread
+                    else
+                        a.mark_read Mark Read

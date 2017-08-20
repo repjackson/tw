@@ -5,6 +5,7 @@ if Meteor.isClient
 
     Template.public_quiz_sessions.helpers
         public_quiz_sessions: -> 
+            username=FlowRouter.getParam('username')
             user = Meteor.users.findOne username:username
             Docs.find
                 type: 'quiz_session'

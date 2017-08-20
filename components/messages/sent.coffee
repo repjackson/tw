@@ -14,6 +14,7 @@ if Meteor.isClient
         sent_messages: ->
             Messages.find
                 author_id: Meteor.userId()  
+                status: 'sent'
     
     
             

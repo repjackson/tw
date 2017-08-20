@@ -22,17 +22,6 @@
                     .ui.hidden.divider
                     .ui.header My True Colors Are:
                     +color_dots
-                    if is_user
-                        unless profile.colors
-                            i.circular.inverted.grey.icon
-                            i.circular.inverted.grey.icon
-                            i.circular.inverted.grey.icon
-                            i.circular.inverted.grey.icon
-                            .ui.hidden.fitted.divider
-                            a.ui.basic.button(href='/colors') Take this short quiz to discover your True Colors!
-                        else
-                            div
-                                a(href='/colors') Edit Your Colors
                     .ui.hidden.divider
                     // if points
                     //     .ui.small.teal.statistic
@@ -41,7 +30,7 @@
                     // if isInRole 'dev'
                     //     +tag_person this    
                     
-            .ten.wide.column
+            .eleven.wide.column
                 if profile.first_name
                     h2.ui.center.aligned.header
                         |#{profile.first_name} #{profile.last_name}
@@ -52,34 +41,44 @@
                         each tags
                             .user_tag.ui.circular.basic.label #{this}
                 if isInRole 'dev'
-                    .ui.pointing.five.item.stackable.menu
-                        .item About
-                        .item Courses
-                        .item Quizes
-                        .item Social
-                        .item Contact
-                if profile.location
-                    .ui.header Location 
-                    | #{profile.location}
-                if profile.about_me
-                    .ui.header About Me
-                    |#{profile.about_me}
-                if profile.if_knew_me
-                    .ui.header If you really knew me you would know…
-                    |#{profile.if_knew_me}
-                if profile.if_not_working
-                    .ui.header If I am not at work or in class then I am probably…
-                    |#{profile.if_not_working}
-                +user_courses
-                if is_user
-                    +my_friends
-                if isInRole 'dev'
-                    +user_docs
-                // if isInRole 'beta'
-                //     .ui.horizontal.divider.header
-                //         i.red.configure.icon
-                //         |Admin
-                //     +messages_with_user
-                //     if is_user
-                //         +clouds
-                // +public_quiz_sessions
+                    #profile_menu.ui.top.attached.five.item.stackable.tabular.menu
+                        a.item.active(data-tab='about') About
+                        a.item(data-tab='courses') Courses
+                        a.item(data-tab='quizes') Quizes
+                        a.item(data-tab='social') Social
+                        a.item(data-tab='contact') Contact
+                    .ui.bottom.attached.tab.segment.active(data-tab='about')
+                        .ui.basic.segment
+                            if profile.location
+                                .ui.header Location 
+                                | #{profile.location}
+                            if profile.about_me
+                                .ui.header About Me
+                                |#{profile.about_me}
+                            if profile.if_knew_me
+                                .ui.header If you really knew me you would know…
+                                |#{profile.if_knew_me}
+                            if profile.if_not_working
+                                .ui.header If I am not at work or in class then I am probably…
+                                |#{profile.if_not_working}
+                    .ui.bottom.attached.tab.segment(data-tab='courses')
+                        .ui.basic.segment
+                            +user_courses
+                    .ui.bottom.attached.tab.segment(data-tab='quizes')
+                        .ui.basic.segment
+                            +public_quiz_sessions
+                    .ui.bottom.attached.tab.segment(data-tab='social')
+                        .ui.basic.segment
+                            if is_user
+                                +my_friends
+                    .ui.bottom.attached.tab.segment(data-tab='contact')
+                        .ui.basic.segment
+                            if isInRole 'beta'
+                                .ui.horizontal.divider.header
+                                    i.red.configure.icon
+                                    |Admin
+                                +messages_with_user
+                                if is_user
+                                    +clouds
+                // if isInRole 'dev'
+                //     +user_docs

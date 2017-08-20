@@ -42,6 +42,17 @@ template(name='colors')
 template(name='color_dots')
     each this.profile.colors
         i.circular.inverted.icon(class=color_icon_class data-title=color_data_title data-html=color_data_content)
+    if is_user
+        unless profile.colors
+            i.circular.inverted.grey.icon
+            i.circular.inverted.grey.icon
+            i.circular.inverted.grey.icon
+            i.circular.inverted.grey.icon
+            .ui.hidden.fitted.divider
+            a.ui.basic.button(href='/colors') Take this short quiz to discover your True Colors!
+        else
+            div
+                a(href='/colors') Edit Your Colors
 
 template(name='tiny_color_dots')
     each this.profile.colors

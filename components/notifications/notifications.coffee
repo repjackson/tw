@@ -31,6 +31,21 @@ if Meteor.isClient
     
     Template.notifications.helpers
         notifications: -> Notifications.find()
+        
+        
+    Template.notification.helpers
+        notification_segment_class: ->
+            if @read then 'basic' else ''
+
+    Template.notification.events
+        'click .mark_read': ->
+            Notifications.update @_id,
+                $set: read: true
+            
+            
+        'click .mark_unread': ->
+            Notifications.update @_id,
+                $set: read: false
 
 
 
@@ -38,8 +53,8 @@ if Meteor.isServer
     publishComposite 'received_notifications', ->
         {
             find: ->
-                Notifications.find {}
-                    # recipient_id: Meteor.userId()
+                Notifications.find 
+                    recipient_id: Meteor.userId()
             children: [
                 { find: (message) ->
                     Meteor.users.find 
@@ -48,3 +63,23 @@ if Meteor.isServer
                 ]    
         }
         
+        
+    publishComposite 'unread_notifications', ->
+        {
+            find: ->
+                Notifications.find 
+                    recipient_id: Meteor.userId()
+                    read: false
+            children: [
+                { find: (message) ->
+                    Meteor.users.find 
+                        _id: message.author_id
+                    }
+                ]    
+        }
+        
+
+    Notifications.allow
+        insert: (userId, doc) -> Roles.userIsInRole(userId, 'admin') or doc.author_id is userId
+        update: (userId, doc) -> Roles.userIsInRole(userId, 'admin') or doc.author_id is userId
+        remove: (userId, doc) -> Roles.userIsInRole(userId, 'admin') or doc.author_id is userId

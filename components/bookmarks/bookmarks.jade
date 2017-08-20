@@ -1,20 +1,37 @@
 template(name='bookmarks')
     .ui.container
-        .ui.dividing.header 
-            i.bookmarks.icon
+        h1.ui.horizontal.dividing.header 
+            i.bookmark.outline.icon
             |My Bookmarks (#{bookmarks_count})
-        .ui.list
-            each bookmark_docs
-                +bookmark
-                .ui.hidden.divider
-                .ui.divider
+        .ui.stackable.grid
+            .five.wide.column
+                .ui.dividing.header Tag Filter
+                if selected_tags
+                    #clear_tags.ui.teal.icon.large.button
+                        i.remove.icon
+                    each selected_tags
+                        .unselect_tag.ui.teal.large.button
+                            strong #{this}
+                each bookmarked_tags
+                    .ui.basic.button.select_tag(class=cloud_tag_class) 
+                        | #{this.name}
+                .ui.dividing.header Sharing
+                .ui.slider.checkbox
+                    input#share_bookmarks(type='checkbox' checked=currentUser.profile.share_bookmarks)
+                    label(for='share_bookmarks') Share Bookmarks in Profile
+            .eleven.wide.column
+                .ui.list
+                    each bookmark_docs
+                        +bookmark
+                        .ui.hidden.divider
+                        .ui.divider
                 
 template(name='bookmark')
     .item
         .content
             .header
                 each tags
-                    .ui.basic.label #{this}
+                    .ui.label(class=tag_class) #{this}
             .avatar
                 a
                     | by
@@ -29,10 +46,10 @@ template(name='bookmark')
                         img.ui.small.image(src=image_url)
             .extra
                 .ui.horizontal.list
-                    .item
-                        .ui.blue.basic.button
-                            | View
-                            i.right.chevron.icon
+                    // .item
+                    //     .ui.blue.basic.button
+                    //         | View
+                    //         i.right.chevron.icon
                     .item
                         +bookmark_button   
                     .item

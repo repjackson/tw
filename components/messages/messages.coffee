@@ -23,6 +23,24 @@ if Meteor.isClient
             FlowRouter.go "/message/edit/#{message_id}"
 
     
+    Template.messages_layout.helpers
+        unread_inbox_count: ->
+            Messages.find(
+                recipient_id: Meteor.userId()
+                read: false
+                ).count()
+    
+        sent_count: ->
+            Messages.find(
+                author_id: Meteor.userId()
+                ).count()
+    
+        drafts_count: ->
+            Messages.find(
+                author_id: Meteor.userId()
+                status: 'draft'
+                ).count()
+    
     
     Template.messages_with_user.onCreated ->
         @autorun -> Meteor.subscribe('messages_with_user', FlowRouter.getParam('username'))
@@ -49,6 +67,11 @@ if Meteor.isServer
     Meteor.publish 'message', (message_id)->
         Messages.find message_id
             
+            
+    Meteor.publish 'unread_messages', ()->
+        Messages.find
+            recipient_id: Meteor.userId()
+            read: false
             
     publishComposite 'received_messages', ->
         {

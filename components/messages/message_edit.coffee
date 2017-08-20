@@ -79,7 +79,21 @@ if Meteor.isClient
                 if err then console.error err
                 else console.log res
 
-
+        'click #delete_message': ->
+            self = @
+            swal {
+                title: 'Delete Message?'
+                # text: 'Confirm delete?'
+                type: 'error'
+                animation: false
+                showCancelButton: true
+                closeOnConfirm: true
+                cancelButtonText: 'Cancel'
+                confirmButtonText: 'Delete'
+                confirmButtonColor: '#da5347'
+            }, ->
+                Messages.remove self._id
+                FlowRouter.go '/messages'
 if Meteor.isServer
     Meteor.publish 'usernames', ->
         Meteor.users.find {}

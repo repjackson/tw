@@ -2,15 +2,12 @@ template(name='drafts')
     .ui.horizontal.divider.header Drafts
     .ui.threaded.comments
         each drafts
-            unless is_editing
-                +draft_message
-            else
-                +edit_message
+            +draft_message
         
 template(name='draft_message')
     .comment
-        a.avatar
-            img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+        .avatar
+            img.ui.avatar.image(src="{{c.url recipient.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
         .content
             a.author 
                 | #{author.username}
@@ -18,7 +15,7 @@ template(name='draft_message')
                 | #{recipient.username}
             .metadata
                 span.date #{from_now}
-            .text
+            a.text(href="/message/edit/#{_id}")
                 .ui.segment
                     | !{content}
             .actions

@@ -35,7 +35,7 @@ if Meteor.isClient
     
     Template.inbox_message.helpers
         message_segment_class: -> 
-            if @read then '' else 'blue'
+            if @read then '' else 'blue raised'
             
 
 # if Meteor.isServer

@@ -52,3 +52,6 @@ underscore@1.0.10
 tmeasday:publish-counts
 dynamic-import@0.1.1
 yasaricli:slugify
+philippspo:momentum-flow-router
+meteorhacks:ssr
+service-configuration

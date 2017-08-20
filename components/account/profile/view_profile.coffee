@@ -13,7 +13,14 @@ FlowRouter.route '/profile/:username',
 if Meteor.isClient
     Template.view_profile.onCreated ->
         @autorun -> Meteor.subscribe('user_profile', FlowRouter.getParam('username'))
+
         
+    Template.view_profile.onRendered ->
+        Meteor.setTimeout ->
+            $('#profile_menu .item').tab()
+        , 200
+    
+    
     
     Template.view_profile.helpers
         person: -> Meteor.users.findOne username:FlowRouter.getParam('username') 

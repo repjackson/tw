@@ -13,18 +13,19 @@ if Meteor.isClient
             Messages.find
                 author_id: Meteor.userId()  
     
-    
+        message_segment_class: -> 
+            if @read then '' else 'blue'
+
             
     Template.all_messages.events
-        # 'click .mark_read': ->
-        #     Docs.update @_id,
-        #         $set: read: true
+        'click .mark_read': ->
+            Messages.update @_id,
+                $set: read: true
             
             
-        # 'click .mark_unread': ->
-        #     Docs.update @_id,
-        #         $set: read: false
-            
+        'click .mark_unread': ->
+            Messages.update @_id,
+                $set: read: false
 
 # if Meteor.isServer
 #     Meteor.publish 'all_messages', ->

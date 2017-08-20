@@ -188,3 +188,35 @@ Meteor.publish 'people_tags', (selected_people_tags)->
 #                 }
 #             ]    
 #     }
+
+
+
+Meteor.publish 'bookmarked_tags', (selected_tags)->
+    
+    self = @
+    match = {}
+    
+    match.bookmarked_ids = $in: [Meteor.userId()]
+    
+    # match.tags = $all: selected_tags
+    if selected_tags.length > 0 then match.tags = $all: selected_tags
+    
+    cloud = Docs.aggregate [
+        { $match: match }
+        { $project: tags: 1 }
+        { $unwind: "$tags" }
+        { $group: _id: '$tags', count: $sum: 1 }
+        { $match: _id: $nin: selected_tags }
+        { $sort: count: -1, _id: 1 }
+        { $limit: 20 }
+        { $project: _id: 0, name: '$_id', count: 1 }
+        ]
+    # console.log 'cloud, ', cloud
+    cloud.forEach (tag, i) ->
+        self.added 'tags', Random.id(),
+            name: tag.name
+            count: tag.count
+            index: i
+
+    self.ready()
+        

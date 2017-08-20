@@ -1,4 +1,4 @@
-.ui.blue.top.attached.menu
+.ui.teal.borderless.top.attached.menu
     a.toggle_sidebar.mobile.only.item
         i.sidebar.icon
         .imogen Tori Webster
@@ -51,24 +51,35 @@
     .right.mobile.hidden.menu
         if currentUser
             if cart_items
-                a.icon.item(href='/cart' class="{{isActivePath '/cart'}}")
+                a.icon.item(href='/cart' class="{{isActivePath '/cart'}}" data-content="Shopping Cart")
                     i.large.icons
                         i.cart.icon
                         i.corner.teal.asterisk.icon
             if isInRole 'admin'
-                a.item(href='/admin/members' class="{{isActivePath '/admin/members'}}")
+                a.icon.item(href='/admin/members' class="{{isActivePath '/admin/members'}}")
                     i.configure.red.icon
                     // | Admin
             if isInRole 'dev'
-                a.item(href='/messages' class="{{isActiveRoute name='message_layout'}}")
-                    i.mail.outline.red.icon
+                a.icon.item(href='/messages' class="{{isActiveRoute name='message_layout'}}" data-content="Messages")
+                    if unread_message_count
+                        i.mail.teal.icon
+                    else
+                        i.mail.outline.icon
                     // | Admin
-                a.item(href='/notifications' class="{{isActivePath '/notifications'}}")
+                a.ui.icon.dropdown.item(class="{{isActivePath '/notifications'}}" data-content="Notifications")
                     i.alarm.outline.red.icon
-                    // | Admin
-            a.item(href='/bookmarks' class="{{isActivePath '/bookmarks'}}")
+                    .ui.menu
+                        a.item(href='/notifications') View All
+                        .ui.divider
+                        each unread_notifications
+                            a.unread_notification.item #{text}
+            // a.ui.icon.dropdown.item(href='/bookmarks' class="{{isActivePath '/bookmarks'}}")
+            a.icon.item(href='/bookmarks' class="{{isActivePath '/bookmarks'}}" data-content="Bookmarks")
                 i.bookmark.outline.icon
-                // | Admin
+                // .ui.menu
+                //     each bookmark_docs
+                //         each tags
+                //             .ui.tiny.basic.label #{this}
             a.item(href="/dashboard" class="{{isActivePath '/dashboard'}}")
                 if currentUser.profile.image_id
                     img.ui.avatar.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
