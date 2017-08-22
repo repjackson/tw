@@ -1,13 +1,21 @@
 template(name='notifications')
-    .ui.container
+    .ui.text.container
         .ui.dividing.header Notifications
-        .ui.grid
-            .five.wide.column
-                .ui.header Admin
-            .eleven.wide.column
+        // .ui.grid
+        //     .five.wide.column
+        //         if isInRole 'admin'
+        //             .ui.header Options
+        //             if notifications_allowed
+        //                 .ui.basic.disabled.button Desktop Notifications Allowed
+        //                 #disallow_notifications.ui.basic.red.button
+        //                     i.remove.icon
+        //                     |Remove Permissions
+        //         else
+        //             #allow_notifications.ui.basic.button Allow Desktop Notifications
+        //     .eleven.wide.column
                 // .ui.feed
-                each notifications
-                    +notification
+        each notifications
+            +notification
             
             
 template(name='notification')
@@ -15,16 +23,38 @@ template(name='notification')
         .ui.feed
             .event
                 .label
-                    img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+                    img.ui.avatar.image(src="{{c.url subject.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
                 .content
                     .summary
-                        a.user
-                            | #{author.name} #{author.username}
-                            | #{text}
+                        a.user(href="/profile/#{subject.username}")
+                            | #{subject_name}
+                        | #{predicate}
+                        a.user(href="/profile/#{object.username}")
+                            | #{object_name}
                         .date
                             | #{when}
-                        .meta
-                            if read
-                                a.mark_unread Mark Unread
-                            else
-                                a.mark_read Mark Read
+                    if extra_text
+                        .extra.text
+                            p #{extra_text}
+                    .meta
+                        if read
+                            a.mark_unread 
+                                i.open.envelope.icon
+                                |Mark Unread
+                        else
+                            a.mark_read 
+                                i.mail.outline.icon
+                                |Mark Read
+                        if liked
+                            a.unlike 
+                                i.thumbs.up.icon
+                                |#{liked_count}    
+                            //     i.thumbs.up.icon
+                            //     |Unlike
+                        else
+                            a.like 
+                                i.thumbs.up.outline.icon
+                                |Like
+                        a.add_comment 
+                            i.comment.icon
+                            |Comment

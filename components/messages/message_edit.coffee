@@ -75,7 +75,7 @@ if Meteor.isClient
             Messages.update message._id,
                 $set: status: 'sent'
             swal "Message Sent", "",'success'
-            Meteor.call 'notify', message.recipient_id, 'message sent test', (err, res)->
+            Meteor.call 'add_notification', Meteor.userId(), 'messaged', message.recipient_id, (err, res)->
                 if err then console.error err
                 else console.log res
 

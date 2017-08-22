@@ -41,12 +41,25 @@
                         each tags
                             .user_tag.ui.circular.basic.label #{this}
                 if isInRole 'dev'
-                    #profile_menu.ui.top.attached.five.item.stackable.tabular.menu
-                        a.item.active(data-tab='about') About
-                        a.item(data-tab='courses') Courses
-                        a.item(data-tab='quizes') Quizes
-                        a.item(data-tab='social') Social
-                        a.item(data-tab='contact') Contact
+                    #profile_menu.ui.top.attached.six.item.stackable.tabular.menu
+                        a.item.active(data-tab='about') 
+                            i.info.icon
+                            |About
+                        a.item(data-tab='courses')
+                            i.university.icon
+                            |Courses
+                        a.item(data-tab='quizes')
+                            i.edit.icon
+                            |Quizes
+                        a.item(data-tab='social') 
+                            i.talk.outline.icon
+                            |Social
+                        a.item(data-tab='posts') 
+                            i.sticky.note.outline.icon
+                            |Posts
+                        a.item(data-tab='contact') 
+                            i.phone.icon
+                            |Contact
                     .ui.bottom.attached.tab.segment.active(data-tab='about')
                         .ui.basic.segment
                             if profile.location
@@ -71,6 +84,13 @@
                         .ui.basic.segment
                             if is_user
                                 +my_friends
+                            .ui.dividing.header
+                                .ui.teal.button Follow #{name}
+                            .ui.dividing.header List of Users Following #{name}
+                            .ui.dividing.header List of Users Followed by #{name}
+                    .ui.bottom.attached.tab.segment(data-tab='posts')
+                        .ui.basic.segment
+                            .ui.header Posts
                     .ui.bottom.attached.tab.segment(data-tab='contact')
                         .ui.basic.segment
                             if isInRole 'beta'

@@ -2,23 +2,26 @@
 
 Notifications.before.insert (user_id, doc)->
     doc.timestamp = Date.now()
-    doc.user_id = Meteor.userId()
-    doc.read = false
+    doc.read_by = []
+    doc.liked_by = []
     return
     
     
 Notifications.helpers
-    author: -> Meteor.users.findOne @author_id
+    subject: -> Meteor.users.findOne @subject_id
+    object: -> Meteor.users.findOne @object_id
     when: -> moment(@timestamp).fromNow()
-    recipient: -> Meteor.users.findOne @recipient_id
     
 Meteor.methods
-    notify: (recipient_id, text) ->
+    add_notification: (subject_id, predicate, object_id) ->
         new_id = Notifications.insert
-            recipient_id: recipient_id
-            text: text
-            author_id: Meteor.userId()
+            subject_id: subject_id
+            predicate: predicate
+            object_id: object_id
         return new_id
+
+
+
 
             
 FlowRouter.route '/notifications', action: ->
@@ -27,25 +30,44 @@ FlowRouter.route '/notifications', action: ->
 
 if Meteor.isClient
     Template.notifications.onCreated ->
-        @autorun -> Meteor.subscribe 'received_notifications'
+        @autorun -> Meteor.subscribe 'all_notifications'
     
     Template.notifications.helpers
-        notifications: -> Notifications.find()
+        notifications: -> 
+            Notifications.find {}, 
+                sort: timestamp: -1
         
+        # notifications_allowed: ->
+        #     # console.log Notification.permission
+        #     if Notification.permission is 'denied' or 'default' 
+        #         # console.log 'notifications are denied'
+        #         # return false
+        #     if Notification.permission is 'granted'
+        #         # console.log 'yes granted'
+        #         # return true
+            
+            
+    Template.notifications.events
+        'click #allow_notifications': ->
+            Notification.requestPermission()
         
     Template.notification.helpers
-        notification_segment_class: ->
-            if @read then 'basic' else ''
+        notification_segment_class: -> if Meteor.userId() in @read_by then 'basic' else ''
+        read: -> Meteor.userId() in @read_by
+        liked: -> Meteor.userId() in @liked_by
+        
+        read_count: -> @read_by.length    
+        liked_count: -> @liked_by.length    
+        
+        subject_name: -> if @subject_id is Meteor.userId() then 'You' else @subject().name()
+        object_name: -> if @object_id is Meteor.userId() then 'you' else @object().name()
 
     Template.notification.events
-        'click .mark_read': ->
-            Notifications.update @_id,
-                $set: read: true
-            
-            
-        'click .mark_unread': ->
-            Notifications.update @_id,
-                $set: read: false
+        'click .mark_read': -> Notifications.update @_id, $addToSet: read_by: Meteor.userId()
+        'click .mark_unread': -> Notifications.update @_id, $pull: read_by: Meteor.userId()
+
+        'click .like': -> Notifications.update @_id, $addToSet: liked_by: Meteor.userId()
+        'click .unlike': -> Notifications.update @_id, $pull: liked_by: Meteor.userId()
 
 
 
@@ -59,6 +81,22 @@ if Meteor.isServer
                 { find: (message) ->
                     Meteor.users.find 
                         _id: message.author_id
+                    }
+                ]    
+        }
+        
+    publishComposite 'all_notifications', ->
+        {
+            find: ->
+                Notifications.find {}
+            children: [
+                { find: (notification) ->
+                    Meteor.users.find 
+                        _id: notification.subject_id
+                    }
+                { find: (notification) ->
+                    Meteor.users.find 
+                        _id: notification.object_id
                     }
                 ]    
         }
@@ -80,6 +118,6 @@ if Meteor.isServer
         
 
     Notifications.allow
-        insert: (userId, doc) -> Roles.userIsInRole(userId, 'admin') or doc.author_id is userId
-        update: (userId, doc) -> Roles.userIsInRole(userId, 'admin') or doc.author_id is userId
-        remove: (userId, doc) -> Roles.userIsInRole(userId, 'admin') or doc.author_id is userId
+        insert: (userId, doc) -> userId
+        update: (userId, doc) -> userId
+        remove: (userId, doc) -> Roles.userIsInRole(userId, 'admin')

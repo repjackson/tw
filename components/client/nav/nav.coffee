@@ -1,5 +1,4 @@
-Template.nav.events
-    'click #logout': -> AccountsTemplates.logout()
+    
 Template.layout.events
     'click #logout': -> AccountsTemplates.logout()
 
@@ -10,7 +9,7 @@ Template.nav.onCreated ->
     @autorun -> Meteor.subscribe 'me'
     @autorun -> Meteor.subscribe 'cart'
     @autorun -> Meteor.subscribe 'unread_messages'
-    @autorun -> Meteor.subscribe 'unread_notifications'
+    @autorun -> Meteor.subscribe 'all_notifications'
     @autorun -> Meteor.subscribe 'my_bookmarks'
     
     
@@ -39,10 +38,20 @@ Template.nav.helpers
 
     unread_notifications_count: ->
         Notifications.find(
-            recipient_id: Meteor.userId()
-            read: false
+            read_by: $nin: [Meteor.userId()]
             ).count()
 
+    unread_notifications: ->
+        Notifications.find({})
+
+Template.nav.events
+    'click #logout': -> AccountsTemplates.logout()
+    
+    'click #test': ->
+        Notification.requestPermission()
+    
+    
+    
     
 Template.left_sidebar.onRendered ->
     @autorun =>

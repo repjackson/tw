@@ -55,10 +55,13 @@ Template.toggle_friend.events
         Meteor.users.update Meteor.userId(), $addToSet: friends: @_id
         $(e.currentTarget).closest('#add_friend').transition('pulse')
 
+        Meteor.call 'add_notification', @_id, 'friended', Meteor.userId()
+
     'click #remove_friend': (e,t)-> 
         Meteor.users.update Meteor.userId(), $pull: friends: @_id
         $(e.currentTarget).closest('#remove_friend').transition('pulse')
 
+        Meteor.call 'add_notification', @_id, 'unfriended', Meteor.userId()
 
 Template.published.events
     'click #publish': -> Docs.update @_id, $set: published: true
