@@ -72,8 +72,7 @@ Meteor.methods
             Docs.findOne
                 tags: $all: ['sol', 'course progress']
                 author_id: Meteor.userId()
-        if sol_progress_doc then console.log 'found progress doc'
-        else
+        if not sol_progress_doc
             console.log 'didnt find progress doc, creating'
             Docs.insert
                 tags: ['sol', 'course progress']

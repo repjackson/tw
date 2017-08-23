@@ -1,41 +1,24 @@
 template(name='journal_view')
     a.ui.basic.button(href='/journal')
         i.left.chevron.icon
-        |journal
+        strong Journal
     with doc
         .ui.container
-            h1.ui.center.aligned.header View journal Entry
+            h1.ui.center.aligned.header View Journal Entry
             .ui.grid
                 .ten.wide.column
-                    if has_youtube
-                        if youtube
-                            +view_youtube
-                    if has_image
-                        if image_id
-                            .ui.large.image
-                                img(src="{{c.url image_id width=500 crop='fit'}}")
-                        if image_url
-                            .ui.fluid.image
-                                img(src=image_url)
-                    if has_content
-                        |!{content}
+                    |!{content}
                 .five.wide.column
-                    if can_resonate
-                        div
-                            +resonate_button
-                    if can_complete
-                        div
-                            +mark_complete_button
-                    if can_bookmark
-                        div
-                            +bookmark_button
-        
-                    .ui.header Tags
+                    .ui.dividing.header Tags
                     each tags
                         .ui.basic.large.label.doc_tag #{this}
+                    .ui.dividing.header Actions
+                    +resonate_button
+                    +bookmark_button
+        
                     if resonates_with_people.count
                         .ui.segment
-                            .title 
+                            .ui.dividing.header
                                 |This Resonates With... (#{resonates_with_people.count})
                             .ui.divided.list
                                 each resonates_with_people
@@ -48,18 +31,19 @@ template(name='journal_view')
                                                 +tiny_color_dots
                                                 each five_tags
                                                     .ui.basic.label #{this}
-
                     
-                    
-                    
-                    if isInRole 'admin'
-                        .ui.dividing.header Admin
-                        if published
-                            .ui.basic.green.label Published
-                        else
-                            .ui.basic.label Unpublished
-                        .ui.hidden.fitted.divider
+                    .ui.dividing.header Visibility
+                    if published
+                        .ui.basic.green.large.label 
+                            i.unlock.icon
+                            | Public
+                    else
+                        .ui.basic.large.label 
+                            i.unlock.icon
+                            | Private
+                    .ui.header by #{author.name}
+                    .ui.divider
+                    if is_author
                         a.ui.basic.button(href="/journal/edit/#{_id}") 
                             i.pencil.icon
                             |Edit
-                        .ui.header by #{author.name}

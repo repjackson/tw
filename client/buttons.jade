@@ -111,15 +111,52 @@ template(name='delete_link')
     a#delete Delete
 
 template(name='published')
-    if published
-        #unpublish.ui.basic.button
-            // i.toggle.on.green.icon
-            i.hide.icon
-            | Make Private
-    else
-        #publish.ui.basic.button
+    .ui.segment
+        .ui.dividing.header
             i.unhide.icon
-            | Make Public
+            |Visibility
+        if published
+            .ui.header
+                i.unlock.icon
+                |Public
+            #unpublish.ui.fluid.basic.button
+                // i.toggle.on.green.icon
+                i.lock.icon
+                | Make Private
+        else
+            .ui.header
+                i.lock.icon
+                | Private
+            #publish.ui.fluid.basic.button
+                i.unlock.icon
+                | Make Public
+
+
+
+template(name='request_tori_feedback')
+    .ui.segment
+        .ui.dividing.header 
+            i.comments.outline.icon
+            |Request Feedback
+        if feedback_requested
+            .ui.header
+                i.comments.outline.icon
+                | Feedback Requested 
+                |Status: Pending
+            #cancel_request.ui.fluid.basic.button
+                // i.toggle.on.green.icon
+                i.cancel.icon
+                | Cancel Request
+        else
+            // .ui.header
+            //     | Feedback Not Requested
+            |Tori will respond within 24 hours.
+            #request_feedback.ui.fluid.basic.button
+                i.comments.outline.icon
+                | Request Feedback (100 Karma)
+
+
+
 
 template(name='featured')
     .field

@@ -57,9 +57,6 @@ if Meteor.isClient
         bookmarked_item_class: -> 
             if not Meteor.userId() then 'disabled'
             else if Session.equals 'view_bookmarked', true then 'active' else ''
-        completed_item_class: -> 
-            if not Meteor.userId() then 'disabled'
-            else if Session.equals 'view_completed', true then 'active' else ''
         published_item_class: -> 
             if not Meteor.userId() then 'disabled'
             else if Session.equals 'view_published', true then 'active' else ''
@@ -69,12 +66,12 @@ if Meteor.isClient
     
     Template.journal.events
     
-        'click #add': ->
+        'click #add_journal_entry': ->
             new_id = Docs.insert 
                 type:'journal'
-                tags: selected_tags.array()
             Session.set 'view_unpublished', true
-            Session.set 'editing_id', new_id
+            FlowRouter.go("/journal/edit/#{new_id}")
+        
     
         'click #set_mode_to_all': -> 
             if Meteor.userId() 
@@ -134,7 +131,6 @@ if Meteor.isServer
                 match.type = 'journal'
                 if view_resonates then match.favoriters = $in: [@userId]
                 if view_bookmarked then match.bookmarked_ids = $in: [@userId]
-                if view_completed then match.completed_ids = $in: [@userId]
                 if view_published then match.published = true
                 if view_unpublished then match.published = false
                 # if journal_view_mode and journal_view_mode is 'mine'

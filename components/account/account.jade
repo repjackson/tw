@@ -22,8 +22,9 @@ template(name='account')
                     .ui.action.fluid.input
                         input#new_email(type='email')
                         #add_email.ui.submit.blue.button Add Email Address
-                h2.ui.header Change Username (current: #{currentUser.username})
+                h2.ui.header Change Username 
                 .ui.segment
+                    .ui.header Current: #{currentUser.username}
                     .ui.action.fluid.input
                         input#username(type='text')
                         #change_username.ui.submit.blue.button Submit

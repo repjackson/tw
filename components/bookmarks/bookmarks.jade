@@ -1,6 +1,6 @@
 template(name='bookmarks')
     .ui.container
-        h1.ui.horizontal.dividing.header 
+        h1.ui.center.aligned.header 
             i.bookmark.outline.icon
             |My Bookmarks (#{bookmarks_count})
         .ui.stackable.grid
@@ -32,12 +32,12 @@ template(name='bookmark')
             .header
                 each tags
                     .ui.label(class=tag_class) #{this}
-            .avatar
-                a
-                    | by
-                    img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
-                    |#{author.name}
-                span.date #{from_now}
+            // .avatar
+                // a
+                //     | by
+                //     img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+                //     |#{author.name}
+                // span.date #{from_now}
             .description
                 .ui.basic.segment
                     if content

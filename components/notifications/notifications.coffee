@@ -51,6 +51,12 @@ if Meteor.isClient
         'click #allow_notifications': ->
             Notification.requestPermission()
         
+        'click #mark_all_read': ->
+            if confirm 'Mark all notifications read?'
+                Notifications.update {},
+                    $addToSet: read_by: Meteor.userId()
+                    
+        
     Template.notification.helpers
         notification_segment_class: -> if Meteor.userId() in @read_by then 'basic' else ''
         read: -> Meteor.userId() in @read_by
@@ -69,7 +75,14 @@ if Meteor.isClient
         'click .like': -> Notifications.update @_id, $addToSet: liked_by: Meteor.userId()
         'click .unlike': -> Notifications.update @_id, $pull: liked_by: Meteor.userId()
 
-
+        
+        'click .delete_notfication': (e,t)-> 
+            if confirm 'Delete Notification?'
+                $(e.currentTarget).closest('.notification_segment').transition('fade left', '1000ms')
+                Meteor.setTimeout ->
+                    Notifications.remove @_id
+                , 3000
+    
 
 if Meteor.isServer
     publishComposite 'received_notifications', ->

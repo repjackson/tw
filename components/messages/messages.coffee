@@ -11,7 +11,7 @@ Messages.helpers
     author: -> Meteor.users.findOne @author_id
     when: -> moment(@timestamp).fromNow()
     recipient: -> Meteor.users.findOne @recipient_id
-
+    parent: -> Messages.findOne @parent_id
 
 if Meteor.isClient
     Template.messages_layout.onCreated ->
@@ -30,6 +30,7 @@ if Meteor.isClient
             Messages.find(
                 recipient_id: Meteor.userId()
                 archived: false
+                status: 'sent'
                 read: false
                 ).count()
     

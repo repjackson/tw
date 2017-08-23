@@ -3,6 +3,11 @@ template(name='public_quiz_sessions')
         .ui.dividing.header My Quiz Sessions
     else
         .ui.dividing.header Public Quiz Sessions
-    .ui.cards
-        each public_quiz_sessions
-            +session_card
+    if public_quiz_sessions
+        .ui.cards
+            each public_quiz_sessions
+                +session_card
+    h3.ui.header Click below to take a quiz and publish the results if you like.
+    a.ui.teal.button(href='/quizes') 
+        i.edit.icon
+        |Quizes

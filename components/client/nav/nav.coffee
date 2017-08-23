@@ -27,10 +27,13 @@ Template.nav.helpers
     cart_items: -> Docs.find({type: 'cart_item'},{author_id: Meteor.userId()}).count()
 
     unread_message_count: ->
-        Messages.find(
+        count = Messages.find(
             recipient_id: Meteor.userId()
+            status: 'sent'
             read: false
         ).count()
+        # console.log count
+        return count
         
     bookmark_docs: -> 
         Docs.find
@@ -42,7 +45,9 @@ Template.nav.helpers
             ).count()
 
     unread_notifications: ->
-        Notifications.find({})
+        Notifications.find {},
+            sort: timestamp: -1
+            limit: 10
 
 Template.nav.events
     'click #logout': -> AccountsTemplates.logout()

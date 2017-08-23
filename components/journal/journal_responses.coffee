@@ -24,3 +24,4 @@ if Meteor.isServer
     Meteor.publish 'journal_responses', (parent_doc_id)->
         Docs.find
             parent_id: parent_doc_id
+            type: 'journal'

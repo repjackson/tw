@@ -22,12 +22,10 @@ template(name='lightbank')
                 if isInRole 'admin'
                     .ui.two.item.stackable.menu
                         a#toggle_published.item(class=published_item_class) 
-                            i.red.configure.icon
-                            i.unhide.icon
+                            i.red.unhide.icon
                             |Published (#{published_count})
                         a#toggle_unpublished.item(class=unpublished_item_class) 
-                            i.red.configure.icon
-                            i.hide.icon
+                            i.red.hide.icon
                             |Unpublished (#{unpublished_count})
                     if selected_tags
                         #add.ui.teal.button

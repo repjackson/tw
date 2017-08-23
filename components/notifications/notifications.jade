@@ -1,25 +1,34 @@
 template(name='notifications')
     .ui.text.container
         .ui.dividing.header Notifications
-        // .ui.grid
-        //     .five.wide.column
-        //         if isInRole 'admin'
-        //             .ui.header Options
-        //             if notifications_allowed
-        //                 .ui.basic.disabled.button Desktop Notifications Allowed
-        //                 #disallow_notifications.ui.basic.red.button
-        //                     i.remove.icon
-        //                     |Remove Permissions
-        //         else
-        //             #allow_notifications.ui.basic.button Allow Desktop Notifications
-        //     .eleven.wide.column
+        .ui.grid
+            .five.wide.column
+                .ui.horizontal.divider.header Filter
+                .ui.basic.button All
+                .ui.basic.button Unread
+                .ui.header People
+                .ui.header Type
+                .ui.dividing.header Actions
+                    #mark_all_read.ui.basic.button 
+                        i.visible.icon
+                        |Mark All Read
+                // if isInRole 'admin'
+                //     .ui.header Options
+                //     if notifications_allowed
+                //         .ui.basic.disabled.button Desktop Notifications Allowed
+                //         #disallow_notifications.ui.basic.red.button
+                //             i.remove.icon
+                //             |Remove Permissions
+                // else
+                //     #allow_notifications.ui.basic.button Allow Desktop Notifications
+            .eleven.wide.column
                 // .ui.feed
-        each notifications
-            +notification
+                each notifications
+                    +notification
             
             
 template(name='notification')
-    .ui.segment(class=notification_segment_class)
+    .ui.segment.notification_segment(class=notification_segment_class)
         .ui.feed
             .event
                 .label
@@ -39,7 +48,7 @@ template(name='notification')
                     .meta
                         if read
                             a.mark_unread 
-                                i.open.envelope.icon
+                                i.mail.icon
                                 |Mark Unread
                         else
                             a.mark_read 
@@ -55,6 +64,10 @@ template(name='notification')
                             a.like 
                                 i.thumbs.up.outline.icon
                                 |Like
-                        a.add_comment 
-                            i.comment.icon
-                            |Comment
+                        if isInRole 'admin'
+                            a.add_comment 
+                                i.comment.icon
+                                |Comment
+                            a.delete_notfication 
+                                i.red.remove.icon
+                                |Delete

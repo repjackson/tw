@@ -170,3 +170,4 @@ if Meteor.isServer
                 image_id: 1
                 courses: 1
                 points: 1
+                followers: 1

@@ -58,7 +58,7 @@
                     // | Admin
             a.icon.item(href='/messages' class="{{isActiveRoute name='message_layout'}}" data-content="Messages")
                 if unread_message_count
-                    i.mail.blue.icon
+                    i.mail.icon
                 else
                     i.mail.outline.icon
                 // | Admin
@@ -92,24 +92,28 @@
                 .ui.menu
                     a.item(href="/dashboard" class="{{isActivePath '/dashboard'}}")
                         i.dashboard.icon
-                        |Dashboard
+                        | Dashboard
                     .ui.divider
-                    a.icon.item(href='/karma' class="{{isActivePath '/karma'}}")
-                        i.heartbeat.outline.icon
-                        | Karma
+                    // a.icon.item(href='/karma' class="{{isActivePath '/karma'}}")
+                    //     i.heartbeat.outline.icon
+                    //     | Karma
                     a.item(href='/courses' class="{{isActivePath '/courses'}}") 
                         i.university.icon
-                        |My Courses
+                        | Courses
                     a.item(href='/people' class="{{isActivePath '/people'}}") 
                         i.users.icon
                         | People
+                    a.item(href='/journal' class="{{isActivePath '/journal'}}") 
+                        i.pencil.icon
+                        | Journal
                     a.item(href='/bookmarks' class="{{isActivePath '/bookmarks'}}")
                         i.bookmark.outline.icon
-                        |Bookmarks
+                        | Bookmarks
                         // .ui.menu
                         //     each bookmark_docs
                         //         each tags
                         //             .ui.tiny.basic.label #{this}
+                    .ui.divider
                     a.item(href="/profile/#{currentUser.username}" class="{{isActiveRoute name='view_profile'}}")
                         i.user.icon
                         | Profile

@@ -10,18 +10,9 @@ template(name='journal_cloud')
             each selected_tags
                 .unselect_tag.ui.blue.button
                     strong #{this}
-        // .ui.hidden.divider
-        // .ui.button.select_tag(class=media_tag_class) Tori Webster
-        // .ui.hidden.divider
-        .ui.header Filter Media
-        each media_tags
-            .ui.button.select_tag(class=media_tag_class) 
-                strong #{this.name}
-                // if isInRole 'admin'
-                //     small #{this.count}
         .ui.hidden.fitted.divider
         .ui.header Filter Tags
-        each theme_tags
+        each journal_tags
             .ui.basic.button.select_tag(class=cloud_tag_class) 
                 | #{this.name}
                 // if isInRole 'admin'
