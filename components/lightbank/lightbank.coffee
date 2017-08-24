@@ -31,13 +31,15 @@ if Meteor.isClient
     
     Template.lightbank.helpers
         docs: -> 
-            # if Session.get 'editing_id'
-            #     Docs.find Session.get('editing_id')
-            # else
-            Docs.find {type:'lightbank' }, 
-                sort:
-                    tag_count: 1
-                limit: 5
+            if Session.get 'view_unpublished'
+                Docs.find
+                    type: lightbank
+                    published: false
+            else
+                Docs.find {type:'lightbank' }, 
+                    sort:
+                        tag_count: 1
+                    limit: 5
     
         tag_class: -> if @valueOf() in selected_tags.array() then 'teal' else 'basic'
         selected_tags: -> selected_tags.array()
@@ -74,7 +76,7 @@ if Meteor.isClient
                 type:'lightbank'
                 tags: selected_tags.array()
             Session.set 'view_unpublished', true
-            Session.set 'editing_id', new_id
+            FlowRouter.go "/lightbank/edit/#{new_id}"
     
         'click #set_mode_to_all': -> 
             if Meteor.userId() 

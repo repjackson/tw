@@ -3,3 +3,11 @@ template(name='message_user')
         #create_message.ui.teal.button Send #{name} Message
     else
         .ui.header Sending #{username} a Message
+        .ui.form
+            .field
+                textarea#message_content(rows='3')
+                #send_message.ui.right.floated.teal.button
+                    i.send.icon
+                    | Send
+                #cancel_message.ui.yellow.icon.button
+                    i.cancel.icon

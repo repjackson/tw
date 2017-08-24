@@ -122,7 +122,12 @@ meteor add bundle-visualizer
 
 
 
-
-today todo
-    replace lw answers with typical
+get to karma
+points for completing sections, excercises
+flow
+dashboard, attention empowering, being seen
+journal evoke activity, get to know people, lead to meaning 
+check in
+    suggested tags, brians system
     
+comments, point per upvoted comment

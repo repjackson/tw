@@ -93,3 +93,6 @@ Tracker.autorun ->
 #     idle: ->  @status?.idle
 
 
+
+Meteor.startup ->
+    Status.setTemplate('semantic_ui')
