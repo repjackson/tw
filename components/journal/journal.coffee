@@ -31,9 +31,6 @@ if Meteor.isClient
     
     Template.journal.helpers
         docs: -> 
-            # if Session.get 'editing_id'
-            #     Docs.find Session.get('editing_id')
-            # else
             Docs.find {type:'journal' }, 
                 sort:
                     tag_count: 1
@@ -112,6 +109,9 @@ if Meteor.isClient
             else Session.set 'view_unpublished', true
     
     
+        'click #convert_journal_docs': ->
+            Meteor.call 'convert_journal_docs'
+    
     Template.journal_doc_view.helpers
         is_author: -> Meteor.userId() and @author_id is Meteor.userId()
         tag_class: -> if @valueOf() in selected_tags.array() then 'teal' else 'basic'
@@ -134,7 +134,7 @@ if Meteor.isServer
                 if view_published then match.published = true
                 if view_unpublished then match.published = false
                 # if journal_view_mode and journal_view_mode is 'mine'
-                #     match.author_id
+                match.author_id = Meteor.userId()
             
                 if limit
                     Docs.find match, 
@@ -158,9 +158,25 @@ if Meteor.isServer
 
 
 
-
-
-
+    Meteor.methods
+        convert_journal_docs: ->
+            count = Docs.find(
+                author_id: '2hjhjPYPwxAqxj8BC'
+                ).count()
+            console.log count
+            
+            # Docs.update {
+            #     author_id: '2hjhjPYPwxAqxj8BC'
+            # }, {
+            #     $set: 
+            #         author_id: 'FKnvuPnXbtBSPbES5'
+            #         type: 'journal'
+            # }, multi: true
+                
+            
+            
+            
+            
     Meteor.publish 'unpublished_journal_count', ->
         Counts.publish this, 'unpublished_journal_count', Docs.find(type: 'journal', published:false)
         return undefined    # otherwise coffeescript returns a Counts.publish

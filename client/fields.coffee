@@ -103,7 +103,7 @@ Template.type.events
             $set: type: type
             
             
-Template.image.events
+Template.edit_image.events
     "change input[type='file']": (e) ->
         doc_id = @_id
         files = e.currentTarget.files

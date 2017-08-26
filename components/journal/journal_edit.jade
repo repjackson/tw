@@ -7,11 +7,39 @@ template(name='journal_edit')
                     .ui.form
                         .ui.segment
                             +tags
+                        if has_youtube
+                            .ui.segment
+                                +youtube
+                                if youtube
+                                    +view_youtube
+                        if has_image
+                            +edit_image
                         .ui.segment
                             +content
+
                 .four.wide.column
+                    .ui.segment
+                        .ui.form
+                            .grouped.fields
+                                .ui.header Components
+                                .field
+                                    a.ui.toggle.checkbox
+                                        input#toggle_youtube(type='checkbox' checked=has_youtube)
+                                        label(for='toggle_youtube') Video
+                                .field
+                                    a.ui.toggle.checkbox
+                                        input#toggle_image(type='checkbox' checked=has_image)
+                                        label(for='toggle_image') Image
                     +published
                     +request_tori_feedback
                     .ui.divider
-                    #saveDoc.ui.fluid.green.big.button Save
-                    #deleteDoc.ui.small.fluid.red.basic.button Delete
+                    if tags
+                        #saveDoc.ui.fluid.green.big.button 
+                            i.save.icon
+                            |Save
+                    else
+                        .ui.fluid.green.big.disabled.button Add Tags to Save
+                    .ui.hidden.divider
+                    #deleteDoc.ui.small.fluid.red.compact.button 
+                        i.trash.icon
+                        |Delete

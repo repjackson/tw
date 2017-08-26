@@ -71,8 +71,18 @@ Meteor.publish 'docs', (selected_tags, type, limit, view_mode)->
     else
         Docs.find match
 
-Meteor.publish 'doc', (id)->
-    Docs.find id
+
+publishComposite 'doc', (id)->
+    {
+        find: ->
+            Docs.find id
+        children: [
+            find: (doc)->
+                Meteor.users.find
+                    _id: doc.author_id
+        ]
+        
+        }
 
 Meteor.publish 'doc_by_tags', (tags)->
     Docs.find

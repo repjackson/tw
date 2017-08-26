@@ -1,12 +1,7 @@
-template(name='following')
-    .ui.dividing.header Following
-    if is_following
-        #unfollow.ui.teal.button Unfollow #{name}
-    else
-        #follow.ui.teal.button Follow #{name}
-    .ui.dividing.header Following #{name}
+template(name='my_friends')
+    .ui.dividing.header #{name}'s Friends
     .ui.divided.list
-        each followers
+        each my_friends
             .item
                 .image
                     a(href="/profile/#{username}")
@@ -27,9 +22,10 @@ template(name='following')
                         // |last seen #{last_login}
                                 
                             
-    .ui.dividing.header Followed by #{name}
+template(name='user_friends')
+    .ui.dividing.header #{name}'s Friends
     .ui.divided.list
-        each following
+        each user_friends
             .item
                 .image
                     a(href="/profile/#{username}")

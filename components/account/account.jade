@@ -1,7 +1,7 @@
 template(name='account')
     .ui.container
         h1.ui.dividing.header Account
-        .ui.two.column.grid
+        .ui.two.column.stackable.grid
             .column
                 |{{> atForm state='changePwd'}}
             .column
@@ -19,6 +19,8 @@ template(name='account')
                                         .ui.green.basic.label Verified
                                     else
                                         .ui.basic.label Unverified
+                                        .send_verification_email.ui.blue.icon.button
+                                            i.send.icon
                     .ui.action.fluid.input
                         input#new_email(type='email')
                         #add_email.ui.submit.blue.button Add Email Address

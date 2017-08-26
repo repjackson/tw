@@ -2,7 +2,7 @@ template(name='lightbank')
     .ui.container
         .ui.center.aligned.basic.segment
             +doc_content tags='lightbank,blurb'
-            // .ui.teal.four.item.stackable.menu
+            // .ui.blue.four.item.stackable.menu
             //     a#set_mode_to_all.item(class=all_item_class) 
             //         i.sun.yellow.icon
             //         |All
@@ -28,11 +28,11 @@ template(name='lightbank')
                             i.red.hide.icon
                             |Unpublished (#{unpublished_count})
                     if selected_tags
-                        #add.ui.teal.button
+                        #add.ui.blue.button
                             i.plus.icon
                             |Add with Selected Tags
                     else
-                        #add.ui.icon.basic.button
+                        #add_lightbank_doc.ui.icon.basic.fluid.button
                             i.plus.icon
                             |Add Lightbank Item
             
@@ -75,7 +75,7 @@ template(name='lightbank_doc_view')
             // if can_bookmark
             +bookmark_button
             .ui.center.aligned.basic.segment
-                a.ui.basic.teal.button(href="/lightbank/view/#{_id}")
+                a.ui.basic.blue.button(href="/lightbank/view/#{_id}")
                     |View
                     i.right.chevron.icon
                 if can_edit

@@ -11,7 +11,7 @@ template(name='messages_layout')
                 #main_area
                     .ui.hidden.divider
                     .ui.container
-                        .ui.stackable.divided.grid
+                        .ui.stackable.grid
                             .five.wide.column
                                 a#compose.ui.fluid.basic.button 
                                     i.plus.icon
@@ -24,7 +24,9 @@ template(name='messages_layout')
                                             .ui.white.label #{unread_inbox_count}
                                     a.item(href='/messages/sent' class="{{isActiveRoute name='sent_messages'}}") 
                                         i.send.icon
-                                        |Sent (#{sent_count})
+                                        |Sent 
+                                        if sent_count
+                                            |(#{sent_count})
                                     a.item(href='/messages/drafts' class="{{isActiveRoute name='drafts'}}") 
                                         i.edit.icon
                                         |Drafts
@@ -32,7 +34,9 @@ template(name='messages_layout')
                                             .ui.white.label #{drafts_count}
                                     a.item(href='/messages/archived' class="{{isActiveRoute name='all_messages'}}") 
                                         i.archive.icon
-                                        | Archived (#{archived_count})
+                                        | Archived 
+                                        if archived_count    
+                                            |(#{archived_count})
                             .eleven.wide.column
                                 +Template.dynamic template=message_content
 

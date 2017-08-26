@@ -1,19 +1,19 @@
 if Meteor.isClient
     Session.setDefault 'adding_id', null
     
-    Template.bookmarks.onCreated ->
-        @autorun => Meteor.subscribe('bookmarks', @data._id)
+    Template.comments.onCreated ->
+        @autorun => Meteor.subscribe('comments', @data._id)
     Template.comment.onCreated ->
         @editing_id = new ReactiveVar('')
         
-    Template.bookmarks.onRendered ->
+    Template.comments.onRendered ->
         @autorun =>
             if @subscriptionsReady()
                 Meteor.setTimeout ->
                     $('.ui.accordion').accordion()
                 , 500
 
-    Template.bookmarks.events
+    Template.comments.events
         'click #add_comment': ->
             new_id = Docs.insert 
                 type: 'comment'
@@ -56,14 +56,14 @@ if Meteor.isClient
             editing_comment
         
         
-    Template.bookmarks.helpers
-        bookmarks: -> 
+    Template.comments.helpers
+        comments: -> 
             Docs.find 
                 type: 'comment'
                 parent_id: @_id
             
 if Meteor.isServer
-    Meteor.publish 'bookmarks', (parent_id)->
+    Meteor.publish 'comments', (parent_id)->
         Docs.find
             type: 'comment'
             parent_id: parent_id            

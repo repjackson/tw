@@ -13,12 +13,14 @@ if Meteor.isClient
     
     
     Template.read_link.events
-        'click .mark_read': ->
+        'click .mark_read': (e,t)->
+            $(e.currentTarget).closest('.comment').transition('bounce')
             Messages.update @_id,
                 $set: read: true
             
             
-        'click .mark_unread': ->
+        'click .mark_unread': (e,t)->
+            $(e.currentTarget).closest('.comment').transition('bounce')
             Messages.update @_id,
                 $set: read: false
     
@@ -28,7 +30,9 @@ if Meteor.isClient
             $(e.currentTarget).closest('.comment').transition('fly left')
             Meteor.setTimeout ->
                 Messages.update self._id,
-                    $set: archived: true
+                    $set: 
+                        read: true
+                        archived: true
             , 500
             
         'click .unarchive': (e,t)->
@@ -38,3 +42,41 @@ if Meteor.isClient
                 Messages.update self._id,
                     $set: archived: false
             , 500
+
+
+
+    Template.delete_message_button.events
+        'click #delete_message': ->
+            self = @
+            swal {
+                title: 'Delete Message?'
+                # text: 'Confirm delete?'
+                type: 'error'
+                animation: false
+                showCancelButton: true
+                closeOnConfirm: true
+                cancelButtonText: 'Cancel'
+                confirmButtonText: 'Delete'
+                confirmButtonColor: '#da5347'
+            }, ->
+                Messages.remove self._id
+                FlowRouter.go '/messages'
+
+    Template.delete_message_link.events
+        'click #delete_message': ->
+            self = @
+            swal {
+                title: 'Delete Message?'
+                # text: 'Confirm delete?'
+                type: 'error'
+                animation: false
+                showCancelButton: true
+                closeOnConfirm: true
+                cancelButtonText: 'Cancel'
+                confirmButtonText: 'Delete'
+                confirmButtonColor: '#da5347'
+            }, ->
+                Messages.remove self._id
+                FlowRouter.go '/messages'
+
+

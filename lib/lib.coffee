@@ -114,7 +114,7 @@ Meteor.methods
             Docs.update id,
                 $pull: upvoters: Meteor.userId()
                 $inc: points: -1
-            # Meteor.users.update doc.author_id, $inc: points: -1
+            Meteor.users.update doc.author_id, $inc: points: -1
             # Meteor.users.update Meteor.userId(), $inc: points: 1
 
         else if Meteor.userId() in doc.downvoters #switch downvote to upvote
@@ -128,7 +128,7 @@ Meteor.methods
             Docs.update id,
                 $addToSet: upvoters: Meteor.userId()
                 $inc: points: 1
-            # Meteor.users.update doc.author_id, $inc: points: 1
+            Meteor.users.update doc.author_id, $inc: points: 1
             # Meteor.users.update Meteor.userId(), $inc: points: -1
         Meteor.call 'generate_upvoted_cloud', Meteor.userId()
 

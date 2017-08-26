@@ -1,3 +1,19 @@
+@Transactions = new Meteor.Collection 'transactions'
+
+Transactions.before.insert (userId, doc)->
+    doc.timestamp = Date.now()
+    doc.author_id = Meteor.userId()
+    doc.status = 'draft'
+    doc.read = false
+    doc.archived = false
+    return
+
+Transactions.helpers
+    sender: -> Meteor.users.findOne @sender_id
+    when: -> moment(@timestamp).fromNow()
+    receiver: -> Meteor.users.findOne @receiver_id
+    parent: -> Transactions.findOne @parent_id
+
 if Meteor.isClient
     FlowRouter.route '/transactions', action: (params) ->
         BlazeLayout.render 'layout',

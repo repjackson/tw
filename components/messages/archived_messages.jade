@@ -1,5 +1,7 @@
 template(name='archived_messages')
-    .ui.horizontal.divider.header All Messages
+    .ui.horizontal.divider.header 
+        i.archive.icon
+        |Archived Messages
     .ui.threaded.comments
         each archived_messages
             +message
@@ -22,3 +24,4 @@ template(name='message')
             .actions
                 +read_link
                 +archive_link
+                +delete_message_link

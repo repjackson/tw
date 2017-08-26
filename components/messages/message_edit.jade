@@ -38,8 +38,7 @@ template(name='message_edit')
                 .ui.segment
                     |!{content}
             if is_draft
-                #delete_message.ui.red.icon.button
-                    i.remove.icon
+                +delete_message_button
                 if recipient_id
                     #send_message.ui.right.floated.teal.labeled.icon.button
                         |Send

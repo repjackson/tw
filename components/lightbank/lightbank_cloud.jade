@@ -13,12 +13,13 @@ template(name='lightbank_cloud')
         // .ui.hidden.divider
         // .ui.button.select_tag(class=media_tag_class) Tori Webster
         // .ui.hidden.divider
-        .ui.header Filter Media
-        each media_tags
-            .ui.button.select_tag(class=media_tag_class) 
-                strong #{this.name}
-                // if isInRole 'admin'
-                //     small #{this.count}
+        if media_tags_exist
+            .ui.header Filter Media
+            each media_tags
+                .ui.button.select_tag(class=media_tag_class) 
+                    strong #{this.name}
+                    // if isInRole 'admin'
+                    //     small #{this.count}
         .ui.hidden.fitted.divider
         .ui.header Filter Tags
         each theme_tags

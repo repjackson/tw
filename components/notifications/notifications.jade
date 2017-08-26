@@ -1,7 +1,7 @@
 template(name='notifications')
     .ui.text.container
         .ui.dividing.header Notifications
-        .ui.grid
+        .ui.stackable.grid
             .five.wide.column
                 .ui.horizontal.divider.header Filter
                 .ui.basic.button All
@@ -68,6 +68,4 @@ template(name='notification')
                             a.add_comment 
                                 i.comment.icon
                                 |Comment
-                            a.delete_notfication 
-                                i.red.remove.icon
-                                |Delete
+                            +delete_notification_link

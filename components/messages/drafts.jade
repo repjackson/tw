@@ -1,5 +1,7 @@
 template(name='drafts')
-    .ui.horizontal.divider.header Drafts
+    .ui.horizontal.divider.header 
+        i.edit.icon
+        |Drafts
     .ui.threaded.comments
         each drafts
             +draft_message
@@ -23,6 +25,6 @@ template(name='draft_message')
                 // +favorite
                 // +voting
                 // if is_author
-                a.delete_message
+                +delete_message_link
                 a.edit_comment(href="/message/edit/#{_id}") Edit
 

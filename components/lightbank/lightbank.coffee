@@ -71,7 +71,7 @@ if Meteor.isClient
     
     Template.lightbank.events
     
-        'click #add': ->
+        'click #add_lightbank_doc': ->
             new_id = Docs.insert 
                 type:'lightbank'
                 tags: selected_tags.array()

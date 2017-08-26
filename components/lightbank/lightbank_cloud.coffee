@@ -17,9 +17,9 @@ if Meteor.isClient
                 )
     
     Template.lightbank_cloud.helpers
-        media_tags: -> 
-            Tags.find
-                name: $in: media_tags
+        media_tags: -> Tags.find(name: $in: media_tags)
+            
+        media_tags_exist: -> Tags.find(name: $in: media_tags).count()
             
         theme_tags: ->
             doc_count = Docs.find(type:'lightbank').count()

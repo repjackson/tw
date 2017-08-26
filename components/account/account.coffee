@@ -57,3 +57,6 @@ if Meteor.isClient
                     else
                         Bert.alert result, 'success', 'growl-top-right'
                     return
+                    
+        'click .send_verification_email': (e,t)->
+            console.log @

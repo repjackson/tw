@@ -2,78 +2,65 @@
     a.toggle_sidebar.mobile.only.item
         i.sidebar.icon
         .imogen Tori Webster
-        // |     Menu
-        // |     Menu
-    // a.ui.mobile.only.dropdown.item 
-    //     i.content.icon
-    //     .imogen Tori Webster
-    //     .menu
-    //         a.item(href='/' class="{{isActivePath '/'}}") Home
-    //         a.item(href='/about' class="{{isActivePath '/about'}}") About
-    //         a.item(href='/courses' class="{{isActivePath '/courses'}}") Courses
-    //         a.item(href='/lightbank' class="{{isActivePath '/lightbank'}}") Lightbank
-    //         // if isInRole 'admin'
-    //         //     a.item(href='/marketplace' class="{{isActivePath '/marketplace'}}") 
-    //         //         i.red.configure.icon
-    //         //         |Marketplace
-    //         a.item(href='/contact' class="{{isActivePath '/contact'}}") Contact
-    //         .divider
-    //         if currentUser
-    //             if isInRole 'admin'
-    //                 a.item(href='/admin/members' class="{{isActivePath '/admin/members'}}")
-    //                     i.configure.icon
-    //                     | Admin
-    //             a.item(href="/dashboard" class="{{isActivePath '/dashboard'}}")
-    //                 if currentUser.profile.image_id
-    //                     img.ui.avatar.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
-    //                 else
-    //                     i.user.icon
-    //                 if currentUser.name
-    //                     | #{currentUser.name}
-    //                 else
-    //                     | #{currentUser.username}
-    //             a#logout.ui.item(href='#')
-    //                 i.sign.out.icon
-    //                 | Sign Out
-    //         else
-    //             a.ui.item(href='/sign-in') 
-    //                 i.sign.in.icon
-    //                 | Sign In
+    if currentUser
+        a#check_in.icon.mobile.only.item(href='#' data-position="bottom center" data-content="Check In")
+            i.green.large.check.icon
     a.mobile.hidden.item(href='/' class="{{isActivePath '/'}}")
         .imogen Tori Webster
-    a.mobile.hidden.item(href='/about' class="{{isActivePath '/about'}}") About
-    a.mobile.hidden.item(href='/courses' class="{{isActivePath '/courses'}}") Courses
-    a.mobile.hidden.item(href='/lightbank' class="{{isActivePath '/lightbank'}}") Lightbank
-    a.mobile.hidden.item(href='/contact' class="{{isActivePath '/contact'}}") Contact
-    .right.mobile.hidden.menu
+    unless currentUser
+        a.mobile.hidden.item(href='/about' class="{{isActivePath '/about'}}") About
+        a.mobile.hidden.item(href='/courses' class="{{isActivePath '/courses'}}") Courses
+        a.mobile.hidden.item(href='/lightbank' class="{{isActivePath '/lightbank'}}") Lightbank
+        a.mobile.hidden.item(href='/contact' class="{{isActivePath '/contact'}}") Contact
+    else
+        a.item(href="/dashboard" class="{{isActivePath '/dashboard'}}")
+            i.dashboard.icon
+            | Dashboard
+        a.item(href='/courses' class="{{isActivePath '/courses'}}") 
+            i.university.icon
+            | Courses
+        a.item(href='/lightbank' class="{{isActivePath '/lightbank'}}") 
+            i.sun.icon
+            | Lightbank
+        a.item(href='/people' class="{{isActivePath '/people'}}") 
+            i.users.icon
+            | People
+        a.item(href='/journal' class="{{isActivePath '/journal'}}") 
+            i.pencil.icon
+            | Journal
+        
+    .right.menu
         if currentUser
             if cart_items
-                a.icon.item(href='/cart' class="{{isActivePath '/cart'}}" data-content="Shopping Cart")
+                a.icon.mobile.hidden.item(href='/cart' class="{{isActivePath '/cart'}}" data-position="bottom center" data-content="Shopping Cart")
                     i.large.icons
                         i.cart.icon
                         i.corner.teal.asterisk.icon
-            if isInRole 'admin'
-                a.icon.item(href='/admin/members' class="{{isActivePath '/admin/members'}}")
-                    i.configure.red.icon
-                    // | Admin
-            a.icon.item(href='/messages' class="{{isActiveRoute name='message_layout'}}" data-content="Messages")
+            a#check_in.icon.mobile.hidden.item(href='#' data-position="bottom center" data-content="Check In")
+                i.green.large.check.icon
+            a.icon.mobile.hidden.item(href='/karma' data-position="bottom center" data-content="Karma")
+                i.heartbeat.icon
+                |#{currentUser.points}
+            a.icon.item(href='/messages' class="{{isActiveRoute name='message_layout'}}" data-position="bottom center" data-content="Messages")
                 if unread_message_count
-                    i.mail.icon
+                    i.blue.mail.icon
                 else
                     i.mail.outline.icon
                 // | Admin
-            a.ui.icon.dropdown.item(class="{{isActivePath '/notifications'}}" data-content="Notifications")
+            a.ui.icon.dropdown.item(class="{{isActivePath '/notifications'}}" data-position="bottom center" data-content="Notifications")
                 if unread_notifications_count
                     i.alarm.blue.icon
                 else
                     i.alarm.outline.icon
                 .ui.menu(style="right: 0;left: auto;")
-                    a.item(href='/notifications') View All
+                    a.item(href='/notifications') 
+                        |View All
+                        i.external.icon
                     .ui.divider
                     each unread_notifications
                         .item #{subject.name} #{predicate} #{object.name}
 
-            a.icon.item(href='/bookmarks' class="{{isActivePath '/bookmarks'}}" data-content="Bookmarks")
+            a.icon.mobile.hidden.item(href='/bookmarks' class="{{isActivePath '/bookmarks'}}" data-position="bottom center" data-content="Bookmarks")
                 i.bookmark.outline.icon
                 // .ui.menu
                 //     each bookmark_docs
@@ -84,19 +71,20 @@
                     img.ui.avatar.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
                 else
                     i.user.icon
-                if currentUser.name
-                    | #{currentUser.name}
-                else
-                    | #{currentUser.username}
+                span.mobile.hidden    
+                    if currentUser.name
+                        | #{currentUser.name}
+                    else
+                        | #{currentUser.username}
                 i.dropdown.icon
                 .ui.menu
                     a.item(href="/dashboard" class="{{isActivePath '/dashboard'}}")
                         i.dashboard.icon
                         | Dashboard
                     .ui.divider
-                    // a.icon.item(href='/karma' class="{{isActivePath '/karma'}}")
-                    //     i.heartbeat.outline.icon
-                    //     | Karma
+                    a.icon.item(href='/karma' class="{{isActivePath '/karma'}}")
+                        i.heartbeat.outline.icon
+                        | Karma
                     a.item(href='/courses' class="{{isActivePath '/courses'}}") 
                         i.university.icon
                         | Courses
@@ -136,3 +124,19 @@
             a.ui.item(href='/sign-in') 
                 i.sign.in.icon
                 | Sign In
+    .ui.modal
+        i.close.icon
+        .ui.center.aligned.header
+            i.green.check.icon
+            | #{currentUser.name} Check In
+        .content
+            .description
+                with new_checkin_doc
+                    .ui.form
+                        +tags
+                        +body
+                        +content
+        .actions
+            .ui.cancel.red.basic.button Cancel
+            .ui.ok.green.button Submit
+

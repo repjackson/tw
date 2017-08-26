@@ -27,8 +27,8 @@ if Meteor.isClient
         module_is_available: ->
             if Roles.userIsInRole(Meteor.userId(), 'sol_demo') and @number < 2
                 return true
-            # else if Roles.userIsInRole(Meteor.userId(), ['admin']) 
-            #     return true
+            else if Roles.userIsInRole(Meteor.userId(), ['admin']) 
+                return true
             else 
                 if @number is 1 then return true
                 else

@@ -2,7 +2,7 @@
 Messages.before.insert (userId, doc)->
     doc.timestamp = Date.now()
     doc.author_id = Meteor.userId()
-    doc.status = 'draft'
+    # doc.status = 'draft'
     doc.read = false
     doc.archived = false
     return
@@ -21,7 +21,7 @@ if Meteor.isClient
 
     Template.messages_layout.events
         'click #compose': (e,t)->
-            message_id = Messages.insert({})
+            message_id = Messages.insert({status: 'draft'})
             FlowRouter.go "/message/edit/#{message_id}"
 
     

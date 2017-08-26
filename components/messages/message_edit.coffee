@@ -77,23 +77,11 @@ if Meteor.isClient
             swal "Message Sent", "",'success'
             Meteor.call 'add_notification', Meteor.userId(), 'messaged', message.recipient_id, (err, res)->
                 if err then console.error err
-                else console.log res
+                else 
+                    # console.log res
+                    return
 
-        'click #delete_message': ->
-            self = @
-            swal {
-                title: 'Delete Message?'
-                # text: 'Confirm delete?'
-                type: 'error'
-                animation: false
-                showCancelButton: true
-                closeOnConfirm: true
-                cancelButtonText: 'Cancel'
-                confirmButtonText: 'Delete'
-                confirmButtonColor: '#da5347'
-            }, ->
-                Messages.remove self._id
-                FlowRouter.go '/messages'
 if Meteor.isServer
     Meteor.publish 'usernames', ->
-        Meteor.users.find {}
+        Meteor.users.find {},
+            fields: username: 1

@@ -1,4 +1,7 @@
 template(name='checkin')
+    h1.ui.header Check In
+    +doc_content tags='checkin,blurb'
+    .ui.divider
     .ui.divided.grid
         .five.wide.column
             +checkin_cloud
@@ -6,7 +9,6 @@ template(name='checkin')
             .ui.centered.stackable.cards
                 each docs
                     +checkin_doc_view
-        
 
 
 template(name='checkin_doc_view')
@@ -17,10 +19,13 @@ template(name='checkin_doc_view')
                 each tags
                     .ui.tiny.button.tag(class=tag_class) #{this}
             .ui.hidden.divider
+            |!{content}
         .content
+            a.right.floated(href="/profile/view/#{author.username}")
+                i.user.icon
+                |#{author.name}
             |#{when}
             if can_edit
                 a.ui.basic.button(href="/edit/#{_id}")
                     i.red.configure.icon
                     |Edit
-        

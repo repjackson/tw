@@ -13,28 +13,7 @@ template(name='lightbank_edit')
                                 if youtube
                                     +view_youtube
                         if has_image
-                            .ui.segment
-                                .field
-                                    if image_id
-                                        label image
-                                        .ui.large.image
-                                            img(src="{{c.url image_id width=500 crop='fit'}}")
-                                            a#remove_photo.ui.top.left.attached.link.blue.label remove
-                                            .ui.bottom.right.attached.blue.label Image Id: #{image_id}
-                                    else
-                                        unless image_url
-                                            label Upload Image
-                                            input(type='file' name='upload_picture' accept='image/*')
-                                    if image_url
-                                        label image
-                                        .ui.large.image
-                                            img(src=image_url)
-                                            a#remove_photo.ui.top.left.attached.link.blue.label remove
-                                        .ui.label Image URL: #{image_url}
-                                    else
-                                        unless image_id
-                                            label Image URL
-                                            input#image_url(type='text' value=image_url)
+                            +edit_image
                         if has_content
                             .ui.segment
                                 +content

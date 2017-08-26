@@ -17,7 +17,15 @@ if Meteor.isClient
                 recipient_id: recipient._id
                 author_id: Meteor.userId()
                 content: message_content
-            alert 'message sent'
+            swal {
+                title: "Message to #{recipient.name()} sent."
+                # text: 'You will not be able to recover this imaginary file!'
+                type: 'success'
+                animation: true
+                showCancelButton: false
+                # confirmButtonColor: '#DD6B55'
+                closeOnConfirm: true
+            }
             $('#message_content').val('')
             t.sending_message.set(false)
             

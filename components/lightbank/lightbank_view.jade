@@ -21,20 +21,17 @@ template(name='lightbank_view')
                         |!{content}
                     if journal_prompt
                         +journal_responses
+                    +comments    
                 .five.wide.column
-                    if can_resonate
-                        div
-                            +resonate_button
-                    if can_complete
-                        div
-                            +mark_complete_button
-                    if can_bookmark
-                        div
-                            +bookmark_button
-        
-                    .ui.header Tags
+                    .ui.dividing.header Tags
                     each tags
                         .ui.basic.large.label.doc_tag #{this}
+                    .ui.dividing.header Actions
+                    +bookmark_button
+                    div
+                        +voting
+                    .ui.dividing.header Resonates
+                    +resonate_button
                     if resonates_with_people.count
                         .ui.segment
                             .title 
@@ -48,8 +45,9 @@ template(name='lightbank_view')
                                                 |#{name}
                                             .description
                                                 +tiny_color_dots
-                                                each five_tags
-                                                    .ui.basic.label #{this}
+                                                div
+                                                    each five_tags
+                                                        .ui.basic.label #{this}
 
                     
                     

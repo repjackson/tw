@@ -23,14 +23,7 @@ if Meteor.isClient
         resonates_item_class: -> if Session.equals 'checkin_view_mode', 'resonates' then 'active' else ''
     
     Template.checkin.events
-        'click #set_mode_to_all': -> 
-            if Meteor.userId() then Session.set 'checkin_view_mode', 'all'
-            else FlowRouter.go '/sign-in'
-    
-        'click #set_mode_to_resonates': -> 
-            if Meteor.userId() then Session.set 'checkin_view_mode', 'resonates'
-            else FlowRouter.go '/sign-in'
-    
+
     
     Template.checkin_doc_view.helpers
         is_author: -> Meteor.userId() and @author_id is Meteor.userId()
@@ -46,24 +39,35 @@ if Meteor.isClient
 
 
 if Meteor.isServer
-    Meteor.publish 'checkin', (selected_tags, limit, checkin_view_mode)->
-    
-        self = @
-        match = {}
-        # match.tags = $all: selected_tags
-        if selected_tags.length > 0 then match.tags = $all: selected_tags
-        match.type = 'checkin'
-        if checkin_view_mode is 'resonates'
-            match.favoriters = $in: [@userId]
-        
-        if checkin_view_mode and checkin_view_mode is 'mine'
-            match.author_id
-    
-        if limit
-            Docs.find match, 
-                limit: limit
-        else
-            Docs.find match
+    publishComposite 'checkin', (selected_tags, limit, checkin_view_mode)->
+        {
+            find: ->
+                self = @
+                match = {}
+                # match.tags = $all: selected_tags
+                if selected_tags.length > 0 then match.tags = $all: selected_tags
+                match.type = 'checkin'
+                if checkin_view_mode is 'resonates'
+                    match.favoriters = $in: [@userId]
+                
+                if checkin_view_mode and checkin_view_mode is 'mine'
+                    match.author_id
+            
+                if limit
+                    Docs.find match, 
+                        limit: limit
+                else
+                    Docs.find match
+            children: [
+                { find: (doc) ->
+                    Meteor.users.find 
+                        _id: doc.author_id
+                    }
+                ]    
+        }
+            
+            
+            
     
     Meteor.publish 'checkin_tags', (selected_tags, limit, checkin_view_mode)->
         

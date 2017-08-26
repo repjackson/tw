@@ -75,24 +75,33 @@ template(name='content')
             +froalaReactive getFEContext
     
     
-template(name='image')
-    .ui.form
-        if image_id
-            .field
-                label Image
+template(name='edit_image')
+    .ui.segment
+        .field
+            if image_id
+                label image
                 .ui.large.image
                     img(src="{{c.url image_id width=500 crop='fit'}}")
-                    a#remove_photo.ui.top.left.attached.link.blue.label Remove
+                    a#remove_photo.ui.top.left.attached.link.blue.label remove
                     .ui.bottom.right.attached.blue.label Image Id: #{image_id}
-        else
-            .fields
-                .field
+            else
+                unless image_url
                     label Upload Image
                     input(type='file' name='upload_picture' accept='image/*')
-                if isInRole 'admin'
-                    .field
-                        label or Choose Cloudinary Image Id
-                        input#input_image_id(type='text')
+                    if isInRole 'admin'
+                        .field
+                            label or Choose Cloudinary Image Id
+                            input#input_image_id(type='text')
+            if image_url
+                label image
+                .ui.large.image
+                    img(src=image_url)
+                    a#remove_photo.ui.top.left.attached.link.blue.label remove
+                .ui.label Image URL: #{image_url}
+            else
+                unless image_id
+                    label Image URL
+                    input#image_url(type='text' value=image_url)
     
 template(name='youtube')
     .field

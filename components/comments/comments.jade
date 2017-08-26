@@ -1,10 +1,10 @@
 template(name='comments')
     .ui.fluid.styled.accordion
-        .title 
+        .active.title 
             i.comments.outline.icon
             |Comments (#{comments.count})
             i.dropdown.icon
-        .content
+        .active.content
             if adding_id
                 .ui.form
                     .field

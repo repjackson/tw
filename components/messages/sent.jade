@@ -1,5 +1,7 @@
 template(name='sent')
-    .ui.horizontal.divider.header Sent
+    .ui.horizontal.divider.header 
+        i.send.icon
+        |Sent
     .ui.threaded.comments
         each sent_messages
             +sent_message

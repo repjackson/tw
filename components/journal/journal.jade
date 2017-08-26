@@ -2,35 +2,45 @@ template(name='journal')
     .ui.container
         .ui.center.aligned.basic.segment
             +doc_content tags='journal,blurb'
-        .ui.grid
+        #convert_journal_docs.ui.button Convert Journal Docs
+        .ui.stackable.grid
             .four.wide.column
                 #add_journal_entry.ui.basic.fluid.button
                     i.plus.icon
                     |Add Journal Entry
                 +journal_cloud
-                .ui.vertical.menu
-                    a#toggle_published.item(class=published_item_class) 
-                        i.red.unhide.icon
-                        |Published (#{published_count})
-                    a#toggle_unpublished.item(class=unpublished_item_class) 
-                        i.red.hide.icon
-                        |Unpublished (#{unpublished_count})
+                // a#toggle_published.ui.basic.button(class=published_item_class) 
+                //     i.red.unhide.icon
+                //     |Published (#{published_count})
+                // a#toggle_unpublished.ui.basic.button(class=unpublished_item_class) 
+                //     i.red.hide.icon
+                //     |Unpublished (#{unpublished_count})
+            
+                a#toggle_mine.ui.basic.button(class=mine_item_class) 
+                    |Mine (#{mine_count})
             
             .twelve.wide.column
-                each docs
-                    +journal_doc_view
+                .ui.centered.stackable.cards
+                    each docs
+                        +journal_doc_view
         
 
 
 template(name='journal_doc_view')
-    .ui.fluid.card
-        .content
-            |!{content}
+    .ui.card
+        if content
+            .content
+                |!{content}
         .content
             .meta
                 i.tags.icon
                 each tags
-                    .ui.tiny.circular.button.tag(class=tag_class) #{this}
+                    .ui.tiny.circular.compact.button.tag(class=tag_class) #{this}
+        .content
+                |by
+                if author.profile.image_id
+                    img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+                |#{author.name} #{when}
         .content
             // .ui.hidden.divider
             +bookmark_button

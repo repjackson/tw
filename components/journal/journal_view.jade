@@ -8,6 +8,8 @@ template(name='journal_view')
             .ui.grid
                 .ten.wide.column
                     |!{content}
+                    if published
+                        +comments
                 .five.wide.column
                     .ui.dividing.header Tags
                     each tags
@@ -39,7 +41,7 @@ template(name='journal_view')
                             | Public
                     else
                         .ui.basic.large.label 
-                            i.unlock.icon
+                            i.lock.icon
                             | Private
                     .ui.header by #{author.name}
                     .ui.divider
