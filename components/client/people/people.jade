@@ -1,10 +1,15 @@
 template(name='people')
     .ui.container
         +doc_content tags='people cloud,blurb'
-        +people_cloud
-        .ui.four.centered.stackable.cards
-            each people
-                +person
+        .ui.hidden.divider
+        .ui.stackable.grid
+            .four.wide.column
+                .ui.dividing.header Tag Filter
+                +people_cloud
+            .eleven.wide.column
+                .ui.centered.stackable.cards
+                    each people
+                        +person
 
 
 template(name='person')

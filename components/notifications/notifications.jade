@@ -1,17 +1,22 @@
 template(name='notifications')
     .ui.text.container
-        .ui.dividing.header Notifications
+        h1.ui.horizontal.divider.header 
+            i.alert.outline.icon
+            |Notifications
         .ui.stackable.grid
             .five.wide.column
-                .ui.horizontal.divider.header Filter
-                .ui.basic.button All
-                .ui.basic.button Unread
-                .ui.header People
-                .ui.header Type
-                .ui.dividing.header Actions
-                    #mark_all_read.ui.basic.button 
-                        i.visible.icon
-                        |Mark All Read
+                // .ui.horizontal.divider.header Filter
+                .ui.header Viewing: 
+                    if viewing_unread
+                        #view_all_notifications.ui.basic.button Unread
+                    if viewing_all
+                        #view_unread_notifications.ui.basic.button All
+                // .ui.header People
+                // .ui.header Type
+                // .ui.dividing.header Actions
+                //     #mark_all_read.ui.basic.button 
+                //         i.visible.icon
+                //         |Mark All Read
                 // if isInRole 'admin'
                 //     .ui.header Options
                 //     if notifications_allowed
@@ -39,7 +44,7 @@ template(name='notification')
                             | #{subject_name}
                         | #{predicate}
                         a.user(href="/profile/#{object.username}")
-                            | #{object_name}
+                            | #{object_name}.
                         .date
                             | #{when}
                     if extra_text

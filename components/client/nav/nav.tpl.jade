@@ -13,19 +13,19 @@
         a.mobile.hidden.item(href='/lightbank' class="{{isActivePath '/lightbank'}}") Lightbank
         a.mobile.hidden.item(href='/contact' class="{{isActivePath '/contact'}}") Contact
     else
-        a.item(href="/dashboard" class="{{isActivePath '/dashboard'}}")
+        a.mobile.hidden.item(href="/dashboard" class="{{isActivePath '/dashboard'}}")
             i.dashboard.icon
             | Dashboard
-        a.item(href='/courses' class="{{isActivePath '/courses'}}") 
+        a.mobile.hidden.item(href='/courses' class="{{isActivePath '/courses'}}") 
             i.university.icon
             | Courses
-        a.item(href='/lightbank' class="{{isActivePath '/lightbank'}}") 
+        a.mobile.hidden.item(href='/lightbank' class="{{isActivePath '/lightbank'}}") 
             i.sun.icon
             | Lightbank
-        a.item(href='/people' class="{{isActivePath '/people'}}") 
+        a.mobile.hidden.item(href='/people' class="{{isActivePath '/people'}}") 
             i.users.icon
             | People
-        a.item(href='/journal' class="{{isActivePath '/journal'}}") 
+        a.mobile.hidden.item(href='/journal' class="{{isActivePath '/journal'}}") 
             i.pencil.icon
             | Journal
         
@@ -38,16 +38,17 @@
                         i.corner.teal.asterisk.icon
             a#check_in.icon.mobile.hidden.item(href='#' data-position="bottom center" data-content="Check In")
                 i.green.large.check.icon
-            a.icon.mobile.hidden.item(href='/karma' data-position="bottom center" data-content="Karma")
-                i.heartbeat.icon
-                |#{currentUser.points}
-            a.icon.item(href='/messages' class="{{isActiveRoute name='message_layout'}}" data-position="bottom center" data-content="Messages")
+            // a.icon.mobile.hidden.item(href='/karma' data-position="bottom center" data-content="Karma")
+            //     i.heartbeat.icon
+            //     |#{currentUser.points}
+            a.icon.item(href='/messages' class="{{isActiveRoute name='message_layout'}}")
                 if unread_message_count
                     i.blue.mail.icon
                 else
                     i.mail.outline.icon
                 // | Admin
-            a.ui.icon.dropdown.item(class="{{isActivePath '/notifications'}}" data-position="bottom center" data-content="Notifications")
+            // a.ui.icon.dropdown.item(class="{{isActivePath '/notifications'}}" data-position="bottom center" data-content="Notifications")
+            a.ui.icon.dropdown.item(class="{{isActivePath '/notifications'}}")
                 if unread_notifications_count
                     i.alarm.blue.icon
                 else
@@ -60,8 +61,8 @@
                     each unread_notifications
                         .item #{subject.name} #{predicate} #{object.name}
 
-            a.icon.mobile.hidden.item(href='/bookmarks' class="{{isActivePath '/bookmarks'}}" data-position="bottom center" data-content="Bookmarks")
-                i.bookmark.outline.icon
+            // a.icon.mobile.hidden.item(href='/bookmarks' class="{{isActivePath '/bookmarks'}}" data-position="bottom center" data-content="Bookmarks")
+            //     i.bookmark.outline.icon
                 // .ui.menu
                 //     each bookmark_docs
                 //         each tags
@@ -88,6 +89,9 @@
                     a.item(href='/courses' class="{{isActivePath '/courses'}}") 
                         i.university.icon
                         | Courses
+                    a.item(href='/checkin' class="{{isActivePath '/checkin'}}") 
+                        i.check.icon
+                        | Check In's
                     a.item(href='/people' class="{{isActivePath '/people'}}") 
                         i.users.icon
                         | People

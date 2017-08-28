@@ -4,7 +4,7 @@ template(name='lightbank_cloud')
             i.search.icon
             +inputAutocomplete settings=settings id="search" class="" autocomplete="off" placeholder='Search Lightbank...'
         if selected_tags
-            .ui.header Selected Tags
+            // .ui.dividing.header Selected Tags
             #clear_tags.ui.blue.icon.button
                 i.remove.icon
             each selected_tags
@@ -14,14 +14,14 @@ template(name='lightbank_cloud')
         // .ui.button.select_tag(class=media_tag_class) Tori Webster
         // .ui.hidden.divider
         if media_tags_exist
-            .ui.header Filter Media
+            .ui.dividing.header Filter Media
             each media_tags
                 .ui.button.select_tag(class=media_tag_class) 
                     strong #{this.name}
                     // if isInRole 'admin'
                     //     small #{this.count}
         .ui.hidden.fitted.divider
-        .ui.header Filter Tags
+        .ui.dividing.header Filter Tags
         each theme_tags
             .ui.basic.button.select_tag(class=cloud_tag_class) 
                 | #{this.name}

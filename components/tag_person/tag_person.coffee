@@ -8,7 +8,10 @@ if Meteor.isClient
             Docs.find
                 type: 'tag_person'
                 parent_id: @_id
-    
+
+        person: ->
+            Meteor.users.findOne username: FlowRouter.getParam 'username'
+
         my_rating: ->
             # console.log @
             my_rating = Docs.findOne 

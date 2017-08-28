@@ -12,7 +12,7 @@ if Meteor.isClient
         docs: -> 
             Docs.find {type:'checkin' }, 
                 sort:
-                    tag_count: 1
+                    timestamp: -1
                 limit: 10
     
         tag_class: -> if @valueOf() in selected_tags.array() then 'teal' else 'basic'
@@ -56,8 +56,10 @@ if Meteor.isServer
                 if limit
                     Docs.find match, 
                         limit: limit
+                        sort: timestamp: -1
                 else
-                    Docs.find match
+                    Docs.find match,
+                        sort: timestamp: -1
             children: [
                 { find: (doc) ->
                     Meteor.users.find 

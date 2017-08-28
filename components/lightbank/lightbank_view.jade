@@ -1,3 +1,4 @@
+
 template(name='lightbank_view')
     a.ui.basic.button(href='/lightbank')
         i.left.chevron.icon
@@ -22,6 +23,7 @@ template(name='lightbank_view')
                     if journal_prompt
                         +journal_responses
                     +comments    
+                    +tag_rating
                 .five.wide.column
                     .ui.dividing.header Tags
                     each tags

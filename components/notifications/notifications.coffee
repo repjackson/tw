@@ -31,11 +31,23 @@ FlowRouter.route '/notifications', action: ->
 if Meteor.isClient
     Template.notifications.onCreated ->
         @autorun -> Meteor.subscribe 'all_notifications'
-    
+        @notification_view_mode = new ReactiveVar('all')
+
     Template.notifications.helpers
         notifications: -> 
-            Notifications.find {}, 
-                sort: timestamp: -1
+            if Template.instance().notification_view_mode.get() is 'unread'
+                Notifications.find {
+                    read_by: $nin: [Meteor.userId()]
+                    }, 
+                    sort: timestamp: -1
+            else        
+                Notifications.find {
+                    }, 
+                    sort: timestamp: -1
+        
+        viewing_unread: -> Template.instance().notification_view_mode.get() is 'unread'  
+        viewing_all: -> Template.instance().notification_view_mode.get() is 'all'  
+
         
         # notifications_allowed: ->
         #     # console.log Notification.permission
@@ -56,6 +68,11 @@ if Meteor.isClient
                 Notifications.update {},
                     $addToSet: read_by: Meteor.userId()
                     
+        'click #view_unread_notifications': (e,t)->
+            t.notification_view_mode.set('unread')    
+        
+        'click #view_all_notifications': (e,t)->
+            t.notification_view_mode.set('all')    
         
     Template.notification.helpers
         notification_segment_class: -> if Meteor.userId() in @read_by then 'basic' else ''
@@ -69,8 +86,13 @@ if Meteor.isClient
         object_name: -> if @object_id is Meteor.userId() then 'you' else @object().name()
 
     Template.notification.events
-        'click .mark_read': -> Notifications.update @_id, $addToSet: read_by: Meteor.userId()
-        'click .mark_unread': -> Notifications.update @_id, $pull: read_by: Meteor.userId()
+        'click .mark_read': (e,t)-> 
+            $(e.currentTarget).closest('.notification_segment').transition('bounce')
+            Notifications.update @_id, $addToSet: read_by: Meteor.userId()
+        
+        'click .mark_unread': (e,t)-> 
+            $(e.currentTarget).closest('.notification_segment').transition('bounce')
+            Notifications.update @_id, $pull: read_by: Meteor.userId()
 
         'click .like': -> Notifications.update @_id, $addToSet: liked_by: Meteor.userId()
         'click .unlike': -> Notifications.update @_id, $pull: liked_by: Meteor.userId()
@@ -128,6 +150,57 @@ if Meteor.isServer
                     }
                 ]    
         }
+        
+        
+    Meteor.publish 'notification_subjects', (selected_subjects)->
+        self = @
+        match = {}
+        
+        if selected_tags.length > 0 then match.tags = $all: selected_tags
+        
+        cloud = Notifications.aggregate [
+            { $match: match }
+            { $project: subject_id: 1 }
+            { $group: _id: '$subject_id', count: $sum: 1 }
+            { $match: _id: $nin: selected_subjects }
+            { $sort: count: -1, _id: 1 }
+            { $limit: 20 }
+            { $project: _id: 0, name: '$_id', count: 1 }
+            ]
+        # console.log 'cloud, ', cloud
+        cloud.forEach (notification_subject, i) ->
+            self.added 'notification_subjects', Random.id(),
+                name: notification_subject.name
+                count: notification_subject.count
+                index: i
+    
+        self.ready()
+            
+    
+    # Meteor.publish 'usernames', (selectedTags, selectedUsernames, pinnedUsernames, viewMode)->
+# Meteor.publish 'usernames', (selectedTags)->
+    # self = @
+
+    # match = {}
+    # if selectedTags.length > 0 then match.tags = $all: selectedTags
+    # # if selectedUsernames.length > 0 then match.username = $in: selectedUsernames
+
+    # cloud = Docs.aggregate [
+    #     { $match: match }
+    #     { $project: username: 1 }
+    #     { $group: _id: '$username', count: $sum: 1 }
+    #     { $match: _id: $nin: selectedUsernames }
+    #     { $sort: count: -1, _id: 1 }
+    #     { $limit: 50 }
+    #     { $project: _id: 0, text: '$_id', count: 1 }
+    #     ]
+
+    # cloud.forEach (username) ->
+    #     self.added 'usernames', Random.id(),
+    #         text: username.text
+    #         count: username.count
+    # self.ready()
+
         
 
     Notifications.allow
