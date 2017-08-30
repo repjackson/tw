@@ -83,9 +83,9 @@
                         i.dashboard.icon
                         | Dashboard
                     .ui.divider
-                    a.icon.item(href='/karma' class="{{isActivePath '/karma'}}")
-                        i.heartbeat.outline.icon
-                        | Karma
+                    // a.icon.item(href='/karma' class="{{isActivePath '/karma'}}")
+                    //     i.heartbeat.outline.icon
+                    //     | Karma
                     a.item(href='/courses' class="{{isActivePath '/courses'}}") 
                         i.university.icon
                         | Courses
@@ -138,6 +138,22 @@
                 with new_checkin_doc
                     .ui.form
                         +tags
+                        .ui.basic.button
+                            .ui.icon.header
+                                i.smile.icon
+                                |Happy
+                        .ui.basic.button
+                            .ui.icon.header
+                                i.meh.icon
+                                | Nuetral
+                        .ui.basic.button
+                            .ui.icon.header
+                                i.frown.icon
+                                | Sad
+                        .ui.basic.button
+                            .ui.icon.header
+                                i.treatment.icon
+                                | Sensitive
                         +body
                         +content
         .actions

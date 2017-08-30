@@ -1,6 +1,10 @@
 @Tags = new Meteor.Collection 'tags'
 @People_tags = new Meteor.Collection 'people_tags'
 @Docs = new Meteor.Collection 'docs'
+@Author_ids = new Meteor.Collection 'author_ids'
+
+
+
 
 Docs.before.insert (userId, doc)->
     doc.timestamp = Date.now()

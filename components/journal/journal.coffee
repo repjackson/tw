@@ -4,12 +4,13 @@ if Meteor.isClient
             # cloud: 'cloud'
             main: 'journal'
     
-    
+    @selected_author_ids = new ReactiveArray []
     # Session.setDefault 'journal_view_mode', 'all'
     Template.journal.onCreated -> 
         @autorun -> 
             Meteor.subscribe('journal_docs', 
                 selected_tags.array(), 
+                selected_author_ids.array()
                 limit=10, 
                 view_resonates=Session.get('view_resonates'), 
                 view_bookmarked=Session.get('view_bookmarked'), 
@@ -31,7 +32,10 @@ if Meteor.isClient
     
     Template.journal.helpers
         docs: -> 
-            Docs.find {type:'journal' }, 
+            match = {}
+            match.type = 'journal'
+            if selected_author_ids.array().length > 0 then match.author_id = $in: selected_author_ids.array()
+            Docs.find match, 
                 sort:
                     timestamp: -1
                 limit: 5
@@ -60,6 +64,9 @@ if Meteor.isClient
         unpublished_item_class: -> 
             if not Meteor.userId() then 'disabled'
             else if Session.equals 'view_unpublished', true then 'active' else ''
+    
+        journal_card_class: -> if @published then 'blue' else ''
+    
     
     Template.journal.events
     
@@ -116,47 +123,41 @@ if Meteor.isClient
         is_author: -> Meteor.userId() and @author_id is Meteor.userId()
         tag_class: -> if @valueOf() in selected_tags.array() then 'teal' else 'basic'
         when: -> moment(@timestamp).fromNow()
-            
+        journal_card_class: -> if @published then 'blue' else ''
+
     Template.journal_doc_view.events
         'click .tag': -> if @valueOf() in selected_tags.array() then selected_tags.remove(@valueOf()) else selected_tags.push(@valueOf())
 
 if Meteor.isServer
-    publishComposite 'journal_docs', (selected_tags, limit, view_resonates, view_bookmarked, view_completed, view_published, view_unpublished)->
+    publishComposite 'journal_docs', (selected_tags, selected_author_ids)->
         {
             find: ->
                 self = @
                 match = {}
                 # match.tags = $all: selected_tags
                 if selected_tags.length > 0 then match.tags = $all: selected_tags
+                # console.log selected_author_ids
+                if selected_author_ids.length > 0 then match.author_id = $in: selected_author_ids
+
+                
                 match.type = 'journal'
-                if view_resonates then match.favoriters = $in: [@userId]
-                if view_bookmarked then match.bookmarked_ids = $in: [@userId]
-                if view_published then match.published = true
-                if view_unpublished then match.published = false
                 # if journal_view_mode and journal_view_mode is 'mine'
-                match.author_id = Meteor.userId()
+                # match.author_id = Meteor.userId()
             
-                if limit
-                    Docs.find match, 
-                        limit: limit
-                        sort: timestamp: -1
-                else
-                    Docs.find match,
-                        sort: timestamp: -1
+                # if limit
+                #     Docs.find match, 
+                #         limit: limit
+                #         sort: timestamp: -1
+                # else
+                Docs.find match,
+                    sort: timestamp: -1
             children: [
                 { find: (doc) ->
                     Meteor.users.find 
                         _id: doc.author_id
                     }
-                { find: (doc) ->
-                    if doc.favoriters
-                        Meteor.users.find 
-                            _id: $in: doc.favoriters
-                    }
-                
                 ]    
         }
-
 
 
 

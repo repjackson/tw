@@ -2,12 +2,13 @@ template(name='journal')
     .ui.container
         .ui.center.aligned.basic.segment
             +doc_content tags='journal,blurb'
-        #convert_journal_docs.ui.button Convert Journal Docs
+        // #convert_journal_docs.ui.button Convert Journal Docs
         .ui.stackable.grid
             .four.wide.column
                 #add_journal_entry.ui.basic.fluid.button
-                    i.plus.icon
+                    i.green.plus.icon
                     |Add Journal Entry
+                .ui.hidden.divider
                 +journal_cloud
                 // a#toggle_published.ui.basic.button(class=published_item_class) 
                 //     i.red.unhide.icon
@@ -16,8 +17,8 @@ template(name='journal')
                 //     i.red.hide.icon
                 //     |Unpublished (#{unpublished_count})
             
-                a#toggle_mine.ui.basic.button(class=mine_item_class) 
-                    |Mine (#{mine_count})
+                // a#toggle_mine.ui.basic.button(class=mine_item_class) 
+                //     |Mine (#{mine_count})
             
             .twelve.wide.column
                 .ui.centered.stackable.cards
@@ -27,7 +28,18 @@ template(name='journal')
 
 
 template(name='journal_doc_view')
-    .ui.fluid.card
+    .ui.fluid.card(class=journal_card_class)
+        .content
+            span.right.floated
+                if published
+                    i.unlock.blue.icon
+                    |Published
+                else
+                    i.lock.icon
+                    |Private
+            if author.profile.image_id
+                img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+            |#{author.name} #{when}
         if content
             .content
                 |!{content}
@@ -36,19 +48,18 @@ template(name='journal_doc_view')
                 i.tags.icon
                 each tags
                     .ui.tiny.circular.compact.button.tag(class=tag_class) #{this}
-        .content
-                |by
-                if author.profile.image_id
-                    img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
-                |#{author.name} #{when}
+        // .content
+        //         |by
+        //         if author.profile.image_id
+        //             img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+        //         |#{author.name} #{when}
         .content
             // .ui.hidden.divider
+            a.ui.basic.teal.right.floated.button(href="/journal/view/#{_id}")
+                |View
+                i.right.chevron.icon
             +bookmark_button
-            .ui.center.aligned.basic.segment
-                a.ui.basic.teal.button(href="/journal/view/#{_id}")
-                    |View
-                    i.right.chevron.icon
-                if can_edit
-                    a.ui.basic.button(href="/journal/edit/#{_id}")
-                        i.red.configure.icon
-                        |Edit
+            if can_edit
+                a.ui.basic.button(href="/journal/edit/#{_id}")
+                    i.red.configure.icon
+                    |Edit

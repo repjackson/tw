@@ -4,6 +4,9 @@ template(name='checkin')
     .ui.divider
     .ui.divided.grid
         .five.wide.column
+            a.ui.basic.button(href='/checkin/calendar') 
+                i.calendar.icon
+                |Calendar View
             +checkin_cloud
         .eleven.wide.column
             .ui.centered.stackable.cards
@@ -29,3 +32,7 @@ template(name='checkin_doc_view')
                 a.ui.basic.button(href="/edit/#{_id}")
                     i.red.configure.icon
                     |Edit
+                    
+                    
+template(name='checkin_calendar_view')
+    #checkin-calendar

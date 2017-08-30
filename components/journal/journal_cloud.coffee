@@ -6,11 +6,21 @@ if Meteor.isClient
         @autorun => 
             Meteor.subscribe('journal_tags', 
                 selected_tags.array(), 
-                limit=100, 
+                selected_author_ids.array()
+                limit=20, 
                 view_bookmarked=Session.get('view_bookmarked'), 
                 view_published=Session.get('view_published')
                 view_unpublished=Session.get('view_unpublished')
                 )
+            Meteor.subscribe('author_ids', 
+                selected_tags.array(), 
+                selected_author_ids.array()
+                limit=20, 
+                view_bookmarked=Session.get('view_bookmarked'), 
+                view_published=Session.get('view_published')
+                view_unpublished=Session.get('view_unpublished')
+                )
+            Meteor.subscribe 'usernames'
     
     Template.journal_cloud.helpers
         journal_tags: ->
@@ -23,6 +33,16 @@ if Meteor.isClient
             else
                 Tags.find({}, limit:20)
                 
+        author_tags: ->
+            author_usernames = []
+            
+            for author_id in Author_ids.find().fetch()
+                found_user = Meteor.users.findOne(author_id.text).username
+                # if found_user
+                    # console.log Meteor.users.findOne(author_id.text).username
+                author_usernames.push Meteor.users.findOne(author_id.text).username
+            author_usernames
+                
         cloud_tag_class: ->
             button_class = []
             switch
@@ -32,7 +52,14 @@ if Meteor.isClient
             return button_class
     
         selected_tags: -> selected_tags.array()
-    
+        # selected_author_ids: -> selected_author_ids.array()
+        selected_author_ids: ->
+            selected_author_usernames = []
+            for selected_author_id in selected_author_ids.array()
+                selected_author_usernames.push Meteor.users.findOne(selected_author_id).username
+            selected_author_usernames
+        
+        
         settings: -> {
             position: 'bottom'
             limit: 10
@@ -52,6 +79,12 @@ if Meteor.isClient
         'click .select_tag': -> selected_tags.push @name
         'click .unselect_tag': -> selected_tags.remove @valueOf()
         'click #clear_tags': -> selected_tags.clear()
+    
+        'click .select_author': ->
+            selected_author = Meteor.users.findOne username: @valueOf()
+            selected_author_ids.push selected_author._id
+        'click .unselect_author': -> selected_author_ids.remove @valueOf()
+        'click #clear_authors': -> selected_author_ids.clear()
     
 
         'keyup #search': (e,t)->
@@ -77,7 +110,7 @@ if Meteor.isClient
             $('#search').val ''
     
 if Meteor.isServer
-    Meteor.publish 'journal_tags', (selected_tags)->
+    Meteor.publish 'journal_tags', (selected_tags, selected_author_ids)->
         
         self = @
         match = {}
@@ -85,7 +118,8 @@ if Meteor.isServer
         match.type = 'journal'
         match.author_id = Meteor.userId()
         if selected_tags.length > 0 then match.tags = $all: selected_tags
-        
+        if selected_author_ids.length > 0 then match.author_id = $in: selected_author_ids
+
         cloud = Docs.aggregate [
             { $match: match }
             { $project: tags: 1 }
@@ -104,3 +138,43 @@ if Meteor.isServer
                 index: i
     
         self.ready()
+        
+    publishComposite 'author_ids', (selected_tags, selected_author_ids)->
+        
+        {
+            find: ->
+                self = @
+                match = {}
+                match.type = 'journal'
+                if selected_tags.length > 0 then match.tags = $all: selected_tags
+                if selected_author_ids.length > 0 then match.author_id = $in: selected_author_ids
+            
+                cloud = Docs.aggregate [
+                    { $match: match }
+                    { $project: author_id: 1 }
+                    { $group: _id: '$author_id', count: $sum: 1 }
+                    { $match: _id: $nin: selected_author_ids }
+                    { $sort: count: -1, _id: 1 }
+                    { $limit: 20 }
+                    { $project: _id: 0, text: '$_id', count: 1 }
+                    ]
+            
+            
+                # console.log cloud
+                
+                # author_objects = []
+                # Meteor.users.find _id: $in: cloud.
+            
+                cloud.forEach (author_id) ->
+                    self.added 'author_ids', Random.id(),
+                        text: author_id.text
+                        count: author_id.count
+                self.ready()
+            
+            children: [
+                { find: (doc) ->
+                    Meteor.users.find 
+                        _id: doc.author_id
+                    }
+                ]    
+        }
