@@ -199,3 +199,13 @@ Meteor.methods
                 $addToSet: bookmarked_ids: Meteor.userId()
                 $inc: bookmarked_count: 1
     
+    pin: (doc)->
+        if doc.pinned_ids and Meteor.userId() in doc.pinned_ids
+            Docs.update doc._id,
+                $pull: pinned_ids: Meteor.userId()
+                $inc: pinned_count: -1
+        else
+            Docs.update doc._id,
+                $addToSet: pinned_ids: Meteor.userId()
+                $inc: pinned_count: 1
+    

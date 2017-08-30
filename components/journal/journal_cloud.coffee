@@ -83,7 +83,9 @@ if Meteor.isClient
         'click .select_author': ->
             selected_author = Meteor.users.findOne username: @valueOf()
             selected_author_ids.push selected_author._id
-        'click .unselect_author': -> selected_author_ids.remove @valueOf()
+        'click .unselect_author': -> 
+            selected_author = Meteor.users.findOne username: @valueOf()
+            selected_author_ids.remove selected_author._id
         'click #clear_authors': -> selected_author_ids.clear()
     
 

@@ -65,6 +65,25 @@ Meteor.publish 'sol_progress', ()->
         author_id: @userId
         
 
+publishComposite 'my_course_pins', (selected_tags=[])->
+    {
+        find: ->
+            match = {}
+            
+            if selected_tags.length > 0 then match.tags = $all: selected_tags
+            match.pinned_ids = $in: [Meteor.userId()]
+
+            Docs.find match
+        children: [
+            { find: (pin) ->
+                Meteor.users.find 
+                    _id: pin.author_id
+                }
+            ]    
+    }
+
+
+
 
 Meteor.methods
     'calculate_sol_progress': ()->

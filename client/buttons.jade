@@ -209,4 +209,14 @@ template(name='bookmark_button')
             | Bookmark
         
         
+template(name='pin_button')
+    .pin_button.ui.circular.icon.button(class=pin_button_class) 
+        if pinned
+            i.pin.icon
+            // | Pinned
+        else
+            i.pin.icon
+            // | Pin
+        
+        
         

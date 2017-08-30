@@ -31,11 +31,13 @@ template(name='questions')
                             +session_edit_button
                             +published
                     else
+                        // .ui.top.right.attached.basic.label
                         .ui.header 
                             |#{number}: #{body}
                             // if has_answered_question
                             //     .ui.right.corner.green.label
                             //         i.checkmark.icon
+                        +pin_button
                         if isInRole 'admin'
                             +session_edit_button
                             // if isInRole 'dev'

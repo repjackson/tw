@@ -73,14 +73,14 @@ template(name='view_section')
                         +user_section_progress_list
             .eleven.wide.column
                 // if Template.subscriptionsReady
-                +doc_content tags=section_content_tags
+                +doc_content tags=section_content_tags pinnable=true
                 .ui.hidden.divider
                 .ui.styled.fluid.accordion
                     h3.title
                         i.large.newspaper.icon
                         | Transcript
                     .content
-                        +doc_content tags=section_transcript_tags
+                        +doc_content tags=section_transcript_tags pinnable=true
                 .ui.hidden.divider
                 if currentUser
                     if video_complete

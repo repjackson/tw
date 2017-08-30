@@ -1,0 +1,52 @@
+template(name='course_pins')
+    .ui.container
+        h1.ui.center.aligned.header 
+            i.pin.outline.icon
+            |My Pins (#{pins_count})
+        .ui.stackable.grid
+            // .five.wide.column
+            //     .ui.dividing.header Tag Filter
+            //     if selected_tags
+            //         #clear_tags.ui.teal.icon.large.button
+            //             i.remove.icon
+            //         each selected_tags
+            //             .unselect_tag.ui.teal.large.button
+            //                 strong #{this}
+            // .eleven.wide.column
+            each pinned_tags
+                .ui.basic.button.select_tag(class=cloud_tag_class) 
+                    | #{this.name}
+            .ui.list
+                each pinned_docs
+                    +pin
+                    .ui.hidden.divider
+                    .ui.divider
+                
+template(name='pin')
+    .item
+        .content
+            .header
+                each tags
+                    .ui.label(class=tag_class) #{this}
+            // .avatar
+                // a
+                //     | by
+                //     img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+                //     |#{author.name}
+                // span.date #{from_now}
+            .description
+                .ui.basic.segment
+                    if content
+                        |!{content}
+                    if body
+                        |#{body}
+                    if image_url
+                        img.ui.small.image(src=image_url)
+            .extra
+                .ui.horizontal.list
+                    // .item
+                    //     .ui.blue.basic.button
+                    //         | View
+                    //         i.right.chevron.icon
+                    .item
+                        +pin_button

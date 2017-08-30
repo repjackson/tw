@@ -352,6 +352,25 @@ Template.bookmark_button.events
         else FlowRouter.go '/sign-in'
 
 
+
+
+Template.pin_button.helpers
+    pin_button_class: -> 
+        if Meteor.user()
+            if @pinned_ids and Meteor.userId() in  @pinned_ids then 'teal' else 'basic'
+        else 'grey disabled'
+        
+    pinned: -> Meteor.user()?.pinned_ids and @_id in Meteor.user().pinned_ids
+
+
+Template.pin_button.events
+    'click .pin_button': (e,t)-> 
+        if Meteor.userId() 
+            Meteor.call 'pin', Template.parentData(0)
+            $(e.currentTarget).closest('.pin_button').transition('pulse')
+        else FlowRouter.go '/sign-in'
+
+
 Template.featured.events
     'click #make_featured': -> Docs.update FlowRouter.getParam('doc_id'), $set: featured: true
     'click #make_unfeatured': -> Docs.update FlowRouter.getParam('doc_id'), $set: featured: false

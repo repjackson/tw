@@ -6,6 +6,8 @@ template(name='doc_content')
             else
                 span(class=doc_classes)
                     |!{content}
+                if pinnable
+                    +pin_button
             if isInRole 'admin'
                 unless editing
                     .edit_this.ui.basic.small.icon.button(title=tags)
