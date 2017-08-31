@@ -20,7 +20,8 @@ if Meteor.isClient
                 )
         @autorun -> Meteor.subscribe 'unpublished_journal_count'
         @autorun -> Meteor.subscribe 'published_journal_count'
-    
+        Session.setDefault 'journal_view_mode', 'all'
+
     
     Template.journal_doc_view.onRendered ->
         @autorun =>

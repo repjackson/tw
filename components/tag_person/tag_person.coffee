@@ -9,8 +9,10 @@ if Meteor.isClient
                 type: 'tag_person'
                 parent_id: @_id
 
-        person: ->
-            Meteor.users.findOne username: FlowRouter.getParam 'username'
+        person: -> Meteor.users.findOne username: FlowRouter.getParam 'username'
+
+        is_person: -> Meteor.user().username is FlowRouter.getParam 'username'
+
 
         my_rating: ->
             # console.log @

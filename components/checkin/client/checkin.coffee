@@ -46,7 +46,17 @@ Template.checkin.helpers
     resonates_item_class: -> if Session.equals 'checkin_view_mode', 'resonates' then 'active' else ''
 
 Template.checkin.events
-
+    'keyup #quick_add': (e,t)->
+        e.preventDefault
+        tag = $('#quick_add').val().toLowerCase()
+        if e.which is 13
+            if tag.length > 0
+                split_tags = tag.match(/\S+/g)
+                $('#quick_add').val('')
+                Meteor.call 'add_checkin', split_tags
+                selected_tags.clear()
+                for tag in split_tags
+                    selected_tags.push tag
 
 Template.checkin_doc_view.helpers
     is_author: -> Meteor.userId() and @author_id is Meteor.userId()

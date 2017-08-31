@@ -20,11 +20,11 @@ Template.nav.onCreated ->
 Template.nav.onRendered ->
     Meteor.setTimeout =>
         $('.ui.dropdown').dropdown()
-    , 500
+    , 1000
     Meteor.setTimeout =>
         $('.item').popup
             position : 'left center'
-    , 500
+    , 1000
 
 
 Template.nav.helpers
@@ -95,7 +95,7 @@ Template.left_sidebar.onRendered ->
                         transition:  'push'
                     })
                     .sidebar('attach events', '.context.example .menu .toggle_sidebar.item')
-            , 500
+            , 1000
             
 # Template.right_sidebar.onRendered ->
 #     @autorun =>

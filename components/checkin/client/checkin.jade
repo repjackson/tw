@@ -7,7 +7,13 @@ template(name='checkin')
             // a.ui.basic.button(href='/checkin/calendar') 
             //     i.calendar.icon
             //     |Calendar View
-            +checkin_cloud
+            .ui.icon.fluid.input
+                input#quick_add(type='text' placeholder='Quick Add with Tags (separated by spaces)')
+                i.green.plus.icon
+            .ui.divider
+            +tag_filter type='checkin'
+            +username_filter type='checkin'
+            // +checkin_cloud
         .eleven.wide.column
             .ui.centered.stackable.cards
                 each docs
@@ -40,12 +46,12 @@ template(name='checkin_doc_view')
                 |#{when}
         .content
             a.ui.basic.right.floated.button(href="/checkin/view/#{_id}") 
-                |View
+                |More
                 i.right.arrow.icon
             +thanks_button
             if can_edit
-                a.ui.basic.button(href="/checkin/edit/#{_id}")
-                    i.red.configure.icon
+                a.ui.basic.compact.button(href="/checkin/edit/#{_id}")
+                    i.edit.icon
                     |Edit
                     
                     

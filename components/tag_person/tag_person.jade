@@ -17,9 +17,9 @@ template(name='tag_person')
                             .ui.small.basic.label #{this}
     if currentUser
         .ui.dividing.header Tag Person
-        if my_person_tags
+        if my_rating
             .ui.dividing.header My Tags
-            with my_tags
+            with my_rating
                 unless is_editing
                     each tags
                         .ui.small.basic.label #{this}
