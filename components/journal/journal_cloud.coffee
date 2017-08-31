@@ -5,22 +5,9 @@ if Meteor.isClient
     Template.journal_cloud.onCreated ->
         @autorun => 
             Meteor.subscribe('journal_tags', 
-                selected_tags.array(), 
+                selected_tags.array()
                 selected_author_ids.array()
-                limit=20, 
-                view_bookmarked=Session.get('view_bookmarked'), 
-                view_published=Session.get('view_published')
-                view_unpublished=Session.get('view_unpublished')
                 )
-            Meteor.subscribe('author_ids', 
-                selected_tags.array(), 
-                selected_author_ids.array()
-                limit=20, 
-                view_bookmarked=Session.get('view_bookmarked'), 
-                view_published=Session.get('view_published')
-                view_unpublished=Session.get('view_unpublished')
-                )
-            Meteor.subscribe 'usernames'
     
     Template.journal_cloud.helpers
         journal_tags: ->
@@ -33,15 +20,6 @@ if Meteor.isClient
             else
                 Tags.find({}, limit:20)
                 
-        author_tags: ->
-            author_usernames = []
-            
-            for author_id in Author_ids.find().fetch()
-                found_user = Meteor.users.findOne(author_id.text).username
-                # if found_user
-                    # console.log Meteor.users.findOne(author_id.text).username
-                author_usernames.push Meteor.users.findOne(author_id.text).username
-            author_usernames
                 
         cloud_tag_class: ->
             button_class = []
@@ -53,13 +31,6 @@ if Meteor.isClient
     
         selected_tags: -> selected_tags.array()
         # selected_author_ids: -> selected_author_ids.array()
-        selected_author_ids: ->
-            selected_author_usernames = []
-            for selected_author_id in selected_author_ids.array()
-                selected_author_usernames.push Meteor.users.findOne(selected_author_id).username
-            selected_author_usernames
-        
-        
         settings: -> {
             position: 'bottom'
             limit: 10
@@ -141,42 +112,3 @@ if Meteor.isServer
     
         self.ready()
         
-    publishComposite 'author_ids', (selected_tags, selected_author_ids)->
-        
-        {
-            find: ->
-                self = @
-                match = {}
-                match.type = 'journal'
-                if selected_tags.length > 0 then match.tags = $all: selected_tags
-                if selected_author_ids.length > 0 then match.author_id = $in: selected_author_ids
-            
-                cloud = Docs.aggregate [
-                    { $match: match }
-                    { $project: author_id: 1 }
-                    { $group: _id: '$author_id', count: $sum: 1 }
-                    { $match: _id: $nin: selected_author_ids }
-                    { $sort: count: -1, _id: 1 }
-                    { $limit: 20 }
-                    { $project: _id: 0, text: '$_id', count: 1 }
-                    ]
-            
-            
-                # console.log cloud
-                
-                # author_objects = []
-                # Meteor.users.find _id: $in: cloud.
-            
-                cloud.forEach (author_id) ->
-                    self.added 'author_ids', Random.id(),
-                        text: author_id.text
-                        count: author_id.count
-                self.ready()
-            
-            children: [
-                { find: (doc) ->
-                    Meteor.users.find 
-                        _id: doc.author_id
-                    }
-                ]    
-        }

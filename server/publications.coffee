@@ -230,3 +230,42 @@ Meteor.publish 'bookmarked_tags', (selected_tags)->
 
     self.ready()
         
+publishComposite 'author_ids', (selected_tags, selected_author_ids, type)->
+    
+    {
+        find: ->
+            self = @
+            match = {}
+            if type then match.type = type
+            if selected_tags.length > 0 then match.tags = $all: selected_tags
+            if selected_author_ids.length > 0 then match.author_id = $in: selected_author_ids
+        
+            cloud = Docs.aggregate [
+                { $match: match }
+                { $project: author_id: 1 }
+                { $group: _id: '$author_id', count: $sum: 1 }
+                { $match: _id: $nin: selected_author_ids }
+                { $sort: count: -1, _id: 1 }
+                { $limit: 20 }
+                { $project: _id: 0, text: '$_id', count: 1 }
+                ]
+        
+        
+            # console.log cloud
+            
+            # author_objects = []
+            # Meteor.users.find _id: $in: cloud.
+        
+            cloud.forEach (author_id) ->
+                self.added 'author_ids', Random.id(),
+                    text: author_id.text
+                    count: author_id.count
+            self.ready()
+        
+        children: [
+            { find: (doc) ->
+                Meteor.users.find 
+                    _id: doc.author_id
+                }
+            ]    
+    }

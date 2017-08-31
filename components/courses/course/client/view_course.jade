@@ -32,6 +32,9 @@ template(name='view_course')
                         a.item(href="/course/sol/members" class="{{isActiveRoute name='course_members'}}") 
                             i.users.icon
                             |Members
+                        a.item(href="/course/sol/pins" class="{{isActiveRoute name='course_pins'}}") 
+                            i.pin.icon
+                            |Pins
                     else
                         .disabled.item 
                             i.list.layout.icon
@@ -39,6 +42,9 @@ template(name='view_course')
                         .disabled.item 
                             i.users.icon
                             |Members (please agree to terms)
+                        .disabled.item
+                            i.pin.icon
+                            |Pins (please agree to terms)
                     
                     // a.item(href="/course/sol/collaboration" class="{{isActiveRoute name='course_collaboration'}}") Collaboration
                     // a.item(href="/course/sol/downloads" class="{{isActiveRoute name='course_downloads'}}") Downloads

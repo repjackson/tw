@@ -17,16 +17,4 @@ template(name='journal_cloud')
                 | #{this.name}
                 // if isInRole 'admin'
                 //     small #{this.count}
-
-        .ui.dividing.header Filter Authors
-        if selected_author_ids
-            #clear_authors.ui.blue.icon.circular.button
-                i.remove.icon
-            each selected_author_ids
-                .unselect_author.ui.blue.circular.button
-                    strong #{this}
-        each author_tags
-            .ui.basic.circular.button.select_author(class=cloud_tag_class) 
-                | #{this}
-                // if isInRole 'admin'
-                //     small #{this.count}
+        +username_filter type='journal'
