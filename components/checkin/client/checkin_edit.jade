@@ -1,0 +1,26 @@
+template(name='checkin_edit')
+    with doc
+        .ui.container
+            h1.ui.center.aligned.header Edit Check In
+            .ui.stackable.grid
+                .twelve.wide.column
+                    .ui.form
+                        .ui.segment
+                            +content
+                        .ui.segment
+                            +tags
+
+                .four.wide.column
+                    +published
+                    +request_tori_feedback
+                    .ui.divider
+                    if tags
+                        #saveDoc.ui.fluid.green.big.button 
+                            i.save.icon
+                            |Save
+                    else
+                        .ui.fluid.green.big.disabled.button Add Tags to Save
+                    .ui.hidden.divider
+                    #deleteDoc.ui.small.fluid.red.compact.button 
+                        i.trash.icon
+                        |Delete

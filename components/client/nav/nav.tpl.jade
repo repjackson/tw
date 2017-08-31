@@ -2,9 +2,6 @@
     a.toggle_sidebar.mobile.only.item
         i.sidebar.icon
         .imogen Tori Webster
-    if currentUser
-        a#check_in.icon.mobile.only.item(href='#' data-position="bottom center" data-content="Check In")
-            i.green.large.check.icon
     a.mobile.hidden.item(href='/' class="{{isActivePath '/'}}")
         .imogen Tori Webster
     unless currentUser
@@ -36,7 +33,7 @@
                     i.large.icons
                         i.cart.icon
                         i.corner.teal.asterisk.icon
-            a#check_in.icon.mobile.hidden.item(href='#' data-position="bottom center" data-content="Check In")
+            a#check_in.icon.item(href='#' data-position="bottom center" data-content="Check In")
                 i.green.large.check.icon
             // a.icon.mobile.hidden.item(href='/karma' data-position="bottom center" data-content="Karma")
             //     i.heartbeat.icon

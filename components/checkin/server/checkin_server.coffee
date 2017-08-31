@@ -1,10 +1,11 @@
-publishComposite 'checkin', (selected_tags, limit, checkin_view_mode)->
+publishComposite 'checkin', (selected_tags, selected_author_ids, limit, checkin_view_mode)->
     {
         find: ->
             self = @
             match = {}
             # match.tags = $all: selected_tags
             if selected_tags.length > 0 then match.tags = $all: selected_tags
+            if selected_author_ids.length > 0 then match.author_id = $in: selected_author_ids
             match.type = 'checkin'
             if checkin_view_mode is 'resonates'
                 match.favoriters = $in: [@userId]

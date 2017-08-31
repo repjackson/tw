@@ -20,6 +20,22 @@ Template.voting.events
         if Meteor.userId() then Meteor.call 'vote_down', @_id
         else FlowRouter.go '/sign-in'
 
+Template.thanks_button.helpers
+    said_thanks: ->
+        @upvoters and Meteor.userId() in @upvoters
+    thanks_button_class: ->
+        if not Meteor.userId() then 'disabled'
+        else if @upvoters and Meteor.userId() in @upvoters then 'green'
+        else 'basic'
+
+
+Template.thanks_button.events
+    'click .vote_up': (e,t)-> 
+        if Meteor.userId()
+            Meteor.call 'vote_up', @_id
+            $(e.currentTarget).closest('.vote_up').transition('pulse')
+        else FlowRouter.go '/sign-in'
+
 
 Template.big_both_voter.helpers
     vote_up_button_class: ->

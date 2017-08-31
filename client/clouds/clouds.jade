@@ -1,3 +1,30 @@
+
+template(name='tag_filter')
+    .ui.left.icon.fluid.input
+        i.search.icon
+        +inputAutocomplete settings=settings id="search" class="" autocomplete="off" placeholder='Search journal...'
+    if selected_tags
+        .ui.dividing.header Selected Tags
+        #clear_tags.ui.blue.icon.circular.button
+            i.remove.icon
+        each selected_tags
+            .unselect_tag.ui.blue.circular.button
+                strong #{this}
+    .ui.hidden.fitted.divider
+    .ui.dividing.header Filter Tags
+    each journal_tags
+        .ui.basic.circular.button.select_tag(class=cloud_tag_class) 
+            | #{this.name}
+            // if isInRole 'admin'
+            //     small #{this.count}
+
+
+
+
+
+
+
+
 template(name='username_filter')
     .ui.dividing.header Filter Authors
     if selected_author_ids

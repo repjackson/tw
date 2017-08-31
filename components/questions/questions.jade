@@ -98,14 +98,14 @@ template(name='answers')
                             .metadata
                                 span.date #{from_now}
                                 unless is_author
-                                    +voting
+                                    +thanks_button
                             .text
                                 if body
                                     | {{nl2br body}}
                             // .actions
                                 // a.reply(href='#') Reply
                                 // +favorite
-                                // +voting
+                                // +thanks_button
                                 // if is_author
                                 //     +delete_link
                                 //     +edit_link

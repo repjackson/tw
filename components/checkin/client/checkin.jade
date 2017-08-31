@@ -4,9 +4,9 @@ template(name='checkin')
     // .ui.divider
     .ui.divided.stackable.grid
         .five.wide.column
-            a.ui.basic.button(href='/checkin/calendar') 
-                i.calendar.icon
-                |Calendar View
+            // a.ui.basic.button(href='/checkin/calendar') 
+            //     i.calendar.icon
+            //     |Calendar View
             +checkin_cloud
         .eleven.wide.column
             .ui.centered.stackable.cards
@@ -15,7 +15,16 @@ template(name='checkin')
 
 
 template(name='checkin_doc_view')
-    .ui.card
+    .ui.card(class=checkin_card_class)
+        if is_author
+            .content
+                span.right.floated
+                    if published
+                        i.unlock.blue.icon
+                        |Published
+                    else
+                        i.lock.icon
+                        |Private
         .content
             .meta
                 i.tags.icon
@@ -23,13 +32,19 @@ template(name='checkin_doc_view')
                     .ui.tiny.button.tag(class=tag_class) #{this}
             .ui.hidden.divider
             |!{content}
+        unless is_author
+            .content
+                a.right.floated(href="/profile/#{author.username}")
+                    i.user.icon
+                    |#{author.name}
+                |#{when}
         .content
-            a.right.floated(href="/profile/view/#{author.username}")
-                i.user.icon
-                |#{author.name}
-            |#{when}
+            a.ui.basic.right.floated.button(href="/checkin/view/#{_id}") 
+                |View
+                i.right.arrow.icon
+            +thanks_button
             if can_edit
-                a.ui.basic.button(href="/edit/#{_id}")
+                a.ui.basic.button(href="/checkin/edit/#{_id}")
                     i.red.configure.icon
                     |Edit
                     

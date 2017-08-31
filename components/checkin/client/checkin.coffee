@@ -29,7 +29,7 @@ Template.checkin_calendar_view.helpers
 
 # Session.setDefault 'checkin_view_mode', 'all'
 Template.checkin.onCreated -> 
-    @autorun -> Meteor.subscribe('checkin', selected_tags.array(), limit=10, checkin_view_mode=Session.get('checkin_view_mode'))
+    @autorun -> Meteor.subscribe('checkin', selected_tags.array(), selected_author_ids.array(), limit=10, checkin_view_mode=Session.get('checkin_view_mode'))
 
 Template.checkin.helpers
     docs: -> 
@@ -56,6 +56,9 @@ Template.checkin_doc_view.helpers
     when: -> moment(@timestamp).fromNow()
     
     checkin_tags: -> _.difference(@tags, 'checkin')
+    
+    checkin_card_class: -> if @published then 'blue' else ''
+
 
 Template.checkin_doc_view.events
     'click .tag': -> if @valueOf() in selected_tags.array() then selected_tags.remove(@valueOf()) else selected_tags.push(@valueOf())

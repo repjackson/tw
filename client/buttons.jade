@@ -3,6 +3,14 @@ template(name='voting')
     // i.thumbs.down.link.big.icon.vote_down(class=vote_down_button_class)
     |#{points}
 
+template(name='thanks_button')
+    .ui.circular.compact.button.vote_up(class=thanks_button_class)
+        i.thumbs.up.icon
+        if said_thanks
+            |Thanks!
+        else
+            |Say Thanks
+
 
 template(name='big_both_voter')
     i.thumbs.up.link.huge.icon.vote_up(class=vote_up_button_class)
