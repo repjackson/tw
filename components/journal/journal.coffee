@@ -1,7 +1,6 @@
 if Meteor.isClient
     FlowRouter.route '/journal', action: (params) ->
         BlazeLayout.render 'layout',
-            # cloud: 'cloud'
             main: 'journal'
     
     @selected_author_ids = new ReactiveArray []

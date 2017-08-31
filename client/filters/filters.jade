@@ -12,7 +12,7 @@ template(name='tag_filter')
                 strong #{this}
     .ui.hidden.fitted.divider
     .ui.dividing.header Browse Tags
-    each journal_tags
+    each tags
         .ui.basic.circular.button.select_tag(class=cloud_tag_class) 
             | #{this.name}
             // if isInRole 'admin'

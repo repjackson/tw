@@ -50,7 +50,7 @@ Template.tag_filter.onCreated ->
             )
 
 Template.tag_filter.helpers
-    journal_tags: ->
+    tags: ->
         doc_count = Docs.find(type:'journal').count()
         # if selected_tags.array().length
         if 0 < doc_count < 3

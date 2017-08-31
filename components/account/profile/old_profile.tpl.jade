@@ -40,42 +40,7 @@
                     .ui.basic.center.aligned.segment
                         each tags
                             .user_tag.ui.circular.basic.label #{this}
-                #profile_menu.ui.top.attached.six.item.stackable.tabular.menu
-                    a.item.active(data-tab='about') 
-                        i.info.icon
-                        |About
-                    a.item(data-tab='courses')
-                        i.university.icon
-                        |Courses
-                    a.item(data-tab='quizes')
-                        i.edit.icon
-                        |Quizes
-                    a.item(data-tab='social') 
-                        i.talk.outline.icon
-                        |Social
-                    a.item(data-tab='journal') 
-                        i.edit.icon
-                        | Journal
-                    a.item(data-tab='contact') 
-                        i.phone.icon
-                        |Contact
-                .ui.bottom.attached.tab.segment.active(data-tab='about')
-                    .ui.basic.segment
-                        if profile.location
-                            .ui.header Location 
-                            | #{profile.location}
-                        if profile.about_me
-                            .ui.header About Me
-                            |#{profile.about_me}
-                        if profile.if_knew_me
-                            .ui.header If you really knew me you would know…
-                            |#{profile.if_knew_me}
-                        if profile.if_not_working
-                            .ui.header If I am not at work or in class then I am probably…
-                            |#{profile.if_not_working}
                 .ui.bottom.attached.tab.segment(data-tab='courses')
-                    .ui.basic.segment
-                        +user_courses
                 .ui.bottom.attached.tab.segment(data-tab='quizes')
                     .ui.basic.segment
                         +public_quiz_sessions
@@ -85,11 +50,3 @@
                         +following
                         +tag_person
                 .ui.bottom.attached.tab.segment(data-tab='journal')
-                    .ui.basic.segment
-                        +public_journal
-                .ui.bottom.attached.tab.segment(data-tab='contact')
-                    .ui.basic.segment
-                        +message_user
-                        // +messages_with_user
-                // if isInRole 'dev'
-                //     +user_docs
