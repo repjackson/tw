@@ -1,22 +1,22 @@
 template(name='people')
     .ui.container
         +doc_content tags='people cloud,blurb'
+        .ui.dividing.header Tag Filter
+        +people_cloud
         .ui.hidden.divider
-        .ui.stackable.grid
-            .four.wide.column
-                .ui.dividing.header Tag Filter
-                +people_cloud
-            .eleven.wide.column
-                .ui.centered.stackable.cards
-                    each people
-                        +person
+        .ui.centered.stackable.cards
+            each people
+                +person
+        // .ui.stackable.grid
+        //     // .four.wide.column
+        //     .eleven.wide.column
 
 
 template(name='person')
     .ui.card
         .image
             a(href="/profile/#{username}")
-                img.ui.fluid.image(src="{{c.url profile.image_id width=400 height=400 gravity='face' crop='fill'}}")
+                img.ui.fluid.rounded.image(src="{{c.url profile.image_id width=400 height=400 gravity='face' crop='fill'}}")
         .content
             .header
                 a(href="/profile/#{username}")

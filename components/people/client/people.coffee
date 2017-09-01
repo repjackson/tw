@@ -13,8 +13,10 @@ Template.person.onCreated ->
 
 Template.people.helpers
     people: -> 
-        Meteor.users.find { _id: $ne: Meteor.userId() }, 
-        # Meteor.users.find { }, 
+        Meteor.users.find { 
+            _id: $ne: Meteor.userId()
+            tags: $in: selected_people_tags.array()
+            }, 
             sort:
                 tag_count: 1
             limit: 10

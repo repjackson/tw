@@ -11,111 +11,125 @@ template(name='profile_layout')
                 #main_area
                     .ui.basic.fluid.segment
                         .ui.basic.segment.container
-                            .ui.breadcrumb
-                                a.section(href='/') Home
-                                .divider  / 
-                                a.section(href='/people') People
-                                .divider  / 
-                                .active.section #{person.username}
-                            .ui.hidden.divider    
-                            if person.profile.first_name
-                                h2.ui.center.aligned.header
-                                    |#{person.profile.first_name} #{person.profile.last_name}
-                            else
-                                .ui.center.aligned.sub.header #{person.username}
-
+                            // .ui.breadcrumb
+                            //     a.section(href='/') Home
+                            //     .divider  / 
+                            //     a.section(href='/people') People
+                            //     .divider  / 
+                            //     .active.section #{person.username}
+                            // .ui.hidden.divider    
                             .ui.stackable.grid
-                                .five.wide.column
-                                    with person
-                                        .ui.vertical.fluid.pointing.menu
-                                            a.item(href="/profile/#{username}/about" class="{{isActiveRoute name='profile_about'}}") 
-                                                i.info.icon
-                                                |About
-                                            a.item(href="/profile/#{username}/courses" class="{{isActiveRoute name='profile_courses'}}")
-                                                i.university.icon
-                                                |Courses
-                                            a.item(href="/profile/#{username}/quizes" class="{{isActiveRoute name='profile_quizes'}}")
-                                                i.edit.icon
-                                                |Quizes
-                                            a.item(href="/profile/#{username}/social" class="{{isActiveRoute name='profile_social'}}") 
-                                                i.talk.outline.icon
-                                                |Social
-                                            a.item(href="/profile/#{username}/journal" class="{{isActiveRoute name='profile_journal'}}") 
-                                                i.edit.icon
-                                                | Journal
-                                            a.item(href="/profile/#{username}/clouds" class="{{isActiveRoute name='profile_clouds'}}") 
-                                                i.cloud.icon
-                                                | Clouds
-                                            a.item(href="/profile/#{username}/contact" class="{{isActiveRoute name='profile_contact'}}") 
-                                                i.phone.icon
-                                                |Contact
-                                .eleven.wide.column
-                                    +Template.dynamic template=profile_content
+                                .row
+                                    if person.profile.first_name
+                                        h2.ui.center.aligned.header
+                                            |#{person.profile.first_name} #{person.profile.last_name}
+                                    else
+                                        .ui.center.aligned.sub.header #{person.username}
+                                .row
+                                    .five.wide.column
+                                        with person
+                                            .ui.vertical.fluid.pointing.menu
+                                                a.item(href="/profile/#{username}/about" class="{{isActiveRoute name='profile_about'}}") 
+                                                    i.info.icon
+                                                    |About
+                                                a.item(href="/profile/#{username}/courses" class="{{isActiveRoute name='profile_courses'}}")
+                                                    i.university.icon
+                                                    |Courses
+                                                a.item(href="/profile/#{username}/quizes" class="{{isActiveRoute name='profile_quizes'}}")
+                                                    i.edit.icon
+                                                    |Quizes
+                                                a.item(href="/profile/#{username}/social" class="{{isActiveRoute name='profile_social'}}") 
+                                                    i.talk.outline.icon
+                                                    |Social
+                                                a.item(href="/profile/#{username}/journal" class="{{isActiveRoute name='profile_journal'}}") 
+                                                    i.edit.icon
+                                                    | Journal
+                                                a.item(href="/profile/#{username}/clouds" class="{{isActiveRoute name='profile_clouds'}}") 
+                                                    i.cloud.icon
+                                                    | Clouds
+                                                a.item(href="/profile/#{username}/contact" class="{{isActiveRoute name='profile_contact'}}") 
+                                                    i.phone.icon
+                                                    |Contact
+                                    .eleven.wide.column
+                                        +Template.dynamic template=profile_content
 
 
 template(name='profile_contact')
-    .ui.header Contact
+    .ui.horizontal.divider.header 
+        i.phone.icon
+        |Contact
     +message_user
         
         
 template(name='profile_journal')
-    .ui.header Journal
+    .ui.horizontal.divider.header 
+        i.pencil.icon
+        |Journal
     +public_journal
         
 template(name='profile_quizes')
-    .ui.header Quizes
+    .ui.horizontal.divider.header 
+        i.pencil.icon
+        |Quizes
     +public_quiz_sessions
 
 
 
 template(name='profile_courses')
-    .ui.header Courses
+    .ui.horizontal.divider.header 
+        i.university.icon
+        |Courses
     +user_courses
 
 template(name='profile_social')
-    .ui.header Social
-    +user_friends
+    .ui.horizontal.divider.header 
+        i.comments.icon
+        |Social
+    // +user_friends
     +following
     +tag_person
 
         
 template(name='profile_about')
-    .ui.header About
-    if tags
-        .ui.basic.center.aligned.segment
-            each tags
-                .user_tag.ui.circular.basic.label #{this}
+    with person
+        .ui.horizontal.divider.header 
+            i.info.icon
+            |About
+        .ui.grid
+            .six.wide.column
+                img.ui.rounded.large.image(src="{{c.url person.profile.image_id width=400 height=400 gravity='face' crop='fill'}}")
+            .ten.wide.column
+                if tags
+                    .ui.basic.center.aligned.segment
+                        each tags
+                            .user_tag.ui.circular.basic.label #{this}
+                if is_user
+                    a.ui.basic.fluid.button(href="/account/profile/edit/#{_id}") Edit My Profile
+                else
+                    .ui.basic.center.aligned.segment
+                        // +toggle_friend
+                        // .ui.hidden.divider
+                        // +staus_indicator
+                        .ui.header My True Colors Are:
+                        +color_dots
+                        // if points
+                        //     .ui.small.teal.statistic
+                        //         .value #{points}
+                        //         .label Comment Karma
+                        // if isInRole 'dev'
+                        //     +tag_person this    
 
-    img.ui.centered.rounded.image(src="{{c.url profile.image_id width=400 height=400 gravity='face' crop='fill'}}")
-    .ui.basic.center.aligned.segment
-        if is_user
-            a.ui.basic.fluid.button(href="/account/profile/edit/#{_id}") Edit My Profile
-        else
-            +toggle_friend
-        // .ui.hidden.divider
-        // +staus_indicator
-        .ui.hidden.divider
-        .ui.header My True Colors Are:
-        +color_dots
-        .ui.hidden.divider
-        // if points
-        //     .ui.small.teal.statistic
-        //         .value #{points}
-        //         .label Comment Karma
-        // if isInRole 'dev'
-        //     +tag_person this    
-    if profile.location
-        .ui.header Location 
-        | #{profile.location}
-    if profile.about_me
-        .ui.header About Me
-        |#{profile.about_me}
-    if profile.if_knew_me
-        .ui.header If you really knew me you would know…
-        |#{profile.if_knew_me}
-    if profile.if_not_working
-        .ui.header If I am not at work or in class then I am probably…
-        |#{profile.if_not_working}
-    
-    
-    
+        if profile.location
+            .ui.header Location 
+            | #{profile.location}
+        if profile.about_me
+            .ui.header About Me
+            |#{profile.about_me}
+        if profile.if_knew_me
+            .ui.header If you really knew me you would know…
+            |#{profile.if_knew_me}
+        if profile.if_not_working
+            .ui.header If I am not at work or in class then I am probably…
+            |#{profile.if_not_working}
+        
+        
