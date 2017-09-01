@@ -1,0 +1,54 @@
+template(name='resonate_button')
+    .resonate_button.ui.circular.button(class=resonate_button_class) 
+        i.heartbeat.icon
+        | This Resonates with Me
+        
+
+template(name='resonates_list')
+    if resonates_with_people.count
+        .ui.segment
+            .ui.dividing.header
+                |This Resonates With... (#{resonates_with_people.count})
+            .ui.divided.list
+                each resonates_with_people
+                    .item
+                        img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                        .content
+                            .header
+                                |#{name}
+                            .description
+                                +tiny_color_dots
+                                each five_tags
+                                    .ui.basic.label #{this}
+
+
+template(name='doc_matches')
+    .ui.fluid.styled.accordion
+        .title 
+            i.random.icon
+            |Top Doc Matches (#{top_doc_matches.length})
+            i.dropdown.icon
+            #compute_doc_matches.ui.icon.basic.button(data-content='Compute Matches')
+                i.refresh.icon
+        .content
+            if top_doc_matches
+                .ui.relaxed.divided.items
+                    each top_doc_matches
+                        .item 
+                            .content
+                                .description
+                                    i.random.icon
+                                    |Intersection Tags (#{intersection_tags_count})
+                                    each intersection_tags
+                                        .ui.basic.label #{this}
+                                .description
+                                    i.tags.icon
+                                    | Document Tags
+                                    each tags
+                                        .ui.small.basic.label #{this}
+                                .extra
+                                    a.ui.basic.compact.teal.button(href="/view/#{doc_id}") 
+                                        |Full
+                                        i.right.arrow.icon
+
+                        

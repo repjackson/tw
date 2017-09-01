@@ -312,18 +312,6 @@ Template.favorite_button.events
         else FlowRouter.go '/sign-in'
 
 
-Template.resonate_button.helpers
-    resonate_button_class: -> 
-        if Meteor.userId()
-            if @favoriters and Meteor.userId() in @favoriters then 'teal' else 'basic'
-        else 'grey disabled'
-Template.resonate_button.events
-    'click .resonate_button': (e,t)-> 
-        if Meteor.userId() 
-            Meteor.call 'favorite', Template.parentData(0)
-            $(e.currentTarget).closest('.resonate_button').transition('pulse')
-        else FlowRouter.go '/sign-in'
-
 
 
 

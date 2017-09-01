@@ -22,6 +22,7 @@ template(name='doc_page')
                     h1.ui.dividing.header #{title}
                     |!{content}
                     +comments
+                    +doc_matches
                 .five.wide.column
                     if price
                         .ui.dividing.header Price $#{price}
@@ -29,6 +30,8 @@ template(name='doc_page')
                     .ui.dividing.header Actions
                     +favorite_button
                     +voting
+                    +resonate_button
+                    +resonates_list
                     if tags
                         .ui.dividing.header Tags
                         each tags

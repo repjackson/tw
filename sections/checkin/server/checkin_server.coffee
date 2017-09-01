@@ -9,6 +9,7 @@ publishComposite 'checkin', (selected_tags, selected_author_ids, limit, checkin_
             match.type = 'checkin'
             if checkin_view_mode is 'resonates'
                 match.favoriters = $in: [@userId]
+            match.published = true
             
             if checkin_view_mode and checkin_view_mode is 'mine'
                 match.author_id

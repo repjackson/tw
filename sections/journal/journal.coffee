@@ -138,7 +138,7 @@ if Meteor.isServer
                 if selected_tags.length > 0 then match.tags = $all: selected_tags
                 # console.log selected_author_ids
                 if selected_author_ids.length > 0 then match.author_id = $in: selected_author_ids
-
+                match.published = true
                 
                 match.type = 'journal'
                 # if journal_view_mode and journal_view_mode is 'mine'
