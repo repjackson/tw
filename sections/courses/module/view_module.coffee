@@ -12,7 +12,11 @@ if Meteor.isClient
             if context.params.module_number is "1"
                 redirect "/course/sol/module/#{context.params.module_number}/sections"
             else 
-                redirect "/course/sol/module/#{context.params.module_number}/debrief"
+                module_progress_doc =  Docs.findOne(tags: $all: ["sol", "module progress","module #{context.params.module_number}"])
+                if module_progress_doc and module_progress_doc.module_debrief_complete
+                    redirect "/course/sol/module/#{context.params.module_number}/sections"
+                else
+                    redirect "/course/sol/module/#{context.params.module_number}/debrief"
         ]
 
     

@@ -22,7 +22,20 @@ if Meteor.isClient
             Docs.find {
                 tags: $all: ['sol','module'] },
                 sort: number: 1
-                
+        
+        available_segment_class: ->
+            module_progress_doc = Docs.findOne 
+                tags: ['sol', "module #{@number}", 'module progress']
+                author_id: Meteor.userId()
+            if module_progress_doc and module_progress_doc.module_progress_percent > 99 then 'green' else ''
+
+            
+        module_is_complete: ->
+            module_progress_doc = Docs.findOne 
+                tags: ['sol', "module #{@number}", 'module progress']
+                author_id: Meteor.userId()
+            if module_progress_doc and module_progress_doc.module_progress_percent > 99 then true else false
+
             
         module_is_available: ->
             if Roles.userIsInRole(Meteor.userId(), 'sol_demo') and @number < 2

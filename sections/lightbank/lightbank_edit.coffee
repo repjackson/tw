@@ -94,7 +94,7 @@ if Meteor.isClient
         'click #deleteDoc': ->
             if confirm 'Delete this doc?'
                 Docs.remove @_id
-                FlowRouter.go '/'
+                FlowRouter.go '/lightbank'
 
 
         # toggles

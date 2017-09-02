@@ -128,7 +128,7 @@ template(name='answers')
                                 .metadata
                                     span.date #{from_now}
                                     unless is_author
-                                        +voting
+                                        +thanks_button
                                 .text
                                     | #{body}
                                 // .actions

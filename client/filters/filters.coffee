@@ -65,8 +65,9 @@ Template.tag_filter.helpers
     cloud_tag_class: ->
         button_class = []
         switch
-            when @index <= 5 then button_class.push ' '
-            when @index <= 12 then button_class.push 'small '
+            when @index <= 5 then button_class.push 'large '
+            when @index <= 10 then button_class.push ' '
+            when @index <= 15 then button_class.push 'small '
             when @index <= 20 then button_class.push ' tiny'
         return button_class
 

@@ -12,6 +12,10 @@ if Meteor.isClient
             if Meteor.userId() in @acheiver_ids then '' else 'disabled'
 
     Template.profile_badges.events
+    	'mouseenter .certificate': -> $( ".certificate" ).addClass( "loading" )
+
+    	'mouseleave .certificate': -> $( ".certificate" ).removeClass( "loading" )
+
         'click .enable': ->
             Docs.update @_id,
                 $addToSet: acheiver_ids: Meteor.userId()

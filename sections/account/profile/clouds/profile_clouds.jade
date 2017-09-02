@@ -1,6 +1,8 @@
 template(name='profile_clouds')
     .ui.container
-        .ui.header User Clouds
+        .ui.horizontal.divider.header
+            i.cloud.icon
+            |User Clouds
         +doc_content tags='profile,clouds,blurb'
         +upvoted_cloud
         +downvoted_cloud

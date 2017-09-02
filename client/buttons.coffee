@@ -25,7 +25,7 @@ Template.thanks_button.helpers
         @upvoters and Meteor.userId() in @upvoters
     thanks_button_class: ->
         if not Meteor.userId() then 'disabled'
-        else if @upvoters and Meteor.userId() in @upvoters then 'green'
+        else if @upvoters and Meteor.userId() in @upvoters then 'teal'
         else 'basic'
 
 
@@ -83,7 +83,13 @@ Template.published.events
     'click #publish': -> Docs.update @_id, $set: published: true
     'click #unpublish': -> Docs.update @_id, $set: published: false
 
-
+    'mouseenter .ui.dividing.header i.icon': (e,t)->
+        $(e.currentTarget).closest('.icon').addClass('loading')
+        
+    'mouseleave .ui.dividing.header i.icon': (e,t)->
+        $(e.currentTarget).closest('.icon').removeClass('loading')
+        
+        
 Template.edit_button.onCreated ->
     @editing = new ReactiveVar(false)
 Template.edit_button.helpers

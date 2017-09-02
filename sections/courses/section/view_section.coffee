@@ -149,6 +149,7 @@ if Meteor.isClient
                 tags: $in: ['module']
                 number: module_num
 
+    
         section: -> 
             section_number = parseInt(FlowRouter.getParam('section_number'))
 
@@ -221,6 +222,23 @@ if Meteor.isClient
                 # console.log res
                 $('#section_percent_complete_bar').progress('set percent', res);
                 # console.log $('#section_percent_complete_bar').progress('get percent');
+            
+            
+            section_number = parseInt(FlowRouter.getParam('section_number'))
+            section = Docs.findOne 
+                tags: $in: ['section']
+                number: section_number
+            if section.content.length
+                swal {
+                    title: "Section #{section.number}: #{section.title} Summary"
+                    html: true
+                    text: section.content
+                    animation: true
+                    showCancelButton: false
+                    closeOnConfirm: true
+                    confirmButtonText: 'Roger That'
+                }
+
 
     
         'click .unmark_video_complete': ->
@@ -281,6 +299,25 @@ if Meteor.isClient
                 # console.log res
                 $('#section_percent_complete_bar').progress('set percent', res);
                 # console.log $('#section_percent_complete_bar').progress('get percent');
+
+    
+    
+        'click .popup_takeaway': ->
+            section_number = parseInt(FlowRouter.getParam('section_number'))
+
+            section = Docs.findOne 
+                tags: $in: ['section']
+                number: section_number
+
+            swal {
+                title: "Section #{section.number}: #{section.title} Summary"
+                html: true
+                text: section.content
+                animation: true
+                showCancelButton: false
+                closeOnConfirm: true
+                confirmButtonText: 'Roger That'
+            }
 
     
 if Meteor.isServer

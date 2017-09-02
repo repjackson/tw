@@ -1,6 +1,6 @@
 if Meteor.isClient
     FlowRouter.route '/course/sol/module/:module_number/sections', 
-        name: 'sections'
+        name: 'view_sections'
         action: (params) ->
             BlazeLayout.render 'view_module',
                 module_content: 'sections'
@@ -55,6 +55,13 @@ if Meteor.isClient
                     Docs.findOne(tags: $all: ["section #{previous_section_number}", "section progress"])
                 if previous_section_progress_doc and previous_section_progress_doc.percent_complete is 100 then true else false
 
+        section_is_complete: ->
+            section_progress_doc = 
+                Docs.findOne(tags: $all: ["section #{@number}", "section progress"])
+            if section_progress_doc and section_progress_doc.percent_complete > 99 then true else false
+
+
+
     Template.sections.helpers
         sections: ->
             Docs.find {
@@ -77,7 +84,7 @@ if Meteor.isClient
             t.editing.set false
         'click .section_summary': ->
             swal {
-                title: "Section #{@number}:#{@title} Summary"
+                title: "Section #{@number}: #{@title} Summary"
                 html: true
                 text: @content
                 animation: true

@@ -23,22 +23,22 @@ template(name='view_section')
                         i.up.chevron.arrow.icon
                         |#{module.number}: #{module.title}
             .center.aligned.row
-                .four.wide.column
+                .three.wide.column
                     if previous_section
                         // a.ui.basic.small.button(href="/course/sol/module/#{module.number}/section/#{previous_section.number}")
                         a#go_to_previous_section.ui.basic.small.button(href="#")
                             i.left.chevron.icon
                             |#{previous_section.number}: #{previous_section.title}
-                .eight.wide.column
+                .ten.wide.column
                     h1.ui.center.aligned.header Section #{section.number}: #{section.title}
-                .four.wide.column
+                .three.wide.column
                     if section_complete
                         if next_section_exists
                             a.go_to_next_section.ui.basic.small.right.button(href="#")
                                 |#{next_section.number}: #{next_section.title}
                                 i.right.chevron.icon
                         else
-                            a.ui.basic.fluid.button(href="/course/sol/module/#{module.number}") 
+                            a.ui.basic.fluid.button(href="/course/sol/module/#{module.number}/sections") 
                                 i.large.icons
                                     i.green.check.circle.icon
                                     i.reply.corner.icon
@@ -58,8 +58,15 @@ template(name='view_section')
                         .ui.fluid.basic.label 
                             i.green.check.icon
                             |Video Watched
+                        if section.content.length
+                            .item
+                                .popup_takeaway.ui.basic.fluid.button 
+                                    i.external.icon
+                                    |Video Takeaways
+    
                     else
                         .ui.basic.fluid.label 
+                            i.square.outline.icon
                             |Video
                     if reflective_question_docs.count
                         .ui.sub.dividing.header #{section_progress_doc.section_answer_count}/ #{section_progress_doc.section_question_count} Questions Answered
@@ -81,16 +88,20 @@ template(name='view_section')
                         | Transcript
                     .content
                         +doc_content tags=section_transcript_tags pinnable=true
-                .ui.hidden.divider
-                if currentUser
-                    if video_complete
-                        .unmark_video_complete.ui.blue.fluid.button 
-                            i.check.icon
-                            |Video Watched
+                .ui.center.aligned.basic.segment
+                    if currentUser
+                        if video_complete
+                            .unmark_video_complete.ui.blue.fluid.button 
+                                i.check.icon
+                                |Video Watched
+                            if section.content.length
+                                .popup_takeaway.ui.basic.large.button 
+                                    i.external.icon
+                                    |Video Takeaways
                     else
-                        .mark_video_complete.ui.basic.fluid.button Mark Video Watched
-                .ui.hidden.divider
-                .ui.hidden.divider
+                        .mark_video_complete.ui.basic.fluid.button 
+                            i.square.outline.icon
+                            |Mark Video Watched
                 with section
                     if isInRole 'admin'
                         +questions tag='reflection' parent_id=this._id title='Reflection Questions'

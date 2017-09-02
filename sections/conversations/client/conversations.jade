@@ -27,7 +27,6 @@ template(name='conversation')
                             .item 
                                 img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
                                 |#{name}
-                                +color_dots
                 .description
                     .ui.segment
                         .ui.threaded.comments
@@ -35,7 +34,7 @@ template(name='conversation')
                                 +comment
                         if in_conversation
                             .ui.small.left.icon.fluid.input
-                                i.plus.icon
+                                i.green.plus.icon
                                 input.add_message(type='text' placeholder='Add Message')
             if currentUser
                 .extra.content

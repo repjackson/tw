@@ -17,15 +17,12 @@ if Meteor.isClient
     
     Template.email_settings.helpers
         toggle_class: ->
-            if Meteor.user().profile.settings.email.unsubscribe_all then 'disabled' else ''
+            if Meteor.user() and Meteor.user().profile.settings?.email?.unsubscribe_all then 'disabled' else ''
     
     Template.email_settings.events
     	'mouseenter .large.icons': -> $( ".corner.icon" ).addClass( "loading" )
 
     	'mouseleave .large.icons': -> $( ".corner.icon" ).removeClass( "loading" )
-    
-    
-    
     
         'click .announcements_toggle': ->
             current_announcements_value = Meteor.user().profile.settings?.email?.announcements
@@ -50,6 +47,7 @@ if Meteor.isClient
 
     
         'click .unsubscribe_toggle': ->
+            console.log 'hi'
             current_unsubscribe_all_value = Meteor.user().profile.settings?.email?.unsubscribe_all
             if current_unsubscribe_all_value
                 new_value = !current_unsubscribe_all_value

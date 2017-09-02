@@ -50,13 +50,13 @@ if Meteor.isClient
                 FlowRouter.go "/conversation/#{id}"
 
     Template.conversation.onCreated ->
-        @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
-        @autorun -> Meteor.subscribe 'child_docs', FlowRouter.getParam('doc_id')
-        @autorun -> Meteor.subscribe 'people_list', FlowRouter.getParam('doc_id')
+        @autorun => Meteor.subscribe 'doc', @data._id
+        @autorun => Meteor.subscribe 'child_docs', @data._id
+        @autorun => Meteor.subscribe 'people_list', @data._id
     
     
     Template.conversation.helpers
-        conversation: -> Docs.findOne FlowRouter.getParam('doc_id')
+        conversation: -> Docs.findOne @_id
     
         in_conversation: -> if Meteor.userId() in @participant_ids then true else false
     
@@ -80,13 +80,18 @@ if Meteor.isClient
         'keydown .add_message': (e,t)->
             e.preventDefault
             if e.which is 13
-                parent_id = FlowRouter.getParam('doc_id')
+                parent_id = @_id
                 console.log parent_id
                 body = t.find('.add_message').value.trim()
                 if body.length > 0
                     console.log body
-                    Meteor.call 'add_doc', body, parent_id, ['conversation', 'message'], (err,res)->
-                        t.find('.add_message').value = ''
+                    Docs.insert
+                        body: body
+                        type: 'message'
+                        parent_id: parent_id
+                        tags: ['conversation', 'message']
+                        
+                t.find('.add_message').value = ''
     
         'click .close_conversation': ->
             self = @
@@ -109,6 +114,7 @@ if Meteor.isClient
 
 if Meteor.isServer
     Meteor.publish 'people_list', (conversation_id) ->
+        # console.log conversation_id
         conversation = Docs.findOne conversation_id
         Meteor.users.find
             _id: $in: conversation.participant_ids

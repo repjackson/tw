@@ -30,7 +30,7 @@ template(name='facet')
                     .unselect_tag.ui.active.large.button
                         strong #{this}
             each facet_tags
-                .ui.button.select_tag(class=cloud_tag_class) 
+                .ui.basic.button.select_tag(class=cloud_tag_class) 
                     | #{this.name}
                     // | #{this.index}
                     small #{this.count}

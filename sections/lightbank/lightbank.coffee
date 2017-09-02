@@ -33,7 +33,7 @@ if Meteor.isClient
         docs: -> 
             if Session.get 'view_unpublished'
                 Docs.find
-                    type: lightbank
+                    type: 'lightbank'
                     published: false
             else
                 Docs.find {type:'lightbank' }, 

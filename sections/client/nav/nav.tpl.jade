@@ -45,7 +45,7 @@
                     i.mail.outline.icon
                 // | Admin
             // a.ui.icon.dropdown.item(class="{{isActivePath '/notifications'}}" data-position="bottom center" data-content="Notifications")
-            a.ui.icon.dropdown.item(class="{{isActivePath '/notifications'}}")
+            a.ui.icon.simple.dropdown.item
                 if unread_notifications_count
                     i.alarm.blue.icon
                 else
@@ -64,7 +64,7 @@
                 //     each bookmark_docs
                 //         each tags
                 //             .ui.tiny.basic.label #{this}
-            a.ui.dropdown.item
+            a.ui.simple.dropdown.item
                 if currentUser.profile.image_id
                     img.ui.avatar.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
                 else
@@ -79,10 +79,10 @@
                     a.item(href="/dashboard" class="{{isActivePath '/dashboard'}}")
                         i.dashboard.icon
                         | Dashboard
+                    a.item(href="/profile/#{currentUser.username}" class="{{isActiveRoute name='view_profile'}}")
+                        i.user.icon
+                        | Profile
                     .ui.divider
-                    // a.icon.item(href='/karma' class="{{isActivePath '/karma'}}")
-                    //     i.heartbeat.outline.icon
-                    //     | Karma
                     a.item(href='/courses' class="{{isActivePath '/courses'}}") 
                         i.university.icon
                         | Courses
@@ -92,6 +92,9 @@
                     a.item(href='/people' class="{{isActivePath '/people'}}") 
                         i.users.icon
                         | People
+                    a.item(href='/conversations' class="{{isActivePath '/conversations'}}") 
+                        i.comments.outline.icon
+                        | Conversations
                     a.item(href='/journal' class="{{isActivePath '/journal'}}") 
                         i.pencil.icon
                         | Journal
@@ -103,14 +106,15 @@
                         //         each tags
                         //             .ui.tiny.basic.label #{this}
                     .ui.divider
-                    a.item(href="/profile/#{currentUser.username}" class="{{isActiveRoute name='view_profile'}}")
-                        i.user.icon
-                        | Profile
                     a.icon.item(href="/profile/#{currentUser.username}/account" class="{{isActiveRoute name='account'}}")
                         i.setting.icon
                         | Settings
                     if isInRole 'admin'
-                        .ui.divider
+                        .ui.horizontal.divider
+                            i.red.configure.icon
+                        a.icon.item(href='/karma' class="{{isActivePath '/karma'}}")
+                            i.heartbeat.outline.icon
+                            | Karma
                         a.mobile.hidden.item(href='/services' class="{{isActivePath '/services'}}") 
                             i.paint.brush.icon
                             |Services

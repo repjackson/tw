@@ -18,9 +18,9 @@ Template.nav.onCreated ->
     
     
 Template.nav.onRendered ->
-    Meteor.setTimeout =>
-        $('.ui.dropdown').dropdown()
-    , 1000
+    # Meteor.setTimeout =>
+    #     $('.ui.dropdown').dropdown()
+    # , 1000
     Meteor.setTimeout =>
         $('.item').popup
             position : 'left center'
@@ -59,8 +59,8 @@ Template.nav.helpers
             limit: 10
 
 Template.nav.events
-# 	'mouseenter .item': (e,t)-> $(e.currentTarget).closest('.item').addClass( "inverted" )
-# 	'mouseleave .item': (e,t)-> $(e.currentTarget).closest('.item').removeClass( "inverted" )
+# 	'mouseenter .item': (e,t)-> $(e.currentTarget).closest('.icon').toggleClass( "large" )
+# 	'mouseleave .item': (e,t)-> $(e.currentTarget).closest('.icon').toggleClass( "large" )
 
     'click #logout': -> AccountsTemplates.logout()
     
