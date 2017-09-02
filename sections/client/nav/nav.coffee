@@ -59,6 +59,8 @@ Template.nav.helpers
             limit: 10
 
 Template.nav.events
+# 	'mouseenter .item': (e,t)-> $(e.currentTarget).closest('.item').addClass( "inverted" )
+# 	'mouseleave .item': (e,t)-> $(e.currentTarget).closest('.item').removeClass( "inverted" )
 
     'click #logout': -> AccountsTemplates.logout()
     

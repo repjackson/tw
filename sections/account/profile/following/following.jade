@@ -1,52 +1,49 @@
 template(name='following')
-    .ui.dividing.header Following
-    if is_following
-        #unfollow.ui.teal.button Unfollow #{name}
-    else
-        #follow.ui.teal.button Follow #{name}
-    .ui.dividing.header Following #{name}
-    .ui.divided.list
-        each followers
-            .item
-                .image
-                    a(href="/profile/#{username}")
-                        img.ui.avatar.image(src="{{c.url profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
-                .content
-                    a.header(href="/profile/#{username}")
-                        if profile.name 
-                            |#{profile.name}
-                            // |#{profile.first_name} #{profile.last_name}
-                        else
-                            |#{username}
-                    // .description
-                    //     each five_tags
-                    //         .ui.tiny.basic.label #{this}
-                    +color_dots
-                    .description
-                        // // +staus_indicator
-                        // |last seen #{last_login}
-                                
-                            
-    .ui.dividing.header Followed by #{name}
-    .ui.divided.list
-        each following
-            .item
-                .image
-                    a(href="/profile/#{username}")
-                        img.ui.avatar.image(src="{{c.url profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
-                .content
-                    a.header(href="/profile/#{username}")
-                        if profile.name 
-                            |#{profile.name}
-                            // |#{profile.first_name} #{profile.last_name}
-                        else
-                            |#{username}
-                    // .description
-                    //     each five_tags
-                    //         .ui.tiny.basic.label #{this}
-                    +color_dots
-                    .description
-                        // // +staus_indicator
-                        // |last seen #{last_login}
-                                
-                            
+    with target_user
+        .ui.segment
+            .ui.dividing.header
+                |You are
+                if is_following
+                    |following #{name}. 
+                    #unfollow.ui.teal.basic.compact.button 
+                        i.cancel.icon
+                        |Unfollow
+                else
+                    |not following #{name}. 
+                    #follow.ui.teal.compact.button 
+                        i.alarm.outline.icon
+                        |Follow
+            .ui.two.column.grid
+                .column
+                    .ui.dividing.header Following #{name}
+                    .ui.divided.list
+                        each followers
+                            +person_item
+                .column
+                    .ui.dividing.header Followed by #{name}
+                    .ui.divided.list
+                        each following
+                            +person_item
+
+
+template(name='person_item')
+    .item
+        .image
+            a(href="/profile/#{username}")
+                img.ui.avatar.image(src="{{c.url profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+        .content
+            a.header(href="/profile/#{username}")
+                if profile.name 
+                    |#{profile.name}
+                    // |#{profile.first_name} #{profile.last_name}
+                else
+                    |#{username}
+            // .description
+            //     each five_tags
+            //         .ui.tiny.basic.label #{this}
+            +color_dots
+            .description
+                // // +staus_indicator
+                // |last seen #{last_login}
+            
+        

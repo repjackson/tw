@@ -1,4 +1,4 @@
-.ui.borderless.top.attached.menu
+.ui.borderless.top.attached.pointing.menu
     a.toggle_sidebar.mobile.only.item
         i.sidebar.icon
         .imogen Tori Webster
@@ -106,8 +106,8 @@
                     a.item(href="/profile/#{currentUser.username}" class="{{isActiveRoute name='view_profile'}}")
                         i.user.icon
                         | Profile
-                    a.icon.item(href='/account/' class="{{isActivePath '/account/'}}")
-                        i.settings.icon
+                    a.icon.item(href="/profile/#{currentUser.username}/account" class="{{isActiveRoute name='account'}}")
+                        i.setting.icon
                         | Settings
                     if isInRole 'admin'
                         .ui.divider

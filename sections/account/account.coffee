@@ -1,10 +1,10 @@
         
         
 if Meteor.isClient
-    FlowRouter.route '/account', action: (params) ->
-        BlazeLayout.render 'layout',
+    FlowRouter.route '/profile/:username/account', action: (params) ->
+        BlazeLayout.render 'profile_layout',
             sub_nav: 'member_nav'
-            main: 'account'
+            profile_content: 'account'
     
     
     Template.account.onCreated ->

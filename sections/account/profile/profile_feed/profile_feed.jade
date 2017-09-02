@@ -1,0 +1,7 @@
+template(name='profile_feed')
+    .ui.horizontal.divider.header 
+        i.feed.icon
+        | Feed
+    +doc_content tags='profile,feed,blurb'
+    each feed_items
+        +notification

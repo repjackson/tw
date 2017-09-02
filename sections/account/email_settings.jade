@@ -1,0 +1,48 @@
+template(name='email_settings')
+    .ui.container
+        h1.ui.horizontal.divider.header 
+            i.large.icons
+                i.mail.icon
+                i.setting.corner.icon
+            |Email Settings
+        .ui.segments
+            .ui.segment.other_segment(class=toggle_class)
+                .ui.header Forums
+                .ui.divided.relaxed.list
+                    a.item.announcements_toggle
+                        .right.floated.content
+                            .ui.slider.checkbox(class=toggle_class)
+                                input(type='checkbox' checked=currentUser.profile.settings.email.announcements)
+                        .content
+                            .header Announcements
+                            .description Important announcements from TW
+                    a.item.new_features_toggle
+                        .right.floated.content
+                            .ui.slider.checkbox(class=toggle_class)
+                                input(type='checkbox' checked=currentUser.profile.settings.email.new_features)
+                        .content
+                            .header New Features 
+                            .description Notifications about new features and enhancements on TW
+            .ui.segment.other_segment(class=toggle_class)
+                .ui.header Messenger
+                .ui.divided.relaxed.list
+                    a.item.new_features_toggle
+                        .right.floated.content
+                            .ui.slider.checkbox(class=toggle_class)
+                                input(type='checkbox' checked=currentUser.profile.settings.email.new_messenges)
+                        .content
+                            .description New activity that took place in the last 24 hours in a conversation you are a part of
+            .ui.segment.other_segment(class=toggle_class)
+                .ui.header Courses
+            .ui.segment.other_segment(class=toggle_class)
+                .ui.header Other
+            .ui.segment
+                .ui.header Unsubscribe
+                .ui.list
+                    a.item.unsubscribe_toggle
+                        .right.floated.content
+                            .ui.slider.checkbox
+                                input(type='checkbox' checked=currentUser.profile.settings.email.unsubscribe_all)
+                        .content
+                            .header Unsubscribe from all notifications 
+                            .description Overrides all other settings

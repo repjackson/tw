@@ -99,10 +99,11 @@ Template.edit_link.helpers
 
 Template.edit_button.events
     'click .edit_this': (e,t)-> 
-        # console.log t.editing
+        console.log @
+        console.log t.editing
         t.editing.set true
     'click .save_doc': (e,t)-> 
-        # console.log t.editing
+        console.log t.editing
         t.editing.set false
 
 

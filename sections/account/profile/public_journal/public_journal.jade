@@ -1,20 +1,11 @@
 template(name='public_journal')
-    .ui.dividing.header
-        if is_user
-            |My Public Journal Reponses
-        else
-            | Public Journal Responses
-
-    .ui.centered.cards
-        each public_journal_entries
-            .card
-                .content
-                    each tags
-                        .ui.basic.label #{this}
-                    |!{content}
-                .content
-                    a.ui.basic.teal.right.floated.button(href="/journal/view/#{_id}") 
-                        |View
-                        i.right.chevron.icon
-    .ui.divider
-    a.ui.teal.button(href='/journal') Go to My Journal
+    with user
+        +tag_filter type='journal' author_id=user._id
+        .ui.dividing.header
+            if is_user
+                |My Public Journal Reponses
+            else
+                | Public Journal Responses
+        .ui.centered.cards
+            each public_journal_entries
+                +journal_doc_view

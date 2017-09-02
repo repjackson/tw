@@ -1,35 +1,34 @@
 template(name='account')
     .ui.container
-        h1.ui.dividing.header Account
-        .ui.two.column.stackable.grid
-            .column
-                |{{> atForm state='changePwd'}}
-            .column
-                h2.ui.header Email(s)
-                .ui.segment
-                    .ui.divided.list
-                        each currentUser.emails
-                            .item 
-                                // unless verified
-                                //     .right.floated.content
-                                //         .ui.basic.button Verify
-                                .content
-                                    |#{address}
-                                    if verified
-                                        .ui.green.basic.label Verified
-                                    else
-                                        .ui.basic.label Unverified
-                                        .send_verification_email.ui.blue.icon.button
-                                            i.send.icon
-                    .ui.action.fluid.input
-                        input#new_email(type='email')
-                        #add_email.ui.submit.blue.button Add Email Address
-                h2.ui.header Change Username 
-                .ui.segment
-                    .ui.header Current: #{currentUser.username}
-                    .ui.action.fluid.input
-                        input#username(type='text')
-                        #change_username.ui.submit.blue.button Submit
+        h1.ui.horizontal.divider.header 
+            i.setting.icon
+            |Account
+        |{{> atForm state='changePwd'}}
+        h2.ui.header Email(s)
+        .ui.segment
+            .ui.divided.list
+                each currentUser.emails
+                    .item 
+                        // unless verified
+                        //     .right.floated.content
+                        //         .ui.basic.button Verify
+                        .content
+                            |#{address}
+                            if verified
+                                .ui.green.basic.label Verified
+                            else
+                                .ui.basic.label Unverified
+                                .send_verification_email.ui.blue.icon.button
+                                    i.send.icon
+            .ui.action.fluid.input
+                input#new_email(type='email')
+                #add_email.ui.submit.blue.button Add Email Address
+        h2.ui.header Change Username 
+        .ui.segment
+            .ui.header Current: #{currentUser.username}
+            .ui.action.fluid.input
+                input#username(type='text')
+                #change_username.ui.submit.blue.button Submit
             
 template(name='account_nav')
     if isInRole 'admin'

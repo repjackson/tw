@@ -1,0 +1,15 @@
+template(name='profile_badges')
+    .ui.horizontal.divider.header 
+        i.badge.icon
+        |Badges
+    +doc_content tags='profile,badges,blurb'
+    #add_badge.ui.button Add Badge
+    .ui.cards
+        each badges
+            .ui.card(class=badge_class)
+                .content
+                    .header #{title}
+                    i.huge.icon(class=icon_label)
+                    .extra
+                        .enable.ui.button Enable
+                        .disable.ui.button Disable

@@ -4,6 +4,8 @@ if Meteor.isClient
         @autorun => Meteor.subscribe 'followers'
         
     Template.following.helpers
+        target_user: ->
+            Meteor.users.findOne username: FlowRouter.getParam('username')
         is_following: ->
             target_user = Meteor.users.findOne username: FlowRouter.getParam('username')
             if target_user and target_user.followers 

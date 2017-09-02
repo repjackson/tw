@@ -1,16 +1,33 @@
 if Meteor.isClient
+    # loggedIn = FlowRouter.group
+    #     triggersEnter: [ ->
+    #         unless Meteor.loggingIn() or Meteor.userId()
+    #             route = FlowRouter.current()
+    #             unless route.route.name is 'login'
+    #                 Session.set 'redirectAfterLogin', route.path
+    #             FlowRouter.go ‘login’
+    #     ]
+    
     FlowRouter.route '/profile/:username', 
         name: 'profile_home'
         action: (params) ->
             BlazeLayout.render 'profile_layout',
                 sub_nav: 'member_nav'
                 profile_content: 'profile_about'
+                
     FlowRouter.route '/profile/:username/about', 
         name: 'profile_about'
         action: (params) ->
             BlazeLayout.render 'profile_layout',
                 sub_nav: 'member_nav'
                 profile_content: 'profile_about'
+    
+    FlowRouter.route '/profile/:username/feed', 
+        name: 'profile_feed'
+        action: (params) ->
+            BlazeLayout.render 'profile_layout',
+                sub_nav: 'member_nav'
+                profile_content: 'profile_feed'
     
     FlowRouter.route '/profile/:username/social', 
         name: 'profile_social'
@@ -54,6 +71,13 @@ if Meteor.isClient
                 sub_nav: 'member_nav'
                 profile_content: 'profile_journal'
 
+    FlowRouter.route '/profile/:username/badges', 
+        name: 'profile_badges'
+        action: (params) ->
+            BlazeLayout.render 'profile_layout',
+                sub_nav: 'member_nav'
+                profile_content: 'profile_badges'
+
 
 
 
@@ -73,3 +97,9 @@ if Meteor.isClient
         is_user: -> FlowRouter.getParam('username') is Meteor.user()?.username
         
     Template.profile_layout.events
+    # 	'mouseenter .item': -> $( ".corner.icon" ).addClass( "large" )
+    # 	'mouseenter .item': (e,t)-> $(e.currentTarget).closest('.item').transition('pulse')
+
+    # # 	'mouseleave .item': -> $( ".corner.icon" ).removeClass( "large" )
+    # 	'mouseleave .item': (e,t)-> $( ".corner.icon" ).removeClass( "large" )
+    

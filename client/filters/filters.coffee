@@ -47,6 +47,7 @@ Template.tag_filter.onCreated ->
             selected_tags.array()
             selected_author_ids.array()
             type=@data.type
+            author_id=@data.author_id
             )
 
 Template.tag_filter.helpers

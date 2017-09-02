@@ -18,17 +18,19 @@ template(name='profile_layout')
                             //     .divider  / 
                             //     .active.section #{person.username}
                             // .ui.hidden.divider    
+                            if person.profile.first_name
+                                h2.ui.center.aligned.header
+                                    img.ui.avatar.image(src="{{c.url person.profile.image_id width=200 height=200 gravity='face' crop='fill'}}")
+                                    |#{person.profile.first_name} #{person.profile.last_name}
+                            else
+                                .ui.center.aligned.sub.header #{person.username}
                             .ui.stackable.grid
-                                .row
-                                    if person.profile.first_name
-                                        h2.ui.center.aligned.header
-                                            |#{person.profile.first_name} #{person.profile.last_name}
-                                    else
-                                        .ui.center.aligned.sub.header #{person.username}
-                                .row
                                     .five.wide.column
                                         with person
                                             .ui.vertical.fluid.pointing.menu
+                                                a.item(href="/profile/#{username}/feed" class="{{isActiveRoute name='profile_feed'}}") 
+                                                    i.feed.icon
+                                                    | Feed
                                                 a.item(href="/profile/#{username}/about" class="{{isActiveRoute name='profile_about'}}") 
                                                     i.info.icon
                                                     |About
@@ -47,9 +49,22 @@ template(name='profile_layout')
                                                 a.item(href="/profile/#{username}/clouds" class="{{isActiveRoute name='profile_clouds'}}") 
                                                     i.cloud.icon
                                                     | Clouds
+                                                if isInRole 'admin'
+                                                    a.item(href="/profile/#{username}/badges" class="{{isActiveRoute name='profile_badges'}}") 
+                                                        i.certificate.icon
+                                                        | Badges
                                                 a.item(href="/profile/#{username}/contact" class="{{isActiveRoute name='profile_contact'}}") 
                                                     i.phone.icon
                                                     |Contact
+                                        if is_person_by_username
+                                            .ui.vertical.fluid.pointing.menu
+                                                a.item(href="/profile/#{currentUser.username}/account" class="{{isActiveRoute name='account'}}") 
+                                                    i.setting.icon
+                                                    |Account Settings
+                                                a.item(href="/profile/#{currentUser.username}/email_settings" class="{{isActiveRoute name='email_settings'}}") 
+                                                    i.mail.icon
+                                                    |Email Settings
+        
                                     .eleven.wide.column
                                         +Template.dynamic template=profile_content
 
@@ -63,7 +78,8 @@ template(name='profile_contact')
         
 template(name='profile_journal')
     .ui.horizontal.divider.header 
-        i.pencil.icon
+        a(href='/journal')
+            i.link.pencil.icon
         |Journal
     +public_journal
         
@@ -72,7 +88,6 @@ template(name='profile_quizes')
         i.pencil.icon
         |Quizes
     +public_quiz_sessions
-
 
 
 template(name='profile_courses')
@@ -87,7 +102,7 @@ template(name='profile_social')
         |Social
     // +user_friends
     +following
-    +tag_person
+    +person_tags
 
         
 template(name='profile_about')
@@ -96,15 +111,17 @@ template(name='profile_about')
             i.info.icon
             |About
         .ui.grid
-            .six.wide.column
+            .eight.wide.column
                 img.ui.rounded.large.image(src="{{c.url person.profile.image_id width=400 height=400 gravity='face' crop='fill'}}")
-            .ten.wide.column
+            .eight.wide.column
                 if tags
                     .ui.basic.center.aligned.segment
                         each tags
                             .user_tag.ui.circular.basic.label #{this}
                 if is_user
-                    a.ui.basic.fluid.button(href="/account/profile/edit/#{_id}") Edit My Profile
+                    a.ui.basic.fluid.button(href="/account/profile/edit/#{_id}") 
+                        i.pencil.icon
+                        |Edit My Profile
                 else
                     .ui.basic.center.aligned.segment
                         // +toggle_friend
