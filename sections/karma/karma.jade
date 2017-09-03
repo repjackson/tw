@@ -3,25 +3,29 @@ template(name='karma')
         h1.ui.horizontal.dividing.header 
             i.heartbeat.outline.icon
             |Karma (#{currentUser.points})
-        .ui.stackable.grid
-            .four.wide.column
-                .ui.dividing.header Actions
-                a.ui.basic.fluid.button(href="/karma/send")
-                    i.send.icon
-                    |Send Karma
-                .ui.dividing.header Sharing
-                .ui.slider.checkbox
-                    input#share_bookmarks(type='checkbox' checked=currentUser.profile.share_bookmarks)
-                    label(for='share_bookmarks') Share Stats in Profile
-            .twelve.wide.column
-                .ui.dividing.header History
-                // .ui.dividing.header Trends
-                // .ui.four.column.stackable.grid
-                //     .column
-                //         .ui.dividing.header Top Posts
-                //     .column
-                //         .ui.dividing.header Top Rising
-                //     .column
-                //         .ui.dividing.header Top Given Users
-                //     .column
-                //         .ui.dividing.header Top Received Users
+        // .ui.stackable.grid
+        //     .four.wide.column
+        //         // .ui.dividing.header Actions
+        //         // a.ui.basic.fluid.button(href="/karma/send")
+        //         //     i.send.icon
+        //         //     |Send Karma
+        //         // .ui.dividing.header Sharing
+        //         // .ui.slider.checkbox
+        //         //     input#share_bookmarks(type='checkbox' checked=currentUser.profile.share_bookmarks)
+        //         //     label(for='share_bookmarks') Share Stats in Profile
+        //     .twelve.wide.column
+        .ui.dividing.header History
+        .ui.divided.relaxed.list
+            each upvoted_docs
+                .item
+                    .content
+                        .header 
+                            each tags
+                                .ui.basic.small.label #{this}
+                        .description
+                            if body
+                                |#{body}
+                            .ui.header Points #{points}
+                            .ui.header Upvoters (#{upvoters.length})
+                            each upvoters
+                                .ui.basic.label #{this}

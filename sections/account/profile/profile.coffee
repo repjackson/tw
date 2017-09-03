@@ -57,6 +57,13 @@ if Meteor.isClient
                 sub_nav: 'member_nav'
                 profile_content: 'profile_courses'
     
+    FlowRouter.route '/profile/:username/karma', 
+        name: 'profile_karma'
+        action: (params) ->
+            BlazeLayout.render 'profile_layout',
+                sub_nav: 'member_nav'
+                profile_content: 'profile_karma'
+    
     FlowRouter.route '/profile/:username/quizes', 
         name: 'profile_quizes'
         action: (params) ->

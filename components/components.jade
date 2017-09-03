@@ -28,7 +28,7 @@ template(name='doc_matches')
             i.random.icon
             |Top Doc Matches (#{top_doc_matches.length})
             i.dropdown.icon
-            if currenUser
+            if currentUser
                 #compute_doc_matches.ui.icon.basic.button(data-content='Compute Matches')
                     i.refresh.icon
         .content.match_content

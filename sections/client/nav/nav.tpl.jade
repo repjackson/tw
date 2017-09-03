@@ -105,6 +105,9 @@
                         //     each bookmark_docs
                         //         each tags
                         //             .ui.tiny.basic.label #{this}
+                    a.icon.item(href='/karma' class="{{isActivePath '/karma'}}")
+                        i.heartbeat.outline.icon
+                        | Karma
                     .ui.divider
                     a.icon.item(href="/profile/#{currentUser.username}/account" class="{{isActiveRoute name='account'}}")
                         i.setting.icon
@@ -112,9 +115,6 @@
                     if isInRole 'admin'
                         .ui.horizontal.divider
                             i.red.configure.icon
-                        a.icon.item(href='/karma' class="{{isActivePath '/karma'}}")
-                            i.heartbeat.outline.icon
-                            | Karma
                         a.mobile.hidden.item(href='/services' class="{{isActivePath '/services'}}") 
                             i.paint.brush.icon
                             |Services

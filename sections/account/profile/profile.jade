@@ -52,13 +52,13 @@ template(name='profile_layout')
                                                 a.item(href="/profile/#{username}/clouds" class="{{isActiveRoute name='profile_clouds'}}") 
                                                     i.cloud.large.icon
                                                     | Clouds
+                                                a.item(href="/profile/#{username}/karma" class="{{isActiveRoute name='profile_karma'}}") 
+                                                    i.large.heartbeat.icon
+                                                    | Karma
                                                 if isInRole 'admin'
                                                     a.item(href="/profile/#{username}/badges" class="{{isActiveRoute name='profile_badges'}}") 
                                                         i.certificate.red.large.icon
                                                         | Badges
-                                                    a.item(href="/profile/#{username}/karma" class="{{isActiveRoute name='profile_karma'}}") 
-                                                        i.large.red.heartbeat.icon
-                                                        | Karma
                                                 a.item(href="/profile/#{username}/contact" class="{{isActiveRoute name='profile_contact'}}") 
                                                     i.phone.large.icon
                                                     |Contact
@@ -82,6 +82,13 @@ template(name='profile_journal')
             i.link.pencil.icon
         |Journal
     +public_journal
+        
+template(name='profile_karma')
+    .ui.horizontal.divider.header 
+        a(href='/karma')
+            i.hearbeat.icon
+        |Karma
+    +karma
         
 template(name='profile_quizes')
     .ui.horizontal.divider.header 

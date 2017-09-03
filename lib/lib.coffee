@@ -137,7 +137,6 @@ Meteor.methods
             # Meteor.users.update Meteor.userId(), $inc: points: -1
         Meteor.call 'generate_upvoted_cloud', Meteor.userId()
 
-
     vote_down: (id)->
         doc = Docs.findOne id
         if not doc.downvoters

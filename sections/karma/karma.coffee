@@ -13,32 +13,11 @@ if Meteor.isClient
     Template.karma.onRendered ->
 
     Template.karma.helpers
-        bookmarked_tags: ->
-            doc_count = Docs.find().count()
-            if 0 < doc_count < 3
-                Tags.find { 
-                    count: $lt: doc_count
-                    }, limit:20
-            else
-                Tags.find({}, limit:20)
-        cloud_tag_class: ->
-            button_class = []
-            switch
-                when @index <= 5 then button_class.push ' '
-                when @index <= 10 then button_class.push ' small'
-                when @index <= 15 then button_class.push ' tiny'
-                when @index <= 20 then button_class.push ' mini'
-            return button_class
-    
-        selected_tags: -> selected_tags.array()
-
-    
-        bookmark_docs: -> 
+        upvoted_docs: -> 
             Docs.find
-                bookmarked_ids: $in: [Meteor.userId()]
+                author_id: Meteor.userId()
+                points: $gt: 0
 
-        karma_count: ->
-            Docs.find(bookmarked_ids: $in: [Meteor.userId()]).count()
             
             
     Template.bookmark.helpers
@@ -67,13 +46,13 @@ if Meteor.isServer
                 match = {}
                 
                 if selected_tags.length > 0 then match.tags = $all: selected_tags
-                match.bookmarked_ids = $in: [Meteor.userId()]
-
+                match.points = $gt: 0
+                match.author_id = Meteor.userId()
                 Docs.find match
             children: [
-                { find: (bookmark) ->
+                { find: (doc) ->
                     Meteor.users.find 
-                        _id: bookmark.author_id
+                        _id: $in: [doc.upvoters]
                     }
                 ]    
         }
