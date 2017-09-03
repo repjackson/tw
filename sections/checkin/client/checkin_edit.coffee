@@ -17,12 +17,12 @@ Template.checkin_edit.helpers
 
 
 Template.checkin_edit.events
-    'click #saveDoc': ->
+    'click #save_doc': ->
         FlowRouter.go "/checkin/view/#{@_id}"
         # selected_tags.clear()
         # selected_tags.push tag for tag in @tags
 
-    'click #deleteDoc': ->
+    'click #delete_doc': ->
         if confirm 'Delete this doc?'
             Docs.remove @_id
             FlowRouter.go '/'

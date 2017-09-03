@@ -1,0 +1,55 @@
+template(name='conversation_view')
+    a.ui.basic.button(href='/conversation')
+        i.left.chevron.icon
+        strong conversation
+    with doc
+        .ui.container
+            h1.ui.center.aligned.header View Conversation 
+            .ui.grid
+                .ten.wide.column
+                    +conversation
+                    if published
+                        +comments
+                    +doc_matches
+
+                .five.wide.column
+                    .ui.dividing.header Description
+                    |!{content}
+                    .ui.dividing.header Participants
+                    .ui.divided.relaxed.list
+                        each participants
+                            .item
+                                img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                                .content
+                                    .header
+                                        |#{name}
+                                        .sub.header @#{username}
+                                    .description
+                                        each five_tags
+                                            .ui.tiny.basic.label #{this}
+                
+                    .ui.dividing.header Tags
+                    each tags
+                        .ui.basic.large.label.doc_tag #{this}
+                    .ui.dividing.header Actions
+                    +bookmark_button
+                    unless is_author
+                        +resonate_button
+                        +thanks_button
+                    +resonates_list
+
+                    .ui.dividing.header Visibility
+                    if published
+                        .ui.basic.green.large.label 
+                            i.unlock.icon
+                            | Public
+                    else
+                        .ui.basic.large.label 
+                            i.lock.icon
+                            | Private
+                    .ui.header by #{author.name}
+                    .ui.divider
+                    if is_author
+                        a.ui.basic.button(href="/conversation/#{_id}/edit") 
+                            i.pencil.icon
+                            |Edit

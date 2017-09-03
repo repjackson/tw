@@ -86,12 +86,12 @@ if Meteor.isClient
             Docs.update @_id,
                 $set: image_url: image_url
                 
-        'click #saveDoc': ->
+        'click #save_doc': ->
             FlowRouter.go "/lightbank/view/#{@_id}"
             # selected_tags.clear()
             # selected_tags.push tag for tag in @tags
     
-        'click #deleteDoc': ->
+        'click #delete_doc': ->
             if confirm 'Delete this doc?'
                 Docs.remove @_id
                 FlowRouter.go '/lightbank'

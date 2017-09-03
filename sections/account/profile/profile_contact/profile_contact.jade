@@ -1,0 +1,9 @@
+template(name='profile_contact')
+    .ui.horizontal.divider.header 
+        i.phone.icon
+        |Contact
+    if conversation_with_user
+        with conversation_with_user
+            +conversation
+    else
+        #create_conversation_with_user.ui.teal.button Start Conversation with User

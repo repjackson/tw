@@ -1,10 +1,10 @@
 template(name='comments')
     .ui.fluid.styled.accordion
-        .active.title 
+        .title 
             i.comments.outline.icon
             |Comments (#{comments.count})
             i.dropdown.icon
-        .active.content
+        .content
             if adding_id
                 .ui.form
                     .field
@@ -34,10 +34,11 @@ template(name='comment')
                 .actions
                     // a.reply(href='#') Reply
                     // +favorite
-                    // +voting
                     if is_author
                         +delete_link
                         a.edit_comment Edit
+                    else
+                        +voting
             // if children
             //     each children
             //         h2 #{this}

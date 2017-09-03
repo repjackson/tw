@@ -2,6 +2,7 @@
 @People_tags = new Meteor.Collection 'people_tags'
 @Docs = new Meteor.Collection 'docs'
 @Author_ids = new Meteor.Collection 'author_ids'
+@Participant_ids = new Meteor.Collection 'participant_ids'
 
 
 

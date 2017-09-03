@@ -84,4 +84,6 @@ if Meteor.isClient
 if Meteor.isServer
     Meteor.publish 'usernames', ->
         Meteor.users.find {},
-            fields: username: 1
+            fields: 
+                username: 1
+                profile: 1

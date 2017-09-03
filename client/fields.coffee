@@ -215,3 +215,41 @@ Template.view_youtube.onRendered ->
     Meteor.setTimeout (->
         $('.ui.embed').embed()
     ), 2000
+
+
+Template.participants.onCreated ->
+    Meteor.subscribe 'usernames'
+
+Template.participants.events
+    "autocompleteselect input": (event, template, doc) ->
+        # console.log("selected ", doc)
+        Docs.update FlowRouter.getParam('doc_id'),
+            $addToSet: participant_ids: doc._id
+        $('#participant_select').val("")
+    'click #remove_participant': (e,t)->
+        # console.log @
+        Docs.update FlowRouter.getParam('doc_id'),
+            $pull: participant_ids: @_id
+
+
+
+Template.participants.helpers
+    participants_edit_settings: -> {
+        position: 'bottom'
+        limit: 10
+        rules: [
+            {
+                collection: Meteor.users
+                field: 'username'
+                matchAll: true
+                template: Template.user_pill
+            }
+            ]
+    }
+
+    participants: ->
+        participants = []
+        
+        for participant_id in @participant_ids
+            participants.push Meteor.users.findOne(participant_id)
+        participants

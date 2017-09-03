@@ -115,3 +115,17 @@ template(name='youtube')
 template(name='view_youtube')
     // .ui.embed(data-source="youtube" data-id=youtube data-icon="video" data-placeholder="/images/video_placeholder.png")
     .ui.embed(data-source="youtube" data-id=youtube)
+
+
+template(name='participants')
+    .field
+        label Participants: 
+        each participants
+            .ui.large.basic.label
+                img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                |#{username}
+                #remove_participant.ui.icon.basic.small.compact.circular.button
+                    i.red.remove.icon
+        .ui.left.icon.large.input
+            i.search.icon
+            +inputAutocomplete settings=participants_edit_settings id="participant_select" class="" autocomplete="off" placeholder='Search Username...'

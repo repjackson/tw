@@ -1,24 +1,25 @@
-template(name='checkin_edit')
+template(name='conversation_edit')
     with doc
         .ui.container
-            h1.ui.center.aligned.header Edit Check In
+            h1.ui.center.aligned.header Edit Conversation
             .ui.stackable.grid
                 .twelve.wide.column
                     .ui.form
+                        +participants
                         +tags
                         +content
 
                 .four.wide.column
+                    | Private conversations are only shown to participants you invite.  
                     +published
-                    +request_tori_feedback
                     .ui.divider
                     if tags
                         #save_doc.ui.fluid.green.big.button 
                             i.save.icon
-                            |Save
+                            |Save Conversation
                     else
                         .ui.fluid.green.big.disabled.button Add Tags to Save
                     .ui.hidden.divider
                     #delete_doc.ui.small.fluid.red.compact.button 
                         i.trash.icon
-                        |Delete
+                        |Delete Conversation

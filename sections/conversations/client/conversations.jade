@@ -1,42 +1,50 @@
 template(name='conversations')
-    .ui.container.basic.segment
-        // #create_conversation.ui.basic.button
-        //     i.plus.icon
-        //     | Start Conversation
-        .ui.two.cards
-            each conversations
-                +conversation
+    .ui.horizontal.divider.header 
+        i.comments.outline.icon
+        |Conversations
+    .ui.grid
+        .four.wide.column
+            if currentUser
+                #create_conversation.ui.basic.button
+                    i.plus.icon
+                    |Create Conversation
+            +conversation_cloud
+        .twelve.wide.column
+            .ui.cards
+                each conversations
+                    +conversation
 
 
 template(name='conversation')
-    .ui.container
-        .ui.fluid.card
-            .content
-                // .header
-                //     |Conversation Topics:
+    .ui.fluid.card
+        .content
+            // .header
+            //     |Conversation Topics:
+            if published
                 if can_edit
                     .ui.form
                         +tags
                 else
                     each tags
                         .ui.basic.label #{this}
-                .ui.segment
-                    .ui.dividing.header Participants: &nbsp;
-                    .ui.horizontal.list
-                        each participants
-                            .item 
-                                img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
-                                |#{name}
-                .description
-                    .ui.segment
-                        .ui.threaded.comments
-                            each conversation_messages
-                                +comment
-                        if in_conversation
-                            .ui.small.left.icon.fluid.input
-                                i.green.plus.icon
-                                input.add_message(type='text' placeholder='Add Message')
-            if currentUser
+            .ui.center.aligned.basic.segment
+                .ui.horizontal.list
+                    each participants
+                        .item
+                            img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                            |#{name}
+            .ui.divider
+            .description
+                .ui.threaded.comments
+                    each conversation_messages
+                        +comment
+                if in_conversation
+                    .ui.divider
+                    .ui.large.left.icon.fluid.transparent.input
+                        i.green.plus.icon
+                        input.add_message(type='text' placeholder='Add Message')
+        if currentUser
+            if published
                 .extra.content
                     if can_edit
                         .ui.basic.button.close_conversation
@@ -50,4 +58,4 @@ template(name='conversation')
                         .ui.basic.button.join_conversation
                             i.green.plus.icon
                             |Join
-    
+
