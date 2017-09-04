@@ -1,4 +1,4 @@
-FlowRouter.route '/conversation/view/:doc_id',
+FlowRouter.route '/conversation/:doc_id/view',
     action: (params) ->
         BlazeLayout.render 'layout',
             # top: 'nav'

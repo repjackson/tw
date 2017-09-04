@@ -6,6 +6,14 @@ FlowRouter.route '/terms-of-use', action: (params) ->
     BlazeLayout.render 'layout',
         main: 'terms-of-use'
 
+# Accounts.onLogin ->
+#     redirect = Session.get ‘redirectAfterLogin’
+#     if redirect?
+#         unless redirect is '/login'
+#     FlowRouter.go redirect
+
+
+
 if Meteor.isDevelopment
     AccountsTemplates.configure
         sendVerificationEmail: false
@@ -26,7 +34,7 @@ AccountsTemplates.configure
     enablePasswordChange: true
 
     # Appearance
-    showAddRemoveServices: false
+    showAddRemoveServices: true
     showForgotPasswordLink: true
     showLabels: true
     showPlaceholders: false
@@ -114,3 +122,14 @@ AccountsTemplates.configureRoute('signUp', {
 
 AccountsTemplates.configureRoute 'verifyEmail'
 
+
+
+orig_updateOrCreateUserFromExternalService = Accounts.updateOrCreateUserFromExternalService
+
+Accounts.updateOrCreateUserFromExternalService = (serviceName, serviceData, options) ->
+    loggedInUser = Meteor.user()
+    if loggedInUser and typeof loggedInUser.services[serviceName] == 'undefined'
+        setAttr = {}
+        setAttr['services.' + serviceName] = serviceData
+        Meteor.users.update loggedInUser._id, $set: setAttr
+    orig_updateOrCreateUserFromExternalService.apply this, arguments

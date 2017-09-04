@@ -89,3 +89,52 @@ Meteor.methods
                 from: 'Versaclimber'
                 subject: 'Versaclimber Administration Invitation`'
                 html: SSR.render('message_email', email_data)
+
+
+    generatePersonalCloud: (uid)->
+        authored_cloud = Docs.aggregate [
+            { $match: authorId: uid }
+            { $project: tags: 1 }
+            { $unwind: '$tags' }
+            { $group: _id: '$tags', count: $sum: 1 }
+            { $sort: count: -1, _id: 1 }
+            { $limit: 50 }
+            { $project: _id: 0, name: '$_id', count: 1 }
+            ]
+        authored_list = (tag.name for tag in authored_cloud)
+        Meteor.users.update Meteor.userId(),
+            $set:
+                authored_cloud: authored_cloud
+                authored_list: authored_list
+
+
+        upvoted_cloud = Docs.aggregate [
+            { $match: up_voters: $in: [Meteor.userId()] }
+            { $project: tags: 1 }
+            { $unwind: '$tags' }
+            { $group: _id: '$tags', count: $sum: 1 }
+            { $sort: count: -1, _id: 1 }
+            { $limit: 50 }
+            { $project: _id: 0, name: '$_id', count: 1 }
+            ]
+        upvoted_list = (tag.name for tag in upvoted_cloud)
+        Meteor.users.update Meteor.userId(),
+            $set:
+                upvoted_cloud: upvoted_cloud
+                upvoted_list: upvoted_list
+
+
+        downvoted_cloud = Docs.aggregate [
+            { $match: down_voters: $in: [Meteor.userId()] }
+            { $project: tags: 1 }
+            { $unwind: '$tags' }
+            { $group: _id: '$tags', count: $sum: 1 }
+            { $sort: count: -1, _id: 1 }
+            { $limit: 50 }
+            { $project: _id: 0, name: '$_id', count: 1 }
+            ]
+        downvoted_list = (tag.name for tag in downvoted_cloud)
+        Meteor.users.update Meteor.userId(),
+            $set:
+                downvoted_cloud: downvoted_cloud
+                downvoted_list: downvoted_list

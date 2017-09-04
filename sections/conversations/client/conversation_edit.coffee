@@ -20,11 +20,6 @@ if Meteor.isClient
 
     
     Template.conversation_edit.events
-        'click #save_doc': ->
-            FlowRouter.go "/conversation/view/#{@_id}"
-            # selected_tags.clear()
-            # selected_tags.push tag for tag in @tags
-    
         'click #delete_doc': ->
             if confirm 'Delete this Conversation?'
                 Docs.remove @_id

@@ -1,5 +1,8 @@
 accounts-base@1.3.1
+accounts-google@1.2.0
+accounts-oauth@1.1.15
 accounts-password@1.4.0
+accounts-twitter@1.3.0
 alanning:roles@1.2.16
 aldeed:simple-schema@1.3.3
 aldeed:template-extension@4.0.0
@@ -56,6 +59,7 @@ francocatena:status@1.5.3
 froala:editor@2.4.2
 froala:editor-reactive@2.4.2
 geojson-utils@1.0.10
+google-oauth@1.2.4
 gwendall:body-events@0.1.6
 gwendall:session-json@0.1.7
 hot-code-push@1.0.4
@@ -97,9 +101,13 @@ mquandalle:jade@0.4.9
 mquandalle:jade-compiler@0.4.5
 mquandalle:stylus@1.1.1
 mrgalaxy:stripe@2.2.2
+nefiltari:yaki@0.1.81
 npm-bcrypt@0.9.3
 npm-mongo@2.2.30
 oaf:html5-desktop-notifications@1.0.0
+oauth@1.1.13
+oauth1@1.1.11
+oauth2@1.1.11
 observe-sequence@1.0.16
 okgrow:analytics@2.1.3
 ordered-dict@1.0.9
@@ -128,6 +136,8 @@ shell-server@0.2.4
 softwarerero:accounts-t9n@1.3.11
 spacebars@1.0.15
 spacebars-compiler@1.1.2
+splendido:accounts-emails-field@1.2.0
+splendido:accounts-meld@1.3.1
 srp@1.0.10
 tap:i18n@1.7.0
 templating@1.3.2
@@ -137,6 +147,7 @@ templating-tools@1.1.2
 themeteorchef:bert@2.1.3
 tmeasday:publish-counts@0.8.0
 tracker@1.1.3
+twitter-oauth@1.2.0
 ui@1.0.13
 underscore@1.0.10
 url@1.1.0

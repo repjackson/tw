@@ -17,15 +17,18 @@ if Meteor.isClient
 
         my_rating: ->
             # console.log @
+            person = Meteor.users.findOne username: FlowRouter.getParam 'username'
+            
             my_rating = Docs.findOne 
                 type: 'person_tags'
-                parent_user_id: @_id 
-                author_id: Meteor.userId()
+                parent_user_id: person._id
+                # author_id: Meteor.userId()
             # if my_rating then console.log my_rating
             my_rating
 
     Template.person_tags.events
         'click #add_person_tags': ->
+            console.log 'hi'
             person = Meteor.users.findOne username: FlowRouter.getParam 'username'
             new_person_tags_id = Docs.insert 
                 type: 'person_tags'

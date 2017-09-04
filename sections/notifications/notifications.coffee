@@ -68,11 +68,8 @@ if Meteor.isClient
                 Notifications.update {},
                     $addToSet: read_by: Meteor.userId()
                     
-        'click #view_unread_notifications': (e,t)->
-            t.notification_view_mode.set('unread')    
-        
-        'click #view_all_notifications': (e,t)->
-            t.notification_view_mode.set('all')    
+        'click #view_unread_notifications': (e,t)-> t.notification_view_mode.set('unread')    
+        'click #view_all_notifications': (e,t)-> t.notification_view_mode.set('all')    
         
     Template.notification.helpers
         notification_segment_class: -> if Meteor.userId() in @read_by then 'basic' else ''

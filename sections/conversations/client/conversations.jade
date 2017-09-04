@@ -2,12 +2,22 @@ template(name='conversations')
     .ui.horizontal.divider.header 
         i.comments.outline.icon
         |Conversations
-    .ui.grid
+    .ui.stackable.grid
         .four.wide.column
+
             if currentUser
                 #create_conversation.ui.basic.button
                     i.plus.icon
                     |Create Conversation
+            .ui.dividing.header Viewing: 
+                if viewing_published
+                    #view_private_conversations.ui.basic.button 
+                        i.unhide.icon
+                        |Published
+                if viewing_private
+                    #view_published_conversations.ui.basic.button 
+                        i.lock.icon
+                        |Private
             +conversation_cloud
         .twelve.wide.column
             .ui.cards
@@ -21,12 +31,17 @@ template(name='conversation')
             // .header
             //     |Conversation Topics:
             if published
-                if can_edit
-                    .ui.form
-                        +tags
-                else
-                    each tags
-                        .ui.basic.label #{this}
+                i.tags.icon
+                each tags
+                    .ui.basic.label #{this}
+                span.right.floated
+                    i.unlock.icon
+                    |Published
+            else
+                span.right.floated
+                    i.lock.icon
+                    |Private
+                
             .ui.center.aligned.basic.segment
                 .ui.horizontal.list
                     each participants
@@ -44,8 +59,8 @@ template(name='conversation')
                         i.green.plus.icon
                         input.add_message(type='text' placeholder='Add Message')
         if currentUser
-            if published
-                .extra.content
+            .extra.content
+                if published
                     if can_edit
                         .ui.basic.button.close_conversation
                             i.red.remove.icon
@@ -58,4 +73,8 @@ template(name='conversation')
                         .ui.basic.button.join_conversation
                             i.green.plus.icon
                             |Join
+                a.ui.right.floated.basic.teal.button(href="/conversation/#{_id}/view")
+                    |Full
+                    i.right.arrow.icon
+                    
 

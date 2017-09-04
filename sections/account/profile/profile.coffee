@@ -50,6 +50,13 @@ if Meteor.isClient
                 sub_nav: 'member_nav'
                 profile_content: 'profile_contact'
     
+    FlowRouter.route '/profile/:username/conversations', 
+        name: 'profile_conversations'
+        action: (params) ->
+            BlazeLayout.render 'profile_layout',
+                sub_nav: 'member_nav'
+                profile_content: 'profile_conversations'
+    
     FlowRouter.route '/profile/:username/courses', 
         name: 'profile_courses'
         action: (params) ->

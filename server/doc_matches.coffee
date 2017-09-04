@@ -65,3 +65,25 @@ Meteor.methods
                     user_id: user_id
                     username: username
                     user_match_authored_cloud: user_match_authored_cloud
+
+
+    match_two_users_upvoted_cloud: (user_id)->
+        username = Meteor.users.findOne(user_id).username
+        match = {}
+        match.upvoters = $in: [Meteor.userId(), user_id]
+
+        user_match_upvoted_cloud = Docs.aggregate [
+            { $match: match }
+            { $project: tags: 1 }
+            { $unwind: '$tags' }
+            { $group: _id: '$tags', count: $sum: 1 }
+            { $sort: count: -1, _id: 1 }
+            { $limit: 50 }
+            { $project: _id: 0, name: '$_id', count: 1 }
+            ]
+        Meteor.users.update Meteor.userId(),
+            $addToSet:
+                upVotedCloudMatches:
+                    user_id: user_id
+                    username: username
+                    user_match_upvoted_cloud: user_match_upvoted_cloud

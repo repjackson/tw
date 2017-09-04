@@ -36,16 +36,43 @@ Meteor.methods
 if Meteor.isClient
     Template.conversations.onCreated ->
         @autorun -> Meteor.subscribe('conversations', selected_conversation_tags.array(), selected_participant_ids.array())
-    
+        @view_published = new ReactiveVar(true)
+
     Template.conversations.helpers
         conversations: -> 
-            Docs.find
-                type: 'conversation'
+            if Template.instance().view_published.get() is true
+                Docs.find {
+                    type: 'conversation'
+                    published: true
+                }, sort: timestamp: -1
+            else
+                Docs.find {
+                    participant_ids: $in: [Meteor.userId()]
+                    type: 'conversation'
+                    published: false
+                }, sort: timestamp: -1
+            
+            
+        viewing_published: -> Template.instance().view_published.get() is true
+        viewing_private: -> Template.instance().view_published.get() is false  
+    
+    
     
     Template.conversations.events
         'click #create_conversation': ->
             Meteor.call 'create_conversation', (err,id)->
                 FlowRouter.go "/conversation/#{id}/edit"
+
+
+        'click #view_private_conversations': (e,t)-> 
+            t.view_published.set(false)
+            console.log t.view_published.get()
+            
+        'click #view_published_conversations': (e,t)-> 
+            t.view_published.set(true)    
+
+            console.log t.view_published.get()
+
 
     Template.conversation.onCreated ->
         # @autorun => Meteor.subscribe 'doc', @data._id
@@ -79,10 +106,10 @@ if Meteor.isClient
             e.preventDefault
             if e.which is 13
                 parent_id = @_id
-                console.log parent_id
+                # console.log parent_id
                 body = t.find('.add_message').value.trim()
                 if body.length > 0
-                    console.log body
+                    # console.log body
                     Docs.insert
                         body: body
                         type: 'message'
@@ -135,7 +162,7 @@ if Meteor.isServer
                 match.type = 'conversation'
                 if selected_tags.length > 0 then match.tags = $all: selected_tags
                 if selected_participant_ids.length > 0 then match.participant_ids = $in: selected_participant_ids
-                # match.published = true
+                match.published = true
                 
                 cloud = Docs.aggregate [
                     { $match: match }
@@ -169,17 +196,30 @@ if Meteor.isServer
         }            
         
         
-    Meteor.publish 'conversations', (selected_tags, selected_participant_ids)->
+    Meteor.publish 'conversations', (selected_tags, selected_participant_ids, view_published)->
     
         self = @
         match = {}
-        console.log selected_participant_ids
+        # console.log selected_participant_ids
         if selected_tags.length > 0 then match.tags = $all: selected_tags
-        if selected_participant_ids.length > 0 then match.participant_ids = $in: selected_participant_ids
+        if view_published is true
+            match.published = true
+        else if view_published = false
+            match.published = false
+            match.participant_ids = $in: [Meteor.userId()]
+        # if view_mode
+        #     if view_mode is 'mine'
+        #         match
+        #         match.participant_ids = $in: [Meteor.userId()]
+        # else
+        #     if selected_participant_ids.length > 0 then match.participant_ids = $in: selected_participant_ids
+                
+                
         match.type = 'conversation'
         # console.log match
+        
         cursor = Docs.find match
-        console.log cursor.count()
+        # console.log cursor.count()
         return cursor
         
         

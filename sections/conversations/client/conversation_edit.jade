@@ -14,12 +14,10 @@ template(name='conversation_edit')
                     +published
                     .ui.divider
                     if tags
-                        #save_doc.ui.fluid.green.big.button 
-                            i.save.icon
+                        a.ui.fluid.green.big.button(href="/conversation/#{_id}/view") 
                             |Save Conversation
                     else
                         .ui.fluid.green.big.disabled.button Add Tags to Save
                     .ui.hidden.divider
                     #delete_doc.ui.small.fluid.red.compact.button 
-                        i.trash.icon
                         |Delete Conversation
