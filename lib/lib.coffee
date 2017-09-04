@@ -3,6 +3,7 @@
 @Docs = new Meteor.Collection 'docs'
 @Author_ids = new Meteor.Collection 'author_ids'
 @Participant_ids = new Meteor.Collection 'participant_ids'
+@Upvoter_ids = new Meteor.Collection 'upvoter_ids'
 
 
 

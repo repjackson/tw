@@ -6,8 +6,7 @@ if Meteor.isClient
     
     
     Template.karma.onCreated ->
-        @autorun => Meteor.subscribe('my_karma', selected_tags.array())
-        @autorun => Meteor.subscribe('bookmarked_tags', selected_tags.array())
+        @autorun => Meteor.subscribe('my_karma', selected_tags.array(), selected_upvoter_ids.array())
 
         
     Template.karma.onRendered ->
@@ -18,7 +17,12 @@ if Meteor.isClient
                 author_id: Meteor.userId()
                 points: $gt: 0
 
+        upvoter_users: ->
+            users = []
             
+            for upvoter_id in @upvoters
+                users.push Meteor.users.findOne upvoter_id
+            users
             
     Template.bookmark.helpers
         tag_class: -> if @valueOf() in selected_tags.array() then 'teal' else 'basic'
@@ -40,15 +44,18 @@ if Meteor.isClient
     
             
 if Meteor.isServer
-    publishComposite 'my_karma', (selected_tags=[])->
+    publishComposite 'my_karma', (selected_tags=[], selected_upvoter_ids)->
         {
             find: ->
                 match = {}
                 
                 if selected_tags.length > 0 then match.tags = $all: selected_tags
+                if selected_upvoter_ids.length > 0 then match.upvoters = $all: selected_upvoter_ids
                 match.points = $gt: 0
                 match.author_id = Meteor.userId()
-                Docs.find match
+                Docs.find match,
+                    limit: 10
+                    sort: points: -1
             children: [
                 { find: (doc) ->
                     Meteor.users.find 
@@ -56,3 +63,35 @@ if Meteor.isServer
                     }
                 ]    
         }
+
+
+    Meteor.publish 'karma_tags', (selected_tags, selected_upvoter_ids)->
+        
+        self = @
+        match = {}
+        
+        if selected_tags.length > 0 then match.tags = $all: selected_tags
+        if selected_upvoter_ids.length > 0 then match.author_id = $in: selected_upvoter_ids
+        match.points = $gt: 0
+        match.author_id = Meteor.userId()
+        # console.log match
+        
+        cloud = Docs.aggregate [
+            { $match: match }
+            { $project: tags: 1 }
+            { $unwind: "$tags" }
+            { $group: _id: '$tags', count: $sum: 1 }
+            { $match: _id: $nin: selected_tags }
+            { $sort: count: -1, _id: 1 }
+            { $limit: 20 }
+            { $project: _id: 0, name: '$_id', count: 1 }
+            ]
+        # console.log 'cloud, ', cloud
+        cloud.forEach (tag, i) ->
+            self.added 'tags', Random.id(),
+                name: tag.name
+                count: tag.count
+                index: i
+    
+        self.ready()
+            

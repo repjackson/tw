@@ -3,29 +3,42 @@ template(name='karma')
         h1.ui.horizontal.dividing.header 
             i.heartbeat.outline.icon
             |Karma (#{currentUser.points})
-        // .ui.stackable.grid
-        //     .four.wide.column
-        //         // .ui.dividing.header Actions
-        //         // a.ui.basic.fluid.button(href="/karma/send")
-        //         //     i.send.icon
-        //         //     |Send Karma
-        //         // .ui.dividing.header Sharing
-        //         // .ui.slider.checkbox
-        //         //     input#share_bookmarks(type='checkbox' checked=currentUser.profile.share_bookmarks)
-        //         //     label(for='share_bookmarks') Share Stats in Profile
-        //     .twelve.wide.column
-        .ui.dividing.header History
-        .ui.divided.relaxed.list
-            each upvoted_docs
-                .item
-                    .content
-                        .header 
-                            each tags
-                                .ui.basic.small.label #{this}
-                        .description
-                            if body
-                                |#{body}
-                            .ui.header Points #{points}
-                            .ui.header Upvoters (#{upvoters.length})
-                            each upvoters
-                                .ui.basic.label #{this}
+        .ui.stackable.grid
+            .four.wide.column
+                +karma_cloud
+                // .ui.dividing.header Actions
+                // a.ui.basic.fluid.button(href="/karma/send")
+                //     i.send.icon
+                //     |Send Karma
+                // .ui.dividing.header Sharing
+                // .ui.slider.checkbox
+                //     input#share_bookmarks(type='checkbox' checked=currentUser.profile.share_bookmarks)
+                //     label(for='share_bookmarks') Share Stats in Profile
+            .twelve.wide.column
+                .ui.dividing.header History
+                .ui.divided.relaxed.items
+                    each upvoted_docs
+                        .item
+                            .content
+                                .header 
+                                    each tags
+                                        .ui.basic.small.label #{this}
+                                .description
+                                    if body
+                                        |#{body}
+                                .extra
+                                    |Type: 
+                                    .ui.basic.label #{type}
+                                    | Points 
+                                    .ui.basic.label #{points}
+                                    | Upvoters (#{upvoters.length})
+                                    .ui.horizontal.list
+                                        each upvoter_users
+                                            .item 
+                                                .ui.basic.label 
+                                                    img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                                                    |#{this.name}
+                                                
+                                    a.ui.basic.right.floated.teal.button(href="/view/#{_id}")
+                                        | Full
+                                        i.right.chevron.arrow.icon

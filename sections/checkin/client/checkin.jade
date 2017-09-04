@@ -22,16 +22,22 @@ template(name='checkin')
 
 template(name='checkin_doc_view')
     .ui.card(class=checkin_card_class)
-        if is_author
-            .content
-                | by you
-                span.right.floated
-                    if published
-                        i.unlock.icon
-                        // |Published
-                    else
-                        i.lock.icon
-                        // |Private
+        .content
+            | by 
+            if is_author
+                |you
+            else        
+                a(href="/profile/#{author.username}")
+                    i.user.icon
+                    |#{author.name}
+            |#{when}
+            span.right.floated
+                if published
+                    i.unlock.icon
+                    // |Published
+                else
+                    i.lock.icon
+                    // |Private
         .content
             .meta
                 i.tags.icon
@@ -39,18 +45,14 @@ template(name='checkin_doc_view')
                     .ui.tiny.circular.button.tag(class=tag_class) #{this}
             .ui.hidden.divider
             |!{content}
-        unless is_author
-            .content
-                a.right.floated(href="/profile/#{author.username}")
-                    i.user.icon
-                    |#{author.name}
-                |#{when}
+        .content
+            +bookmark_button
+            unless is_author
+                +thanks_button
         .content
             a.ui.basic.right.floated.button(href="/checkin/view/#{_id}") 
                 | Full 
                 i.right.arrow.icon
-            unless is_author
-                +thanks_button
             if can_edit
                 a.ui.basic.compact.button(href="/checkin/edit/#{_id}")
                     i.edit.icon
