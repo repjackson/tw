@@ -25,7 +25,7 @@ if Meteor.isClient
         'click #add_service': ->
             id = Docs.insert
                 type: 'service'
-            FlowRouter.go "/edit/#{id}"
+            FlowRouter.go "/service/edit/#{id}"
     
         'click #make_list_layout': -> Session.set 'layout_view', 'list'
         'click #make_grid_layout': -> Session.set 'layout_view', 'grid'
@@ -45,8 +45,8 @@ if Meteor.isServer
         self = @
         match = {}
         match.type = 'service'
-        if not @userId or not Roles.userIsInRole(@userId, ['admin'])
-            match.published = true
+        # if not @userId or not Roles.userIsInRole(@userId, ['admin'])
+        #     match.published = true
         
     
         Docs.find match

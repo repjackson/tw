@@ -1,6 +1,6 @@
 if Meteor.isClient
     
-    FlowRouter.route '/service/view/:doc_id',
+    FlowRouter.route '/service/:doc_id/view',
         action: (params) ->
             BlazeLayout.render 'layout',
                 # top: 'nav'
@@ -17,11 +17,5 @@ if Meteor.isClient
     Template.service_view.helpers
         doc: -> Docs.findOne FlowRouter.getParam('doc_id')
 
-        resonates_with_people: ->
-            if @favoriters
-                if @favoriters.length > 0
-            # console.log @favoriters
-                    Meteor.users.find _id: $in: @favoriters
-        
 
     Template.service_view.events

@@ -33,23 +33,38 @@ template(name='cart_checkout')
         table.ui.table
             thead
                 tr
-                    th 
+                    if parent.image_id
+                        th 
                     th Title
-                    th Price
+                    th Type
+                    th Price ($)
+                    th Price (points)
                     // th Amount
                     th Actions
             tbody
                 each cart_items
                     tr
+                        if parent.image_id
+                            td 
+                                img.ui.small.image(src="{{c.url parent.image_id}}")
                         td 
-                            img.ui.small.image(src="{{c.url parent_doc.image_id}}")
+                            a.ui.header(href="/#{parent.type}/#{parent._id}/view") 
+                                |#{parent.title}
+                            div
+                                each parent.tags
+                                    .ui.small.basic.label #{this}
+                        td
+                            .ui.basic.label #{parent.type}
                         td 
-                            a.ui.header(href="product/#{parent_doc._id}/view") 
-                                |#{parent_doc.title}
-                            each parent_doc.tags
-                                .ui.small.basic.label #{this}
+                            if parent.dollar_price
+                                |$#{parent.dollar_price}
+                            else
+                                |$0
                         td 
-                            |$#{parent_doc.price}
+                            if parent.point_price
+                                |#{parent.point_price} points
+                            else
+                                |0 points
                         // td
                         //     +number
                         //     #increase_amount.ui.basic.icon.button
@@ -58,9 +73,13 @@ template(name='cart_checkout')
                         //     #decrease_amount.ui.basic.icon.button
                         //         i.minus.icon
                         td 
-                            .purchase_item.ui.teal.button 
-                                i.check.icon
-                                | Purchase
+                            if can_purchase
+                                .purchase_item.ui.teal.button 
+                                    i.check.icon
+                                    | Purchase
+                            else
+                                .ui.teal.disabled.button 
+                                    | Not Enough Points
                             +delete_button
             // tfoot
             //     tr
@@ -68,13 +87,16 @@ template(name='cart_checkout')
             //         th 
             //         th
             //         th Subtotal (#{total_items} items): $#{subtotal}
+        .ui.message
+            .header My Points
+            p #{currentUser.points}
     else
         .ui.message
             .header 
                 |No shopping cart items
             p 
                 |Checkout our 
-                a(href='/service') Services
+                a(href='/services') Services
                 |section to add some.
 
 

@@ -17,11 +17,11 @@ template(name='dashboard')
                     .header 
                         i.sun.icon
                         |Light Bank
-            // a.ui.card(href='/transactions')
-            //     .content
-            //         .header
-            //             i.exchange.icon
-            //             |Transactions
+            a.ui.card(href='/transactions')
+                .content
+                    .header
+                        i.exchange.icon
+                        |Transactions
             a.ui.card(href='/journal')
                 .content
                     .header
@@ -47,11 +47,11 @@ template(name='dashboard')
                     .header
                         i.checkmark.icon
                         |Check In
-            // a.ui.card(href='/karma')
-            //     .content
-            //         .header
-            //             i.heart.outline.icon
-            //             |Karma
+            a.ui.card(href='/karma')
+                .content
+                    .header
+                        i.heart.outline.icon
+                        |Karma
             a.ui.card(href='/notifications')
                 .content
                     .header
@@ -62,6 +62,11 @@ template(name='dashboard')
                     .header
                         i.mail.icon
                         |Messages
+            a.ui.card(href='/services')
+                .content
+                    .header
+                        i.configure.icon
+                        | Services
             a.ui.card(href='/support')
                 .content
                     .header
@@ -72,11 +77,3 @@ template(name='dashboard')
                     .header
                         i.setting.icon
                         |Account Settings
-                        
-            // +me_card
-            // +my_courses
-            // +my_quizes
-            // +my_purchases
-            // +my_friends
-            // +favorites
-            

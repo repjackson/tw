@@ -36,6 +36,7 @@ Docs.helpers
     author: -> Meteor.users.findOne @author_id
     when: -> moment(@timestamp).fromNow()
     parent: -> Docs.findOne @parent_id
+    recipient: -> Meteor.users.findOne @recipient_id
 
 
 

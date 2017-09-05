@@ -1,8 +1,21 @@
 template(name='services')
     .ui.container
+        h1.ui.horizontal.divider.header
+            i.configure.icon
+            |Services
         .ui.stackable.divided.grid
+            .four.wide.column
+                #add_service.ui.large.basic.fluid.button
+                    i.plus.icon
+                    |Add Service
+                .ui.dividing.header Tag Filter
+                +tag_filter type='service'
+                .ui.dividing.header Layouts
+                #make_list_layout.ui.large.icon.button(class=list_layout_button_class)
+                    i.list.layout.icon
+                #make_grid_layout.ui.large.icon.button(class=grid_layout_button_class)
+                    i.grid.layout.icon
             .twelve.wide.column
-                h1.ui.dividing.header Tori Webster Services
                 if is_list_view
                     .ui.relaxed.divided.items
                         each services
@@ -11,36 +24,27 @@ template(name='services')
                     .ui.centered.cards
                         each services
                             +service_card
-            .four.wide.column
-                // .ui.dividing.header Tag Filter
-                // +cloud type='service'
-                .ui.dividing.header Layouts
-                #make_list_layout.ui.large.icon.button(class=list_layout_button_class)
-                    i.list.layout.icon
-                #make_grid_layout.ui.large.icon.button(class=grid_layout_button_class)
-                    i.grid.layout.icon
-                if isInRole 'admin'
-                    .ui.dividing.header
-                        i.red.configure.icon
-                        |Admin
-                    #add_service.ui.large.basic.fluid.button
-                        i.plus.icon
-                        |Add Service
 
 
 template(name='service_card')
     .ui.card
         .ui.centered.image
-            a(href="/service/view/#{_id}")
+            a(href="/service/#{_id}/view")
                 img(src="{{c.url image_id  height=300 crop='fill' gravity='face' }}")
         .content
             .header
-                a(href="/service/view/#{_id}")
+                a(href="/service/#{_id}/view")
                     h2.ui.header #{title}
             if price
                 .meta
                     // | published #{publish_when}
-                    | Price: $#{price}
+                    if dollar_price
+                        | Price: $#{dollar_price}
+                    if point_price
+                        | Point Price: #{point_price} points
+                    else
+                        | Point Price: 0 points
+                    
             .description
                 |!{content}
         .content
@@ -56,23 +60,27 @@ template(name='service_card')
             
 template(name='service_item')
     .item
-        a.image(href="/service/view/#{_id}")
+        a.image(href="/service/#{_id}/view")
             img.ui.rounded.image(src="{{c.url image_id  width=175 height=175 crop='fill' gravity='face' }}")
         .content
-            a.header(href="/service/view/#{_id}") #{title}
+            a.header(href="/service/#{_id}/view") #{title}
             .meta
-                // | published #{publish_when}
-                | Price: $#{price}
+                if dollar_price
+                    | Price: $#{dollar_price}
+                if point_price
+                    | Point Price: #{point_price} points
+                else
+                    | Point Price: 0 points
             .description
-                p #{snippet}
-                a(href="/service/view/#{_id}") 
+                | !{content}
+                a(href="/service/#{_id}/view") 
                     |View More
                     i.arrow.right.icon
             // .extra
             //     i.tags.icon
             //     each tags
             //         .ui.compact.tiny.button.service_tag(class=tag_class) #{this}
-            if isInRole 'admin'
+            if can_edit
                 .extra
                     i.red.configure.large.icon
                     if published

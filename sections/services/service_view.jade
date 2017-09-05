@@ -7,42 +7,35 @@ template(name='service_view')
             h1.ui.center.aligned.header View Service
             .ui.grid
                 .ten.wide.column
-                    if has_youtube
-                        if youtube
-                            +view_youtube
-                    if has_image
-                        if image_id
-                            .ui.large.image
-                                img(src="{{c.url image_id width=500 crop='fit'}}")
-                        if image_url
-                            .ui.fluid.image
-                                img(src=image_url)
-                    if has_content
-                        |!{content}
+                    |!{content}
+                    if image_id
+                        .ui.large.centered.image
+                            img(src="{{c.url image_id width=500 crop='fit'}}")
+                    if image_url
+                        .ui.large.centered.image
+                            img(src=image_url)
+
                 .five.wide.column
-                    .ui.header Price: $#{price}
-                    if can_resonate
-                        div
-                            +resonate_button
-                    if can_complete
-                        div
-                            +mark_complete_button
-                    if can_bookmark
-                        div
-                            +bookmark_button
+                    .ui.header by 
+                        img.ui.avatar.image(src="{{c.url author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                        |#{author.name}
+                    if dollar_price
+                        .ui.header Price: $#{dollar_price}
+                    .ui.header Price: #{point_price} points
+                    .ui.dividing.header Actions
+                    +add_to_cart
+                    +bookmark_button
         
-                    .ui.header Tags
+                    .ui.dividing.header Tags
                     each tags
                         .ui.basic.large.label.doc_tag #{this}
+                    if published
+                        .ui.basic.green.label Published
+                    else
+                        .ui.basic.label Unpublished
+                    .ui.hidden.fitted.divider
                     
-                    if isInRole 'admin'
-                        .ui.dividing.header Admin
-                        if published
-                            .ui.basic.green.label Published
-                        else
-                            .ui.basic.label Unpublished
-                        .ui.hidden.fitted.divider
-                        a.ui.basic.button(href="/service/edit/#{_id}") 
+                    if can_edit
+                        a.ui.basic.button(href="/service/#{_id}/edit") 
                             i.pencil.icon
                             |Edit
-                        .ui.header by #{author.name}

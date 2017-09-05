@@ -40,7 +40,7 @@ if Meteor.isClient
                 Meteor.call 'processPayment', charge, (error, response) =>
                     if error then Bert.alert error.reason, 'danger'
                     else
-                        Meteor.call 'register_purchase', purchasing_item._id, (err, response)->
+                        Meteor.call 'register_transaction', purchasing_item._id, (err, response)->
                             if err then console.error err
                             else
                                 Bert.alert "You have purchased #{purchasing_item.title}.", 'success'
@@ -56,8 +56,6 @@ if Meteor.isClient
                 type: 'cart_item'
                 author_id: Meteor.userId()
                 
-        parent_doc: -> Docs.findOne @parent_id
-            
         total_items: -> Docs.find({type: 'cart_item'},{author_id: Meteor.userId()}).count()
             
         subtotal: ->    
@@ -66,6 +64,21 @@ if Meteor.isClient
             for cart_item in cart_items
                 subtotal += cart_item.price
             subtotal
+            
+        can_purchase: ->
+            console.log @parent().point_price
+            console.log Meteor.user().points
+                
+            if @parent().point_price
+                if Meteor.user().points > @parent().point_price 
+                    console.log true
+                    return true
+                else
+                    console.log false
+                    return true
+            else 
+                return true
+            
             
     Template.cart.events
         # 'click .buy_course': ->
@@ -85,18 +98,18 @@ if Meteor.isClient
             Session.set 'purchasing_item', @parent_id
             Session.set 'current_cart_item', @_id
             parent_doc = Docs.findOne @parent_id
-            if parent_doc.price > 0
+            if parent_doc.dollar_price > 0
                 Template.instance().checkout.open
                     name: 'Tori Webster Inspires, LLC'
                     description: parent_doc.title
-                    amount: parent_doc.price*100
+                    amount: parent_doc.dollar_price*100
             else
-                Meteor.call 'register_purchase', @parent_id, (err,response)=>
+                Meteor.call 'register_transaction', @parent_id, (err,response)=>
                     if err then console.error err
                     else
-                        Bert.alert "Thank you for your purchase.", 'success'
+                        Bert.alert "You have purchased #{parent_doc.title}.", 'success'
                         Docs.remove @_id
-                        FlowRouter.go "/account"
+                        FlowRouter.go "/transactions"
                         
                     
 
@@ -114,12 +127,26 @@ if Meteor.isServer
                 type: 'cart_item'
                 parent_id: doc_id
         
-        'register_purchase': (product_id)->
+        'register_transaction': (product_id)->
             product = Docs.findOne product_id
+            if product.point_price
+                console.log 'product point price', product.point_price
+                console.log 'purchaser amount before', Meteor.user().points
+                Meteor.users.update Meteor.userId(),
+                    $inc: points: -product.point_price
+                console.log 'purchaser amount after', Meteor.user().points
+                
+                console.log 'seller amount before', Meteor.users.findOne(product.author_id).points
+                Meteor.users.update product.author_id,
+                    $inc: points: product.point_price
+                console.log 'seller amount after', Meteor.users.findOne(product.author_id).points
             Docs.insert
-                type: 'purchase'
+                type: 'transaction'
                 parent_id: product_id
-                sale_price: product.price
+                sale_dollar_price: product.dollar_price
+                sale_point_price: product.point_price
+                author_id: Meteor.userId()
+                recipient_id: product.author_id
         
         
     publishComposite 'cart', ->

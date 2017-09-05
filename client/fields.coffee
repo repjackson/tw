@@ -48,12 +48,19 @@ Template.tags.helpers
 
 
 
-Template.price.events
-    'change #price': ->
-        price = parseInt $('#price').val()
+Template.dollar_price.events
+    'change #dollar_price': ->
+        dollar_price = parseInt $('#dollar_price').val()
 
         Docs.update @_id,
-            $set: price: price
+            $set: dollar_price: dollar_price
+            
+Template.point_price.events
+    'change #point_price': ->
+        point_price = parseInt $('#point_price').val()
+
+        Docs.update @_id,
+            $set: point_price: point_price
             
             
 Template.number.events
@@ -161,6 +168,14 @@ Template.edit_image.events
     #     			console.log "Upload Result: #{res}"
     #                 # Docs.update @_id, 
     #                 #     $unset: image_id: 1
+
+
+
+    'blur #image_url': ->
+        image_url = $('#image_url').val()
+        Docs.update @_id,
+            $set: image_url: image_url
+
 
             
 Template.location.events
@@ -324,3 +339,38 @@ Template.participants.helpers
 #         docId = FlowRouter.getParam('docId')
 #         doc = Docs.findOne docId
 #         if @text.toLowerCase() in doc.tags then 'disabled' else ''
+
+
+Template.edit_author.onCreated ->
+    Meteor.subscribe 'usernames'
+
+Template.edit_author.events
+    "autocompleteselect input": (event, template, doc) ->
+        # console.log("selected ", doc)
+        if confirm 'Change author?'
+            Docs.update FlowRouter.getParam('doc_id'),
+                $set: author_id: doc._id
+            $('#author_select').val("")
+
+
+
+Template.edit_author.helpers
+    author_edit_settings: -> {
+        position: 'bottom'
+        limit: 10
+        rules: [
+            {
+                collection: Meteor.users
+                field: 'username'
+                matchAll: true
+                template: Template.user_pill
+            }
+            ]
+    }
+
+    # edit_author: ->
+    #     participants = []
+        
+    #     for participant_id in @participant_ids
+    #         participants.push Meteor.users.findOne(participant_id)
+    #     participants
