@@ -17,5 +17,9 @@ if Meteor.isClient
     Template.service_view.helpers
         doc: -> Docs.findOne FlowRouter.getParam('doc_id')
 
+        child_transactions: ->
+            Docs.find
+                type: 'transaction'
+                parent_id: FlowRouter.getParam('doc_id')
 
     Template.service_view.events

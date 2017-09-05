@@ -10,6 +10,9 @@ if Meteor.isClient
 
         
     Template.karma.onRendered ->
+        Meteor.setTimeout ->
+            $('.ui.accordion').accordion()
+        , 500
 
     Template.karma.helpers
         upvoted_docs: -> 

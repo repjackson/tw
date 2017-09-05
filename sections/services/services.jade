@@ -30,11 +30,17 @@ template(name='service_card')
     .ui.card
         .ui.centered.image
             a(href="/service/#{_id}/view")
-                img(src="{{c.url image_id  height=300 crop='fill' gravity='face' }}")
+                if image_id
+                    img(src="{{c.url image_id  height=300 crop='fill' gravity='face' }}")
+                if image_url
+                    img(src=image_url)
         .content
             .header
                 a(href="/service/#{_id}/view")
                     h2.ui.header #{title}
+            .meta
+                each tags
+                    .ui.tiny.basic.label #{this}
             if price
                 .meta
                     // | published #{publish_when}
@@ -54,14 +60,21 @@ template(name='service_card')
                 .edit_service.ui.primary.basic.right.floated.button
                     i.pencil.icon
                     |Edit Service    
-        .content
             +favorite_button
+            a.ui.basic.teal.button(href="/service/#{_id}/view") 
+                |View More
+                i.arrow.right.icon
+
 
             
 template(name='service_item')
     .item
         a.image(href="/service/#{_id}/view")
-            img.ui.rounded.image(src="{{c.url image_id  width=175 height=175 crop='fill' gravity='face' }}")
+            if image_id
+                img.ui.rounded.image(src="{{c.url image_id  width=175 height=175 crop='fill' gravity='face' }}")
+            if image_url
+                img(src=image_url)
+
         .content
             a.header(href="/service/#{_id}/view") #{title}
             .meta
@@ -71,9 +84,13 @@ template(name='service_item')
                     | Point Price: #{point_price} points
                 else
                     | Point Price: 0 points
+            .meta
+                each tags
+                    .ui.tiny.basic.label #{this}
+
             .description
                 | !{content}
-                a(href="/service/#{_id}/view") 
+                a.ui.basic.teal.button(href="/service/#{_id}/view") 
                     |View More
                     i.arrow.right.icon
             // .extra

@@ -1,0 +1,124 @@
+template(name='status_container')
+    a(href='https://github.com/mizzao/meteor-user-status')
+        img(style='position: absolute; top: 0; left: 0; border: 0;', src='https://s3.amazonaws.com/github/ribbons/forkme_left_red_aa0000.png', alt='Fork me on GitHub')
+    .container
+        .row
+            .col-md-4.well
+                h3 Instructions
+                ul
+                    li Log in with any username.
+                    li Log in from other computers with the same username or open multiple tabs.
+                    |                 These will appear as sessions/connections under the same user.
+                    li
+                        | Click or keypress events reset the idle timer. The default idle threshold is 30 seconds.
+                    li
+                        | Idle session information is transmitted to the server and multiplexed into the user document.
+                    li Play with the idle timer to try different client-side settings.
+                    li Click 'Resync Time' a few times to see the variance in TimeSync.
+                        +login
+                        |{{> userstatus userStatus}}
+            .col-md-8
+                +serverStatus
+
+template(name='login')
+    if loggedIn
+        h3 You are logged in as:
+            |#{currentUser.username}
+    // else
+    //     form.form-inline
+    //         p Enter username to log in:
+    //         |         {{! We use the pattern below because it matches \w in in autocomplete for user names}}
+    //         input.form-control(type='text', name='username', required='', pattern='^[a-zA-Z][a-zA-Z0-9_]{5,12}$', placeholder='Username...', title='6-13 numbers or characters.')
+    //         button.btn.btn-primary(type='submit') Login
+    
+    
+template(name='userstatus')
+    h3 Local status:
+    button.btn.btn-success.resync Resync Time
+    dl.dl-horizontal
+        dt Server Time:
+        dd {{serverTime}}
+        dt Local Offset:
+        dd {{serverOffset}} ms
+        dt RTT:
+        dd {{serverRTT}} ms
+        dt Idle:
+        dd {{isIdleText}}
+        dt Monitor on:
+        dd {{isMonitoringText}}
+        dt Last Activity:
+        dd {{lastActivity}}
+    if isMonitoring}}
+        h4 Idle monitoring is on.
+        button.btn.btn-danger.stop-monitor Stop Monitor
+    else
+        form.start-monitor
+            legend Start monitor with the following parameters:
+            label Idle Threshold:
+            input.form-control(name='threshold', type='number', min='5000', step='1', value='30000', required='')
+            label Monitor Interval:
+            input.form-control(name='interval', type='number', min='1000', step='1', value='1000', required='')
+            label Idle on window blur:
+            select.form-control(name='idleOnBlur', required='')
+                option(value='true', selected='') true
+                option(value='false') false
+            button.btn.btn-primary.pull-right(type='submit') Start Monitor
+
+
+template(name='serverStatus')
+    h3 All user connections on server:
+    table.table.table-condensed.table-striped.table-hover
+        thead
+            tr
+                th Username/Connection
+                th Idle
+                th Last Activity
+                th
+                    | IP (
+                    i Last
+                    | )
+                th(style='width: 256px')
+                    | User Agent (
+                    i Last
+                    | )
+        tbody
+            each anonymous
+                +serverConnection
+            +each users
+                tr.bold(class='{{userClass}}')
+                    td
+                        | {{username}}
+                        br
+                        | (last login {{localeTime status.lastLogin.date}})
+                    td {{status.idle}}
+                    td
+                        with status.lastActivity
+                            +relTime
+                        else
+                            | (active or not monitoring)
+                    td
+                        i {{status.lastLogin.ipAddr}}
+                    td
+                        i {{status.lastLogin.userAgent}}
+                        each connections}}
+                            serverConnection}}
+
+
+template(name='serverConnection')
+    tr.(class='{{connectionClass}}')
+        td
+            | {{_id}}{{#with loginTime}}
+            br
+            | (login {{this}}){{/with}}
+        td {{idle}}
+        td
+            with lastActivity
+                +relTime
+            else
+                | (active or not monitoring)
+        td {{ipAddr}}
+        td {{userAgent}}
+template(name='relTime')
+    | {{localeTime this}}
+    br
+    |     ({{relativeTime this}})

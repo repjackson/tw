@@ -5,9 +5,14 @@ template(name='journal_edit')
             .ui.stackable.grid
                 .twelve.wide.column
                     .ui.form
-                        +content
                         +tags
-
+                        +content
+                        #call_watson.ui.basic.large.button 
+                            i.sitemap.icon
+                            |Call Watson
+                        if watson
+                            // {{> jsonView json=watson options=options }}
+                            {{> jsonView json=watson}}
                 .four.wide.column
                     +published
                     +request_tori_feedback

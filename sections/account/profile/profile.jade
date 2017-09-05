@@ -18,12 +18,16 @@ template(name='profile_layout')
                             //     .divider  / 
                             //     .active.section #{person.username}
                             // .ui.hidden.divider    
-                            if person.profile.first_name
-                                h2.ui.center.aligned.header
-                                    img.ui.avatar.image(src="{{c.url person.profile.image_id width=200 height=200 gravity='face' crop='fill'}}")
-                                    |#{person.profile.first_name} #{person.profile.last_name}
-                            else
-                                .ui.center.aligned.sub.header #{person.username}
+                            with person
+                                if profile.first_name
+                                    h2.ui.center.aligned.header
+                                        img.ui.avatar.image(src="{{c.url profile.image_id width=200 height=200 gravity='face' crop='fill'}}")
+                                        |#{profile.first_name} #{profile.last_name}
+                                        +staus_indicator
+                                else
+                                    .ui.center.aligned.sub.header 
+                                        |#{username}
+                                        +staus_indicator
                             .ui.stackable.grid
                                     .five.wide.column
                                         with person

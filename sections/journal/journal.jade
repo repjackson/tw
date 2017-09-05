@@ -45,6 +45,8 @@ template(name='journal_doc_view')
             if author.profile.image_id
                 img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
             |#{author.name} #{when}
+            with author
+                +staus_indicator
         if content
             .content
                 |!{content}

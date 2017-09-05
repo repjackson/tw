@@ -19,9 +19,45 @@ Template.people_cloud.helpers
             when @index <= 20 then 'small'
             when @index <= 25 then 'tiny'
         return button_class
+    
+    settings: -> {
+        position: 'bottom'
+        limit: 10
+        rules: [
+            {
+                collection: People_tags
+                field: 'name'
+                matchAll: false
+                template: Template.tag_result
+            }
+            ]
+    }
 
 
 Template.people_cloud.events
     'click .select_tag': -> selected_people_tags.push @name
     'click .unselect_tag': -> selected_people_tags.remove @valueOf()
     'click #clear_tags': -> selected_people_tags.clear()
+
+
+    'keyup #search': (e,t)->
+        e.preventDefault()
+        val = $('#search').val().toLowerCase().trim()
+        switch e.which
+            when 13 #enter
+                switch val
+                    when 'clear'
+                        selected_people_tags.clear()
+                        $('#search').val ''
+                    else
+                        unless val.length is 0
+                            selected_people_tags.push val.toString()
+                            $('#search').val ''
+            when 8
+                if val.length is 0
+                    selected_people_tags.pop()
+                    
+    'autocompleteselect #search': (event, template, doc) ->
+        # console.log 'selected ', doc
+        selected_people_tags.push doc.name
+        $('#search').val ''

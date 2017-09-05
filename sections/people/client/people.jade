@@ -26,6 +26,7 @@ template(name='person')
                         | #{profile.last_name}
                     else    
                         | #{username}
+                    +staus_indicator
             if profile.location
                 .meta
                     | #{profile.location}

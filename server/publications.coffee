@@ -80,12 +80,18 @@ publishComposite 'doc', (id)->
         find: ->
             Docs.find id
         children: [
-            find: (doc)->
-                Meteor.users.find
-                    _id: doc.author_id
+            {
+                find: (doc)->
+                    Meteor.users.find
+                        _id: doc.author_id
+            }
+            {
+                find: (doc)->
+                    Docs.find
+                        parent_id: doc._id
+            }
         ]
-        
-        }
+    }
 
 Meteor.publish 'doc_by_tags', (tags)->
     Docs.find

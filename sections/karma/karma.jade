@@ -15,7 +15,15 @@ template(name='karma')
                 //     input#share_bookmarks(type='checkbox' checked=currentUser.profile.share_bookmarks)
                 //     label(for='share_bookmarks') Share Stats in Profile
             .twelve.wide.column
-                .ui.dividing.header History
+                .ui.dividing.header Transactions
+                .ui.styled.fluid.accordion
+                    .title 
+                        i.exchange.icon
+                        |Transactions
+                        i.dropdown.icon
+                    .content
+                        +transactions
+                .ui.dividing.header Upvoted Documents
                 .ui.divided.relaxed.items
                     each upvoted_docs
                         .item

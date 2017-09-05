@@ -108,6 +108,9 @@
                     a.icon.item(href='/karma' class="{{isActivePath '/karma'}}")
                         i.heartbeat.outline.icon
                         | Karma
+                    a.mobile.hidden.item(href='/services' class="{{isActivePath '/services'}}") 
+                        i.configure.icon
+                        |Services
                     .ui.divider
                     a.icon.item(href="/profile/#{currentUser.username}/account" class="{{isActiveRoute name='account'}}")
                         i.setting.icon
@@ -115,13 +118,10 @@
                     if isInRole 'admin'
                         .ui.horizontal.divider
                             i.red.configure.icon
-                        a.mobile.hidden.item(href='/services' class="{{isActivePath '/services'}}") 
-                            i.paint.brush.icon
-                            |Services
                         a.icon.item(href='/admin/dashboard' class="{{isActivePath '/admin/dashboard'}}")
                             i.configure.red.icon
                             | Admin
-                    .ui.divider
+                        .ui.divider
                     a#logout.ui.item
                         i.sign.out.icon
                         | Sign Out

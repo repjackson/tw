@@ -13,6 +13,9 @@ template(name='journal_view')
                     +doc_matches
 
                 .five.wide.column
+                    .ui.header by #{author.name}
+                    with author
+                        +staus_indicator
                     .ui.dividing.header Tags
                     each tags
                         .ui.basic.large.label.doc_tag #{this}
@@ -32,9 +35,8 @@ template(name='journal_view')
                         .ui.basic.large.label 
                             i.lock.icon
                             | Private
-                    .ui.header by #{author.name}
                     .ui.divider
-                    if is_author
+                    if can_edit
                         a.ui.basic.button(href="/journal/edit/#{_id}") 
                             i.pencil.icon
                             |Edit
