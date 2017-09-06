@@ -28,9 +28,10 @@ Meteor.methods({
           if (err)
             console.log('error:', err);
           else
-            var result = (JSON.stringify(response, null, 2));
+            // var result = (JSON.stringify(response, null, 2));
+            // var result = response));
             Docs.update({_id:doc_id},
-                {$set: {watson:result}}
+                {$set: {watson:response}}
             )
     }));
       

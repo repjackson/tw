@@ -19,21 +19,6 @@ if Meteor.isClient
 
     
     Template.journal_edit.events
-        'click #call_watson': ->
-            parameters = 
-                'text': @content
-                'features':
-                    'entities':
-                        'emotion': true
-                        'sentiment': true
-                        'limit': 2
-                    'keywords':
-                        'emotion': true
-                        'sentiment': true
-                        'limit': 2
-            Meteor.call 'call_watson', parameters, @_id
-    
-    
         'click #save_doc': ->
             FlowRouter.go "/journal/view/#{@_id}"
             # selected_tags.clear()

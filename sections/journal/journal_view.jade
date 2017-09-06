@@ -11,11 +11,45 @@ template(name='journal_view')
                     if published
                         +comments
                     +doc_matches
-
+                    +watson_stats
+                    // {{> jsonView json=watson options=options }}
+                    // |{{> jsonView json=watson}}
                 .five.wide.column
-                    .ui.header by #{author.name}
+                    .ui.header
+                        |by
+                        img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+                        |#{author.name}
                     with author
                         +staus_indicator
+                    if watson
+                        .ui.segment
+                            .ui.dividing.header Document Sentiment
+                            |#{watson.sentiment.document.score}
+                            |#{watson.sentiment.document.label}
+                        .ui.segment
+                            .ui.dividing.header Document Emotion
+                            with watson.emotion.document.emotion
+                                .ui.blue.tiny.progress(data-percent=sadness_percent)
+                                    .bar
+                                    .progress
+                                    .label Sadness
+                                .ui.green.tiny.progress(data-percent=joy_percent)
+                                    .bar
+                                    .progress
+                                    .label Joy
+                                .ui.black.tiny.progress(data-percent=fear_percent)
+                                    .bar
+                                    .progress
+                                    .label Fear
+                                .ui.yellow.tiny.progress(data-percent=disgust_percent)
+                                    .bar
+                                    .progress
+                                    .label Disgust
+                                .ui.red.tiny.progress(data-percent=anger_percent)
+                                    .bar
+                                    .progress
+                                    .label Anger
+
                     .ui.dividing.header Tags
                     each tags
                         .ui.basic.large.label.doc_tag #{this}
