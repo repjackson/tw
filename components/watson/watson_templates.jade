@@ -1,0 +1,36 @@
+template(name='doc_sentiment') 
+    .ui.segment
+        .ui.dividing.header Sentiment
+        |#{doc_sentiment_label}
+        |#{doc_sentiment_score}
+
+template(name='watson_keywords') 
+    .ui.segment
+        .ui.dividing.header Watson Keywords
+        each watson_keywords
+            .ui.basic.label #{this}
+
+template(name='doc_emotion') 
+    .ui.segment
+        .ui.dividing.header Emotion
+        with watson.emotion.document.emotion
+            .ui.blue.tiny.progress(data-percent=sadness_percent)
+                .bar
+                .progress
+                .label Sadness
+            .ui.green.tiny.progress(data-percent=joy_percent)
+                .bar
+                .progress
+                .label Joy
+            .ui.black.tiny.progress(data-percent=fear_percent)
+                .bar
+                .progress
+                .label Fear
+            .ui.yellow.tiny.progress(data-percent=disgust_percent)
+                .bar
+                .progress
+                .label Disgust
+            .ui.red.tiny.progress(data-percent=anger_percent)
+                .bar
+                .progress
+                .label Anger

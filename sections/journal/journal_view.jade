@@ -22,34 +22,9 @@ template(name='journal_view')
                     with author
                         +staus_indicator
                     if watson
-                        .ui.segment
-                            .ui.dividing.header Document Sentiment
-                            |#{watson.sentiment.document.score}
-                            |#{watson.sentiment.document.label}
-                        .ui.segment
-                            .ui.dividing.header Document Emotion
-                            with watson.emotion.document.emotion
-                                .ui.blue.tiny.progress(data-percent=sadness_percent)
-                                    .bar
-                                    .progress
-                                    .label Sadness
-                                .ui.green.tiny.progress(data-percent=joy_percent)
-                                    .bar
-                                    .progress
-                                    .label Joy
-                                .ui.black.tiny.progress(data-percent=fear_percent)
-                                    .bar
-                                    .progress
-                                    .label Fear
-                                .ui.yellow.tiny.progress(data-percent=disgust_percent)
-                                    .bar
-                                    .progress
-                                    .label Disgust
-                                .ui.red.tiny.progress(data-percent=anger_percent)
-                                    .bar
-                                    .progress
-                                    .label Anger
-
+                        +doc_sentiment
+                        +doc_emotion
+                        +watson_keywords
                     .ui.dividing.header Tags
                     each tags
                         .ui.basic.large.label.doc_tag #{this}

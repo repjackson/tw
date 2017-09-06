@@ -1,5 +1,4 @@
 if Meteor.isClient
-    
     FlowRouter.route '/journal/edit/:doc_id',
         action: (params) ->
             BlazeLayout.render 'layout',

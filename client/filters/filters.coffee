@@ -40,7 +40,6 @@ Template.username_filter.events
 
 @selected_tags = new ReactiveArray []
 
-
 Template.tag_filter.onCreated ->
     @autorun => 
         Meteor.subscribe('tags', 

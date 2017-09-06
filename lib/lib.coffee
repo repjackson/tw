@@ -1,4 +1,5 @@
 @Tags = new Meteor.Collection 'tags'
+@Watson_keywords = new Meteor.Collection 'watson_keywords'
 @People_tags = new Meteor.Collection 'people_tags'
 @Docs = new Meteor.Collection 'docs'
 @Author_ids = new Meteor.Collection 'author_ids'

@@ -46,3 +46,12 @@ if Meteor.isClient
                 $( ".title" ).addClass( "active" )
                 $( ".match_content" ).addClass( "active" )
                 # console.log res
+                
+                
+    Template.request_tori_feedback.helpers
+        feedback_requested: ->
+            
+            
+    Template.request_tori_feedback.events
+        'click #request_feedback': ->
+            console.log @

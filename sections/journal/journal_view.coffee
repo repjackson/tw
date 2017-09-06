@@ -21,10 +21,5 @@ if Meteor.isClient
     Template.journal_view.helpers
         doc: -> Docs.findOne FlowRouter.getParam('doc_id')
 
-        sadness_percent: -> @sadness*100            
-        joy_percent: -> @joy*100            
-        disgust_percent: -> @disgust*100            
-        anger_percent: -> @anger*100            
-        fear_percent: -> @fear*100            
 
     Template.journal_view.events

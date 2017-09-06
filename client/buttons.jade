@@ -140,28 +140,6 @@ template(name='published')
 
 
 
-template(name='request_tori_feedback')
-    .ui.segment
-        .ui.dividing.header 
-            i.comments.outline.icon
-            |Request Feedback
-        if feedback_requested
-            .ui.header
-                i.comments.outline.icon
-                | Feedback Requested 
-                |Status: Pending
-            #cancel_request.ui.fluid.basic.button
-                // i.toggle.on.green.icon
-                i.cancel.icon
-                | Cancel Request
-        else
-            // .ui.header
-            //     | Feedback Not Requested
-            // |Tori will respond within 24 hours.
-            #request_feedback.ui.fluid.basic.button
-                i.comments.outline.icon
-                | Request Feedback
-
 
 
 

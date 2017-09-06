@@ -56,6 +56,41 @@ Meteor.publish 'tags', (selected_tags, selected_author_ids=[], type=null, author
 
     self.ready()
         
+Meteor.publish 'watson_keywords', (selected_tags, selected_author_ids=[], type=null, author_id=null, parent_id=null, manual_limit=null, view_mode)->
+    
+    self = @
+    match = {}
+    
+    # match.tags = $all: selected_tags
+    if type then match.type = type
+    if parent_id then match.parent_id = parent_id
+    if selected_tags.length > 0 then match.tags = $all: selected_tags
+    if selected_author_ids.length > 0 then match.author_id = $in: selected_author_ids
+    match.published = true
+    # console.log 'limit:', manual_limit
+    if manual_limit then limit=manual_limit else limit=50
+    if author_id then match.author_id = author_id
+    # console.log match
+    
+    cloud = Docs.aggregate [
+        { $match: match }
+        { $project: watson_keywords: 1 }
+        { $unwind: "$watson_keywords" }
+        { $group: _id: '$watson_keywords', count: $sum: 1 }
+        { $match: _id: $nin: selected_tags }
+        { $sort: count: -1, _id: 1 }
+        { $limit: limit }
+        { $project: _id: 0, name: '$_id', count: 1 }
+        ]
+    # console.log 'cloud, ', cloud
+    cloud.forEach (keyword, i) ->
+        self.added 'watson_keywords', Random.id(),
+            name: keyword.name
+            count: keyword.count
+            index: i
+
+    self.ready()
+        
 
 Meteor.publish 'docs', (selected_tags, type, limit, view_mode)->
 
