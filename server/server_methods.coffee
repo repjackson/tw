@@ -171,3 +171,28 @@ Meteor.methods
         intersection = _.intersection(my_linear_cloud, other_linear_cloud)
         console.log intersection
 
+
+    create_message: (recipient_id, text, parent_id)->
+        # console.log 'recipient_id', recipient_id
+        
+        found_conversation = Docs.findOne
+            type: 'conversation'
+            participant_ids: $all: [Meteor.userId(), recipient_id]
+            
+        if found_conversation 
+            # console.log 'found conversation with id:', found_conversation._id
+            convo_id = found_conversation._id
+        else
+            new_conversation_id = 
+                Docs.insert
+                    type: 'conversation'
+                    participant_ids: [Meteor.userId(), recipient_id]
+            # console.log 'convo NOT found, created new one with id:', new_conversation_id
+            convo_id = new_conversation_id
+        new_message_id = 
+            new_message_id = Docs.insert
+                type: 'message'
+                group_id: convo_id
+                parent_id: parent_id
+                body: text
+        return new_message_id

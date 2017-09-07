@@ -21,8 +21,8 @@ if Meteor.isClient
 
 
 if Meteor.isServer
-    Meteor.publish 'authored_cloud', ->
-        user = Meteor.users.findOne username: FlowRouter.getParam('username')
+    Meteor.publish 'authored_cloud', (username)->
+        user = Meteor.users.findOne username: username
         Meteor.users.find user._id,
             fields:
                 authored_cloud: 1

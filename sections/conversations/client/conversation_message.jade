@@ -1,0 +1,39 @@
+template(name='conversation_message')
+    .comment
+        a.avatar
+            img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+        .content
+            a.author #{author.name}
+            .metadata
+                span.date #{from_now}
+            .text
+                | #{body}
+            .actions
+                if is_author
+                    +delete_link
+                else
+                    +voting
+                if parent_id
+                    .ui.accordion
+                        .title
+                            i.vertically.flipped.share.icon
+                            |In reference to...
+                            i.dropdown.icon
+                        .content
+                            if parent.parent.parent_id
+                                each parent.parent.parent.tags
+                                    .ui.small.basic.label #{this}
+                                if parent.parent.parent.title
+                                    strong #{parent.parent.parent.title}
+                                p #{parent.parent.parent.body}
+
+                            .ui.divider
+                            if parent.parent_id
+                                each parent.parent.tags
+                                    .ui.small.basic.label #{this}
+                                p #{parent.parent.body}
+                            .ui.divider
+                            each parent.tags
+                                .ui.small.basic.label #{this}
+                            strong by #{parent.author.name}
+                            p #{parent.body}

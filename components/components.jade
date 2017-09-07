@@ -77,8 +77,8 @@ template(name='parent_doc_segment')
     if parent_id
         .ui.segment
             .ui.dividing.header 
-                a.right.floated(href="/lightbank/#{parent._id}/view")
+                |In response to...
+                a.ui.basic.small.compact.right.floated.button(href="/lightbank/#{parent._id}/view")
                     |Full
                     i.right.arrow.icon
-                |In response to...
             |!{parent.content}

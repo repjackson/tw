@@ -3,6 +3,8 @@ if Meteor.isClient
         @autorun -> Meteor.subscribe('conversation_with_user', FlowRouter.getParam('username'))
 
     Template.profile_contact.helpers
+        user: -> Meteor.users.findOne username: FlowRouter.getParam('username')
+        
         conversation_with_user: ->
             user = Meteor.users.findOne username: FlowRouter.getParam('username')
             if user

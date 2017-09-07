@@ -53,7 +53,7 @@ template(name='conversation')
             .description
                 .ui.threaded.comments
                     each conversation_messages
-                        +comment
+                        +conversation_message
                 if in_conversation
                     .ui.divider
                     .ui.large.left.icon.fluid.transparent.input

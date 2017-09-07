@@ -66,6 +66,6 @@ if Meteor.isClient
                 @doc_sentiment_score*-100
                 
             
-        sentiment_bar_class: ->
-            if @doc_sentiment_label is 'positive' then 'green' else 'red'
+        sentiment_bar_class: -> if @doc_sentiment_label is 'positive' then 'green' else 'red'
             
+        is_positive: -> if @doc_sentiment_label is 'positive' then true else false    

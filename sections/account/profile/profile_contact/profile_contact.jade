@@ -6,4 +6,6 @@ template(name='profile_contact')
         with conversation_with_user
             +conversation
     else
-        #create_conversation_with_user.ui.teal.button Start Conversation with User
+        #create_conversation_with_user.ui.teal.button 
+            i.plus.icon
+            |Start Conversation with #{user.profile.first_name}

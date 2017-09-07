@@ -16,17 +16,19 @@ Meteor.methods
             participant_ids: [Meteor.userId()]
         # FlowRouter.go "/conversation/#{id}"
 
-    close_conversation: (id)->
-        Docs.remove id
-        Messages.remove conversation_id: id
+    close_conversation: (conversation_id)->
+        Docs.remove conversation_id
+        Docs.remove 
+            type: 'message'
+            group_id: conversation_id
 
-    join_conversation: (id)->
-        Docs.update id,
+    join_conversation: (conversation_id)->
+        Docs.update conversation_id,
             $addToSet:
                 participant_ids: Meteor.userId()
 
-    leave_conversation: (id)->
-        Docs.update id,
+    leave_conversation: (conversation_id)->
+        Docs.update conversation_id,
             $pull:
                 participant_ids: Meteor.userId()
 
@@ -76,7 +78,7 @@ if Meteor.isClient
 
     Template.conversation.onCreated ->
         # @autorun => Meteor.subscribe 'doc', @data._id
-        @autorun => Meteor.subscribe 'child_docs', @data._id
+        @autorun => Meteor.subscribe 'group_docs', @data._id
         @autorun => Meteor.subscribe 'people_list', @data._id
     
     
@@ -86,8 +88,10 @@ if Meteor.isClient
         in_conversation: -> if Meteor.userId() in @participant_ids then true else false
     
         conversation_messages: -> 
-            Docs.find
-                parent_id: @_id
+            Docs.find {
+                type: 'message'
+                group_id: @_id },
+                sort: timestamp: 1
     
         
         participants: ->
@@ -105,15 +109,15 @@ if Meteor.isClient
         'keydown .add_message': (e,t)->
             e.preventDefault
             if e.which is 13
-                parent_id = @_id
-                # console.log parent_id
+                group_id = @_id
+                # console.log group_id
                 body = t.find('.add_message').value.trim()
                 if body.length > 0
                     # console.log body
                     Docs.insert
                         body: body
                         type: 'message'
-                        parent_id: parent_id
+                        group_id: group_id
                         tags: ['conversation', 'message']
                         
                 t.find('.add_message').value = ''
@@ -147,7 +151,8 @@ if Meteor.isServer
 
 
     Meteor.publish 'conversation_messages', (conversation_id) ->
-        Messages.find
+        Docs.find
+            type: 'message'
             conversation_id: conversation_id
     
     

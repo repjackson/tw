@@ -9,6 +9,35 @@ Meteor.publish 'child_docs', (parent_id)->
         parent_id: parent_id
     
     
+publishComposite 'group_docs', (group_id)->
+    {
+        find: -> Docs.find group_id: group_id
+        children: [
+            {
+                find: (doc)-> Docs.find _id: doc.parent_id
+                children: [
+                    { 
+                        find: (doc)-> Docs.find _id: doc.parent_id 
+                        children: [
+                            { find: (doc)-> Docs.find _id: doc.parent_id }
+                        ]
+                    }
+                    {
+                        find: (doc)->
+                            Meteor.users.find
+                                _id: doc.author_id
+                    }
+                ]
+            }
+            {
+                find: (doc)->
+                    Meteor.users.find
+                        _id: doc.author_id
+            }
+
+        ]
+    }
+    
 Meteor.publish 'me', ->
     Meteor.users.find @userId,
         fields: 

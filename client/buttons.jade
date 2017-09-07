@@ -7,9 +7,30 @@ template(name='thanks_button')
     .ui.circular.compact.button.vote_up(class=thanks_button_class)
         i.thumbs.up.icon
         if said_thanks
-            |Thanks #{author.first_name}!
+            |Thanks #{author.profile.first_name}!
         else
-            | Thank #{author.first_name} for sharing
+            | Thank #{author.profile.first_name} for sharing
+    #thanks_modal.ui.modal
+        i.close.icon
+        .header Send #{author.profile.first_name} an optional private message?
+        .content
+            img.ui.avatar.image(src="{{c.url author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+            .ui.large.input
+                input#thanks_message_text(type='text')
+        .actions
+            .ui.cancel.basic.button
+                // i.ban.icon
+                | No Thanks
+            .ui.teal.approve.labeled.icon.button 
+                i.send.icon
+                |Send
+    #message_sent.ui.small.modal
+        i.close.icon
+        .header Message sent to #{author.profile.first_name}.
+        .actions
+            .ui.green.approve.button 
+                i.check.icon
+                |Cool
 
 template(name='reflect_button')
     #reflect.ui.circular.basic.button

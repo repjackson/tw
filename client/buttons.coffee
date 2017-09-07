@@ -28,10 +28,36 @@ Template.thanks_button.helpers
         else if @upvoters and Meteor.userId() in @upvoters then 'teal'
         else 'basic'
 
+Template.thanks_button.onRendered ->
+    self = @
+    Meteor.setTimeout =>
+        $('#thanks_modal').modal(
+            transition: 'horizontal flip'
+            closable: false
+            inverted: true
+            onApprove : =>
+                text = $('#thanks_message_text').val()
+                Meteor.call 'create_message', recipient_id=self.data.author_id, text=text, parent_id=self.data._id, (err,res)->
+                    if err then console.error err
+                    else
+                        $('#message_sent.modal').modal('show')
+                        $('#thanks_message_text').val('')
+            )
+    , 500
+    
+    Meteor.setTimeout ->
+        $('#message_sent').modal(
+            transition: 'horizontal flip'
+            closable: true
+            inverted: true
+            )
+    , 500
 
 Template.thanks_button.events
     'click .vote_up': (e,t)-> 
         if Meteor.userId()
+            if Meteor.userId() not in @upvoters
+                $('#thanks_modal').modal('show')
             Meteor.call 'vote_up', @_id
             $(e.currentTarget).closest('.vote_up').transition('pulse')
         else FlowRouter.go '/sign-in'

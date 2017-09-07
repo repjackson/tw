@@ -68,3 +68,4 @@ Meteor.methods
                 tags: tagsWithNew
                 locationob: result
                 addresstags: loweredAddressTags
+
