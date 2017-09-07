@@ -1,6 +1,6 @@
 if Meteor.isClient
     
-    FlowRouter.route '/lightbank/edit/:doc_id',
+    FlowRouter.route '/lightbank/:doc_id/edit',
         action: (params) ->
             BlazeLayout.render 'layout',
                 # top: 'nav'
@@ -20,7 +20,6 @@ if Meteor.isClient
     
     Template.lightbank_edit.events
         'click #save_doc': ->
-            FlowRouter.go "/lightbank/view/#{@_id}"
             # selected_tags.clear()
             # selected_tags.push tag for tag in @tags
     

@@ -1,5 +1,5 @@
 if Meteor.isClient
-    FlowRouter.route '/journal/edit/:doc_id',
+    FlowRouter.route '/journal/:doc_id/edit',
         action: (params) ->
             BlazeLayout.render 'layout',
                 # top: 'nav'
@@ -18,8 +18,6 @@ if Meteor.isClient
 
     
     Template.journal_edit.events
-        'click #save_doc': ->
-            FlowRouter.go "/journal/view/#{@_id}"
             # selected_tags.clear()
             # selected_tags.push tag for tag in @tags
     

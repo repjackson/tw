@@ -1,6 +1,6 @@
 if Meteor.isClient
     
-    FlowRouter.route '/journal/view/:doc_id',
+    FlowRouter.route '/journal/:doc_id/view',
         action: (params) ->
             BlazeLayout.render 'layout',
                 # top: 'nav'

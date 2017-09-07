@@ -33,6 +33,6 @@ template(name='checkin_view')
                     .ui.header by #{author.name}
                     .ui.divider
                     if is_author
-                        a.ui.basic.button(href="/journal/edit/#{_id}") 
+                        a.ui.basic.button(href="/journal/#{_id}/edit") 
                             i.pencil.icon
                             |Edit

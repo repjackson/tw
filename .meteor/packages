@@ -5,7 +5,7 @@
 # but you can also edit it by hand.
 
 meteor-base@1.1.0             # Packages every Meteor app needs to have
-mongo@1.1.19                   # The database Meteor supports right now
+mongo@1.2.0                   # The database Meteor supports right now
 session@1.1.7                 # Client-side reactive dictionary for your app
 tracker@1.1.3                 # Meteor's client-side reactive programming library
 
@@ -27,7 +27,7 @@ accounts-password@1.4.0
 shell-server@0.2.4
 kadira:flow-router
 kadira:blaze-layout
-accounts-base@1.3.1
+accounts-base@1.3.2
 zimme:active-route
 useraccounts:flow-routing
 useraccounts:semantic-ui
@@ -54,14 +54,14 @@ dynamic-import@0.1.1
 yasaricli:slugify
 philippspo:momentum-flow-router
 meteorhacks:ssr
-service-configuration
+service-configuration@1.0.11
 oaf:html5-desktop-notifications
 francocatena:status
 webdeb:app-loader
-ecmascript
+ecmascript@0.8.2
 nefiltari:yaki
 splendido:accounts-meld
-accounts-google
-accounts-twitter
+accounts-google@1.2.0
+accounts-twitter@1.3.0
 mizzao:user-status
 yasinuslu:json-view

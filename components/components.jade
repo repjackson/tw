@@ -71,3 +71,14 @@ template(name='request_tori_feedback')
             #request_feedback.ui.fluid.basic.button
                 i.comments.outline.icon
                 | Request Feedback
+                
+                
+template(name='parent_doc_segment')
+    if parent_id
+        .ui.segment
+            .ui.dividing.header 
+                a.right.floated(href="/lightbank/#{parent._id}/view")
+                    |Full
+                    i.right.arrow.icon
+                |In response to...
+            |!{parent.content}

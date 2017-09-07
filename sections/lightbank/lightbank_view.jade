@@ -24,36 +24,27 @@ template(name='lightbank_view')
                         +journal_responses
                     +comments    
                     +tag_rating
+                    if watson
+                        +analyzed_watson_keywords
+
                 .five.wide.column
+                    .ui.dividing.header Actions
+                    +bookmark_button
+                    +thanks_button
+                    +reflect_button
                     .ui.dividing.header Tags
                     each tags
                         .ui.basic.large.label.doc_tag #{this}
-                    .ui.dividing.header Actions
-                    +bookmark_button
-                    div
-                        +voting
+                    if isInRole 'admin'
+                        +call_watson
+                    if watson
+                        +doc_sentiment
+                        +doc_emotion
+                        +watson_keywords
+
                     .ui.dividing.header Resonates
                     +resonate_button
-                    if resonates_with_people.count
-                        .ui.segment
-                            .title 
-                                |This Resonates With... (#{resonates_with_people.count})
-                            .ui.divided.list
-                                each resonates_with_people
-                                    .item
-                                        img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
-                                        .content
-                                            .header
-                                                |#{name}
-                                            .description
-                                                +tiny_color_dots
-                                                div
-                                                    each five_tags
-                                                        .ui.basic.label #{this}
-
-                    
-                    
-                    
+                    +resonates_list 
                     if isInRole 'admin'
                         .ui.dividing.header Admin
                         if published

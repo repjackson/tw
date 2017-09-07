@@ -74,7 +74,7 @@ if Meteor.isClient
             new_id = Docs.insert 
                 type:'journal'
             Session.set 'view_unpublished', true
-            FlowRouter.go("/journal/edit/#{new_id}")
+            FlowRouter.go("/journal/#{new_id}/edit")
         
     
         'click #set_mode_to_all': -> 
@@ -152,11 +152,17 @@ if Meteor.isServer
                 Docs.find match,
                     sort: timestamp: -1
             children: [
-                { find: (doc) ->
-                    Meteor.users.find 
-                        _id: doc.author_id
-                    }
-                ]    
+                {
+                    find: (doc)->
+                        Meteor.users.find
+                            _id: doc.author_id
+                }
+                {
+                    find: (doc)->
+                        Docs.find
+                            _id: doc.parent_id
+                }
+            ]
         }
 
 

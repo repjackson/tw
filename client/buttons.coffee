@@ -409,3 +409,12 @@ Template.add_to_cart.helpers
             type: 'cart_item'
             parent_id: @_id
             author_id: Meteor.userId()
+            
+            
+Template.reflect_button.events
+    'click #reflect': ->
+        new_journal_id = Docs.insert
+            type:'journal'
+            parent_id: FlowRouter.getParam('doc_id')
+            
+        FlowRouter.go("/journal/#{new_journal_id}/edit")    

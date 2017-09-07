@@ -7,11 +7,12 @@ template(name='journal_view')
             h1.ui.center.aligned.header View Journal Entry
             .ui.grid
                 .ten.wide.column
+                    +parent_doc_segment
                     |!{content}
                     if published
                         +comments
                     +doc_matches
-                    +watson_stats
+                    +analyzed_watson_keywords
                     // {{> jsonView json=watson options=options }}
                     // |{{> jsonView json=watson}}
                 .five.wide.column
@@ -19,8 +20,11 @@ template(name='journal_view')
                         |by
                         img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
                         |#{author.name}
-                    with author
-                        +staus_indicator
+                        with author
+                            +staus_indicator
+                        h3.ui.sub.header #{when}
+                    if isInRole 'admin'
+                        +call_watson
                     if watson
                         +doc_sentiment
                         +doc_emotion
@@ -46,6 +50,6 @@ template(name='journal_view')
                             | Private
                     .ui.divider
                     if can_edit
-                        a.ui.basic.button(href="/journal/edit/#{_id}") 
+                        a.ui.basic.button(href="/journal/#{_id}/edit") 
                             i.pencil.icon
                             |Edit

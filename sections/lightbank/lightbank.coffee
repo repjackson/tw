@@ -145,8 +145,10 @@ if Meteor.isServer
                 if limit
                     Docs.find match, 
                         limit: limit
+                        sort: timestamp: -1
                 else
-                    Docs.find match
+                    Docs.find match,
+                        sort: timestamp: -1
             children: [
                 { find: (doc) ->
                     Meteor.users.find 

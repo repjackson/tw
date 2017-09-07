@@ -91,7 +91,7 @@ Meteor.methods
                 html: SSR.render('message_email', email_data)
 
 
-    generatePersonalCloud: (uid)->
+    generate_personal_cloud: (uid)->
         authored_cloud = Docs.aggregate [
             { $match: authorId: uid }
             { $project: tags: 1 }
@@ -138,3 +138,36 @@ Meteor.methods
             $set:
                 downvoted_cloud: downvoted_cloud
                 downvoted_list: downvoted_list
+
+    tagify_date_time: (val)->
+        console.log moment(val).format("dddd, MMMM Do YYYY, h:mm:ss a")
+        minute = moment(val).minute()
+        hour = moment(val).format('h')
+        date = moment(val).format('Do')
+        ampm = moment(val).format('a')
+        weekdaynum = moment(val).isoWeekday()
+        weekday = moment().isoWeekday(weekdaynum).format('dddd')
+
+        month = moment(val).format('MMMM')
+        year = moment(val).format('YYYY')
+
+        date_array = [hour, minute, ampm, weekday, month, date, year]
+        date_array = _.map(date_array, (el)-> el.toString().toLowerCase())
+        # date_array = _.each(date_array, (el)-> console.log(typeof el))
+        console.log date_array
+        return date_array
+        
+
+    calculate_user_match: (username)->
+        my_cloud = Meteor.user().cloud
+        other_user = Meteor.users.findOne "profile.name": username
+        console.log username
+        console.log other_user
+        Meteor.call 'generate_personal_cloud', other_user._id
+        other_cloud = other_user.cloud
+
+        my_linear_cloud = _.pluck(my_cloud, 'name')
+        other_linear_cloud = _.pluck(other_cloud, 'name')
+        intersection = _.intersection(my_linear_cloud, other_linear_cloud)
+        console.log intersection
+

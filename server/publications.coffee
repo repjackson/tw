@@ -123,7 +123,7 @@ publishComposite 'doc', (id)->
             {
                 find: (doc)->
                     Docs.find
-                        parent_id: doc._id
+                        _id: doc.parent_id
             }
         ]
     }

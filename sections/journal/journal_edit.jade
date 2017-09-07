@@ -4,18 +4,24 @@ template(name='journal_edit')
             h1.ui.center.aligned.header Edit Journal Entry
             .ui.stackable.grid
                 .twelve.wide.column
+                    +parent_doc_segment
                     .ui.form
-                        +tags
                         +content
-                        +watson_stats
+                        +tags
+                        if watson 
+                            +analyzed_watson_keywords
                     // |{{> jsonView json=watson}}
                 .four.wide.column
                     +published
                     +request_tori_feedback
-                    +watson_keywords
+                    +call_watson
+                    if watson
+                        +watson_keywords
                     .ui.divider
+                    if isInRole 'admin'
+                        +edit_author
                     if tags
-                        #save_doc.ui.fluid.green.big.button 
+                        a#save_doc.ui.fluid.green.big.button(href="/journal/#{@_id}/view")
                             i.save.icon
                             |Save
                     else
