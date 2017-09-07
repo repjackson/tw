@@ -10,8 +10,8 @@ if Meteor.isClient
         
     Template.transactions.helpers
         transactions: -> 
-            Docs.find
-                type: 'transaction'
+            Docs.find { type: 'transaction' },
+                sort: timestamp: -1
                 # author_id: Meteor.userId()
                 
 

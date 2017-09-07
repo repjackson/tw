@@ -53,15 +53,15 @@ template(name='profile_layout')
                                                 a.item(href="/profile/#{username}/journal" class="{{isActiveRoute name='profile_journal'}}") 
                                                     i.edit.large.icon
                                                     | Journal
-                                                a.item(href="/profile/#{username}/clouds" class="{{isActiveRoute name='profile_clouds'}}") 
-                                                    i.cloud.large.icon
-                                                    | Clouds
-                                                a.item(href="/profile/#{username}/karma" class="{{isActiveRoute name='profile_karma'}}") 
-                                                    i.large.heartbeat.icon
-                                                    | Karma
-                                                a.item(href="/profile/#{username}/services" class="{{isActiveRoute name='profile_services'}}") 
-                                                    i.large.configure.icon
-                                                    | Services
+                                                // a.item(href="/profile/#{username}/clouds" class="{{isActiveRoute name='profile_clouds'}}") 
+                                                //     i.cloud.large.icon
+                                                //     | Clouds
+                                                // a.item(href="/profile/#{username}/karma" class="{{isActiveRoute name='profile_karma'}}") 
+                                                //     i.large.heartbeat.icon
+                                                //     | Karma
+                                                // a.item(href="/profile/#{username}/services" class="{{isActiveRoute name='profile_services'}}") 
+                                                //     i.large.configure.icon
+                                                //     | Services
                                                 if isInRole 'admin'
                                                     a.item(href="/profile/#{username}/badges" class="{{isActiveRoute name='profile_badges'}}") 
                                                         i.certificate.red.large.icon

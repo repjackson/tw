@@ -74,10 +74,10 @@ template(name='lightbank_doc_view')
                 +mark_complete_button
             // if can_bookmark
             +bookmark_button
-            a.ui.basic.blue.button(href="/lightbank/view/#{_id}")
+            a.ui.basic.blue.button(href="/lightbank/#{_id}/view")
                 |View
                 i.right.chevron.icon
             if can_edit
-                a.ui.basic.button(href="/lightbank/edit/#{_id}")
+                a.ui.basic.button(href="/lightbank/#{_id}/edit")
                     i.red.configure.icon
                     |Edit

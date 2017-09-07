@@ -52,7 +52,7 @@ template(name='lightbank_view')
                         else
                             .ui.basic.label Unpublished
                         .ui.hidden.fitted.divider
-                        a.ui.basic.button(href="/lightbank/edit/#{_id}") 
+                        a.ui.basic.button(href="/lightbank/#{_id}/edit") 
                             i.pencil.icon
                             |Edit
                         .ui.header by #{author.name}

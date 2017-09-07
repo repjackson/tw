@@ -44,6 +44,13 @@ if Meteor.isClient
     
             Meteor.call 'add_notification', Meteor.userId(), 'unfollowed', target_user._id
 
+
+
+    Template.person_item.onRendered ->
+        Meteor.setTimeout ->
+            # $(e.currentTarget).closest('.item').transition('pulse')
+            $('.item').transition('pulse')
+        , 200
                 
 if Meteor.isServer
     Meteor.publish 'followers', ->

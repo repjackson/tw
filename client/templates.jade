@@ -107,13 +107,12 @@ template(name='not_found')
         
         
 template(name='staus_indicator')
-    .ui.label(class='{{labelClass}}') 
-        if online 
-            |Online
-        else if idle
-            |Idle
-        else 
-            |Offline
+    if online 
+        .ui.label(class='{{labelClass}}') Online
+    else if idle
+        .ui.label(class='{{labelClass}}') Idle
+        // else 
+        //     |Offline
 
 
 template(name='user_list_item')

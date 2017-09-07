@@ -21,7 +21,7 @@ template(name='journal_edit')
                     if isInRole 'admin'
                         +edit_author
                     if tags
-                        a#save_doc.ui.fluid.green.big.button(href="/journal/#{@_id}/view")
+                        a#save_doc.ui.fluid.green.big.button(href="/journal/#{_id}/view")
                             i.save.icon
                             |Save
                     else

@@ -96,12 +96,10 @@ template(name='journal_doc_view')
                 |#{author.name} #{when}
                 with author
                     +staus_indicator
-            // .meta
-            //     i.large.icons
-            //         i.user.icon
-            //         i.tags.corner.icon
-            //     each tags
-            //         .ui.tiny.circular.compact.button.tag(class=tag_class) #{this}
+            .meta
+                i.hastag.icon
+                each tags
+                    .ui.tiny.circular.compact.button.tag(class=tag_class) #{this}
             // .meta
             //     i.large.icons
             //         i.idea.icon

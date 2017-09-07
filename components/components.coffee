@@ -55,3 +55,12 @@ if Meteor.isClient
     Template.request_tori_feedback.events
         'click #request_feedback': ->
             console.log @
+            
+    Template.parent_doc_segment.onRendered ->
+        @autorun =>
+            if @subscriptionsReady()
+                Meteor.setTimeout ->
+                    $('.ui.accordion').accordion()
+                , 500
+        
+        

@@ -84,11 +84,11 @@ if Meteor.isClient
 
     Template.notification.events
         'click .mark_read': (e,t)-> 
-            $(e.currentTarget).closest('.notification_segment').transition('bounce')
+            $(e.currentTarget).closest('.notification_segment').transition('pulse')
             Notifications.update @_id, $addToSet: read_by: Meteor.userId()
-        
+            
         'click .mark_unread': (e,t)-> 
-            $(e.currentTarget).closest('.notification_segment').transition('bounce')
+            $(e.currentTarget).closest('.notification_segment').transition('pulse')
             Notifications.update @_id, $pull: read_by: Meteor.userId()
 
         'click .like': -> Notifications.update @_id, $addToSet: liked_by: Meteor.userId()

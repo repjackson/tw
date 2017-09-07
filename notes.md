@@ -89,14 +89,7 @@ notes
 
 
 flow from demo button
-settings under account
-email in profile
 birthday under location
-toggle for email public
-password change
-username change
-tests
-posts in dashboard
 
 
 Light purple
@@ -131,3 +124,30 @@ check in
     suggested tags, brians system
     
 comments, point per upvoted comment
+
+person tags
+document tag rating
+working request tori feedback feature
+    send message, email message to tori,
+    transaction mark complete
+transaction review, voting and tags
+    transaction child documents
+messaging system overhaul
+profile sections review
+child doc component for docs (journal entries), conversation view under lightbank, 
+    'start conversation about this'
+    public
+    inheerit tags
+    include author
+date array tag facet
+karma
+    send point
+    tip amount for documents
+    
+    
+services
+    tori 1on1
+    price
+    scheduling
+stats and badges
+    ?
