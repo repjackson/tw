@@ -65,7 +65,7 @@ Docs.allow
     remove: (userId, doc) -> Roles.userIsInRole(userId, 'admin') or doc.author_id is userId
 
 
-AccountsMeld.configure
-    askBeforeMeld: false
-    # meldDBCallback: meldDBCallback
-    # serviceAddedCallback: serviceAddedCallback
+# AccountsMeld.configure
+#     askBeforeMeld: false
+#     # meldDBCallback: meldDBCallback
+#     # serviceAddedCallback: serviceAddedCallback

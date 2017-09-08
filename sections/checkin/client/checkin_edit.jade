@@ -7,13 +7,21 @@ template(name='checkin_edit')
                     .ui.form
                         +tags
                         +content
+                        if watson 
+                            +analyzed_watson_keywords
 
                 .four.wide.column
                     +published
                     +request_tori_feedback
+                    +call_watson
+                    if watson
+                        +doc_sentiment
+                        +doc_emotion
+                        +watson_keywords
+
                     .ui.divider
                     if tags
-                        #save_doc.ui.fluid.green.big.button 
+                        a.ui.fluid.green.big.button(href="/checkin/#{_id}/view")
                             i.save.icon
                             |Save
                     else

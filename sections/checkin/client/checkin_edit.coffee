@@ -1,4 +1,4 @@
-FlowRouter.route '/checkin/edit/:doc_id',
+FlowRouter.route '/checkin/:doc_id/edit',
     action: (params) ->
         BlazeLayout.render 'layout',
             # top: 'nav'
@@ -17,12 +17,7 @@ Template.checkin_edit.helpers
 
 
 Template.checkin_edit.events
-    'click #save_doc': ->
-        FlowRouter.go "/checkin/view/#{@_id}"
-        # selected_tags.clear()
-        # selected_tags.push tag for tag in @tags
-
     'click #delete_doc': ->
         if confirm 'Delete this doc?'
             Docs.remove @_id
-            FlowRouter.go '/'
+            FlowRouter.go '/checkin'

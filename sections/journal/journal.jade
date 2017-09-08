@@ -1,8 +1,8 @@
 template(name='journal')
     .ui.container
-        h1.ui.center.aligned.header
-            i.pencil.icon
-            | My Journal
+        // h1.ui.center.aligned.header
+        //     i.pencil.icon
+        //     | My Journal
         .ui.center.aligned.basic.segment
             +doc_content tags='journal,blurb'
         // #convert_journal_docs.ui.button Convert Journal Docs
@@ -12,6 +12,7 @@ template(name='journal')
                     i.green.plus.icon
                     |Add Journal Entry
                 .ui.hidden.divider
+                +view_mode_button
                 #cloud
                     +tag_filter type='journal'
                     +username_filter type='journal'
@@ -29,7 +30,7 @@ template(name='journal')
             .twelve.wide.column
                 // .ui.centered.stackable.cards
                 .ui.relaxed.divided.items
-                    each docs
+                    each journal_entries
                         +journal_doc_view
         
 
@@ -97,7 +98,7 @@ template(name='journal_doc_view')
                 with author
                     +staus_indicator
             .meta
-                i.hastag.icon
+                i.hashtag.icon
                 each tags
                     .ui.tiny.circular.compact.button.tag(class=tag_class) #{this}
             // .meta

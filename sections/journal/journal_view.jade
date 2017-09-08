@@ -5,16 +5,15 @@ template(name='journal_view')
     with doc
         .ui.container
             h1.ui.center.aligned.header View Journal Entry
-            .ui.grid
+            .ui.stackable.grid
                 .ten.wide.column
                     +parent_doc_segment
                     |!{content}
                     if published
                         +comments
                     +doc_matches
-                    +analyzed_watson_keywords
-                    // {{> jsonView json=watson options=options }}
-                    // |{{> jsonView json=watson}}
+                    if watson
+                        +analyzed_watson_keywords
                 .five.wide.column
                     .ui.header
                         |by
@@ -39,15 +38,7 @@ template(name='journal_view')
                         +thanks_button
                     +resonates_list
 
-                    .ui.dividing.header Visibility
-                    if published
-                        .ui.basic.green.large.label 
-                            i.unlock.icon
-                            | Public
-                    else
-                        .ui.basic.large.label 
-                            i.lock.icon
-                            | Private
+                    +published
                     .ui.divider
                     if can_edit
                         a.ui.basic.button(href="/journal/#{_id}/edit") 

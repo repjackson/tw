@@ -1,4 +1,4 @@
-publishComposite 'checkin', (selected_tags, selected_author_ids, limit, checkin_view_mode)->
+publishComposite 'checkin', (selected_tags, selected_author_ids, limit, view_mode)->
     {
         find: ->
             self = @
@@ -7,12 +7,14 @@ publishComposite 'checkin', (selected_tags, selected_author_ids, limit, checkin_
             if selected_tags.length > 0 then match.tags = $all: selected_tags
             if selected_author_ids.length > 0 then match.author_id = $in: selected_author_ids
             match.type = 'checkin'
-            if checkin_view_mode is 'resonates'
-                match.favoriters = $in: [@userId]
-            match.published = true
             
-            if checkin_view_mode and checkin_view_mode is 'mine'
-                match.author_id
+            if view_mode is 'mine'
+                match.author_id = Meteor.userId()
+            else if view_mode is 'resonates'
+                match.favoriters = $in: [@userId]
+            else if view_mode is 'all'
+                match.published = true
+            
         
             if limit
                 Docs.find match, 
@@ -32,7 +34,7 @@ publishComposite 'checkin', (selected_tags, selected_author_ids, limit, checkin_
         
         
 
-Meteor.publish 'checkin_tags', (selected_tags, limit, checkin_view_mode)->
+Meteor.publish 'checkin_tags', (selected_tags, limit, view_mode)->
     
     self = @
     match = {}
@@ -40,9 +42,13 @@ Meteor.publish 'checkin_tags', (selected_tags, limit, checkin_view_mode)->
     match.type = 'checkin'
     if selected_tags.length > 0 then match.tags = $all: selected_tags
     
-    if checkin_view_mode is 'resonates'
+    if view_mode is 'mine'
+        match.author_id = Meteor.userId()
+    else if view_mode is 'resonates'
         match.favoriters = $in: [@userId]
-    
+    else if view_mode is 'all'
+        match.published = true
+            
     
     cloud = Docs.aggregate [
         { $match: match }

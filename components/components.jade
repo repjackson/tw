@@ -55,7 +55,7 @@ template(name='doc_matches')
                         
                         
 template(name='request_tori_feedback')
-    .ui.segment
+    .ui.basic.segment
         .ui.dividing.header 
             i.comments.outline.icon
             |Request Feedback
@@ -85,3 +85,17 @@ template(name='parent_doc_segment')
                     a.ui.basic.large.button(href="/lightbank/#{parent._id}/view" title='View Lightbank Entry')
                         i.link.external.icon
                         |View Lightbank Entry
+
+
+template(name='view_mode_button')
+    .ui.header Viewing: 
+        if viewing_mine
+            #view_all_entries.ui.basic.button
+                img.ui.avatar.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+                |My Entries
+        if viewing_all
+            #view_my_entries.ui.basic.button 
+                i.large.icons
+                    i.users.icon
+                    i.pencil.corner.icon
+                |All

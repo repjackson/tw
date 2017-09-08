@@ -11,6 +11,8 @@ template(name='checkin_view')
                     if published
                         +comments
                     +doc_matches
+                    if watson
+                        +analyzed_watson_keywords
                 .five.wide.column
                     .ui.dividing.header Tags
                     each tags
@@ -21,15 +23,11 @@ template(name='checkin_view')
                         +thanks_button
                     +resonate_button
                     +resonates_list
-                    .ui.dividing.header Visibility
-                    if published
-                        .ui.basic.green.large.label 
-                            i.unlock.icon
-                            | Public
-                    else
-                        .ui.basic.large.label 
-                            i.lock.icon
-                            | Private
+                    if watson
+                        +doc_sentiment
+                        +doc_emotion
+                        +watson_keywords
+                    +published
                     .ui.header by #{author.name}
                     .ui.divider
                     if is_author

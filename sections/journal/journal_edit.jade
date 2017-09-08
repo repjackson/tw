@@ -16,12 +16,14 @@ template(name='journal_edit')
                     +request_tori_feedback
                     +call_watson
                     if watson
+                        +doc_sentiment
+                        +doc_emotion
                         +watson_keywords
                     .ui.divider
                     if isInRole 'admin'
                         +edit_author
                     if tags
-                        a#save_doc.ui.fluid.green.big.button(href="/journal/#{_id}/view")
+                        a.ui.fluid.green.big.button(href="/checkin/#{_id}/view")
                             i.save.icon
                             |Save
                     else

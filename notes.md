@@ -123,7 +123,6 @@ journal evoke activity, get to know people, lead to meaning
 check in
     suggested tags, brians system
     
-comments, point per upvoted comment
 
 person tags
 document tag rating
@@ -151,3 +150,7 @@ services
     scheduling
 stats and badges
     ?
+    
+global read count
+    read activation on click
+    segment view 

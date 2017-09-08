@@ -23,13 +23,8 @@ Template.checkin_calendar_view.helpers
 
         }
 
-
-
-
-
-# Session.setDefault 'checkin_view_mode', 'all'
 Template.checkin.onCreated -> 
-    @autorun -> Meteor.subscribe('checkin', selected_tags.array(), selected_author_ids.array(), limit=10, checkin_view_mode=Session.get('checkin_view_mode'))
+    @autorun -> Meteor.subscribe('checkin', selected_tags.array(), selected_author_ids.array(), limit=10, Session.get('view_mode'))
 
 Template.checkin.helpers
     docs: -> 
@@ -40,10 +35,7 @@ Template.checkin.helpers
 
     tag_class: -> if @valueOf() in selected_tags.array() then 'teal' else 'basic'
 
-    selected_tags: -> selected_tags.array()
 
-    all_item_class: -> if Session.equals 'checkin_view_mode', 'all' then 'active' else ''
-    resonates_item_class: -> if Session.equals 'checkin_view_mode', 'resonates' then 'active' else ''
 
 Template.checkin.events
     'keyup #quick_add': (e,t)->
@@ -59,13 +51,9 @@ Template.checkin.events
                     selected_tags.push tag
 
 Template.checkin_doc_view.helpers
-    is_author: -> Meteor.userId() and @author_id is Meteor.userId()
-
     tag_class: -> if @valueOf() in selected_tags.array() then 'teal' else 'basic'
 
-    when: -> moment(@timestamp).fromNow()
-    
-    checkin_tags: -> _.difference(@tags, 'checkin')
+    # checkin_tags: -> _.difference(@tags, 'checkin')
     
     checkin_card_class: -> if @published then 'blue' else ''
 

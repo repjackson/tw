@@ -1,9 +1,13 @@
 template(name='checkin')
-    h1.ui.header Check In
-    +doc_content tags='checkin,blurb'
     // .ui.divider
     .ui.divided.stackable.grid
         .five.wide.column
+            h1 Check In
+                .ui.green.large.icon.button
+                    i.large.icons
+                        i.check.icon
+                        i.plus.corner.icon
+            +doc_content tags='checkin,blurb'
             // a.ui.basic.button(href='/checkin/calendar') 
             //     i.calendar.icon
             //     |Calendar View
@@ -11,9 +15,9 @@ template(name='checkin')
                 input#quick_add(type='text' placeholder='Quick Add with Tags (separated by spaces)')
                 i.green.plus.icon
             .ui.divider
+            +view_mode_button
             +tag_filter type='checkin'
             +username_filter type='checkin'
-            // +checkin_cloud
         .eleven.wide.column
             .ui.centered.stackable.cards
                 each docs

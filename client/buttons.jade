@@ -4,18 +4,18 @@ template(name='voting')
     |#{points}
 
 template(name='thanks_button')
-    .ui.circular.compact.button.vote_up(class=thanks_button_class)
+    .ui.circular.button.vote_up(class=thanks_button_class)
         i.thumbs.up.icon
         if said_thanks
             |Thanks #{author.profile.first_name}!
         else
             | Thank #{author.profile.first_name} for sharing
-    #thanks_modal.ui.modal
+    #thanks_modal.ui.small.modal
         i.close.icon
         .header Send #{author.profile.first_name} an optional private message?
         .content
-            img.ui.avatar.image(src="{{c.url author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
-            .ui.large.input
+            // img.ui.avatar.image(src="{{c.url author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+            .ui.fluid.input
                 input#thanks_message_text(type='text')
         .actions
             .ui.cancel.basic.button
@@ -145,25 +145,27 @@ template(name='delete_link')
     a#delete Delete
 
 template(name='published')
-    .ui.segment
+    .ui.basic.segment
         .ui.dividing.header
             i.unhide.icon
             |Visibility
         if published
-            .ui.center.aligned.header
-                i.green.unlock.icon
+            .ui.large.green.label
+                i.unlock.icon
                 |Public
-            #unpublish.ui.fluid.basic.button
-                // i.toggle.on.green.icon
-                i.lock.icon
-                | Make Private
+            if can_edit
+                #unpublish.ui.icon.basic.button
+                    // i.toggle.on.green.icon
+                    i.lock.icon
+                    // | Make Private
         else
-            .ui.center.aligned.header
+            .ui.large.basic.label
                 i.lock.icon
                 | Private
-            #publish.ui.fluid.basic.button
-                i.unlock.icon
-                | Make Public
+            if can_edit
+                #publish.ui.icon.basic.button
+                    i.unlock.icon
+                    // | Make Public
 
 
 

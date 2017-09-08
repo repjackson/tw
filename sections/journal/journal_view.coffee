@@ -1,5 +1,4 @@
 if Meteor.isClient
-    
     FlowRouter.route '/journal/:doc_id/view',
         action: (params) ->
             BlazeLayout.render 'layout',
@@ -7,10 +6,7 @@ if Meteor.isClient
                 main: 'journal_view'
     
     
-    
-    
     Template.journal_view.onCreated ->
-        # console.log FlowRouter.getParam 'doc_id'
         @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
 
     Template.journal_view.onCreated ->

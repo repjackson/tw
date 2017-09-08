@@ -60,11 +60,21 @@ Meteor.publish 'tags', (selected_tags, selected_author_ids=[], type=null, author
     if parent_id then match.parent_id = parent_id
     if selected_tags.length > 0 then match.tags = $all: selected_tags
     if selected_author_ids.length > 0 then match.author_id = $in: selected_author_ids
-    match.published = true
+    # match.published = true
     # console.log 'limit:', manual_limit
     if manual_limit then limit=manual_limit else limit=50
     if author_id then match.author_id = author_id
     # console.log match
+    
+    if view_mode is 'mine'
+        match.author_id = Meteor.userId()
+    else if view_mode is 'resonates'
+        match.favoriters = $in: [@userId]
+    else if view_mode is 'all'
+        match.published = true
+            
+
+    
     
     cloud = Docs.aggregate [
         { $match: match }
@@ -101,6 +111,16 @@ Meteor.publish 'watson_keywords', (selected_tags, selected_author_ids=[], type=n
     if author_id then match.author_id = author_id
     # console.log match
     
+    if view_mode is 'mine'
+        match.author_id = Meteor.userId()
+    else if view_mode is 'resonates'
+        match.favoriters = $in: [@userId]
+    else if view_mode is 'all'
+        match.published = true
+            
+
+    
+    
     cloud = Docs.aggregate [
         { $match: match }
         { $project: watson_keywords: 1 }
@@ -129,8 +149,13 @@ Meteor.publish 'docs', (selected_tags, type, limit, view_mode)->
     if selected_tags.length > 0 then match.tags = $all: selected_tags
     if type then match.type = type
     # console.log view_mode
-    if view_mode and view_mode is 'mine'
-        match.author_id
+    if view_mode is 'mine'
+        match.author_id = Meteor.userId()
+    else if view_mode is 'resonates'
+        match.favoriters = $in: [@userId]
+    else if view_mode is 'all'
+        match.published = true
+            
 
     if limit
         Docs.find match, 

@@ -64,3 +64,11 @@ if Meteor.isClient
                 , 500
         
         
+    Template.view_mode_button.helpers
+        viewing_mine: -> Session.equals 'view_mode','mine'  
+        viewing_all: -> Session.equals 'view_mode','all'  
+
+
+    Template.view_mode_button.events
+        'click #view_my_entries': (e,t)-> Session.set('view_mode','mine')    
+        'click #view_all_entries': (e,t)-> Session.set('view_mode', 'all')    
