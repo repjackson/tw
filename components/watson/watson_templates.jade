@@ -15,7 +15,7 @@ template(name='doc_sentiment')
         // |#{sentiment_score_percent}
 
 template(name='watson_keywords') 
-    .ui.dividing.header Watson Keywords
+    .ui.dividing.header Analyzed Keywords
     each watson_keywords
         .ui.basic.label #{this}
 
@@ -46,10 +46,10 @@ template(name='doc_emotion')
             .label Anger
             
 template(name='call_watson')
-    #call_watson.ui.basic.button 
+    #call_watson.ui.basic.fluid.button 
         // i.calculator.icon
         i.refresh.icon
-        |Call Watson
+        |Analyze Text (1p)
 
 template(name='analyzed_watson_keywords')
     .ui.fluid.styled.accordion

@@ -7,13 +7,16 @@ template(name='service_view')
             h1.ui.center.aligned.header View '#{title}' Services
             .ui.grid
                 .ten.wide.column
-                    |!{content}
-                    if image_id
-                        .ui.large.centered.image
-                            img(src="{{c.url image_id width=500 crop='fit'}}")
-                    if image_url
-                        .ui.large.centered.image
-                            img(src=image_url)
+                    .ui.items
+                        .ui.item
+                            .ui.small.image
+                                if image_id
+                                    img(src="{{c.url image_id}}")
+                                if image_url
+                                    img(src=image_url)
+                            .content
+                                .description
+                                    |!{content}
                     
                     h4.ui.horizontal.divider.header
                         i.exchange.icon
@@ -57,7 +60,7 @@ template(name='service_view')
 
                     if dollar_price
                         .ui.header Price: $#{dollar_price}
-                    .ui.header Price: #{point_price} points
+                    .ui.header Price: #{point_price} point(s)
                     .ui.dividing.header Actions
                     +add_to_cart
                     +bookmark_button
@@ -65,12 +68,9 @@ template(name='service_view')
                     .ui.dividing.header Tags
                     each tags
                         .ui.basic.large.label.doc_tag #{this}
-                    if published
-                        .ui.basic.green.label Published
-                    else
-                        .ui.basic.label Unpublished
+                    +published
                     .ui.hidden.fitted.divider
-                    +tag_rating
+                    // +tag_rating
                     if can_edit
                         a.ui.basic.button(href="/service/#{_id}/edit") 
                             i.pencil.icon

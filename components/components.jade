@@ -51,27 +51,30 @@ template(name='doc_matches')
                                     a.ui.basic.compact.teal.button(href="/view/#{doc_id}") 
                                         |Full
                                         i.right.arrow.icon
-
+                                        
+template(name='service_buttons')
+    .ui.dividing.header Services
+    +request_tori_feedback
+    +call_watson
                         
                         
 template(name='request_tori_feedback')
-    .ui.basic.segment
-        .ui.dividing.header 
+    // .ui.dividing.header 
+    //     i.comments.outline.icon
+    //     |Request Feedback
+    if feedback_requested
+        .ui.header
             i.comments.outline.icon
-            |Request Feedback
-        if feedback_requested
-            .ui.header
-                i.comments.outline.icon
-                | Feedback Requested 
-                |Status: Pending
-            #cancel_request.ui.fluid.basic.button
-                i.cancel.icon
-                | Cancel Request
-        else
-            #request_feedback.ui.fluid.basic.button
-                i.comments.outline.icon
-                | Request Feedback
-                
+            | Feedback Requested 
+            |Status: Pending
+        #cancel_request.ui.fluid.basic.button
+            i.cancel.icon
+            | Cancel Request
+    else
+        #request_feedback.ui.fluid.basic.button
+            i.comments.outline.icon
+            | Request Tori's Feedback (1p)
+            
                 
 template(name='parent_doc_segment')
     if parent_id

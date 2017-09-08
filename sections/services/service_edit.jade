@@ -15,9 +15,8 @@ template(name='service_edit')
                     if isInRole 'admin'
                         +edit_author
                     if tags
-                        a.ui.fluid.green.big.button(href="/service/#{_id}/view")
-                            |Save Service
+                        a.ui.fluid.green.big.button(href="/service/#{_id}/view") Save Service
                     else
                         .ui.fluid.green.big.disabled.button
                             | Add Tags to Save
-                    #delete_doc.ui.small.fluid.red.basic.button Delete
+                    #delete_doc.ui.small.fluid.red.button Delete

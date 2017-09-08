@@ -54,11 +54,11 @@ template(name='checkin_doc_view')
             unless is_author
                 +thanks_button
         .content
-            a.ui.basic.right.floated.button(href="/checkin/view/#{_id}") 
+            a.ui.basic.right.floated.button(href="/checkin/#{_id}/view") 
                 | Full 
                 i.right.arrow.icon
             if can_edit
-                a.ui.basic.compact.button(href="/checkin/edit/#{_id}")
+                a.ui.basic.compact.button(href="/checkin/#{_id}/edit")
                     i.edit.icon
                     |Edit
                     

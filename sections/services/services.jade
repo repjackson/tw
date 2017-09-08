@@ -1,20 +1,20 @@
 template(name='services')
     .ui.container
-        h1.ui.horizontal.divider.header
-            i.configure.icon
-            |Services
-        .ui.stackable.divided.grid
+        .ui.stackable.grid
             .four.wide.column
-                #add_service.ui.large.basic.fluid.button
-                    i.plus.icon
-                    |Add Service
-                .ui.dividing.header Tag Filter
+                h1.ui.dividing.header
+                    i.configure.icon
+                    |Services
+                if isInRole 'admin'
+                    #add_service.ui.red.basic.fluid.button
+                        i.plus.icon
+                        |Add Service
                 +tag_filter type='service'
-                .ui.dividing.header Layouts
-                #make_list_layout.ui.large.icon.button(class=list_layout_button_class)
-                    i.list.layout.icon
-                #make_grid_layout.ui.large.icon.button(class=grid_layout_button_class)
-                    i.grid.layout.icon
+                // .ui.dividing.header Layouts
+                // #make_list_layout.ui.large.icon.button(class=list_layout_button_class)
+                //     i.list.layout.icon
+                // #make_grid_layout.ui.large.icon.button(class=grid_layout_button_class)
+                //     i.grid.layout.icon
             .twelve.wide.column
                 if is_list_view
                     .ui.relaxed.divided.items
@@ -74,20 +74,22 @@ template(name='service_item')
                 img.ui.rounded.image(src="{{c.url image_id  width=175 height=175 crop='fill' gravity='face' }}")
             if image_url
                 img(src=image_url)
+            .ui.center.aligned.header
+                if dollar_price
+                    | $#{dollar_price}
+                if point_price
+                    | #{point_price} point(s)
+                else
+                    | 0 points
 
         .content
             a.header(href="/service/#{_id}/view") #{title}
             .meta
-                if dollar_price
-                    | Price: $#{dollar_price}
-                if point_price
-                    | Point Price: #{point_price} points
-                else
-                    | Point Price: 0 points
+                img.ui.avatar.image(src="{{c.url author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                |by #{author.name}
             .meta
                 each tags
                     .ui.tiny.basic.label #{this}
-
             .description
                 | !{content}
                 a.ui.basic.teal.button(href="/service/#{_id}/view") 

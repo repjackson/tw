@@ -7,7 +7,7 @@ template(name='thanks_button')
     .ui.circular.button.vote_up(class=thanks_button_class)
         i.thumbs.up.icon
         if said_thanks
-            |Thanks #{author.profile.first_name}!
+            |Thanks #{author.profile.first_name}
         else
             | Thank #{author.profile.first_name} for sharing
     #thanks_modal.ui.small.modal
@@ -146,9 +146,7 @@ template(name='delete_link')
 
 template(name='published')
     .ui.basic.segment
-        .ui.dividing.header
-            i.unhide.icon
-            |Visibility
+        .ui.dividing.header Visibility
         if published
             .ui.large.green.label
                 i.unlock.icon

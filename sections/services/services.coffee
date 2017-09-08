@@ -5,7 +5,7 @@ if Meteor.isClient
             main: 'services'
 
     Template.services.onCreated ->
-        @autorun -> Meteor.subscribe('selected_services')
+        @autorun -> Meteor.subscribe('docs', selected_tags.array(), 'service')
         Session.set 'layout_view', 'list'
     
     Template.services.helpers
@@ -25,15 +25,13 @@ if Meteor.isClient
         'click #add_service': ->
             id = Docs.insert
                 type: 'service'
-            FlowRouter.go "/service/edit/#{id}"
+            FlowRouter.go "/service/#{id}/edit"
     
         'click #make_list_layout': -> Session.set 'layout_view', 'list'
         'click #make_grid_layout': -> Session.set 'layout_view', 'grid'
         
     Template.service_item.helpers
         tag_class: -> if @valueOf() in selected_tags.array() then 'teal' else 'basic'
-    
-        can_edit: -> @author_id is Meteor.userId()
     
     Template.service_item.events
         'click .service_tag': ->

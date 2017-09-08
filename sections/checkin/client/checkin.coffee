@@ -38,6 +38,10 @@ Template.checkin.helpers
 
 
 Template.checkin.events
+    'click #check_in': ->
+        new_checkin_doc_id = Docs.insert type: 'checkin'
+        FlowRouter.go("/checkin/#{new_checkin_doc_id}/edit")
+
     'keyup #quick_add': (e,t)->
         e.preventDefault
         tag = $('#quick_add').val().toLowerCase()

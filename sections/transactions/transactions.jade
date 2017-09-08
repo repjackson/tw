@@ -3,6 +3,7 @@ template(name='transactions')
         .ui.horizontal.divider.header
             i.exchange.icon
             |Transactions
+        .ui.header Your current point amount: #{currentUser.points}
         table.ui.selectable.unstackable.table
                 thead
                     tr

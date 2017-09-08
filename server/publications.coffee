@@ -141,28 +141,41 @@ Meteor.publish 'watson_keywords', (selected_tags, selected_author_ids=[], type=n
     self.ready()
         
 
-Meteor.publish 'docs', (selected_tags, type, limit, view_mode)->
+publishComposite 'docs', (selected_tags, type, limit, view_mode)->
+    {
+        find: ->
+            self = @
+            match = {}
+            # match.tags = $all: selected_tags
+            if selected_tags.length > 0 then match.tags = $all: selected_tags
+            if type then match.type = type
+            # console.log view_mode
+            if view_mode is 'mine'
+                match.author_id = Meteor.userId()
+            else if view_mode is 'resonates'
+                match.favoriters = $in: [@userId]
+            else if view_mode is 'all'
+                match.published = true
+                    
+            if limit
+                Docs.find match, 
+                    limit: limit
+            else
+                Docs.find match
+        children: [
+            {
+                find: (doc)->
+                    Meteor.users.find
+                        _id: doc.author_id
+            }
+            {
+                find: (doc)->
+                    Docs.find
+                        _id: doc.parent_id
+            }
+        ]
 
-    self = @
-    match = {}
-    # match.tags = $all: selected_tags
-    if selected_tags.length > 0 then match.tags = $all: selected_tags
-    if type then match.type = type
-    # console.log view_mode
-    if view_mode is 'mine'
-        match.author_id = Meteor.userId()
-    else if view_mode is 'resonates'
-        match.favoriters = $in: [@userId]
-    else if view_mode is 'all'
-        match.published = true
-            
-
-    if limit
-        Docs.find match, 
-            limit: limit
-    else
-        Docs.find match
-
+    }
 
 publishComposite 'doc', (id)->
     {

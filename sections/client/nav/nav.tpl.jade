@@ -25,6 +25,17 @@
         a.mobile.hidden.item(href='/journal' class="{{isActivePath '/journal'}}") 
             i.pencil.icon
             | Journal
+        a.mobile.hidden.item(href='/checkin' class="{{isActivePath '/checkin'}}") 
+            i.check.icon
+            | Check In's
+        a.mobile.hidden.item.item(href='/conversations' class="{{isActivePath '/conversations'}}") 
+            i.comments.outline.icon
+            | Conversations
+
+        a.mobile.hidden.item(href='/services' class="{{isActivePath '/services'}}") 
+            i.configure.icon
+            |Services
+    
         
     .right.menu
         if currentUser
@@ -38,25 +49,25 @@
             // a.icon.mobile.hidden.item(href='/karma' data-position="bottom center" data-content="Karma")
             //     i.heartbeat.icon
             //     |#{currentUser.points}
-            a.icon.item(href='/messages' class="{{isActiveRoute name='message_layout'}}")
-                if unread_message_count
-                    i.blue.mail.icon
-                else
-                    i.mail.outline.icon
-                // | Admin
-            // a.ui.icon.dropdown.item(class="{{isActivePath '/notifications'}}" data-position="bottom center" data-content="Notifications")
-            a.ui.icon.simple.dropdown.item
-                if unread_notifications_count
-                    i.alarm.blue.icon
-                else
-                    i.alarm.outline.icon
-                .ui.menu(style="right: 0;left: auto;")
-                    a.item(href='/notifications') 
-                        |View All
-                        i.external.icon
-                    .ui.divider
-                    each unread_notifications
-                        .item #{subject.name} #{predicate} #{object.name}
+            // a.icon.item(href='/messages' class="{{isActiveRoute name='message_layout'}}")
+            //     if unread_message_count
+            //         i.blue.mail.icon
+            //     else
+            //         i.mail.outline.icon
+            //     // | Admin
+            // // a.ui.icon.dropdown.item(class="{{isActivePath '/notifications'}}" data-position="bottom center" data-content="Notifications")
+            // a.ui.icon.simple.dropdown.item
+            //     if unread_notifications_count
+            //         i.alarm.blue.icon
+            //     else
+            //         i.alarm.outline.icon
+            //     .ui.menu(style="right: 0;left: auto;")
+            //         a.item(href='/notifications') 
+            //             |View All
+            //             i.external.icon
+            //         .ui.divider
+            //         each unread_notifications
+            //             .item #{subject.name} #{predicate} #{object.name}
 
             // a.icon.mobile.hidden.item(href='/bookmarks' class="{{isActivePath '/bookmarks'}}" data-position="bottom center" data-content="Bookmarks")
             //     i.bookmark.outline.icon
@@ -129,35 +140,35 @@
             a.ui.item(href='/sign-in') 
                 i.sign.in.icon
                 | Sign In
-    .ui.modal
-        i.close.icon
-        .ui.center.aligned.header
-            i.green.check.icon
-            | #{currentUser.name} Check In
-        .content
-            .description
-                with new_checkin_doc
-                    .ui.form
-                        +tags
-                        // .ui.basic.button
-                        //     .ui.icon.header
-                        //         i.smile.icon
-                        //         |Happy
-                        // .ui.basic.button
-                        //     .ui.icon.header
-                        //         i.meh.icon
-                        //         | Nuetral
-                        // .ui.basic.button
-                        //     .ui.icon.header
-                        //         i.frown.icon
-                        //         | Sad
-                        // .ui.basic.button
-                        //     .ui.icon.header
-                        //         i.treatment.icon
-                        //         | Sensitive
-                        +body
-                        +content
-        .actions
-            .ui.cancel.red.basic.button Cancel
-            .ui.ok.green.button Submit
+    // .ui.modal
+    //     i.close.icon
+    //     .ui.center.aligned.header
+    //         i.green.check.icon
+    //         | #{currentUser.name} Check In
+    //     .content
+    //         .description
+    //             with new_checkin_doc
+    //                 .ui.form
+    //                     +tags
+    //                     // .ui.basic.button
+    //                     //     .ui.icon.header
+    //                     //         i.smile.icon
+    //                     //         |Happy
+    //                     // .ui.basic.button
+    //                     //     .ui.icon.header
+    //                     //         i.meh.icon
+    //                     //         | Nuetral
+    //                     // .ui.basic.button
+    //                     //     .ui.icon.header
+    //                     //         i.frown.icon
+    //                     //         | Sad
+    //                     // .ui.basic.button
+    //                     //     .ui.icon.header
+    //                     //         i.treatment.icon
+    //                     //         | Sensitive
+    //                     +body
+    //                     +content
+    //     .actions
+    //         .ui.cancel.red.basic.button Cancel
+    //         .ui.ok.green.button Submit
 

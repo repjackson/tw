@@ -1,12 +1,11 @@
 template(name='conversations')
-    .ui.horizontal.divider.header 
-        i.comments.outline.icon
-        |Conversations
     .ui.stackable.grid
         .four.wide.column
-
+            h1.ui.horizontal.divider.header 
+                i.comments.outline.icon
+                |Conversations
             if currentUser
-                #create_conversation.ui.basic.button
+                #create_conversation.ui.basic.fluid.button
                     i.plus.icon
                     |Create Conversation
             .ui.dividing.header Viewing: 
@@ -28,21 +27,20 @@ template(name='conversations')
 template(name='conversation')
     .ui.fluid.card
         .content
-            // .header
-            //     |Conversation Topics:
-            if published
+            .ui.header !{content}    
+            // if published    
+            //     span.right.floated
+            //         i.unlock.icon
+            //         |Published
+            // else
+            //     span.right.floated
+            //         i.lock.icon
+            //         |Private
+            div
                 i.tags.icon
                 each tags
                     .ui.basic.label #{this}
-                span.right.floated
-                    i.unlock.icon
-                    |Published
-            else
-                span.right.floated
-                    i.lock.icon
-                    |Private
-                
-            .ui.center.aligned.basic.segment
+            div
                 .ui.horizontal.list
                     each participants
                         .item

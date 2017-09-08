@@ -33,7 +33,7 @@ Template.thanks_button.onRendered ->
     Meteor.setTimeout =>
         $('#thanks_modal').modal(
             transition: 'horizontal flip'
-            closable: false
+            closable: true
             inverted: true
             onApprove : =>
                 text = $('#thanks_message_text').val()
@@ -48,7 +48,6 @@ Template.thanks_button.onRendered ->
     Meteor.setTimeout ->
         $('#message_sent').modal(
             transition: 'horizontal flip'
-            closable: true
             inverted: true
             )
     , 500
