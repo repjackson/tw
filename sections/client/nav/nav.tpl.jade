@@ -28,10 +28,6 @@
         a.mobile.hidden.item(href='/checkin' class="{{isActivePath '/checkin'}}") 
             i.check.icon
             | Check In's
-        a.mobile.hidden.item.item(href='/conversations' class="{{isActivePath '/conversations'}}") 
-            i.comments.outline.icon
-            | Conversations
-
         a.mobile.hidden.item(href='/services' class="{{isActivePath '/services'}}") 
             i.configure.icon
             |Services
@@ -49,12 +45,9 @@
             // a.icon.mobile.hidden.item(href='/karma' data-position="bottom center" data-content="Karma")
             //     i.heartbeat.icon
             //     |#{currentUser.points}
-            // a.icon.item(href='/messages' class="{{isActiveRoute name='message_layout'}}")
-            //     if unread_message_count
-            //         i.blue.mail.icon
-            //     else
-            //         i.mail.outline.icon
-            //     // | Admin
+            a.icon.item.item(href='/conversations' class="{{isActivePath '/conversations'}}") 
+                i.comments.outline.icon
+            
             // // a.ui.icon.dropdown.item(class="{{isActivePath '/notifications'}}" data-position="bottom center" data-content="Notifications")
             // a.ui.icon.simple.dropdown.item
             //     if unread_notifications_count

@@ -23,7 +23,7 @@ template(name='journal_edit')
                     if isInRole 'admin'
                         +edit_author
                     if tags
-                        a.ui.fluid.green.big.button(href="/checkin/#{_id}/view") Save Journal Entry
+                        a.ui.fluid.green.big.button(href="/journal/#{_id}/view") Save Journal Entry
                     else
                         .ui.fluid.green.big.disabled.button Add Tags to Save
                     .ui.hidden.fitted.divider

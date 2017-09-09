@@ -13,6 +13,7 @@ template(name='conversation_message')
                     .actions
                         if is_author
                             +delete_link
+                        else
                             if read
                                 a.mark_unread 
                                     i.mail.icon
@@ -21,8 +22,6 @@ template(name='conversation_message')
                                 a.mark_read 
                                     i.mail.outline.icon
                                     |Mark Read
-
-                        else
                             +voting
                         if parent_id
                             .ui.accordion

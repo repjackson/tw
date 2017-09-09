@@ -20,9 +20,31 @@ if Meteor.isClient
             # console.log @favoriters
                     Meteor.users.find _id: $in: @favoriters
         
+        
+    Template.read_by.onCreated ->
+        @autorun => Meteor.subscribe 'read_by', FlowRouter.getParam('doc_id')
+        
+    Template.read_by.helpers
+        read_by: ->
+            if @read_by
+                if @read_by.length > 0
+            # console.log @read_by
+                    Meteor.users.find _id: $in: @read_by
+        
+    Template.toggle_doc_read.events
+        'click .mark_read': (e,t)-> Meteor.call 'mark_read', FlowRouter.getParam('doc_id')
+            
+        'click .mark_unread': (e,t)-> Meteor.call 'mark_unread', FlowRouter.getParam('doc_id'),
+    
+    Template.toggle_doc_read.helpers
+        read: ->Meteor.userId() in @read_by
+        
+        
+        
+        
+        
     Template.doc_matches.onCreated ->
         @is_calculating = new ReactiveVar 'false'
-        
         
     Template.doc_matches.onRendered ->
         @autorun =>
@@ -30,8 +52,6 @@ if Meteor.isClient
                 Meteor.setTimeout ->
                     $('.ui.accordion').accordion()
                 , 500
-        
-        
         
     Template.doc_matches.helpers
         # calculate_button_class: ->
@@ -48,6 +68,13 @@ if Meteor.isClient
                 # console.log res
                 
                 
+                
+                
+                
+                
+                
+                
+                
     Template.request_tori_feedback.helpers
         feedback_requested: ->
             
@@ -56,12 +83,20 @@ if Meteor.isClient
         'click #request_feedback': ->
             console.log @
             
+            
+            
+            
+            
+            
     Template.parent_doc_segment.onRendered ->
         @autorun =>
             if @subscriptionsReady()
                 Meteor.setTimeout ->
                     $('.ui.accordion').accordion()
                 , 500
+        
+        
+        
         
         
     Template.view_mode_button.helpers
@@ -72,3 +107,23 @@ if Meteor.isClient
     Template.view_mode_button.events
         'click #view_my_entries': (e,t)-> Session.set('view_mode','mine')    
         'click #view_all_entries': (e,t)-> Session.set('view_mode', 'all')    
+
+
+if Meteor.isServer
+    Meteor.methods
+        mark_read: (doc_id)->
+            Docs.update doc_id,
+                $addToSet: read_by: Meteor.userId()
+            
+            
+        mark_unread: (doc_id)->
+            Docs.update doc_id,
+                $pull: read_by: Meteor.userId()
+    
+
+    
+    Meteor.publish 'read_by', (doc_id)->
+        doc = Docs.findOne doc_id
+        if doc.read_by
+            Meteor.users.find
+                _id: $in: doc.read_by

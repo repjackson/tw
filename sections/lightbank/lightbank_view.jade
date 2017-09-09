@@ -20,13 +20,13 @@ template(name='lightbank_view')
                                 img(src=image_url)
                     if has_content
                         |!{content}
-                    if journal_prompt
-                        +journal_responses
+                    // if journal_prompt
+                    +journal_responses
                     +comments    
                     +tag_rating
                     if watson
                         +analyzed_watson_keywords
-
+                    +child_docs
                 .five.wide.column
                     .ui.dividing.header Actions
                     +bookmark_button

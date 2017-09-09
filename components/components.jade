@@ -22,6 +22,34 @@ template(name='resonates_list')
                                     .ui.basic.label #{this}
 
 
+template(name='toggle_doc_read')
+    if read
+        .mark_unread.ui.basic.button 
+            i.open.envelope.outline.icon
+            |Mark Unread
+    else
+        .mark_read.ui.basic.button 
+            i.mail.outline.icon
+            |Mark Read
+
+template(name='read_by')
+    // if read_by.count
+    .ui.segment
+        .ui.dividing.header
+            |Read by... (#{read_by.count})
+        .ui.divided.list
+            each read_by
+                .item
+                    img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                    .content
+                        .header
+                            |#{name}
+                        .description
+                            +tiny_color_dots
+                            each five_tags
+                                .ui.basic.label #{this}
+
+
 template(name='doc_matches')
     .ui.fluid.styled.accordion
         .title 

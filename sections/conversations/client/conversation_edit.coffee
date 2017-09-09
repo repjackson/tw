@@ -13,6 +13,7 @@ if Meteor.isClient
     Template.conversation_edit.onCreated ->
         # console.log FlowRouter.getParam 'doc_id'
         @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
+        @autorun -> Meteor.subscribe 'usernames'
 
 
     Template.conversation_edit.helpers

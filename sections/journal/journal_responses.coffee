@@ -1,6 +1,6 @@
 if Meteor.isClient
     Template.journal_responses.onCreated ->
-        console.log FlowRouter.getParam 'doc_id'
+        # console.log FlowRouter.getParam 'doc_id'
         @autorun -> Meteor.subscribe('journal_responses', FlowRouter.getParam('doc_id'))
 
 

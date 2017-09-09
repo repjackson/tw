@@ -10,7 +10,7 @@ if Meteor.isClient
             if user
                 Docs.findOne
                     type: 'conversation'
-                    participant_ids: $all: [Meteor.userId(), user._id]
+                    participant_ids: [Meteor.userId(), user._id]
 
     Template.profile_contact.events
         'click #create_conversation_with_user': ->
@@ -27,5 +27,5 @@ if Meteor.isServer
         user = Meteor.users.findOne username: username
         Docs.find
             type: 'conversation'
-            participant_ids: $all: [Meteor.userId(), user._id]
+            participant_ids: [Meteor.userId(), user._id]
             

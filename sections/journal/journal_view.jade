@@ -14,6 +14,7 @@ template(name='journal_view')
                     +doc_matches
                     if watson
                         +analyzed_watson_keywords
+                    +child_docs
                 .five.wide.column
                     .ui.header
                         |by
@@ -22,7 +23,7 @@ template(name='journal_view')
                         with author
                             +staus_indicator
                         h3.ui.sub.header #{when}
-                    if isInRole 'admin'
+                    if can_edit
                         +call_watson
                     if watson
                         +doc_sentiment
@@ -33,11 +34,13 @@ template(name='journal_view')
                         .ui.basic.large.label.doc_tag #{this}
                     .ui.dividing.header Actions
                     +bookmark_button
+                    +reflect_button
                     unless is_author
                         +resonate_button
                         +thanks_button
                     +resonates_list
-
+                    +toggle_doc_read
+                    +read_by
                     +published
                     .ui.divider
                     if can_edit

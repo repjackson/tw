@@ -7,11 +7,6 @@ template(name='transactions')
         table.ui.selectable.unstackable.table
                 thead
                     tr
-                        // if parent.image_id
-                        //     th 
-                        // if parent.image_url
-                        //     th 
-                        th
                         th Title
                         th Sale Price
                         th When
@@ -21,13 +16,11 @@ template(name='transactions')
                 tbody
                     each transactions
                         tr
-                            if parent.image_id
-                                td 
-                                    img.ui.small.image(src="{{c.url parent.image_id}}")
-                            if parent.image_url
-                                td
-                                    img.ui.small.image(src=parent.image_url)
                             td 
+                                if parent.image_id
+                                    img.ui.avatar.image(src="{{c.url parent.image_id}}")
+                                if parent.image_url
+                                    img.ui.avatar.image(src=parent.image_url)
                                 a.ui.header(href="#{parent.type}/#{parent._id}/view") 
                                     |#{parent.title}
                                 each parent.tags

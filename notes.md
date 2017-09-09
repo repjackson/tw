@@ -131,7 +131,10 @@ working request tori feedback feature
     transaction mark complete
 transaction review, voting and tags
     transaction child documents
-messaging system overhaul
+messaging system to conversations
+
+! read by stats with numbers !
+
 profile sections review
 child doc component for docs (journal entries), conversation view under lightbank, 
     'start conversation about this'
