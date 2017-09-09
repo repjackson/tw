@@ -188,9 +188,21 @@ publishComposite 'doc', (id)->
                         _id: doc.author_id
             }
             {
+                # parent doc
                 find: (doc)->
                     Docs.find
                         _id: doc.parent_id
+            }
+            {
+                # children doc
+                find: (doc)->
+                    Docs.find
+                        parent_id: doc._id
+                children: [
+                    find: (child_doc)->
+                        Meteor.users.find
+                            _id: child_doc.author_id
+                    ]
             }
         ]
     }
@@ -216,17 +228,17 @@ Meteor.publish 'doc_by_tags', (tags)->
 #     }
     
         
-Meteor.publish 'my_friends', ->
-    me = Meteor.users.findOne @userId
-    if me.friends
-        Meteor.users.find {_id: $in: me.friends}
-        # fields: 
-        #     tags: 1
-        #     courses: 1
-        #     friends: 1
-        #     points: 1
-        #     status: 1
-        #     profile: 1
+# Meteor.publish 'my_friends', ->
+#     me = Meteor.users.findOne @userId
+#     if me.friends
+#         Meteor.users.find {_id: $in: me.friends}
+#         # fields: 
+#         #     tags: 1
+#         #     courses: 1
+#         #     friends: 1
+#         #     points: 1
+#         #     status: 1
+#         #     profile: 1
     
     
     
@@ -249,13 +261,13 @@ Meteor.publish 'person', (id)->
             
             
         
-Meteor.publish 'person_card', (id)->
-    # console.log id
-    Meteor.users.find id,
-        fields:
-            tags: 1
-            profile: 1
-            points: 1        
+# Meteor.publish 'person_card', (id)->
+#     # console.log id
+#     Meteor.users.find id,
+#         fields:
+#             tags: 1
+#             profile: 1
+#             points: 1        
             
             
 Meteor.publish 'people', (selected_people_tags)->
@@ -381,3 +393,11 @@ publishComposite 'author_ids', (selected_tags, selected_author_ids, type)->
                 }
             ]    
     }
+    
+    
+    
+Meteor.publish 'usernames', ->
+    Meteor.users.find()
+        # fields: 
+        #     username: 1
+        #     profile: 1

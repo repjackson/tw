@@ -145,25 +145,24 @@ template(name='delete_link')
     a#delete Delete
 
 template(name='published')
-    .ui.basic.segment
-        .ui.dividing.header Visibility
-        if published
-            .ui.large.green.label
-                i.unlock.icon
-                |Public
-            if can_edit
-                #unpublish.ui.icon.basic.button
-                    // i.toggle.on.green.icon
-                    i.lock.icon
-                    // | Make Private
-        else
-            .ui.large.basic.label
+    .ui.dividing.header Visibility
+    if published
+        .ui.large.green.label
+            i.unlock.icon
+            |Public
+        if can_edit
+            #unpublish.ui.icon.basic.button
+                // i.toggle.on.green.icon
                 i.lock.icon
-                | Private
-            if can_edit
-                #publish.ui.icon.basic.button
-                    i.unlock.icon
-                    // | Make Public
+                // | Make Private
+    else
+        .ui.large.basic.label
+            i.lock.icon
+            | Private
+        if can_edit
+            #publish.ui.icon.basic.button
+                i.unlock.icon
+                // | Make Public
 
 
 

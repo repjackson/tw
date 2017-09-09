@@ -17,7 +17,8 @@ template(name='conversations')
                     #view_published_conversations.ui.basic.button 
                         i.lock.icon
                         |Private
-            +conversation_cloud
+            +tag_filter type='conversation'
+            +participant_filter type='conversation'
         .twelve.wide.column
             .ui.cards
                 each conversations
@@ -39,7 +40,7 @@ template(name='conversation')
             div
                 i.tags.icon
                 each tags
-                    .ui.basic.label #{this}
+                    .ui.basic.label(class=tag_class) #{this}
             div
                 .ui.horizontal.list
                     each participants

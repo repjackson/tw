@@ -102,16 +102,20 @@
                     a.item(href='/journal' class="{{isActivePath '/journal'}}") 
                         i.pencil.icon
                         | Journal
-                    a.item(href='/bookmarks' class="{{isActivePath '/bookmarks'}}")
-                        i.bookmark.outline.icon
-                        | Bookmarks
+                    // a.item(href='/bookmarks' class="{{isActivePath '/bookmarks'}}")
+                    //     i.bookmark.outline.icon
+                    //     | Bookmarks
                         // .ui.menu
                         //     each bookmark_docs
                         //         each tags
                         //             .ui.tiny.basic.label #{this}
+                    .ui.divider
                     a.icon.item(href='/karma' class="{{isActivePath '/karma'}}")
                         i.heartbeat.outline.icon
                         | Karma
+                    a.icon.item(href='/transactions' class="{{isActivePath '/transactions'}}")
+                        i.exchange.icon
+                        | Transactions
                     a.mobile.hidden.item(href='/services' class="{{isActivePath '/services'}}") 
                         i.configure.icon
                         |Services
@@ -120,8 +124,6 @@
                         i.setting.icon
                         | Settings
                     if isInRole 'admin'
-                        .ui.horizontal.divider
-                            i.red.configure.icon
                         a.icon.item(href='/admin/dashboard' class="{{isActivePath '/admin/dashboard'}}")
                             i.configure.red.icon
                             | Admin

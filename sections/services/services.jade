@@ -88,7 +88,7 @@ template(name='service_item')
                 |by #{author.name}
             .meta
                 each tags
-                    .ui.tiny.basic.label(class=tag_class) #{this}
+                    .ui.small.label(class=tag_class) #{this}
             .description
                 | !{content}
                 a.ui.basic.teal.button(href="/service/#{_id}/view") 

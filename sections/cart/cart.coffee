@@ -75,7 +75,7 @@ if Meteor.isClient
                     return true
                 else
                     console.log false
-                    return true
+                    return false
             else 
                 return true
             

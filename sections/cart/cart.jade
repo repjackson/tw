@@ -33,8 +33,6 @@ template(name='cart_checkout')
         table.ui.table
             thead
                 tr
-                    if parent.image_id
-                        th 
                     th Title
                     th Type
                     th Price ($)
@@ -44,10 +42,11 @@ template(name='cart_checkout')
             tbody
                 each cart_items
                     tr
-                        if parent.image_id
-                            td 
-                                img.ui.small.image(src="{{c.url parent.image_id}}")
                         td 
+                            if parent.image_id
+                                img.ui.avatar.image(src="{{c.url parent.image_id}}")
+                            if parent.image_url
+                                img.ui.avatar.image(src=parent.image_url)
                             a.ui.header(href="/#{parent.type}/#{parent._id}/view") 
                                 |#{parent.title}
                             div

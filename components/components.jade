@@ -107,10 +107,11 @@ template(name='request_tori_feedback')
 template(name='parent_doc_segment')
     if parent_id
         .ui.styled.fluid.accordion
-            .active.title
-                .ui.header In response to...
-                    i.dropdown.icon
-            .active.content
+            .title
+                i.vertically.flipped.share.icon
+                |In response to...
+                i.dropdown.icon
+            .content
                 |!{parent.content}
                 .ui.basic.center.aligned.segment
                     a.ui.basic.large.button(href="/lightbank/#{parent._id}/view" title='View Lightbank Entry')

@@ -17,40 +17,7 @@ template(name='service_view')
                             .content
                                 .description
                                     |!{content}
-                    
-                    h4.ui.horizontal.divider.header
-                        i.exchange.icon
-                        | #{title} Transactions
-                    table.ui.selectable.unstackable.table
-                            thead
-                                tr
-                                    th Sale Price
-                                    th When
-                                    th Buyer
-                                    th Has Completed
-                                    th Buyer Review
-                            tbody
-                                each child_transactions
-                                    tr
-                                        td 
-                                            if sale_dollar_price
-                                                |$#{sale_dollar_price}
-                                            |#{sale_point_price} point(s)
-                                        td
-                                            |#{when}
-                                        td
-                                            img.ui.avatar.image(src="{{c.url author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
-                                            |#{author.name}
-                                            with author
-                                                +staus_indicator
-                                        td
-                                            if completed
-                                                i.large.green.check.icon
-                                            else    
-                                                i.large.circle.outline.icon
-                                        td
-
-                    
+                    +service_transactions
                 .five.wide.column
                     .ui.header by 
                         img.ui.avatar.image(src="{{c.url author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
@@ -60,7 +27,32 @@ template(name='service_view')
 
                     if dollar_price
                         .ui.header Price: $#{dollar_price}
-                    .ui.header Price: #{point_price} point(s)
+                    .ui.basic.definition.table
+                        thead
+                            tr
+                                th
+                                th 
+                                    i.large.heartbeat.icon 
+                        tbody
+                            tr
+                                td Price
+                                td 
+                                    .ui.tiny.horizontal.statistic
+                                        .value #{point_price} 
+                                        .label points
+                                        
+                            tr
+                                td Your Balance
+                                td 
+                                    .ui.tiny.horizontal.statistic
+                                        .value #{currentUser.points}
+                                        .label points
+                            tr
+                                td Balance After Purchase
+                                td
+                                    .ui.tiny.horizontal.statistic
+                                        .value #{balance_after_transaction}
+                                        .label points
                     .ui.dividing.header Actions
                     +add_to_cart
                     +bookmark_button

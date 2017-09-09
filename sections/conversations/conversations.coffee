@@ -37,7 +37,7 @@ Meteor.methods
 
 if Meteor.isClient
     Template.conversations.onCreated ->
-        @autorun -> Meteor.subscribe('conversations', selected_conversation_tags.array(), selected_participant_ids.array())
+        @autorun -> Meteor.subscribe('conversations', selected_tags.array(), selected_participant_ids.array())
         @view_published = new ReactiveVar(true)
 
     Template.conversations.helpers
@@ -64,6 +64,12 @@ if Meteor.isClient
         'click #create_conversation': ->
             Meteor.call 'create_conversation', (err,id)->
                 FlowRouter.go "/conversation/#{id}/edit"
+
+    # 'click #create_conversation': ->
+    #     id = Docs.insert 
+    #         type: 'conversation'
+    #         participant_ids: [Meteor.userId()]
+    #     FlowRouter.go "/conversation/#{id}"
 
 
         'click #view_private_conversations': (e,t)-> 
@@ -209,15 +215,17 @@ if Meteor.isServer
         if selected_tags.length > 0 then match.tags = $all: selected_tags
         if view_published is true
             match.published = true
+            if selected_participant_ids.length > 0 then match.participant_ids = $in: selected_participant_ids
         else if view_published = false
             match.published = false
-            match.participant_ids = $in: [Meteor.userId()]
+            selected_participant_ids.push Meteor.userId()
+            match.participant_ids = $in: selected_participant_ids
         # if view_mode
         #     if view_mode is 'mine'
         #         match
         #         match.participant_ids = $in: [Meteor.userId()]
         # else
-        #     if selected_participant_ids.length > 0 then match.participant_ids = $in: selected_participant_ids
+            # if selected_participant_ids.length > 0 then match.participant_ids = $in: selected_participant_ids
                 
                 
         match.type = 'conversation'

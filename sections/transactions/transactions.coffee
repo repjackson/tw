@@ -26,5 +26,11 @@ if Meteor.isServer
                 { find: (transaction) ->
                     Docs.find transaction.parent_id
                     }
+                { find: (transaction) ->
+                    Meteor.users.find transaction.author_id
+                    }
+                { find: (transaction) ->
+                    Meteor.users.find transaction.recipient_id
+                    }
                 ]    
         }

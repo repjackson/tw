@@ -241,6 +241,7 @@ Template.participants.events
         Docs.update FlowRouter.getParam('doc_id'),
             $addToSet: participant_ids: doc._id
         $('#participant_select').val("")
+   
     'click #remove_participant': (e,t)->
         # console.log @
         Docs.update FlowRouter.getParam('doc_id'),

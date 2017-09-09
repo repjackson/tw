@@ -57,3 +57,17 @@ template(name='username_filter')
             | #{this}
             // if isInRole 'admin'
             //     small #{this.count}
+
+
+template(name='participant_filter')
+    .ui.dividing.header Browse Participants
+    if selected_participant_ids
+        #clear_participants.ui.teal.icon.circular.button
+            i.remove.icon
+        each selected_participant_ids
+            .unselect_participant.ui.teal.circular.button
+                strong #{this}
+    each participant_tags
+        .ui.basic.circular.button.select_participant(class=cloud_tag_class) 
+            | #{this.username}
+            small #{this.count}
