@@ -48,19 +48,19 @@
             a.icon.item.item(href='/conversations' class="{{isActivePath '/conversations'}}") 
                 i.comments.outline.icon
             
-            // // a.ui.icon.dropdown.item(class="{{isActivePath '/notifications'}}" data-position="bottom center" data-content="Notifications")
-            // a.ui.icon.simple.dropdown.item
-            //     if unread_notifications_count
-            //         i.alarm.blue.icon
-            //     else
-            //         i.alarm.outline.icon
-            //     .ui.menu(style="right: 0;left: auto;")
-            //         a.item(href='/notifications') 
-            //             |View All
-            //             i.external.icon
-            //         .ui.divider
-            //         each unread_notifications
-            //             .item #{subject.name} #{predicate} #{object.name}
+            // a.ui.icon.dropdown.item(class="{{isActivePath '/notifications'}}" data-position="bottom center" data-content="Notifications")
+            a.ui.icon.simple.dropdown.item
+                if unread_notifications_count
+                    i.alarm.blue.icon
+                else
+                    i.alarm.outline.icon
+                .ui.menu(style="right: 0;left: auto;")
+                    a.item(href='/notifications') 
+                        |View All
+                        i.external.icon
+                    .ui.divider
+                    each unread_notifications
+                        .item #{subject.name} #{predicate} #{object.name}
 
             // a.icon.mobile.hidden.item(href='/bookmarks' class="{{isActivePath '/bookmarks'}}" data-position="bottom center" data-content="Bookmarks")
             //     i.bookmark.outline.icon

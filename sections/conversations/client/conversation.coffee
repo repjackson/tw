@@ -11,7 +11,9 @@ if Meteor.isClient
                 group_id: @_id },
                 sort: timestamp: 1
     
-    
+    Template.conversation_messages_pane.helpers
+        conversation_tag_class:->
+            if @valueOf() in selected_conversation_tags.array() then 'teal' else ''
     Template.conversation_messages_pane.helpers
         conversation: -> Docs.findOne @_id
     
@@ -27,8 +29,11 @@ if Meteor.isClient
     
     
     Template.conversation_messages_pane.events
-        'click .join_conversation': -> Meteor.call 'join_conversation', @_id
-        'click .leave_conversation': -> Meteor.call 'leave_conversation', @_id
+        'click .join_conversation': (e,t)-> 
+            Meteor.call 'join_conversation', @_id, ->
+        'click .leave_conversation': (e,t)-> 
+            Meteor.call 'leave_conversation', @_id, ->
+
     
         'keydown .add_message': (e,t)->
             e.preventDefault

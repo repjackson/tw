@@ -35,17 +35,16 @@ template(name='service_view')
                                     i.large.heartbeat.icon 
                         tbody
                             tr
-                                td Price
-                                td 
-                                    .ui.tiny.horizontal.statistic
-                                        .value #{point_price} 
-                                        .label points
-                                        
-                            tr
                                 td Your Balance
                                 td 
                                     .ui.tiny.horizontal.statistic
                                         .value #{currentUser.points}
+                                        .label points
+                            tr
+                                td Price
+                                td 
+                                    .ui.tiny.horizontal.statistic
+                                        .value #{point_price} 
                                         .label points
                             tr
                                 td Balance After Purchase

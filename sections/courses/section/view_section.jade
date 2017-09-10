@@ -98,10 +98,10 @@ template(name='view_section')
                                 .popup_takeaway.ui.basic.large.button 
                                     i.external.icon
                                     |Video Takeaways
-                    else
-                        .mark_video_complete.ui.basic.fluid.button 
-                            i.square.outline.icon
-                            |Mark Video Watched
+                        else
+                            .mark_video_complete.ui.basic.fluid.button 
+                                i.square.outline.icon
+                                |Mark Video Watched
                 with section
                     if isInRole 'admin'
                         +questions tag='reflection' parent_id=this._id title='Reflection Questions'

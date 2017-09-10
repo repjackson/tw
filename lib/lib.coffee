@@ -54,6 +54,8 @@ Docs.helpers
     only_child: -> Docs.findOne parent_id: @_id
     parent: -> Docs.findOne @parent_id
     recipient: -> Meteor.users.findOne @recipient_id
+    subject: -> Meteor.users.findOne @subject_id
+    object: -> Meteor.users.findOne @object_id
 
 
 

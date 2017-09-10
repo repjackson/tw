@@ -11,8 +11,12 @@ template(name='conversation_view')
                     +conversation_messages_pane this
                 .five.wide.column
                     .ui.dividing.header Stats
-                    p Total Messages: #{message_count}
-                    p Unread Messages: #{unread_message_count} 
+                    .ui.small.horizontal.statistic
+                        .value #{message_count}
+                        .label Total Messages
+                    .ui.small.horizontal.statistic
+                        .value #{unread_message_count} 
+                        .label Unread Messages
                     .ui.dividing.header Description
                     |!{content}
                     .ui.dividing.header Participants

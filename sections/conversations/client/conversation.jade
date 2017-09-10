@@ -1,7 +1,14 @@
 template(name='full_conversation_view')
     .ui.fluid.card
         .content
-            .ui.header !{content}    
+            span.right.floated
+                if isInRole 'admin'
+                    +delete_button
+                a.ui.right.floated.basic.button(href="/conversation/#{_id}/view")
+                    |Full
+                    i.right.arrow.icon
+            .ui.header 
+                |!{content}    
             // if published    
             //     span.right.floated
             //         i.unlock.icon
@@ -13,7 +20,7 @@ template(name='full_conversation_view')
             div
                 i.tags.icon
                 each tags
-                    .ui.basic.label(class=tag_class) #{this}
+                    .ui.basic.label(class=conversation_tag_class) #{this}
             div
                 .ui.horizontal.list
                     each participants
@@ -21,35 +28,33 @@ template(name='full_conversation_view')
                             img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
                             |#{name}
                             +staus_indicator
-            .ui.divider
             +conversation_messages_pane this
-        if currentUser
-            .extra.content
-                if published
-                    if can_edit
-                        .ui.basic.button.close_conversation
-                            i.red.remove.icon
-                            |Close
-                    if in_conversation
-                        .ui.basic.button.leave_conversation
-                            i.red.minus.icon
-                            |Leave
-                    else
-                        .ui.basic.button.join_conversation
-                            i.green.plus.icon
-                            |Join
-                a.ui.right.floated.basic.teal.button(href="/conversation/#{_id}/view")
-                    |Full
-                    i.right.arrow.icon
                     
 template(name='minimal_conversation_view')
 
 template(name='conversation_messages_pane')
+    .ui.horizontal.list.participant_list
+        if published
+            .item
+                if in_conversation
+                    .ui.basic.button.leave_conversation
+                        i.sign.out.icon
+                        |Leave
+                else
+                    .ui.basic.button.join_conversation
+                        i.sign.in.icon
+                        |Join
+        each participants
+            .item.participant_item
+                img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                |#{name}
+                +staus_indicator
+    .ui.divider
     .description.conversation_messages
         each conversation_messages
             +conversation_message
     if in_conversation
         .ui.divider
         .ui.large.left.icon.fluid.transparent.input
-            i.green.plus.icon
+            i.plus.icon
             input.add_message(type='text' placeholder='Add Message')

@@ -32,21 +32,24 @@ if Meteor.isClient
             else 'outline'
 
     Template.transaction_view.events
-        'click #mark_complete': ->
+        'click #mark_complete': (e,t)->
             Docs.update FlowRouter.getParam('doc_id'),
                 $set: completed: true
-        'click #unmark_complete': ->
+            $(e.currentTarget).closest('.button').transition('pulse')
+        'click #unmark_complete': (e,t)->
             Docs.update FlowRouter.getParam('doc_id'),
                 $set: completed: false
+            $(e.currentTarget).closest('.button').transition('pulse')
+
 
         'click .vote_up': (e,t)-> 
             # console.log @
             Meteor.call 'transaction_vote_up', @_id
-            # $(e.currentTarget).closest('.vote_up').transition('pulse')
+            $(e.currentTarget).closest('.vote_up').transition('pulse')
     
         'click .vote_down': (e,t)-> 
             Meteor.call 'transaction_vote_down', @_id
-            # $(e.currentTarget).closest('.vote_down').transition('pulse')
+            $(e.currentTarget).closest('.vote_down').transition('pulse')
 
 
 if Meteor.isServer
