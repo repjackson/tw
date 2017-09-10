@@ -11,7 +11,7 @@ template(name='conversation_message')
                     .text
                         | #{body}
                     .actions
-                        if is_author
+                        if can_edit
                             +delete_link
                         else
                             if read

@@ -5,7 +5,7 @@ template(name='person_tags')
                 i.user.icon
                 i.tags.corner.icon
             | Person Tags
-        .ui.sub.header #{person.name} can only see your tags
+        .ui.sub.header Only #{person.name} can see your tags.
         if is_person
             each person_tags
                 .ui.basic.label #{this}

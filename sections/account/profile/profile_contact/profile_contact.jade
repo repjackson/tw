@@ -6,6 +6,12 @@ template(name='profile_contact')
         with conversation_with_user
             +conversation_messages_pane
     else
-        #create_conversation_with_user.ui.teal.button 
-            i.plus.icon
-            |Start Conversation with #{user.profile.first_name}
+        if currentUser
+            #create_conversation_with_user.ui.teal.button 
+                i.plus.icon
+                |Start Conversation with #{user.profile.first_name}
+        else
+            a.ui.disabled.teal.button(href='/sign-in')
+                i.plus.icon
+                |Sign in to contact #{user.profile.first_name}
+        

@@ -1,19 +1,20 @@
 template(name='following')
     with target_user
         .ui.segment
-            .ui.header
-                |You are
-                if is_following
-                    |following #{name}. 
-                    #unfollow.ui.teal.basic.compact.right.floated.button 
-                        i.cancel.icon
-                        |Unfollow
-                else
-                    |not following #{name}. 
-                    #follow.ui.teal.compact.right.floated.button 
-                        i.alarm.outline.icon
-                        |Follow
-            .ui.hidden.divider
+            if currentUser
+                .ui.header
+                    |You are
+                    if is_following
+                        |following #{name}. 
+                        #unfollow.ui.teal.basic.compact.right.floated.button 
+                            i.cancel.icon
+                            |Unfollow
+                    else
+                        |not following #{name}. 
+                        #follow.ui.teal.compact.right.floated.button 
+                            i.alarm.outline.icon
+                            |Follow
+                .ui.hidden.divider
             .ui.two.column.grid
                 .column
                     .ui.dividing.header Following #{name}

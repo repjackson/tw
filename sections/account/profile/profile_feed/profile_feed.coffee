@@ -6,7 +6,8 @@ if Meteor.isClient
     Template.profile_feed.helpers 
         feed_items: ->
             user = Meteor.users.findOne username: FlowRouter.getParam('username')
-            Notifications.find {
+            Docs.find {
+                type: 'notification'
                 $or: [
                     { subject_id: user._id }
                     { object_id: user._id }
@@ -19,7 +20,8 @@ if Meteor.isClient
 if Meteor.isServer
     Meteor.publish 'profile_feed', (username)->
         user = Meteor.users.findOne username: username
-        Notifications.find {
+        Docs.find {
+            type: 'notification'
             $or: [
                 { subject_id: user._id }
                 { object_id: user._id }
