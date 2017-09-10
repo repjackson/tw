@@ -55,8 +55,10 @@ template(name='lightbank_edit')
                     //                     input#toggle_complete(type='checkbox' checked=can_complete)
                     //                     label(for='complete') Complete
                     +published
+                    .ui.header by #{author.name}
+
                     if isInRole 'admin'
                         +edit_author
 
-                    a.ui.fluid.green.big.button(href="/lightbank/#{_id}/view") Save
-                    #delete_doc.ui.small.fluid.red.basic.button Delete
+                    a.ui.fluid.green.big.button(href="/lightbank/#{_id}/view") Save Lightbank Item
+                    #delete_doc.ui.small.fluid.red.button Delete

@@ -60,11 +60,11 @@ template(name='lightbank_doc_view')
             //             i.expand.icon
             if has_content
                 |!{content}
-        // .content
-        //     .meta
-        //         i.tags.icon
-        //         each tags
-        //             .ui.tiny.circular.button.tag(class=tag_class) #{this}
+        .content
+            .meta
+                i.tags.icon
+                each tags
+                    .ui.tiny.circular.button.tag(class=tag_class) #{this}
         .content
             // .ui.hidden.divider
             // if can_resonate

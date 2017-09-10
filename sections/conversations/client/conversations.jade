@@ -22,58 +22,6 @@ template(name='conversations')
         .twelve.wide.column
             .ui.cards
                 each conversations
-                    +conversation
+                    +full_conversation_view
 
-
-template(name='conversation')
-    .ui.fluid.card
-        .content
-            .ui.header !{content}    
-            // if published    
-            //     span.right.floated
-            //         i.unlock.icon
-            //         |Published
-            // else
-            //     span.right.floated
-            //         i.lock.icon
-            //         |Private
-            div
-                i.tags.icon
-                each tags
-                    .ui.basic.label(class=tag_class) #{this}
-            div
-                .ui.horizontal.list
-                    each participants
-                        .item
-                            img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
-                            |#{name}
-                            +staus_indicator
-            .ui.divider
-            .description
-                each conversation_messages
-                    +conversation_message
-                if in_conversation
-                    .ui.divider
-                    .ui.large.left.icon.fluid.transparent.input
-                        i.green.plus.icon
-                        input.add_message(type='text' placeholder='Add Message')
-        if currentUser
-            .extra.content
-                if published
-                    if can_edit
-                        .ui.basic.button.close_conversation
-                            i.red.remove.icon
-                            |Close
-                    if in_conversation
-                        .ui.basic.button.leave_conversation
-                            i.red.minus.icon
-                            |Leave
-                    else
-                        .ui.basic.button.join_conversation
-                            i.green.plus.icon
-                            |Join
-                a.ui.right.floated.basic.teal.button(href="/conversation/#{_id}/view")
-                    |Full
-                    i.right.arrow.icon
-                    
 

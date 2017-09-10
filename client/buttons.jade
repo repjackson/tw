@@ -33,11 +33,18 @@ template(name='thanks_button')
                 |Cool
 
 template(name='reflect_button')
-    #reflect.ui.circular.basic.button
-        i.large.icons
-            i.talk.outline.icon
-            i.corner.share.icon
-        |Reflect in Journal
+    if currentUser
+        #reflect.ui.circular.basic.button
+            i.large.icons
+                i.talk.outline.icon
+                i.corner.share.icon
+            |Reflect in Journal
+    else
+        .ui.circular.basic.disabled.button
+            i.large.icons
+                i.talk.outline.icon
+                i.corner.share.icon
+            |Reflect in Journal
 
 template(name='big_both_voter')
     i.thumbs.up.link.huge.icon.vote_up(class=vote_up_button_class)

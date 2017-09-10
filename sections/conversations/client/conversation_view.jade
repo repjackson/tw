@@ -7,12 +7,12 @@ template(name='conversation_view')
             h1.ui.center.aligned.header View Conversation 
             .ui.grid
                 .ten.wide.column
-                    +conversation
-                    if published
-                        +comments
-                    +doc_matches
-
+                    // +minimal_conversation_view this
+                    +conversation_messages_pane this
                 .five.wide.column
+                    .ui.dividing.header Stats
+                    p Total Messages: #{message_count}
+                    p Unread Messages: #{unread_message_count} 
                     .ui.dividing.header Description
                     |!{content}
                     .ui.dividing.header Participants

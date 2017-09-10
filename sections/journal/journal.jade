@@ -8,9 +8,10 @@ template(name='journal')
         // #convert_journal_docs.ui.button Convert Journal Docs
         .ui.stackable.grid
             .four.wide.column
-                #add_journal_entry.ui.basic.fluid.button
-                    i.green.plus.icon
-                    |Add Journal Entry
+                if currentUser
+                    #add_journal_entry.ui.basic.fluid.button
+                        i.green.plus.icon
+                        |Add Journal Entry
                 .ui.hidden.divider
                 +view_mode_button
                 #cloud
