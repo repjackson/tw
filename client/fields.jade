@@ -89,7 +89,7 @@ template(name='edit_image')
                 label image
                 .ui.large.image
                     img(src="{{c.url image_id width=500 crop='fit'}}")
-                    a#remove_photo.ui.top.left.attached.link.blue.label remove
+                    a#remove_photo.ui.top.left.attached.link.blue.label Remove
                     .ui.bottom.right.attached.blue.label Image Id: #{image_id}
             else
                 unless image_url
@@ -103,7 +103,7 @@ template(name='edit_image')
                 label image
                 .ui.large.image
                     img(src=image_url)
-                    a#remove_photo.ui.top.left.attached.link.blue.label remove
+                    a#remove_image_url.ui.top.left.attached.link.blue.label Remove
                 .ui.label Image URL: #{image_url}
             else
                 unless image_id

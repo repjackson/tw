@@ -1,45 +1,44 @@
 template(name='lightbank')
-    .ui.container
-        .ui.center.aligned.basic.segment
-            +doc_content tags='lightbank,blurb'
-            // .ui.blue.four.item.stackable.menu
-            //     a#set_mode_to_all.item(class=all_item_class) 
-            //         i.sun.yellow.icon
-            //         |All
-            //     a#toggle_resonates.item(class=resonates_item_class) 
-            //         i.heartbeat.icon
-            //         |Resonates
-            //     a#toggle_bookmarked.item(class=bookmarked_item_class) 
-            //         i.bookmark.icon
-            //         |Bookmarked
-            //     a#toggle_completed.item(class=completed_item_class) 
-            //         i.checkmark.box.icon
-            //         |Completed
-    
-        .ui.stackable.grid
-            .five.wide.column
-                +lightbank_cloud
-                if isInRole 'admin'
-                    .ui.two.item.stackable.menu
-                        a#toggle_published.item(class=published_item_class) 
-                            i.red.unhide.icon
-                            |Published (#{published_count})
-                        a#toggle_unpublished.item(class=unpublished_item_class) 
-                            i.red.hide.icon
-                            |Unpublished (#{unpublished_count})
-                    if selected_tags
-                        #add.ui.blue.button
-                            i.plus.icon
-                            |Add with Selected Tags
-                    else
-                        #add_lightbank_doc.ui.icon.basic.fluid.button
-                            i.plus.icon
-                            |Add Lightbank Item
-            
-            .eleven.wide.column
-                .ui.centered.stackable.cards
-                    each docs
-                        +lightbank_doc_view
+    .ui.center.aligned.basic.segment
+        +doc_content tags='lightbank,blurb'
+        // .ui.blue.four.item.stackable.menu
+        //     a#set_mode_to_all.item(class=all_item_class) 
+        //         i.sun.yellow.icon
+        //         |All
+        //     a#toggle_resonates.item(class=resonates_item_class) 
+        //         i.heartbeat.icon
+        //         |Resonates
+        //     a#toggle_bookmarked.item(class=bookmarked_item_class) 
+        //         i.bookmark.icon
+        //         |Bookmarked
+        //     a#toggle_completed.item(class=completed_item_class) 
+        //         i.checkmark.box.icon
+        //         |Completed
+
+    .ui.stackable.grid
+        .six.wide.column
+            +lightbank_cloud
+            if isInRole 'admin'
+                .ui.two.item.stackable.menu
+                    a#toggle_published.item(class=published_item_class) 
+                        i.red.unhide.icon
+                        |Published (#{published_count})
+                    a#toggle_unpublished.item(class=unpublished_item_class) 
+                        i.red.hide.icon
+                        |Unpublished (#{unpublished_count})
+                if selected_tags
+                    #add.ui.blue.button
+                        i.plus.icon
+                        |Add with Selected Tags
+                else
+                    #add_lightbank_doc.ui.icon.basic.fluid.button
+                        i.plus.icon
+                        |Add Lightbank Item
+        
+        .ten.wide.column
+            .ui.centered.stackable.cards
+                each docs
+                    +lightbank_doc_view
         
 
 
@@ -53,7 +52,7 @@ template(name='lightbank_doc_view')
                     .image
                         img(src="{{c.url image_id}}")
                 if image_url
-                    .ui.fluid.image
+                    .ui.large.image
                         img(src=image_url)
             // .content
             //     span.right.floated 
@@ -75,7 +74,7 @@ template(name='lightbank_doc_view')
             // if can_bookmark
             +bookmark_button
             a.ui.basic.blue.button(href="/lightbank/#{_id}/view")
-                |View
+                |Full
                 i.right.chevron.icon
             if can_edit
                 a.ui.basic.button(href="/lightbank/#{_id}/edit")

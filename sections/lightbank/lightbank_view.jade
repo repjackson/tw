@@ -21,12 +21,12 @@ template(name='lightbank_view')
                     if has_content
                         |!{content}
                     // if journal_prompt
-                    +journal_responses
+                    // +journal_responses
                     +comments    
-                    +tag_rating
+                    // +tag_rating
                     if watson
                         +analyzed_watson_keywords
-                    +child_docs
+                    // +child_docs
                 .five.wide.column
                     .ui.dividing.header Actions
                     +bookmark_button

@@ -155,10 +155,17 @@ Template.edit_image.events
                     # Do Stuff with res
                     # console.log res
                     Docs.update @_id, 
-                        $unset: image_id: 1
+                        $unset: 
+                            image_id: 1
 
                 else
                     throw new Meteor.Error "it failed miserably"
+
+    'click #remove_image_url': ->
+        Docs.update @_id, 
+            $unset: 
+                image_url: 1
+        
 
     #         console.log Cloudinary
     # 		Cloudinary.delete "37hr", (err,res) ->

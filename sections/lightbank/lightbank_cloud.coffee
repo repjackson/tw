@@ -28,10 +28,10 @@ if Meteor.isClient
                 Tags.find { 
                     count: $lt: doc_count
                     name: $nin: media_tags
-                    }, limit:20
+                    }, limit:40
             else
                 # console.log 'media tags?', media_tags
-                cursor = Tags.find({name: $nin: media_tags}, limit:20)
+                cursor = Tags.find({name: $nin: media_tags}, limit:40)
                 
         media_tag_class: -> 
             button_class = []
@@ -43,9 +43,10 @@ if Meteor.isClient
         cloud_tag_class: ->
             button_class = []
             switch
-                when @index <= 5 then button_class.push ' large'
-                when @index <= 12 then button_class.push ' '
-                when @index <= 20 then button_class.push ' small'
+                when @index <= 10 then button_class.push ' large'
+                when @index <= 20 then button_class.push ' '
+                when @index <= 30 then button_class.push ' small'
+                when @index <= 45 then button_class.push ' mini'
             return button_class
     
         selected_tags: -> selected_tags.array()
