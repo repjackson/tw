@@ -1,6 +1,6 @@
-template(name='tag_rating')
+template(name='tag_ratings')
     .ui.dividing.header Tag Ratings
-    each article_tags
+    each document_tags
         .ui.basic.label #{this}
     .ui.list
         each ratings
@@ -15,6 +15,11 @@ template(name='tag_rating')
                     .description
                         each tags
                             .ui.small.basic.label #{this}
+
+
+
+
+template(name='tag_rate')
     if currentUser
         if my_rating
             .ui.dividing.header My Rating
@@ -23,12 +28,13 @@ template(name='tag_rating')
                     each tags
                         .ui.small.basic.label #{this}
                     .ui.hidden.divider
-                    +edit_button
-                    +delete_button
+                    +session_edit_button
+                    +delete_link
                 else
-                    +tags
-                    +edit_button
+                    .ui.form
+                        +tags
+                    +session_edit_button
         else
             #add_rating.ui.basic.button
                 i.plus.icon
-                |Rating
+                |Tag Rating

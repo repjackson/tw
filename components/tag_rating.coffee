@@ -1,8 +1,8 @@
 if Meteor.isClient
-    Template.tag_rating.onCreated ->
-        @autorun => Meteor.subscribe('article_tags', @data._id)
+    Template.tag_ratings.onCreated ->
+        @autorun => Meteor.subscribe('document_tags', @data._id)
     
-    Template.tag_rating.helpers
+    Template.tag_ratings.helpers
         ratings: ->
             Docs.find
                 type: 'tag_rating'
@@ -10,6 +10,7 @@ if Meteor.isClient
         
         person: -> Meteor.users.findOne username:FlowRouter.getParam('username') 
 
+    Template.tag_rate.helpers
         my_rating: ->
             # console.log @
             my_rating = Docs.findOne 
@@ -18,7 +19,7 @@ if Meteor.isClient
             # if my_rating then console.log my_rating
             my_rating
 
-    Template.tag_rating.events
+    Template.tag_rate.events
         'click #add_rating': ->
             new_rating_id = Docs.insert 
                 type: 'tag_rating'
@@ -28,7 +29,7 @@ if Meteor.isClient
 
 
 if Meteor.isServer
-    Meteor.publish 'article_tags', (doc_id)->
+    Meteor.publish 'document_tags', (doc_id)->
         Docs.find
             type: 'tag_rating'
             parent_id: doc_id

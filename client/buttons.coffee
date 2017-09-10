@@ -380,14 +380,14 @@ Template.bookmark_button.helpers
         else 'grey disabled'
         
     bookmarked: -> Meteor.user()?.bookmarked_ids and @_id in Meteor.user().bookmarked_ids
+
+
 Template.bookmark_button.events
     'click .bookmark_button': (e,t)-> 
         if Meteor.userId() 
             Meteor.call 'bookmark', Template.parentData(0)
             $(e.currentTarget).closest('.bookmark_button').transition('pulse')
         else FlowRouter.go '/sign-in'
-
-
 
 
 Template.pin_button.helpers

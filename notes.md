@@ -139,7 +139,7 @@ profile sections review
 child doc component for docs (journal entries), conversation view under lightbank, 
     'start conversation about this'
     public
-    inheerit tags
+    inherit tags
     include author
 date array tag facet
 karma

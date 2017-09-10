@@ -51,6 +51,7 @@ Docs.before.insert (userId, doc)->
 Docs.helpers
     author: -> Meteor.users.findOne @author_id
     when: -> moment(@timestamp).fromNow()
+    only_child: -> Docs.findOne parent_id: @_id
     parent: -> Docs.findOne @parent_id
     recipient: -> Meteor.users.findOne @recipient_id
 
