@@ -9,7 +9,6 @@ if Meteor.isClient
     
     Template.course_stats.onCreated ->
         @autorun => Meteor.subscribe('my_course_stats', selected_tags.array())
-        @autorun => Meteor.subscribe('pinned_tags', selected_tags.array())
     
         
     Template.course_stats.onRendered ->
@@ -18,7 +17,7 @@ if Meteor.isClient
         modules: -> 
             Docs.find
                 tags: $all: ['sol', "module progress"]
-                author_id: @userId
+                # author_id: Meteor.userId()
     
         stats_count: ->
             Docs.find(pinned_ids: $in: [Meteor.userId()]).count()

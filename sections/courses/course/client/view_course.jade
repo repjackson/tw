@@ -35,6 +35,9 @@ template(name='view_course')
                         a.item(href="/course/sol/pins" class="{{isActiveRoute name='course_pins'}}") 
                             i.pin.icon
                             |Pins
+                        a.item(href="/course/sol/stats" class="{{isActiveRoute name='course_stats'}}") 
+                            i.line.chart.icon
+                            |Stats
                     else
                         .disabled.item 
                             i.list.layout.icon

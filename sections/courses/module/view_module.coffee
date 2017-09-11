@@ -144,10 +144,21 @@ if Meteor.isClient
             sort: module_progress_percent: 1
     
 if Meteor.isServer
-    Meteor.publish 'module', (module_number)->
-        Docs.find
-            tags: $in: ['module']
-            number: module_number
+    publishComposite 'module', (module_number)->
+        {
+            find: ->
+                Docs.find
+                    tags: $in: ['module']
+                    number: module_number
+            children: [
+                { 
+                    find: (module_doc) ->
+                        Docs.find
+                            parent_id: module_doc._id
+                }
+            ]
+            
+        }
             
     Meteor.publish 'module_progress', (module_number)->
         Docs.find

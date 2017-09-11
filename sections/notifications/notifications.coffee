@@ -1,8 +1,3 @@
-@Notifications = new Meteor.Collection 'notifications'
-
-Notifications.helpers
-    when: -> moment(@timestamp).fromNow()
-    
 Meteor.methods
     add_notification: (subject_id, predicate, object_id) ->
         new_id = Docs.insert
@@ -79,7 +74,7 @@ if Meteor.isClient
     Template.notification.events
         'click .mark_read': (e,t)-> 
             $(e.currentTarget).closest('.notification_segment').transition('pulse')
-            DOcs.update @_id, $addToSet: read_by: Meteor.userId()
+            Docs.update @_id, $addToSet: read_by: Meteor.userId()
             
         'click .mark_unread': (e,t)-> 
             $(e.currentTarget).closest('.notification_segment').transition('pulse')
