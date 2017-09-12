@@ -13,23 +13,27 @@ template(name='questions')
         each question_docs
             if has_answered_previous
                 .ui.segment(class=question_segment_class)
-                    if isInRole 'admin'
-                        if published
-                            .ui.top.right.attached.blue.label Published
-                        else
-                            .ui.top.right.attached.basic.label Hidden
+                    // if isInRole 'admin'
+                    //     if published
+                    //         .ui.top.right.attached.blue.label Published
+                    //     else
+                    //         .ui.top.right.attached.basic.label Hidden
                     if is_editing
                         .ui.form
+                            .field
+                                +type
+                            .field
+                                +tags
                             .field
                                 +number
                             .field
                                 label Question
                                 textarea#body(rows='3') #{body}
                             // +tags
-                            +edit_parentid_field
-                            .ui.divider
-                            +session_edit_button
-                            +published
+                            // +edit_parentid_field
+                            // .ui.divider
+                            // +session_edit_button
+                            // +published
                     else
                         // .ui.top.right.attached.basic.label
                         .ui.header 
@@ -37,7 +41,7 @@ template(name='questions')
                             // if has_answered_question
                             //     .ui.right.corner.green.label
                             //         i.checkmark.icon
-                        +pin_button
+                        +pin_corner_button
                         if isInRole 'admin'
                             +session_edit_button
                             // if isInRole 'dev'
@@ -49,6 +53,7 @@ template(name='questions')
                             // +answers
                         // else 
                         // if currentUser
+                        // +answers
                         if has_answered_question
                             +answers
                         else
@@ -60,7 +65,7 @@ template(name='questions')
 template(name='answers')
     with my_answer
         .ui.segment(class=segment_class)
-            .ui.blue.ribbon.large.label(class=ribbon_class)
+            .ui.blue.top.right.attached.large.label(class=ribbon_class)
                 | Your Answer
                 if published
                     |(public)

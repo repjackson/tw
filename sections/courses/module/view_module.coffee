@@ -61,7 +61,14 @@ if Meteor.isClient
             
         download_count: ->
             module_number = FlowRouter.getParam('module_number')
-            Docs.find(tags: $all: ["sol", "module #{module_number}", "download"]).count()
+            module_doc = Docs.findOne 
+                tags: $in: ['module']
+                number: parseInt FlowRouter.getParam('module_number')
+
+            Docs.find(
+                parent_id: module_doc._id
+                type: 'download'
+                ).count()
             
         module_progress_doc: ->
             module_number = FlowRouter.getParam('module_number')

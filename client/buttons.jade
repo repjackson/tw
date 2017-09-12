@@ -87,7 +87,7 @@ template(name='session_edit_button')
             .edit_this.ui.icon.basic.button(title="Edit #{tags}" class=button_classes)
                 i.pencil.icon
         else
-            .save_doc.ui.basic.button(class=button_classes)
+            .save_doc.ui.green.button(class=button_classes)
                 i.check.icon
                 |Save
 template(name='session_edit_icon')
@@ -95,7 +95,7 @@ template(name='session_edit_icon')
         unless is_editing
             i.red.pencil.link.icon.edit_this(title=tags class=button_classes)
         else
-            .save_doc.ui.basic.button(class=button_classes)
+            .save_doc.ui.green.button(class=button_classes)
                 i.red.check.icon
                 |Save
 template(name='edit_button')
@@ -105,7 +105,7 @@ template(name='edit_button')
                 i.red.pencil.icon
                 |Edit
         else
-            .save_doc.ui.basic.button
+            .save_doc.ui.green.button
                 i.red.check.icon
                 |Save
                 
@@ -232,4 +232,6 @@ template(name='pin_button')
             // | Pin
         
         
-        
+template(name='pin_corner_button')
+    a.pin_button.ui.corner.link.label(class=pin_button_class title='Pin this') 
+        i.pin.icon

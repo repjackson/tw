@@ -41,6 +41,9 @@ db.docs.find({ tags:"['reflection', 'question']"}).forEach(
     }
 )
 
+Docs.update({tags: {$all:["question", "reflection"]}}, {$set: {type:"reflective_question"}}, {multi: true})
+
+
 facetadmin
 FRHuvjHTCNouzmFJ
 

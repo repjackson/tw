@@ -1,15 +1,15 @@
 if Meteor.isClient
     Template.questions.onCreated ->
         # @autorun -> Meteor.subscribe 'questions', FlowRouter.getParam('module_number'), FlowRouter.getParam('section_number')
-        @autorun => Meteor.subscribe 'questions', @data.tag, @data.parent_id
+        @autorun => Meteor.subscribe 'questions', @data.type, @data.parent_id
         # console.log @data
     
     Template.questions.helpers
         question_docs: -> 
-            parent_id = Template.currentData().parent_id
             Docs.find {
                 # tags: ["question"]
-                parent_id: parent_id
+                type: Template.currentData().type
+                parent_id: Template.currentData().parent_id
                 }
                 # tags: ["sol","module #{mod_num}","section #{sec_num}","reflective question"] }
                 , { sort: number: 1} 
@@ -23,9 +23,7 @@ if Meteor.isClient
                 parent_id: Template.currentData().parent_id
                 }).count()
 
-        questions_title: ->
-            if Template.currentData().title then Template.currentData().title else 'Questions'
-            
+        questions_title: -> if Template.currentData().title then Template.currentData().title else 'Questions'
             
         has_answered_previous: ->
             # console.log @number
@@ -59,16 +57,18 @@ if Meteor.isClient
                         
                             
         has_answered_question: ->
+            # console.log @_id
             found_answer = Docs.findOne
                 # tags: $in: ['answer']
                 parent_id: @_id
                 author_id: Meteor.userId()
-            # if found_answer
-            #     console.log "has answered question #{@number}"
-            #     console.log found_answer
-            # else
-            #     console.log "has NOT answered question #{@number}"
-
+            # if @number is 3
+            #     if found_answer
+            #         console.log "has answered question #{@number}"
+            #         console.log found_answer
+            #     else
+            #         console.log "has NOT answered question #{@number}"
+            return found_answer
         question_segment_class: ->
             found_answer = Docs.findOne
                 # tags: $in: ['answer']
@@ -142,27 +142,33 @@ if Meteor.isClient
             # answer_tags.push 'answer'
             # answer_tags.push "question #{@number}"
             # console.log 'answer tags', answer_tags
+            # console.log @_id
+            # console.log @number
             new_id = Docs.insert
                 tags: ["answer"]
                 parent_id: @_id
                 question_number: @number
+            # console.log Docs.findOne new_id
             Session.set 'editing_id', new_id
 
 if Meteor.isServer
     # publishComposite 'questions', (module_number, section_number)->
-    publishComposite 'questions', (tag, parent_id)->
+    publishComposite 'questions', (type, parent_id)->
         {
             find: ->
                 Docs.find 
-                    tags: $all: [tag, 'question']
+                    type: type
                     parent_id: parent_id
                     # tags: ["sol","module #{module_number}", "section #{section_number}","reflective question"]
             children: [
                 { 
                     find: (question) ->
-                        Docs.find
+                        # console.log 'question:', question
+                        cursor = Docs.find
                             # tags: $in: ["answer"]
                             parent_id: question._id
+                        # console.log cursor.fetch()
+                        return cursor
                     children: [
                         find: (answer) ->
                             Meteor.users.find

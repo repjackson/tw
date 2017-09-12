@@ -115,7 +115,7 @@ template(name='user_module_progress_list')
 
 template(name='debrief')
     with module
-        +questions tag='debrief' parent_id=this._id title='Lightwork Debrief Questions'
+        +questions type='debrief_question' parent_id=this._id title='Lightwork Debrief Questions'
 
 
 
@@ -131,5 +131,19 @@ template(name='lightwork')
         .content
             +doc_content tags=lightwork_transcript_tags
     .ui.hidden.divider
+
+    // .ui.header new lightwork
+    // +doc_id_content parent_id=module._id type='lightwork'
+    // .ui.hidden.divider
+    // .ui.styled.fluid.accordion
+    //     h3.title
+    //         i.large.newspaper.icon
+    //         | Transcript
+    //     .content
+    //         +doc_id_content parent_id=module._id type='lightwork_transcript'
+    // .ui.hidden.divider
+    // with module
+    //     +questions tag='lightwork' parent_id=this._id title='Lightwork Questions'
+        
     with module
-        +questions tag='lightwork' parent_id=this._id title='Lightwork Questions'
+        +questions type='lightwork_question' parent_id=this._id title='Lightwork Questions'

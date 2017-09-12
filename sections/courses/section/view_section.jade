@@ -104,9 +104,9 @@ template(name='view_section')
                                 |Mark Video Watched
                 with section
                     if isInRole 'admin'
-                        +questions tag='reflection' parent_id=this._id title='Reflection Questions'
+                        +questions type='reflective_question' parent_id=this._id title='Reflection Questions'
                     else if video_complete
-                        +questions tag='reflection' parent_id=this._id title='Reflection Questions'
+                        +questions type='reflective_question' parent_id=this._id title='Reflection Questions'
                 if section_progress_doc.questions_complete
                     unless section_complete
                         if question_docs.count

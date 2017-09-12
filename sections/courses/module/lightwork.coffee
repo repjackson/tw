@@ -21,7 +21,7 @@ if Meteor.isClient
             Docs.findOne 
                 tags: $in: ['module']
                 number: parseInt FlowRouter.getParam('module_number')
-    
+
             
         lightwork_tags: ->
             "sol,module #{FlowRouter.getParam('module_number')},lightwork"
