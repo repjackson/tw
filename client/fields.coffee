@@ -110,6 +110,13 @@ Template.type.events
             $set: type: type
             
             
+Template.edit_parent_id.events
+    'blur #parent_id': (e,t)->
+        parent_id = $('#parent_id').val()
+        Docs.update @_id,
+            $set: parent_id: parent_id
+            
+            
 Template.edit_image.events
     "change input[type='file']": (e) ->
         doc_id = @_id

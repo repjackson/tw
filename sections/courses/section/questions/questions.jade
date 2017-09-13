@@ -1,0 +1,149 @@
+template(name='questions')
+    // .ui.embed(data-source='vimeo', data-id='215750115', data-placeholder='/toriwebster-logotype-04.png')
+    unless question_docs.count
+        if isInRole 'admin'
+            #add_question.ui.basic.button 
+                i.plus.icon
+                |Add Question
+    else
+        .ui.horizontal.divider.header 
+            |#{questions_title} (#{question_docs.count})
+            if isInRole 'admin'
+                i#add_question.green.plus.link.icon(title='Add Question')
+        each question_docs
+            if has_answered_previous
+                +question
+                
+template(name='question')
+    .ui.segment(class=question_segment_class)
+        // if isInRole 'admin'
+        //     if published
+        //         .ui.top.right.attached.blue.label Published
+        //     else
+        //         .ui.top.right.attached.basic.label Hidden
+        if is_editing
+            .ui.form
+                .field
+                    +type
+                .field
+                    +tags
+                .field
+                    +number
+                .field
+                    label Question
+                    textarea#body(rows='3') #{body}
+                +delete_button
+                // +tags
+                // +edit_parentid_field
+                // .ui.divider
+                // +session_edit_button
+                // +published
+        else
+            // .ui.top.right.attached.basic.label
+            .ui.header 
+                |#{number}: #{body}
+                // if has_answered_question
+                //     .ui.right.corner.green.label
+                //         i.checkmark.icon
+            +pin_corner_button
+        if isInRole 'admin'
+            +session_edit_button
+                // if isInRole 'dev'
+                //     .ui.list
+                //         .item parent_id #{parent_id}
+                //         .item this id #{_id}
+            .ui.divider
+            // if isInRole 'admin'
+                // +answers
+            // else 
+            // if currentUser
+            +answers
+                    
+
+template(name='answers')
+    if has_answered_question
+        with my_answer
+            .ui.segment(class=segment_class)
+                .ui.blue.top.right.attached.large.label(class=ribbon_class)
+                    | Your Answer
+                    if published
+                        |(public)
+                    else
+                        |(private)
+                if can_edit
+                    unless is_editing
+                        +session_edit_button
+                if is_editing
+                    .ui.basic.segment
+                        .ui.form
+                            .field
+                                // label Answer
+                                textarea#body(rows='3') #{body}
+                        +request_tori_feedback
+                    +session_edit_button
+                    +published
+                    +delete_button
+                else
+                    .ui.basic.segment 
+                        if body
+                            |{{nl2br body}}
+        .ui.styled.fluid.accordion
+            .title
+                i.large.users.icon
+                | All Public Answers (#{all_answers.count})
+                i.dropdown.icon
+            .content
+                .ui.threaded.comments
+                    each all_answers
+                        .comment
+                            a(href='/profile/#{author.username}').avatar
+                                img.ui.avatar.image(src="{{c.url author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                            .content
+                                a(href='/profile/#{author.username}').author #{author.name}
+                                .metadata
+                                    span.date #{from_now}
+                                    unless is_author
+                                        +thanks_button
+                                .text
+                                    if body
+                                        | {{nl2br body}}
+                                // .actions
+                                    // a.reply(href='#') Reply
+                                    // +favorite
+                                    // +thanks_button
+                                    // if is_author
+                                    //     +delete_link
+                                    //     +edit_link
+        
+        if isInRole 'admin' 
+            .ui.styled.fluid.accordion
+                .title
+                    i.red.configure.icon
+                    | All Private Answers (#{all_private_answers.count})
+                    
+                    i.dropdown.icon
+                .content
+                    .ui.threaded.comments
+                        each all_private_answers
+                            .comment
+                                a(href='/profile/#{author.username}').avatar
+                                    img.ui.avatar.image(src="{{c.url author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                                .content
+                                    a(href='/profile/#{author.username}').author #{author.name}
+                                    .metadata
+                                        span.date #{from_now}
+                                        unless is_author
+                                            +thanks_button
+                                    .text
+                                        | #{body}
+                                    // .actions
+                                        // a.reply(href='#') Reply
+                                        // +favorite
+                                        // +voting
+                                        // if is_author
+                                        //     +delete_link
+                                        //     +edit_link
+    else
+        .add_answer.ui.basic.fluid.button 
+            i.plus.icon
+            |Add Answer

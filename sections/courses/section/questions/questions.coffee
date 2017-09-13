@@ -1,15 +1,19 @@
 if Meteor.isClient
     Template.questions.onCreated ->
-        # @autorun -> Meteor.subscribe 'questions', FlowRouter.getParam('module_number'), FlowRouter.getParam('section_number')
         @autorun => Meteor.subscribe 'questions', @data.type, @data.parent_id
+        # console.log @data
+    
+    Template.question.onCreated ->
+        @autorun => Meteor.subscribe 'question', @data._id
         # console.log @data
     
     Template.questions.helpers
         question_docs: -> 
+            parent_id = Template.currentData().parent_id
+            type = Template.currentData().type
             Docs.find {
-                # tags: ["question"]
-                type: Template.currentData().type
-                parent_id: Template.currentData().parent_id
+                type: type
+                parent_id: parent_id
                 }
                 # tags: ["sol","module #{mod_num}","section #{sec_num}","reflective question"] }
                 , { sort: number: 1} 
@@ -56,6 +60,16 @@ if Meteor.isClient
                             return false    
                         
                             
+    Template.answers.helpers
+        question_segment_class: ->
+            found_answer = Docs.findOne
+                # tags: $in: ['answer']
+                parent_id: @_id
+                author_id: Meteor.userId()
+            if found_answer then 'raised green' else ''
+                
+    
+    Template.answers.helpers
         has_answered_question: ->
             # console.log @_id
             found_answer = Docs.findOne
@@ -69,15 +83,7 @@ if Meteor.isClient
             #     else
             #         console.log "has NOT answered question #{@number}"
             return found_answer
-        question_segment_class: ->
-            found_answer = Docs.findOne
-                # tags: $in: ['answer']
-                parent_id: @_id
-                author_id: Meteor.userId()
-            if found_answer then 'raised green' else ''
-                
-    
-    Template.answers.helpers
+
         all_answers: ->
             Docs.find
                 parent_id: @_id
@@ -112,11 +118,9 @@ if Meteor.isClient
                 $set: body: body
             
     Template.answers.onRendered ->
-        @autorun =>
-            if @subscriptionsReady()
-                Meteor.setTimeout ->
-                    $('.ui.accordion').accordion()
-                , 500
+        Meteor.setTimeout ->
+            $('.ui.accordion').accordion()
+        , 1000
                 # console.log 'subs ready'
 
     
@@ -131,21 +135,25 @@ if Meteor.isClient
             
     
         'click #add_question': ->
-            # console.log Template.parentData()
-            # console.log Template.currentData()
+            question_tags = Template.parentData().tags
+            question_tags.push 'question'
+            question_tags.push "module #{Template.parentData().number}"
+            console.log Template.currentData()
             Docs.insert
-                parent_id: Template.parentData()._id
-                tags: ["question",Template.currentData().tag]
+                parent_id: Template.currentData().parent_id
+                tags: question_tags
+                type: Template.currentData().type
 
         'click .add_answer': ->
-            # answer_tags = @tags
-            # answer_tags.push 'answer'
-            # answer_tags.push "question #{@number}"
+            answer_tags = @tags
+            answer_tags.push 'answer'
+            answer_tags.push "question #{@number}"
             # console.log 'answer tags', answer_tags
             # console.log @_id
             # console.log @number
             new_id = Docs.insert
-                tags: ["answer"]
+                type: 'answer'
+                tags: answer_tags
                 parent_id: @_id
                 question_number: @number
             # console.log Docs.findOne new_id

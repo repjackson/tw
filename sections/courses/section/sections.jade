@@ -16,11 +16,17 @@ template(name='section')
                     .field
                         +title
                     .field
+                        +type
+                    .field
+                        |#{when}
+                    .field
+                        +edit_parent_id
+                    .field
+                        +tags
+                    .field
                         .label Takeaways
                         +content
-                    .field
-                        +published
-                        +delete_button
+                    +delete_button
                     .ui.hidden.divider
                     if isInRole 'admin'
                         +session_edit_icon
@@ -30,6 +36,8 @@ template(name='section')
                         i.green.big.check.circle.icon
                     |#{number}: #{title}
                 if isInRole 'admin'
+                    // p parent_id: #{parent_id}
+                    // p type: #{type}
                     +session_edit_icon
                 unless section_is_complete
                     .ui.divider

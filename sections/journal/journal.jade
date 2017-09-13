@@ -128,3 +128,5 @@ template(name='journal_doc_view')
             .ui.basic.segment
                 +doc_sentiment
                 +doc_emotion
+                if is_author
+                    +published

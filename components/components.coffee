@@ -40,7 +40,7 @@ if Meteor.isClient
         read: ->Meteor.userId() in @read_by
         
         
-        
+    
         
         
     Template.doc_matches.onCreated ->
@@ -73,19 +73,35 @@ if Meteor.isClient
                 
                 
                 
+    Template.request_tori_feedback.onCreated ->
+        @autorun => Meteor.subscribe 'feedback_requested', @data._id
                 
                 
     Template.request_tori_feedback.helpers
         feedback_requested: ->
-            
-            
+            Docs.findOne
+                type: 'tori_feedback_request'
+                parent_id: @_id
+                author_id: Meteor.userId()
+
+
     Template.request_tori_feedback.events
         'click #request_feedback': ->
-            console.log @
+            # console.log @
+            Docs.insert
+                type: 'tori_feedback_request'
+                parent_id: @_id
             
+        'click #cancel_request': ->
+            # console.log @
+            request_doc = Docs.findOne
+                type: 'tori_feedback_request'
+                parent_id: @_id
+                author_id: Meteor.userId()
+            Docs.remove request_doc._id
             
-            
-            
+           
+           
             
             
     Template.parent_doc_segment.onRendered ->
@@ -127,3 +143,11 @@ if Meteor.isServer
         if doc.read_by
             Meteor.users.find
                 _id: $in: doc.read_by
+                
+    Meteor.publish 'feedback_requested', (doc_id)->
+        Docs.find
+            type: 'tori_feedback_request'
+            parent_id: doc_id
+            author_id: Meteor.userId()
+                
+                

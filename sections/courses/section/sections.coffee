@@ -6,7 +6,13 @@ if Meteor.isClient
                 module_content: 'sections'
     
     Template.sections.onCreated ->
+        # @autorun -> Meteor.subscribe 'module', parseInt FlowRouter.getParam('module_number')
+        
         @autorun -> Meteor.subscribe 'sections', parseInt FlowRouter.getParam('module_number')
+        # module_doc = Docs.findOne 
+        #     tags: $in: ['module']
+        #     number: parseInt FlowRouter.getParam('module_number')
+        # console.log module_doc
 
 
     Template.section.onRendered ->
@@ -65,14 +71,14 @@ if Meteor.isClient
     Template.sections.helpers
         sections: ->
             Docs.find {
-                tags: $all: ['section'] },
+                type: 'section' },
                 sort: number: 1
                 
     Template.sections.events
         'click #add_section': ->
             module_number = parseInt FlowRouter.getParam('module_number')
             Docs.insert
-                tags: ['section']
+                type: 'section'
                 module_number: module_number
                 
     Template.section.events
@@ -111,7 +117,7 @@ if Meteor.isServer
         {
             find: ->
                 Docs.find
-                    tags: ['section']
+                    type: 'section'
                     module_number: module_number
             children: [
                 { find: (section) ->

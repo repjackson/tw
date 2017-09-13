@@ -35,6 +35,8 @@ template(name='view_module')
                                             if module_complete
                                                 i.small.circle.green.check.icon
                                             |Module #{module_number}: #{module.title}
+                                        if isInRole 'admin'
+                                            |module_id: #{module._id}
                     
                                     .four.wide.column
                                         if module_complete

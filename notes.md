@@ -160,3 +160,8 @@ stats and badges
 global read count
     read activation on click
     segment view 
+    
+    
+    
+Docs.find({tags:["section"]}).count()
+Docs.update({tags:["section"]}, {$set:{type:'section'}}, {multi:true})

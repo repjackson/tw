@@ -21,7 +21,7 @@ template(name='view_section')
                 .sixteen.wide.column
                     a.ui.basic.button(href="/course/sol/module/#{module.number}/sections") 
                         i.up.chevron.arrow.icon
-                        |#{module.number}: #{module.title}
+                        |Module #{module.number}: #{module.title}
             .center.aligned.row
                 .three.wide.column
                     if previous_section
@@ -31,6 +31,8 @@ template(name='view_section')
                             |#{previous_section.number}: #{previous_section.title}
                 .ten.wide.column
                     h1.ui.center.aligned.header Section #{section.number}: #{section.title}
+                    if isInRole 'admin'
+                        | section_id: #{section._id}
                 .three.wide.column
                     if section_complete
                         if next_section_exists
@@ -114,22 +116,23 @@ template(name='view_section')
                                 i.circle.outline.icon
                                 |Calculate Section Progress
                 unless is_editing
-                    if section_progress_doc.questions_complete
-                        if video_complete
+                    // if section_progress_doc.questions_complete
+                        // if video_complete
+                    if section_complete
+                        .ui.horizontal.divider.header
+                            i.green.check.circle.icon
+                            |Section Complete
+                        if next_section_exists
+                            a.go_to_next_section.ui.basic.fluid.button(href="#")
+                                | Continue to Section #{next_section_number}
+                                i.right.chevron.icon 
+                        else
                             .ui.horizontal.divider.header
                                 i.green.check.circle.icon
-                                |Section Complete
-                            if next_section_exists
-                                a.go_to_next_section.ui.basic.fluid.button(href="#")
-                                    | Continue to Section #{next_section_number}
-                                    i.right.chevron.icon 
-                            else
-                                .ui.horizontal.divider.header
-                                    i.green.check.circle.icon
-                                    | All Module #{module.number} Sections Complete
-                                a.ui.basic.fluid.button(href="/course/sol/module/#{module.number}") 
-                                    i.reply.icon
-                                    | Return to Module #{module.number}: #{module.title}
+                                | All Module #{module.number} Sections Complete
+                            a.ui.basic.fluid.button(href="/course/sol/module/#{module.number}") 
+                                i.reply.icon
+                                | Return to Module #{module.number}: #{module.title}
                     .ui.divider
                 #calculate_section_progress.ui.fluid.basic.button 
                     i.refresh.icon
@@ -147,11 +150,13 @@ template(name='view_section')
 template(name='user_section_progress_list')
     .ui.horizontal.divider.header
         i.red.configure.icon
-        |Member Progress
+        |Member Section Progress
     .ui.list    
         each user_section_progress_docs
             .item
                 .header #{author.name}
+                .content
+                    +edit_parent_id
                 .content
                     .ui.indicating.tiny.progress(data-percent=percent_complete)
                         .bar

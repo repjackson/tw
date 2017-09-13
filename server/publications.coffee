@@ -192,9 +192,42 @@ publishComposite 'doc', (id)->
                 find: (doc)->
                     Docs.find
                         _id: doc.parent_id
+                children: [
+                    # grandparent doc
+                    find: (parent_doc)->
+                        Docs.find
+                            _id: parent_doc.parent_id
+                    children: [
+                        # great grandparent doc
+                        find: (grandparent_doc)->
+                            Docs.find
+                                _id: grandparent_doc.parent_id
+                        children: [
+                            # great great grandparent doc
+                            find: (great_grandparent_doc)->
+                                Docs.find
+                                    _id: great_grandparent_doc.parent_id
+                            children: [
+                                # great great great grandparent doc
+                                find: (great_great_grandparent_doc)->
+                                    Docs.find
+                                        _id: great_great_grandparent_doc.parent_id
+                                ]
+            
+                            ]
+        
+                        ]
+            
+                    ]
             }
             {
-                # children doc
+                # parent doc
+                find: (doc)->
+                    Docs.find
+                        _id: doc.parent_id
+            }
+            {
+                # child doc
                 find: (doc)->
                     Docs.find
                         parent_id: doc._id
