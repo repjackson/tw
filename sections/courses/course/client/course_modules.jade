@@ -12,6 +12,12 @@ template(name='course_modules')
                     .ui.form
                         +number
                         +title
+                        .field
+                            +tags
+                        .field
+                            +edit_parent_id
+                        .field
+                            +type
                         +delete_button
                 else
                     a.ui.header(href="/course/sol/module/#{number}") 

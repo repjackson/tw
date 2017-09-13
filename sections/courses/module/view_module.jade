@@ -106,6 +106,8 @@ template(name='user_module_progress_list')
         each user_progress_docs
             .item
                 .header #{author.name}
+                    if isInRole 'admin'
+                        +edit_parent_id
                 .content
                     .ui.indicating.tiny.progress(data-percent=module_progress_percent)
                         .bar

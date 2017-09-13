@@ -170,7 +170,7 @@ if Meteor.isServer
     Meteor.publish 'module_progress', (module_number)->
         Docs.find
             tags: $all: ['sol', "module #{module_number}", "module progress"]
-            author_id: @userId
+            author_id: Meteor.userId()
             
             
     publishComposite 'user_module_progress_docs', (module_number)->
@@ -200,7 +200,7 @@ if Meteor.isServer
 
             module_section_count = 
                 Docs.find( 
-                    tags: $in: ['section']
+                    type: 'section'
                     module_number: module_number
                 ).count()
         
@@ -222,14 +222,14 @@ if Meteor.isServer
                 
             debrief_questions = 
                 Docs.find(
-                    tags: $all: ['debrief', 'question']
+                    type: 'debrief_question'
                     parent_id: module_doc._id
                 ).fetch()
                 
                 
             debrief_question_count = 
                 Docs.find(
-                    tags: $all: ['debrief', 'question']
+                    type: 'debrief_question'
                     parent_id: module_doc._id
                 ).count()
             # console.log debrief_question_count

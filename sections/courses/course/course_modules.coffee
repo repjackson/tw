@@ -20,19 +20,23 @@ if Meteor.isClient
         
         sol_modules: ->
             Docs.find {
-                tags: $all: ['sol','module'] },
+                type: 'module'},
                 sort: number: 1
         
         available_segment_class: ->
             module_progress_doc = Docs.findOne 
-                tags: ['sol', "module #{@number}", 'module progress']
+                # tags: ['sol', "module #{@number}", 'module progress']
+                type: 'module_progress'
+                parent_id: @_id
                 author_id: Meteor.userId()
             if module_progress_doc and module_progress_doc.module_progress_percent > 99 then 'green' else ''
 
             
         module_is_complete: ->
             module_progress_doc = Docs.findOne 
-                tags: ['sol', "module #{@number}", 'module progress']
+                # tags: ['sol', "module #{@number}", 'module progress']
+                type: 'module_progress'
+                parent_id: @_id
                 author_id: Meteor.userId()
             if module_progress_doc and module_progress_doc.module_progress_percent > 99 then true else false
 
@@ -46,21 +50,30 @@ if Meteor.isClient
                 if @number is 1 then return true
                 else
                     previous_module_number = @number - 1
+                    previous_module_doc = 
+                        Docs.findOne
+                            type: 'module'
+                            number: previous_module_number
                     previous_module_progress_doc = 
-                        Docs.findOne(tags: $all: ["module #{previous_module_number}", "module progress"])
+                        Docs.findOne 
+                            type: 'module_progress'
+                            parent_id: previous_module_doc._id
+                            author_id: Meteor.userId()
                     if previous_module_progress_doc and previous_module_progress_doc.module_progress_percent > 99 then return true else return false
 
                 return false
     
         module_progress_doc: ->
             Docs.findOne 
-                tags: ['sol', "module #{@number}", 'module progress']
+                type: 'module_progress'
+                parent_id: @_id
                 author_id: Meteor.userId()
         
         
         user_progress: ->
             progress_doc = Docs.findOne 
-                tags: ['sol', "module #{@number}", 'module progress']
+                type: 'module_progress'
+                parent_id: @_id
                 author_id: Meteor.userId()
             if progress_doc
                  progress_doc.module_progress_percent
@@ -70,18 +83,19 @@ if Meteor.isClient
     Template.course_modules.events
         'click #add_sol_module': ->
             Docs.insert
-                tags: ['sol','module']
+                type: 'module'
             
             
 if Meteor.isServer
     publishComposite 'sol_modules', ->
         {
-            find: -> Docs.find tags: $all: ['sol','module']
+            find: -> Docs.find type: 'module'
             children: [
                 { find: (module) ->
                     Docs.find 
-                        tags: $all: ['sol', 'module progress']
-                        author_id: @userId
+                        type: 'module_progress'
+                        parent_id: module._id
+                        author_id: Meteor.userId()
                     }
                 ]    
         }
