@@ -1,102 +1,117 @@
 template(name='view_module')
-    .context.example
-        +nav
+    // .context.example
+        // +nav
         // .ui.top.attached.demo.menu
         //     a.item
         //         i.sidebar.icon
         //         |     Menu
-        .ui.bottom.attached.basic.segment.pushable
-            +left_sidebar
-            .pusher
-                #main_area
-                    .ui.basic.fluid.segment
-                        .ui.basic.segment.container
-                            .ui.breadcrumb
-                                a.section(href='/') Home
-                                .divider  / 
-                                a.section(href='/courses') Courses
-                                .divider  / 
-                                a.section(href="/course/sol") Source of Light
-                                .divider  / 
-                                a.section(href="/course/sol/modules") Modules
-                                .divider  / 
-                                .active.section #{module.number}: #{module.title}
-                            .ui.hidden.divider
-                            .ui.stackable.grid
-                                .center.aligned.row
-                                    .four.wide.column
-                                        if previous_module
-                                            // a.ui.basic.small.button(href="/course/sol/module/#{module.number}/section/#{previous_section.number}")
-                                            a#go_to_previous_module.ui.basic.small.button(href="#")
-                                                i.left.chevron.icon
-                                                |#{previous_module.number}: #{previous_module.title}
-                                    .eight.wide.column
-                                        h1.ui.center.aligned.header 
-                                            if module_complete
-                                                i.small.circle.green.check.icon
-                                            |Module #{module_number}: #{module.title}
-                                        if isInRole 'admin'
-                                            |module_id: #{module._id}
-                    
-                                    .four.wide.column
-                                        if module_complete
-                                            a.go_to_next_module.ui.basic.small.button(href="/course/sol/module/#{next_module_number}")
-                                                |#{next_module.number}: #{next_module.title}
-                                                i.right.chevron.icon
-                                // a.item(href="/course/sol/module/#{module.number}/section/#{section.number}/reflective_questions" class="{{isActiveRoute name='reflective_questions'}}") Collaboration
-                            .ui.stackable.grid
-                                .five.wide.column
-                                    with module
-                                        .content
-                                            |!{description}
-                                        .ui.vertical.fluid.pointing.menu
-                                            unless is_first_module
-                                                a.item(href="/course/sol/module/#{number}/debrief" class="{{isActiveRoute name='debrief'}}") 
-                                                    if module_progress_doc.module_debrief_complete
-                                                        i.green.check.icon
-                                                    else
-                                                        i.square.outline.icon
-                                                    .ui.label #{module_progress_doc.debrief_answer_count}/#{module_progress_doc.debrief_question_count}
-                                                    |Debrief 
-                                            a.item(href="/course/sol/module/#{number}/sections" class="{{isActiveRoute name='view_sections'}}") 
-                                                if module_progress_doc.module_sections_complete
-                                                    i.green.check.icon
-                                                else
-                                                    i.square.outline.icon
-                                                .ui.label #{module_progress_doc.section_complete_count}/#{module_progress_doc.module_section_count}
-                                                |Sections 
-                                                // .item Sections
-                                                // .menu
-                                                //     each sections
-                                                //         a.item(href="/course/#{../course}/#{module_number}/section/#{number}" class=section_path_class)  #{number}: #{title}
-                                            a.item(href="/course/sol/module/#{number}/lightwork" class="{{isActiveRoute name='lightwork'}}") 
-                                                if module_progress_doc.module_lightwork_complete
-                                                    i.green.check.icon
-                                                else
-                                                    i.square.outline.icon
-                                                .ui.label #{module_progress_doc.lightwork_answer_count}/#{module_progress_doc.lightwork_question_count}
-                                                |Lightwork 
-                                            if download_count
-                                                a.item(href="/course/sol/module/#{number}/downloads" class="{{isActiveRoute name='downloads'}}")
-                                                    |Downloads
-                                                    .ui.label #{download_count}
-                                            else if isInRole 'admin'        
-                                                a.item(href="/course/sol/module/#{number}/downloads" class="{{isActiveRoute name='downloads'}}")
-                                                    |Downloads
-                                                    .ui.label #{download_count}
-                                        .ui.dividing.header Status
-                                        #calculate_module_progress.ui.fluid.basic.button 
-                                            i.refresh.icon
-                                            |Calculate Module Progress
-                                        #module_percent_complete_bar.ui.blue.indicating.progress(data-percent=section_progress_doc.percent_complete)
-                                            .bar
-                                                .progress
-                                                    | #{module_progress_doc.module_progress_percent}%
-                                        if isInRole 'dev'
-                                            +user_module_progress_list
-                                .eleven.wide.column
-                                    +Template.dynamic template=module_content
-                
+        // .ui.bottom.attached.basic.segment.pushable
+            // +left_sidebar
+            // .pusher
+            //     #main_area
+            //         .ui.basic.fluid.segment
+    .ui.basic.segment.container
+        .ui.breadcrumb
+            a.section(href='/') Home
+            .divider  / 
+            a.section(href='/courses') Courses
+            .divider  / 
+            a.section(href="/course/sol") Source of Light
+            .divider  / 
+            a.section(href="/course/sol/modules") Modules
+            .divider  / 
+            .active.section #{module.number}: #{module.title}
+        .ui.hidden.divider
+        .ui.stackable.grid
+            .center.aligned.row
+                .four.wide.column
+                    if previous_module
+                        // a.ui.basic.small.button(href="/course/sol/module/#{module.number}/section/#{previous_section.number}")
+                        a.ui.basic.small.button(href="/view/#{previous_module._id}")
+                            i.left.chevron.icon
+                            |#{previous_module.number}: #{previous_module.title}
+                .eight.wide.column
+                    h1.ui.center.aligned.header 
+                        if module_complete
+                            i.small.circle.green.check.icon
+                        |Module #{module_number}: #{module.title}
+                    // if isInRole 'admin'
+                    //     |module_id: #{module._id}
+
+                .four.wide.column
+                    // if module_complete
+                    a.ui.basic.small.button(href="/view/#{next_module._id}")
+                        |#{next_module.number}: #{next_module.title}
+                        i.right.chevron.icon
+            // a.item(href="/course/sol/module/#{module.number}/section/#{section.number}/reflective_questions" class="{{isActiveRoute name='reflective_questions'}}") Collaboration
+        .ui.stackable.grid
+            .five.wide.column
+                with module
+                    .content
+                        |!{description}
+                    .ui.vertical.fluid.pointing.menu
+                        unless is_first_module
+                            a.item(href="/course/sol/module/#{number}/debrief" class="{{isActiveRoute name='debrief'}}") 
+                                if module_progress_doc.module_debrief_complete
+                                    i.green.check.icon
+                                else
+                                    i.square.outline.icon
+                                .ui.label #{module_progress_doc.debrief_answer_count}/#{module_progress_doc.debrief_question_count}
+                                |Debrief 
+                        a.item(href="/course/sol/module/#{number}/sections" class="{{isActiveRoute name='view_sections'}}") 
+                            if module_progress_doc.module_sections_complete
+                                i.green.check.icon
+                            else
+                                i.square.outline.icon
+                            .ui.label #{module_progress_doc.section_complete_count}/#{module_progress_doc.module_section_count}
+                            |Sections 
+                            // .item Sections
+                            // .menu
+                            //     each sections
+                            //         a.item(href="/course/#{../course}/#{module_number}/section/#{number}" class=section_path_class)  #{number}: #{title}
+                        a.item(href="/course/sol/module/#{number}/lightwork" class="{{isActiveRoute name='lightwork'}}") 
+                            if module_progress_doc.module_lightwork_complete
+                                i.green.check.icon
+                            else
+                                i.square.outline.icon
+                            .ui.label #{module_progress_doc.lightwork_answer_count}/#{module_progress_doc.lightwork_question_count}
+                            |Lightwork 
+                        if download_count
+                            a.item(href="/course/sol/module/#{number}/downloads" class="{{isActiveRoute name='downloads'}}")
+                                |Downloads
+                                .ui.label #{download_count}
+                        else if isInRole 'admin'        
+                            a.item(href="/course/sol/module/#{number}/downloads" class="{{isActiveRoute name='downloads'}}")
+                                |Downloads
+                                .ui.label #{download_count}
+                    .ui.dividing.header Status
+                    #calculate_module_progress.ui.fluid.basic.button 
+                        i.refresh.icon
+                        |Calculate Module Progress
+                    #module_percent_complete_bar.ui.blue.indicating.progress(data-percent=section_progress_doc.percent_complete)
+                        .bar
+                            .progress
+                                | #{module_progress_doc.module_progress_percent}%
+                    if isInRole 'dev'
+                        +user_module_progress_list
+            .eleven.wide.column
+                .ui.top.attached.tabular.menu
+                    a.item(data-tab='debrief') Debrief
+                    a.item(data-tab='sections') Sections
+                    a.item(data-tab='lightwork') Lightwork
+                    a.item(data-tab='downloads') Downloads
+                .ui.bottom.attached.tab.segment(data-tab='debrief')
+                    .ui.basic.segment
+                        +debrief
+                .ui.bottom.attached.tab.segment(data-tab='sections')
+                    .ui.basic.segment
+                        +sections
+                .ui.bottom.attached.tab.segment(data-tab='lightwork')
+                    .ui.basic.segment
+                        +lightwork
+                .ui.bottom.attached.tab.segment(data-tab='downloads')
+                    .ui.basic.segment
+                        +downloads
                 
 template(name='user_module_progress_list')
     .ui.horizontal.divider.header
@@ -118,8 +133,8 @@ template(name='user_module_progress_list')
 
 
 template(name='debrief')
-    with module
-        +questions type='debrief_question' parent_id=this._id title='Lightwork Debrief Questions'
+    // with module
+    +questions type='debrief_question' parent_id=this._id title='Lightwork Debrief Questions'
 
 
 

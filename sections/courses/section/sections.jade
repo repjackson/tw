@@ -31,13 +31,13 @@ template(name='section')
                     if isInRole 'admin'
                         +session_edit_icon
             else
-                a.ui.header(href="/course/sol/module/#{module_number}/section/#{number}") 
+                a.ui.header(href="/view/#{_id}")
                     if section_is_complete
                         i.green.big.check.circle.icon
                     |#{number}: #{title}
-                if isInRole 'admin'
-                    div
-                        a.ui.sub.header(href="/view/#{_id}") id: #{_id} 
+                // if isInRole 'admin'
+                //     div
+                //         a.ui.sub.header(href="/view/#{_id}") id: #{_id} 
                 if isInRole 'admin'
                     // p parent_id: #{parent_id}
                     // p type: #{type}

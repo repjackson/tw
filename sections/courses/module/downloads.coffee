@@ -24,11 +24,7 @@ if Meteor.isClient
 
     Template.downloads.events
         'click #add_file': (e,t)->
-            module_number = FlowRouter.getParam('module_number')
-            module_doc = Docs.findOne
-                tags: $in: ["module"]
-                number: parseInt FlowRouter.getParam('module_number')
-
+            module_doc = Docs.findOne FlowRouter.getParam('doc_id')
             new_id = Docs.insert
                 type: 'download'
                 parent_id: module_doc._id

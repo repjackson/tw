@@ -50,37 +50,36 @@ template(name='view_section')
                 // a.item(href="/course/sol/module/#{module.number}/section/#{section.number}/questions" class="{{isActiveRoute name='questions'}}") Collaboration
             .ui.stackable.grid
                 .five.wide.column
-                    .ui.rail
-                        // .ui.dividing.header Progress
-                        // #calculate_section_progress.ui.fluid.basic.button Calculate Section Progress
-                        // #section_percent_complete_bar.ui.blue.indicating.progress(data-percent=section_progress_doc.percent_complete)
-                        //     .bar
-                        //         .progress
-                        //             | #{section_progress_doc.percent_complete}%
-                        if video_complete
-                            .ui.fluid.basic.label 
-                                i.green.check.icon
-                                |Video Watched
-                            if section.content.length
-                                .item
-                                    .popup_takeaway.ui.basic.fluid.button 
-                                        i.external.icon
-                                        |Video Takeaways
-        
-                        else
-                            .ui.basic.fluid.label 
-                                i.square.outline.icon
-                                |Video
-                        if reflective_question_docs.count
-                            .ui.sub.dividing.header #{section_progress_doc.section_answer_count}/ #{section_progress_doc.section_question_count} Questions Answered
-                            .ui.list
-                                each reflective_question_docs
-                                        .item 
-                                            if reflective_question_answered
-                                                i.green.check.icon
-                                            | #{number}: #{body}
-                        if isInRole 'admin'
-                            +user_section_progress_list
+                    // .ui.dividing.header Progress
+                    // #calculate_section_progress.ui.fluid.basic.button Calculate Section Progress
+                    // #section_percent_complete_bar.ui.blue.indicating.progress(data-percent=section_progress_doc.percent_complete)
+                    //     .bar
+                    //         .progress
+                    //             | #{section_progress_doc.percent_complete}%
+                    if video_complete
+                        .ui.fluid.basic.label 
+                            i.green.check.icon
+                            |Video Watched
+                        if section.content.length
+                            .item
+                                .popup_takeaway.ui.basic.fluid.button 
+                                    i.external.icon
+                                    |Video Takeaways
+    
+                    else
+                        .ui.basic.fluid.label 
+                            i.square.outline.icon
+                            |Video
+                    if reflective_question_docs.count
+                        .ui.sub.dividing.header #{section_progress_doc.section_answer_count}/ #{section_progress_doc.section_question_count} Questions Answered
+                        .ui.list
+                            each reflective_question_docs
+                                    .item 
+                                        if reflective_question_answered
+                                            i.green.check.icon
+                                        | #{number}: #{body}
+                    if isInRole 'admin'
+                        +user_section_progress_list
                 .eleven.wide.column
                     // if Template.subscriptionsReady
                     // #convert_content.ui.button Convert Contents

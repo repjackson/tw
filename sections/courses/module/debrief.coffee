@@ -8,7 +8,7 @@ if Meteor.isClient
     
     Template.debrief.onCreated ->
         # @autorun -> Meteor.subscribe 'debrief_questions', FlowRouter.getParam('module_number')
-        @autorun -> Meteor.subscribe 'module', parseInt FlowRouter.getParam('module_number')
+        # @autorun -> Meteor.subscribe 'module', parseInt
 
     # Template.debrief_answers.onCreated ->
     #     @autorun => Meteor.subscribe 'answers', @data._id

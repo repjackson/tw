@@ -18,9 +18,7 @@ if Meteor.isClient
                 
     Template.lightwork.helpers
         module: -> 
-            Docs.findOne 
-                tags: $in: ['module']
-                number: parseInt FlowRouter.getParam('module_number')
+            Docs.findOne FlowRouter.getParam('doc_id')
 
             
         lightwork_tags: ->
