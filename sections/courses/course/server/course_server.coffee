@@ -3,7 +3,7 @@
 Meteor.publish 'sol_members', (selected_course_member_tags) ->
     match = {}
     if selected_course_member_tags.length > 0 then match.tags = $all: selected_course_member_tags
-    match._id = $ne: @userId
+    match._id = $ne: Meteor.userId()
     # match["profile.published"] = true
     match.roles = $in: ['sol','sol_demo']
     
@@ -19,7 +19,7 @@ Meteor.publish 'course_member_tags', (selected_course_member_tags)->
     self = @
     match = {}
     if selected_course_member_tags.length > 0 then match.tags = $all: selected_course_member_tags
-    match._id = $ne: @userId
+    match._id = $ne: Meteor.userId()
     # match["profile.published"] = true
     match.roles = $in: ['sol','sol_demo']
 
@@ -61,8 +61,8 @@ Meteor.publish 'sol_signers', ->
         
 Meteor.publish 'sol_progress', ()->
     Docs.find
-        tags: $all: ['sol', "course progress"]
-        author_id: @userId
+        type: 'course_progress'
+        author_id: Meteor.userId()
         
 
 publishComposite 'my_course_pins', (selected_tags=[])->
@@ -89,17 +89,17 @@ Meteor.methods
     'calculate_sol_progress': ()->
         sol_progress_doc = 
             Docs.findOne
-                tags: $all: ['sol', 'course progress']
+                type: 'course_progress'
                 author_id: Meteor.userId()
         if not sol_progress_doc
             console.log 'didnt find progress doc, creating'
             Docs.insert
-                tags: ['sol', 'course progress']
+                type: 'course_progress'
                 author_id: Meteor.userId()
 
             sol_progress_doc = 
                 Docs.findOne
-                    tags: $all: ['sol', 'course progress']
+                    type: 'course_progress'
                     author_id: Meteor.userId()
             console.log 'new progress doc:', sol_progress_doc
 
@@ -109,14 +109,16 @@ Meteor.methods
         current_module = 0
 
         sol_module_count = 
-            Docs.find( 
-                tags: $all: ['sol', 'module']
-            ).count()
+            Docs.find(type: 'module').count()
         
         for number in [1..sol_module_count]
+            
+            module_doc = Docs.findOne(type: 'module')
+
             module_progress_doc = 
                 Docs.findOne
-                    tags: ['sol', "module #{number}", 'module progress']
+                    type: 'module_progress'
+                    parent_id: module_doc._id
                     author_id: Meteor.userId()
             if module_progress_doc
                 # console.log typeof module_progress_doc.module_progress_percent

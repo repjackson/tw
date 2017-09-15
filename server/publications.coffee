@@ -183,9 +183,30 @@ publishComposite 'doc', (id)->
             Docs.find id
         children: [
             {
+                # author
                 find: (doc)->
                     Meteor.users.find
                         _id: doc.author_id
+            }
+            {
+                # older numeric sibling
+                find: (doc)->
+                    if doc.number
+                        next_number = doc.number + 1
+                        Docs.find
+                            type: doc.type
+                            parent_id: doc.parent_id
+                            number: next_number
+            }
+            {
+                # younger numeric sibling
+                find: (doc)->
+                    if doc.number
+                        previous_number = doc.number - 1
+                        Docs.find
+                            type: doc.type
+                            parent_id: doc.parent_id
+                            number: previous_number
             }
             {
                 # parent doc
@@ -221,21 +242,23 @@ publishComposite 'doc', (id)->
                     ]
             }
             {
-                # parent doc
-                find: (doc)->
-                    Docs.find
-                        _id: doc.parent_id
-            }
-            {
                 # child doc
                 find: (doc)->
                     Docs.find
                         parent_id: doc._id
-                children: [
-                    find: (child_doc)->
-                        Meteor.users.find
-                            _id: child_doc.author_id
-                    ]
+                children: [ 
+                    {
+                        find: (child_doc)->
+                            Meteor.users.find
+                                _id: child_doc.author_id
+                    }
+                    {
+                        find: (child_doc)->
+                            # console.log child_doc
+                            Docs.find
+                                parent_id: child_doc._id
+                    }
+                ]
             }
         ]
     }

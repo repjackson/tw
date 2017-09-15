@@ -297,6 +297,7 @@ Template.rating.events
 Template.delete_button.events
     'click #delete': ->
         self = @
+        # console.log @_id
         swal {
             title: 'Delete?'
             # text: 'Confirm delete?'
@@ -309,8 +310,8 @@ Template.delete_button.events
             confirmButtonColor: '#da5347'
         }, ->
             Docs.remove self._id
-            if FlowRouter.getParam('doc_id') 
-                FlowRouter.go "/#{self.type}"
+            # if FlowRouter.getParam('doc_id') 
+            #     FlowRouter.go "/#{self.type}"
 Template.delete_link.events
     'click #delete': ->
         self = @

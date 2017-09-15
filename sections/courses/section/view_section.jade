@@ -1,5 +1,5 @@
 template(name='view_section')
-    +nav
+    // +nav
     .ui.container
         .ui.breadcrumb
             a.section(href='/') Home
@@ -16,132 +16,139 @@ template(name='view_section')
             .divider  / 
             .section #{section.number}: #{section.title}
         .ui.hidden.divider
-        .ui.grid
-            .center.aligned.row
-                .sixteen.wide.column
-                    a.ui.basic.button(href="/course/sol/module/#{module.number}/sections") 
-                        i.up.chevron.arrow.icon
-                        |Module #{module.number}: #{module.title}
-            .center.aligned.row
-                .three.wide.column
-                    if previous_section
-                        // a.ui.basic.small.button(href="/course/sol/module/#{module.number}/section/#{previous_section.number}")
-                        a#go_to_previous_section.ui.basic.small.button(href="#")
-                            i.left.chevron.icon
-                            |#{previous_section.number}: #{previous_section.title}
-                .ten.wide.column
-                    h1.ui.center.aligned.header Section #{section.number}: #{section.title}
-                    if isInRole 'admin'
-                        | section_id: #{section._id}
-                .three.wide.column
-                    if section_complete
-                        if next_section_exists
-                            a.go_to_next_section.ui.basic.small.right.button(href="#")
-                                |#{next_section.number}: #{next_section.title}
-                                i.right.chevron.icon
-                        else
-                            a.ui.basic.fluid.button(href="/course/sol/module/#{module.number}/sections") 
-                                i.large.icons
-                                    i.green.check.circle.icon
-                                    i.reply.corner.icon
-                                | Module #{module.number} Sections Complete
-
-            // a.item(href="/course/sol/module/#{module.number}/section/#{section.number}/questions" class="{{isActiveRoute name='questions'}}") Collaboration
-        .ui.stackable.grid
-            .five.wide.column
-                .ui.rail
-                    // .ui.dividing.header Progress
-                    // #calculate_section_progress.ui.fluid.basic.button Calculate Section Progress
-                    // #section_percent_complete_bar.ui.blue.indicating.progress(data-percent=section_progress_doc.percent_complete)
-                    //     .bar
-                    //         .progress
-                    //             | #{section_progress_doc.percent_complete}%
-                    if video_complete
-                        .ui.fluid.basic.label 
-                            i.green.check.icon
-                            |Video Watched
-                        if section.content.length
-                            .item
-                                .popup_takeaway.ui.basic.fluid.button 
-                                    i.external.icon
-                                    |Video Takeaways
+        if Template.subscriptionsReady
+            .ui.grid
+                .center.aligned.row
+                    .sixteen.wide.column
+                        a.ui.basic.button(href="/view/#{module._id}") 
+                            i.up.chevron.arrow.icon
+                            |Module #{module.number}: #{module.title}
+                .center.aligned.row
+                    .three.wide.column
+                        if previous_section
+                            // a.ui.basic.small.button(href="/course/sol/module/#{module.number}/section/#{previous_section.number}")
+                            a.ui.basic.small.button(href="/view/#{previous_section._id}")
+                                i.left.chevron.icon
+                                |#{previous_section.number}: #{previous_section.title}
+                    .ten.wide.column
+                        h1.ui.center.aligned.header Section #{section.number}: #{section.title}
+                        if isInRole 'admin'
+                            | section_id: #{section._id}
+                    .three.wide.column
+                        if section_complete
+                            if next_section_exists
+                                a.ui.basic.small.right.button(href="/view/#{next_section._id}")
+                                    |#{next_section.number}: #{next_section.title}
+                                    i.right.chevron.icon
+                            else
+                                a.ui.basic.fluid.button(href="/view/#{module._id}") 
+                                    i.large.icons
+                                        i.green.check.circle.icon
+                                        i.reply.corner.icon
+                                    | Module #{module.number} Sections Complete
     
-                    else
-                        .ui.basic.fluid.label 
-                            i.square.outline.icon
-                            |Video
-                    if reflective_question_docs.count
-                        .ui.sub.dividing.header #{section_progress_doc.section_answer_count}/ #{section_progress_doc.section_question_count} Questions Answered
-                        .ui.list
-                            each reflective_question_docs
-                                    .item 
-                                        if reflective_question_answered
-                                            i.green.check.icon
-                                        | #{number}: #{body}
-                    if isInRole 'admin'
-                        +user_section_progress_list
-            .eleven.wide.column
-                // if Template.subscriptionsReady
-                +doc_content tags=section_content_tags pinnable=true
-                .ui.hidden.divider
-                .ui.styled.fluid.accordion
-                    h3.title
-                        i.large.newspaper.icon
-                        | Transcript
-                    .content
-                        +doc_content tags=section_transcript_tags pinnable=true
-                .ui.center.aligned.basic.segment
-                    if currentUser
+                // a.item(href="/course/sol/module/#{module.number}/section/#{section.number}/questions" class="{{isActiveRoute name='questions'}}") Collaboration
+            .ui.stackable.grid
+                .five.wide.column
+                    .ui.rail
+                        // .ui.dividing.header Progress
+                        // #calculate_section_progress.ui.fluid.basic.button Calculate Section Progress
+                        // #section_percent_complete_bar.ui.blue.indicating.progress(data-percent=section_progress_doc.percent_complete)
+                        //     .bar
+                        //         .progress
+                        //             | #{section_progress_doc.percent_complete}%
                         if video_complete
-                            .unmark_video_complete.ui.blue.fluid.button 
-                                i.check.icon
+                            .ui.fluid.basic.label 
+                                i.green.check.icon
                                 |Video Watched
                             if section.content.length
-                                .popup_takeaway.ui.basic.large.button 
-                                    i.external.icon
-                                    |Video Takeaways
+                                .item
+                                    .popup_takeaway.ui.basic.fluid.button 
+                                        i.external.icon
+                                        |Video Takeaways
+        
                         else
-                            .mark_video_complete.ui.basic.fluid.button 
+                            .ui.basic.fluid.label 
                                 i.square.outline.icon
-                                |Mark Video Watched
-                with section
-                    if isInRole 'admin'
-                        +questions type='reflective_question' parent_id=this._id title='Reflection Questions'
-                    else if video_complete
-                        +questions type='reflective_question' parent_id=this._id title='Reflection Questions'
-                if section_progress_doc.questions_complete
-                    unless section_complete
-                        if question_docs.count
-                            #mark_section_complete.ui.basic.large.fluid.button 
-                                i.circle.outline.icon
-                                |Calculate Section Progress
-                unless is_editing
-                    // if section_progress_doc.questions_complete
-                        // if video_complete
-                    if section_complete
-                        .ui.horizontal.divider.header
-                            i.green.check.circle.icon
-                            |Section Complete
-                        if next_section_exists
-                            a.go_to_next_section.ui.basic.fluid.button(href="#")
-                                | Continue to Section #{next_section_number}
-                                i.right.chevron.icon 
-                        else
+                                |Video
+                        if reflective_question_docs.count
+                            .ui.sub.dividing.header #{section_progress_doc.section_answer_count}/ #{section_progress_doc.section_question_count} Questions Answered
+                            .ui.list
+                                each reflective_question_docs
+                                        .item 
+                                            if reflective_question_answered
+                                                i.green.check.icon
+                                            | #{number}: #{body}
+                        if isInRole 'admin'
+                            +user_section_progress_list
+                .eleven.wide.column
+                    // if Template.subscriptionsReady
+                    // #convert_content.ui.button Convert Contents
+                    // +doc_content tags=section_content_tags pinnable=true
+                    +doc_by_parentid_and_type parent_id=section._id type='section_video' tags='section,video'
+    
+                    .ui.hidden.divider
+                    .ui.styled.fluid.accordion
+                        h3.title
+                            i.large.newspaper.icon
+                            | Transcript
+                        .content
+                            // +doc_content tags=section_transcript_tags pinnable=true
+                            +doc_by_parentid_and_type parent_id=section._id type='section_transcript' tags='section,transcript'
+    
+                    .ui.center.aligned.basic.segment
+                        if currentUser
+                            if video_complete
+                                .unmark_video_complete.ui.blue.fluid.button 
+                                    i.check.icon
+                                    |Video Watched
+                                if section.content.length
+                                    .popup_takeaway.ui.basic.large.button 
+                                        i.external.icon
+                                        |Video Takeaways
+                            else
+                                .mark_video_complete.ui.basic.fluid.button 
+                                    i.square.outline.icon
+                                    |Mark Video Watched
+                    with section
+                        if isInRole 'admin'
+                            +questions type='reflective_question' parent_id=this._id title='Reflection Questions'
+                        else if video_complete
+                            +questions type='reflective_question' parent_id=this._id title='Reflection Questions'
+                    if section_progress_doc.questions_complete
+                        unless section_complete
+                            if question_docs.count
+                                #mark_section_complete.ui.basic.large.fluid.button 
+                                    i.circle.outline.icon
+                                    |Calculate Section Progress
+                    unless is_editing
+                        // if section_progress_doc.questions_complete
+                            // if video_complete
+                        if section_complete
                             .ui.horizontal.divider.header
                                 i.green.check.circle.icon
-                                | All Module #{module.number} Sections Complete
-                            a.ui.basic.fluid.button(href="/course/sol/module/#{module.number}") 
-                                i.reply.icon
-                                | Return to Module #{module.number}: #{module.title}
-                    .ui.divider
-                #calculate_section_progress.ui.fluid.basic.button 
-                    i.refresh.icon
-                    |Calculate Section Progress
-                #section_percent_complete_bar.ui.indicating.progress(data-percent=section_progress_doc.percent_complete)
-                    .bar
-                        .progress
-                            | #{section_progress_doc.percent_complete}%
-
+                                |Section Complete
+                            if next_section_exists
+                                a.ui.basic.fluid.button(href="/view/#{next_section._id}")
+                                    | Continue to Section #{next_section.number}: #{next_section.title}
+                                    i.right.chevron.icon 
+                            else
+                                .ui.horizontal.divider.header
+                                    i.green.check.circle.icon
+                                    | All Module #{module.number} Sections Complete
+                                a.ui.basic.fluid.button(href="/view/#{module._id}") 
+                                    i.reply.icon
+                                    | Return to Module #{module.number}: #{module.title}
+                        .ui.divider
+                    #calculate_section_progress.ui.fluid.basic.button 
+                        i.refresh.icon
+                        |Calculate Section Progress
+                    #section_percent_complete_bar.ui.indicating.progress(data-percent=section_progress_doc.percent_complete)
+                        .bar
+                            .progress
+                                | #{section_progress_doc.percent_complete}%
+        else
+            .ui.header Loading...
 
     // if isInRole 'dev'
     //     +dev_footer
@@ -155,8 +162,8 @@ template(name='user_section_progress_list')
         each user_section_progress_docs
             .item
                 .header #{author.name}
-                .content
-                    +edit_parent_id
+                // .content
+                //     +edit_parent_id
                 .content
                     .ui.indicating.tiny.progress(data-percent=percent_complete)
                         .bar

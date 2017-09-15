@@ -23,7 +23,7 @@ Template.course_dashboard.helpers
     
     sol_progress_doc: ->
         Docs.findOne
-            tags: $all: ['sol', 'course progress']
+            type: 'course_progress'
             author_id: Meteor.userId()
         
         

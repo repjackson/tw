@@ -1,4 +1,4 @@
-template(name='doc_id_content')
+template(name='doc_by_parentid_and_type')
     if doc
         with doc
             if editing
@@ -7,8 +7,7 @@ template(name='doc_id_content')
                     .field
                         +tags
             else
-                span(class=doc_classes)
-                    |!{content}
+                |!{content}
                 if pinnable
                     +pin_button
             if isInRole 'admin'
@@ -17,6 +16,7 @@ template(name='doc_id_content')
                         i.red.pencil.icon
                         // |Edit #{tags} Content
                 else
+                    +delete_button    
                     .save_doc.ui.green.basic.button
                         i.check.icon
                         |Save Content

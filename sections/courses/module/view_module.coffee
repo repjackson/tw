@@ -155,7 +155,7 @@ if Meteor.isServer
         {
             find: ->
                 Docs.find
-                    tags: $in: ['module']
+                    type: 'module'
                     number: module_number
             children: [
                 { 
@@ -168,16 +168,26 @@ if Meteor.isServer
         }
             
     Meteor.publish 'module_progress', (module_number)->
+        module_doc = 
+            Docs.findOne
+                type: 'module'
+                number: module_number
         Docs.find
-            tags: $all: ['sol', "module #{module_number}", "module progress"]
+            type: 'module_progress'
+            parent_id: module_doc._id
             author_id: Meteor.userId()
             
             
     publishComposite 'user_module_progress_docs', (module_number)->
         {
             find: ->
+                module_doc = 
+                    Docs.findOne
+                        type: 'module'
+                        number: module_number
                 Docs.find
-                    tags: $all: ['sol', "module #{module_number}", "module progress"]
+                    type: 'module_progress'
+                    parent_id: module_doc._id
             children: [
                 { 
                     find: (progress_doc) ->
@@ -190,9 +200,14 @@ if Meteor.isServer
             
     Meteor.methods
         'calculate_module_progress': (module_number)->
-            module_progress_doc = 
+            module_doc = 
                 Docs.findOne
-                    tags: ['sol', "module #{module_number}", 'module progress']
+                    type: 'module'
+                    number: module_number
+            module_progress_doc=
+                Docs.find
+                    type: 'module_progress'
+                    parent_id: module_doc._id
                     author_id: Meteor.userId()
 
             # console.log module_progress_doc
@@ -212,7 +227,7 @@ if Meteor.isServer
             module_progress = 0
             
             module_doc = Docs.findOne
-                tags: $in: ['module']
+                type: 'module'
                 number: module_number
 
 
@@ -241,7 +256,7 @@ if Meteor.isServer
             for debrief_question in debrief_questions
                 # console.log debrief_question
                 debrief_answer = Docs.findOne
-                    tags: $in: ['answer']
+                    # tags: $in: ['answer']
                     parent_id: debrief_question._id
                     author_id: Meteor.userId()
 
@@ -268,14 +283,14 @@ if Meteor.isServer
                 
             lightwork_questions = 
                 Docs.find(
-                    tags: $all: ['lightwork', 'question']
+                    type: 'lightwork_question'
                     parent_id: module_doc._id
                 ).fetch()
                 
                 
             lightwork_question_count = 
                 Docs.find(
-                    tags: $all: ['lightwork', 'question']
+                    type: 'lightwork_question'
                     parent_id: module_doc._id
                 ).count()
             # console.log lightwork_question_count
@@ -284,7 +299,7 @@ if Meteor.isServer
             for lightwork_question in lightwork_questions
                 # console.log lightwork_question
                 lightwork_answer = Docs.findOne
-                    tags: $in: ['answer']
+                    # tags: $in: ['answer']
                     parent_id: lightwork_question._id
                     author_id: Meteor.userId()
                 if lightwork_answer then lightwork_answer_count++
@@ -314,9 +329,19 @@ if Meteor.isServer
             # console.log module_section_progress_increment
             section_complete_count = 0
             for section_number in [1..module_section_count]
+                module_doc = 
+                    Docs.findOne
+                        type: 'module'
+                        number: module_number
+                section_doc = 
+                    Docs.findOne
+                        type: 'section'
+                        parent_id: module_doc._id
+                        nummber: section_number
                 section_progress_doc = 
                     Docs.findOne
-                        tags: ['sol', "module #{module_number}", "section #{section_number}", 'section progress']
+                        type: 'section_progress'
+                        parent_id: section_doc._id
                         author_id: Meteor.userId()
                 if section_progress_doc then section_complete_count++
                 if section_progress_doc
@@ -340,7 +365,8 @@ if Meteor.isServer
             #     module_progress_percent: module_progress
                 
             update_result = Docs.update { 
-                tags: ['sol', "module #{module_number}", 'module progress']
+                type: 'module_progress'
+                parent_id: module_doc._id
                 author_id: Meteor.userId() 
             },
             { $set: 

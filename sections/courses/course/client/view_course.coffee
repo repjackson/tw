@@ -53,7 +53,7 @@ Template.view_course.onRendered ->
                 # $('.ui.accordion').accordion()            
                 sol_progress_doc = 
                     Docs.findOne
-                        tags: $all: ['sol', 'course progress']
+                        type: 'course_progress'
                         author_id: Meteor.userId()
                 # console.log sol_progress_doc
                 if sol_progress_doc
@@ -74,13 +74,13 @@ Template.view_course.helpers
 
     sol_progress_doc: ->
         Docs.findOne
-            tags: $all: ['sol', 'course progress']
+            type: 'course_progress'
             author_id: Meteor.userId()
         
     welcome_icon_class: ->
         sol_progress_doc = 
             Docs.findOne
-                tags: $all: ['sol', 'course progress']
+                type: 'course_progress'
                 author_id: Meteor.userId()
         if sol_progress_doc and sol_progress_doc.welcome_complete then 'yellow' else ''        
         

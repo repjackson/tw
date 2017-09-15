@@ -1,23 +1,26 @@
 if Meteor.isClient
-    Template.doc_id_content.onCreated ->
+    Template.doc_by_parentid_and_type.onCreated ->
         @editing = new ReactiveVar(false)
-
-        @autorun => Meteor.subscribe 'doc_by_id', @data.id 
+        # console.log @data.parent_id
+        # console.log @data.type
+        @autorun => Meteor.subscribe 'doc_by_parentid_and_type', @data.parent_id, @data.type
         
         
-    Template.doc_id_content.helpers
+    Template.doc_by_parentid_and_type.helpers
         editing: -> Template.instance().editing.get()
 
-        doc: -> Docs.findOne Template.currentData().id
+        doc: -> 
+            Docs.findOne
+                type: Template.currentData().type
+                parent_id: Template.currentData().parent_id
     
         doc_classes: -> Template.parentData().classes
         
-        doc_parent_id: -> Template.parentData().parent_id
+        doc_parent_id: -> Template.currentData().parent_id
         
-        doc_type: -> Template.parentData().type
+        doc_type: -> Template.currentData().type
 
-
-    Template.doc_id_content.events
+    Template.doc_by_parentid_and_type.events
         'click .edit_this': (e,t)-> t.editing.set true
         'click .save_doc': (e,t)-> t.editing.set false
 
@@ -29,7 +32,16 @@ if Meteor.isClient
             #     tags = t.data.tags
             #     tags = tags.split ','
             new_id = Docs.insert
-                tags: split_array
+                # tags: split_array
                 type: t.data.type
                 parent_id: t.data.parent_id
+                content: ''
             Session.set 'editing_id', new_id
+
+if Meteor.isServer
+    Meteor.publish 'doc_by_parentid_and_type', (parent_id, type)->
+        # console.log parent_id
+        # console.log type
+        Docs.find
+            type: type
+            parent_id: parent_id

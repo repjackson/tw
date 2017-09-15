@@ -29,4 +29,5 @@ Template.doc_page.onCreated ->
 
 Template.doc_page.helpers
     doc: -> Docs.findOne FlowRouter.getParam('doc_id')
+    type_template: -> "view_#{@type}"
     

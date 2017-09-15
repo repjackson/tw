@@ -12,16 +12,16 @@ Template.course_welcome.onRendered ->
         $('#course_welcome_menu .item').tab()
         sol_progress_doc = 
             Docs.findOne
-                tags: $all: ["sol", "course progress"]
+                type: 'course_progress'
                 author_id: Meteor.userId()
         # console.log sol_progress_doc
         if not sol_progress_doc
             Docs.insert
-                tags: ["sol", "course progress"]
+                type: 'course_progress'
                 author_id: Meteor.userId()
         sol_progress_doc = 
             Docs.findOne
-                tags: $all: ["sol", "course progress"]
+                type: 'course_progress'
                 author_id: Meteor.userId()
 
     , 1000
@@ -42,7 +42,7 @@ Template.welcome_video.helpers
     welcome_video_watched: ->
         sol_progress_doc = 
             Docs.findOne
-                tags: $all: ["sol", "course progress"]
+                type: 'course_progress'
                 author_id: Meteor.userId()
         # console.log sol_progress_doc
         if sol_progress_doc then return sol_progress_doc.watched_welcome_video
@@ -52,7 +52,7 @@ Template.welcome_video.events
     'click #mark_welcome_video_complete': ->
         sol_progress_doc = 
             Docs.findOne
-                tags: $all: ["sol", "course progress"]
+                type: 'course_progress'
                 author_id: Meteor.userId()
         Docs.update sol_progress_doc._id, 
             $set:
@@ -68,7 +68,7 @@ Template.welcome_video.events
     'click #unmark_welcome_video_complete': ->
         sol_progress_doc = 
             Docs.findOne
-                tags: $all: ["sol", "course progress"]
+                type: 'course_progress'
                 author_id: Meteor.userId()
             
         Docs.update sol_progress_doc._id, 
@@ -130,7 +130,7 @@ Template.sol_terms.events
                         date_signed: new Date()
             sol_progress_doc = 
                 Docs.findOne
-                    tags: $all: ["sol", "course progress"]
+                    type: 'course_progress'
                     author_id: Meteor.userId()
             # console.log sol_progress_doc
             Docs.update sol_progress_doc._id, 
@@ -146,7 +146,7 @@ Template.sol_terms.events
                     user_id: Meteor.userId()
         sol_progress_doc = 
             Docs.findOne
-                tags: $all: ["sol", "course progress"]
+                type: 'course_progress'
                 author_id: Meteor.userId()
         # console.log sol_progress_doc
         Docs.update sol_progress_doc._id, 
@@ -167,7 +167,7 @@ Template.inspiration_video.helpers
     inspiration_video_watched: ->
         sol_progress_doc = 
             Docs.findOne
-                tags: $all: ["sol", "course progress"]
+                type: 'course_progress'
                 author_id: Meteor.userId()
         # console.log sol_progress_doc
         if sol_progress_doc then return sol_progress_doc.watched_inspiration_video
@@ -177,7 +177,7 @@ Template.inspiration_video.events
     'click #mark_inspiration_video_complete': ->
         sol_progress_doc = 
             Docs.findOne
-                tags: $all: ["sol", "course progress"]
+                type: 'course_progress'
                 author_id: Meteor.userId()
         # console.log sol_progress_doc
         Docs.update sol_progress_doc._id, 
@@ -194,7 +194,7 @@ Template.inspiration_video.events
     'click #unmark_inspiration_video_complete': ->
         sol_progress_doc = 
             Docs.findOne
-                tags: $all: ["sol", "course progress"]
+                type: 'course_progress'
                 author_id: Meteor.userId()
         # console.log sol_progress_doc
         Docs.update sol_progress_doc._id, 
