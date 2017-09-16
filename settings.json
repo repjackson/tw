@@ -35,7 +35,7 @@
     "env": {
       "MONGO_URL": "mongodb://toridbadmin:Turnf34ragainstthose!@aws-us-east-1-portal.21.dblayer.com:10444/toridb?ssl=true",
       "ROOT_URL": "https://www.toriwebster.com",
-      "MAIL_URL": "smtp://toripostmaster%40mg.toriwebster.com:Turnf34ragainstthose!@smtp.mailgun.org:587"
+      "MAIL_URL": "smtp://toripostmaster%40mg.toriwebster.com:repj1984@smtp.mailgun.org:587"
     }
   }
 }

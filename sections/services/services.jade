@@ -9,66 +9,15 @@ template(name='services')
                     i.plus.icon
                     |Add Service
             +tag_filter type='service'
-            // .ui.dividing.header Layouts
-            // #make_list_layout.ui.large.icon.button(class=list_layout_button_class)
-            //     i.list.layout.icon
-            // #make_grid_layout.ui.large.icon.button(class=grid_layout_button_class)
-            //     i.grid.layout.icon
         .twelve.wide.column
             .ui.relaxed.divided.items
                 each services
                     +service_item
-            // if is_list_view
-            // if is_grid_view
-            //     .ui.centered.cards
-            //         each services
-            //             +service_card
 
 
-// template(name='service_card')
-//     .ui.card
-//         .ui.centered.image
-//             a(href="/service/#{_id}/view")
-//                 if image_id
-//                     img(src="{{c.url image_id  height=300 crop='fill' gravity='face' }}")
-//                 if image_url
-//                     img(src=image_url)
-//         .content
-//             .header
-//                 a(href="/service/#{_id}/view")
-//                     h2.ui.header #{title}
-//             .meta
-//                 each tags
-//                     .ui.tiny.basic.label #{this}
-//             if price
-//                 .meta
-//                     // | published #{publish_when}
-//                     if dollar_price
-//                         | Price: $#{dollar_price}
-//                     if point_price
-//                         | Point Price: #{point_price} points
-//                     else
-//                         | Point Price: 0 points
-                    
-//             .description
-//                 |!{content}
-//         .content
-//             // each tags
-//             //     .ui.compact.button.service_tag(class=tag_class) #{this}
-//             if isInRole 'admin'
-//                 .edit_service.ui.primary.basic.right.floated.button
-//                     i.pencil.icon
-//                     |Edit Service    
-//             +favorite_button
-//             a.ui.basic.teal.button(href="/service/#{_id}/view") 
-//                 |View More
-//                 i.arrow.right.icon
-
-
-            
 template(name='service_item')
     .item
-        a.image(href="/service/#{_id}/view")
+        a.image(href="/view/#{_id}")
             if image_id
                 img.ui.rounded.image(src="{{c.url image_id  width=175 height=175 crop='fill' gravity='face' }}")
             if image_url
@@ -82,7 +31,7 @@ template(name='service_item')
                     | 0 points
 
         .content
-            a.header(href="/service/#{_id}/view") #{title}
+            a.header(href="/view/#{_id}") #{title}
             .meta
                 img.ui.avatar.image(src="{{c.url author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
                 |by #{author.name}
@@ -91,17 +40,9 @@ template(name='service_item')
                     .ui.small.label(class=tag_class) #{this}
             .description
                 | !{content}
-                a.ui.basic.teal.button(href="/service/#{_id}/view") 
-                    |View More
-                    i.arrow.right.icon
+                span.right.floated
+                    +view_full_button
             // .extra
             //     i.tags.icon
             //     each tags
             //         .ui.compact.tiny.button.service_tag(class=tag_class) #{this}
-            if can_edit
-                .extra
-                    i.red.configure.large.icon
-                    if published
-                        .ui.green.basic.label Published
-                    else
-                        .ui.red.basic.label Unpublished                        

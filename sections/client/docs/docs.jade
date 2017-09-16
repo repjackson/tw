@@ -1,13 +1,17 @@
+template(name='edit_doc')
+    with doc
+        +Template.dynamic template=edit_type_template
+
 template(name='docs')
     .ui.container
         +cloud
         // if one_doc
         each docs
             +doc_view
-
-template(name='doc_page')
+        
+template(name='view_doc')
     with doc
-        +Template.dynamic template=type_template
+        +Template.dynamic template=view_type_template
         // .ui.container
         //     .ui.breadcrumb
         //         a.section(href='/') Home

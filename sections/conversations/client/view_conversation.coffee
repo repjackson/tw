@@ -1,18 +1,4 @@
-FlowRouter.route '/conversation/:doc_id/view',
-    action: (params) ->
-        BlazeLayout.render 'layout',
-            # top: 'nav'
-            main: 'conversation_view'
-
-
-Template.conversation_view.onCreated ->
-    # console.log FlowRouter.getParam 'doc_id'
-    @autorun -> Meteor.subscribe 'conversation', FlowRouter.getParam('doc_id')
-
-
-Template.conversation_view.helpers
-    doc: -> Docs.findOne FlowRouter.getParam('doc_id')
-
+Template.view_conversation.helpers
     participants: ->
         participants = []
         for participant_id in @participant_ids
@@ -35,10 +21,3 @@ Template.conversation_view.helpers
             type: 'message'
             group_id: @_id 
             read_by: $nin: [Meteor.userId()]}).count()
-
-
-
-
-Template.conversation_view.events
-
-

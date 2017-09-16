@@ -2,11 +2,6 @@ FlowRouter.route '/conversations', action: (params) ->
     BlazeLayout.render 'layout',
         main: 'conversations'
 
-FlowRouter.route '/conversation/:doc_id', action: (params) ->
-    BlazeLayout.render 'layout',
-        main: 'conversation_page'
-
-
 
 Meteor.methods
     create_conversation: (tags=[])->
@@ -171,16 +166,3 @@ if Meteor.isServer
         cursor = Docs.find match
         # console.log cursor.count()
         return cursor
-        
-        
-    publishComposite 'conversation', (doc_id)->
-        {
-            find: ->
-                Docs.find doc_id
-            children: [
-                { find: (conversation)->
-                    Meteor.users.find
-                        _id: $in: conversation.participant_ids
-                }
-            ]
-        }

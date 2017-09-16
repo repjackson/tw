@@ -117,6 +117,14 @@ if Meteor.isClient
             else Session.set 'view_unpublished', true
     
     
+    Template.edit_lightbank.events
+        'click #delete_doc': ->
+            if confirm 'Delete this doc?'
+                Docs.remove @_id
+                FlowRouter.go '/lightbank'
+    
+    
+    
     Template.lightbank_doc_view.helpers
         is_author: -> Meteor.userId() and @author_id is Meteor.userId()
         tag_class: -> if @valueOf() in selected_tags.array() then 'teal' else 'basic'

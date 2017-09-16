@@ -4,9 +4,7 @@ template(name='full_conversation_view')
             span.right.floated
                 if isInRole 'admin'
                     +delete_button
-                a.ui.right.floated.basic.button(href="/conversation/#{_id}/view")
-                    |Full
-                    i.right.arrow.icon
+                +view_full_button
             .ui.header 
                 |!{content}    
             // if published    

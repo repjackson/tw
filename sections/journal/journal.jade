@@ -114,16 +114,10 @@ template(name='journal_doc_view')
             //             img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
             //         |#{author.name} #{when}
             .extra
-                // .ui.hidden.divider
-                a.ui.basic.right.floated.button(href="/journal/#{_id}/view")
-                    |Full
-                    i.right.chevron.icon
+                span.right.floated
+                    +view_full_button
                 +bookmark_button
-                if can_edit
-                    // +call_watson
-                    a.ui.basic.button(href="/journal/#{_id}/edit")
-                        i.red.configure.icon
-                        |Edit
+                +edit_link_button
         .image
             .ui.basic.segment
                 +doc_sentiment

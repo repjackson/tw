@@ -1,6 +1,6 @@
-with doc
+template(name='edit_service')
     .ui.container
-        h1.ui.center.aligned.header Edit #{title} Transaction
+        h1.ui.center.aligned.header Edit #{title} Service
         .ui.divided.grid
             .eleven.wide.column
                 .ui.form
@@ -9,13 +9,13 @@ with doc
                     +content
                     +edit_image
             .five.wide.column
-                +point_price
-                +published
-                if isInRole 'admin'
-                    +edit_author
                 if tags
                     a.ui.fluid.green.big.button(href="/service/#{_id}/view") Save Service
                 else
                     .ui.fluid.green.big.disabled.button
                         | Add Tags to Save
                 #delete_doc.ui.small.fluid.red.button Delete
+                +point_price
+                +published
+                if isInRole 'admin'
+                    +edit_author

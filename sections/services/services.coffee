@@ -37,6 +37,14 @@ if Meteor.isClient
         'click .service_tag': ->
             if @valueOf() in selected_tags.array() then selected_tags.remove @valueOf() else selected_tags.push @valueOf()
     
+    Template.edit_service.events
+        'click #delete_doc': ->
+            if confirm 'Delete this Service?'
+                Docs.remove @_id
+                FlowRouter.go '/services'
+    
+    
+    
 if Meteor.isServer
     Meteor.publish 'selected_services', ->
         

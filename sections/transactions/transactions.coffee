@@ -14,7 +14,6 @@ if Meteor.isClient
                 sort: timestamp: -1
                 # author_id: Meteor.userId()
                 
-
 if Meteor.isServer
     publishComposite 'transactions', ->
         {

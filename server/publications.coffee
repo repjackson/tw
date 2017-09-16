@@ -182,6 +182,13 @@ publishComposite 'doc', (id)->
         find: ->
             Docs.find id
         children: [
+            { 
+                # participants
+                find: (conversation)->
+                    if conversation.participant_ids
+                        Meteor.users.find
+                            _id: $in: conversation.participant_ids
+            }
             {
                 # author
                 find: (doc)->

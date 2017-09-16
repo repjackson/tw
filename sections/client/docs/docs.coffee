@@ -2,7 +2,7 @@ FlowRouter.route '/view/:doc_id',
     name: 'view'
     action: (params) ->
         BlazeLayout.render 'layout',
-            main: 'doc_page'
+            main: 'view_doc'
 
 
 Template.docs.onCreated -> 
@@ -24,10 +24,10 @@ Template.docs.helpers
 
 
 
-Template.doc_page.onCreated ->
+Template.view_doc.onCreated ->
     @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
 
-Template.doc_page.helpers
+Template.view_doc.helpers
     doc: -> Docs.findOne FlowRouter.getParam('doc_id')
-    type_template: -> "view_#{@type}"
+    view_type_template: -> "view_#{@type}"
     

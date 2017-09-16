@@ -1,14 +1,14 @@
 if Meteor.isClient
-    FlowRouter.route '/course/sol/module/:module_number/sections', 
-        name: 'view_sections'
-        action: (params) ->
-            BlazeLayout.render 'view_module',
-                module_content: 'sections'
+    # FlowRouter.route '/course/sol/module/:module_number/sections', 
+    #     name: 'view_sections'
+    #     action: (params) ->
+    #         BlazeLayout.render 'view_module',
+    #             module_content: 'sections'
     
     Template.sections.onCreated ->
         # @autorun -> Meteor.subscribe 'module', parseInt FlowRouter.getParam('module_number')
         
-        @autorun -> Meteor.subscribe 'sections', parseInt FlowRouter.getParam('module_number')
+        # @autorun -> Meteor.subscribe 'sections', parseInt FlowRouter.getParam('module_number')
         # module_doc = Docs.findOne 
         #     tags: $in: ['module']
         #     number: parseInt FlowRouter.getParam('module_number')
@@ -76,10 +76,9 @@ if Meteor.isClient
                 
     Template.sections.events
         'click #add_section': ->
-            module_number = parseInt FlowRouter.getParam('module_number')
             Docs.insert
                 type: 'section'
-                module_number: module_number
+                parent_id: FlowRouter.getParam('doc_id')
                 
     Template.section.events
         'click .edit_this': (e,t)-> 
@@ -112,20 +111,20 @@ if Meteor.isClient
                 
                 
                 
-if Meteor.isServer
-    publishComposite 'sections', (module_number)->
-        {
-            find: ->
-                Docs.find
-                    type: 'section'
-                    module_number: module_number
-            children: [
-                { find: (section) ->
-                    Docs.find 
-                        tags: $all: ['sol', "module #{module_number}","section progress"]
-                        author_id: @userId
-                    }
-                ]    
-        }
+# if Meteor.isServer
+#     publishComposite 'sections', (module_number)->
+#         {
+#             find: ->
+#                 Docs.find
+#                     type: 'section'
+#                     module_number: module_number
+#             children: [
+#                 { find: (section) ->
+#                     Docs.find 
+#                         tags: $all: ['sol', "module #{module_number}","section progress"]
+#                         author_id: @userId
+#                     }
+#                 ]    
+#         }
             
             

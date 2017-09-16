@@ -235,3 +235,15 @@ template(name='pin_button')
 template(name='pin_corner_button')
     a.pin_button.ui.corner.link.label(class=pin_button_class title='Pin this') 
         i.pin.icon
+        
+template(name='view_full_button')
+    a.ui.basic.button(href="/view/#{_id}")
+        |Full
+        i.right.chevron.icon
+
+template(name='edit_link_button')
+    if can_edit
+        // +call_watson
+        a.ui.basic.button(href="/edit/#{_id}")
+            i.pencil.icon
+            |Edit

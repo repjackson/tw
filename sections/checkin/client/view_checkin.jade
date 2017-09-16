@@ -1,0 +1,38 @@
+template(name='view_checkin')
+    a.ui.basic.button(href='/checkin')
+        i.left.chevron.icon
+        strong Check In's
+    .ui.container
+        h1.ui.center.aligned.header View Check In
+        .ui.stackable.grid
+            .ten.wide.column
+                .ui.dividing.header Tags
+                each tags
+                    .ui.basic.large.label.doc_tag #{this}
+                .ui.basic.segment
+                    |!{content}
+                if published
+                    +comments
+                +doc_matches
+                if watson
+                    +analyzed_watson_keywords
+            .five.wide.column
+                .ui.header
+                    img.ui.avatar.image(src="{{c.url author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                    |by #{author.name}
+                .ui.sub.header #{when}
+                .ui.divider
+                +edit_link_button
+                .ui.dividing.header Actions
+                +bookmark_button
+                div
+                    +thanks_button
+                +resonate_button
+                +resonates_list
+                if is_author
+                    +service_buttons
+                if watson
+                    +doc_sentiment
+                    +doc_emotion
+                    +watson_keywords
+                +published

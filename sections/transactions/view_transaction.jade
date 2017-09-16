@@ -1,0 +1,60 @@
+template(name='view_transaction')
+    a.ui.basic.button(href='/view/#{parent._id}')
+        i.left.chevron.icon
+        |#{parent.title}
+    .ui.container
+        h1.ui.center.aligned.header View Transaction
+        .ui.stackable.grid
+            .five.wide.column
+                .ui.segment
+                    .ui.dividing.header Parent Service
+                    .ui.header #{parent.title}
+                    .description !{parent.content}
+                .ui.segment
+                    .ui.dividing.header Service Applied To
+            .five.wide.column
+                .ui.dividing.header When
+                |#{when}
+                .ui.dividing.header Sale Price
+                if sale_dollar_price
+                    |$#{sale_dollar_price}
+                |#{sale_point_price} point(s)
+                .ui.dividing.header Buyer 
+                img.ui.avatar.image(src="{{c.url author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                |#{author.name}
+                with author
+                    +staus_indicator
+                .ui.dividing.header Recipient
+                img.ui.avatar.image(src="{{c.url recipient.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                |#{recipient.name}
+                with recipient
+                    +staus_indicator
+            .five.wide.column
+                .ui.dividing.header Completed
+                p Once payment is made the seller (#{recipient.name}) can mark transaction complete.  Seller can not unmark complete once buyer submits review.
+                if completed
+                    i.large.green.check.icon
+                else    
+                    i.large.circle.outline.icon
+                if can_mark_complete
+                    if completed
+                        #unmark_complete.ui.basic.button
+                            i.minus.icon
+                            | Unmark Complete
+                    else
+                        #mark_complete.ui.basic.button
+                            i.check.icon
+                            | Mark Complete
+                .ui.dividing.header Reviewed
+                if reviewed
+                    i.green.check.large.icon
+                    |Reviewed
+                else
+                    i.square.outline.large.icon
+                    |Not Reviewed
+                p When transaction is marked complete, the buyer (#{author.name}) can review the transaction with voting and tags.
+                if can_review
+                    i.thumbs.up.link.huge.icon.vote_up(class=vote_up_button_class)
+                    i.thumbs.down.link.huge.icon.vote_down(class=vote_down_button_class)
+                    +tag_rate parent
+                +tag_ratings parent

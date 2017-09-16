@@ -1,20 +1,5 @@
 if Meteor.isClient
-    FlowRouter.route '/transaction/:doc_id/view',
-        action: (params) ->
-            BlazeLayout.render 'layout',
-                # top: 'nav'
-                main: 'transaction_view'
-    
-    
-    
-    
-    Template.transaction_view.onCreated ->
-        # console.log FlowRouter.getParam 'doc_id'
-        @autorun -> Meteor.subscribe 'transaction', FlowRouter.getParam('doc_id')
-
-
-    Template.transaction_view.helpers
-        doc: -> Docs.findOne FlowRouter.getParam('doc_id')
+    Template.view_transaction.helpers
         balance_after_transaction: ->Meteor.user().points - @point_price
 
         can_mark_complete: -> 
@@ -31,7 +16,7 @@ if Meteor.isClient
             else if @downvoters and Meteor.userId() in @downvoters then 'red'
             else 'outline'
 
-    Template.transaction_view.events
+    Template.view_transaction.events
         'click #mark_complete': (e,t)->
             Docs.update FlowRouter.getParam('doc_id'),
                 $set: completed: true
@@ -52,29 +37,6 @@ if Meteor.isClient
             $(e.currentTarget).closest('.vote_down').transition('pulse')
 
 
-if Meteor.isServer
-    publishComposite 'transaction', (doc_id)->
-        {
-            find: -> Docs.find doc_id
-            children: [
-                {
-                    find: (doc)->
-                        Meteor.users.find
-                            _id: doc.recipient_id
-                    }
-                {
-                    find: (doc)->
-                        Meteor.users.find
-                            _id: doc.author_id
-                    }
-                {
-                    find: (doc)->
-                        Docs.find
-                            _id: doc.parent_id
-                    }
-                ]
-            }
-            
 Meteor.methods        
     transaction_vote_up: (transaction_id)->
         transaction = Docs.findOne transaction_id

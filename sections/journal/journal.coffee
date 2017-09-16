@@ -72,6 +72,11 @@ if Meteor.isClient
             Docs.update @_id, $pull: read_by: Meteor.userId()
 
 
+    Template.edit_journal.events
+        'click #delete_doc': ->
+            if confirm 'Delete this journal entry?'
+                Docs.remove @_id
+                FlowRouter.go '/journal'
 
 
 

@@ -11,6 +11,14 @@ FlowRouter.route '/checkin/calendar', action: (params) ->
         # cloud: 'cloud'
         main: 'checkin_calendar_view'
 
+Template.edit_checkin.events
+    'click #delete_doc': ->
+        if confirm 'Delete this doc?'
+            Docs.remove @_id
+            FlowRouter.go '/checkin'
+
+
+
 
 Template.checkin_calendar_view.onRendered ->
     $( '#checkin-calendar' ).fullcalendar();

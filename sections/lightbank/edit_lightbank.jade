@@ -1,0 +1,43 @@
+template(name='edit_lightbank')
+    .ui.container
+        h1.ui.center.aligned.header Edit Lightbank Entry
+        .ui.stackable.grid
+            .eleven.wide.column
+                .ui.form
+                    .ui.segment
+                        +tags
+                    if has_youtube
+                        .ui.segment
+                            +youtube
+                            if youtube
+                                +view_youtube
+                    if has_image
+                        +edit_image
+                    if has_content
+                        .ui.segment
+                            +content
+            .five.wide.column
+                if tags
+                    a.ui.fluid.green.big.button(href="/view/#{_id}") Save Lightbank Item
+                else
+                    .ui.fluid.green.big.disabled.button Add Tags to Save
+                #delete_doc.ui.small.fluid.red.button Delete
+                .ui.segment
+                    .ui.form
+                        .grouped.fields
+                            .label Components
+                            +toggle_youtube
+                            +toggle_image
+                            +toggle_content
+                // .ui.segment
+                //     .ui.form
+                //         .grouped.fields
+                //             .label Buttons
+                            // +toggle_resonates_button
+                            // +toggle_bookmarkable_button
+                            // +toggle_complete_button
+                +published
+                .ui.header by #{author.name}
+
+                if isInRole 'admin'
+                    +edit_author
