@@ -65,7 +65,7 @@ Template.nav.events
     
     'click #check_in': ->
         new_checkin_doc_id = Docs.insert type: 'checkin'
-        FlowRouter.go("/checkin/#{new_checkin_doc_id}/edit")
+        FlowRouter.go("/edit/#{new_checkin_doc_id}")
     
 Template.left_sidebar.onRendered ->
     @autorun =>

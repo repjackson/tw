@@ -39,14 +39,6 @@ if Meteor.isClient
         journal_card_class: -> if @published then 'blue' else ''
         
     
-    Template.journal.events
-    
-        'click #add_journal_entry': ->
-            new_id = Docs.insert 
-                type:'journal'
-            Session.set 'view_unpublished', true
-            FlowRouter.go("/journal/#{new_id}/edit")
-        
 
     
     Template.journal_doc_view.helpers

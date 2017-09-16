@@ -48,7 +48,7 @@ Template.checkin.helpers
 Template.checkin.events
     'click #check_in': ->
         new_checkin_doc_id = Docs.insert type: 'checkin'
-        FlowRouter.go("/checkin/#{new_checkin_doc_id}/edit")
+        FlowRouter.go("/edit/#{new_checkin_doc_id}")
 
     'keyup #quick_add': (e,t)->
         e.preventDefault

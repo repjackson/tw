@@ -466,4 +466,16 @@ Template.reflect_button.events
             type:'journal'
             parent_id: FlowRouter.getParam('doc_id')
             
-        FlowRouter.go("/journal/#{new_journal_id}/edit")    
+        FlowRouter.go("/edit/#{new_journal_id}")    
+        
+        
+Template.add_doc_button.events
+    'click #add_doc': (e,t)->
+        # console.log t.data.type
+        # console.log t.data.button_text
+        new_id = Docs.insert 
+            type: t.data.type
+        FlowRouter.go("/edit/#{new_id}")
+
+Template.add_doc_button.helpers
+    add_button_text: -> Template.currentData().button_text

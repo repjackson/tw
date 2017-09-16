@@ -76,7 +76,7 @@ if Meteor.isClient
                 type:'lightbank'
                 tags: selected_tags.array()
             Session.set 'view_unpublished', true
-            FlowRouter.go "/lightbank/#{new_id}/edit"
+            FlowRouter.go "/edit/#{new_id}"
     
         'click #set_mode_to_all': -> 
             if Meteor.userId() 

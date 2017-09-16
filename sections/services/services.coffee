@@ -25,7 +25,7 @@ if Meteor.isClient
         'click #add_service': ->
             id = Docs.insert
                 type: 'service'
-            FlowRouter.go "/service/#{id}/edit"
+            FlowRouter.go "/edit/#{id}"
     
         'click #make_list_layout': -> Session.set 'layout_view', 'list'
         'click #make_grid_layout': -> Session.set 'layout_view', 'grid'

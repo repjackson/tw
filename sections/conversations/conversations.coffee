@@ -58,7 +58,7 @@ if Meteor.isClient
     Template.conversations.events
         'click #create_conversation': ->
             Meteor.call 'create_conversation', (err,id)->
-                FlowRouter.go "/conversation/#{id}/edit"
+                FlowRouter.go "/edit/#{id}"
 
     # 'click #create_conversation': ->
     #     id = Docs.insert 
