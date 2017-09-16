@@ -1,9 +1,9 @@
 if Meteor.isClient
-    FlowRouter.route '/course/sol/module/:module_number/lightwork', 
-        name: 'lightwork'
-        action: (params) ->
-            BlazeLayout.render 'view_module',
-                module_content: 'lightwork'
+    # FlowRouter.route '/course/sol/module/:module_number/lightwork', 
+    #     name: 'lightwork'
+    #     action: (params) ->
+    #         BlazeLayout.render 'view_module',
+    #             module_content: 'lightwork'
     
     
     
@@ -17,12 +17,10 @@ if Meteor.isClient
     
                 
     Template.lightwork.helpers
-        module: -> 
-            Docs.findOne FlowRouter.getParam('doc_id')
-
+        module: -> Docs.findOne FlowRouter.getParam('doc_id')
+        
+        # lightwork_tags: ->
+        #     "sol,module #{FlowRouter.getParam('module_number')},lightwork"
             
-        lightwork_tags: ->
-            "sol,module #{FlowRouter.getParam('module_number')},lightwork"
-            
-        lightwork_transcript_tags: ->
-            "sol,module #{FlowRouter.getParam('module_number')},lightwork,transcript"
+        # lightwork_transcript_tags: ->
+        #     "sol,module #{FlowRouter.getParam('module_number')},lightwork,transcript"

@@ -8,14 +8,12 @@ if Meteor.isClient
     
     
     Template.downloads.onCreated ->
-        @autorun -> Meteor.subscribe 'module', parseInt FlowRouter.getParam('module_number')
+        # @autorun -> Meteor.subscribe 'module', parseInt FlowRouter.getParam('module_number')
     
     
     Template.downloads.helpers
         module: -> 
-            Docs.findOne
-                tags: $in: ["module"]
-                number: parseInt FlowRouter.getParam('module_number')
+            Docs.findOne FlowRouter.getParam('doc_id')
                 
         module_files: -> 
             Docs.find

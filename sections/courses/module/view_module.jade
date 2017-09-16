@@ -34,7 +34,7 @@ template(name='view_module')
                     h1.ui.center.aligned.header 
                         if module_complete
                             i.small.circle.green.check.icon
-                        |Module #{module_number}: #{module.title}
+                        |Module #{module.number}: #{module.title}
                     // if isInRole 'admin'
                     //     |module_id: #{module._id}
 
@@ -49,41 +49,46 @@ template(name='view_module')
                 with module
                     .content
                         |!{description}
-                    .ui.vertical.fluid.pointing.menu
+                    .ui.vertical.relaxed.divided.list
                         unless is_first_module
-                            a.item(href="/course/sol/module/#{number}/debrief" class="{{isActiveRoute name='debrief'}}") 
-                                if module_progress_doc.module_debrief_complete
+                            .item 
+                                .header
+                                    if module_progress_doc.module_debrief_complete
+                                        i.green.check.icon
+                                    else
+                                        i.square.outline.icon
+                                    |Debrief 
+                                    |#{module_progress_doc.debrief_answer_count}/#{module_progress_doc.debrief_question_count}
+                        .item 
+                            .header
+                                if module_progress_doc.module_sections_complete
                                     i.green.check.icon
                                 else
                                     i.square.outline.icon
-                                .ui.label #{module_progress_doc.debrief_answer_count}/#{module_progress_doc.debrief_question_count}
-                                |Debrief 
-                        a.item(href="/course/sol/module/#{number}/sections" class="{{isActiveRoute name='view_sections'}}") 
-                            if module_progress_doc.module_sections_complete
-                                i.green.check.icon
-                            else
-                                i.square.outline.icon
-                            .ui.label #{module_progress_doc.section_complete_count}/#{module_progress_doc.module_section_count}
-                            |Sections 
-                            // .item Sections
-                            // .menu
-                            //     each sections
-                            //         a.item(href="/course/#{../course}/#{module_number}/section/#{number}" class=section_path_class)  #{number}: #{title}
-                        a.item(href="/course/sol/module/#{number}/lightwork" class="{{isActiveRoute name='lightwork'}}") 
-                            if module_progress_doc.module_lightwork_complete
-                                i.green.check.icon
-                            else
-                                i.square.outline.icon
-                            .ui.label #{module_progress_doc.lightwork_answer_count}/#{module_progress_doc.lightwork_question_count}
-                            |Lightwork 
+                                |Sections 
+                                | #{module_progress_doc.section_complete_count}/#{module_progress_doc.module_section_count}
+                                // .item Sections
+                                // .menu
+                                //     each sections
+                                //         a.item(href="/course/#{../course}/#{module_number}/section/#{number}" class=section_path_class)  #{number}: #{title}
+                        .item 
+                            .header 
+                                if module_progress_doc.module_lightwork_complete
+                                    i.green.check.icon
+                                else
+                                    i.square.outline.icon
+                                |Lightwork 
+                                | #{module_progress_doc.lightwork_answer_count}/#{module_progress_doc.lightwork_question_count}
                         if download_count
-                            a.item(href="/course/sol/module/#{number}/downloads" class="{{isActiveRoute name='downloads'}}")
-                                |Downloads
-                                .ui.label #{download_count}
+                            .item
+                                .header
+                                    |Downloads
+                                    | #{download_count}
                         else if isInRole 'admin'        
-                            a.item(href="/course/sol/module/#{number}/downloads" class="{{isActiveRoute name='downloads'}}")
-                                |Downloads
-                                .ui.label #{download_count}
+                            .item
+                                .header 
+                                    |Downloads
+                                    | #{download_count}
                     .ui.dividing.header Status
                     #calculate_module_progress.ui.fluid.basic.button 
                         i.refresh.icon
@@ -140,15 +145,19 @@ template(name='debrief')
 
 template(name='lightwork')
     // .ui.basic.segment
-    .ui.horizontal.divider.header Lightwork
-    +doc_content tags=lightwork_tags
+    .ui.horizontal.divider.header #{module.title} Lightwork
+    // +doc_content tags=lightwork_tags
+    +doc_by_parentid_and_type parent_id=module._id type='lightwork_video' tags='lightwork,video'
+
     .ui.hidden.divider
     .ui.styled.fluid.accordion
         h3.title
             i.large.newspaper.icon
             | Transcript
+            i.dropdown.icon
         .content
-            +doc_content tags=lightwork_transcript_tags
+            +doc_by_parentid_and_type parent_id=module._id type='lightwork_transcript' tags='lightwork,transcript'
+            // +doc_content tags=lightwork_transcript_tags
     .ui.hidden.divider
 
     // .ui.header new lightwork

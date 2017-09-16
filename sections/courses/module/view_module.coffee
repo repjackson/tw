@@ -92,7 +92,7 @@ if Meteor.isClient
             next_module = Docs.findOne
                 type: 'module'
                 number: next_module_number
-            console.log next_module
+            # console.log next_module
             return next_module
 
 
@@ -328,9 +328,7 @@ if Meteor.isServer
             section_complete_count = 0
             for section_number in [1..module_section_count]
                 module_doc = 
-                    Docs.findOne
-                        type: 'module'
-                        number: module_number
+                    Docs.findOne module_id
                 section_doc = 
                     Docs.findOne
                         type: 'section'

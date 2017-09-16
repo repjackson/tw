@@ -20,7 +20,8 @@ template(name='course_modules')
                             +type
                         +delete_button
                 else
-                    a.ui.header(href="/course/sol/module/#{number}") 
+                    a.ui.header(href="/view/#{_id}") 
+                        // a.ui.subheader(href="/view/#{_id}") id: #{_id}
                         if module_is_complete
                             i.green.big.check.circle.icon
                         |#{number}: #{title}
