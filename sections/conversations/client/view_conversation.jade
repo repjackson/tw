@@ -26,6 +26,12 @@ template(name='view_conversation')
                             .content
                                 .header
                                     |#{name}
+                                    if subscribed
+                                        .ui.small.basic.green.label
+                                            |Subscribed
+                                    else
+                                        .ui.basic.label
+                                            |Not Subscribed
                                     .sub.header @#{username}
                                 .description
                                     each five_tags
@@ -35,6 +41,7 @@ template(name='view_conversation')
                 each tags
                     .ui.basic.large.label.doc_tag #{this}
                 .ui.dividing.header Actions
+                +subscribe_button
                 +bookmark_button
                 unless is_author
                     +resonate_button

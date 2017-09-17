@@ -8,6 +8,7 @@ Meteor.methods
         Docs.insert
             tags: tags
             type: 'conversation'
+            subscribers: [Meteor.userId()]
             participant_ids: [Meteor.userId()]
         # FlowRouter.go "/conversation/#{id}"
 

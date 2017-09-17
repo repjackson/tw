@@ -4,6 +4,7 @@ template(name='full_conversation_view')
             span.right.floated
                 if isInRole 'admin'
                     +delete_button
+                +subscribe_button
                 +view_full_button
             .ui.header 
                 |!{content}    
@@ -28,8 +29,6 @@ template(name='full_conversation_view')
                             +staus_indicator
             +conversation_messages_pane this
                     
-template(name='minimal_conversation_view')
-
 template(name='conversation_messages_pane')
     .ui.horizontal.list.participant_list
         if published
@@ -44,9 +43,10 @@ template(name='conversation_messages_pane')
                         |Join
         each participants
             .item.participant_item
-                img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
-                |#{name}
-                +staus_indicator
+                a(href="/profile/#{username}")
+                    img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                    |#{name}
+                    +staus_indicator
     .ui.divider
     .description.conversation_messages
         each conversation_messages

@@ -2,18 +2,19 @@ template(name='conversation_message')
     .ui.segment.message_segment(class=message_segment_class)
         .ui.comments
             .comment
-                a.avatar
+                a.avatar(href="/profile/#{username}")
                     img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
                 .content
-                    a.author #{author.name}
+                    a.author(href="/profile/#{username}") #{author.name}
                     .metadata
                         span.date #{from_now}
                     .text
                         | #{body}
                     .actions
-                        if can_edit
+                        if is_author
                             +delete_link
                         else
+                            +voting
                             if read
                                 a.mark_unread 
                                     i.mail.icon
@@ -22,7 +23,10 @@ template(name='conversation_message')
                                 a.mark_read 
                                     i.mail.outline.icon
                                     |Mark Read
-                            +voting
+                        |Read by:
+                        each readers
+                            .ui.tiny.basic.label #{name}
+                            // img.ui.avatar.image(src="{{c.url profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
                         if parent_id
                             .ui.accordion
                                 .title

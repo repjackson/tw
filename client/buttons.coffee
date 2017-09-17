@@ -21,36 +21,35 @@ Template.voting.events
         else FlowRouter.go '/sign-in'
 
 Template.thanks_button.helpers
-    said_thanks: ->
-        @upvoters and Meteor.userId() in @upvoters
+    said_thanks: -> @upvoters and Meteor.userId() in @upvoters
     thanks_button_class: ->
         if not Meteor.userId() then 'disabled'
         else if @upvoters and Meteor.userId() in @upvoters then 'teal'
         else 'basic'
 
-Template.thanks_button.onRendered ->
-    self = @
-    Meteor.setTimeout =>
-        $('#thanks_modal').modal(
-            transition: 'horizontal flip'
-            closable: true
-            inverted: true
-            onApprove : =>
-                text = $('#thanks_message_text').val()
-                Meteor.call 'create_message', recipient_id=self.data.author_id, text=text, parent_id=self.data._id, (err,res)->
-                    if err then console.error err
-                    else
-                        $('#message_sent.modal').modal('show')
-                        $('#thanks_message_text').val('')
-            )
-    , 500
+# Template.thanks_button.onRendered ->
+#     self = @
+#     Meteor.setTimeout =>
+#         $('#thanks_modal').modal(
+#             transition: 'horizontal flip'
+#             closable: true
+#             inverted: true
+#             onApprove : =>
+#                 text = $('#thanks_message_text').val()
+#                 Meteor.call 'create_message', recipient_id=self.data.author_id, text=text, parent_id=self.data._id, (err,res)->
+#                     if err then console.error err
+#                     else
+#                         $('#message_sent.modal').modal('show')
+#                         $('#thanks_message_text').val('')
+#             )
+#     , 500
     
-    Meteor.setTimeout ->
-        $('#message_sent').modal(
-            transition: 'horizontal flip'
-            inverted: true
-            )
-    , 500
+#     Meteor.setTimeout ->
+#         $('#message_sent').modal(
+#             transition: 'horizontal flip'
+#             inverted: true
+#             )
+#     , 500
 
 Template.thanks_button.events
     'click .vote_up': (e,t)-> 
@@ -295,38 +294,28 @@ Template.rating.events
 #                 session_id: session_id
 
 Template.delete_button.events
-    'click #delete': ->
-        self = @
-        # console.log @_id
-        swal {
-            title: 'Delete?'
-            # text: 'Confirm delete?'
-            type: 'error'
-            animation: false
-            showCancelButton: true
-            closeOnConfirm: true
-            cancelButtonText: 'Cancel'
-            confirmButtonText: 'Delete'
-            confirmButtonColor: '#da5347'
-        }, ->
-            Docs.remove self._id
-            # if FlowRouter.getParam('doc_id') 
-            #     FlowRouter.go "/#{self.type}"
+    'click .delete': (e,t)-> t.confirming.set true
+
+    'click .cancel': (e,t)-> t.confirming.set false
+    'click .confirm': (e,t)-> Docs.remove @_id
+            
+Template.delete_link.onCreated ->
+    @confirming = new ReactiveVar(false)
+            
+            
+Template.delete_link.helpers
+    confirming: -> Template.instance().confirming.get()
 Template.delete_link.events
-    'click #delete': ->
-        self = @
-        swal {
-            title: 'Delete?'
-            # text: 'Confirm delete?'
-            type: 'error'
-            animation: false
-            showCancelButton: true
-            closeOnConfirm: true
-            cancelButtonText: 'Cancel'
-            confirmButtonText: 'Delete'
-            confirmButtonColor: '#da5347'
-        }, ->
-            Docs.remove self._id
+    'click .delete': (e,t)-> 
+        # $(e.currentTarget).closest('.comment').transition('pulse')
+        t.confirming.set true
+
+    'click .cancel': (e,t)-> t.confirming.set false
+    'click .confirm': (e,t)-> 
+        $(e.currentTarget).closest('.comment').transition('fade right')
+        Meteor.setTimeout =>
+            Docs.remove(@_id)
+        , 1000
 
 
 Template.favorite_button.helpers
@@ -479,3 +468,24 @@ Template.add_doc_button.events
 
 Template.add_doc_button.helpers
     add_button_text: -> Template.currentData().button_text
+    
+    
+    
+Template.subscribe_button.helpers
+    subscribe_buton_class: -> if @subscribers and Meteor.userId() in @subscribers then 'teal' else 'basic'
+    subscribed: -> if @subscribers and Meteor.userId() in @subscribers then true else false
+    is_participant: -> Meteor.userId() in @participant_ids
+        
+Template.subscribe_button.events
+    'click #subscribe_button': (e,t)-> 
+        if Template.parentData(0).subscribers
+            if Meteor.userId() in Template.parentData(0).subscribers
+                Docs.update Template.parentData(0)._id,
+                    $pull: subscribers: Meteor.userId()
+            else
+                Docs.update Template.parentData(0)._id,
+                    $addToSet: subscribers: Meteor.userId()
+            $(e.currentTarget).closest('#subscribe_button').transition('pulse')
+        else
+            Docs.update Template.parentData(0)._id,
+                $set: subscribers: []

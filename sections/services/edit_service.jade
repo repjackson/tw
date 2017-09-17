@@ -10,11 +10,12 @@ template(name='edit_service')
                     +edit_image
             .five.wide.column
                 if tags
-                    a.ui.fluid.green.big.button(href="/service/#{_id}/view") Save Service
+                    a.ui.fluid.green.big.button(href="/view/#{_id}") Save Service
                 else
                     .ui.fluid.green.big.disabled.button
                         | Add Tags to Save
                 #delete_doc.ui.small.fluid.red.button Delete
+                .ui.divider
                 +point_price
                 +published
                 if isInRole 'admin'

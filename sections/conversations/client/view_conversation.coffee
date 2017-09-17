@@ -21,3 +21,6 @@ Template.view_conversation.helpers
             type: 'message'
             group_id: @_id 
             read_by: $nin: [Meteor.userId()]}).count()
+
+
+    subscribed: -> @_id in Docs.findOne(FlowRouter.getParam('doc_id')).subscribers

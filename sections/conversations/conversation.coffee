@@ -45,7 +45,7 @@ if Meteor.isClient
                         if err then console.error err
                         else
                             console.log res
-                            t.find('.add_message').value = ''
+                    t.find('.add_message').value = ''
     
         'click .close_conversation': ->
             self = @
@@ -80,14 +80,50 @@ if Meteor.isServer
                 group_id: group_id
                 tags: ['conversation', 'message']
             
-            conversation_doc = Docs.findOne
-                _id: group_id
-            console.log 'new message id', new_message_id
-            console.log 'conversation people', conversation_doc.participant_ids
-            Email.send
-                to: "repjackson@gmail.com",
-                from: "from.address@email.com",
-                subject: "Example Email",
-                text: "The contents of our email in plain text.",
+            conversation_doc = Docs.findOne _id: group_id
+            message_doc = Docs.findOne new_message_id
+            message_author = Meteor.users.findOne message_doc.author_id
+            
+            message_link = "/view/#{message_doc._id}"
+            # console.log 'message author', message_author
+            # console.log 'message_doc', message_doc
+            
+            this.unblock()
+            
+            offline_ids = []
+            for participant_id in conversation_doc.participant_ids
+                user = Meteor.users.findOne participant_id
+                console.log participant_id
+                if user.status.online is true
+                    console.log 'user online:', user.profile.first_name
+                else
+                    offline_ids.push user._id
+                    console.log 'user offline:', user.profile.first_name
+            
+            
+            for offline_id in offline_ids
+                console.log 'offline id', offline_id
+                offline_user = Meteor.users.findOne offline_id
+                
+                Email.send
+                    to: " #{offline_user.profile.first_name} #{offline_user.profile.last_name} <#{offline_user.emails[0].address}>",
+                    from: "TWI Admin <no-reply@toriwebster.com>",
+                    subject: "New Message from #{message_author.profile.first_name} #{message_author.profile.last_name}",
+                    html: 
+                        "<h4>#{message_author.profile.first_name} just sent the following message: </h4>
+                        #{body} <br>
+                        
+                        Click <a href=#{message_link}> here to view.</a><br>
+                        You can unsubscribe from this conversation in the Actions panel.
+                        "
+                    
+                    # html: 
+                    #     "<h4>#{message_author.profile.first_name} just sent the following message: </h4>
+                    #     #{body} <br>
+                    #     In conversation with tags: #{conversation_doc.tags}. \n
+                    #     In conversation with description: #{conversation_doc.description}. \n
+                    #     \n
+                    #     Click <a href="/view/#{_id}"
+                    # "
             return new_message_id
                 

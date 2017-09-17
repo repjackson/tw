@@ -1,7 +1,7 @@
 template(name='voting')
     i.thumbs.up.link.large.icon.vote_up(class=vote_up_button_class)
     // i.thumbs.down.link.big.icon.vote_down(class=vote_down_button_class)
-    |#{points}
+    // |#{points}
 
 template(name='thanks_button')
     .ui.circular.button.vote_up(class=thanks_button_class)
@@ -10,27 +10,27 @@ template(name='thanks_button')
             |Thanks #{author.profile.first_name}
         else
             | Thank #{author.profile.first_name} for sharing
-    #thanks_modal.ui.small.modal
-        i.close.icon
-        .header Send #{author.profile.first_name} an optional private message?
-        .content
-            // img.ui.avatar.image(src="{{c.url author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
-            .ui.fluid.input
-                input#thanks_message_text(type='text')
-        .actions
-            .ui.cancel.basic.button
-                // i.ban.icon
-                | No Thanks
-            .ui.teal.approve.labeled.icon.button 
-                i.send.icon
-                |Send
-    #message_sent.ui.small.modal
-        i.close.icon
-        .header Message sent to #{author.profile.first_name}.
-        .actions
-            .ui.green.approve.button 
-                i.check.icon
-                |Cool
+    // #thanks_modal.ui.small.modal
+    //     i.close.icon
+    //     .header Send #{author.profile.first_name} an optional private message?
+    //     .content
+    //         // img.ui.avatar.image(src="{{c.url author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+    //         .ui.fluid.input
+    //             input#thanks_message_text(type='text')
+    //     .actions
+    //         .ui.cancel.basic.button
+    //             // i.ban.icon
+    //             | No Thanks
+    //         .ui.teal.approve.labeled.icon.button 
+    //             i.send.icon
+    //             |Send
+    // #message_sent.ui.small.modal
+    //     i.close.icon
+    //     .header Message sent to #{author.profile.first_name}.
+    //     .actions
+    //         .ui.green.approve.button 
+    //             i.check.icon
+    //             |Cool
 
 template(name='reflect_button')
     if currentUser
@@ -145,11 +145,25 @@ template(name='add_to_cart')
         
 
 template(name='delete_button')
-    #delete.ui.icon.red.basic.button
-        i.remove.icon
+    unless confirming
+        .delete.ui.icon.red.basic.button
+            i.remove.icon
+    else
+        a.cancel(href='#') Cancel
+        a.confirm(href='#') Confirm Delete
         
 template(name='delete_link')
-    a#delete(href='#') Delete
+    span.link_area
+        unless confirming
+            a.delete(href='#') Delete
+        else
+            a.cancel(href='#') 
+                i.ban.icon
+                |Cancel
+            a.confirm(href='#') 
+                i.red.trash.icon
+                |Confirm Delete
+        
 
 template(name='published')
     .ui.dividing.header Visibility
@@ -253,3 +267,14 @@ template(name='add_doc_button')
     #add_doc.ui.basic.fluid.button
         i.green.plus.icon
         | #{add_button_text}
+
+
+template(name='subscribe_button')
+    if is_participant
+        #subscribe_button.ui.button(class=subscribe_buton_class)
+            if subscribed
+                i.check.icon
+                | Subscribed
+            else
+                i.square.outline.icon
+                |Not Subscribed

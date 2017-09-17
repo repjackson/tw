@@ -19,7 +19,7 @@ if Meteor.isClient
                 type: 'conversation'
                 participant_ids: [Meteor.userId(), user._id]
                 published: false
-
+                tags: ['private','messaging']
 
     
 if Meteor.isServer

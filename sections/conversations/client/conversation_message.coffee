@@ -9,6 +9,13 @@ if Meteor.isClient
         message_segment_class: -> if Meteor.userId() in @read_by then 'basic' else ''
         read: -> Meteor.userId() in @read_by
 
+        readers: ->
+            readers = []
+            for reader_id in @read_by
+                readers.push Meteor.users.findOne reader_id
+            readers
+
+
     Template.conversation_message.events
         'click .mark_read': (e,t)-> 
             $(e.currentTarget).closest('.message_segment').transition('pulse')
