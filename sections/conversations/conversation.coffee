@@ -84,7 +84,7 @@ if Meteor.isServer
             message_doc = Docs.findOne new_message_id
             message_author = Meteor.users.findOne message_doc.author_id
             
-            message_link = "/view/#{message_doc._id}"
+            message_link = "https://www.toriwebster.com/view/#{message_doc._id}"
             # console.log 'message author', message_author
             # console.log 'message_doc', message_doc
             

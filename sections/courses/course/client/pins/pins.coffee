@@ -11,6 +11,10 @@ Template.course_pins.onCreated ->
     @autorun => Meteor.subscribe('pinned_tags', selected_tags.array())
 
     
+Template.pin.onCreated ->
+    @autorun => Meteor.subscribe 'doc', @data._id
+
+    
 Template.course_pins.onRendered ->
 
 Template.course_pins.helpers
@@ -42,8 +46,10 @@ Template.course_pins.helpers
         Docs.find(pinned_ids: $in: [Meteor.userId()]).count()
         
         
-Template.bookmark.helpers
-    tag_class: -> if @valueOf() in selected_tags.array() then 'teal' else 'basic'
+Template.pin.onRendered ->
+    Meteor.setTimeout ->
+        $('.ui.accordion').accordion()
+    , 500
 
         
         

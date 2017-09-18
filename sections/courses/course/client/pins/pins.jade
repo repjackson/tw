@@ -16,18 +16,16 @@ template(name='course_pins')
             each pinned_tags
                 .ui.basic.button.select_tag(class=cloud_tag_class) 
                     | #{this.name}
-            .ui.list
-                each pinned_docs
-                    +pin
-                    .ui.hidden.divider
-                    .ui.divider
+            each pinned_docs
+                +pin
                 
 template(name='pin')
-    .item
+    .ui.fluid.segment
         .content
+            +pin_corner_button
             .header
                 each tags
-                    .ui.label(class=tag_class) #{this}
+                    .ui.large.basic.label(class=tag_class) #{this}
             // .avatar
                 // a
                 //     | by
@@ -43,10 +41,30 @@ template(name='pin')
                     if image_url
                         img.ui.small.image(src=image_url)
             .extra
-                .ui.horizontal.list
-                    // .item
-                    //     .ui.blue.basic.button
-                    //         | View
-                    //         i.right.chevron.icon
-                    .item
-                        +pin_button
+                .item
+                    if parent_id
+                        .ui.accordion
+                            .title
+                                i.vertically.flipped.share.icon
+                                |Child of...
+                                i.dropdown.icon
+                            .content
+                                .ui.basic.segment
+                                    each parent.tags
+                                        .ui.small.basic.label #{this}
+                                    strong by #{parent.author.profile.first_name}
+                                    p #{parent.body}
+                                    if parent.parent_id
+                                        .ui.basic.segment
+                                            i.vertically.flipped.share.icon
+                                            each parent.parent.tags
+                                                .ui.small.basic.label #{this}
+                                            p #{parent.parent.body}
+                                            if parent.parent.parent_id
+                                                .ui.basic.segment
+                                                    i.vertically.flipped.share.icon
+                                                    each parent.parent.parent.tags
+                                                        .ui.small.basic.label #{this}
+                                                    if parent.parent.parent.title
+                                                        strong #{parent.parent.parent.title}
+                                                    p #{parent.parent.parent.body}            
