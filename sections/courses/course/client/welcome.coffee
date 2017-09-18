@@ -112,7 +112,7 @@ Template.sol_terms.events
         self = @
         swal {
             title: 'Agree to Terms?'
-            text: 'This cannot be undone.'
+            # text: 'This cannot be undone.'
             type: 'info'
             animation: true
             showCancelButton: true

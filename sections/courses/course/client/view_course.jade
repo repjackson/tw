@@ -26,30 +26,30 @@ template(name='view_course')
                         i.star.icon(class=welcome_icon_class)
                         .ui.blue.label #{sol_progress_doc.welcome_count}/3
                         |Welcome
-                    if has_agreed
-                        a.item(href="/course/sol/modules" class="{{isActiveRoute name='course_modules'}}") 
-                            i.list.layout.icon
-                            |Modules
-                            .ui.blue.label #{sol_progress_doc.module_complete_count}/#{sol_progress_doc.sol_module_count}
-                        a.item(href="/course/sol/members" class="{{isActiveRoute name='course_members'}}") 
-                            i.users.icon
-                            |Members
-                        a.item(href="/course/sol/pins" class="{{isActiveRoute name='course_pins'}}") 
-                            i.pin.icon
-                            |Pins
-                        a.item(href="/course/sol/stats" class="{{isActiveRoute name='course_stats'}}") 
-                            i.line.chart.icon
-                            |Stats
-                    else
-                        .disabled.item 
-                            i.list.layout.icon
-                            |Modules (please agree to terms)
-                        .disabled.item 
-                            i.users.icon
-                            |Members (please agree to terms)
-                        .disabled.item
-                            i.pin.icon
-                            |Pins (please agree to terms)
+                    // if has_agreed
+                    a.item(href="/course/sol/modules" class="{{isActiveRoute name='course_modules'}}") 
+                        i.list.layout.icon
+                        |Modules
+                        .ui.blue.label #{sol_progress_doc.module_complete_count}/#{sol_progress_doc.sol_module_count}
+                    a.item(href="/course/sol/members" class="{{isActiveRoute name='course_members'}}") 
+                        i.users.icon
+                        |Members
+                    a.item(href="/course/sol/pins" class="{{isActiveRoute name='course_pins'}}") 
+                        i.pin.icon
+                        |Pins
+                    a.item(href="/course/sol/stats" class="{{isActiveRoute name='course_stats'}}") 
+                        i.line.chart.icon
+                        |Stats
+                    // else
+                    //     .disabled.item 
+                    //         i.list.layout.icon
+                    //         |Modules (please agree to terms)
+                    //     .disabled.item 
+                    //         i.users.icon
+                    //         |Members (please agree to terms)
+                    //     .disabled.item
+                    //         i.pin.icon
+                    //         |Pins (please agree to terms)
                     
                     // a.item(href="/course/sol/collaboration" class="{{isActiveRoute name='course_collaboration'}}") Collaboration
                     // a.item(href="/course/sol/downloads" class="{{isActiveRoute name='course_downloads'}}") Downloads

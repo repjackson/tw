@@ -153,11 +153,11 @@ template(name='sol_terms')
             strong #{agreed_date}
     p(dir='ltr')
         br
-
-    if has_agreed
-        #remove_agreement.ui.basic.red.button Remove Agreement
-    else
-        #agree_to_terms.ui.green.fluid.button Agree to Terms
+    if currentUser
+        if has_agreed
+            #remove_agreement.ui.basic.red.button Remove Agreement
+        else
+            #agree_to_terms.ui.green.fluid.button Agree to Terms
     if isInRole 'admin'
         .ui.horizontal.divider.header
             i.red.configure.icon
