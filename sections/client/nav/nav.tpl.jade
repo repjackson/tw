@@ -12,25 +12,32 @@
     else
         a.mobile.hidden.item(href="/dashboard" class="{{isActivePath '/dashboard'}}")
             i.dashboard.icon
-            | Dashboard
+            .computer.only
+                | Dashboard
         a.mobile.hidden.item(href='/courses' class="{{isActivePath '/courses'}}") 
             i.university.icon
-            | Courses
+            .computer.only
+                | Courses
         a.mobile.hidden.item(href='/lightbank' class="{{isActivePath '/lightbank'}}") 
             i.sun.icon
-            | Lightbank
+            .computer.only
+                | Lightbank
         a.mobile.hidden.item(href='/people' class="{{isActivePath '/people'}}") 
             i.users.icon
-            | People
+            .computer.only
+                | People
         a.mobile.hidden.item(href='/journal' class="{{isActivePath '/journal'}}") 
             i.pencil.icon
-            | Journal
+            .computer.only
+                | Journal
         a.mobile.hidden.item(href='/checkin' class="{{isActivePath '/checkin'}}") 
             i.check.icon
-            | Check In's
+            .computer.only
+                | Check In's
         a.mobile.hidden.item(href='/services' class="{{isActivePath '/services'}}") 
             i.configure.icon
-            |Services
+            .computer.only
+                |Services
     
         
     .right.menu

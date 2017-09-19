@@ -13,6 +13,10 @@ if Meteor.isClient
                 selected_author_ids.array()
                 view_mode= Session.get('view_mode')
                 )
+    Template.view_journal.onCreated ->
+        Meteor.setTimeout ->
+            $('.progress').progress()
+        , 2000
 
     
     Template.journal_doc_view.onRendered ->

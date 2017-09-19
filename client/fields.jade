@@ -8,6 +8,12 @@ template(name='subtitle')
         label Subtitle
         input#subtitle(type='text' value=subtitle)
 
+template(name='created_date')
+    .ui.form
+        .inline.field
+            label Created Date
+            input#created_date(type='datetime-local' value=created_date)
+
 template(name='plain')
     .field
         input#plain(type='text' value=plain)

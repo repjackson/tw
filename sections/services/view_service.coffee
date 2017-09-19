@@ -5,8 +5,8 @@ if Meteor.isClient
                 
     Template.service_transactions.helpers
         child_transactions: ->
-            Docs.find
+            Docs.find {
                 type: 'transaction'
                 parent_id: FlowRouter.getParam('doc_id')
-
+            }, sort: timestamp: -1
     Template.view_service.events

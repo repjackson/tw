@@ -16,8 +16,8 @@ if Meteor.isClient
     Template.course_stats.helpers
         modules: -> 
             Docs.find
-                tags: $all: ['sol', "module progress"]
-                # author_id: Meteor.userId()
+                type: 'module_progress'
+                author_id: Meteor.userId()
     
         stats_count: ->
             Docs.find(pinned_ids: $in: [Meteor.userId()]).count()
@@ -28,5 +28,5 @@ if Meteor.isClient
 if Meteor.isServer
     Meteor.publish 'my_course_stats', ->
         Docs.find
-            tags: $all: ['sol', "module progress"]
-            author_id: @userId
+            type: 'module_progress'
+            author_id: Meteor.userId()

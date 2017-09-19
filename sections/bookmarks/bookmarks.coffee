@@ -11,7 +11,8 @@ if Meteor.isClient
 
         
     Template.bookmarks.onRendered ->
-
+        selected_tags.clear()
+        
     Template.bookmarks.helpers
         bookmarked_tags: ->
             doc_count = Docs.find().count()

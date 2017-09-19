@@ -75,6 +75,8 @@ template(name='journal_doc_view')
                     +view_full_button
                 +bookmark_button
                 +edit_link_button
+                unless is_author
+                    +thanks_button
         .image
             .ui.basic.segment
                 +doc_sentiment

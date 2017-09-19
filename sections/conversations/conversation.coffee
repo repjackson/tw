@@ -84,7 +84,7 @@ if Meteor.isServer
             message_doc = Docs.findOne new_message_id
             message_author = Meteor.users.findOne message_doc.author_id
             
-            message_link = "https://www.toriwebster.com/view/#{message_doc._id}"
+            message_link = "https://www.toriwebster.com/view/#{conversation_doc._id}"
             # console.log 'message author', message_author
             # console.log 'message_doc', message_doc
             
@@ -110,10 +110,10 @@ if Meteor.isServer
                     from: "TWI Admin <no-reply@toriwebster.com>",
                     subject: "New Message from #{message_author.profile.first_name} #{message_author.profile.last_name}",
                     html: 
-                        "<h4>#{message_author.profile.first_name} just sent the following message: </h4>
-                        #{body} <br>
+                        "<h4>#{message_author.profile.first_name} just sent the following message while you were offline: </h4>
+                        #{body} <br><br>
                         
-                        Click <a href=#{message_link}> here to view.</a><br>
+                        Click <a href=#{message_link}> here to view.</a><br><br>
                         You can unsubscribe from this conversation in the Actions panel.
                         "
                     

@@ -26,9 +26,9 @@ template(name='service_item')
                 if dollar_price
                     | $#{dollar_price}
                 if point_price
-                    | #{point_price} point(s)
+                    | #{point_price} pts
                 else
-                    | 0 points
+                    | Free
 
         .content
             a.header(href="/view/#{_id}") #{title}

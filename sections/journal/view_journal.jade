@@ -2,8 +2,6 @@ template(name='view_journal')
     a.ui.basic.button(href='/journal')
         i.left.chevron.icon
         strong Journal
-    // with doc
-    
     .ui.container
         h1.ui.center.aligned.header View Journal Entry
         .ui.stackable.grid
@@ -24,7 +22,7 @@ template(name='view_journal')
                     with author
                         +staus_indicator
                     h3.ui.sub.header #{when}
-                if can_edit
+                if is_author
                     +call_watson
                 if watson
                     +doc_sentiment

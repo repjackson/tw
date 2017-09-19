@@ -4,6 +4,18 @@ Template.subtitle.events
         Docs.update @_id,
             $set: subtitle: subtitle
             
+Template.created_date.helpers
+    created_date: -> 
+        console.log @timestamp
+        @timestamp
+
+Template.created_date.events
+    'blur #created_date': ->
+        created_date = $('#created_date').val()
+        console.log created_date
+        # Docs.update @_id,
+        #     $set: created_date: created_date
+            
 Template.plain.events
     'blur #plain': ->
         plain = $('#plain').val()

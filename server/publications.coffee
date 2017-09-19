@@ -196,6 +196,12 @@ publishComposite 'doc', (id)->
                         _id: doc.author_id
             }
             {
+                # object
+                find: (doc)->
+                    Docs.find
+                        _id: doc.object_id
+            }
+            {
                 # older numeric sibling
                 find: (doc)->
                     if doc.number
@@ -221,32 +227,39 @@ publishComposite 'doc', (id)->
                     Docs.find
                         _id: doc.parent_id
                 children: [
-                    # grandparent doc
-                    find: (parent_doc)->
-                        Docs.find
-                            _id: parent_doc.parent_id
-                    children: [
-                        # great grandparent doc
-                        find: (grandparent_doc)->
+                    {
+                        # grandparent doc
+                        find: (parent_doc)->
                             Docs.find
-                                _id: grandparent_doc.parent_id
+                                _id: parent_doc.parent_id
                         children: [
-                            # great great grandparent doc
-                            find: (great_grandparent_doc)->
+                            # great grandparent doc
+                            find: (grandparent_doc)->
                                 Docs.find
-                                    _id: great_grandparent_doc.parent_id
+                                    _id: grandparent_doc.parent_id
                             children: [
-                                # great great great grandparent doc
-                                find: (great_great_grandparent_doc)->
+                                # great great grandparent doc
+                                find: (great_grandparent_doc)->
                                     Docs.find
-                                        _id: great_great_grandparent_doc.parent_id
+                                        _id: great_grandparent_doc.parent_id
+                                children: [
+                                    # great great great grandparent doc
+                                    find: (great_great_grandparent_doc)->
+                                        Docs.find
+                                            _id: great_great_grandparent_doc.parent_id
+                                    ]
+                
                                 ]
             
                             ]
-        
-                        ]
-            
-                    ]
+                    }
+                    {
+                        # parent author
+                        find: (parent_doc)->
+                            Meteor.users.find
+                                _id: parent_doc.author_id
+                    }
+                ]
             }
             {
                 # child doc

@@ -27,6 +27,7 @@ if Meteor.isClient
                 Meteor.setTimeout ->
                     $('.ui.accordion').accordion()
                 , 500
+        selected_tags.clear()
 
     
     Template.lightbank.helpers

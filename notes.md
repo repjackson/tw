@@ -165,3 +165,27 @@ global read count
     
 Docs.find({tags:["section"]}).count()
 Docs.update({tags:["section"]}, {$set:{type:'section'}}, {multi:true})
+
+
+
+{
+  "_id": "NZaqaeYyGdnBm4cJJ",
+  "tags": [
+    "sol",
+    "module 4",
+    "module progress"
+  ],
+  "author_id": "5xrn6pFLKF95mrpcj",
+  "module_progress_percent": 66.66666666666666,
+  "module_section_count": 5,
+  "section_complete_count": 3,
+  "module_sections_complete": false,
+  "debrief_question_count": 1,
+  "debrief_answer_count": 1,
+  "module_debrief_complete": true,
+  "lightwork_question_count": 3,
+  "lightwork_answer_count": 0,
+  "module_lightwork_complete": false,
+  "parent_id": "2eXMhxuv4LW4jWobr",
+  "type": "module_progress"
+}

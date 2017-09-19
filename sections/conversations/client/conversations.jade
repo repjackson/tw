@@ -1,9 +1,9 @@
 template(name='conversations')
+    h1.ui.header 
+        i.comments.outline.icon
+        |Conversations
     .ui.stackable.grid
         .four.wide.column
-            h1.ui.horizontal.divider.header 
-                i.comments.outline.icon
-                |Conversations
             if currentUser
                 #create_conversation.ui.basic.fluid.button
                     i.plus.icon

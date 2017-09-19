@@ -8,6 +8,9 @@ if Meteor.isClient
         @autorun => Meteor.subscribe 'transactions'
         Meteor.subscribe 'usernames'
         
+    Template.transaction.onCreated ->
+        @autorun => Meteor.subscribe 'doc', @data._id
+        
     Template.transactions.helpers
         transactions: -> 
             Docs.find { type: 'transaction' },

@@ -1,17 +1,40 @@
 template(name='view_transaction')
     a.ui.basic.button(href='/view/#{parent._id}')
         i.left.chevron.icon
-        |#{parent.title}
+        |'#{parent.title}' Service 
+    div    
+        a.ui.basic.button(href='/transactions')
+            i.left.chevron.icon
+            |My Transactions
     .ui.container
         h1.ui.center.aligned.header View Transaction
         .ui.stackable.grid
             .five.wide.column
                 .ui.segment
                     .ui.dividing.header Parent Service
-                    .ui.header #{parent.title}
+                    .ui.header 
+                        if parent.image_id
+                            img.ui.avatar.image(src="{{c.url parent.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                        if parent.image_url
+                            img.ui.avatar.image(src=parent.image_url)
+                        |#{parent.title}
                     .description !{parent.content}
                 .ui.segment
                     .ui.dividing.header Service Applied To
+                    .ui.header 
+                        if object.image_id
+                            img.ui.avatar.image(src="{{c.url object.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                        if object.image_url
+                            img.ui.avatar.image(src=object.image_url)
+                        |#{object.title}
+                    .description !{object.content}
+                    .extra
+                        |Type: 
+                        .ui.basic.label #{object.type}
+                    .extra
+                        a.ui.basic.button(href="/view/#{object._id}") 
+                            |View Full
+                            i.right.chevron.arrosw.icon
             .five.wide.column
                 .ui.dividing.header When
                 |#{when}
@@ -25,13 +48,13 @@ template(name='view_transaction')
                 with author
                     +staus_indicator
                 .ui.dividing.header Recipient
-                img.ui.avatar.image(src="{{c.url recipient.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
-                |#{recipient.name}
-                with recipient
+                img.ui.avatar.image(src="{{c.url parent.author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                |#{parent.author.name}
+                with parent.author
                     +staus_indicator
             .five.wide.column
                 .ui.dividing.header Completed
-                p Once payment is made the seller (#{recipient.name}) can mark transaction complete.  Seller can not unmark complete once buyer submits review.
+                p Once payment is made the seller (#{parent.author.name}) can mark transaction complete.  Seller can not unmark complete once buyer submits review.
                 if completed
                     i.large.green.check.icon
                 else    

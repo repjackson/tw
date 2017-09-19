@@ -60,4 +60,6 @@ if Meteor.isClient
                     return
                     
         'click .send_verification_email': (e,t)->
-            console.log @
+            Meteor.call 'verify_email', Meteor.userId(), ->
+                Bert.alert 'Verification Email Sent', 'success', 'growl-top-right'
+                

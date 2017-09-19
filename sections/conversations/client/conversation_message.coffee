@@ -17,9 +17,10 @@ if Meteor.isClient
 
 
     Template.conversation_message.events
-        'click .mark_read': (e,t)->
-            Meteor.call 'mark_read', @_id, ->
-                $(e.currentTarget).closest('.message_segment').transition('pulse')
+        'click .mark_read, click .text': (e,t)->
+            unless Meteor.userId() in @read_by
+                Meteor.call 'mark_read', @_id, ->
+                    $(e.currentTarget).closest('.message_segment').transition('pulse')
         
         'click .mark_unread': (e,t)-> 
             Meteor.call 'mark_unread', @_id, ->
