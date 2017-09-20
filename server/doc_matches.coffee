@@ -15,7 +15,7 @@ Meteor.methods
         match_object = {}
         for tag in tags
             id_array_with_tag = []
-            Docs.find({ tags: $in: [tag] }, { tags: 1 }).forEach (doc)->
+            Docs.find({ tags: $in: [tag], published: true }, { tags: 1 }).forEach (doc)->
                 if doc._id isnt doc_id
                     id_array_with_tag.push doc._id
             match_object[tag] = id_array_with_tag

@@ -2,5 +2,6 @@
 .DS_Store
 mup.json
 client/sem/*
+node_modules/*
 !client/sem/custom.semantic.json
 !client/sem/site/globals/site.overrides.import.less

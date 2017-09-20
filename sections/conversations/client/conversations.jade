@@ -1,7 +1,11 @@
 template(name='conversations')
-    h1.ui.header 
-        i.comments.outline.icon
-        |Conversations
+    .ui.stackable.grid
+        .five.wide.column
+            h1.ui.header 
+                i.comments.outline.icon
+                |Conversations
+        .ten.wide.column
+            .ui.header Unread Messages Count: #{unread_message_count}
     .ui.stackable.grid
         .four.wide.column
             if currentUser

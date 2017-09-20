@@ -63,22 +63,33 @@ template(name='doc_matches')
             if top_doc_matches
                 .ui.relaxed.divided.items
                     each top_doc_matches
-                        .item 
-                            .content
-                                .description
-                                    i.random.icon
-                                    |Intersection Tags (#{intersection_tags_count})
-                                    each intersection_tags
-                                        .ui.basic.label #{this}
-                                .description
-                                    i.tags.icon
-                                    | Document Tags
-                                    each tags
-                                        .ui.small.basic.label #{this}
-                                .extra
-                                    a.ui.basic.compact.teal.button(href="/view/#{doc_id}") 
-                                        |Full
-                                        i.right.arrow.icon
+                        +doc_match
+                        
+                        
+                                        
+template(name='doc_match')                    
+    .item 
+        .content
+            .description
+                i.random.icon
+                |Intersection Tags (#{intersection_tags_count})
+                each intersection_tags
+                    .ui.basic.label #{this}
+            .description
+                i.tags.icon
+                | Document Tags
+                each tags
+                    .ui.small.basic.label #{this}
+            .description
+                |Type: #{match_doc.type}
+            .description
+                |Author: #{match_doc.author.name}
+            .description
+                |Content: !{match_doc.content}
+            .extra
+                a.ui.basic.compact.teal.button(href="/view/#{doc_id}") 
+                    |Full
+                    i.right.arrow.icon
                                         
 template(name='service_buttons')
     .ui.dividing.header Services

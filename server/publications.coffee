@@ -1,9 +1,4 @@
     
-Meteor.publish 'my_tickets', ->
-    Docs.find
-        author_id: @userId 
-        type: 'support_ticket'
-        
 Meteor.publish 'child_docs', (parent_id)->
     Docs.find
         parent_id: parent_id
@@ -50,7 +45,7 @@ Meteor.publish 'me', ->
             bookmarked_ids: 1
     
     
-Meteor.publish 'tags', (selected_tags, selected_author_ids=[], type=null, author_id=null, parent_id=null, manual_limit=null, view_mode)->
+Meteor.publish 'tags', (selected_tags, selected_author_ids=[], type=null, author_id=null, parent_id=null, manual_limit=null, view_private, view_unread)->
     
     self = @
     match = {}
@@ -66,12 +61,8 @@ Meteor.publish 'tags', (selected_tags, selected_author_ids=[], type=null, author
     if author_id then match.author_id = author_id
     # console.log match
     
-    if view_mode is 'mine'
-        match.author_id = Meteor.userId()
-    else if view_mode is 'resonates'
-        match.favoriters = $in: [@userId]
-    else if view_mode is 'all'
-        match.published = true
+    if view_private is true then match.author_id = Meteor.userId()
+    else if view_private is false then match.published = true
             
 
     
@@ -95,7 +86,7 @@ Meteor.publish 'tags', (selected_tags, selected_author_ids=[], type=null, author
 
     self.ready()
         
-Meteor.publish 'watson_keywords', (selected_tags, selected_author_ids=[], type=null, author_id=null, parent_id=null, manual_limit=null, view_mode)->
+Meteor.publish 'watson_keywords', (selected_tags, selected_author_ids=[], type=null, author_id=null, parent_id=null, manual_limit=null, view_private)->
     
     self = @
     match = {}
@@ -111,12 +102,8 @@ Meteor.publish 'watson_keywords', (selected_tags, selected_author_ids=[], type=n
     if author_id then match.author_id = author_id
     # console.log match
     
-    if view_mode is 'mine'
-        match.author_id = Meteor.userId()
-    else if view_mode is 'resonates'
-        match.favoriters = $in: [@userId]
-    else if view_mode is 'all'
-        match.published = true
+    if view_private is true then match.author_id = Meteor.userId()
+    else if view_private is false then match.published = true
             
 
     
@@ -141,7 +128,7 @@ Meteor.publish 'watson_keywords', (selected_tags, selected_author_ids=[], type=n
     self.ready()
         
 
-publishComposite 'docs', (selected_tags, type, limit, view_mode)->
+publishComposite 'docs', (selected_tags, type, limit, view_private)->
     {
         find: ->
             self = @
@@ -149,13 +136,9 @@ publishComposite 'docs', (selected_tags, type, limit, view_mode)->
             # match.tags = $all: selected_tags
             if selected_tags.length > 0 then match.tags = $all: selected_tags
             if type then match.type = type
-            # console.log view_mode
-            if view_mode is 'mine'
-                match.author_id = Meteor.userId()
-            else if view_mode is 'resonates'
-                match.favoriters = $in: [@userId]
-            else if view_mode is 'all'
-                match.published = true
+            # console.log view_private
+            if view_private is true then match.author_id = Meteor.userId()
+            else if view_private is false then match.published = true
                     
             if limit
                 Docs.find match, 
@@ -318,13 +301,13 @@ Meteor.publish 'doc_by_tags', (tags)->
     
     
     
-Meteor.publish 'me_card', ->
-    # console.log id
-    Meteor.users.find @userId,
-        fields:
-            tags: 1
-            profile: 1
-            points: 1    
+# Meteor.publish 'me_card', ->
+#     # console.log id
+#     Meteor.users.find @userId,
+#         fields:
+#             tags: 1
+#             profile: 1
+#             points: 1    
             
             
 Meteor.publish 'person', (id)->

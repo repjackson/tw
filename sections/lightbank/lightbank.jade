@@ -43,7 +43,7 @@ template(name='lightbank')
 
 
 template(name='lightbank_doc_view')
-    .ui.fluid.card
+    .ui.fluid.card(class=read_segment_class)
         .content
             if has_youtube
                 +view_youtube
@@ -74,4 +74,6 @@ template(name='lightbank_doc_view')
             // if can_bookmark
             +bookmark_button
             +view_full_button
-            +edit_link_button
+            +toggle_doc_read
+            if can_edit
+                +edit_link_button

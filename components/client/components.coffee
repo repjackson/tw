@@ -31,9 +31,9 @@ Template.read_by.helpers
                 Meteor.users.find _id: $in: @read_by
     
 Template.toggle_doc_read.events
-    'click .mark_read': (e,t)-> Meteor.call 'mark_read', FlowRouter.getParam('doc_id')
+    'click .mark_read': (e,t)-> Meteor.call 'mark_read', @_id
         
-    'click .mark_unread': (e,t)-> Meteor.call 'mark_unread', FlowRouter.getParam('doc_id'),
+    'click .mark_unread': (e,t)-> Meteor.call 'mark_unread', @_id
 
 Template.toggle_doc_read.helpers
     read: ->Meteor.userId() in @read_by
@@ -67,8 +67,11 @@ Template.doc_matches.events
             # console.log res
             
             
+Template.doc_match.onCreated ->
+    @autorun => Meteor.subscribe 'doc', @data.doc_id
             
-            
+Template.doc_match.helpers
+    match_doc: -> Docs.findOne @doc_id
             
             
             

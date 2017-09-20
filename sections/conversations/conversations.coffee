@@ -30,7 +30,6 @@ Meteor.methods
 
 
 
-
 if Meteor.isClient
     Template.conversations.onCreated ->
         @autorun -> Meteor.subscribe('conversations', selected_tags.array(), selected_participant_ids.array())
@@ -49,6 +48,23 @@ if Meteor.isClient
                     type: 'conversation'
                     published: false
                 }, sort: timestamp: -1
+            
+            
+        unread_message_count: ->
+            count = 0
+            my_conversations = Docs.find(
+                type: 'conversation'
+                participant_ids: $in: [Meteor.userId()]
+            ).fetch()
+            
+            for conversation in my_conversations
+                unread_count = Docs.find(
+                    type: 'message'
+                    group_id: conversation._id
+                    read_by: $nin: [Meteor.userId()]
+                ).count()
+                count += unread_count
+            count
             
             
         viewing_published: -> Template.instance().view_published.get() is true
@@ -70,12 +86,12 @@ if Meteor.isClient
 
         'click #view_private_conversations': (e,t)-> 
             t.view_published.set(false)
-            console.log t.view_published.get()
+            # console.log t.view_published.get()
             
         'click #view_published_conversations': (e,t)-> 
             t.view_published.set(true)    
 
-            console.log t.view_published.get()
+            # console.log t.view_published.get()
 
 
 

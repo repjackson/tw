@@ -21,13 +21,14 @@ if Meteor.isClient
         @autorun -> Meteor.subscribe 'published_lightbank_count'
     
     
+    Template.lightbank.onRendered -> selected_tags.clear()
+    
     Template.lightbank_doc_view.onRendered ->
         @autorun =>
             if @subscriptionsReady()
                 Meteor.setTimeout ->
                     $('.ui.accordion').accordion()
                 , 500
-        selected_tags.clear()
 
     
     Template.lightbank.helpers
@@ -183,4 +184,12 @@ if Meteor.isServer
         return undefined    # otherwise coffeescript returns a Counts.publish
     Meteor.publish 'published_lightbank_count', ->
         Counts.publish this, 'published_lightbank_count', Docs.find(type: 'lightbank', published:true)
+        return undefined    # otherwise coffeescript returns a Counts.publish
+    Meteor.publish 'unread_lightbank_count', ->
+        Counts.publish this, 'unread_lightbank_count', 
+            Docs.find(
+                type: 'lightbank' 
+                published:true
+                read_by: $nin: [Meteor.userId()]
+            )
         return undefined    # otherwise coffeescript returns a Counts.publish

@@ -14,6 +14,12 @@ if Meteor.isClient
                 Session.get('view_private')
                 Session.get('view_unread')
                 )
+        @autorun -> Meteor.subscribe 'unread_journal_count'
+            
+                
+                
+                
+                
     Template.view_journal.onCreated ->
         Meteor.setTimeout ->
             $('.progress').progress()
@@ -43,7 +49,8 @@ if Meteor.isClient
             
         journal_card_class: -> if @published then 'blue' else ''
         
-    
+        published_count: -> Counts.get('unread_journal_count')
+
 
     
     Template.journal_doc_view.helpers
@@ -117,14 +124,22 @@ if Meteor.isServer
             ]
         }
 
+    Meteor.publish 'unread_journal_count', ->
+        Counts.publish this, 'unread_journal_count', 
+            Docs.find(
+                type: 'journal' 
+                published:true
+                read_by: $nin: [Meteor.userId()]
+            )
+        return undefined    # otherwise coffeescript returns a Counts.publish
 
 
-    Meteor.methods
-        convert_journal_docs: ->
-            count = Docs.find(
-                author_id: '2hjhjPYPwxAqxj8BC'
-                ).count()
-            console.log count
+    # Meteor.methods
+    #     convert_journal_docs: ->
+    #         count = Docs.find(
+    #             author_id: '2hjhjPYPwxAqxj8BC'
+    #             ).count()
+    #         console.log count
             
             # Docs.update {
             #     author_id: '2hjhjPYPwxAqxj8BC'

@@ -11,31 +11,35 @@
         a.mobile.hidden.item(href='/contact' class="{{isActivePath '/contact'}}") Contact
     else
         a.mobile.hidden.item(href="/dashboard" class="{{isActivePath '/dashboard'}}")
-            i.dashboard.icon
+            i.dashboard.large.icon
             .computer.only
                 | Dashboard
         a.mobile.hidden.item(href='/courses' class="{{isActivePath '/courses'}}") 
-            i.university.icon
+            i.university.large.icon
             .computer.only
                 | Courses
         a.mobile.hidden.item(href='/lightbank' class="{{isActivePath '/lightbank'}}") 
-            i.sun.icon
+            i.sun.large.icon
             .computer.only
                 | Lightbank
+            if unread_lightbank_count
+                .ui.label #{unread_lightbank_count}
         a.mobile.hidden.item(href='/people' class="{{isActivePath '/people'}}") 
-            i.users.icon
+            i.users.large.icon
             .computer.only
                 | People
         a.mobile.hidden.item(href='/journal' class="{{isActivePath '/journal'}}") 
-            i.pencil.icon
+            i.pencil.large.icon
             .computer.only
                 | Journal
+            if unread_journal_count
+                .ui.label #{unread_journal_count}
         a.mobile.hidden.item(href='/checkin' class="{{isActivePath '/checkin'}}") 
-            i.check.icon
+            i.check.large.icon
             .computer.only
                 | Check In's
         a.mobile.hidden.item(href='/services' class="{{isActivePath '/services'}}") 
-            i.configure.icon
+            i.configure.large.icon
             .computer.only
                 |Services
     
@@ -52,9 +56,10 @@
             // a.icon.mobile.hidden.item(href='/karma' data-position="bottom center" data-content="Karma")
             //     i.heartbeat.icon
             //     |#{currentUser.points}
-            a.icon.item.item(href='/conversations' class="{{isActivePath '/conversations'}}") 
-                i.comments.outline.icon
-            
+            a.item.item(href='/conversations' class="{{isActivePath '/conversations'}}") 
+                i.large.comments.outline.icon
+                if unread_message_count
+                    .ui.basic.label #{unread_message_count}
             // a.ui.icon.dropdown.item(class="{{isActivePath '/notifications'}}" data-position="bottom center" data-content="Notifications")
             // a.ui.icon.simple.dropdown.item
             //     if unread_notifications_count
