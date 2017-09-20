@@ -117,11 +117,21 @@ Template.parent_doc_segment.onRendered ->
     
     
     
-Template.view_mode_button.helpers
-    viewing_mine: -> Session.equals 'view_mode','mine'  
-    viewing_all: -> Session.equals 'view_mode','all'  
+Template.view_published_toggle.helpers
+    viewing_mine: -> Session.equals 'view_private',true  
+    viewing_all: -> Session.equals 'view_private',false  
 
 
-Template.view_mode_button.events
-    'click #view_my_entries': (e,t)-> Session.set('view_mode','mine')    
-    'click #view_all_entries': (e,t)-> Session.set('view_mode', 'all')    
+Template.view_published_toggle.events
+    'click #view_my_entries': (e,t)-> Session.set('view_private',true)    
+    'click #view_all_entries': (e,t)-> Session.set('view_private', false)    
+
+
+Template.view_read_toggle.helpers
+    viewing_unread: -> Session.equals 'view_unread', true  
+    viewing_all: -> Session.equals 'view_unread',false  
+
+
+Template.view_read_toggle.events
+    'click #view_unread': (e,t)-> Session.set('view_unread', true)    
+    'click #view_all': (e,t)-> Session.set('view_unread', false)    

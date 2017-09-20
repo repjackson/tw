@@ -4,7 +4,8 @@ $.cloudinary.config
 Session.setDefault 'cart_item', null
 
 
-Session.setDefault 'view_mode', 'all'
+Session.setDefault 'view_private', false
+Session.setDefault 'view_unread', true
     
     
     

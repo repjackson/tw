@@ -91,9 +91,9 @@ Meteor.methods
     #             html: SSR.render('message_email', email_data)
 
 
-    generate_personal_cloud: (uid)->
+    generate_personal_cloud: (user_id)->
         authored_cloud = Docs.aggregate [
-            { $match: authorId: uid }
+            { $match: author_id: user_id }
             { $project: tags: 1 }
             { $unwind: '$tags' }
             { $group: _id: '$tags', count: $sum: 1 }

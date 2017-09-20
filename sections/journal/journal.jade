@@ -10,8 +10,9 @@ template(name='journal')
             .four.wide.column
                 if currentUser
                     +add_doc_button type='journal' button_text='Add Journal Entry'
-                .ui.hidden.divider
-                +view_mode_button
+                .ui.dividing.header Filters
+                +view_published_toggle
+                +view_read_toggle
                 #cloud
                     +tag_filter type='journal'
                     +username_filter type='journal'

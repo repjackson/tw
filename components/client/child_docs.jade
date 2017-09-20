@@ -1,15 +1,16 @@
 template(name='child_docs')
-    .ui.styled.accordion
-        .title Child Documents
-        .content
-            .ui.cards
-                each child_docs
-                    .card
-                        .content
-                            .header
-                                if title
-                                    |#{title}
-                            .description
-                                .meta
-                                    each tags
-                                        .ui.basic.label #{this}
+    if child_docs.count
+        .ui.styled.accordion
+            .title Child Documents
+            .content
+                .ui.cards
+                    each child_docs
+                        .card
+                            .content
+                                .header
+                                    if title
+                                        |#{title}
+                                .description
+                                    .meta
+                                        each tags
+                                            .ui.basic.label #{this}

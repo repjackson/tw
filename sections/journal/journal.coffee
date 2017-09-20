@@ -11,7 +11,8 @@ if Meteor.isClient
             Meteor.subscribe('journal_docs', 
                 selected_tags.array(), 
                 selected_author_ids.array()
-                view_mode= Session.get('view_mode')
+                Session.get('view_private')
+                Session.get('view_unread')
                 )
     Template.view_journal.onCreated ->
         Meteor.setTimeout ->
@@ -77,7 +78,7 @@ if Meteor.isClient
 
 
 if Meteor.isServer
-    publishComposite 'journal_docs', (selected_tags, selected_author_ids, view_mode)->
+    publishComposite 'journal_docs', (selected_tags, selected_author_ids, view_private, view_unread)->
         {
             find: ->
                 self = @
@@ -90,15 +91,18 @@ if Meteor.isServer
                 
                 match.type = 'journal'
                 
-                if view_mode is 'mine'
-                    match.author_id = Meteor.userId()
-                else if view_mode is 'resonates'
-                    match.favoriters = $in: [@userId]
-                else if view_mode is 'all'
-                    match.published = true
+                if view_private is true then match.author_id = Meteor.userId()
+                # else if view_private is 'resonates'
+                #     match.favoriters = $in: [@userId]
+                else if view_private is false then match.published = true
+                
+                if view_unread is true then match.read_by = $nin: [Meteor.userId()]
+                
                 
                 Docs.find match,
                     sort: timestamp: -1
+                
+                
             children: [
                 {
                     find: (doc)->
