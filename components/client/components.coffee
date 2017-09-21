@@ -36,7 +36,7 @@ Template.toggle_doc_read.events
     'click .mark_unread': (e,t)-> Meteor.call 'mark_unread', @_id
 
 Template.toggle_doc_read.helpers
-    read: ->Meteor.userId() in @read_by
+    read: ->Meteor.userId() in @read_by?
     
     
 
@@ -138,3 +138,33 @@ Template.view_read_toggle.helpers
 Template.view_read_toggle.events
     'click #view_unread': (e,t)-> Session.set('view_unread', true)    
     'click #view_all': (e,t)-> Session.set('view_unread', false)    
+
+
+
+# Template.instance().stripe = Stripe.configure(
+#     key: stripe_key
+#     image: '/toriwebster-logomark-04.png'
+#     locale: 'auto'
+#     # zipCode: true
+#     token: (token) ->
+#         # console.log token
+#         purchasing_item = Docs.findOne Session.get 'purchasing_item'
+#         console.dir 'purchasing_item', purchasing_item
+#         charge = 
+#             amount: purchasing_item.price*100
+#             currency: 'usd'
+#             source: token.id
+#             description: token.description
+#             receipt_email: token.email
+#         Meteor.call 'processPayment', charge, (error, response) =>
+#             if error then Bert.alert error.reason, 'danger'
+#             else
+#                 Meteor.call 'register_transaction', purchasing_item._id, (err, response)->
+#                     if err then console.error err
+#                     else
+#                         Bert.alert "You have purchased #{purchasing_item.title}.", 'success'
+#                         Docs.remove Session.get('current_cart_item')
+#                         FlowRouter.go "/account"
+#     # closed: ->
+#     #     Bert.alert "Payment Canceled", 'info', 'growl-top-right'
+# )

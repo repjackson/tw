@@ -15,8 +15,9 @@ template(name='checkin')
             .ui.icon.fluid.input
                 input#quick_add(type='text' placeholder='Quick Add with Tags (separated by spaces)')
                 i.green.plus.icon
-            .ui.divider
-            +view_mode_button
+            .ui.dividing.header Filters
+            +view_published_toggle
+            +view_read_toggle
             +tag_filter type='checkin'
             +username_filter type='checkin'
         .eleven.wide.column

@@ -1,0 +1,30 @@
+a.ui.basic.button(href='/plans')
+    i.left.chevron.icon
+    |Plans
+.ui.container
+    h1.ui.center.aligned.header View '#{title}' Plan
+    .ui.stackable.grid
+        .ten.wide.column
+            .ui.items
+                .ui.item
+                    .content
+                        .description
+                            |!{content}
+            +stripe_cc_form                
+            // +plan_members
+        .five.wide.column
+            if dollar_price
+                .ui.header Price: $#{dollar_price}
+            .ui.dividing.header Actions
+            +add_to_cart
+            .ui.dividing.header Reviews
+            h4 Review Points: #{points}
+
+            .ui.dividing.header Tags
+            each tags
+                .ui.basic.large.label.doc_tag #{this}
+            .ui.hidden.fitted.divider
+            // +tag_rating
+            if is_admin
+                +edit_link_button
+                

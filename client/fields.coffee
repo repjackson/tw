@@ -4,6 +4,12 @@ Template.subtitle.events
         Docs.update @_id,
             $set: subtitle: subtitle
             
+Template.icon_class.events
+    'blur #icon_class': ->
+        icon_class = $('#icon_class').val()
+        Docs.update @_id,
+            $set: icon_class: icon_class
+            
 Template.created_date.helpers
     created_date: -> 
         console.log @timestamp

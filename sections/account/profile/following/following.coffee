@@ -35,14 +35,14 @@ if Meteor.isClient
             Meteor.users.update target_user._id, $addToSet: followers: Meteor.userId()
             $(e.currentTarget).closest('#follow').transition('pulse')
     
-            Meteor.call 'add_notification', Meteor.userId(), 'followed', target_user._id
+            # Meteor.call 'add_notification', Meteor.userId(), 'followed', target_user._id
     
         'click #unfollow': (e,t)-> 
             target_user = Meteor.users.findOne username: FlowRouter.getParam('username')
             Meteor.users.update target_user._id, $pull: followers: Meteor.userId()
             $(e.currentTarget).closest('#unfollow').transition('pulse')
     
-            Meteor.call 'add_notification', Meteor.userId(), 'unfollowed', target_user._id
+            # Meteor.call 'add_notification', Meteor.userId(), 'unfollowed', target_user._id
 
 
 

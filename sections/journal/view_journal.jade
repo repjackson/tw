@@ -7,7 +7,8 @@ template(name='view_journal')
         .ui.stackable.grid
             .ten.wide.column
                 +parent_doc_segment
-                |!{content}
+                .ui.basic.segment
+                    |!{content}
                 if published
                     +comments
                 +doc_matches

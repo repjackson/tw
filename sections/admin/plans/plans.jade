@@ -1,0 +1,40 @@
+template(name='plans')
+    .ui.stackable.grid
+        .four.wide.column
+            h1.ui.dividing.header
+                i.payment.icon
+                |Membership Plans
+            if isInRole 'admin'
+                #add_plan.ui.red.basic.fluid.button
+                    i.plus.icon
+                    |Add plan
+        .twelve.wide.column
+            .ui.relaxed.divided.items
+                each plans
+                    +plan
+
+
+template(name='plan')
+    .item
+        a.image(href="/view/#{_id}")
+            .ui.center.aligned.header
+                if dollar_price
+                    | $#{dollar_price}
+                if point_price
+                    | #{point_price} pts
+                else
+                    | Free
+
+        .content
+            a.header(href="/view/#{_id}") #{title}
+            .meta
+                each tags
+                    .ui.small.label(class=tag_class) #{this}
+            .description
+                | !{content}
+                span.right.floated
+                    +view_full_button
+            .extra
+                i.tags.icon
+                each tags
+                    .ui.compact.tiny.button.plan_tag(class=tag_class) #{this}

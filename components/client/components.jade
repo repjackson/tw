@@ -123,11 +123,30 @@ template(name='parent_doc_segment')
                 |In response to...
                 i.dropdown.icon
             .content
-                |!{parent.content}
-                .ui.basic.center.aligned.segment
-                    a.ui.basic.large.button(href="/lightbank/#{parent._id}/view" title='View Lightbank Entry')
-                        i.link.external.icon
-                        |View Lightbank Entry
+                with parent
+                    |!{content}
+                    .ui.divider
+                    .ui.horizontal.divided.list
+                        .item
+                            img.ui.avatar.image(src="{{c.url author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                            |by #{author.name}
+                        .item
+                            |Type:
+                            .ui.basic.label #{type}
+                    .ui.divider
+                    .ui.horizontal.divided.list
+                        .item
+                            |Tags:
+                            each tags
+                                .ui.basic.small.label #{this}
+                    .ui.divider
+                    .ui.horizontal.divided.list
+                        .item
+                            +voting
+                        .item
+                            a.ui.basic.button(href="/view/#{_id}" title='View Document')
+                                i.link.external.icon
+                                |View Entry
 
 
 template(name='view_published_toggle')
@@ -152,3 +171,5 @@ template(name='view_read_toggle')
             i.mail.icon
             |Viewing All
 
+template(name='stripe_cc_form')
+    #card_element

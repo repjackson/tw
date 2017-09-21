@@ -1,4 +1,9 @@
     
+Meteor.publish 'my_tickets', ->
+    Docs.find
+        author_id: @userId 
+        type: 'support_ticket'
+        
 Meteor.publish 'child_docs', (parent_id)->
     Docs.find
         parent_id: parent_id
@@ -62,7 +67,10 @@ Meteor.publish 'tags', (selected_tags, selected_author_ids=[], type=null, author
     # console.log match
     
     if view_private is true then match.author_id = Meteor.userId()
-    else if view_private is false then match.published = true
+    else if view_private is 'resonates'
+        match.favoriters = $in: [@userId]
+    else if view_private is 'all'
+        match.published = true
             
 
     
@@ -301,13 +309,13 @@ Meteor.publish 'doc_by_tags', (tags)->
     
     
     
-# Meteor.publish 'me_card', ->
-#     # console.log id
-#     Meteor.users.find @userId,
-#         fields:
-#             tags: 1
-#             profile: 1
-#             points: 1    
+Meteor.publish 'me_card', ->
+    # console.log id
+    Meteor.users.find @userId,
+        fields:
+            tags: 1
+            profile: 1
+            points: 1    
             
             
 Meteor.publish 'person', (id)->

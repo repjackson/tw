@@ -46,7 +46,7 @@ Template.registerHelper 'segment_class', () ->
     else
         ''
 
-Template.registerHelper 'read_segment_class', () -> if Meteor.userId() in @read_by then 'raised green' else 'basic'
+Template.registerHelper 'read_segment_class', () -> if Meteor.userId() in @read_by? then 'raised green' else 'basic'
 Template.registerHelper 'ribbon_class', () -> if @published then 'blue' else 'basic'
 
 Template.registerHelper 'from_now', () -> moment(@timestamp).fromNow()

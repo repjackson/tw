@@ -1,0 +1,19 @@
+.ui.container
+    h1.ui.center.aligned.header Edit #{title} Plan
+    .ui.divided.grid
+        .eleven.wide.column
+            .ui.form
+                +title
+                +icon_class
+                +tags
+                +content
+        .five.wide.column
+            if tags
+                a.ui.fluid.green.big.button(href="/view/#{_id}") Save Plan
+            else
+                .ui.fluid.green.big.disabled.button
+                    | Add Tags to Save
+            #delete_plan.ui.small.fluid.red.button Delete
+            .ui.divider
+            +point_price
+            +dollar_price

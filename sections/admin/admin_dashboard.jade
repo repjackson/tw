@@ -1,50 +1,66 @@
 template(name='admin_dashboard')
-    .ui.container
-        .ui.dividing.header Tori Feedback Requests
-        .ui.items
-            each feedback_requests
-                +feedback_request
+    .ui.stackable.grid
+        .five.wide.column
+            .ui.segment
+                .ui.header Lightbank
+        .five.wide.column
+            .ui.segment
+                .ui.header Journal
+            .ui.segment
+                .ui.header Journal
+        .five.wide.column
+            .ui.segment
+                .ui.header Checkin
+
+
+
+
+    // .ui.container
+    //     .ui.dividing.header Tori Feedback Requests
+    //     .ui.items
+    //         each feedback_requests
+    //             +feedback_request
                 
-template(name='feedback_request')
-    .ui.item
-        .content
-            .header 
-                each parent.tags
-                    .ui.basic.label #{this}
-            .description
-                |#{parent.body}
-                |!{parent.content}
-            .extra 
-                |Author: #{parent.author.name}
-            .extra
-                |Feedback requested: #{when}
-    if parent.parent
-        .ui.segment
-            .ui.header Grandparent Doc
-            each parent.parent.tags
-                .ui.basic.label #{this}
-            .description
-                |#{parent.parent.body}
-                |!{parent.parent.content}
-            .extra 
-                |Author: #{parent.parent.author.name}
-    if parent.parent.parent
-        .ui.segment
-            .ui.header Grandparent Doc
-            each parent.parent.parent.tags
-                .ui.basic.label #{this}
-            .description
-                |#{parent.parent.parent.body}
-                |!{parent.parent.parent.content}
-            .extra 
-                |Author: #{parent.parent.parent.author.name}
-    if parent.parent.parent.parent
-        .ui.segment
-            .ui.header Grandparent Doc
-            each parent.parent.parent.parent.tags
-                .ui.basic.label #{this}
-            .description
-                |#{parent.parent.parent.parent.body}
-                |!{parent.parent.parent.parent.content}
-            .extra 
-                |Author: #{parent.parent.parent.parent.author.name}
+// template(name='feedback_request')
+//     .ui.item
+//         .content
+//             .header 
+//                 each parent.tags
+//                     .ui.basic.label #{this}
+//             .description
+//                 |#{parent.body}
+//                 |!{parent.content}
+//             .extra 
+//                 |Author: #{parent.author.name}
+//             .extra
+//                 |Feedback requested: #{when}
+//     if parent.parent
+//         .ui.segment
+//             .ui.header Grandparent Doc
+//             each parent.parent.tags
+//                 .ui.basic.label #{this}
+//             .description
+//                 |#{parent.parent.body}
+//                 |!{parent.parent.content}
+//             .extra 
+//                 |Author: #{parent.parent.author.name}
+//     if parent.parent.parent
+//         .ui.segment
+//             .ui.header Grandparent Doc
+//             each parent.parent.parent.tags
+//                 .ui.basic.label #{this}
+//             .description
+//                 |#{parent.parent.parent.body}
+//                 |!{parent.parent.parent.content}
+//             .extra 
+//                 |Author: #{parent.parent.parent.author.name}
+//     if parent.parent.parent.parent
+//         .ui.segment
+//             .ui.header Grandparent Doc
+//             each parent.parent.parent.parent.tags
+//                 .ui.basic.label #{this}
+//             .description
+//                 |#{parent.parent.parent.parent.body}
+//                 |!{parent.parent.parent.parent.content}
+//             .extra 
+//                 |Author: #{parent.parent.parent.parent.author.name}
