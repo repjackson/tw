@@ -32,6 +32,12 @@ template(name='view_journal')
                 .ui.dividing.header Tags
                 each tags
                     .ui.basic.large.label.doc_tag #{this}
+                .ui.dividing.header Location Tags
+                each location_tags
+                    .ui.basic.large.label.location_tag #{this}
+                .ui.dividing.header Intention Tags
+                each intention_tags
+                    .ui.basic.large.label.intention_tag #{this}
                 .ui.dividing.header Actions
                 +bookmark_button
                 +reflect_button

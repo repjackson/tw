@@ -1,34 +1,46 @@
 template(name='alpha')
-    h2.ui.center.aligned.header alpha
-    .ui.stackable.grid
-        .four.wide.column
-            #add.ui.button add
-        .twelve.wide.column
-            with root
-                +alpha_card
-            with child
-                +Template.dynamic template=view_type_template
+    #add.ui.button add
+    with root
+        +alpha_menu
+        // +alpha_card
+    with child
+        +Template.dynamic template=template_name
 
-            // #cloud.ui.basic.segment
-            //     .ui.left.icon.large.input
-            //         i.search.icon
-            //         +inputAutocomplete settings=settings id="search" class="" autocomplete="off" 
-            //     if selected_all_tags
-            //         #clear_tags.ui.active.icon.large.button
-            //             i.remove.icon
-            //         each selected_all_tags
-            //             .unselect_tag.ui.active.large.button
-            //                 strong #{this}
-            //     each all_tags
-            //         .ui.button.select_tag(class=cloud_tag_class) 
-            //             | #{this.name}
-            //             // | #{this.index}
-            //             small #{this.count}
-            //     .ui.hidden.divider
-            //     .ui.centered.cards
-                    // each all_docs
-                    //     +alpha_card 
-                        // +dev_doc
+    // #cloud.ui.basic.segment
+    //     .ui.left.icon.large.input
+    //         i.search.icon
+    //         +inputAutocomplete settings=settings id="search" class="" autocomplete="off" 
+    //     if selected_all_tags
+    //         #clear_tags.ui.active.icon.large.button
+    //             i.remove.icon
+    //         each selected_all_tags
+    //             .unselect_tag.ui.active.large.button
+    //                 strong #{this}
+    //     each all_tags
+    //         .ui.button.select_tag(class=cloud_tag_class) 
+    //             | #{this.name}
+    //             // | #{this.index}
+    //             small #{this.count}
+    //     .ui.hidden.divider
+    //     .ui.centered.cards
+            // each all_docs
+            //     +alpha_card 
+                // +dev_doc
+
+template(name='alpha_menu')
+    .ui.borderless.top.attached.pointing.menu
+        a.toggle_sidebar.mobile.only.item
+            i.sidebar.icon
+            .imogen Tori Webster
+        a.mobile.hidden.item(href='/' class="{{isActivePath '/'}}" title=_id)
+            .imogen Tori Webster
+        a.icon.item(href="/alpha_edit/#{_id}")
+            i.pencil.icon
+        a.create_child.icon.item
+            i.plus.icon
+    
+        +Template.dynamic template=template_name
+
 
 template(name='alpha_card')
     .ui.card
@@ -40,24 +52,26 @@ template(name='alpha_card')
                     |by 
                     img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
                     |#{author.name} #{when}
+                |tags
                 each tags
                     .ui.tiny.label(class=tag_class) #{this}
             if body
-                .description Body
+                .description body
                 |#{body}
             if content
-                .description Content
+                .description content
                 |!{content}
             if price
-                | Price #{price}
+                | price #{price}
             if type
-                | Type: #{type}
+                | type: #{type}
             .extra
                 a.ui.button(href="/alpha_edit/#{_id}") edit
                 .create_child.ui.button create child
             .ui.list
                 .header children
-                +Template.dynamic template=children_template
+                // +Template.dynamic template=children_template
+                +Template.dynamic template=template_name
 
 
                     
@@ -68,9 +82,8 @@ template(name='child_list_item')
             .ui.small.basic.label #{this}
             
 template(name='child_menu')
-    .ui.menu
-        each parent_children
-            a.select_child.item 
-                |#{title}
-                a.ui.small.icon.button(href="/alpha_edit/#{_id}")
-                    i.pencil.icon
+    each parent_children
+        a.select_child.item 
+            |#{title}
+            a.ui.small.icon.button(href="/alpha_edit/#{_id}")
+                i.pencil.icon

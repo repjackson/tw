@@ -5,8 +5,10 @@ template(name='edit_journal')
             .twelve.wide.column
                 +parent_doc_segment
                 .ui.form
+                    +intention_tags
                     +content
                     +tags
+                    +location_tags
                     if watson 
                         +analyzed_watson_keywords
                 // |{{> jsonView json=watson}}

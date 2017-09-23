@@ -14,7 +14,7 @@ if Meteor.isClient
         @autorun -> Meteor.subscribe 'root'
     
     
-    Template.alpha_card.onCreated -> 
+    Template.alpha_menu.onCreated -> 
         console.log @data
         @autorun => 
             if @subscriptionsReady()
@@ -110,12 +110,12 @@ if Meteor.isClient
             selected_all_tags.push doc.name
             $('#search').val ''
 
-    Template.alpha_card.events
+    Template.alpha_menu.events
         'click .create_child': ->
             id = Docs.insert parent_id: @_id
             FlowRouter.go "/alpha_edit/#{id}"
             
-    Template.alpha_card.helpers
+    Template.alpha_menu.helpers
         children: ->
             children = Docs.find(parent_id: @_id).fetch()
             console.log children
@@ -127,12 +127,12 @@ if Meteor.isClient
     Template.child_menu.helpers
         parent_children: -> 
             parent_id = Template.parentData(0)._id
-            # console.log parent_id
+            console.log parent_id
             children = Docs.find(parent_id: parent_id).fetch()
-            # console.log children
+            console.log children
             children
 
-    Template.alpha_card.events
+    Template.alpha_menu.events
         'click .select_child': -> 
             Session.set 'child_id', @_id
             

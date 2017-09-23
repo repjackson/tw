@@ -6,9 +6,16 @@ template(name='view_checkin')
         h1.ui.center.aligned.header View Check In
         .ui.stackable.grid
             .ten.wide.column
-                .ui.dividing.header Tags
+                .ui.dividing.header 
+                    i.hashtag.icon
+                    |Tags
                 each tags
                     .ui.basic.large.label.doc_tag #{this}
+                .ui.dividing.header 
+                    i.marker.icon
+                    |Location Tags
+                each location_tags
+                    .ui.basic.large.label.location_tag #{this}
                 .ui.basic.segment
                     |!{content}
                 if published

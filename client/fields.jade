@@ -8,10 +8,10 @@ template(name='subtitle')
         label Subtitle
         input#subtitle(type='text' value=subtitle)
 
-template(name='children_template')
+template(name='template_name')
     .inline.field
-        label Children Template
-        input#children_template(type='text' value=children_template)
+        label Template Name
+        input#template_name(type='text' value=template_name)
 
 template(name='icon_class')
     .inline.field
@@ -42,10 +42,34 @@ template(name='number')
 
 
 template(name='tags')
-    .required.inline.field
-        label Tags
-        input#add_tag(type='text' placeholder='Add Tag' maxlength='50' )
+    .required.field
+        label 
+            i.hashtag.icon
+            |Theme Tags
+        input#add_tag(type='text' placeholder='press enter after each' maxlength='50' )
         each tags
+            a.ui.basic.large.label.doc_tag
+                i.minus.icon
+                |#{this}
+
+template(name='location_tags')
+    .field
+        label 
+            i.marker.icon
+            |Location Tags
+        input#add_location_tag(type='text' placeholder='press enter after each' maxlength='50' )
+        each location_tags
+            a.ui.basic.large.label.doc_tag
+                i.minus.icon
+                |#{this}
+
+template(name='intention_tags')
+    .field
+        label 
+            i.idea.icon
+            |Intention Tags
+        input#add_intention_tag(type='text' placeholder='press enter after each' maxlength='50' )
+        each intention_tags
             a.ui.basic.large.label.doc_tag
                 i.minus.icon
                 |#{this}

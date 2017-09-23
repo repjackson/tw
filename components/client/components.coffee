@@ -52,6 +52,13 @@ Template.doc_matches.onRendered ->
                 $('.ui.accordion').accordion()
             , 500
     
+Template.doc_match.onRendered ->
+    @autorun =>
+        if @subscriptionsReady()
+            Meteor.setTimeout ->
+                $('.ui.accordion').accordion()
+            , 500
+    
 Template.doc_matches.helpers
     # calculate_button_class: ->
         # if Template.instance().is_calculating then 'loading' else ''

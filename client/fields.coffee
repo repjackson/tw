@@ -60,9 +60,39 @@ Template.tags.events
             $pull: tags: tag
         $('#add_tag').val(tag)
 
-Template.tags.helpers
-    tag_subset: ->
-        _.difference(Template.parentData().tags, @filter)
+
+Template.location_tags.events
+    'keydown #add_location_tag': (e,t)->
+        if e.which is 13
+            tag = $('#add_location_tag').val().toLowerCase().trim()
+            if tag.length > 0
+                Docs.update Template.currentData()._id,
+                    $addToSet: location_tags: tag
+                $('#add_location_tag').val('')
+            
+
+    'click .doc_tag': (e,t)->
+        tag = @valueOf()
+        Docs.update Template.currentData()._id,
+            $pull: location_tags: tag
+        $('#add_location_tag').val(tag)
+
+
+Template.intention_tags.events
+    'keydown #add_intention_tag': (e,t)->
+        if e.which is 13
+            tag = $('#add_intention_tag').val().toLowerCase().trim()
+            if tag.length > 0
+                Docs.update Template.currentData()._id,
+                    $addToSet: intention_tags: tag
+                $('#add_intention_tag').val('')
+            
+
+    'click .doc_tag': (e,t)->
+        tag = @valueOf()
+        Docs.update Template.currentData()._id,
+            $pull: intention_tags: tag
+        $('#add_intention_tag').val(tag)
 
 
 
@@ -127,11 +157,11 @@ Template.type.events
         Docs.update @_id,
             $set: type: type
             
-Template.children_template.events
-    'blur #children_template': (e,t)->
-        children_template = $('#children_template').val()
+Template.template_name.events
+    'blur #template_name': (e,t)->
+        template_name = $('#template_name').val()
         Docs.update @_id,
-            $set: children_template: children_template
+            $set: template_name: template_name
             
             
 Template.edit_parent_id.events

@@ -81,11 +81,14 @@ template(name='doc_match')
                 each tags
                     .ui.small.basic.label #{this}
             .description
-                |Type: #{match_doc.type}
-            .description
-                |Author: #{match_doc.author.name}
-            .description
-                |Content: !{match_doc.content}
+                |#{match_doc.type} entry by
+                img.ui.avatar.image(src="{{c.url match_doc.author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                | #{match_doc.author.name}
+            .title
+                i.dropdown.icon
+                |Content 
+            .content
+                |!{match_doc.content}
             .extra
                 a.ui.basic.compact.teal.button(href="/view/#{doc_id}") 
                     |Full
