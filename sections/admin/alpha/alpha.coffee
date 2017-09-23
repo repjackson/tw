@@ -1,18 +1,35 @@
 if Meteor.isClient
-    FlowRouter.route '/admin/all_content', action: (params) ->
+    FlowRouter.route '/admin/alpha', action: (params) ->
         BlazeLayout.render 'layout',
             nav: 'nav'
             sub_nav: 'admin_nav'
-            main: 'all_content'
+            main: 'alpha'
 
 
     @selected_all_tags = new ReactiveArray []
 
-    Template.all_content.onCreated ->
+    Template.alpha.onCreated ->
         @autorun => Meteor.subscribe('all_tags', selected_all_tags.array())
         @autorun -> Meteor.subscribe('all_docs', selected_all_tags.array())
+        @autorun -> Meteor.subscribe 'root'
+    
+    
+    Template.alpha_card.onCreated -> 
+        console.log @data
+        @autorun => 
+            if @subscriptionsReady()
+                Meteor.subscribe 'doc', @data._id
 
-    Template.all_content.helpers
+    Template.alpha.helpers
+        root: -> Docs.findOne type: 'root'
+        
+        child: -> Docs.findOne _id: Session.get('child_id')
+        
+        view_type_template: -> 
+            child = Docs.findOne _id:Session.get('child_id')
+            return "view_#{child.type}"
+            
+            
         all_tags: ->
             doc_count = Docs.find().count()
             if 0 < doc_count < 3
@@ -62,7 +79,7 @@ if Meteor.isClient
     
     
     
-    Template.all_content.events
+    Template.alpha.events
         'click .select_tag': -> selected_all_tags.push @name
         'click .unselect_tag': -> selected_all_tags.remove @valueOf()
         'click #clear_tags': -> selected_all_tags.clear()
@@ -84,14 +101,46 @@ if Meteor.isClient
                     if val.length is 0
                         selected_all_tags.pop()
                         
+        'click #add': ->
+            id = Docs.insert {}
+            FlowRouter.go "/alpha_edit/#{id}"
+                        
         'autocompleteselect #search': (event, template, doc) ->
             # console.log 'selected ', doc
             selected_all_tags.push doc.name
             $('#search').val ''
 
+    Template.alpha_card.events
+        'click .create_child': ->
+            id = Docs.insert parent_id: @_id
+            FlowRouter.go "/alpha_edit/#{id}"
+            
+    Template.alpha_card.helpers
+        children: ->
+            children = Docs.find(parent_id: @_id).fetch()
+            console.log children
+            children
+
+
+
+
+    Template.child_menu.helpers
+        parent_children: -> 
+            parent_id = Template.parentData(0)._id
+            # console.log parent_id
+            children = Docs.find(parent_id: parent_id).fetch()
+            # console.log children
+            children
+
+    Template.alpha_card.events
+        'click .select_child': -> 
+            Session.set 'child_id', @_id
+            
 
 
 if Meteor.isServer
+    Meteor.publish 'root', -> Docs.find type:'root'
+    
     publishComposite 'all_docs', (selected_all_tags)->
         {
             find: ->

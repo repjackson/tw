@@ -127,6 +127,12 @@ Template.type.events
         Docs.update @_id,
             $set: type: type
             
+Template.children_template.events
+    'blur #children_template': (e,t)->
+        children_template = $('#children_template').val()
+        Docs.update @_id,
+            $set: children_template: children_template
+            
             
 Template.edit_parent_id.events
     'blur #parent_id': (e,t)->

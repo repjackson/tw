@@ -22,6 +22,14 @@ Template.toggle_content.events
             $set:
                 has_content: value
         
+Template.toggle_title.events
+    'change #toggle_title': (e,t)->
+        # console.log e.currentTarget.value
+        value = $('#toggle_title').is(":checked")
+        Docs.update FlowRouter.getParam('doc_id'), 
+            $set:
+                has_title: value
+        
 Template.toggle_journal_prompt.events
     'change #toggle_journal_prompt': (e,t)->
         value = $('#toggle_journal_prompt').is(":checked")

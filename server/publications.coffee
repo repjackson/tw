@@ -1,8 +1,8 @@
     
-Meteor.publish 'my_tickets', ->
-    Docs.find
-        author_id: @userId 
-        type: 'support_ticket'
+# Meteor.publish 'my_tickets', ->
+#     Docs.find
+#         author_id: @userId 
+#         type: 'support_ticket'
         
 Meteor.publish 'child_docs', (parent_id)->
     Docs.find

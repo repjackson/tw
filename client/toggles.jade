@@ -43,3 +43,9 @@ template(name='toggle_complete_button')
         a.ui.toggle.checkbox
             input#toggle_complete(type='checkbox' checked=can_complete)
             label(for='complete') Complete
+
+template(name='toggle_title')
+    .field
+        a.ui.toggle.checkbox
+            input#toggle_title(type='checkbox' checked=has_title)
+            label(for='toggle_title') Title

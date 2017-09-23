@@ -5,7 +5,7 @@ Session.setDefault 'cart_item', null
 
 
 Session.setDefault 'view_private', false
-Session.setDefault 'view_unread', true
+Session.setDefault 'view_unread', false
     
     
     
