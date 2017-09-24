@@ -73,6 +73,8 @@ Template.nav.events
     # 'click #test': ->
     #     Notification.requestPermission()
     
+    'click #toggle_off_admin_mode': ->Session.set 'admin_mode', false
+    'click #toggle_on_admin_mode': ->Session.set 'admin_mode', true
     
     'click #check_in': ->
         new_checkin_doc_id = Docs.insert type: 'checkin'

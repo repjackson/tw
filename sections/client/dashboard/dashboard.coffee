@@ -22,4 +22,4 @@ Template.dashboard.events
         FlowRouter.go '/lightbank'
         
         
-        
+    'click #logout': -> AccountsTemplates.logout()

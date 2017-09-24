@@ -62,18 +62,19 @@ template(name='dashboard')
                     .header
                         i.comments.outline.icon
                         |Conversations
-            // a.ui.card(href='/notifications')
-            //     .content
-            //         .header
-            //             i.alarm.outline.icon
-            //             | Notifications
-            // a.ui.card(href='/support')
-            //     .content
-            //         .header
-            //             i.help.circle.icon
-            //             |Support
             a.ui.card(href="/profile/#{currentUser.username}/account")
                 .content
                     .header
                         i.setting.icon
                         |Account Settings
+            if isInRole 'admin'
+                a.ui.card(href='/admin/dashboard')
+                    .content
+                        .header
+                            i.red.configure.icon
+                            | Admin
+            a#logout.ui.card(href='#')
+                .content
+                    .header
+                        i.sign.out.icon
+                        | Sign Out

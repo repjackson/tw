@@ -1,5 +1,5 @@
 template(name='alpha')
-    #add.ui.button add
+    // #add.ui.button add
     with root
         +alpha_menu
         // +alpha_card
@@ -34,12 +34,53 @@ template(name='alpha_menu')
             .imogen Tori Webster
         a.mobile.hidden.item(href='/' class="{{isActivePath '/'}}" title=_id)
             .imogen Tori Webster
-        a.icon.item(href="/alpha_edit/#{_id}")
-            i.pencil.icon
-        a.create_child.icon.item
-            i.plus.icon
+        if isInRole 'admin'
+            if admin_mode
+                a.icon.item(href="/alpha_edit/#{_id}" title='edit root doc')
+                    i.red.pencil.icon
+                a.create_child.icon.item(title='add menu item')
+                    i.red.plus.icon
+        unless currentUser
+            a.mobile.hidden.item(href='/about' class="{{isActivePath '/about'}}") About
+            a.mobile.hidden.item(href='/courses' class="{{isActivePath '/courses'}}") Courses
+            a.mobile.hidden.item(href='/lightbank' class="{{isActivePath '/lightbank'}}") Lightbank
+            a.mobile.hidden.item(href='/contact' class="{{isActivePath '/contact'}}") Contact
+        else
     
-        +Template.dynamic template=template_name
+            +Template.dynamic template=template_name
+            if currentUser
+                if cart_items
+                    a.icon.mobile.hidden.item(href='/cart' class="{{isActivePath '/cart'}}" data-position="bottom center" data-content="Shopping Cart")
+                        i.large.icons
+                            i.cart.icon
+                            i.corner.teal.asterisk.icon
+                a#check_in.icon.item(href='#' data-position="bottom center" data-content="Check In")
+                    i.green.large.check.icon
+                a.item(href="/profile/#{currentUser.username}" class="{{isActiveRoute name='view_profile'}}")
+                    if currentUser.profile.image_id
+                        img.ui.avatar.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+                    else
+                        i.user.icon
+                    | Profile
+                // span.mobile.hidden    
+                //     if currentUser.name
+                //         | #{currentUser.name}
+                //     else
+                //         | #{currentUser.username}
+
+                if isInRole 'admin'
+                    if admin_mode 
+                        a#toggle_off_admin_mode.icon.item
+                            // i.red.asterisk.icon
+                            i.toggle.on.icon
+                            // |Admin Mode On
+                    else
+                        a#toggle_on_admin_mode.icon.item
+                            i.toggle.off.icon
+                            // |Admin Mode Off
+                    // a.icon.item(href='/admin/dashboard' class="{{isActivePath '/admin/dashboard'}}")
+                    //     i.configure.red.icon
+                        // | Admin
 
 
 template(name='alpha_card')
@@ -84,6 +125,10 @@ template(name='child_list_item')
 template(name='child_menu')
     each parent_children
         a.select_child.item 
-            |#{title}
-            a.ui.small.icon.button(href="/alpha_edit/#{_id}")
-                i.pencil.icon
+            if icon_class
+                i.large.icon(class=icon_class)
+            .computer.only #{title}
+            if isInRole 'admin'
+                if admin_mode
+                    a.ui.small.icon.item(href="/alpha_edit/#{_id}" title="edit #{title}")
+                        i.pencil.red.icon

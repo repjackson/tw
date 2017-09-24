@@ -10,7 +10,7 @@
         a.mobile.hidden.item(href='/lightbank' class="{{isActivePath '/lightbank'}}") Lightbank
         a.mobile.hidden.item(href='/contact' class="{{isActivePath '/contact'}}") Contact
     else
-        a.mobile.hidden.item(href="/dashboard" class="{{isActivePath '/dashboard'}}")
+        a.item(href="/dashboard" class="{{isActivePath '/dashboard'}}")
             i.dashboard.large.icon
             .computer.only
                 | Dashboard
@@ -136,6 +136,14 @@
                         i.setting.icon
                         | Settings
                     if isInRole 'admin'
+                        if admin_mode 
+                            #toggle_off_admin_mode.ui.basic.green.button
+                                i.toggle.on.icon
+                                |Admin Mode On
+                        else
+                            #toggle_on_admin_mode.ui.basic.button
+                                i.toggle.off.icon
+                                |Admin Mode Off
                         a.icon.item(href='/admin/dashboard' class="{{isActivePath '/admin/dashboard'}}")
                             i.configure.red.icon
                             | Admin

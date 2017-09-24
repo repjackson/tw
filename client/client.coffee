@@ -6,8 +6,10 @@ Session.setDefault 'cart_item', null
 
 Session.setDefault 'view_private', false
 Session.setDefault 'view_unread', false
+Session.setDefault 'admin_mode', false
     
     
+Template.registerHelper 'admin_mode', () ->  Session.equals 'admin_mode', true
     
     
 Meteor.startup ->

@@ -15,7 +15,6 @@ if Meteor.isClient
     
     
     Template.alpha_menu.onCreated -> 
-        console.log @data
         @autorun => 
             if @subscriptionsReady()
                 Meteor.subscribe 'doc', @data._id
@@ -114,23 +113,47 @@ if Meteor.isClient
         'click .create_child': ->
             id = Docs.insert parent_id: @_id
             FlowRouter.go "/alpha_edit/#{id}"
-            
+        'click #toggle_off_admin_mode': ->Session.set 'admin_mode', false
+        'click #toggle_on_admin_mode': ->Session.set 'admin_mode', true
+        'click #check_in': ->
+            new_checkin_doc_id = Docs.insert type: 'checkin'
+            FlowRouter.go("/edit/#{new_checkin_doc_id}")
+
     Template.alpha_menu.helpers
         children: ->
-            children = Docs.find(parent_id: @_id).fetch()
-            console.log children
-            children
+            Docs.find {parent_id: @_id}, sort: number:1                
 
+        unread_message_count: ->
+            count = 0
+            my_conversations = Docs.find(
+                type: 'conversation'
+                participant_ids: $in: [Meteor.userId()]
+            ).fetch()
+            
+            for conversation in my_conversations
+                unread_count = Docs.find(
+                    type: 'message'
+                    group_id: conversation._id
+                    read_by: $nin: [Meteor.userId()]
+                ).count()
+                count += unread_count
+            count
+    
+    
+        unread_lightbank_count: -> Counts.get('unread_lightbank_count')
+        unread_journal_count: -> Counts.get('unread_journal_count')
 
 
 
     Template.child_menu.helpers
         parent_children: -> 
             parent_id = Template.parentData(0)._id
-            console.log parent_id
-            children = Docs.find(parent_id: parent_id).fetch()
-            console.log children
-            children
+            # console.log parent_id
+            Docs.find {parent_id: parent_id}, sort: number:1
+
+
+
+
 
     Template.alpha_menu.events
         'click .select_child': -> 

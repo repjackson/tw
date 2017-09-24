@@ -49,3 +49,15 @@ template(name='toggle_title')
         a.ui.toggle.checkbox
             input#toggle_title(type='checkbox' checked=has_title)
             label(for='toggle_title') Title
+
+template(name='toggle_number')
+    .field
+        a.ui.toggle.checkbox
+            input#toggle_number(type='checkbox' checked=has_number)
+            label(for='toggle_number') Number
+
+template(name='toggle_icon')
+    .field
+        a.ui.toggle.checkbox
+            input#toggle_icon(type='checkbox' checked=has_icon)
+            label(for='toggle_icon') Icon Class

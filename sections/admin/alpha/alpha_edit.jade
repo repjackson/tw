@@ -19,6 +19,8 @@ template(name='alpha_edit')
                             +slug
                         if has_number
                             +number
+                        if has_icon
+                            +icon_class
                         if has_image
                             +image
                         if has_youtube
@@ -40,6 +42,8 @@ template(name='alpha_edit')
                             .grouped.fields
                                 .label Components
                                 +toggle_title
+                                +toggle_number
+                                +toggle_icon
                                 +toggle_youtube
                                 +toggle_image
                                 +toggle_content
