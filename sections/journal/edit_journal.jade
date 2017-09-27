@@ -1,34 +1,49 @@
 template(name='edit_journal')
     .ui.container
         h1.ui.center.aligned.header Edit Journal Entry
+        .center.aligned
+            +toggle_zen_mode_button
         .ui.stackable.grid
-            .twelve.wide.column
-                +parent_doc_segment
-                .ui.form
-                    +intention_tags
-                    +content
-                    +tags
-                    +location_tags
-                    if watson 
-                        +analyzed_watson_keywords
-                // |{{> jsonView json=watson}}
-            .four.wide.column
-                +published
-                // .ui.divider
-                // +created_date
-                .ui.divider
-                +request_tori_feedback
-                +call_watson
-                if watson
-                    +doc_sentiment
-                    +doc_emotion
-                    +watson_keywords
-                .ui.divider
-                if isInRole 'admin'
-                    +edit_author
-                if tags
-                    a.ui.fluid.green.big.button(href="/view/#{_id}") Save Journal Entry
-                else
-                    .ui.fluid.green.big.disabled.button Add Tags to Save
-                .ui.hidden.fitted.divider
-                #delete_doc.ui.small.fluid.red.compact.button Delete
+            if zen_mode
+                .sixteen.wide.column
+                    +parent_doc_segment
+                    .ui.form
+                        +intention_tags
+                        +location_tags
+                        +content
+                        +tags
+                        if watson 
+                            +analyzed_watson_keywords
+                    // |{{> jsonView json=watson}}
+            else
+                .twelve.wide.column
+                    +parent_doc_segment
+                    .ui.form
+                        +intention_tags
+                        +location_tags
+                        +content
+                        +tags
+                        if watson 
+                            +analyzed_watson_keywords
+                    // |{{> jsonView json=watson}}
+            unless zen_mode
+                .four.wide.column
+                    +published
+                    // .ui.divider
+                    // +created_date
+                    .ui.divider
+                    +request_tori_feedback
+                    +call_watson
+                    if watson
+                        +doc_sentiment
+                        +doc_emotion
+                        +watson_keywords
+                    .ui.divider
+                    if isInRole 'admin'
+                        +edit_author
+                    if tags
+                        a.ui.fluid.green.big.button(href="/view/#{_id}") Save Journal Entry
+                    else
+                        .ui.fluid.green.big.disabled.button Add Tags to Save
+                    .ui.hidden.fitted.divider
+                    #delete_doc.ui.small.fluid.red.compact.button Delete

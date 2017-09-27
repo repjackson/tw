@@ -416,10 +416,6 @@ Template.pin_corner_button.events
 
 
 
-
-
-
-
 Template.featured.events
     'click #make_featured': -> Docs.update FlowRouter.getParam('doc_id'), $set: featured: true
     'click #make_unfeatured': -> Docs.update FlowRouter.getParam('doc_id'), $set: featured: false
@@ -472,20 +468,42 @@ Template.add_doc_button.helpers
     
     
 Template.subscribe_button.helpers
-    subscribe_buton_class: -> if @subscribers and Meteor.userId() in @subscribers then 'teal' else 'basic'
-    subscribed: -> if @subscribers and Meteor.userId() in @subscribers then true else false
+    subscribe_buton_class: -> if @subscribed_ids and Meteor.userId() in @subscribed_ids then 'teal' else 'basic'
+    subscribed: -> if @subscribed_ids and Meteor.userId() in @subscribed_ids then true else false
     is_participant: -> Meteor.userId() in @participant_ids
         
 Template.subscribe_button.events
-    'click #subscribe_button': (e,t)-> 
-        if Template.parentData(0).subscribers
-            if Meteor.userId() in Template.parentData(0).subscribers
-                Docs.update Template.parentData(0)._id,
-                    $pull: subscribers: Meteor.userId()
-            else
-                Docs.update Template.parentData(0)._id,
-                    $addToSet: subscribers: Meteor.userId()
-            $(e.currentTarget).closest('#subscribe_button').transition('pulse')
-        else
-            Docs.update Template.parentData(0)._id,
-                $set: subscribers: []
+    'click #subscribe_button': (e,t)->
+        if Meteor.userId()
+            Meteor.call 'subscribe', Template.parentData(0)
+            # $(e.currentTarget).closest('.subscribe_button').transition('pulse')
+        else FlowRouter.go '/sign-in'
+
+        # if Template.parentData(0).subscribers
+        #     if Meteor.userId() in Template.parentData(0).subscribers
+        #         Docs.update Template.parentData(0)._id,
+        #             $pull: subscribers: Meteor.userId()
+        #     else
+        #         Docs.update Template.parentData(0)._id,
+        #             $addToSet: subscribers: Meteor.userId()
+        #     $(e.currentTarget).closest('#subscribe_button').transition('pulse')
+        # else
+        #     Docs.update Template.parentData(0)._id,
+        #         $set: subscribers: []
+                
+                
+                
+        # 'click .bookmark_button': (e,t)-> 
+        # if Meteor.userId() 
+        #     Meteor.call 'bookmark', Template.parentData(0)
+        #     # $(e.currentTarget).closest('.bookmark_button').transition('pulse')
+        # else FlowRouter.go '/sign-in'
+            
+            
+Template.toggle_zen_mode_button.helpers
+    zen_mode: -> Session.get 'zen_mode'
+    
+Template.toggle_zen_mode_button.events
+    'click #turn_off_zen_mode': -> Session.set 'zen_mode', false
+    'click #turn_on_zen_mode': -> Session.set 'zen_mode', true
+    

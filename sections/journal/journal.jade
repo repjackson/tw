@@ -37,37 +37,53 @@ template(name='journal')
 
 
 template(name='journal_doc_view')
-    .ui.item(class=journal_card_class)
+    .ui.segment(class=journal_card_class)
         .content
             .description
-                .ui.basic.segment
+                .ui.basic.segment.large
                     |!{content}
                 +parent_doc_segment
-            .description
-                span.right.floated
-                    if published
-                        i.unlock.blue.icon
-                        |Published
-                    else
-                        i.lock.icon
-                        |Private
-                if author.profile.image_id
-                    img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
-                |#{author.name} #{when}
-                with author
-                    +staus_indicator
-            .meta
-                i.hashtag.icon
-                each tags
-                    .ui.tiny.circular.compact.button.tag(class=tag_class) #{this}
-            .meta
-                i.marker.icon
-                each location_tags
-                    .ui.tiny.circular.compact.button.tag(class=location_tag_class) #{this}
-            .meta
-                i.checkmar.box.icon
-                each intention_tags
-                    .ui.tiny.circular.compact.button.tag(class=intention_tag_class) #{this}
+        .ui.divided.grid
+            .ten.wide.column
+                .description
+                    span.right.floated
+                        if published
+                            i.unlock.blue.icon
+                            |Published
+                        else
+                            i.lock.icon
+                            |Private
+                    if author.profile.image_id
+                        img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+                    |#{author.name} #{when}
+                    with author
+                        +staus_indicator
+                .meta
+                    i.hashtag.icon
+                    each tags
+                        .ui.tiny.circular.compact.button.tag(class=tag_class) #{this}
+                .meta
+                    i.marker.icon
+                    each location_tags
+                        .ui.tiny.circular.compact.button.tag(class=location_tag_class) #{this}
+                .meta
+                    i.checkmark.box.icon
+                    each intention_tags
+                        .ui.tiny.circular.compact.button.tag(class=intention_tag_class) #{this}
+                .extra
+                    span.right.floated
+                        +view_full_button
+                    +bookmark_button
+                    +edit_link_button
+                    unless is_author
+                        +thanks_button
+                    if is_author
+                        +published
+            .six.wide.column
+                .image
+                    .ui.basic.segment
+                        +doc_sentiment
+                        +doc_emotion
             // .meta
             //     i.large.icons
             //         i.idea.icon
@@ -79,16 +95,3 @@ template(name='journal_doc_view')
             //         if author.profile.image_id
             //             img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
             //         |#{author.name} #{when}
-            .extra
-                span.right.floated
-                    +view_full_button
-                +bookmark_button
-                +edit_link_button
-                unless is_author
-                    +thanks_button
-        .image
-            .ui.basic.segment
-                +doc_sentiment
-                +doc_emotion
-                if is_author
-                    +published

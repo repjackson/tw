@@ -278,3 +278,15 @@ template(name='subscribe_button')
             else
                 i.square.outline.icon
                 |Not Subscribed
+                
+                
+template(name='toggle_zen_mode_button')
+    if zen_mode
+        #turn_off_zen_mode.ui.basic.button
+            i.red.fire.icon
+            |Turn Off Zen Mode
+    else
+        #turn_on_zen_mode.ui.basic.button
+            i.fire.icon
+            |Turn On Zen Mode
+        

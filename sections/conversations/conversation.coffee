@@ -9,12 +9,10 @@ if Meteor.isClient
             Docs.find {
                 type: 'message'
                 group_id: @_id },
-                sort: timestamp: 1
+                sort: timestamp: -1
     
-    Template.conversation_messages_pane.helpers
         conversation_tag_class:->
             if @valueOf() in selected_conversation_tags.array() then 'teal' else ''
-    Template.conversation_messages_pane.helpers
         conversation: -> Docs.findOne @_id
     
         in_conversation: -> if Meteor.userId() in @participant_ids then true else false

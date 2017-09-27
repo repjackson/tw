@@ -230,3 +230,13 @@ Meteor.methods
                 $addToSet: pinned_ids: Meteor.userId()
                 $inc: pinned_count: 1
     
+    subscribe: (doc)->
+        if doc.subscribed_ids and Meteor.userId() in doc.subscribed_ids
+            Docs.update doc._id,
+                $pull: subscribed_ids: Meteor.userId()
+                $inc: subscribed_count: -1
+        else
+            Docs.update doc._id,
+                $addToSet: subscribed_ids: Meteor.userId()
+                $inc: subscribed_count: 1
+    

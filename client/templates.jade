@@ -75,7 +75,8 @@ template(name='layout')
     //             i.content.icon
     //             span.text Menu
     .context.example
-        +nav
+        unless zen_mode
+            +nav
         // .ui.top.attached.demo.menu
         //     a.item
         //         i.sidebar.icon
@@ -91,7 +92,8 @@ template(name='layout')
                         +Template.dynamic template=cloud
                         +Template.dynamic template=main
                         unless isInRole 'dev'
-                            +footer
+                            unless zen_mode
+                                +footer
                     // else
                             // +dev_footer
                     

@@ -2,14 +2,14 @@ $.cloudinary.config
     cloud_name:"facet"
 
 Session.setDefault 'cart_item', null
+Session.setDefault 'zen_mode', false
 
 
-Session.setDefault 'view_private', false
+Session.setDefault 'view_private', true
 Session.setDefault 'view_unread', false
 Session.setDefault 'admin_mode', false
     
     
-Template.registerHelper 'admin_mode', () ->  Session.equals 'admin_mode', true
     
     
 Meteor.startup ->
@@ -38,6 +38,9 @@ Template.registerHelper 'is_user', () ->  Meteor.userId() is @_id
 Template.registerHelper 'is_person_by_username', () ->  Meteor.user().username is FlowRouter.getParam('username')
 
 Template.registerHelper 'can_edit', () ->  Meteor.userId() is @author_id or Roles.userIsInRole(Meteor.userId(), 'admin')
+
+Template.registerHelper 'zen_mode', () -> Session.get 'zen_mode'
+Template.registerHelper 'admin_mode', () ->  Session.get 'admin_mode'
 
 Template.registerHelper 'publish_when', () -> moment(@publish_date).fromNow()
 
