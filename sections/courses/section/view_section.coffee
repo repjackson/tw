@@ -428,11 +428,11 @@ if Meteor.isServer
                     type: 'reflective_question'
                     parent_id: section_doc._id
                 ).count()
-            console.log 'reflective_question_count', reflective_question_count
+            # console.log 'reflective_question_count', reflective_question_count
             
             reflective_answer_count = 0
             for reflective_question in reflective_questions
-                console.log reflective_question
+                # console.log reflective_question
                 reflective_answer = Docs.findOne
                     # tags: $in: ['answer']
                     parent_id: reflective_question._id
@@ -440,7 +440,7 @@ if Meteor.isServer
 
                 if reflective_answer 
                     reflective_answer_count++
-                    console.log reflective_answer
+                    # console.log reflective_answer
                     
             console.log reflective_answer_count
                 
@@ -471,11 +471,11 @@ if Meteor.isServer
                         parent_id: section_doc._id
                         questions_complete: 0
                         reflective_question_count: reflective_question_count
-                console.log 'new progress doc id', new_progress_doc_id
+                # console.log 'new progress doc id', new_progress_doc_id
                 section_progress_doc_id = new_progress_doc_id        
             else
                 section_progress_doc_id = section_progress_doc._id        
-            console.log 'second found progress doc', section_progress_doc
+            # console.log 'second found progress doc', section_progress_doc
                             
             Docs.update section_progress_doc_id,
                 $set: 
