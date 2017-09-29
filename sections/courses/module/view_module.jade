@@ -102,13 +102,13 @@ template(name='view_module')
             .eleven.wide.column
                 .ui.top.attached.tabular.menu
                     a.item(data-tab='debrief') Debrief
-                    a.item(data-tab='sections') Sections
+                    a.active.item(data-tab='sections') Sections
                     a.item(data-tab='lightwork') Lightwork
                     a.item(data-tab='downloads') Downloads
                 .ui.bottom.attached.tab.segment(data-tab='debrief')
                     .ui.basic.segment
                         +debrief
-                .ui.bottom.attached.tab.segment(data-tab='sections')
+                .ui.bottom.attached.active.tab.segment(data-tab='sections')
                     .ui.basic.segment
                         +sections
                 .ui.bottom.attached.tab.segment(data-tab='lightwork')

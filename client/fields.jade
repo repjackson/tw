@@ -44,7 +44,8 @@ template(name='number')
 template(name='tags')
     .required.field
         label 
-            i.hashtag.icon
+            img(src="https://png.icons8.com/tags/color/24" width="24" height="24")
+            // i.hashtag.icon
             |Theme Tags
         input#add_tag(type='text' placeholder='press enter after each' maxlength='50' )
         each tags
@@ -55,8 +56,9 @@ template(name='tags')
 template(name='location_tags')
     .field
         label 
-            i.marker.icon
-            |Location Tags
+            // i.marker.icon
+            img(src="https://png.icons8.com/geo-fence/color/24" width="24" height="24")
+            |Location Tags (eg. 'home', 'couch')
         input#add_location_tag(type='text' placeholder='press enter after each' maxlength='50' )
         each location_tags
             a.ui.basic.large.label.doc_tag
@@ -66,9 +68,9 @@ template(name='location_tags')
 template(name='intention_tags')
     .field
         label 
-            i.idea.icon
+            img(src="https://png.icons8.com/searchlight/color/24" width="24" height="24")
             |My intention for this entry is to...
-        input#add_intention_tag(type='text' placeholder='press enter after each' maxlength='50' )
+        input#add_intention_tag(type='text' placeholder='press enter after each answer' maxlength='50' )
         each intention_tags
             a.ui.basic.large.label.doc_tag
                 i.minus.icon

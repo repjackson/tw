@@ -1,4 +1,4 @@
-.ui.borderless.top.attached.pointing.menu
+.ui.top.borderless.attached.pointing.menu
     a.toggle_sidebar.mobile.only.item
         i.sidebar.icon
         .imogen Tori Webster
@@ -10,38 +10,51 @@
         a.mobile.hidden.item(href='/lightbank' class="{{isActivePath '/lightbank'}}") Lightbank
         a.mobile.hidden.item(href='/contact' class="{{isActivePath '/contact'}}") Contact
     else
-        a.item(href="/dashboard" class="{{isActivePath '/dashboard'}}")
-            i.dashboard.large.icon
-            .computer.only
-                | Dashboard
-        a.mobile.hidden.item(href='/courses' class="{{isActivePath '/courses'}}") 
-            i.university.large.icon
-            .computer.only
-                | Courses
-        a.mobile.hidden.item(href='/lightbank' class="{{isActivePath '/lightbank'}}") 
-            i.sun.large.icon
-            .computer.only
-                | Lightbank
-            if unread_lightbank_count
-                .ui.label #{unread_lightbank_count}
-        a.mobile.hidden.item(href='/people' class="{{isActivePath '/people'}}") 
-            i.users.large.icon
-            .computer.only
-                | People
-        a.mobile.hidden.item(href='/journal' class="{{isActivePath '/journal'}}") 
-            i.pencil.large.icon
-            .computer.only
-                | Journal
-            if unread_journal_count
-                .ui.label #{unread_journal_count}
-        a.mobile.hidden.item(href='/checkin' class="{{isActivePath '/checkin'}}") 
-            i.check.large.icon
-            .computer.only
-                | Check In's
-        a.mobile.hidden.item(href='/services' class="{{isActivePath '/services'}}") 
-            i.configure.large.icon
-            .computer.only
-                |Services
+        a.icon.item(href="/dashboard" class="{{isActivePath '/dashboard'}}" data-position="bottom center" data-content="Dashboard")
+            // i.dashboard.large.icon
+            .ui.image
+                img(src="https://png.icons8.com/dashboard/color/48" title="Dashboard" width="48" height="48")
+            // .computer.only
+            //     | Dashboard
+        a.mobile.hidden.item(href='/courses' class="{{isActivePath '/courses'}}" data-position="bottom center" data-content="LightSchool") 
+            .ui.image
+                img(src="https://png.icons8.com/library/color/48" width="48" height="48")
+            // .computer.only
+            //     | Courses
+        a.mobile.hidden.item(href='/lightbank' class="{{isActivePath '/lightbank'}}" data-position="bottom center" data-content="Lightbank") 
+            .ui.image
+                img(src="https://png.icons8.com/summer/color/48" width="48" height="48" )
+            // i.sun.large.icon
+            // .computer.only
+            //     | Lightbank
+            // if unread_lightbank_count
+            //     .ui.label #{unread_lightbank_count}
+        a.mobile.hidden.item(href='/people' class="{{isActivePath '/people'}}" data-position="bottom center" data-content="People") 
+            // i.users.large.icon
+            .ui.image
+                img(src="https://png.icons8.com/people/color/48" title="People" width="48" height="48")
+            // .computer.only
+            //     | People
+        a.mobile.hidden.item(href='/journal' class="{{isActivePath '/journal'}}" data-position="bottom center" data-content="Journal") 
+            .ui.image
+                img(src="https://png.icons8.com/journal/color/48" width="48" height="48")
+            // i.pencil.large.icon
+            // .computer.only
+            //     | Journal
+            // if unread_journal_count
+            //     .ui.label #{unread_journal_count}
+        a.mobile.hidden.item(href='/checkin' class="{{isActivePath '/checkin'}}" data-position="bottom center" data-content="Services") 
+            .ui.image
+                img(src="https://png.icons8.com/in-progress/color/48" width="48" height="48")
+            // i.check.large.icon
+            // .computer.only
+            //     | Check In's
+        a.mobile.hidden.item(href='/services' class="{{isActivePath '/services'}}" data-position="bottom center" data-content="Services") 
+            .ui.image
+                img(src="https://png.icons8.com/service-bell/color/48" width="48" height="48")
+            // i.configure.large.icon
+            // .computer.only
+            //     |Services
     
         
     .right.menu
@@ -51,13 +64,15 @@
                     i.large.icons
                         i.cart.icon
                         i.corner.teal.asterisk.icon
-            a#check_in.icon.item(href='#' data-position="bottom center" data-content="Check In")
-                i.green.large.check.icon
+            // a#check_in.icon.item(href='#' data-position="bottom center" data-content="Check In")
+            //     i.green.large.check.icon
             // a.icon.mobile.hidden.item(href='/karma' data-position="bottom center" data-content="Karma")
             //     i.heartbeat.icon
             //     |#{currentUser.points}
             a.item.item(href='/conversations' class="{{isActivePath '/conversations'}}") 
-                i.large.comments.outline.icon
+                .ui.image
+                    img(src="https://png.icons8.com/chat/color/48" width="48" height="48")
+                // i.large.comments.outline.icon
                 if unread_message_count
                     .ui.basic.label #{unread_message_count}
             // a.ui.icon.dropdown.item(class="{{isActivePath '/notifications'}}" data-position="bottom center" data-content="Notifications")
@@ -149,11 +164,15 @@
                             | Admin
                         .ui.divider
                     a#logout.ui.item
-                        i.sign.out.icon
+                        img(src="https://png.icons8.com/burglary/color/48" title="Burglary" width="48" height="48")
+                        // i.sign.out.icon
                         | Sign Out
         else
             a.ui.item(href='/sign-in') 
-                i.sign.in.icon
+                .ui.image
+                    img(src="https://png.icons8.com/signin/color/24" width="24" height="24")
+
+                // i.sign.in.icon
                 | Sign In
     // .ui.modal
     //     i.close.icon

@@ -9,7 +9,7 @@ template(name='thanks_button')
         if said_thanks
             |Thanks #{author.profile.first_name}
         else
-            | Thank #{author.profile.first_name} for sharing
+            | Thank #{author.profile.first_name} for Sharing
     // #thanks_modal.ui.small.modal
     //     i.close.icon
     //     .header Send #{author.profile.first_name} an optional private message?
@@ -120,7 +120,7 @@ template(name='edit_icon')
 template(name='edit_link')
     if currentUser
         unless editing
-            a.edit_this(href='#') Edit
+            a.edit_this Edit
         else
             .save_doc.ui.basic.large.button
                 i.green.check.icon
@@ -153,16 +153,15 @@ template(name='delete_button')
         a.confirm(href='#') Confirm Delete
         
 template(name='delete_link')
-    span.link_area
-        unless confirming
-            a.delete(href='#') Delete
-        else
-            a.cancel(href='#') 
-                i.ban.icon
-                |Cancel
-            a.confirm(href='#') 
-                i.red.trash.icon
-                |Confirm Delete
+    unless confirming
+        a.delete Delete
+    else
+        a.cancel 
+            i.ban.icon
+            |Cancel
+        a.confirm 
+            i.red.trash.icon
+            |Confirm Delete
         
 
 template(name='published')
@@ -282,11 +281,12 @@ template(name='subscribe_button')
                 
 template(name='toggle_zen_mode_button')
     if zen_mode
-        #turn_off_zen_mode.ui.basic.button
-            i.red.fire.icon
-            |Turn Off Zen Mode
+        a#turn_off_zen_mode(href="#")
+            img(src="https://png.icons8.com/lotus/color/48" title="Turn Off Zen Mode" width="48" height="48")
+            // |Zen
     else
-        #turn_on_zen_mode.ui.basic.button
-            i.fire.icon
-            |Turn On Zen Mode
+        a#turn_on_zen_mode(href='#')
+            .ui.link.image
+                img(src="https://png.icons8.com/lotus/ios7/32" title="Turn on Zen Mode" width="32" height="32")
+            // |Zen
         

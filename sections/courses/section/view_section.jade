@@ -32,8 +32,8 @@ template(name='view_section')
                                 |#{previous_section.number}: #{previous_section.title}
                     .ten.wide.column
                         h1.ui.center.aligned.header Section #{section.number}: #{section.title}
-                        if isInRole 'admin'
-                            | section_id: #{section._id}
+                        // if isInRole 'admin'
+                        //     | section_id: #{section._id}
                     .three.wide.column
                         if section_complete
                             if next_section_exists

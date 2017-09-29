@@ -53,6 +53,6 @@ template(name='conversation_messages_pane')
             +conversation_message
     if in_conversation
         .ui.divider
-        .ui.large.left.icon.fluid.transparent.input
-            i.plus.icon
-            input.add_message(type='text' placeholder='Add Message')
+        .ui.form
+            .field
+                textarea.add_message(rows='3' placeholder='Add Message')

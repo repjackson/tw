@@ -69,11 +69,12 @@ template(name='lightbank_doc_view')
             // .ui.hidden.divider
             // if can_resonate
             +resonate_button
+            +reflect_button
             if can_complete
                 +mark_complete_button
             // if can_bookmark
             +bookmark_button
-            +view_full_button
+            // +view_full_button
             +toggle_doc_read
             if can_edit
                 +edit_link_button

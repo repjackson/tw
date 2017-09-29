@@ -1,44 +1,33 @@
-template(name='journal')
+template(name='journal_templates')
     .ui.container
-        // h1.ui.center.aligned.header
-        //     i.pencil.icon
-        //     | My Journal
+        h1.ui.center.aligned.header
+            i.pencil.icon
+            | Journal Templates
         .ui.center.aligned.basic.segment
-            +doc_content tags='journal,blurb'
+            +doc_content tags='journal,templates,blurb'
         // #convert_journal_docs.ui.button Convert Journal Docs
         .ui.stackable.grid
             .four.wide.column
                 if currentUser
-                    +add_doc_button type='journal' button_text='Add Journal Entry'
+                    +add_doc_button type='journal_template' button_text='Add Journal Template'
                 if isInRole 'dev'
-                    a.ui.basic.button(href="/journal/templates") Templates
+                    a.ui.basic.button(href="/journal") Journal
                 .ui.dividing.header Filters
                 +view_published_toggle
                 +view_read_toggle
                 #cloud
                     +tag_filter type='journal'
-                    +username_filter type='journal'
-                    +keyword_filter type='journal'
-                // a#toggle_published.ui.basic.button(class=published_item_class) 
-                //     i.red.unhide.icon
-                //     |Published (#{published_count})
-                // a#toggle_unpublished.ui.basic.button(class=unpublished_item_class) 
-                //     i.red.hide.icon
-                //     |Unpublished (#{unpublished_count})
-            
-                // a#toggle_mine.ui.basic.button(class=mine_item_class) 
-                //     |Mine (#{mine_count})
             
             .twelve.wide.column
                 // .ui.centered.stackable.cards
                 .ui.relaxed.divided.items
-                    each journal_entries
-                        +journal_doc_view
+                    each journal_templates
+                        +journal_template
         
 
 
 
-template(name='journal_doc_view')
+template(name='journal_template')
     .ui.segment(class=journal_card_class)
         .content
             .description
@@ -65,16 +54,14 @@ template(name='journal_doc_view')
                         i.hashtag.icon
                         each tags
                             .ui.tiny.circular.compact.button.tag(class=tag_class) #{this}
-                    if location_tags
-                        .meta
-                            i.marker.icon
-                            each location_tags
-                                .ui.tiny.circular.compact.button.tag(class=location_tag_class) #{this}
-                    if intention_tags
-                        .meta
-                            i.checkmark.box.icon
-                            each intention_tags
-                                .ui.tiny.circular.compact.button.tag(class=intention_tag_class) #{this}
+                    .meta
+                        i.marker.icon
+                        each location_tags
+                            .ui.tiny.circular.compact.button.tag(class=location_tag_class) #{this}
+                    .meta
+                        i.checkmark.box.icon
+                        each intention_tags
+                            .ui.tiny.circular.compact.button.tag(class=intention_tag_class) #{this}
                     .extra
                         span.right.floated
                             +view_full_button

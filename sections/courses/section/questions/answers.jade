@@ -1,0 +1,115 @@
+template(name='answers')
+    if has_answered_question
+        with my_answer
+            .ui.segment(class=segment_class)
+                .ui.blue.top.right.attached.large.label(class=ribbon_class)
+                    | Your Answer
+                    if published
+                        |(public)
+                    else
+                        |(private)
+                if can_edit
+                    unless is_editing
+                        +session_edit_button
+                if is_editing
+                    .ui.basic.segment
+                        .ui.form
+                            .field
+                                // label Answer
+                                textarea#body(rows='3') #{body}
+                        +request_tori_feedback
+                    +session_edit_button
+                    +published
+                    +delete_button
+                else
+                    .ui.basic.segment 
+                        if body
+                            |{{nl2br body}}
+        .ui.styled.fluid.accordion
+            .title
+                i.large.users.icon
+                | All Public Answers (#{all_answers.count})
+                i.dropdown.icon
+            .content
+                .ui.threaded.comments
+                    each all_answers
+                        +answer
+        
+        if isInRole 'admin' 
+            .ui.styled.fluid.accordion
+                .title
+                    i.red.configure.icon
+                    | All Private Answers (#{all_private_answers.count})
+                    
+                    i.dropdown.icon
+                .content
+                    .ui.threaded.comments
+                        each all_private_answers
+                            .comment
+                                a(href='/profile/#{author.username}').avatar
+                                    img.ui.avatar.image(src="{{c.url author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                                .content
+                                    a(href='/profile/#{author.username}').author #{author.name}
+                                    .metadata
+                                        span.date #{from_now}
+                                        unless is_author
+                                            +thanks_button
+                                    .text
+                                        | #{body}
+                                    // .actions
+                                        // a.reply(href='#') Reply
+                                        // +favorite
+                                        // +voting
+                                        // if is_author
+                                        //     +delete_link
+                                        //     +edit_link
+    else
+        .add_answer.ui.basic.fluid.button 
+            i.plus.icon
+            |Add Answer
+
+
+
+template(name='answer')
+    .comment
+        a(href='/profile/#{author.username}').avatar
+            img.ui.avatar.image(src="{{c.url author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+        .content
+            a(href='/profile/#{author.username}').author #{author.name}
+            .metadata
+                span.date #{from_now}
+                unless is_author
+                    +thanks_button
+            .text
+                if body
+                    | {{nl2br body}}
+            .actions
+                if is_author
+                    +delete_link
+                    +edit_link
+                else
+                    a.reply Reply
+                    // +favorite
+                    // +thanks_button
+        if children.count
+            // +comments
+            .ui.comments
+                each children
+                    +comment
+                    // .comment
+                    //     a(href='/profile/#{author.username}').avatar
+                    //         img.ui.avatar.image(src="{{c.url author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                    //     .content
+                    //         a(href='/profile/#{author.username}').author #{author.name}
+                    //         .metadata
+                    //             span.date #{from_now}
+                    //             unless is_author
+                    //                 +thanks_button
+                    //         .text
+                    //             if is_editing
+                    //                 if body
+                    //                     | {{nl2br body}}
+                    //         .actions
+                    //             if is_author
+                    //                 +delete_link
+                    //                 +edit_link

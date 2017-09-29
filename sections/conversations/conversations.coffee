@@ -105,10 +105,10 @@ if Meteor.isServer
 
 
 
-    Meteor.publish 'conversation_messages', (conversation_id) ->
-        Docs.find
-            type: 'message'
-            conversation_id: conversation_id
+    # Meteor.publish 'conversation_messages', (conversation_id) ->
+    #     Docs.find
+    #         type: 'message'
+    #         conversation_id: conversation_id
     
     
     publishComposite 'participant_ids', (selected_tags, selected_participant_ids)->

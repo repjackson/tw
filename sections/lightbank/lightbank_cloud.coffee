@@ -2,7 +2,7 @@ if Meteor.isClient
     Session.setDefault 'lightbank_view_mode', 'all'
     # @selected_tags = new ReactiveArray []
     
-    media_tags = ['tori webster','quote','poem', 'photo', 'image', 'video', 'essay', 'journal prompt']
+    media_tags = ['tori webster','quote','poem', 'photo', 'image', 'video', 'essay', 'journal prompt','prompt']
     
     Template.lightbank_cloud.onCreated ->
         @autorun => 

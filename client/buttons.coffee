@@ -380,6 +380,9 @@ Template.bookmark_button.events
         else FlowRouter.go '/sign-in'
 
 
+
+
+
 Template.pin_button.helpers
     pin_button_class: -> 
         if Meteor.user()
@@ -387,7 +390,6 @@ Template.pin_button.helpers
         else 'grey disabled'
         
     pinned: -> Meteor.user()?.pinned_ids and @_id in Meteor.user().pinned_ids
-
 
 Template.pin_button.events
     'click .pin_button': (e,t)-> 
@@ -445,11 +447,13 @@ Template.add_to_cart.helpers
             author_id: Meteor.userId()
             
             
+            
+            
 Template.reflect_button.events
     'click #reflect': ->
         new_journal_id = Docs.insert
             type:'journal'
-            parent_id: FlowRouter.getParam('doc_id')
+            parent_id: @_id
             
         FlowRouter.go("/edit/#{new_journal_id}")    
         

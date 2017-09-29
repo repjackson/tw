@@ -292,7 +292,7 @@ if Meteor.isClient
             section_doc = Docs.findOne section_id
 
             Meteor.call 'calculate_section_progress', section_id, (err,res)->
-                console.log res
+                # console.log res
                 $('#section_percent_complete_bar').progress('set percent', res);
                 # console.log $('#section_percent_complete_bar').progress('get percent');
 
@@ -315,7 +315,7 @@ if Meteor.isClient
             swal {
                 title: "Section #{section_doc.number}: #{section_doc.title} Summary"
                 html: true
-                text: section.content
+                text: section_doc.content
                 animation: true
                 showCancelButton: false
                 closeOnConfirm: true

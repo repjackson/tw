@@ -7,6 +7,7 @@ template(name='edit_journal')
             if zen_mode
                 .sixteen.wide.column
                     +parent_doc_segment
+                    .ui.hidden.divider
                     .ui.form
                         +intention_tags
                         +location_tags
@@ -18,6 +19,7 @@ template(name='edit_journal')
             else
                 .twelve.wide.column
                     +parent_doc_segment
+                    .ui.hidden.divider
                     .ui.form
                         +intention_tags
                         +location_tags

@@ -4,7 +4,7 @@ template(name='view_conversation')
         strong Conversations
     .ui.container
         h1.ui.center.aligned.header View Conversation 
-        .ui.grid
+        .ui.stackable.grid
             .ten.wide.column
                 // +minimal_conversation_view this
                 +conversation_messages_pane this
