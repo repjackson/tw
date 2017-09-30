@@ -46,11 +46,11 @@ if Meteor.isClient
 
 
 
-    Template.person_item.onRendered ->
-        Meteor.setTimeout ->
-            # $(e.currentTarget).closest('.item').transition('pulse')
-            $('.item').transition('pulse')
-        , 200
+    # Template.person_item.onRendered ->
+    #     Meteor.setTimeout ->
+    #         # $(e.currentTarget).closest('.item').transition('pulse')
+    #         $('.item').transition('pulse')
+    #     , 200
                 
 if Meteor.isServer
     Meteor.publish 'followers', ->

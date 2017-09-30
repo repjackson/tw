@@ -29,43 +29,36 @@ template(name='profile_layout')
                                         |#{username}
                                         +staus_indicator
                             .ui.stackable.grid
-                                    .five.wide.column
+                                    .three.wide.column
                                         with person
                                             .ui.vertical.fluid.pointing.menu
                                                 // a.item(href="/profile/#{username}/feed" class="{{isActiveRoute name='profile_feed'}}") 
                                                 //     i.feed.large.icon
                                                 //     | Feed
                                                 a.item(href="/profile/#{username}/about" class="{{isActiveRoute name='profile_about'}}") 
-                                                    i.info.large.icon
+                                                    i.icon
+                                                        img(src="https://png.icons8.com/info/color/24" width="24" height="24")
                                                     |About
                                                 a.item(href="/profile/#{username}/courses" class="{{isActiveRoute name='profile_courses'}}")
-                                                    i.university.large.icon
+                                                    i.icon
+                                                        img(src="https://png.icons8.com/classroom/color/24" width="24" height="24")
                                                     |Courses
-                                                a.item(href="/profile/#{username}/conversations" class="{{isActiveRoute name='profile_conversations'}}")
-                                                    i.comments.outline.large.icon
-                                                    | Conversations
                                                 a.item(href="/profile/#{username}/quizes" class="{{isActiveRoute name='profile_quizes'}}")
-                                                    i.edit.large.icon
+                                                    i.icon
+                                                        img(src="https://png.icons8.com/hand-with-pen/color/24" width="24" height="24")
                                                     |Quizes
                                                 a.item(href="/profile/#{username}/social" class="{{isActiveRoute name='profile_social'}}") 
-                                                    i.talk.outline.large.icon
+                                                    i.icon
+                                                        img(src="https://png.icons8.com/chat/color/24" width="24" height="24" )
                                                     |Social
                                                 a.item(href="/profile/#{username}/journal" class="{{isActiveRoute name='profile_journal'}}") 
-                                                    i.edit.large.icon
+                                                    i.icon
+                                                        img(src="https://png.icons8.com/journal/color/24" width="24" height="24")
                                                     | Journal
-                                                a.item(href="/profile/#{username}/clouds" class="{{isActiveRoute name='profile_clouds'}}") 
-                                                    i.cloud.large.icon
-                                                    | Clouds
-                                                // a.item(href="/profile/#{username}/karma" class="{{isActiveRoute name='profile_karma'}}") 
-                                                //     i.large.heartbeat.icon
-                                                //     | Karma
-                                                // a.item(href="/profile/#{username}/services" class="{{isActiveRoute name='profile_services'}}") 
-                                                //     i.large.configure.icon
-                                                //     | Services
                                                 if isInRole 'admin'
                                                     a.item(href="/profile/#{username}/badges" class="{{isActiveRoute name='profile_badges'}}") 
                                                         i.certificate.red.large.icon
-                                                        | Badges
+                                                        | Karma + Badges
                                                 a.item(href="/profile/#{username}/contact" class="{{isActiveRoute name='profile_contact'}}") 
                                                     i.phone.large.icon
                                                     |Contact
@@ -78,7 +71,7 @@ template(name='profile_layout')
                                                     i.mail.large.icon
                                                     |Email Settings
         
-                                    .eleven.wide.column
+                                    .thirteen.wide.column
                                         +Template.dynamic template=profile_content
 
 
@@ -98,32 +91,32 @@ template(name='profile_karma')
     +karma
         
 template(name='profile_quizes')
-    .ui.horizontal.divider.header 
-        i.pencil.icon
-        |Quizes
+    // .ui.horizontal.divider.header 
+    //     i.pencil.icon
+    //     |Quizes
     +public_quiz_sessions
 
 
 template(name='profile_courses')
-    .ui.horizontal.divider.header 
-        i.university.icon
-        |Courses
+    // .ui.horizontal.divider.header 
+    //     i.university.icon
+    //     |Courses
     +user_courses
 
 template(name='profile_social')
-    .ui.horizontal.divider.header 
-        i.comments.icon
-        |Social
+    // .ui.horizontal.divider.header 
+    //     i.comments.icon
+    //     |Social
     // +user_friends
     +following
-    +person_tags
+    // +person_tags
 
         
 template(name='profile_about')
     with person
-        .ui.horizontal.divider.header 
-            i.info.icon
-            |About
+        // .ui.horizontal.divider.header 
+        //     i.info.icon
+        //     |About
         .ui.grid
             .eight.wide.column
                 img.ui.rounded.large.image(src="{{c.url person.profile.image_id width=400 height=400 gravity='face' crop='fill'}}")

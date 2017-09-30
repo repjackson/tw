@@ -6,27 +6,28 @@ template(name='conversations')
                 |Conversations
         .ten.wide.column
             .ui.header Unread Messages Count: #{unread_message_count}
-    .ui.stackable.grid
-        .four.wide.column
             if currentUser
-                #create_conversation.ui.basic.fluid.button
+                #create_conversation.ui.basic.button
                     i.plus.icon
                     |Create Conversation
+    .ui.stackable.grid
+        .four.wide.column
+            // +tag_filter type='conversation'
+            // +participant_filter type='conversation'
             +conversation_list
-            .ui.dividing.header Viewing: 
-                if viewing_published
-                    #view_private_conversations.ui.basic.button 
-                        i.unhide.icon
-                        |Published
-                if viewing_private
-                    #view_published_conversations.ui.basic.button 
-                        i.lock.icon
-                        |Private
-            +tag_filter type='conversation'
-            +participant_filter type='conversation'
+            // .ui.dividing.header Viewing: 
+            //     if viewing_published
+            //         #view_private_conversations.ui.basic.button 
+            //             i.unhide.icon
+            //             |Published
+            //     if viewing_private
+            //         #view_published_conversations.ui.basic.button 
+            //             i.lock.icon
+            //             |Private
         .twelve.wide.column
-            .ui.cards
-                each conversations
-                    +full_conversation_view
+            with selected_conversation
+                +full_conversation_view
+            // .ui.cards
+            //     each conversations
 
 

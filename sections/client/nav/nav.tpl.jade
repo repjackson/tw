@@ -1,80 +1,79 @@
-.ui.top.borderless.attached.pointing.menu
+.ui.top.borderless.attached.large.menu
     a.toggle_sidebar.mobile.only.item
         i.sidebar.icon
         .imogen Tori Webster
-    a.mobile.hidden.item(href='/' class="{{isActivePath '/'}}")
-        .imogen Tori Webster
+    if currentUser
+        a.ui.mobile.hidden.simple.dropdown.item(href='/' class="{{isActivePath '/'}}")
+            .imogen Tori Webster
+            .ui.menu
+                a.mobile.hidden.item(href='/about' class="{{isActivePath '/about'}}") 
+                    .ui.image
+                        img(src="https://png.icons8.com/info/color/24" width="24" height="24")
+                    |About
+                a.mobile.hidden.item(href='/services' class="{{isActivePath '/services'}}") 
+                    .ui.image
+                        img(src="https://png.icons8.com/service-bell/color/24" width="24" height="24")
+                    |Services
+                a.mobile.hidden.item(href='/contact' class="{{isActivePath '/contact'}}") 
+                    .ui.image
+                        img(src="https://png.icons8.com/phone/color/24" width="24" height="24" )
+                    |Contact
     unless currentUser
-        a.mobile.hidden.item(href='/about' class="{{isActivePath '/about'}}") About
-        a.mobile.hidden.item(href='/courses' class="{{isActivePath '/courses'}}") Courses
-        a.mobile.hidden.item(href='/lightbank' class="{{isActivePath '/lightbank'}}") Lightbank
-        a.mobile.hidden.item(href='/contact' class="{{isActivePath '/contact'}}") Contact
-    else
-        a.icon.item(href="/dashboard" class="{{isActivePath '/dashboard'}}" data-position="bottom center" data-content="Dashboard")
-            // i.dashboard.large.icon
+        a.mobile.hidden.item(href='/' class="{{isActivePath '/'}}")
+            .imogen Tori Webster
+        a.mobile.hidden.item(href='/about' class="{{isActivePath '/about'}}") 
             .ui.image
-                img(src="https://png.icons8.com/dashboard/color/48" title="Dashboard" width="48" height="48")
-            // .computer.only
-            //     | Dashboard
+                img(src="https://png.icons8.com/info/color/24" width="24" height="24")
+            |About
+        a.mobile.hidden.item(href='/courses' class="{{isActivePath '/courses'}}") 
+            .ui.image
+                img(src="https://png.icons8.com/library/color/24" width="24" height="24")
+            |Courses
+        a.mobile.hidden.item(href='/lightbank' class="{{isActivePath '/lightbank'}}") 
+            .ui.image
+                img(src="https://png.icons8.com/summer/color/24" width="24" height="24" )
+            |Lightbank
+        a.mobile.hidden.item(href='/contact' class="{{isActivePath '/contact'}}") 
+            .ui.image
+                img(src="https://png.icons8.com/phone/color/24" width="24" height="24" )
+            |Contact
+    else
         a.mobile.hidden.item(href='/courses' class="{{isActivePath '/courses'}}" data-position="bottom center" data-content="LightSchool") 
             .ui.image
                 img(src="https://png.icons8.com/library/color/48" width="48" height="48")
-            // .computer.only
-            //     | Courses
         a.mobile.hidden.item(href='/lightbank' class="{{isActivePath '/lightbank'}}" data-position="bottom center" data-content="Lightbank") 
             .ui.image
                 img(src="https://png.icons8.com/summer/color/48" width="48" height="48" )
-            // i.sun.large.icon
-            // .computer.only
-            //     | Lightbank
-            // if unread_lightbank_count
-            //     .ui.label #{unread_lightbank_count}
-        a.mobile.hidden.item(href='/people' class="{{isActivePath '/people'}}" data-position="bottom center" data-content="People") 
-            // i.users.large.icon
-            .ui.image
-                img(src="https://png.icons8.com/people/color/48" title="People" width="48" height="48")
-            // .computer.only
-            //     | People
         a.mobile.hidden.item(href='/journal' class="{{isActivePath '/journal'}}" data-position="bottom center" data-content="Journal") 
             .ui.image
                 img(src="https://png.icons8.com/journal/color/48" width="48" height="48")
-            // i.pencil.large.icon
-            // .computer.only
-            //     | Journal
-            // if unread_journal_count
-            //     .ui.label #{unread_journal_count}
-        a.mobile.hidden.item(href='/checkin' class="{{isActivePath '/checkin'}}" data-position="bottom center" data-content="Services") 
+        a.mobile.hidden.item(href='/checkin' class="{{isActivePath '/checkin'}}" data-position="bottom center" data-content="Check In") 
             .ui.image
                 img(src="https://png.icons8.com/in-progress/color/48" width="48" height="48")
-            // i.check.large.icon
-            // .computer.only
-            //     | Check In's
-        a.mobile.hidden.item(href='/services' class="{{isActivePath '/services'}}" data-position="bottom center" data-content="Services") 
-            .ui.image
-                img(src="https://png.icons8.com/service-bell/color/48" width="48" height="48")
-            // i.configure.large.icon
-            // .computer.only
-            //     |Services
     
         
     .right.menu
         if currentUser
+            a.icon.item(href="/dashboard" class="{{isActivePath '/dashboard'}}" data-position="bottom center" data-content="Dashboard")
+                .ui.image
+                    img(src="https://png.icons8.com/dashboard/color/48" title="Dashboard" width="48" height="48")
+        
             if cart_items
                 a.icon.mobile.hidden.item(href='/cart' class="{{isActivePath '/cart'}}" data-position="bottom center" data-content="Shopping Cart")
                     i.large.icons
                         i.cart.icon
                         i.corner.teal.asterisk.icon
-            // a#check_in.icon.item(href='#' data-position="bottom center" data-content="Check In")
-            //     i.green.large.check.icon
-            // a.icon.mobile.hidden.item(href='/karma' data-position="bottom center" data-content="Karma")
-            //     i.heartbeat.icon
-            //     |#{currentUser.points}
-            a.item.item(href='/conversations' class="{{isActivePath '/conversations'}}") 
-                .ui.image
-                    img(src="https://png.icons8.com/chat/color/48" width="48" height="48")
-                // i.large.comments.outline.icon
-                if unread_message_count
-                    .ui.basic.label #{unread_message_count}
+            a.icon.item(href="/profile/#{currentUser.username}" class="{{isActiveRoute name='view_profile'}}" data-position="bottom center" data-content="Profile")
+                if currentUser.profile.image_id
+                    img.ui.avatar.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+                else
+                    i.user.icon
+                span.mobile.hidden    
+                    if currentUser.name
+                        | #{currentUser.name}
+                    else
+                        | #{currentUser.username}
+            
             // a.ui.icon.dropdown.item(class="{{isActivePath '/notifications'}}" data-position="bottom center" data-content="Notifications")
             // a.ui.icon.simple.dropdown.item
             //     if unread_notifications_count
@@ -88,121 +87,11 @@
             //         .ui.divider
             //         each unread_notifications
             //             .item #{subject.name} #{predicate} #{object.name}
-
-            // a.icon.mobile.hidden.item(href='/bookmarks' class="{{isActivePath '/bookmarks'}}" data-position="bottom center" data-content="Bookmarks")
-            //     i.bookmark.outline.icon
-                // .ui.menu
-                //     each bookmark_docs
-                //         each tags
-                //             .ui.tiny.basic.label #{this}
-            a.ui.simple.dropdown.item
-                if currentUser.profile.image_id
-                    img.ui.avatar.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
-                else
-                    i.user.icon
-                span.mobile.hidden    
-                    if currentUser.name
-                        | #{currentUser.name}
-                    else
-                        | #{currentUser.username}
-                i.dropdown.icon
-                .ui.menu
-                    a.item(href="/dashboard" class="{{isActivePath '/dashboard'}}")
-                        i.dashboard.icon
-                        | Dashboard
-                    a.item(href="/profile/#{currentUser.username}" class="{{isActiveRoute name='view_profile'}}")
-                        i.user.icon
-                        | Profile
-                    .ui.divider
-                    a.item(href='/courses' class="{{isActivePath '/courses'}}") 
-                        i.university.icon
-                        | Courses
-                    a.item(href='/checkin' class="{{isActivePath '/checkin'}}") 
-                        i.check.icon
-                        | Check In's
-                    a.item(href='/people' class="{{isActivePath '/people'}}") 
-                        i.users.icon
-                        | People
-                    a.item(href='/conversations' class="{{isActivePath '/conversations'}}") 
-                        i.comments.outline.icon
-                        | Conversations
-                    a.item(href='/journal' class="{{isActivePath '/journal'}}") 
-                        i.pencil.icon
-                        | Journal
-                    // a.item(href='/bookmarks' class="{{isActivePath '/bookmarks'}}")
-                    //     i.bookmark.outline.icon
-                    //     | Bookmarks
-                        // .ui.menu
-                        //     each bookmark_docs
-                        //         each tags
-                        //             .ui.tiny.basic.label #{this}
-                    .ui.divider
-                    a.icon.item(href='/karma' class="{{isActivePath '/karma'}}")
-                        i.heartbeat.outline.icon
-                        | Karma
-                    a.icon.item(href='/transactions' class="{{isActivePath '/transactions'}}")
-                        i.exchange.icon
-                        | Transactions
-                    a.mobile.hidden.item(href='/services' class="{{isActivePath '/services'}}") 
-                        i.configure.icon
-                        |Services
-                    .ui.divider
-                    a.icon.item(href="/profile/#{currentUser.username}/account" class="{{isActiveRoute name='account'}}")
-                        i.setting.icon
-                        | Settings
-                    if isInRole 'admin'
-                        if admin_mode 
-                            #toggle_off_admin_mode.ui.basic.green.button
-                                i.toggle.on.icon
-                                |Admin Mode On
-                        else
-                            #toggle_on_admin_mode.ui.basic.button
-                                i.toggle.off.icon
-                                |Admin Mode Off
-                        a.icon.item(href='/admin/dashboard' class="{{isActivePath '/admin/dashboard'}}")
-                            i.configure.red.icon
-                            | Admin
-                        .ui.divider
-                    a#logout.ui.item
-                        img(src="https://png.icons8.com/burglary/color/48" title="Burglary" width="48" height="48")
-                        // i.sign.out.icon
-                        | Sign Out
         else
             a.ui.item(href='/sign-in') 
                 .ui.image
                     img(src="https://png.icons8.com/signin/color/24" width="24" height="24")
 
-                // i.sign.in.icon
+                i.sign.in.icon
                 | Sign In
-    // .ui.modal
-    //     i.close.icon
-    //     .ui.center.aligned.header
-    //         i.green.check.icon
-    //         | #{currentUser.name} Check In
-    //     .content
-    //         .description
-    //             with new_checkin_doc
-    //                 .ui.form
-    //                     +tags
-    //                     // .ui.basic.button
-    //                     //     .ui.icon.header
-    //                     //         i.smile.icon
-    //                     //         |Happy
-    //                     // .ui.basic.button
-    //                     //     .ui.icon.header
-    //                     //         i.meh.icon
-    //                     //         | Nuetral
-    //                     // .ui.basic.button
-    //                     //     .ui.icon.header
-    //                     //         i.frown.icon
-    //                     //         | Sad
-    //                     // .ui.basic.button
-    //                     //     .ui.icon.header
-    //                     //         i.treatment.icon
-    //                     //         | Sensitive
-    //                     +body
-    //                     +content
-    //     .actions
-    //         .ui.cancel.red.basic.button Cancel
-    //         .ui.ok.green.button Submit
 

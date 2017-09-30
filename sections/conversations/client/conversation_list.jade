@@ -1,18 +1,19 @@
 template(name='conversation_list')
-    .ui.divided.items
+    .ui.segments
         each conversation_list_items
             +conversation_list_item
             
             
 template(name='conversation_list_item')
-    .ui.item.conversation_list_item
+    .ui.segment.conversation_list_item(href='#' class=conversation_list_item_class)
         .content
             .description
                 each participants
-                    a(href="/profile/#{username}")
-                        img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
-                        // |#{name}
-                        +staus_indicator
+                    // a(href="/profile/#{username}")
+                    img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                    // |#{name}
+                    +staus_indicator
+            .description
                 each tags
                     .ui.small.basic.label #{this}
             .description

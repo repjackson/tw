@@ -1,82 +1,86 @@
 template(name='dashboard')
-    .ui.container
-        h2.ui.center.aligned.header 
-            img(src="https://png.icons8.com/dashboard/color/96" title="Dashboard" width="96" height="96")
-            |Dashboard
-        .ui.three.centered.stackable.cards
-            a#courses.ui.card
-                .content
-                    .header 
-                        i.university.icon
+    .ui.text.container
+        // h2.ui.center.aligned.header 
+        //     img(src="https://png.icons8.com/dashboard/color/96" title="Dashboard" width="96" height="96")
+        //     |Dashboard
+        .ui.three.column.stackable.grid
+            .column
+                .row    
+                    a#courses.ui.icon.center.aligned.header
+                        i.icon
+                            img(src="https://png.icons8.com/classroom/color/96" width="96" height="96")
                         |Courses
-            a.ui.card(href='/people')
-                .content
-                    .header
-                        i.users.icon
-                        |People
-            a#lightbank.ui.card
-                .content
-                    .header 
-                        i.sun.icon
-                        |Light Bank
-            a.ui.card(href='/journal')
-                .content
-                    .header
-                        i.write.square.icon
-                        |Journal
-            a.ui.card(href='/checkin')
-                .content
-                    .header
-                        i.checkmark.icon
-                        |Check In
-            a.ui.card(href='/quizes')
-                .content
-                    .header
-                        i.edit.icon
-                        |Quizes
-            a.ui.card(href='/exercises')
-                .content
-                    .header
-                        i.paint.brush.icon
-                        |Exercises
-            a.ui.card(href='/karma')
-                .content
-                    .header
-                        i.heart.outline.icon
-                        |Karma
-            a.ui.card(href='/transactions')
-                .content
-                    .header
-                        i.exchange.icon
-                        |Transactions
-            a.ui.card(href='/services')
-                .content
-                    .header
-                        i.configure.icon
-                        | Services
-            a.ui.card(href='/bookmarks')
-                .content
-                    .header
-                        i.bookmark.outline.icon
+                .row    
+                    a.ui.icon.center.aligned.header(href='/bookmarks')
+                        i.icon
+                            img(src="https://png.icons8.com/bookmark-ribbon/color/96" width="96" height="96")
                         |Bookmarks
-            a.ui.card(href='/conversations')
-                .content
-                    .header
-                        i.comments.outline.icon
+                        
+                .row    
+                    a.ui.icon.center.aligned.header(href='/people')
+                        i.icon
+                            img(src="https://png.icons8.com/people/color/96" title="People" width="96" height="96")
+                        |Community
+                .row    
+                    a#lightbank.ui.icon.center.aligned.header
+                        i.icon
+                            img(src="https://png.icons8.com/summer/color/96" width="96" height="96" )
+                        |LightBank
+                .row    
+                    a.ui.icon.center.aligned.header(href='/journal')
+                        i.icon
+                            img(src="https://png.icons8.com/journal/color/96" width="96" height="96")
+                        |Journal
+            .column
+                .row    
+                    a.ui.icon.center.aligned.header(href='/checkin')
+                        i.icon
+                            img(src="https://png.icons8.com/in-progress/color/96" width="96" height="96")
+                        |Check In
+                .row    
+                    a.ui.icon.center.aligned.header(href='/quizes')
+                        i.icon
+                            img(src="https://png.icons8.com/report-card/color/96" width="96" height="96")
+                        |Quizes
+                .row    
+                    a.ui.icon.center.aligned.header(href='/exercises')
+                        i.icon
+                            img(src="https://png.icons8.com/hand-with-pen/color/96" width="96" height="96")
+                        |Exercises
+                .row    
+                    a.ui.icon.center.aligned.header(href='/conversations')
+                        i.icon
+                            img(src="https://png.icons8.com/chat/color/96" width="96" height="96")
                         |Conversations
-            a.ui.card(href="/profile/#{currentUser.username}/account")
-                .content
-                    .header
-                        i.setting.icon
-                        |Account Settings
-            if isInRole 'admin'
-                a.ui.card(href='/admin/dashboard')
-                    .content
-                        .header
-                            i.red.configure.icon
+                if isInRole 'admin'
+                    .row    
+                        a.ui.icon.center.aligned.header(href='/admin/dashboard')
+                            i.icon
+                                img(src="https://png.icons8.com/monarch/color/96" width="96" height="96")
                             | Admin
-            a#logout.ui.card(href='#')
-                .content
-                    .header
-                        i.sign.out.icon
+            .column
+                .row    
+                    a.ui.icon.center.aligned.header(href="/karma")
+                        i.icon
+                            img(src="https://png.icons8.com/diamond/color/96" width="96" height="96")
+                        |Karma
+                .row    
+                    a.ui.icon.center.aligned.header(href='/transactions')
+                        i.icon
+                            img(src="https://png.icons8.com/payment-history/color/96" width="96" height="96")
+                        |Transactions
+                .row    
+                    a.ui.icon.center.aligned.header(href='/services')
+                        i.icon
+                            img(src="https://png.icons8.com/service-bell/color/96" width="96" height="96")
+                        | Services
+                .row    
+                    a.ui.icon.center.aligned.header(href="/profile/#{currentUser.username}/account")
+                        i.icon
+                            img(src="https://png.icons8.com/settings/color/96" width="96" height="96")
+                        |Account Settings
+                .row    
+                    a#logout.ui.icon.center.aligned.header(href='#')
+                        i.icon
+                            img(src="https://png.icons8.com/burglary/color/96" width="96" height="96")
                         | Sign Out

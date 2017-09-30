@@ -149,8 +149,8 @@ template(name='delete_button')
         .delete.ui.icon.red.basic.button
             i.remove.icon
     else
-        a.cancel(href='#') Cancel
-        a.confirm(href='#') Confirm Delete
+        .ui.basic.button.cancel Cancel
+        .ui.red.button.confirm Confirm Delete
         
 template(name='delete_link')
     unless confirming

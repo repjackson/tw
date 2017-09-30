@@ -292,6 +292,11 @@ Template.rating.events
 #                 tags: new_tags
 #                 rating: rating
 #                 session_id: session_id
+Template.delete_button.onCreated ->
+    @confirming = new ReactiveVar(false)
+            
+Template.delete_button.helpers
+    confirming: -> Template.instance().confirming.get()
 
 Template.delete_button.events
     'click .delete': (e,t)-> t.confirming.set true

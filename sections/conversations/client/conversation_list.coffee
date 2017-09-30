@@ -19,8 +19,9 @@ if Meteor.isClient
         participants: ->
             participant_array = []
             for participant in @participant_ids
-                participant_object = Meteor.users.findOne participant
-                participant_array.push participant_object
+                unless Meteor.userId() is participant
+                    participant_object = Meteor.users.findOne participant
+                    participant_array.push participant_object
             return participant_array
 
         last_message: ->
@@ -31,11 +32,11 @@ if Meteor.isClient
                 sort: timestamp: -1
                 limit: 1
 
-
+        conversation_list_item_class: -> if Session.equals 'current_conversation_id', @_id then 'blue inverted tertiary' else ''
     Template.conversation_list.events
         'click .conversation_list_item': (e,t)->
-            Session.set 'current_message_id', @_id
-            console.log Session.get 'current_message_id'
+            Session.set 'current_conversation_id', @_id
+            console.log Session.get 'current_conversation_id'
         
         'click .mark_unread': (e,t)-> 
             Meteor.call 'mark_unread', @_id, ->

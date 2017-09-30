@@ -49,7 +49,8 @@ if Meteor.isClient
                     published: false
                 }, sort: timestamp: -1
             
-            
+        selected_conversation: ->
+            Docs.findOne Session.get 'current_conversation_id'
         unread_message_count: ->
             count = 0
             my_conversations = Docs.find(
