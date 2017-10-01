@@ -7,8 +7,8 @@ FlowRouter.route '/course/sol/pins',
 
 
 Template.course_pins.onCreated ->
-    @autorun => Meteor.subscribe('my_course_pins', selected_tags.array())
-    @autorun => Meteor.subscribe('pinned_tags', selected_tags.array())
+    @autorun => Meteor.subscribe('my_course_pins', selected_theme_tags.array())
+    @autorun => Meteor.subscribe('pinned_tags', selected_theme_tags.array())
 
     
 Template.pin.onCreated ->
@@ -35,7 +35,7 @@ Template.course_pins.helpers
             when @index <= 20 then button_class.push ' mini'
         return button_class
 
-    selected_tags: -> selected_tags.array()
+    selected_theme_tags: -> selected_theme_tags.array()
 
 
     pinned_docs: -> 
@@ -54,7 +54,7 @@ Template.pin.onRendered ->
         
         
 Template.course_pins.events
-    'click .select_tag': -> selected_tags.push @name
-    'click .unselect_tag': -> selected_tags.remove @valueOf()
-    'click #clear_tags': -> selected_tags.clear()
+    'click .select_tag': -> selected_theme_tags.push @name
+    'click .unselect_tag': -> selected_theme_tags.remove @valueOf()
+    'click #clear_tags': -> selected_theme_tags.clear()
 

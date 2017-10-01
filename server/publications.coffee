@@ -50,21 +50,24 @@ Meteor.publish 'me', ->
             bookmarked_ids: 1
     
     
-Meteor.publish 'tags', (selected_tags, selected_author_ids=[], type=null, author_id=null, parent_id=null, manual_limit=null, view_private, view_unread)->
+Meteor.publish 'theme_tags', (selected_theme_tags, selected_author_ids=[], selected_location_tags, selected_intention_tags, type=null, author_id=null, parent_id=null, manual_limit=null, view_private, view_unread)->
     
     self = @
     match = {}
     
-    # match.tags = $all: selected_tags
+    # match.tags = $all: selected_theme_tags
     if type then match.type = type
     if parent_id then match.parent_id = parent_id
-    if selected_tags.length > 0 then match.tags = $all: selected_tags
+    if selected_theme_tags.length > 0 then match.tags = $all: selected_theme_tags
     if selected_author_ids.length > 0 then match.author_id = $in: selected_author_ids
+    if selected_location_tags.length > 0 then match.author_id = $in: selected_location_tags
+    if selected_intention_tags.length > 0 then match.author_id = $in: selected_intention_tags
+    
     # match.published = true
     # console.log 'limit:', manual_limit
     if manual_limit then limit=manual_limit else limit=50
     if author_id then match.author_id = author_id
-    # console.log match
+    # console.log 'theme match', match
     
     if view_private is true then match.author_id = Meteor.userId()
     else if view_private is 'resonates'
@@ -80,12 +83,12 @@ Meteor.publish 'tags', (selected_tags, selected_author_ids=[], type=null, author
         { $project: tags: 1 }
         { $unwind: "$tags" }
         { $group: _id: '$tags', count: $sum: 1 }
-        { $match: _id: $nin: selected_tags }
+        { $match: _id: $nin: selected_theme_tags }
         { $sort: count: -1, _id: 1 }
         { $limit: limit }
         { $project: _id: 0, name: '$_id', count: 1 }
         ]
-    # console.log 'cloud, ', cloud
+    # console.log 'theme cloud, ', cloud
     cloud.forEach (tag, i) ->
         self.added 'tags', Random.id(),
             name: tag.name
@@ -94,55 +97,15 @@ Meteor.publish 'tags', (selected_tags, selected_author_ids=[], type=null, author
 
     self.ready()
         
-Meteor.publish 'watson_keywords', (selected_tags, selected_author_ids=[], type=null, author_id=null, parent_id=null, manual_limit=null, view_private)->
-    
-    self = @
-    match = {}
-    
-    # match.tags = $all: selected_tags
-    if type then match.type = type
-    if parent_id then match.parent_id = parent_id
-    if selected_tags.length > 0 then match.tags = $all: selected_tags
-    if selected_author_ids.length > 0 then match.author_id = $in: selected_author_ids
-    match.published = true
-    # console.log 'limit:', manual_limit
-    if manual_limit then limit=manual_limit else limit=50
-    if author_id then match.author_id = author_id
-    # console.log match
-    
-    if view_private is true then match.author_id = Meteor.userId()
-    else if view_private is false then match.published = true
-            
-
-    
-    
-    cloud = Docs.aggregate [
-        { $match: match }
-        { $project: watson_keywords: 1 }
-        { $unwind: "$watson_keywords" }
-        { $group: _id: '$watson_keywords', count: $sum: 1 }
-        { $match: _id: $nin: selected_tags }
-        { $sort: count: -1, _id: 1 }
-        { $limit: limit }
-        { $project: _id: 0, name: '$_id', count: 1 }
-        ]
-    # console.log 'cloud, ', cloud
-    cloud.forEach (keyword, i) ->
-        self.added 'watson_keywords', Random.id(),
-            name: keyword.name
-            count: keyword.count
-            index: i
-
-    self.ready()
         
 
-publishComposite 'docs', (selected_tags, type, limit, view_private)->
+publishComposite 'docs', (selected_theme_tags, type, limit, view_private)->
     {
         find: ->
             self = @
             match = {}
-            # match.tags = $all: selected_tags
-            if selected_tags.length > 0 then match.tags = $all: selected_tags
+            # match.tags = $all: selected_theme_tags
+            if selected_theme_tags.length > 0 then match.tags = $all: selected_theme_tags
             if type then match.type = type
             # console.log view_private
             if view_private is true then match.author_id = Meteor.userId()
@@ -391,22 +354,22 @@ Meteor.publish 'people_tags', (selected_people_tags)->
 
 
 
-Meteor.publish 'bookmarked_tags', (selected_tags)->
+Meteor.publish 'bookmarked_tags', (selected_theme_tags)->
     
     self = @
     match = {}
     
     match.bookmarked_ids = $in: [Meteor.userId()]
     
-    # match.tags = $all: selected_tags
-    if selected_tags.length > 0 then match.tags = $all: selected_tags
+    # match.tags = $all: selected_theme_tags
+    if selected_theme_tags.length > 0 then match.tags = $all: selected_theme_tags
     
     cloud = Docs.aggregate [
         { $match: match }
         { $project: tags: 1 }
         { $unwind: "$tags" }
         { $group: _id: '$tags', count: $sum: 1 }
-        { $match: _id: $nin: selected_tags }
+        { $match: _id: $nin: selected_theme_tags }
         { $sort: count: -1, _id: 1 }
         { $limit: 20 }
         { $project: _id: 0, name: '$_id', count: 1 }
@@ -420,14 +383,14 @@ Meteor.publish 'bookmarked_tags', (selected_tags)->
 
     self.ready()
         
-publishComposite 'author_ids', (selected_tags, selected_author_ids, type)->
+publishComposite 'author_ids', (selected_theme_tags, selected_author_ids, type)->
     
     {
         find: ->
             self = @
             match = {}
             if type then match.type = type
-            if selected_tags.length > 0 then match.tags = $all: selected_tags
+            if selected_theme_tags.length > 0 then match.tags = $all: selected_theme_tags
             if selected_author_ids.length > 0 then match.author_id = $in: selected_author_ids
             match.published = true
             

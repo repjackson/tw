@@ -8,7 +8,7 @@ if Meteor.isClient
     
     
     Template.course_stats.onCreated ->
-        @autorun => Meteor.subscribe('my_course_stats', selected_tags.array())
+        @autorun => Meteor.subscribe('my_course_stats', selected_theme_tags.array())
     
         
     Template.course_stats.onRendered ->

@@ -206,7 +206,7 @@ if Meteor.isServer
                 ]    
         }
 
-    Meteor.publish 'facet_tags', (selected_tags, limit, view_unvoted, view_upvoted, view_downvoted)->
+    Meteor.publish 'facet_tags', (selected_theme_tags, limit, view_unvoted, view_upvoted, view_downvoted)->
         
         self = @
         match = {}
@@ -219,9 +219,9 @@ if Meteor.isServer
         if view_upvoted then match.upvoters = $in: [@userId]
         if view_downvoted then match.downvoters = $in: [@userId]
 
-        # match.tags = $all: selected_tags
+        # match.tags = $all: selected_theme_tags
         match.type = 'facet'
-        if selected_tags.length > 0 then match.tags = $all: selected_tags
+        if selected_theme_tags.length > 0 then match.tags = $all: selected_theme_tags
         
         # console.log 'limit:', limit
         
@@ -230,7 +230,7 @@ if Meteor.isServer
             { $project: tags: 1 }
             { $unwind: "$tags" }
             { $group: _id: '$tags', count: $sum: 1 }
-            { $match: _id: $nin: selected_tags }
+            { $match: _id: $nin: selected_theme_tags }
             { $sort: count: -1, _id: 1 }
             { $limit: limit }
             { $project: _id: 0, name: '$_id', count: 1 }

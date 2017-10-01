@@ -5,7 +5,7 @@ if Meteor.isClient
             main: 'services'
 
     Template.services.onCreated ->
-        @autorun -> Meteor.subscribe('docs', selected_tags.array(), 'service')
+        @autorun -> Meteor.subscribe('docs', selected_theme_tags.array(), 'service')
         Session.set 'layout_view', 'list'
     
     Template.services.helpers
@@ -31,11 +31,11 @@ if Meteor.isClient
         'click #make_grid_layout': -> Session.set 'layout_view', 'grid'
         
     Template.service_item.helpers
-        tag_class: -> if @valueOf() in selected_tags.array() then 'teal' else 'basic'
+        tag_class: -> if @valueOf() in selected_theme_tags.array() then 'teal' else 'basic'
     
     Template.service_item.events
         'click .service_tag': ->
-            if @valueOf() in selected_tags.array() then selected_tags.remove @valueOf() else selected_tags.push @valueOf()
+            if @valueOf() in selected_theme_tags.array() then selected_theme_tags.remove @valueOf() else selected_theme_tags.push @valueOf()
     
     Template.edit_service.events
         'click #delete_doc': ->

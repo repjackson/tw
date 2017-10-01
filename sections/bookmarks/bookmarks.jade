@@ -6,10 +6,10 @@ template(name='bookmarks')
         .ui.stackable.grid
             .five.wide.column
                 .ui.dividing.header Tag Filter
-                if selected_tags
+                if selected_theme_tags
                     #clear_tags.ui.teal.icon.large.button
                         i.remove.icon
-                    each selected_tags
+                    each selected_theme_tags
                         .unselect_tag.ui.teal.large.button
                             strong #{this}
                 each bookmarked_tags

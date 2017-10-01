@@ -3,6 +3,7 @@ template(name='edit_journal')
         h1.ui.center.aligned.header Edit Journal Entry
         .center.aligned
             +toggle_zen_mode_button
+            .ui.hidden.divider
         .ui.stackable.grid
             if zen_mode
                 .sixteen.wide.column

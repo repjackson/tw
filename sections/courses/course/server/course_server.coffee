@@ -65,12 +65,12 @@ Meteor.publish 'sol_progress', ()->
         author_id: Meteor.userId()
         
 
-publishComposite 'my_course_pins', (selected_tags=[])->
+publishComposite 'my_course_pins', (selected_theme_tags=[])->
     {
         find: ->
             match = {}
             
-            if selected_tags.length > 0 then match.tags = $all: selected_tags
+            if selected_theme_tags.length > 0 then match.tags = $all: selected_theme_tags
             match.pinned_ids = $in: [Meteor.userId()]
 
             Docs.find match

@@ -117,3 +117,4 @@ if Meteor.isClient
     # # 	'mouseleave .item': -> $( ".corner.icon" ).removeClass( "large" )
     # 	'mouseleave .item': (e,t)-> $( ".corner.icon" ).removeClass( "large" )
     
+        'click #logout': -> AccountsTemplates.logout()

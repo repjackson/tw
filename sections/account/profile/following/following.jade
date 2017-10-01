@@ -3,26 +3,26 @@ template(name='following')
         .ui.segment
             if currentUser
                 .ui.header
-                    |You are
+                    // |You are
                     if is_following
-                        |following #{name}. 
-                        #unfollow.ui.teal.basic.compact.right.floated.button 
-                            i.cancel.icon
+                        // |following #{profile.first_name}. 
+                        #unfollow.ui.basic.large.circular.right.floated.button 
+                            img.ui.avatar.image(src="https://png.icons8.com/cancel-subscription/color/48" width="48" height="48")
                             |Unfollow
                     else
-                        |not following #{name}. 
-                        #follow.ui.teal.compact.right.floated.button 
-                            i.alarm.outline.icon
+                        // |not following #{profile.first_name}. 
+                        #follow.ui.basic.large.circular.right.floated.button 
+                            img.ui.avatar.image(src="https://png.icons8.com/renew/color/48" width="48" height="48")
                             |Follow
                 .ui.hidden.divider
             .ui.two.column.grid
                 .column
-                    .ui.dividing.header Following #{name}
+                    .ui.dividing.header #{profile.first_name} is Followed by
                     .ui.divided.list
                         each followers
                             +person_item
                 .column
-                    .ui.dividing.header Followed by #{name}
+                    .ui.dividing.header #{profile.first_name} is Following
                     .ui.divided.list
                         each following
                             +person_item
@@ -35,8 +35,8 @@ template(name='person_item')
                 img.ui.avatar.image(src="{{c.url profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
         .content
             a.header(href="/profile/#{username}")
-                if profile.name 
-                    |#{profile.name}
+                if name 
+                    |#{name}
                     // |#{profile.first_name} #{profile.last_name}
                 else
                     |#{username}

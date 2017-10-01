@@ -185,13 +185,13 @@ if Meteor.isServer
                 ]    
         }
 
-    Meteor.publish 'all_tags', (selected_tags)->
+    Meteor.publish 'all_tags', (selected_theme_tags)->
         
         self = @
         match = {}
         
-        # match.tags = $all: selected_tags
-        if selected_tags.length > 0 then match.tags = $all: selected_tags
+        # match.tags = $all: selected_theme_tags
+        if selected_theme_tags.length > 0 then match.tags = $all: selected_theme_tags
         
         
         cloud = Docs.aggregate [
@@ -199,7 +199,7 @@ if Meteor.isServer
             { $project: tags: 1 }
             { $unwind: "$tags" }
             { $group: _id: '$tags', count: $sum: 1 }
-            { $match: _id: $nin: selected_tags }
+            { $match: _id: $nin: selected_theme_tags }
             { $sort: count: -1, _id: 1 }
             { $limit: 20 }
             { $project: _id: 0, name: '$_id', count: 1 }

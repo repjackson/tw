@@ -107,12 +107,12 @@ if Meteor.isServer
             
             
             
-    Meteor.publish 'quiz_tags', (selected_tags, quiz_slug)->
+    Meteor.publish 'quiz_tags', (selected_theme_tags, quiz_slug)->
         self = @
         match = {}
         
         match.type = 'quiz_question'
-        if selected_tags.length > 0 then match.tags = $all: selected_tags
+        if selected_theme_tags.length > 0 then match.tags = $all: selected_theme_tags
         match.quiz_slug = quiz_slug        
         
         cloud = Docs.aggregate [
@@ -120,7 +120,7 @@ if Meteor.isServer
             { $project: tags: 1 }
             { $unwind: "$tags" }
             { $group: _id: '$tags', count: $sum: 1 }
-            { $match: _id: $nin: selected_tags }
+            { $match: _id: $nin: selected_theme_tags }
             { $sort: count: -1, _id: 1 }
             # { $limit: limit }
             { $project: _id: 0, name: '$_id', count: 1 }

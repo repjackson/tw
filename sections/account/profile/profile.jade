@@ -10,7 +10,7 @@ template(name='profile_layout')
             .pusher
                 #main_area
                     .ui.basic.fluid.segment
-                        .ui.basic.segment
+                        .ui.basic.segment.container
                             // .ui.breadcrumb
                             //     a.section(href='/') Home
                             //     .divider  / 
@@ -18,25 +18,24 @@ template(name='profile_layout')
                             //     .divider  / 
                             //     .active.section #{person.username}
                             // .ui.hidden.divider    
-                            with person
-                                h2.ui.center.aligned.header
-                                    img.ui.avatar.image(src="{{c.url profile.image_id width=200 height=200 gravity='face' crop='fill'}}")
-                                    if profile.first_name
-                                        |#{profile.first_name} #{profile.last_name}
-                                    |(#{username})
-                                    unless is_user
-                                        +staus_indicator
                     
                             .ui.stackable.grid
                                 .four.wide.column
                                     with person
+                                        img.ui.small.centered.rounded.image(src="{{c.url profile.image_id width=400 height=400 gravity='face' crop='fill'}}")
+                                        .ui.center.aligned.header
+                                            if profile.first_name
+                                                |#{profile.first_name} #{profile.last_name}
+                                            |(#{username})
+                                            unless is_user
+                                                +staus_indicator
                                         if is_user
                                             a.ui.basic.fluid.large.button(href="/account/profile/edit/#{_id}") 
                                                 i.yellow.pencil.icon
                                                 // i.icon
                                                 //     img(src="https://png.icons8.com/edit/color/24" width="24" height="24")
                                                 |Edit Profile
-                                        .ui.vertical.fluid.pointing.menu
+                                        .ui.vertical.large.fluid.pointing.menu
                                             // a.item(href="/profile/#{username}/feed" class="{{isActiveRoute name='profile_feed'}}") 
                                             //     i.feed.large.icon
                                             //     | Feed
@@ -79,6 +78,12 @@ template(name='profile_layout')
                                                 i.icon
                                                     img(src="https://png.icons8.com/message/color/24" width="24" height="24")
                                                 |Email Settings
+                                        .ui.vertical.fluid.menu
+                                            a#logout.item(href="#" data-position="bottom center" data-content="Log Out")
+                                                i.icon
+                                                    img(src="https://png.icons8.com/burglary/color/24" width="24" height="24")
+                                                |Log Out
+
     
                                 .twelve.wide.column
                                     +Template.dynamic template=profile_content
@@ -86,36 +91,35 @@ template(name='profile_layout')
 
         
 template(name='profile_journal')
-    .ui.horizontal.divider.header 
-        a(href='/journal')
-            i.link.pencil.icon
+    h1.ui.center.aligned.header 
+        img(src="https://png.icons8.com/journal/color/96" width="96" height="96")
         |Journal
     +public_journal
         
 template(name='profile_karma')
-    .ui.horizontal.divider.header 
+    h1.ui.center.aligned.header 
         a(href='/karma')
-            i.hearbeat.icon
+            img(src="https://png.icons8.com/diamond/color/96" width="96" height="96")
         |Karma
     +karma
         
 template(name='profile_quizes')
-    // .ui.horizontal.divider.header 
-    //     i.pencil.icon
-    //     |Quizes
+    h1.ui.center.aligned.header 
+        img(src="https://png.icons8.com/report-card/color/96" width="96" height="96")
+        |Quizes
     +public_quiz_sessions
 
 
 template(name='profile_courses')
-    // .ui.horizontal.divider.header 
-    //     i.university.icon
-    //     |Courses
+    h1.ui.center.aligned.header 
+        img(src="https://png.icons8.com/classroom/color/96" width="96" height="96")
+        |Courses
     +user_courses
 
 template(name='profile_social')
-    // .ui.horizontal.divider.header 
-    //     i.comments.icon
-    //     |Social
+    h1.ui.center.aligned.header 
+        img(src="https://png.icons8.com/chat/color/48" width="48" height="48")
+        |Social
     // +user_friends
     +following
     // +person_tags
@@ -123,42 +127,40 @@ template(name='profile_social')
         
 template(name='profile_about')
     with person
-        // .ui.horizontal.divider.header 
-        //     i.info.icon
-        //     |About
-        .ui.grid
-            .eight.wide.column
-                img.ui.rounded.large.image(src="{{c.url person.profile.image_id width=400 height=400 gravity='face' crop='fill'}}")
-            .eight.wide.column
+        h1.ui.center.aligned.header 
+            img(src="https://png.icons8.com/info/color/96" width="96" height="96")
+            |About
+        .ui.hidden.divider
+        .ui.two.column.stackable.grid
+            .column
                 if tags
-                    .ui.basic.center.aligned.segment
-                        img(src="https://png.icons8.com/tags/color/24" width="24" height="24")
-                        each tags
-                            .user_tag.ui.circular.large.basic.label #{this}
-                .ui.basic.center.aligned.segment
-                    // +toggle_friend
-                    // .ui.hidden.divider
-                    // +staus_indicator
-                    .ui.header My True Colors Are:
-                    +color_dots
-                    // if points
-                    //     .ui.small.teal.statistic
-                    //         .value #{points}
-                    //         .label Comment Karma
-                    // if isInRole 'dev'
-                    //     +tag_person this    
+                    img.ui.avatar.image(src="https://png.icons8.com/hashtag/color/48" width="48" height="48")
+                    each tags
+                        .user_tag.ui.circular.large.basic.label #{this}
+                // +toggle_friend
+                // .ui.hidden.divider
+                if profile.location
+                    .ui.header 
+                        img.ui.avatar.image(src="https://png.icons8.com/geo-fence/color/48" width="48" height="48")
+                        | #{profile.location}
+                if profile.about_me
+                    .ui.header About Me
+                    |#{profile.about_me}
+            .column
+                .ui.header My True Colors Are:
+                +color_dots
+                // if points
+                //     .ui.small.teal.statistic
+                //         .value #{points}
+                //         .label Comment Karma
+                // if isInRole 'dev'
+                //     +tag_person this    
+                if profile.if_knew_me
+                    .ui.header If you really knew me you would know…
+                    |#{profile.if_knew_me}
+                if profile.if_not_working
+                    .ui.header If I am not at work or in class then I am probably…
+                    |#{profile.if_not_working}
 
-        if profile.location
-            .ui.header Location 
-            | #{profile.location}
-        if profile.about_me
-            .ui.header About Me
-            |#{profile.about_me}
-        if profile.if_knew_me
-            .ui.header If you really knew me you would know…
-            |#{profile.if_knew_me}
-        if profile.if_not_working
-            .ui.header If I am not at work or in class then I am probably…
-            |#{profile.if_not_working}
         
         

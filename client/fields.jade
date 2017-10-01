@@ -42,39 +42,55 @@ template(name='number')
 
 
 template(name='tags')
-    .required.field
+    .required.inline.field
         label 
-            img(src="https://png.icons8.com/tags/color/24" width="24" height="24")
-            // i.hashtag.icon
+            img.ui.avatar.image(src="https://png.icons8.com/hashtag/color/24" width="24" height="24")
             |Theme Tags
         input#add_tag(type='text' placeholder='press enter after each' maxlength='50' )
         each tags
-            a.ui.basic.large.label.doc_tag
-                i.minus.icon
-                |#{this}
+            a.ui.basic.animated.fade.large.button.doc_tag
+                .visible.content
+                    i.icon
+                        img.ui.image(src="https://png.icons8.com/hashtag/color/24" width="24" height="24")
+                    |#{this}
+                .hidden.content
+                    i.icon
+                        img.ui.image(src="https://png.icons8.com/delete/color/24" width="24" height="24")
+                    |#{this}
 
 template(name='location_tags')
-    .field
+    .inline.field
         label 
-            // i.marker.icon
-            img(src="https://png.icons8.com/geo-fence/color/24" width="24" height="24")
+            img.ui.avatar.image(src="https://png.icons8.com/geo-fence/color/24" width="24" height="24")
             |Location Tags (eg. 'home', 'couch')
         input#add_location_tag(type='text' placeholder='press enter after each' maxlength='50' )
         each location_tags
-            a.ui.basic.large.label.doc_tag
-                i.minus.icon
-                |#{this}
+            a.ui.basic.large.animated.fade.large.button.doc_tag
+                .visible.content
+                    i.icon
+                        img.ui.image(src="https://png.icons8.com/geo-fence/color/24" width="24" height="24")
+                    |#{this}
+                .hidden.content
+                    i.icon
+                        img.ui.image(src="https://png.icons8.com/delete/color/24" width="24" height="24")
+                    |#{this}
 
 template(name='intention_tags')
-    .field
+    .inline.field
         label 
-            img(src="https://png.icons8.com/searchlight/color/24" width="24" height="24")
+            img.ui.avatar.image(src="https://png.icons8.com/spotlight/color/24" width="24" height="24")
             |My intention for this entry is to...
         input#add_intention_tag(type='text' placeholder='press enter after each answer' maxlength='50' )
         each intention_tags
-            a.ui.basic.large.label.doc_tag
-                i.minus.icon
-                |#{this}
+            a.ui.basic.large.animated.fade.large.button.doc_tag
+                .visible.content
+                    i.icon
+                        img.ui.image(src="https://png.icons8.com/spotlight/color/24" width="24" height="24")
+                    |#{this}
+                .hidden.content
+                    i.icon
+                        img.ui.image(src="https://png.icons8.com/delete/color/24" width="24" height="24")
+                    |#{this}
 
 
 template(name='dollar_price')

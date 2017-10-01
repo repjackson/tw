@@ -1,10 +1,10 @@
-publishComposite 'checkin', (selected_tags, selected_author_ids, limit, view_private, view_unread)->
+publishComposite 'checkin', (selected_theme_tags, selected_author_ids, limit, view_private, view_unread)->
     {
         find: ->
             self = @
             match = {}
-            # match.tags = $all: selected_tags
-            if selected_tags.length > 0 then match.tags = $all: selected_tags
+            # match.tags = $all: selected_theme_tags
+            if selected_theme_tags.length > 0 then match.tags = $all: selected_theme_tags
             if selected_author_ids.length > 0 then match.author_id = $in: selected_author_ids
             match.type = 'checkin'
             
@@ -42,13 +42,13 @@ publishComposite 'checkin', (selected_tags, selected_author_ids, limit, view_pri
         
         
 
-Meteor.publish 'checkin_tags', (selected_tags, limit, view_mode)->
+Meteor.publish 'checkin_tags', (selected_theme_tags, limit, view_mode)->
     
     self = @
     match = {}
     
     match.type = 'checkin'
-    if selected_tags.length > 0 then match.tags = $all: selected_tags
+    if selected_theme_tags.length > 0 then match.tags = $all: selected_theme_tags
     
     if view_mode is 'mine'
         match.author_id = Meteor.userId()
@@ -63,7 +63,7 @@ Meteor.publish 'checkin_tags', (selected_tags, limit, view_mode)->
         { $project: tags: 1 }
         { $unwind: "$tags" }
         { $group: _id: '$tags', count: $sum: 1 }
-        { $match: _id: $nin: selected_tags }
+        { $match: _id: $nin: selected_theme_tags }
         { $sort: count: -1, _id: 1 }
         { $limit: limit }
         { $project: _id: 0, name: '$_id', count: 1 }

@@ -1,7 +1,7 @@
 template(name='public_journal')
     with user
         if public_journal_entries.count
-            +tag_filter type='journal' author_id=user._id
+            +theme_tag_filter type='journal' author_id=user._id
             .ui.dividing.header
                 if is_user
                     |My Public Journal Reponses

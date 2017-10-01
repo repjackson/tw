@@ -110,12 +110,12 @@ if Meteor.isServer
     
         self.ready()
         
-    Meteor.publish 'user_docs', (selected_tags, username)->
+    Meteor.publish 'user_docs', (selected_theme_tags, username)->
     
         self = @
         match = {}
         user = Meteor.users.findOne username: username
-        if selected_tags.length > 0 then match.tags = $all: selected_tags
+        if selected_theme_tags.length > 0 then match.tags = $all: selected_theme_tags
         match.author_id = user._id
 
         Docs.find match

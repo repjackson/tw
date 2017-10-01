@@ -6,7 +6,7 @@ Template.journal_prompts.onCreated ->
     self = @
     @autorun => 
         Meteor.subscribe('journal_prompts', 
-            selected_tags.array()
+            selected_theme_tags.array()
             )
             
 
@@ -28,14 +28,14 @@ Template.journal_prompts.helpers
                 timestamp: -1
             limit: 5
 
-    tag_class: -> if @valueOf() in selected_tags.array() then 'teal' else 'basic'
+    tag_class: -> if @valueOf() in selected_theme_tags.array() then 'teal' else 'basic'
 
         
     journal_card_class: -> if @published then 'blue' else ''
     
 
 Template.journal_prompt.helpers
-    tag_class: -> if @valueOf() in selected_tags.array() then 'teal' else 'basic'
+    tag_class: -> if @valueOf() in selected_theme_tags.array() then 'teal' else 'basic'
     journal_card_class: -> if @published then 'blue' else ''
 
     read: -> Meteor.userId() in @read_by
@@ -46,7 +46,7 @@ Template.journal_prompt.helpers
 
 
 Template.journal_prompt.events
-    'click .tag': -> if @valueOf() in selected_tags.array() then selected_tags.remove(@valueOf()) else selected_tags.push(@valueOf())
+    'click .tag': -> if @valueOf() in selected_theme_tags.array() then selected_theme_tags.remove(@valueOf()) else selected_theme_tags.push(@valueOf())
 
     'click .mark_read': (e,t)-> 
         $(e.currentTarget).closest('.journal_segment').transition('pulse')

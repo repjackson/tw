@@ -3,7 +3,7 @@
 
 Template.participant_filter.onCreated ->
     # @autorun -> Meteor.subscribe('tags', selected_conversation_tags.array(), 'conversation')
-    @autorun -> Meteor.subscribe('participant_ids', selected_tags.array(), selected_participant_ids.array())
+    @autorun -> Meteor.subscribe('participant_ids', selected_theme_tags.array(), selected_participant_ids.array())
     Meteor.subscribe 'usernames'
 
 Template.participant_filter.helpers

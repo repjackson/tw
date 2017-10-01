@@ -5,7 +5,7 @@ if Meteor.isClient
             main: 'plans'
 
     Template.plans.onCreated ->
-        @autorun -> Meteor.subscribe('docs', selected_tags.array(), 'plan')
+        @autorun -> Meteor.subscribe('docs', selected_theme_tags.array(), 'plan')
     
     Template.plans.helpers
         plans: -> 

@@ -6,7 +6,7 @@ FlowRouter.route '/view/:doc_id',
 
 
 Template.docs.onCreated -> 
-    @autorun -> Meteor.subscribe('docs', selected_tags.array(), type=null, 5)
+    @autorun -> Meteor.subscribe('docs', selected_theme_tags.array(), type=null, 5)
 
 Template.docs.helpers
     docs: -> 
@@ -18,9 +18,9 @@ Template.docs.helpers
     one_doc: -> 
         Docs.find().count() is 1
 
-    tag_class: -> if @valueOf() in selected_tags.array() then 'teal' else 'basic'
+    tag_class: -> if @valueOf() in selected_theme_tags.array() then 'teal' else 'basic'
 
-    selected_tags: -> selected_tags.array()
+    selected_theme_tags: -> selected_theme_tags.array()
 
 
 

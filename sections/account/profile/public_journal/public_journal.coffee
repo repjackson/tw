@@ -1,6 +1,6 @@
 if Meteor.isClient
     Template.public_journal.onCreated -> 
-        @autorun => Meteor.subscribe('public_journal', FlowRouter.getParam('username'), selected_tags.array())
+        @autorun => Meteor.subscribe('public_journal', FlowRouter.getParam('username'), selected_theme_tags.array())
 
 
     Template.public_journal.helpers
@@ -15,12 +15,12 @@ if Meteor.isClient
                 }, timestamp: -1
     
 if Meteor.isServer
-    Meteor.publish 'public_journal', (username, selected_tags)->
-        # console.log selected_tags
+    Meteor.publish 'public_journal', (username, selected_theme_tags)->
+        # console.log selected_theme_tags
         user = Meteor.users.findOne username: username
         Docs.find {
             type: 'journal'
             author_id: Meteor.userId()
             published: true
-            tags: $in: selected_tags
+            tags: $in: selected_theme_tags
             }, sort: timestamp: -1

@@ -6,12 +6,12 @@ if Meteor.isClient
     
     
     Template.bookmarks.onCreated ->
-        @autorun => Meteor.subscribe('my_bookmarks', selected_tags.array())
-        @autorun => Meteor.subscribe('bookmarked_tags', selected_tags.array())
+        @autorun => Meteor.subscribe('my_bookmarks', selected_theme_tags.array())
+        @autorun => Meteor.subscribe('bookmarked_tags', selected_theme_tags.array())
 
         
     Template.bookmarks.onRendered ->
-        selected_tags.clear()
+        selected_theme_tags.clear()
         
     Template.bookmarks.helpers
         bookmarked_tags: ->
@@ -31,7 +31,7 @@ if Meteor.isClient
                 when @index <= 20 then button_class.push ' mini'
             return button_class
     
-        selected_tags: -> selected_tags.array()
+        selected_theme_tags: -> selected_theme_tags.array()
 
     
         bookmark_docs: -> 
@@ -43,7 +43,7 @@ if Meteor.isClient
             
             
     Template.bookmark.helpers
-        tag_class: -> if @valueOf() in selected_tags.array() then 'teal' else 'basic'
+        tag_class: -> if @valueOf() in selected_theme_tags.array() then 'teal' else 'basic'
 
             
             
@@ -55,19 +55,19 @@ if Meteor.isClient
                     "profile.share_bookmarks": value
     
 
-        'click .select_tag': -> selected_tags.push @name
-        'click .unselect_tag': -> selected_tags.remove @valueOf()
-        'click #clear_tags': -> selected_tags.clear()
+        'click .select_tag': -> selected_theme_tags.push @name
+        'click .unselect_tag': -> selected_theme_tags.remove @valueOf()
+        'click #clear_tags': -> selected_theme_tags.clear()
 
     
             
 if Meteor.isServer
-    publishComposite 'my_bookmarks', (selected_tags=[])->
+    publishComposite 'my_bookmarks', (selected_theme_tags=[])->
         {
             find: ->
                 match = {}
                 
-                if selected_tags.length > 0 then match.tags = $all: selected_tags
+                if selected_theme_tags.length > 0 then match.tags = $all: selected_theme_tags
                 match.bookmarked_ids = $in: [Meteor.userId()]
 
                 Docs.find match

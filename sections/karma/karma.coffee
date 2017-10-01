@@ -6,7 +6,7 @@ if Meteor.isClient
     
     
     Template.karma.onCreated ->
-        @autorun => Meteor.subscribe('my_karma', selected_tags.array(), selected_upvoter_ids.array())
+        @autorun => Meteor.subscribe('my_karma', selected_theme_tags.array(), selected_upvoter_ids.array())
 
         
     Template.karma.onRendered ->
@@ -28,7 +28,7 @@ if Meteor.isClient
             users
             
     Template.bookmark.helpers
-        tag_class: -> if @valueOf() in selected_tags.array() then 'teal' else 'basic'
+        tag_class: -> if @valueOf() in selected_theme_tags.array() then 'teal' else 'basic'
 
             
             
@@ -40,19 +40,19 @@ if Meteor.isClient
                     "profile.share_karma": value
     
 
-        'click .select_tag': -> selected_tags.push @name
-        'click .unselect_tag': -> selected_tags.remove @valueOf()
-        'click #clear_tags': -> selected_tags.clear()
+        'click .select_tag': -> selected_theme_tags.push @name
+        'click .unselect_tag': -> selected_theme_tags.remove @valueOf()
+        'click #clear_tags': -> selected_theme_tags.clear()
 
     
             
 if Meteor.isServer
-    publishComposite 'my_karma', (selected_tags=[], selected_upvoter_ids)->
+    publishComposite 'my_karma', (selected_theme_tags=[], selected_upvoter_ids)->
         {
             find: ->
                 match = {}
                 
-                if selected_tags.length > 0 then match.tags = $all: selected_tags
+                if selected_theme_tags.length > 0 then match.tags = $all: selected_theme_tags
                 if selected_upvoter_ids.length > 0 then match.upvoters = $all: selected_upvoter_ids
                 match.points = $gt: 0
                 match.author_id = Meteor.userId()
@@ -68,12 +68,12 @@ if Meteor.isServer
         }
 
 
-    Meteor.publish 'karma_tags', (selected_tags, selected_upvoter_ids)->
+    Meteor.publish 'karma_tags', (selected_theme_tags, selected_upvoter_ids)->
         
         self = @
         match = {}
         
-        if selected_tags.length > 0 then match.tags = $all: selected_tags
+        if selected_theme_tags.length > 0 then match.tags = $all: selected_theme_tags
         if selected_upvoter_ids.length > 0 then match.author_id = $in: selected_upvoter_ids
         match.points = $gt: 0
         match.author_id = Meteor.userId()
@@ -84,7 +84,7 @@ if Meteor.isServer
             { $project: tags: 1 }
             { $unwind: "$tags" }
             { $group: _id: '$tags', count: $sum: 1 }
-            { $match: _id: $nin: selected_tags }
+            { $match: _id: $nin: selected_theme_tags }
             { $sort: count: -1, _id: 1 }
             { $limit: 20 }
             { $project: _id: 0, name: '$_id', count: 1 }

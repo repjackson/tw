@@ -1,13 +1,13 @@
 Template.top_10.onCreated ->
-    @autorun -> Meteor.subscribe('top_10', selected_tags.array())
+    @autorun -> Meteor.subscribe('top_10', selected_theme_tags.array())
     # @autorun -> Meteor.subscribe('top_10', Session.get('tag_selection'))
 
     
     
 Template.top_10.helpers
-    selected_tags: -> 
+    selected_theme_tags: -> 
         # Session.get 'tag_selection'
-        selected_tags.array()
+        selected_theme_tags.array()
     
     top_10_list: ->
         tag = Session.get 'tag_selection'
@@ -35,7 +35,7 @@ Template.top_10.helpers
         return sorted_list
 
 
-@selected_tags = new ReactiveArray []
+@selected_theme_tags = new ReactiveArray []
 @selected_usernames = new ReactiveArray []
 
 
@@ -48,9 +48,9 @@ Meteor.loginWithInstagram (err) ->
 
 Template.home.onCreated ->
     Meteor.subscribe 'people'
-    # @autorun -> Meteor.subscribe('usernames', selected_tags.array())
-    @autorun -> Meteor.subscribe('tags', selected_tags.array(), selected_usernames.array())
-    @autorun -> Meteor.subscribe('docs', selected_tags.array(), selected_usernames.array())
+    # @autorun -> Meteor.subscribe('usernames', selected_theme_tags.array())
+    @autorun -> Meteor.subscribe('tags', selected_theme_tags.array(), selected_usernames.array())
+    @autorun -> Meteor.subscribe('docs', selected_theme_tags.array(), selected_usernames.array())
 
 Template.view.onCreated ->
     Meteor.subscribe 'person', @authorId
@@ -68,7 +68,7 @@ Template.nav.events
     'click .clear_my_docs': -> Meteor.call 'clear_my_docs', ->
         Meteor.setTimeout (->
             selected_usernames.clear()
-            selected_tags.clear()
+            selected_theme_tags.clear()
             ), 1000
 
 
@@ -97,7 +97,7 @@ Template.home.helpers
 
 
     global_tags: -> Tags.find()
-    selected_tags: -> selected_tags.list()
+    selected_theme_tags: -> selected_theme_tags.list()
 
     global_usernames: -> Usernames.find()
     selected_usernames: -> selected_usernames.list()
@@ -143,11 +143,11 @@ Template.home.events
 
     'click .select_tag': -> 
         Session.set('tag_selection', @text)
-        selected_tags.push @text
+        selected_theme_tags.push @text
     
-    'click .unselect_tag': -> selected_tags.remove @valueOf()
+    'click .unselect_tag': -> selected_theme_tags.remove @valueOf()
     
-    'click #clear_tags': -> selected_tags.clear()
+    'click #clear_tags': -> selected_theme_tags.clear()
 
 
     'click .view_my_tweets': -> if Meteor.user().profile.name in selected_usernames.array() then selected_usernames.remove Meteor.user().profile.name else selected_usernames.push Meteor.user().profile.name
@@ -168,7 +168,7 @@ Template.home.events
 
 
 Template.view.helpers
-    doc_tag_class: -> if @valueOf() in selected_tags.array() then 'grey' else ''
+    doc_tag_class: -> if @valueOf() in selected_theme_tags.array() then 'grey' else ''
     authorButtonClass: -> if @username in selected_usernames.array() then 'active' else ''
     is_author: -> @authorId is Meteor.userId()
     when: -> moment(@timestamp).fromNow()
@@ -176,7 +176,7 @@ Template.view.helpers
 
 Template.view.events
     'click .delete_tweet': -> Docs.remove @_id
-    'click .doc_tag': -> if @valueOf() in selected_tags.array() then selected_tags.remove @valueOf() else selected_tags.push @valueOf()
+    'click .doc_tag': -> if @valueOf() in selected_theme_tags.array() then selected_theme_tags.remove @valueOf() else selected_theme_tags.push @valueOf()
 
 
 Template.my_tags.helpers
@@ -185,13 +185,13 @@ Template.my_tags.helpers
         # console.log me?.authored_cloud
         me?.authored_list
         
-    my_tag_class: -> if @valueOf() in selected_tags.array() then 'primary' else ''
+    my_tag_class: -> if @valueOf() in selected_theme_tags.array() then 'primary' else ''
 
     
 
 Template.my_tags.events
     # 'click .my_tag': -> Session.set('tag_selection', @valueOd())
-    'click .my_tag': -> if @valueOf() in selected_tags.array() then selected_tags.remove @valueOf() else selected_tags.push @valueOf()
+    'click .my_tag': -> if @valueOf() in selected_theme_tags.array() then selected_theme_tags.remove @valueOf() else selected_theme_tags.push @valueOf()
 
 
 

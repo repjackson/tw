@@ -1,16 +1,18 @@
-publishComposite 'journal_docs', (selected_tags, selected_author_ids, view_private, view_unread)->
+publishComposite 'journal_docs', (selected_theme_tags, selected_author_ids, selected_location_tags, selected_intention_tags, view_private, view_unread)->
     {
         find: ->
             self = @
             match = {}
-            # match.tags = $all: selected_tags
-            if selected_tags.length > 0 then match.tags = $all: selected_tags
+            # match.tags = $all: selected_theme_tags
+            if selected_theme_tags.length > 0 then match.tags = $all: selected_theme_tags
             # console.log selected_author_ids
             if selected_author_ids.length > 0 then match.author_id = $in: selected_author_ids
             # match.published = true
+            if selected_intention_tags.length > 0 then match.intention_tags = $in: selected_intention_tags
+            if selected_location_tags.length > 0 then match.location_tags = $in: selected_location_tags
             
             match.type = 'journal'
-            
+
             if view_private is true then match.author_id = Meteor.userId()
             # else if view_private is 'resonates'
             #     match.favoriters = $in: [@userId]
@@ -18,7 +20,7 @@ publishComposite 'journal_docs', (selected_tags, selected_author_ids, view_priva
             
             if view_unread is true then match.read_by = $nin: [Meteor.userId()]
             
-            
+            console.log 'journal match', match
             Docs.find match,
                 sort: timestamp: -1
             
@@ -39,12 +41,12 @@ publishComposite 'journal_docs', (selected_tags, selected_author_ids, view_priva
     
     
     
-publishComposite 'journal_prompts', (selected_tags)->
+publishComposite 'journal_prompts', (selected_theme_tags)->
     {
         find: ->
             match = {}
-            selected_tags.push 'journal prompt'
-            match.tags = $all: selected_tags
+            selected_theme_tags.push 'journal prompt'
+            match.tags = $all: selected_theme_tags
             
             match.type = 'lightbank'
             

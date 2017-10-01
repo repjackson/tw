@@ -62,15 +62,15 @@ if Meteor.isClient
         
         
 if Meteor.isServer
-    publishComposite 'upvoter_ids', (selected_tags, selected_upvoter_ids)->
+    publishComposite 'upvoter_ids', (selected_theme_tags, selected_upvoter_ids)->
         
         {
             find: ->
                 self = @
                 match = {}
                 # console.log selected_upvoter_ids
-                # console.log selected_tags
-                if selected_tags.length > 0 then match.tags = $all: selected_tags
+                # console.log selected_theme_tags
+                if selected_theme_tags.length > 0 then match.tags = $all: selected_theme_tags
                 if selected_upvoter_ids.length > 0 then match.upvoters = $in: selected_upvoter_ids
                 match.author_id = Meteor.userId()
                 

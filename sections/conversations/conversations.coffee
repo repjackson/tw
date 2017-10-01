@@ -32,7 +32,7 @@ Meteor.methods
 
 if Meteor.isClient
     Template.conversations.onCreated ->
-        @autorun -> Meteor.subscribe('conversations', selected_tags.array(), selected_participant_ids.array())
+        @autorun -> Meteor.subscribe('conversations', selected_theme_tags.array(), selected_participant_ids.array())
         @view_published = new ReactiveVar(true)
 
     Template.conversations.helpers
@@ -112,16 +112,16 @@ if Meteor.isServer
     #         conversation_id: conversation_id
     
     
-    publishComposite 'participant_ids', (selected_tags, selected_participant_ids)->
+    publishComposite 'participant_ids', (selected_theme_tags, selected_participant_ids)->
         
         {
             find: ->
                 self = @
                 match = {}
                 # console.log selected_participant_ids
-                # console.log selected_tags
+                # console.log selected_theme_tags
                 match.type = 'conversation'
-                if selected_tags.length > 0 then match.tags = $all: selected_tags
+                if selected_theme_tags.length > 0 then match.tags = $all: selected_theme_tags
                 if selected_participant_ids.length > 0 then match.participant_ids = $in: selected_participant_ids
                 match.published = true
                 
@@ -157,12 +157,12 @@ if Meteor.isServer
         }            
         
         
-    Meteor.publish 'conversations', (selected_tags, selected_participant_ids, view_published)->
+    Meteor.publish 'conversations', (selected_theme_tags, selected_participant_ids, view_published)->
     
         self = @
         match = {}
         # console.log selected_participant_ids
-        if selected_tags.length > 0 then match.tags = $all: selected_tags
+        if selected_theme_tags.length > 0 then match.tags = $all: selected_theme_tags
         if view_published is true
             match.published = true
             if selected_participant_ids.length > 0 then match.participant_ids = $in: selected_participant_ids

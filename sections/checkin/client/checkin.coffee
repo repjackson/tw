@@ -34,7 +34,7 @@ Template.checkin_calendar_view.helpers
 Template.checkin.onCreated -> 
     @autorun => 
         Meteor.subscribe('checkin', 
-            selected_tags.array()
+            selected_theme_tags.array()
             selected_author_ids.array()
             limit=10
             Session.get('view_private')
@@ -48,7 +48,7 @@ Template.checkin.helpers
                 timestamp: -1
             limit: 10
 
-    tag_class: -> if @valueOf() in selected_tags.array() then 'teal' else 'basic'
+    tag_class: -> if @valueOf() in selected_theme_tags.array() then 'teal' else 'basic'
 
 
 
@@ -65,12 +65,12 @@ Template.checkin.events
                 split_tags = tag.match(/\S+/g)
                 $('#quick_add').val('')
                 Meteor.call 'add_checkin', split_tags
-                selected_tags.clear()
+                selected_theme_tags.clear()
                 for tag in split_tags
-                    selected_tags.push tag
+                    selected_theme_tags.push tag
 
 Template.checkin_doc_view.helpers
-    tag_class: -> if @valueOf() in selected_tags.array() then 'teal' else 'basic'
+    tag_class: -> if @valueOf() in selected_theme_tags.array() then 'teal' else 'basic'
 
     # checkin_tags: -> _.difference(@tags, 'checkin')
     
@@ -78,4 +78,4 @@ Template.checkin_doc_view.helpers
 
 
 Template.checkin_doc_view.events
-    'click .tag': -> if @valueOf() in selected_tags.array() then selected_tags.remove(@valueOf()) else selected_tags.push(@valueOf())
+    'click .tag': -> if @valueOf() in selected_theme_tags.array() then selected_theme_tags.remove(@valueOf()) else selected_theme_tags.push(@valueOf())

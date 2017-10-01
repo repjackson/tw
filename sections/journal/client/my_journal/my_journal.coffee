@@ -6,10 +6,10 @@ Template.my_journal.onCreated ->
     self = @
     @autorun => 
         Meteor.subscribe('journal_docs', 
-            selected_tags.array()
-            []
-            true
-            true
+            selected_theme_tags.array()
+            [Meteor.userId()]
+            selected_location_tags.array()
+            selected_intention_tags.array()
             )
     @autorun -> Meteor.subscribe 'unread_journal_count'
         
@@ -36,7 +36,9 @@ Template.my_journal.helpers
                 timestamp: -1
             limit: 5
 
-    tag_class: -> if @valueOf() in selected_tags.array() then 'teal' else 'basic'
+    theme_tag_class: -> if @valueOf() in selected_theme_tags.array() then 'teal' else 'basic'
+    location_tag_class: -> if @valueOf() in selected_location_tags.array() then 'teal' else 'basic'
+    intention_tag_class: -> if @valueOf() in selected_intention_tags.array() then 'teal' else 'basic'
 
         
     journal_card_class: -> if @published then 'blue' else ''
@@ -46,7 +48,7 @@ Template.my_journal.helpers
 
 
 Template.my_entry_view.helpers
-    tag_class: -> if @valueOf() in selected_tags.array() then 'teal' else 'basic'
+    tag_class: -> if @valueOf() in selected_theme_tags.array() then 'teal' else 'basic'
     journal_card_class: -> if @published then 'blue' else ''
 
     read: -> Meteor.userId() in @read_by
@@ -57,7 +59,7 @@ Template.my_entry_view.helpers
 
 
 Template.my_entry_view.events
-    'click .tag': -> if @valueOf() in selected_tags.array() then selected_tags.remove(@valueOf()) else selected_tags.push(@valueOf())
+    'click .tag': -> if @valueOf() in selected_theme_tags.array() then selected_theme_tags.remove(@valueOf()) else selected_theme_tags.push(@valueOf())
 
     'click .mark_read': (e,t)-> 
         $(e.currentTarget).closest('.journal_segment').transition('pulse')

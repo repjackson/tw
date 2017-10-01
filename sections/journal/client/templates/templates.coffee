@@ -9,7 +9,7 @@ if Meteor.isClient
         self = @
         @autorun => 
             Meteor.subscribe('journal_templates', 
-                selected_tags.array(), 
+                selected_theme_tags.array(), 
                 selected_author_ids.array()
                 Session.get('view_private')
                 Session.get('view_unread')
@@ -44,7 +44,7 @@ if Meteor.isClient
                     timestamp: -1
                 limit: 5
     
-        tag_class: -> if @valueOf() in selected_tags.array() then 'teal' else 'basic'
+        tag_class: -> if @valueOf() in selected_theme_tags.array() then 'teal' else 'basic'
 
             
         journal_card_class: -> if @published then 'blue' else ''
@@ -54,7 +54,7 @@ if Meteor.isClient
 
     
     Template.journal_template.helpers
-        tag_class: -> if @valueOf() in selected_tags.array() then 'teal' else 'basic'
+        tag_class: -> if @valueOf() in selected_theme_tags.array() then 'teal' else 'basic'
         journal_card_class: -> if @published then 'blue' else ''
 
         read: -> Meteor.userId() in @read_by
@@ -65,7 +65,7 @@ if Meteor.isClient
 
 
     Template.journal_template.events
-        'click .tag': -> if @valueOf() in selected_tags.array() then selected_tags.remove(@valueOf()) else selected_tags.push(@valueOf())
+        'click .tag': -> if @valueOf() in selected_theme_tags.array() then selected_theme_tags.remove(@valueOf()) else selected_theme_tags.push(@valueOf())
 
         'click .mark_read': (e,t)-> 
             $(e.currentTarget).closest('.journal_segment').transition('pulse')
@@ -85,13 +85,13 @@ if Meteor.isClient
 
 
 if Meteor.isServer
-    publishComposite 'journal_templates', (selected_tags, selected_author_ids, view_private, view_unread)->
+    publishComposite 'journal_templates', (selected_theme_tags, selected_author_ids, view_private, view_unread)->
         {
             find: ->
                 self = @
                 match = {}
-                # match.tags = $all: selected_tags
-                if selected_tags.length > 0 then match.tags = $all: selected_tags
+                # match.tags = $all: selected_theme_tags
+                if selected_theme_tags.length > 0 then match.tags = $all: selected_theme_tags
                 # console.log selected_author_ids
                 if selected_author_ids.length > 0 then match.author_id = $in: selected_author_ids
                 # match.published = true
