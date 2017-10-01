@@ -3,8 +3,8 @@ template(name='journal_prompts')
         h1.ui.center.aligned.header
             img.ui.image(src="https://png.icons8.com/ask-question/color/48" width="48" height="48")
             | Journal Prompts
-        .ui.center.aligned.basic.segment
-            +doc_content tags='journal,prompt,blurb'
+        // .ui.center.aligned.basic.segment
+        //     +doc_content tags='journal,prompt,blurb'
         // #convert_journal_docs.ui.button Convert Journal Docs
         .ui.stackable.grid
             .four.wide.column
@@ -24,10 +24,10 @@ template(name='journal_prompt')
             .description
                 .ui.basic.segment.large
                     |!{content}
-                +parent_doc_segment
-                if author.profile.image_id
-                    img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
-                |by #{author.name} #{when}
+                // +parent_doc_segment
+                // if author.profile.image_id
+                //     img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+                // |by #{author.name} #{when}
                 .ui.divider
             .ui.basic.segment
                 .meta
@@ -36,8 +36,10 @@ template(name='journal_prompt')
                         .ui.tiny.circular.compact.button.tag(class=tag_class) #{this}
             .extra
                 +bookmark_button
-                +edit_link_button
-                span.right.floated
+                +reflect_button
+                if can_edit
+                    +edit_link_button
+                span.floated.right
                     +view_full_button
             // .meta
             //     i.large.icons

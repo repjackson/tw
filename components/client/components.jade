@@ -91,7 +91,9 @@ template(name='doc_match')
             .content
                 |!{match_doc.content}
             .extra
-                +view_full_button                                        
+                +view_full_button   
+                
+                
 template(name='service_buttons')
     .ui.dividing.header Services
     +request_tori_feedback
@@ -119,35 +121,28 @@ template(name='request_tori_feedback')
 template(name='parent_doc_segment')
     if parent_id
         .ui.styled.fluid.accordion
-            .title
-                i.vertically.flipped.share.icon
+            .active.title
+                img.ui.avatar.image(src="https://png.icons8.com/response/color/48" width="48" height="48")
                 |In response to...
                 i.dropdown.icon
-            .content
+            .active.content
                 with parent
                     |!{content}
-                    .ui.divider
-                    .ui.horizontal.divided.list
-                        .item
-                            img.ui.avatar.image(src="{{c.url author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
-                            |by #{author.name}
-                        .item
-                            |Type:
-                            .ui.basic.label #{type}
-                    .ui.divider
-                    .ui.horizontal.divided.list
-                        .item
-                            |Tags:
-                            each tags
-                                .ui.basic.small.label #{this}
-                    .ui.divider
-                    .ui.horizontal.divided.list
-                        .item
-                            +voting
-                        .item
-                            a.ui.basic.button(href="/view/#{_id}" title='View Document')
-                                i.link.external.icon
-                                |View Entry
+                    // .ui.horizontal.divided.list
+                    //     .item
+                    //         img.ui.avatar.image(src="{{c.url author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                    //         |by #{author.name}
+                    //     .item
+                    //         |Type:
+                    //         .ui.basic.label #{type}
+                    // .ui.divider
+                    // img.ui.avatar.image(src="https://png.icons8.com/tags/color/48" width="48" height="48")
+                    // each tags
+                    //     .ui.basic.small.label #{this}
+                    .ui.basic.segment
+                        +view_full_button
+                    .ui.basic.segment
+                    
 
 
 template(name='view_published_toggle')

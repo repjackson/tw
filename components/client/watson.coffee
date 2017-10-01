@@ -6,18 +6,25 @@ Template.doc_emotion.onCreated ->
 
 
 Template.doc_emotion.helpers
-    sadness_percent: -> @sadness*100            
-    joy_percent: -> @joy*100            
-    disgust_percent: -> @disgust*100            
-    anger_percent: -> @anger*100            
-    fear_percent: -> @fear*100            
+    sadness_percent: -> (@sadness*100).toFixed()            
+    joy_percent: -> (@joy*100).toFixed()   
+    disgust_percent: -> (@disgust*100).toFixed()         
+    anger_percent: -> (@anger*100).toFixed()
+    fear_percent: -> (@fear*100).toFixed()
 
 Template.analyzed_watson_keywords.helpers
-    sadness_percent: -> @sadness*100            
-    joy_percent: -> @joy*100            
-    disgust_percent: -> @disgust*100            
-    anger_percent: -> @anger*100            
-    fear_percent: -> @fear*100            
+    relevance_percent: -> (@relevance*100).toFixed()
+
+    sentiment_percent: -> 
+        (@sentiment.score*100).toFixed()
+
+
+
+    sadness_percent: -> (@sadness*100).toFixed()            
+    joy_percent: -> (@joy*100).toFixed()   
+    disgust_percent: -> (@disgust*100).toFixed()         
+    anger_percent: -> (@anger*100).toFixed()
+    fear_percent: -> (@fear*100).toFixed()
 
 Template.analyzed_watson_keywords.onRendered ->
     Meteor.setTimeout ->
@@ -62,9 +69,9 @@ Template.doc_sentiment.onRendered ->
 Template.doc_sentiment.helpers
     sentiment_score_percent: -> 
         if @doc_sentiment_score > 0
-            @doc_sentiment_score*100
+            (@doc_sentiment_score*100).toFixed()
         else
-            @doc_sentiment_score*-100
+            (@doc_sentiment_score*-100).toFixed()
             
         
     sentiment_bar_class: -> if @doc_sentiment_label is 'positive' then 'green' else 'red'
