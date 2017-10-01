@@ -32,7 +32,14 @@ Template.checkin_calendar_view.helpers
         }
 
 Template.checkin.onCreated -> 
-    @autorun -> Meteor.subscribe('checkin', selected_tags.array(), selected_author_ids.array(), limit=10, Session.get('view_mode'))
+    @autorun => 
+        Meteor.subscribe('checkin', 
+            selected_tags.array()
+            selected_author_ids.array()
+            limit=10
+            Session.get('view_private')
+            Session.get('view_unread')
+            )
 
 Template.checkin.helpers
     docs: -> 

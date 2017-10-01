@@ -22,7 +22,7 @@ template(name='doc_by_parentid_and_type')
                         |Save Content
     else
         if isInRole 'admin'
-            .ui.header No Content Found
+            // .ui.header No Content Found
             .create_doc.ui.basic.button
                 i.plus.icon
                 |Create Content with #{doc_type}, child of #{doc_parent_id}

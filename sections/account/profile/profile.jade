@@ -10,7 +10,7 @@ template(name='profile_layout')
             .pusher
                 #main_area
                     .ui.basic.fluid.segment
-                        .ui.basic.segment.container
+                        .ui.basic.segment
                             // .ui.breadcrumb
                             //     a.section(href='/') Home
                             //     .divider  / 
@@ -19,60 +19,69 @@ template(name='profile_layout')
                             //     .active.section #{person.username}
                             // .ui.hidden.divider    
                             with person
-                                if profile.first_name
-                                    h2.ui.center.aligned.header
-                                        img.ui.avatar.image(src="{{c.url profile.image_id width=200 height=200 gravity='face' crop='fill'}}")
+                                h2.ui.center.aligned.header
+                                    img.ui.avatar.image(src="{{c.url profile.image_id width=200 height=200 gravity='face' crop='fill'}}")
+                                    if profile.first_name
                                         |#{profile.first_name} #{profile.last_name}
+                                    |(#{username})
+                                    unless is_user
                                         +staus_indicator
-                                else
-                                    .ui.center.aligned.sub.header 
-                                        |#{username}
-                                        +staus_indicator
+                    
                             .ui.stackable.grid
-                                    .three.wide.column
-                                        with person
-                                            .ui.vertical.fluid.pointing.menu
-                                                // a.item(href="/profile/#{username}/feed" class="{{isActiveRoute name='profile_feed'}}") 
-                                                //     i.feed.large.icon
-                                                //     | Feed
-                                                a.item(href="/profile/#{username}/about" class="{{isActiveRoute name='profile_about'}}") 
+                                .four.wide.column
+                                    with person
+                                        if is_user
+                                            a.ui.basic.fluid.large.button(href="/account/profile/edit/#{_id}") 
+                                                i.yellow.pencil.icon
+                                                // i.icon
+                                                //     img(src="https://png.icons8.com/edit/color/24" width="24" height="24")
+                                                |Edit Profile
+                                        .ui.vertical.fluid.pointing.menu
+                                            // a.item(href="/profile/#{username}/feed" class="{{isActiveRoute name='profile_feed'}}") 
+                                            //     i.feed.large.icon
+                                            //     | Feed
+                                            a.item(href="/profile/#{username}/about" class="{{isActiveRoute name='profile_about'}}") 
+                                                i.icon
+                                                    img(src="https://png.icons8.com/info/color/24" width="24" height="24")
+                                                |About
+                                            a.item(href="/profile/#{username}/contact" class="{{isActiveRoute name='profile_contact'}}") 
+                                                i.icon
+                                                    img(src="https://png.icons8.com/phone/color/24" width="24" height="24")
+                                                |Contact #{name}
+                                            a.item(href="/profile/#{username}/courses" class="{{isActiveRoute name='profile_courses'}}")
+                                                i.icon
+                                                    img(src="https://png.icons8.com/classroom/color/24" width="24" height="24")
+                                                |Courses
+                                            a.item(href="/profile/#{username}/quizes" class="{{isActiveRoute name='profile_quizes'}}")
+                                                i.icon
+                                                    img(src="https://png.icons8.com/hand-with-pen/color/24" width="24" height="24")
+                                                |Quizes
+                                            a.item(href="/profile/#{username}/social" class="{{isActiveRoute name='profile_social'}}") 
+                                                i.icon
+                                                    img(src="https://png.icons8.com/chat/color/24" width="24" height="24" )
+                                                |Social
+                                            a.item(href="/profile/#{username}/journal" class="{{isActiveRoute name='profile_journal'}}") 
+                                                i.icon
+                                                    img(src="https://png.icons8.com/journal/color/24" width="24" height="24")
+                                                | Journal
+                                            if isInRole 'admin'
+                                                a.item(href="/profile/#{username}/badges" class="{{isActiveRoute name='profile_badges'}}") 
                                                     i.icon
-                                                        img(src="https://png.icons8.com/info/color/24" width="24" height="24")
-                                                    |About
-                                                a.item(href="/profile/#{username}/courses" class="{{isActiveRoute name='profile_courses'}}")
-                                                    i.icon
-                                                        img(src="https://png.icons8.com/classroom/color/24" width="24" height="24")
-                                                    |Courses
-                                                a.item(href="/profile/#{username}/quizes" class="{{isActiveRoute name='profile_quizes'}}")
-                                                    i.icon
-                                                        img(src="https://png.icons8.com/hand-with-pen/color/24" width="24" height="24")
-                                                    |Quizes
-                                                a.item(href="/profile/#{username}/social" class="{{isActiveRoute name='profile_social'}}") 
-                                                    i.icon
-                                                        img(src="https://png.icons8.com/chat/color/24" width="24" height="24" )
-                                                    |Social
-                                                a.item(href="/profile/#{username}/journal" class="{{isActiveRoute name='profile_journal'}}") 
-                                                    i.icon
-                                                        img(src="https://png.icons8.com/journal/color/24" width="24" height="24")
-                                                    | Journal
-                                                if isInRole 'admin'
-                                                    a.item(href="/profile/#{username}/badges" class="{{isActiveRoute name='profile_badges'}}") 
-                                                        i.certificate.red.large.icon
-                                                        | Karma + Badges
-                                                a.item(href="/profile/#{username}/contact" class="{{isActiveRoute name='profile_contact'}}") 
-                                                    i.phone.large.icon
-                                                    |Contact
-                                        if is_person_by_username
-                                            .ui.vertical.fluid.pointing.menu
-                                                a.item(href="/profile/#{currentUser.username}/account" class="{{isActiveRoute name='account_settings'}}") 
-                                                    i.setting.large.icon
-                                                    |Account Settings
-                                                a.item(href="/profile/#{currentUser.username}/email_settings" class="{{isActiveRoute name='email_settings'}}") 
-                                                    i.mail.large.icon
-                                                    |Email Settings
-        
-                                    .thirteen.wide.column
-                                        +Template.dynamic template=profile_content
+                                                        img(src="https://png.icons8.com/police-badge/color/24" width="24" height="24")
+                                                    | Karma + Badges
+                                    if is_person_by_username
+                                        .ui.vertical.fluid.pointing.menu
+                                            a.item(href="/profile/#{currentUser.username}/account" class="{{isActiveRoute name='account_settings'}}") 
+                                                i.icon
+                                                    img(src="https://png.icons8.com/settings/color/24" width="24" height="24")
+                                                |Account Settings
+                                            a.item(href="/profile/#{currentUser.username}/email_settings" class="{{isActiveRoute name='email_settings'}}") 
+                                                i.icon
+                                                    img(src="https://png.icons8.com/message/color/24" width="24" height="24")
+                                                |Email Settings
+    
+                                .twelve.wide.column
+                                    +Template.dynamic template=profile_content
 
 
         
@@ -123,25 +132,21 @@ template(name='profile_about')
             .eight.wide.column
                 if tags
                     .ui.basic.center.aligned.segment
+                        img(src="https://png.icons8.com/tags/color/24" width="24" height="24")
                         each tags
-                            .user_tag.ui.circular.basic.label #{this}
-                if is_user
-                    a.ui.basic.fluid.button(href="/account/profile/edit/#{_id}") 
-                        i.pencil.icon
-                        |Edit My Profile
-                else
-                    .ui.basic.center.aligned.segment
-                        // +toggle_friend
-                        // .ui.hidden.divider
-                        // +staus_indicator
-                        .ui.header My True Colors Are:
-                        +color_dots
-                        // if points
-                        //     .ui.small.teal.statistic
-                        //         .value #{points}
-                        //         .label Comment Karma
-                        // if isInRole 'dev'
-                        //     +tag_person this    
+                            .user_tag.ui.circular.large.basic.label #{this}
+                .ui.basic.center.aligned.segment
+                    // +toggle_friend
+                    // .ui.hidden.divider
+                    // +staus_indicator
+                    .ui.header My True Colors Are:
+                    +color_dots
+                    // if points
+                    //     .ui.small.teal.statistic
+                    //         .value #{points}
+                    //         .label Comment Karma
+                    // if isInRole 'dev'
+                    //     +tag_person this    
 
         if profile.location
             .ui.header Location 

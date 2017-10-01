@@ -1,23 +1,17 @@
-template(name='journal')
+template(name='my_journal')
     .ui.container
-        // h1.ui.center.aligned.header
-        //     i.pencil.icon
-        //     | My Journal
+        h1.ui.center.aligned.header
+            i.pencil.icon
+            | My Journal Entries
         .ui.center.aligned.basic.segment
-            +doc_content tags='journal,blurb'
+            +doc_content tags='journal,mine,blurb'
         // #convert_journal_docs.ui.button Convert Journal Docs
         .ui.stackable.grid
             .four.wide.column
-                if currentUser
-                    +add_doc_button type='journal' button_text='Add Journal Entry'
-                if isInRole 'dev'
-                    a.ui.basic.button(href="/journal/templates") Templates
                 .ui.dividing.header Filters
                 +view_published_toggle
-                +view_read_toggle
                 #cloud
                     +tag_filter type='journal'
-                    +username_filter type='journal'
                     +keyword_filter type='journal'
                 // a#toggle_published.ui.basic.button(class=published_item_class) 
                 //     i.red.unhide.icon
@@ -33,21 +27,19 @@ template(name='journal')
                 // .ui.centered.stackable.cards
                 .ui.relaxed.divided.items
                     each journal_entries
-                        +journal_doc_view
+                        +my_entry_view
         
 
 
 
-template(name='journal_doc_view')
+template(name='my_entry_view')
     .ui.segment(class=journal_card_class)
         .content
             .description
                 .ui.basic.segment.large
                     |!{content}
                 +parent_doc_segment
-                if author.profile.image_id
-                    img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
-                |by #{author.name} #{when}
+                |written #{when}
                 .ui.divider
         .ui.divided.stackable.grid
             .ten.wide.column
@@ -59,8 +51,6 @@ template(name='journal_doc_view')
                         else
                             i.lock.icon
                             |Private
-                    with author
-                        +staus_indicator
                     .meta
                         i.hashtag.icon
                         each tags
@@ -80,8 +70,6 @@ template(name='journal_doc_view')
                             +view_full_button
                         +bookmark_button
                         +edit_link_button
-                        unless is_author
-                            +thanks_button
                         if is_author
                             +published
             .six.wide.column

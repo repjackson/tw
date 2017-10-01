@@ -1,0 +1,27 @@
+template(name='journal')
+    .ui.container
+        .ui.center.aligned.basic.segment
+            +doc_content tags='journal,blurb'
+        .ui.stackable.grid
+            .row
+                .eight.wide.centered.column
+                    #add_journal_entry.ui.large.basic.fluid.big.button 
+                        .ui.image
+                            img(src="https://png.icons8.com/create-document/color/48" width="48" height="48")
+                        |New Entry
+                    a.ui.large.basic.fluid.big.button(href="/journal/mine")
+                        .ui.image
+                            img(src="https://png.icons8.com/journal/color/48" width="48" height="48")
+                        |My Entries
+                    a.ui.large.basic.fluid.big.button(href="/journal/prompts")
+                        .ui.image
+                            img(src="https://png.icons8.com/ask-question/color/48" width="48" height="48")
+                        | Prompts
+                    a.ui.large.basic.fluid.big.button(href="/journal/templates")
+                        .ui.image
+                            img(src="https://png.icons8.com/template/color/48" width="48" height="48")
+                        |Templates
+                    a.ui.large.basic.fluid.big.button(href="/journal/browse") 
+                        .ui.image
+                            img(src="https://png.icons8.com/reading/color/48" width="48" height="48")
+                        |Browse

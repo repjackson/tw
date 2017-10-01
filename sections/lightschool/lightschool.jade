@@ -1,0 +1,23 @@
+template(name='lightschool')
+    .ui.container
+        // h1.ui.dividing.header LightSchool
+        .ui.three.column.stackable.grid
+            .column
+                .row    
+                    a#courses.ui.icon.center.aligned.header
+                        i.icon
+                            img(src="https://png.icons8.com/classroom/color/96" width="96" height="96")
+                        |Courses
+            .column
+                .row    
+                    a.ui.icon.center.aligned.header(href='/quizes')
+                        i.icon
+                            img(src="https://png.icons8.com/report-card/color/96" width="96" height="96")
+                        |Quizzes
+            .column
+                .row    
+                    a.ui.icon.center.aligned.header(href='/exercises')
+                        i.icon
+                            img(src="https://png.icons8.com/hand-with-pen/color/96" width="96" height="96")
+                        |Exercises
+    

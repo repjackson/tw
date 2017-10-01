@@ -25,10 +25,10 @@
             .ui.image
                 img(src="https://png.icons8.com/info/color/24" width="24" height="24")
             |About
-        a.mobile.hidden.item(href='/courses' class="{{isActivePath '/courses'}}") 
+        a.mobile.hidden.item(href='/lightschool' class="{{isActivePath '/lightschool'}}") 
             .ui.image
                 img(src="https://png.icons8.com/library/color/24" width="24" height="24")
-            |Courses
+            |LightSchool
         a.mobile.hidden.item(href='/lightbank' class="{{isActivePath '/lightbank'}}") 
             .ui.image
                 img(src="https://png.icons8.com/summer/color/24" width="24" height="24" )
@@ -38,15 +38,58 @@
                 img(src="https://png.icons8.com/phone/color/24" width="24" height="24" )
             |Contact
     else
-        a.mobile.hidden.item(href='/courses' class="{{isActivePath '/courses'}}" data-position="bottom center" data-content="LightSchool") 
+        a.ui.mobile.hidden.simple.dropdown.item(href='/lightschool' data-position="left center" data-content="LightSchool") 
             .ui.image
                 img(src="https://png.icons8.com/library/color/48" width="48" height="48")
+            .ui.large.menu
+                a.item(href='/lightschool/courses' class="{{isActivePath '/lightschool/courses'}}")
+                    i.icon
+                        .ui.image
+                            img(src="https://png.icons8.com/classroom/color/24" width="24" height="24")
+                    |Courses
+                a.item(href='/lightschool/exercises' class="{{isActivePath '/lightschool/exercises'}}")
+                    i.icon
+                        .ui.image
+                            img(src="https://png.icons8.com/hand-with-pen/color/24" width="24" height="24")
+                    |Exercises
+                a.item(href='/quizzes' class="{{isActivePath '/quizzes'}}")
+                    i.icon
+                        .ui.image
+                            img(src="https://png.icons8.com/report-card/color/24" width="24" height="24")
+                    |Quizzes
         a.mobile.hidden.item(href='/lightbank' class="{{isActivePath '/lightbank'}}" data-position="bottom center" data-content="Lightbank") 
             .ui.image
                 img(src="https://png.icons8.com/summer/color/48" width="48" height="48" )
-        a.mobile.hidden.item(href='/journal' class="{{isActivePath '/journal'}}" data-position="bottom center" data-content="Journal") 
+        a.ui.simple.dropdown.mobile.hidden.item(href='/journal' data-position="left center" data-content="Journal") 
             .ui.image
                 img(src="https://png.icons8.com/journal/color/48" width="48" height="48")
+            .ui.big.menu
+                #add_journal_entry.ui.item 
+                    i.icon
+                        .ui.image
+                            img(src="https://png.icons8.com/create-document/color/24" width="24" height="24")
+                    |New Entry
+                a.ui.item(href="/journal/mine")
+                    i.icon
+                        .ui.image
+                            img(src="https://png.icons8.com/journal/color/24" width="24" height="24")
+                    |My Entries
+                a.ui.item(href="/journal/prompts")
+                    i.icon
+                        .ui.image
+                            img(src="https://png.icons8.com/ask-question/color/24" width="24" height="24")
+                    | Prompts
+                a.ui.item(href="/journal/templates")
+                    i.icon
+                        .ui.image
+                            img(src="https://png.icons8.com/template/color/24" width="24" height="24")
+                    |Templates
+                a.ui.item(href="/journal/browse") 
+                    i.icon
+                        .ui.image
+                            img(src="https://png.icons8.com/reading/color/24" width="24" height="24")
+                    |Browse
+
         a.mobile.hidden.item(href='/checkin' class="{{isActivePath '/checkin'}}" data-position="bottom center" data-content="Check In") 
             .ui.image
                 img(src="https://png.icons8.com/in-progress/color/48" width="48" height="48")

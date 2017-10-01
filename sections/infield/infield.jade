@@ -19,7 +19,7 @@ template(name='doc_content')
                         |Save Content
     else
         if isInRole 'admin'
-            .ui.header No Content Found
+            // .ui.header No Content Found
             .create_doc.ui.basic.button
                 i.plus.icon
                 |Create Content with #{template_tags}

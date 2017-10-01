@@ -1,29 +1,27 @@
 if Meteor.isClient
-    FlowRouter.route '/quizes', action: ->
+    FlowRouter.route '/quizzes', action: ->
         BlazeLayout.render 'layout',
-            sub_nav: 'member_nav'
-            # sub_sub_nav: 'inspire_u_nav'
-            main: 'quizes'
+            main: 'quizzes'
     
     
-    Template.quizes.onCreated -> 
-        @autorun -> Meteor.subscribe('quizes')
-    Template.quizes.helpers
-        quizes: -> Docs.find { type: 'quiz'}
+    Template.quizzes.onCreated -> 
+        @autorun -> Meteor.subscribe('quizzes')
+    Template.quizzes.helpers
+        quizzes: -> Docs.find { type: 'quiz'}
     
     Template.quiz_card.onCreated -> 
         @autorun => Meteor.subscribe('quiz_sessions', @data.slug)
     Template.quiz_card.helpers
         completed: -> Docs.findOne { type: 'quiz_session', quiz_slug: @slug}
     
-    Template.quizes.events
+    Template.quizzes.events
         'click #add_quiz': ->
             id = Docs.insert type: 'quiz'
             FlowRouter.go "/edit/#{id}"
     
     
 if Meteor.isServer
-    Meteor.publish 'quizes', (view_mode)->
+    Meteor.publish 'quizzes', (view_mode)->
         
         me = Meteor.users.findOne @userId
         self = @
@@ -33,7 +31,7 @@ if Meteor.isServer
             #     Meteor.users.update @userId,
             #         $set: courses: []
             # else
-            match._id = $in: me.quizes
+            match._id = $in: me.quizzes
         if not @userId or not Roles.userIsInRole(@userId, ['admin'])
             match.published = true
                 

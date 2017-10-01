@@ -49,11 +49,12 @@ template(name='checkin_doc_view')
                 i.tags.icon
                 each tags
                     .ui.tiny.circular.button.tag(class=tag_class) #{this}
-            .ui.hidden.divider
-            .meta
-                i.marker.icon
-                each location_tags
-                    .ui.tiny.circular.button.tag(class=tag_class) #{this}
+            if location_tags
+                .ui.hidden.divider
+                .meta
+                    i.marker.icon
+                    each location_tags
+                        .ui.tiny.circular.button.tag(class=tag_class) #{this}
             .ui.hidden.divider
             |!{content}
         .content

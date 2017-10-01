@@ -1,4 +1,4 @@
-publishComposite 'checkin', (selected_tags, selected_author_ids, limit, view_mode)->
+publishComposite 'checkin', (selected_tags, selected_author_ids, limit, view_private, view_unread)->
     {
         find: ->
             self = @
@@ -8,12 +8,20 @@ publishComposite 'checkin', (selected_tags, selected_author_ids, limit, view_mod
             if selected_author_ids.length > 0 then match.author_id = $in: selected_author_ids
             match.type = 'checkin'
             
-            if view_mode is 'mine'
-                match.author_id = Meteor.userId()
-            else if view_mode is 'resonates'
-                match.favoriters = $in: [@userId]
-            else if view_mode is 'all'
-                match.published = true
+            # if view_mode is 'mine'
+            #     match.author_id = Meteor.userId()
+            # else if view_mode is 'resonates'
+            #     match.favoriters = $in: [@userId]
+            # else if view_mode is 'all'
+            #     match.published = true
+            
+            
+            if view_private is true then match.author_id = Meteor.userId()
+            # else if view_private is 'resonates'
+            #     match.favoriters = $in: [@userId]
+            else if view_private is false then match.published = true
+            
+            if view_unread is true then match.read_by = $nin: [Meteor.userId()]
             
         
             if limit

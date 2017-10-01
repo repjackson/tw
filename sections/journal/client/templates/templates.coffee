@@ -3,8 +3,8 @@ if Meteor.isClient
         BlazeLayout.render 'layout',
             main: 'journal_templates'
     
-    @selected_author_ids = new ReactiveArray []
-    # Session.setDefault 'view_mode', 'all'
+    # @selected_author_ids = new ReactiveArray []
+
     Template.journal_templates.onCreated -> 
         self = @
         @autorun => 
@@ -85,7 +85,7 @@ if Meteor.isClient
 
 
 if Meteor.isServer
-    publishComposite 'journal_docs', (selected_tags, selected_author_ids, view_private, view_unread)->
+    publishComposite 'journal_templates', (selected_tags, selected_author_ids, view_private, view_unread)->
         {
             find: ->
                 self = @

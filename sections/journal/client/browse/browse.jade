@@ -1,0 +1,98 @@
+template(name='browse_journal')
+    .ui.container
+        h1.ui.center.aligned.header
+            i.pencil.icon
+            | Browse Journal Entries
+        .ui.center.aligned.basic.segment
+            +doc_content tags='journal,browse,blurb'
+        // #convert_journal_docs.ui.button Convert Journal Docs
+        .ui.stackable.grid
+            .four.wide.column
+                .ui.dividing.header Filters
+                +view_published_toggle
+                +view_read_toggle
+                #cloud
+                    +tag_filter type='journal'
+                    +username_filter type='journal'
+                    +keyword_filter type='journal'
+                // a#toggle_published.ui.basic.button(class=published_item_class) 
+                //     i.red.unhide.icon
+                //     |Published (#{published_count})
+                // a#toggle_unpublished.ui.basic.button(class=unpublished_item_class) 
+                //     i.red.hide.icon
+                //     |Unpublished (#{unpublished_count})
+            
+                // a#toggle_mine.ui.basic.button(class=mine_item_class) 
+                //     |Mine (#{mine_count})
+            
+            .twelve.wide.column
+                // .ui.centered.stackable.cards
+                .ui.relaxed.divided.items
+                    each journal_entries
+                        +journal_doc_view
+        
+
+
+
+template(name='browse_entry_view')
+    .ui.segment(class=journal_card_class)
+        .content
+            .description
+                .ui.basic.segment.large
+                    |!{content}
+                +parent_doc_segment
+                if author.profile.image_id
+                    img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+                |by #{author.name} #{when}
+                .ui.divider
+        .ui.divided.stackable.grid
+            .ten.wide.column
+                .ui.basic.segment
+                    div
+                        if published
+                            i.unlock.blue.icon
+                            |Published
+                        else
+                            i.lock.icon
+                            |Private
+                    with author
+                        +staus_indicator
+                    .meta
+                        i.hashtag.icon
+                        each tags
+                            .ui.tiny.circular.compact.button.tag(class=tag_class) #{this}
+                    if location_tags
+                        .meta
+                            i.marker.icon
+                            each location_tags
+                                .ui.tiny.circular.compact.button.tag(class=location_tag_class) #{this}
+                    if intention_tags
+                        .meta
+                            i.checkmark.box.icon
+                            each intention_tags
+                                .ui.tiny.circular.compact.button.tag(class=intention_tag_class) #{this}
+                    .extra
+                        span.right.floated
+                            +view_full_button
+                        +bookmark_button
+                        +edit_link_button
+                        unless is_author
+                            +thanks_button
+                        if is_author
+                            +published
+            .six.wide.column
+                .image
+                    .ui.basic.segment
+                        +doc_sentiment
+                        +doc_emotion
+            // .meta
+            //     i.large.icons
+            //         i.idea.icon
+            //         i.tags.corner.icon
+            //     each watson_keywords
+            //         .ui.tiny.circular.compact.button.tag(class=tag_class) #{this}
+            // .content
+            //         |by
+            //         if author.profile.image_id
+            //             img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+            //         |#{author.name} #{when}
