@@ -29,34 +29,31 @@ template(name='checkin')
 template(name='checkin_doc_view')
     .ui.card(class=checkin_card_class)
         .content
-            | by 
-            if is_author
-                |you
-            else        
-                a(href="/profile/#{author.username}")
-                    i.user.icon
-                    |#{author.name}
-            |#{when}
-            span.right.floated
-                if published
-                    i.unlock.icon
-                    // |Published
-                else
-                    i.lock.icon
-                    // |Private
-        .content
+            |!{content}
             .meta
-                i.tags.icon
+                img.ui.avatar.image(src="https://png.icons8.com/tags/color/48" width="48" height="48")
                 each tags
                     .ui.tiny.circular.button.tag(class=tag_class) #{this}
             if location_tags
                 .ui.hidden.divider
                 .meta
-                    i.marker.icon
+                    img.ui.avatar.image(src="https://png.icons8.com/geo-fence/color/48" width="48" height="48")
                     each location_tags
                         .ui.tiny.circular.button.tag(class=tag_class) #{this}
             .ui.hidden.divider
-            |!{content}
+        .content
+            if is_author
+                |you
+            else        
+                a(href="/profile/#{author.username}")
+                    img.ui.avatar.image(src="{{c.url author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                    |#{author.name}
+            |#{when}
+            span.right.floated
+                if published
+                    img.ui.avatar.image(src="https://png.icons8.com/eye/color/48" width="48" height="48")
+                else
+                    img.ui.avatar.image(src="https://png.icons8.com/invisible/color/48" width="48" height="48")
         .content
             +bookmark_button
             unless is_author

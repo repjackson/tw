@@ -1,6 +1,6 @@
 template(name='doc_sentiment') 
     .ui.dividing.header 
-        // i.calculator.icon
+        img.ui.avatar.image(src="https://png.icons8.com/attitude/color/48" width="48" height="48")
         |Sentiment
     .ui.tiny.progress(data-percent=sentiment_score_percent class=sentiment_bar_class)
         .bar
@@ -15,13 +15,15 @@ template(name='doc_sentiment')
         // |#{sentiment_score_percent}
 
 template(name='watson_keywords') 
-    .ui.dividing.header Analyzed Keywords
+    .ui.dividing.header 
+        img.ui.avatar.image(src="https://png.icons8.com/dna-helix/color/48" width="48" height="48")
+        |Analyzed Keywords
     each watson_keywords
         .ui.basic.label #{this}
 
 template(name='doc_emotion') 
     .ui.dividing.header 
-        // i.calculator.icon
+        img.ui.avatar.image(src="https://png.icons8.com/mind/color/48" width="48" height="48")
         |Emotion
     with watson.emotion.document.emotion
         .ui.blue.tiny.progress(data-percent=sadness_percent)
@@ -48,23 +50,22 @@ template(name='doc_emotion')
 template(name='call_watson')
     #call_watson.ui.basic.fluid.button 
         // i.calculator.icon
-        i.refresh.icon
+        img.ui.avatar.image(src="https://png.icons8.com/dna-helix/color/48" width="48" height="48")
         |Analyze Text
 
 template(name='analyzed_watson_keywords')
     .ui.fluid.styled.accordion
         .title
-            .ui.horizontal.divider.header 
-                // i.calculator.icon
-                |Analyzed Keywords (#{watson.keywords.length})
-                i.dropdown.icon
+            img.ui.avatar.image(src="https://png.icons8.com/dna-helix/color/48" width="48" height="48")
+            |Analyzed Keywords (#{watson.keywords.length})
+            i.dropdown.icon
         .content
             .ui.three.stackable.cards
                 each watson.keywords
                     .ui.card
                         .content
                             .header 
-                                i.tag.icon
+                                img.ui.avatar.image(src="https://png.icons8.com/tag/color/48" width="48" height="48")
                                 |#{text}
                             // .meta
                             //     |Relevance: #{relevance}

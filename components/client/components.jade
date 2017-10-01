@@ -1,6 +1,7 @@
 template(name='resonate_button')
     .resonate_button.ui.circular.button(class=resonate_button_class) 
-        i.heartbeat.icon
+        // i.big.red.heartbeat.icon
+        img.ui.avatar.image(src="https://png.icons8.com/aed/color/48" width="48" height="48")
         | This Resonates with Me
         
 
@@ -18,18 +19,18 @@ template(name='resonates_list')
                                 |#{name}
                             .description
                                 +tiny_color_dots
-                                each five_tags
-                                    .ui.basic.label #{this}
+                                // each five_tags
+                                //     .ui.basic.label #{this}
 
 
 template(name='toggle_doc_read')
     if read
         .mark_unread.ui.basic.button 
-            i.open.envelope.outline.icon
+            img.ui.avatar.image(src="https://png.icons8.com/read-message/color/48" width="48" height="48")
             |Mark Unread
     else
         .mark_read.ui.basic.button 
-            i.mail.outline.icon
+            img.ui.avatar.image(src="https://png.icons8.com/message/color/48" width="48" height="48")
             |Mark Read
 
 template(name='read_by')
@@ -53,7 +54,7 @@ template(name='read_by')
 template(name='doc_matches')
     .ui.fluid.styled.accordion
         .title 
-            i.random.icon
+            img.ui.avatar.image(src="https://png.icons8.com/query-inner-join/color/48" width="48" height="48")
             |Top Doc Matches (#{top_doc_matches.length})
             i.dropdown.icon
             if currentUser
@@ -71,29 +72,26 @@ template(name='doc_match')
     .item 
         .content
             .description
-                i.random.icon
+                img.ui.avatar.image(src="https://png.icons8.com/query-outer-join/color/48" width="48" height="48")
                 |Intersection Tags (#{intersection_tags_count})
                 each intersection_tags
                     .ui.basic.label #{this}
             .description
-                i.tags.icon
+                img.ui.avatar.image(src="https://png.icons8.com/tags/color/48" width="48" height="48")
                 | Document Tags
                 each tags
                     .ui.small.basic.label #{this}
-            .description
-                |#{match_doc.type} entry by
-                img.ui.avatar.image(src="{{c.url match_doc.author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
-                | #{match_doc.author.name}
+            // .description
+            //     |#{match_doc.type} entry by
+            //     img.ui.avatar.image(src="{{c.url match_doc.author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+            //     | #{match_doc.author.name}
             .title
                 i.dropdown.icon
                 |Content 
             .content
                 |!{match_doc.content}
             .extra
-                a.ui.basic.compact.teal.button(href="/view/#{doc_id}") 
-                    |Full
-                    i.right.arrow.icon
-                                        
+                +view_full_button                                        
 template(name='service_buttons')
     .ui.dividing.header Services
     +request_tori_feedback
@@ -106,7 +104,7 @@ template(name='request_tori_feedback')
     //     |Request Feedback
     if feedback_requested
         .ui.header
-            i.comments.outline.icon
+            img.ui.avatar.image(src="https://png.icons8.com/feedback/color/48" width="48" height="48")
             | Feedback Requested 
             |Status: Pending
         #cancel_request.ui.fluid.basic.button
@@ -114,7 +112,7 @@ template(name='request_tori_feedback')
             | Cancel Request
     else
         #request_feedback.ui.fluid.basic.button
-            i.comments.outline.icon
+            img.ui.avatar.image(src="https://png.icons8.com/feedback/color/48" width="48" height="48")
             | Request Tori's Feedback
             
                 

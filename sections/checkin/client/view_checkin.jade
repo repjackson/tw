@@ -7,12 +7,12 @@ template(name='view_checkin')
         .ui.stackable.grid
             .ten.wide.column
                 .ui.dividing.header 
-                    i.hashtag.icon
+                    img.ui.avatar.image(src="https://png.icons8.com/tags/color/48" width="48" height="48")
                     |Tags
                 each tags
                     .ui.basic.large.label.doc_tag #{this}
                 .ui.dividing.header 
-                    i.marker.icon
+                    img.ui.avatar.image(src="https://png.icons8.com/geo-fence/color/48" width="48" height="48")
                     |Location Tags
                 each location_tags
                     .ui.basic.large.label.location_tag #{this}

@@ -38,10 +38,12 @@
                 img(src="https://png.icons8.com/phone/color/24" width="24" height="24" )
             |Contact
     else
-        a.ui.mobile.hidden.simple.dropdown.item(href='/lightschool' data-position="left center" data-content="LightSchool") 
+        a.ui.mobile.hidden.simple.dropdown.item(href='/lightschool' ) 
             .ui.image
                 img(src="https://png.icons8.com/library/color/48" width="48" height="48")
             .ui.large.menu
+                .header.item
+                    .ui.header LightSchool
                 a.item(href='/lightschool/courses' class="{{isActivePath '/lightschool/courses'}}")
                     i.icon
                         .ui.image
@@ -60,10 +62,12 @@
         a.mobile.hidden.item(href='/lightbank' class="{{isActivePath '/lightbank'}}" data-position="bottom center" data-content="Lightbank") 
             .ui.image
                 img(src="https://png.icons8.com/summer/color/48" width="48" height="48" )
-        a.ui.simple.dropdown.mobile.hidden.item(href='/journal' data-position="left center" data-content="Journal") 
+        a.ui.simple.dropdown.mobile.hidden.item(href='/journal') 
             .ui.image
                 img(src="https://png.icons8.com/journal/color/48" width="48" height="48")
             .ui.big.menu
+                .header.item
+                    .ui.header Journal
                 #add_journal_entry.ui.item 
                     i.icon
                         .ui.image

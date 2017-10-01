@@ -36,6 +36,31 @@ publishComposite 'journal_docs', (selected_tags, selected_author_ids, view_priva
             }
         ]
     }
+    
+    
+    
+publishComposite 'journal_prompts', (selected_tags)->
+    {
+        find: ->
+            match = {}
+            selected_tags.push 'journal prompt'
+            match.tags = $all: selected_tags
+            
+            match.type = 'lightbank'
+            
+            
+            Docs.find match,
+                sort: timestamp: -1
+            
+            
+        children: [
+            {
+                find: (doc)->
+                    Meteor.users.find
+                        _id: doc.author_id
+            }
+        ]
+    }
 
 Meteor.publish 'unread_journal_count', ->
     Counts.publish this, 'unread_journal_count', 

@@ -5,9 +5,8 @@ FlowRouter.route '/journal/prompts', action: (params) ->
 Template.journal_prompts.onCreated -> 
     self = @
     @autorun => 
-        Meteor.subscribe('journal_docs', 
-            selected_tags.array(), 
-            selected_author_ids.array()
+        Meteor.subscribe('journal_prompts', 
+            selected_tags.array()
             )
             
 
@@ -22,8 +21,8 @@ Template.journal_prompt.onRendered ->
 Template.journal_prompts.helpers
     journal_prompts: -> 
         match = {}
-        match.type = 'journal'
-        if selected_author_ids.array().length > 0 then match.author_id = $in: selected_author_ids.array()
+        match.type = 'lightbank'
+        # match.tags = 
         Docs.find match, 
             sort:
                 timestamp: -1

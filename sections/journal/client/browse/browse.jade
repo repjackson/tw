@@ -8,9 +8,8 @@ template(name='browse_journal')
         // #convert_journal_docs.ui.button Convert Journal Docs
         .ui.stackable.grid
             .four.wide.column
-                .ui.dividing.header Filters
-                +view_published_toggle
-                +view_read_toggle
+                // .ui.dividing.header Filters
+                // +view_read_toggle
                 #cloud
                     +tag_filter type='journal'
                     +username_filter type='journal'

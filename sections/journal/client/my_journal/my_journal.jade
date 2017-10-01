@@ -5,11 +5,10 @@ template(name='my_journal')
             | My Journal Entries
         .ui.center.aligned.basic.segment
             +doc_content tags='journal,mine,blurb'
-        // #convert_journal_docs.ui.button Convert Journal Docs
         .ui.stackable.grid
             .four.wide.column
-                .ui.dividing.header Filters
-                +view_published_toggle
+                // .ui.dividing.header Filters
+                // +view_published_toggle
                 #cloud
                     +tag_filter type='journal'
                     +keyword_filter type='journal'
@@ -46,23 +45,23 @@ template(name='my_entry_view')
                 .ui.basic.segment
                     div
                         if published
-                            i.unlock.blue.icon
+                            img.ui.avatar.image(src="https://png.icons8.com/eye/color/48" width="48" height="48")
                             |Published
                         else
-                            i.lock.icon
+                            img.ui.avatar.image(src="https://png.icons8.com/invisible/color/48" width="48" height="48")
                             |Private
                     .meta
-                        i.hashtag.icon
+                        img.ui.avatar.image(src="https://png.icons8.com/tags/color/48" title='Theme Tags' width="48" height="48")
                         each tags
                             .ui.tiny.circular.compact.button.tag(class=tag_class) #{this}
                     if location_tags
                         .meta
-                            i.marker.icon
+                            img.ui.avatar.image(src="https://png.icons8.com/geo-marker/color/48" title='Location Tags'  width="48" height="48")
                             each location_tags
                                 .ui.tiny.circular.compact.button.tag(class=location_tag_class) #{this}
                     if intention_tags
                         .meta
-                            i.checkmark.box.icon
+                            img.ui.avatar.image(src="https://png.icons8.com/intention/color/48" title='Intention Tags' width="48" height="48")
                             each intention_tags
                                 .ui.tiny.circular.compact.button.tag(class=intention_tag_class) #{this}
                     .extra

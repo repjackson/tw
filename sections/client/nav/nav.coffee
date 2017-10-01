@@ -80,6 +80,11 @@ Template.nav.events
         new_checkin_doc_id = Docs.insert type: 'checkin'
         FlowRouter.go("/edit/#{new_checkin_doc_id}")
     
+    'click #add_journal_entry': ->
+        new_journal_id = Docs.insert
+            type: 'journal'
+        FlowRouter.go("/edit/#{new_journal_id}")
+    
 Template.left_sidebar.onRendered ->
     @autorun =>
         if @subscriptionsReady()

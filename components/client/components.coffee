@@ -31,12 +31,13 @@ Template.read_by.helpers
                 Meteor.users.find _id: $in: @read_by
     
 Template.toggle_doc_read.events
-    'click .mark_read': (e,t)-> Meteor.call 'mark_read', @_id
+    'click .mark_read': (e,t)-> 
+        Meteor.call 'mark_read', @_id
         
     'click .mark_unread': (e,t)-> Meteor.call 'mark_unread', @_id
 
 Template.toggle_doc_read.helpers
-    read: ->Meteor.userId() in @read_by?
+    read: -> @read_by and Meteor.userId() in @read_by
     
     
 

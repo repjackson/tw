@@ -1,6 +1,9 @@
 template(name='child_docs')
-    .ui.styled.accordion
-        .title Child Documents
+    .ui.styled.fluid.accordion
+
+        .title
+            img.ui.avatar.image(src="https://png.icons8.com/flow-chart/color/48" width="48" height="48")
+            |Child Documents
         .content
             .ui.cards
                 each child_docs

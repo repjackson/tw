@@ -1,6 +1,6 @@
 template(name='view_journal')
     a.ui.basic.button(href='/journal')
-        i.left.chevron.icon
+        img.ui.avatar.image(src="https://png.icons8.com/double-left/color/48" width="48" height="48")
         strong Journal
     .ui.container
         h1.ui.center.aligned.header View Journal Entry
@@ -29,13 +29,19 @@ template(name='view_journal')
                     +doc_sentiment
                     +doc_emotion
                     +watson_keywords
-                .ui.dividing.header Tags
+                .ui.dividing.header 
+                    img.ui.avatar.image(src="https://png.icons8.com/tags/color/48" width="48" height="48")
+                    |Tags
                 each tags
                     .ui.basic.large.label.doc_tag #{this}
-                .ui.dividing.header Location Tags
+                .ui.dividing.header 
+                    img.ui.avatar.image(src="https://png.icons8.com/geo-fence/color/48" width="48" height="48")
+                    |Location Tags
                 each location_tags
                     .ui.basic.large.label.location_tag #{this}
-                .ui.dividing.header Intention Tags
+                .ui.dividing.header 
+                    img.ui.avatar.image(src="https://png.icons8.com/flash-light/color/48" width="48" height="48")
+                    |Intention Tags
                 each intention_tags
                     .ui.basic.large.label.intention_tag #{this}
                 .ui.dividing.header Actions

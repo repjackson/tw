@@ -5,7 +5,7 @@ template(name='voting')
 
 template(name='thanks_button')
     .ui.circular.button.vote_up(class=thanks_button_class)
-        i.thumbs.up.icon
+        img.ui.avatar.image(src="https://png.icons8.com/applause/color/48" width="48" height="48")
         if said_thanks
             |Thanks #{author.profile.first_name}
         else
@@ -35,15 +35,11 @@ template(name='thanks_button')
 template(name='reflect_button')
     if currentUser
         #reflect.ui.circular.basic.button
-            i.large.icons
-                i.talk.outline.icon
-                i.corner.share.icon
+            img.ui.avatar.image(src="https://png.icons8.com/mirror/color/48" width="48" height="48")
             |Reflect in Journal
     else
         .ui.circular.basic.disabled.button
-            i.large.icons
-                i.talk.outline.icon
-                i.corner.share.icon
+            img.ui.avatar.image(src="https://png.icons8.com/mirror/color/48" width="48" height="48")
             |Reflect in Journal
 
 template(name='big_both_voter')
@@ -168,20 +164,19 @@ template(name='published')
     .ui.dividing.header Visibility
     if published
         .ui.large.green.label
-            i.unlock.icon
+            img.ui.avatar.image(src="https://png.icons8.com/eye/color/48" width="48" height="48")
             |Public
         if can_edit
             #unpublish.ui.icon.basic.button
-                // i.toggle.on.green.icon
-                i.lock.icon
+                img.ui.avatar.image(src="https://png.icons8.com/invisible/color/48" width="48" height="48")
                 // | Make Private
     else
         .ui.large.basic.label
-            i.lock.icon
+            img.ui.avatar.image(src="https://png.icons8.com/invisible/color/48" width="48" height="48")
             | Private
         if can_edit
             #publish.ui.icon.basic.button
-                i.unlock.icon
+                img.ui.avatar.image(src="https://png.icons8.com/eye/color/48" width="48" height="48")
                 // | Make Public
 
 
@@ -227,11 +222,10 @@ template(name='mark_doc_complete_button')
         
 template(name='bookmark_button')
     .bookmark_button.ui.circular.button(class=bookmark_button_class) 
+        img.ui.avatar.image(src="https://png.icons8.com/bookmark/color/48" width="48" height="48")
         if bookmarked
-            i.bookmark.icon
             | Bookmarked
         else
-            i.bookmark.icon
             | Bookmark
         
         
@@ -252,13 +246,13 @@ template(name='pin_corner_button')
 template(name='view_full_button')
     a.ui.basic.button(href="/view/#{_id}")
         |Full
-        i.right.chevron.icon
+        img.ui.avatar.image(src="https://png.icons8.com/double-right/color/48" width="48" height="48")
 
 template(name='edit_link_button')
     if can_edit
         // +call_watson
         a.ui.basic.button(href="/edit/#{_id}")
-            i.pencil.icon
+            img.ui.avatar.image(src="https://png.icons8.com/edit/color/48" width="48" height="48")
             |Edit
 
 
