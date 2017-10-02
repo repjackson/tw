@@ -35,13 +35,13 @@ template(name='my_journal')
 
 
 template(name='my_entry_view')
-    .ui.segment(class=journal_card_class)
+    .ui.segment.journal_segment(class=journal_segment_class)
         .content
             .description
                 .ui.basic.segment.large
                     |!{content}
                 +parent_doc_segment
-                .ui.divider
+                // .ui.divider
         .ui.divided.stackable.grid
             .ten.wide.column
                 .ui.basic.segment

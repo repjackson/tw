@@ -167,7 +167,7 @@ template(name='published')
             img.ui.avatar.image(src="https://png.icons8.com/eye/color/48" width="48" height="48")
             |Public
         if can_edit
-            #unpublish.ui.icon.basic.button
+            #unpublish.ui.icon.basic.button(title='Unpublish')
                 img.ui.avatar.image(src="https://png.icons8.com/invisible/color/48" width="48" height="48")
                 // | Make Private
     else
@@ -175,7 +175,7 @@ template(name='published')
             img.ui.avatar.image(src="https://png.icons8.com/invisible/color/48" width="48" height="48")
             | Private
         if can_edit
-            #publish.ui.icon.basic.button
+            #publish.ui.icon.basic.button(title='Publish')
                 img.ui.avatar.image(src="https://png.icons8.com/eye/color/48" width="48" height="48")
                 // | Make Public
 

@@ -75,8 +75,9 @@ template(name='layout')
     //             i.content.icon
     //             span.text Menu
     .context.example
-        unless zen_mode
-            +nav
+        #nav_menu
+            unless zen_mode
+                +nav
         // .ui.top.attached.demo.menu
         //     a.item
         //         i.sidebar.icon

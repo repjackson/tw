@@ -46,7 +46,7 @@ Template.my_journal.helpers
 
 Template.my_entry_view.helpers
     tag_class: -> if @valueOf() in selected_theme_tags.array() then 'teal' else 'basic'
-    journal_card_class: -> if @published then 'blue' else ''
+    journal_segment_class: -> if @published then 'green raised' else ''
 
     read: -> Meteor.userId() in @read_by
     liked: -> Meteor.userId() in @liked_by

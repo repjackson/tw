@@ -104,8 +104,14 @@ Template.toggle_friend.events
         Meteor.call 'add_notification', @_id, 'unfriended', Meteor.userId()
 
 Template.published.events
-    'click #publish': -> Docs.update @_id, $set: published: true
-    'click #unpublish': -> Docs.update @_id, $set: published: false
+    'click #publish': (e,t)-> 
+        $(e.currentTarget).closest('.journal_segment').transition('bounce')
+        $(e.currentTarget).closest('.edit_journal_area').transition('bounce')
+        Docs.update @_id, $set: published: true
+    'click #unpublish': (e,t)-> 
+        $(e.currentTarget).closest('.journal_segment').transition('shake')
+        $(e.currentTarget).closest('.edit_journal_area').transition('shake')
+        Docs.update @_id, $set: published: false
 
     'mouseenter .ui.dividing.header i.icon': (e,t)->
         $(e.currentTarget).closest('.icon').addClass('loading')
@@ -513,6 +519,15 @@ Template.toggle_zen_mode_button.helpers
     zen_mode: -> Session.get 'zen_mode'
     
 Template.toggle_zen_mode_button.events
-    'click #turn_off_zen_mode': -> Session.set 'zen_mode', false
-    'click #turn_on_zen_mode': -> Session.set 'zen_mode', true
+    'click #turn_off_zen_mode': (e,t)-> 
+        Session.set 'zen_mode', false
+        $(e.currentTarget).closest('.edit_journal_area').transition('pulse')
+        # $(e.currentTarget).find('#nav_menu').transition('fade')
+        # $(e.currentTarget).closest('#nav_menu').transition('fade')
+        # $(e.currentTarget).closest('.edit_journal_sidebar').transition('fade')
+    'click #turn_on_zen_mode': (e,t)-> 
+        # $(e.currentTarget).find('#nav_menu').transition('pulse')
+        # $(e.currentTarget).find('.edit_journal_sidebar').transition('pulse')
+        Session.set 'zen_mode', true
+        $(e.currentTarget).closest('.edit_journal_area').transition('pulse')
     

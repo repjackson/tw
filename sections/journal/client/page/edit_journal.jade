@@ -1,5 +1,5 @@
 template(name='edit_journal')
-    .ui.container
+    .ui.container.edit_journal_area
         h1.ui.center.aligned.header Edit Journal Entry
         .center.aligned
             +toggle_zen_mode_button
@@ -7,8 +7,9 @@ template(name='edit_journal')
         .ui.stackable.grid
             if zen_mode
                 .sixteen.wide.column
-                    +parent_doc_segment
-                    .ui.hidden.divider
+                    if parent_id
+                        +parent_doc_segment
+                        .ui.hidden.divider
                     .ui.form
                         +intention_tags
                         +location_tags
@@ -19,8 +20,9 @@ template(name='edit_journal')
                     // |{{> jsonView json=watson}}
             else
                 .twelve.wide.column
-                    +parent_doc_segment
-                    .ui.hidden.divider
+                    if parent_id
+                        +parent_doc_segment
+                        .ui.hidden.divider
                     .ui.form
                         +intention_tags
                         +location_tags
@@ -29,8 +31,7 @@ template(name='edit_journal')
                         if watson 
                             +analyzed_watson_keywords
                     // |{{> jsonView json=watson}}
-            unless zen_mode
-                .four.wide.column
+                .four.wide.column.edit_journal_sidebar
                     +published
                     // .ui.divider
                     // +created_date
