@@ -29,21 +29,7 @@ template(name='view_journal')
                     +doc_sentiment
                     +doc_emotion
                     +watson_keywords
-                .ui.dividing.header 
-                    img.ui.avatar.image(src="https://png.icons8.com/tags/color/48" width="48" height="48")
-                    |Tags
-                each tags
-                    .ui.basic.large.label.doc_tag #{this}
-                .ui.dividing.header 
-                    img.ui.avatar.image(src="https://png.icons8.com/geo-fence/color/48" width="48" height="48")
-                    |Location Tags
-                each location_tags
-                    .ui.basic.large.label.location_tag #{this}
-                .ui.dividing.header 
-                    img.ui.avatar.image(src="https://png.icons8.com/flash-light/color/48" width="48" height="48")
-                    |Intention Tags
-                each intention_tags
-                    .ui.basic.large.label.intention_tag #{this}
+                +view_tags_sidebar
                 .ui.dividing.header Actions
                 +bookmark_button
                 +reflect_button

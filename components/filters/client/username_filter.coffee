@@ -17,7 +17,7 @@ Template.username_filter.helpers
             found_user = Meteor.users.findOne(author_id.text).username
             # if found_user
                 # console.log Meteor.users.findOne(author_id.text).username
-            author_usernames.push Meteor.users.findOne(author_id.text).username
+            author_usernames.push Meteor.users.findOne(author_id.text)
         author_usernames
 
 
@@ -30,7 +30,7 @@ Template.username_filter.helpers
     
 Template.username_filter.events
     'click .select_author': ->
-        selected_author = Meteor.users.findOne username: @valueOf()
+        selected_author = Meteor.users.findOne username: @username
         selected_author_ids.push selected_author._id
     'click .unselect_author': -> 
         selected_author = Meteor.users.findOne username: @valueOf()

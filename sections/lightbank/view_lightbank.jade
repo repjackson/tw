@@ -1,7 +1,7 @@
 
 template(name='view_lightbank')
     a.ui.basic.button(href='/lightbank')
-        i.left.chevron.icon
+        img.ui.avatar.image(src="https://png.icons8.com/double-left/color/48" width="48" height="48")
         |Lightbank
     h1.ui.center.aligned.header View Lightbank Entry
     .ui.container
@@ -18,7 +18,8 @@ template(name='view_lightbank')
                         .ui.fluid.image
                             img(src=image_url)
                 if has_content
-                    |!{content}
+                    .large
+                        |!{content}
                 // if journal_prompt
                 +journal_responses
                 // +comments    
@@ -27,15 +28,19 @@ template(name='view_lightbank')
                     +analyzed_watson_keywords
                 // +child_docs
             .six.wide.column
-                .ui.dividing.header Actions
+                .ui.dividing.header 
+                    img.ui.avatar.image(src="https://png.icons8.com/action/color/48" width="48" height="48")
+                    |Actions
                 +bookmark_button
                 +thanks_button
-                +reflect_button
-                .ui.dividing.header Tags
-                each tags
-                    .ui.basic.large.label.doc_tag #{this}
+                // +reflect_button
                 if isInRole 'admin'
                     +call_watson
+                .ui.dividing.header 
+                    img.ui.avatar.image(src="https://png.icons8.com/hashtag/color/48" width="48" height="48")
+                    |Tags
+                each tags
+                    .ui.basic.large.label.doc_tag #{this}
                 if watson
                     +doc_sentiment
                     +doc_emotion
@@ -45,12 +50,14 @@ template(name='view_lightbank')
                 +resonate_button
                 +resonates_list 
                 if isInRole 'admin'
-                    .ui.dividing.header Admin
+                    .ui.dividing.header 
+                        img.ui.avatar.image(src="https://png.icons8.com/monarch/color/48" width="48" height="48")
+                        |Admin
                     if published
                         .ui.basic.green.label Published
                     else
                         .ui.basic.label Unpublished
                     .ui.hidden.fitted.divider
+                    .ui.header by #{author.name}
                 +edit_link_button
-                .ui.header by #{author.name}
 

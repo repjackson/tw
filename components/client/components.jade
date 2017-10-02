@@ -37,7 +37,8 @@ template(name='read_by')
     // if read_by.count
     .ui.segment
         .ui.dividing.header
-            |Read by... (#{read_by.count})
+            |Read by... 
+            span.floated.right (#{read_by.count})
         .ui.divided.list
             each read_by
                 .item
@@ -47,8 +48,8 @@ template(name='read_by')
                             |#{name}
                         .description
                             +tiny_color_dots
-                            each five_tags
-                                .ui.basic.label #{this}
+                            // each five_tags
+                            //     .ui.basic.label #{this}
 
 
 template(name='doc_matches')

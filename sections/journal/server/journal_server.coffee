@@ -20,7 +20,7 @@ publishComposite 'journal_docs', (selected_theme_tags, selected_author_ids, sele
             
             if view_unread is true then match.read_by = $nin: [Meteor.userId()]
             
-            console.log 'journal match', match
+            # console.log 'journal match', match
             Docs.find match,
                 sort: timestamp: -1
             
