@@ -15,12 +15,14 @@ template(name='section')
                         +number
                     .field
                         +title
-                    .field
-                        +type
-                    .field
-                        |#{when}
-                    .field
-                        +edit_parent_id
+                    if isInRole 'dev'
+                        .ui.segment
+                            .field
+                                +type
+                            .field
+                                |#{when}
+                            .field
+                                +edit_parent_id
                     .field
                         +tags
                     .field

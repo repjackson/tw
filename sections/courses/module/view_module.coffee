@@ -40,17 +40,18 @@ if Meteor.isClient
                 , 1000
                 Meteor.setTimeout ->
                     module = Docs.findOne FlowRouter.getParam('doc_id')
-                    # console.log module_number
+                    # console.log 'module_number', module.number
                     module_progress_doc =  
                         Docs.findOne
                             type: 'module_progress'
                             parent_id: module._id
-                    # console.log module_progress_doc
-                    if module_progress_doc
-                        $('#module_percent_complete_bar').progress(
-                            percent: module_progress_doc.module_progress_percent
-                            autoSuccess: false
-                            )
+                            author_id: Meteor.userId()
+                    # console.log 'module_progress_doc',module_progress_doc
+                    # if module_progress_doc
+                    $('#module_percent_complete_bar').progress(
+                        percent: module_progress_doc.module_progress_percent
+                        autoSuccess: false
+                        )
                 , 1000
 
     
@@ -73,6 +74,7 @@ if Meteor.isClient
             module = Docs.findOne FlowRouter.getParam('doc_id')
             module_progress_doc = Docs.findOne
                 parent_id: module._id
+                type: 'module_progress'
                 author_id: Meteor.userId()
             # if module_progress_doc then alert 'hi' else alert 'no'
             # console.log module_progress_doc
@@ -212,7 +214,7 @@ if Meteor.isServer
                     parent_id: module_doc._id
                     author_id: Meteor.userId()
 
-            # console.log module_progress_doc
+            # console.log 'module_progress_doc',module_progress_doc
 
 
             module_section_count = 
@@ -221,7 +223,7 @@ if Meteor.isServer
                     parent_id: module_id
                 ).count()
         
-            # console.log module_section_count
+            # console.log 'module_section_count',module_section_count
             
             # for module_number in module_section_count
             #     console.log module_number
@@ -245,14 +247,14 @@ if Meteor.isServer
                     type: 'debrief_question'
                     parent_id: module_doc._id
                 ).count()
-            # console.log debrief_question_count
+            # console.log 'debrief_question_count',debrief_question_count
             
             module_chunk_size = if debrief_question_count then 100/3 else 50
 
             
             debrief_answer_count = 0
             for debrief_question in debrief_questions
-                # console.log debrief_question
+                console.log debrief_question
                 debrief_answer = Docs.findOne
                     # tags: $in: ['answer']
                     parent_id: debrief_question._id
@@ -260,7 +262,7 @@ if Meteor.isServer
 
                 if debrief_answer then debrief_answer_count++
                 
-            # console.log debrief_answer_count
+            # console.log 'debrief_answer_count',debrief_answer_count
             if debrief_answer_count is debrief_question_count
                 module_debrief_complete = true
             else
@@ -302,7 +304,7 @@ if Meteor.isServer
                     author_id: Meteor.userId()
                 if lightwork_answer then lightwork_answer_count++
                 
-            console.log lightwork_answer_count
+            # console.log lightwork_answer_count
             if lightwork_answer_count is lightwork_question_count
                 module_lightwork_complete = true
             else
@@ -324,7 +326,7 @@ if Meteor.isServer
             # 
             
             module_section_progress_increment = module_chunk_size/module_section_count
-            # console.log module_section_progress_increment
+            # console.log 'module_section_progress_increment', module_section_progress_increment
             section_complete_count = 0
             for section_number in [1..module_section_count]
                 module_doc = 
@@ -339,6 +341,7 @@ if Meteor.isServer
                         type: 'section_progress'
                         parent_id: section_doc._id
                         author_id: Meteor.userId()
+                # console.log 'section_progress_doc', section_progress_doc
                 if section_progress_doc then section_complete_count++
                 if section_progress_doc
                     adding_amount = section_progress_doc.percent_complete*.01*module_section_progress_increment
@@ -353,10 +356,10 @@ if Meteor.isServer
                 
                 
             if module_sections_complete and module_lightwork_complete and module_debrief_complete
-                # console.log 'hi'
+                # console.log 'sections,lightwork, and debrief complete'
                 module_progress = 100
                 
-            # console.log module_sections_complete
+            # console.log 'module_sections_complete', module_sections_complete
             # Docs.update module_progress_doc._id, 
             #     module_progress_percent: module_progress
                 

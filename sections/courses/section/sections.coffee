@@ -41,29 +41,30 @@ if Meteor.isClient
         editing: -> Template.instance().editing.get()
 
         user_progress: ->
-            section_progress_doc = 
-                Docs.findOne(tags: $all: ["section #{@number}", "section progress"])
+            # console.log @
+            section_progress_doc = Docs.findOne(type: 'section_progress', parent_id: @_id)
+            # console.log section_progress_doc
             if section_progress_doc
                 section_progress_doc.percent_complete
             else
                 0
         section_progress_doc: -> 
-            progress_doc = Docs.findOne(tags: $all: ["section #{@number}", "section progress"])
-            # console.log progress_doc
-            progress_doc
+            section_progress_doc = Docs.findOne(type: 'section_progress', parent_id: @_id)
+            # console.log section_progress_doc
+            section_progress_doc
             
         section_is_available: ->
             if Roles.userIsInRole(Meteor.userId(), 'admin') then true
             else if @number is 1 then true
             else
                 previous_section_number = @number - 1
-                previous_section_progress_doc = 
-                    Docs.findOne(tags: $all: ["section #{previous_section_number}", "section progress"])
+                previous_section_doc = Docs.findOne(type:'section', number: previous_section_number)
+                previous_section_progress_doc = Docs.findOne(type:'section_progress', parent_id: previous_section_doc._id)
+
                 if previous_section_progress_doc and previous_section_progress_doc.percent_complete is 100 then true else false
 
         section_is_complete: ->
-            section_progress_doc = 
-                Docs.findOne(tags: $all: ["section #{@number}", "section progress"])
+            section_progress_doc = Docs.findOne(type: 'section_progress', parent_id: @_id)
             if section_progress_doc and section_progress_doc.percent_complete > 99 then true else false
 
 

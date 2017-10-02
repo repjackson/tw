@@ -105,12 +105,10 @@ Template.toggle_friend.events
 
 Template.published.events
     'click #publish': (e,t)-> 
-        $(e.currentTarget).closest('.journal_segment').transition('bounce')
-        $(e.currentTarget).closest('.edit_journal_area').transition('bounce')
+        $(e.currentTarget).closest('.document_container').transition('bounce')
         Docs.update @_id, $set: published: true
     'click #unpublish': (e,t)-> 
-        $(e.currentTarget).closest('.journal_segment').transition('shake')
-        $(e.currentTarget).closest('.edit_journal_area').transition('shake')
+        $(e.currentTarget).closest('.document_container').transition('shake')
         Docs.update @_id, $set: published: false
 
     'mouseenter .ui.dividing.header i.icon': (e,t)->

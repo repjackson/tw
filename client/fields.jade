@@ -1,5 +1,5 @@
 template(name='title') 
-    .inline.field
+    .field
         label Title
         input#title(type='text' value=title)
 
@@ -36,7 +36,7 @@ template(name='slug')
         input#slug(type='text' value=slug placeholder='computer readable name, no spaces, caps or punctuation')
 
 template(name='number')
-    .field
+    .inline.field
         label Number
         input#number(type='number' min='0' value=number)
 
@@ -44,18 +44,18 @@ template(name='number')
 template(name='tags')
     .required.inline.field
         label 
-            img.ui.avatar.image(src="https://png.icons8.com/hashtag/color/24" width="24" height="24")
+            img.ui.avatar.image(src="https://png.icons8.com/hashtag/color/48" width="48" height="48")
             |Theme Tags
         input#add_tag(type='text' placeholder='press enter after each' maxlength='50' )
         each tags
             a.ui.basic.animated.fade.large.button.doc_tag
                 .visible.content
                     i.icon
-                        img.ui.image(src="https://png.icons8.com/hashtag/color/24" width="24" height="24")
+                        img.ui.avatar.image(src="https://png.icons8.com/hashtag/color/24" width="24" height="24")
                     |#{this}
                 .hidden.content
                     i.icon
-                        img.ui.image(src="https://png.icons8.com/delete/color/24" width="24" height="24")
+                        img.ui.avatar.image(src="https://png.icons8.com/delete/color/24" width="24" height="24")
                     |#{this}
 
 template(name='location_tags')

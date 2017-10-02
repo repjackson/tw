@@ -107,13 +107,12 @@ Meteor.methods
         sol_progress_percent = 0
         module_complete_count = 0
         current_module = 0
-
-        sol_module_count = 
-            Docs.find(type: 'module').count()
-        
+        console.log 'course progress doc', sol_progress_doc
+        sol_module_count = Docs.find(type: 'module').count()
+        console.log 'sol_module_count', sol_module_count
         for number in [1..sol_module_count]
             
-            module_doc = Docs.findOne(type: 'module')
+            module_doc = Docs.findOne(type: 'module', number: number)
 
             module_progress_doc = 
                 Docs.findOne

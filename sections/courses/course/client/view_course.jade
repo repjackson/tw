@@ -63,15 +63,15 @@ template(name='view_course')
                         +doc_title tags='course,sol'
                         +doc_subtitle tags='course,sol'
                         +doc_price tags='course,sol'
-                        #calculate_sol_progress.ui.basic.fluid.button Calc SOL Progress
-                        with sol_progress_doc
-                            #sol_percent_complete_bar.ui.blue.indicating.progress(data-percent=section_progress_doc.percent_complete)
-                                .bar
-                                    .progress
-                                        | #{sol_progress_doc.sol_progress_percent}%
                             .ui.list
                                 .item current module #{sol_progress_doc.current_module}
                                 .item module_complete_count #{sol_progress_doc.module_complete_count}
+                #calculate_sol_progress.ui.basic.fluid.button Calc SOL Progress
+                with sol_progress_doc
+                    #sol_percent_complete_bar.ui.blue.indicating.progress(data-percent=section_progress_doc.percent_complete)
+                        .bar
+                            .progress
+                                | #{sol_progress_doc.sol_progress_percent}%
 
             .ten.wide.column
                 +Template.dynamic template=course_content

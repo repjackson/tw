@@ -81,14 +81,10 @@ template(name='view_module')
                                 | #{module_progress_doc.lightwork_answer_count}/#{module_progress_doc.lightwork_question_count}
                         if download_count
                             .item
-                                .header
-                                    |Downloads
-                                    | #{download_count}
+                                .header Downloads #{download_count}
                         else if isInRole 'admin'        
                             .item
-                                .header 
-                                    |Downloads
-                                    | #{download_count}
+                                .header Downloads #{download_count}
                     .ui.dividing.header Status
                     #calculate_module_progress.ui.fluid.basic.button 
                         i.refresh.icon
@@ -126,8 +122,8 @@ template(name='user_module_progress_list')
         each user_progress_docs
             .item
                 .header #{author.name}
-                    if isInRole 'admin'
-                        +edit_parent_id
+                    // if isInRole 'admin'
+                    //     +edit_parent_id
                 .content
                     .ui.indicating.tiny.progress(data-percent=module_progress_percent)
                         .bar
