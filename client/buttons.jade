@@ -4,12 +4,12 @@ template(name='voting')
     // |#{points}
 
 template(name='thanks_button')
-    .ui.circular.button.vote_up(class=thanks_button_class)
-        img.ui.avatar.image(src="https://png.icons8.com/applause/color/48" width="48" height="48")
-        if said_thanks
-            |Thanks #{author.profile.first_name}
-        else
-            | Thank #{author.profile.first_name} for Sharing
+    .ui.circular.icon.button.vote_up(class=thanks_button_class title="Thank #{author.profile.first_name} for Sharing")
+        +icon24 name='applause' classes='ui avatar image'
+        // if said_thanks
+        //     |Thanks #{author.profile.first_name}
+        // else
+        //     | Thank #{author.profile.first_name} for Sharing
     // #thanks_modal.ui.small.modal
     //     i.close.icon
     //     .header Send #{author.profile.first_name} an optional private message?
@@ -35,11 +35,11 @@ template(name='thanks_button')
 template(name='reflect_button')
     if currentUser
         #reflect.ui.circular.basic.button
-            img.ui.avatar.image(src="https://png.icons8.com/mirror/color/48" width="48" height="48")
+            +icon48 name='mirror' classes='ui avatar image'
             |Reflect in Journal
     else
         .ui.circular.basic.disabled.button
-            img.ui.avatar.image(src="https://png.icons8.com/mirror/color/48" width="48" height="48")
+            +icon48 name='mirror' classes='ui avatar image'
             |Reflect in Journal
 
 template(name='big_both_voter')
@@ -56,7 +56,7 @@ template(name='rank')
         .value #{rank_doc}
         .label Rank
     #increase_index.ui.icon.basic.circular.button
-        i.chevron.up.icon
+        +icon48 name="chevron-up" classes='avatar'
     // #decrease_index.ui.icon.basic.circular.button
     //     i.chevron.down.icon
 
@@ -68,11 +68,11 @@ template(name='toggle_friend')
     if currentUser
         if is_friend
             #remove_friend.ui.basic.button
-                i.minus.red.icon
+                +icon48 name="minus" classes='avatar'
                 |Unfriend
         else
             #add_friend.ui.basic.button
-                i.plus.green.icon
+                +icon48 name="plus" classes='avatar'
                 |Friend
 
 
@@ -80,11 +80,14 @@ template(name='toggle_friend')
 template(name='session_edit_button')
     if currentUser
         unless is_editing
-            .edit_this.ui.icon.basic.button(title="Edit #{tags}" class=button_classes)
-                i.pencil.icon
+            .edit_this.ui.basic.icon.button(title="Edit #{tags}" class=button_classes)
+                +icon24 name="edit" classes='ui avatar image'
+                // i.icon
+                // |Edit
         else
-            .save_doc.ui.green.button(class=button_classes)
-                i.check.icon
+            .save_doc.ui.fluid.green.button(class=button_classes)
+                i.icon
+                    +icon48 name="checkmark" classes='avatar'
                 |Save
 template(name='session_edit_icon')
     if currentUser
@@ -92,17 +95,18 @@ template(name='session_edit_icon')
             i.red.pencil.link.icon.edit_this(title=tags class=button_classes)
         else
             .save_doc.ui.green.button(class=button_classes)
-                i.red.check.icon
                 |Save
 template(name='edit_button')
     if currentUser
         unless editing
             .edit_this.ui.basic.button(title=tags)
-                i.red.pencil.icon
+                i.icon
+                    +icon24 name='edit' classes='ui avatar image'
                 |Edit
         else
             .save_doc.ui.green.button
-                i.red.check.icon
+                i.icon
+                    +icon24 name='checkmark' classes='ui avatar image'
                 |Save
                 
 template(name='edit_icon')
@@ -119,7 +123,7 @@ template(name='edit_link')
             a.edit_this Edit
         else
             .save_doc.ui.basic.large.button
-                i.green.check.icon
+                +icon24 name='checked' classes='ui avatar image'
                 |Save
 
 template(name='add_to_cart')
@@ -143,7 +147,7 @@ template(name='add_to_cart')
 template(name='delete_button')
     unless confirming
         .delete.ui.icon.red.basic.button
-            i.remove.icon
+            +icon48 name="delete" classes='avatar'
     else
         .ui.basic.button.cancel Cancel
         .ui.red.button.confirm Confirm Delete
@@ -164,19 +168,19 @@ template(name='published')
     .ui.dividing.header Visibility
     if published
         .ui.large.green.label
-            img.ui.avatar.image(src="https://png.icons8.com/eye/color/48" width="48" height="48")
+            +icon48 name='eye' classes='avatar'
             |Public
         if can_edit
             #unpublish.ui.icon.basic.button(title='Unpublish')
-                img.ui.avatar.image(src="https://png.icons8.com/invisible/color/48" width="48" height="48")
+                +icon48 name='invisible' classes='avatar'
                 // | Make Private
     else
         .ui.large.basic.label
-            img.ui.avatar.image(src="https://png.icons8.com/invisible/color/48" width="48" height="48")
+            +icon48 name='invisible' classes='avatar'
             | Private
         if can_edit
             #publish.ui.icon.basic.button(title='Publish')
-                img.ui.avatar.image(src="https://png.icons8.com/eye/color/48" width="48" height="48")
+                +icon48 name='eye' classes='avatar'
                 // | Make Public
 
 
@@ -198,9 +202,10 @@ template(name='featured')
             .ui.basic.label Unfeatured
 
 template(name='favorite_button')
-    i.heart.large.link.icon.favorite_item(class=favorite_item_class)
-    if favorite_count
-        | #{favorite_count}
+    .ui.basic.icon.button.favorite_item(class=favorite_item_class)
+        +icon48 name='eye' classes=''
+        if favorite_count
+            | #{favorite_count}
 
 template(name='mark_complete_button')
     .mark_complete.ui.circular.button(class=complete_button_class) 
@@ -222,7 +227,7 @@ template(name='mark_doc_complete_button')
         
 template(name='bookmark_button')
     .bookmark_button.ui.circular.button(class=bookmark_button_class) 
-        img.ui.avatar.image(src="https://png.icons8.com/bookmark/color/48" width="48" height="48")
+        +icon48 name='bookmark' classes='avatar'
         if bookmarked
             | Bookmarked
         else
@@ -232,33 +237,33 @@ template(name='bookmark_button')
 template(name='pin_button')
     .pin_button.ui.circular.icon.button(class=pin_button_class title='Pin this') 
         if pinned
-            i.pin.icon
+            +icon24 name="push-pin" classes='avatar'
             // | Pinned
         else
-            i.pin.icon
+            +icon24 name="push-pin" classes='avatar'
             // | Pin
         
         
 template(name='pin_corner_button')
-    a.pin_button.ui.corner.link.label(class=pin_button_class title='Pin this') 
-        i.pin.icon
+    a.pin_button.ui.top.right.attached.button(class=pin_button_class title='Pin this') 
+        +icon48 name="push-pin" classes='avatar'
         
 template(name='view_full_button')
     a.ui.basic.right.floated.button(href="/view/#{_id}")
         |Full
-        img.ui.avatar.image(src="https://png.icons8.com/double-right/color/48" width="48" height="48")
+        +icon48 name="double-right" classes='avatar'
 
 template(name='edit_link_button')
     if can_edit
         // +call_watson
         a.ui.basic.button(href="/edit/#{_id}")
-            img.ui.avatar.image(src="https://png.icons8.com/edit/color/48" width="48" height="48")
+            +icon48 name='edit' classes='avatar'
             |Edit
 
 
 template(name='add_doc_button')
     #add_doc.ui.basic.fluid.button
-        i.green.plus.icon
+        +icon48 name='plus' classes='avatar'
         | #{add_button_text}
 
 
@@ -266,17 +271,17 @@ template(name='subscribe_button')
     if is_participant
         #subscribe_button.ui.button(class=subscribe_buton_class)
             if subscribed
-                i.check.icon
+                +icon48 name='checked' classes='ui avatar image'
                 | Subscribed
             else
-                i.square.outline.icon
+                +icon48 name='unchecked-checkbox' classes='ui avatar image'
                 |Not Subscribed
                 
                 
 template(name='toggle_zen_mode_button')
     if zen_mode
         a#turn_off_zen_mode(href="#")
-            img(src="https://png.icons8.com/lotus/color/48" title="Turn Off Zen Mode" width="48" height="48")
+            +icon48 name='lotus' classes='ui avatar image' title="Turn off Zen Mode"
             // |Zen
     else
         a#turn_on_zen_mode(href='#')

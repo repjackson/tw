@@ -3,7 +3,7 @@ template(name='questions')
     unless question_docs.count
         if isInRole 'admin'
             #add_question.ui.basic.button 
-                i.plus.icon
+                +icon24 name="plus" classes='avatar'
                 |Add Question
     else
         .ui.horizontal.divider.header 
@@ -45,7 +45,7 @@ template(name='question')
                 // if has_answered_question
                 //     .ui.right.corner.green.label
                 //         i.checkmark.icon
-            +pin_corner_button
+            +pin_button
         if isInRole 'admin'
             +session_edit_button
                 // if isInRole 'dev'

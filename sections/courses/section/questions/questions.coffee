@@ -48,7 +48,7 @@ if Meteor.isClient
                     if previous_question
                         previous_question_answer = 
                             Docs.findOne
-                                tags: $in: ['answer']
+                                # tags: $in: ['answer']
                                 parent_id: previous_question._id
                                 author_id: Meteor.userId()
                         if previous_question_answer 

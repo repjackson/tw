@@ -35,7 +35,7 @@ template(name='section')
             else
                 a.ui.header(href="/view/#{_id}")
                     if section_is_complete
-                        i.green.big.check.circle.icon
+                        +icon48 name='checked' classes='ui avatar image'
                     |#{number}: #{title}
                 // if isInRole 'admin'
                 //     div
@@ -71,7 +71,7 @@ template(name='section')
                     if content
                         .item
                             .section_summary.ui.basic.button 
-                                i.external.icon
+                                +icon24 name='external' classes='ui avatar image'
                                 |Takeaways
     else
         .ui.disabled.segment

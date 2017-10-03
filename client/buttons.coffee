@@ -519,13 +519,8 @@ Template.toggle_zen_mode_button.helpers
 Template.toggle_zen_mode_button.events
     'click #turn_off_zen_mode': (e,t)-> 
         Session.set 'zen_mode', false
-        $(e.currentTarget).closest('.edit_journal_area').transition('pulse')
-        # $(e.currentTarget).find('#nav_menu').transition('fade')
-        # $(e.currentTarget).closest('#nav_menu').transition('fade')
-        # $(e.currentTarget).closest('.edit_journal_sidebar').transition('fade')
+        $(e.currentTarget).closest('.document_container').transition('pulse')
     'click #turn_on_zen_mode': (e,t)-> 
-        # $(e.currentTarget).find('#nav_menu').transition('pulse')
-        # $(e.currentTarget).find('.edit_journal_sidebar').transition('pulse')
+        $(e.currentTarget).closest('.document_container').transition('pulse')
         Session.set 'zen_mode', true
-        $(e.currentTarget).closest('.edit_journal_area').transition('pulse')
     

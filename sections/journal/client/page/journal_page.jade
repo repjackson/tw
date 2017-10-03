@@ -1,8 +1,8 @@
 template(name='view_journal')
     a.ui.basic.button(href='/journal')
-        img.ui.avatar.image(src="https://png.icons8.com/double-left/color/48" width="48" height="48")
+        +icon48 name='double-left'
         strong Journal
-    .ui.container
+    .ui.container.document_container
         h1.ui.center.aligned.header View Journal Entry
         .ui.stackable.grid
             .ten.wide.column

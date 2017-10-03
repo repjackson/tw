@@ -27,7 +27,7 @@ accounts-password@1.4.0
 shell-server@0.2.4
 kadira:flow-router
 kadira:blaze-layout
-accounts-base@1.3.3
+accounts-base@1.3.4
 zimme:active-route
 useraccounts:flow-routing
 useraccounts:semantic-ui
@@ -53,5 +53,5 @@ meteorhacks:ssr
 francocatena:status
 mizzao:user-status
 dynamic-import@0.1.3
-ecmascript@0.8.2
+ecmascript@0.8.3
 email@1.2.3

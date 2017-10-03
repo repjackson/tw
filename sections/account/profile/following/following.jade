@@ -7,12 +7,12 @@ template(name='following')
                     if is_following
                         // |following #{profile.first_name}. 
                         #unfollow.ui.basic.large.circular.right.floated.button 
-                            img.ui.avatar.image(src="https://png.icons8.com/cancel-subscription/color/48" width="48" height="48")
+                            +icon48 name='cancel-subscription' classes='ui avatar image'
                             |Unfollow
                     else
                         // |not following #{profile.first_name}. 
                         #follow.ui.basic.large.circular.right.floated.button 
-                            img.ui.avatar.image(src="https://png.icons8.com/renew/color/48" width="48" height="48")
+                            +icon48 name='renew' classes='ui avatar image'
                             |Follow
                 .ui.hidden.divider
             .ui.two.column.grid

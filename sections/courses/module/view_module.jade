@@ -11,38 +11,44 @@ template(name='view_module')
             //     #main_area
             //         .ui.basic.fluid.segment
     .ui.basic.segment.container
-        .ui.breadcrumb
-            a.section(href='/') Home
-            .divider  / 
-            a.section(href='/courses') Courses
-            .divider  / 
-            a.section(href="/course/sol") Source of Light
-            .divider  / 
-            a.section(href="/course/sol/modules") Modules
-            .divider  / 
-            .active.section #{module.number}: #{module.title}
-        .ui.hidden.divider
+        // .ui.breadcrumb
+        //     a.section(href='/') Home
+        //     .divider  / 
+        //     a.section(href='/courses') Courses
+        //     .divider  / 
+        //     a.section(href="/course/sol") Source of Light
+        //     .divider  / 
+        //     a.section(href="/course/sol/modules") Modules
+        //     .divider  / 
+        //     .active.section #{module.number}: #{module.title}
+        // .ui.hidden.divider
         .ui.stackable.grid
+            .center.aligned.row
+                .sixteen.wide.column
+                    a.ui.basic.circular.button(href="/course/sol/dashboard") 
+                        +icon48 name="chevron-up" classes='avatar'
+                        |Source of Light
             .center.aligned.row
                 .four.wide.column
                     if previous_module
                         // a.ui.basic.small.button(href="/course/sol/module/#{module.number}/section/#{previous_section.number}")
-                        a.ui.basic.small.button(href="/view/#{previous_module._id}")
-                            i.left.chevron.icon
+                        a.ui.basic.small.circular.button(href="/view/#{previous_module._id}")
+                            +icon48 name='chevron-left' classes='ui avatar image'
                             |#{previous_module.number}: #{previous_module.title}
                 .eight.wide.column
                     h1.ui.center.aligned.header 
                         if module_complete
-                            i.small.circle.green.check.icon
+                            +icon48 name='checked' classes='ui avatar image'
                         |Module #{module.number}: #{module.title}
                     // if isInRole 'admin'
                     //     |module_id: #{module._id}
 
                 .four.wide.column
                     // if module_complete
-                    a.ui.basic.small.button(href="/view/#{next_module._id}")
-                        |#{next_module.number}: #{next_module.title}
-                        i.right.chevron.icon
+                    a.ui.basic.small.circular.button(href="/view/#{next_module._id}")
+                        // |#{next_module.number}: #{next_module.title}
+                        |#{next_module.title}
+                        +icon48 name='chevron-right' classes='ui avatar image'
             // a.item(href="/course/sol/module/#{module.number}/section/#{section.number}/reflective_questions" class="{{isActiveRoute name='reflective_questions'}}") Collaboration
         .ui.stackable.grid
             .five.wide.column
@@ -54,17 +60,17 @@ template(name='view_module')
                             .item 
                                 .header
                                     if module_progress_doc.module_debrief_complete
-                                        i.green.check.icon
+                                        +icon24 name='checkmark' classes='ui avatar image'
                                     else
-                                        i.square.outline.icon
+                                        +icon24 name='unchecked-checkbox' classes='ui avatar image'
                                     |Debrief 
                                     |#{module_progress_doc.debrief_answer_count}/#{module_progress_doc.debrief_question_count}
                         .item 
                             .header
                                 if module_progress_doc.module_sections_complete
-                                    i.green.check.icon
+                                    +icon24 name='checkmark' classes='ui avatar image'
                                 else
-                                    i.square.outline.icon
+                                    +icon24 name='unchecked-checkbox' classes='ui avatar image'
                                 |Sections 
                                 | #{module_progress_doc.section_complete_count}/#{module_progress_doc.module_section_count}
                                 // .item Sections
@@ -74,9 +80,9 @@ template(name='view_module')
                         .item 
                             .header 
                                 if module_progress_doc.module_lightwork_complete
-                                    i.green.check.icon
+                                    +icon24 name='checkmark' classes='ui avatar image'
                                 else
-                                    i.square.outline.icon
+                                    +icon24 name='unchecked-checkbox' classes='ui avatar image'
                                 |Lightwork 
                                 | #{module_progress_doc.lightwork_answer_count}/#{module_progress_doc.lightwork_question_count}
                         if download_count
@@ -87,7 +93,7 @@ template(name='view_module')
                                 .header Downloads #{download_count}
                     .ui.dividing.header Status
                     #calculate_module_progress.ui.fluid.basic.button 
-                        i.refresh.icon
+                        +icon48 name='refresh' classes='ui avatar image'
                         |Calculate Module Progress
                     #module_percent_complete_bar.ui.blue.indicating.progress(data-percent=section_progress_doc.percent_complete)
                         .bar
@@ -148,7 +154,7 @@ template(name='lightwork')
     .ui.hidden.divider
     .ui.styled.fluid.accordion
         h3.title
-            i.large.newspaper.icon
+            +icon48 name='paper' classes='ui avatar image'
             | Transcript
             i.dropdown.icon
         .content

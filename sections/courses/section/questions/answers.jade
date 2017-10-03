@@ -27,8 +27,8 @@ template(name='answers')
                             |{{nl2br body}}
         .ui.styled.fluid.accordion
             .title
-                i.large.users.icon
-                | All Public Answers (#{all_answers.count})
+                +icon48 name="people" classes='avatar'
+                | Public Answers (#{all_answers.count})
                 i.dropdown.icon
             .content
                 .ui.threaded.comments
@@ -38,9 +38,8 @@ template(name='answers')
         if isInRole 'admin' 
             .ui.styled.fluid.accordion
                 .title
-                    i.red.configure.icon
-                    | All Private Answers (#{all_private_answers.count})
-                    
+                    +icon48 name="invisible" classes='avatar'
+                    | Private Answers (#{all_private_answers.count})
                     i.dropdown.icon
                 .content
                     .ui.threaded.comments
@@ -65,7 +64,7 @@ template(name='answers')
                                         //     +edit_link
     else
         .add_answer.ui.basic.fluid.button 
-            i.plus.icon
+            +icon48 name="plus" classes='avatar'
             |Add Answer
 
 

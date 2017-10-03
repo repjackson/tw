@@ -22,81 +22,75 @@
         a.mobile.hidden.item(href='/' class="{{isActivePath '/'}}")
             .imogen Tori Webster
         a.mobile.hidden.item(href='/about' class="{{isActivePath '/about'}}") 
-            .ui.image
-                img(src="https://png.icons8.com/info/color/24" width="24" height="24")
+            +icon24 name='info'
             |About
         a.mobile.hidden.item(href='/lightschool' class="{{isActivePath '/lightschool'}}") 
-            .ui.image
-                img(src="https://png.icons8.com/library/color/24" width="24" height="24")
+            +icon24 name='library'
             |LightSchool
         a.mobile.hidden.item(href='/lightbank' class="{{isActivePath '/lightbank'}}") 
-            .ui.image
-                img(src="https://png.icons8.com/summer/color/24" width="24" height="24" )
+            +icon24 name='summer'
             |Lightbank
         a.mobile.hidden.item(href='/contact' class="{{isActivePath '/contact'}}") 
             .ui.image
-                img(src="https://png.icons8.com/phone/color/24" width="24" height="24" )
+                +icon24 name='phone'
             |Contact
     else
         a.ui.mobile.hidden.simple.dropdown.item(href='/lightschool' ) 
             .ui.image
-                img(src="https://png.icons8.com/library/color/48" width="48" height="48")
+                +icon48 name='library'
             .ui.large.menu
                 .header.item
                     .ui.header LightSchool
                 a.item(href='/courses' class="{{isActivePath '/courses'}}")
                     i.icon
                         .ui.image
-                            img(src="https://png.icons8.com/classroom/color/24" width="24" height="24")
+                            +icon24 name='classroom'
                     |Courses
                 a.item(href='/lightschool/exercises' class="{{isActivePath '/lightschool/exercises'}}")
                     i.icon
                         .ui.image
-                            img(src="https://png.icons8.com/hand-with-pen/color/24" width="24" height="24")
+                            +icon24 name='hand-with-pen'
                     |Exercises
                 a.item(href='/quizzes' class="{{isActivePath '/quizzes'}}")
                     i.icon
                         .ui.image
-                            img(src="https://png.icons8.com/report-card/color/24" width="24" height="24")
+                            +icon24 name='report-card'
                     |Quizzes
         a.mobile.hidden.item(href='/lightbank' class="{{isActivePath '/lightbank'}}" data-position="bottom center" data-content="Lightbank") 
-            .ui.image
-                img(src="https://png.icons8.com/summer/color/48" width="48" height="48" )
+            +icon48 name='summer'
         a.ui.simple.dropdown.mobile.hidden.item(href='/journal') 
-            .ui.image
-                img(src="https://png.icons8.com/journal/color/48" width="48" height="48")
+            +icon48 name='journal'
             .ui.big.menu
                 .header.item
                     .ui.header Journal
                 #add_journal_entry.ui.item 
                     i.icon
-                        .ui.image
-                            img(src="https://png.icons8.com/create-document/color/24" width="24" height="24")
+                        +icon24 name='create-document'
                     |New Entry
                 a.ui.item(href="/journal/mine")
                     i.icon
                         .ui.image
-                            img(src="https://png.icons8.com/journal/color/24" width="24" height="24")
+                            +icon24 name='journal'
                     |My Entries
                 a.ui.item(href="/journal/prompts")
                     i.icon
                         .ui.image
-                            img(src="https://png.icons8.com/ask-question/color/24" width="24" height="24")
+                            +icon24 name='ask-question'
                     | Prompts
                 .ui.disabled.item
                     i.icon
                         .ui.image
-                            img(src="https://png.icons8.com/template/color/24" width="24" height="24")
+                            +icon24 name='template'
                     |Templates
                 a.ui.item(href="/journal/browse") 
                     i.icon
                         .ui.image
-                            img(src="https://png.icons8.com/reading/color/24" width="24" height="24")
+                            +icon24 name='reading'
                     |Browse
 
         a.mobile.hidden.item(href='/checkin' class="{{isActivePath '/checkin'}}" data-position="bottom center" data-content="Check In") 
             .ui.image
-                img(src="https://png.icons8.com/in-progress/color/48" width="48" height="48")
+                +icon48 name='in-progress'
     
         
     .right.menu
@@ -104,14 +98,14 @@
             if isInRole 'dev'
                 a.ui.icon.simple.dropdown.item(data-position="left center" data-content="Notifications")
                     if unread_notifications_count
-                        img.ui.image(src="https://png.icons8.com/google-alerts/color/48" title="Unread Notifications" width="48" height="48")
+                        +icon48 name='google-alerts'
                     else
-                        img.ui.image(src="https://png.icons8.com/notification/color/48" title="Notifications" width="48" height="48")
+                        +icon48 name='notification'
                     .ui.large.menu(style="right: 0;left: auto;")
                         a.item(href='/notifications')
                             i.icon
                                 .ui.image
-                                    img(src="https://png.icons8.com/todo-list/color/24" title="Notifications" width="24" height="24")
+                                    +icon24 name='todo-list'
                             |View All
                         .ui.divider
                         each unread_notifications
@@ -142,6 +136,6 @@
         else
             a.ui.item(href='/sign-in') 
                 .ui.image
-                    img(src="https://png.icons8.com/signin/color/24" width="24" height="24")
+                    +icon24 name='signin'
                 | Sign In
 

@@ -1,7 +1,8 @@
 template(name='resonate_button')
     .resonate_button.ui.circular.button(class=resonate_button_class) 
         // i.big.red.heartbeat.icon
-        img.ui.avatar.image(src="https://png.icons8.com/aed/color/48" width="48" height="48")
+        +icon48 name='aed' classes='avatar'
+        // img.ui.avatar.image(src="https://png.icons8.com/aed/color/48" width="48" height="48")
         | This Resonates with Me
         
 
@@ -26,11 +27,11 @@ template(name='resonates_list')
 template(name='toggle_doc_read')
     if read
         .mark_unread.ui.basic.button 
-            img.ui.avatar.image(src="https://png.icons8.com/read-message/color/48" width="48" height="48")
+            +icon48 name='read-message' classes='avatar'
             |Mark Unread
     else
         .mark_read.ui.basic.button 
-            img.ui.avatar.image(src="https://png.icons8.com/message/color/48" width="48" height="48")
+            +icon48 name='message' classes='avatar'
             |Mark Read
 
 template(name='read_by')
@@ -55,7 +56,7 @@ template(name='read_by')
 template(name='doc_matches')
     .ui.fluid.styled.accordion
         .title 
-            img.ui.avatar.image(src="https://png.icons8.com/query-inner-join/color/48" width="48" height="48")
+            +icon48 name='query-inner-join' classes='avatar'
             |Top Doc Matches (#{top_doc_matches.length})
             i.dropdown.icon
             if currentUser
@@ -73,12 +74,12 @@ template(name='doc_match')
     .item 
         .content
             .description
-                img.ui.avatar.image(src="https://png.icons8.com/query-outer-join/color/48" width="48" height="48")
+                +icon48 name='query-outer-join' classes='avatar'
                 |Intersection Tags (#{intersection_tags_count})
                 each intersection_tags
                     .ui.basic.label #{this}
             .description
-                img.ui.avatar.image(src="https://png.icons8.com/tags/color/48" width="48" height="48")
+                +icon48 name='tags' classes='avatar'
                 | Document Tags
                 each tags
                     .ui.small.basic.label #{this}
@@ -107,7 +108,7 @@ template(name='request_tori_feedback')
     //     |Request Feedback
     if feedback_requested
         .ui.header
-            img.ui.avatar.image(src="https://png.icons8.com/feedback/color/48" width="48" height="48")
+            +icon48 name='feedback' classes='avatar'
             | Feedback Requested 
             |Status: Pending
         #cancel_request.ui.fluid.basic.button
@@ -115,7 +116,7 @@ template(name='request_tori_feedback')
             | Cancel Request
     else
         #request_feedback.ui.fluid.basic.button
-            img.ui.avatar.image(src="https://png.icons8.com/feedback/color/48" width="48" height="48")
+            +icon48 name='feedback' classes='avatar'
             | Request Tori's Feedback
             
                 
@@ -123,7 +124,7 @@ template(name='parent_doc_segment')
     if parent_id
         .ui.styled.fluid.accordion
             .active.title
-                img.ui.avatar.image(src="https://png.icons8.com/response/color/48" width="48" height="48")
+                +icon48 name='response' classes='avatar'
                 |In response to...
                 i.dropdown.icon
             .active.content
@@ -153,20 +154,23 @@ template(name='view_published_toggle')
             |Viewing Mine (Public and Private)
     if viewing_all
         #view_my_entries.ui.basic.fluid.button 
-            i.large.icons
-                i.users.icon
-                i.pencil.corner.icon
+            +icon48 name='people' classes='avatar'
             |Viewing All Public
 
 template(name='view_read_toggle')
     if viewing_unread
         #view_all.ui.basic.fluid.button
-            i.open.envelope.icon
+            +icon48 name='read-message' classes='avatar'
             |Viewiing Unread
     if viewing_all
         #view_unread.ui.basic.fluid.button 
-            i.mail.icon
+            +icon48 name='message' classes='avatar'
             |Viewing Read and Unread
 
 template(name='stripe_cc_form')
     #card_element
+    
+template(name='icon48')
+    img.ui.image(src="https://png.icons8.com/#{name}/color/48" width="48" height="48" class=classes title=title)
+template(name='icon24')
+    img(src="https://png.icons8.com/#{name}/color/24" width="24" height="24" title=title)

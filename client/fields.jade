@@ -44,52 +44,52 @@ template(name='number')
 template(name='tags')
     .required.inline.field
         label 
-            img.ui.avatar.image(src="https://png.icons8.com/hashtag/color/48" width="48" height="48")
+            +icon48 name='hashtag' classes='avatar'
             |Theme Tags
         input#add_tag(type='text' placeholder='press enter after each' maxlength='50' )
         each tags
             a.ui.basic.animated.fade.large.button.doc_tag
                 .visible.content
                     i.icon
-                        img.ui.avatar.image(src="https://png.icons8.com/hashtag/color/24" width="24" height="24")
+                        +icon24 name='hashtag' classes='avatar'
                     |#{this}
                 .hidden.content
                     i.icon
-                        img.ui.avatar.image(src="https://png.icons8.com/delete/color/24" width="24" height="24")
+                        +icon24 name='delete' classes='avatar'
                     |#{this}
 
 template(name='location_tags')
     .inline.field
         label 
-            img.ui.avatar.image(src="https://png.icons8.com/geo-fence/color/24" width="24" height="24")
+            +icon24 name='geo-fence' classes='avatar'
             |Location Tags (eg. 'home', 'couch')
         input#add_location_tag(type='text' placeholder='press enter after each' maxlength='50' )
         each location_tags
             a.ui.basic.large.animated.fade.large.button.doc_tag
                 .visible.content
                     i.icon
-                        img.ui.image(src="https://png.icons8.com/geo-fence/color/24" width="24" height="24")
+                        +icon24 name='geo-fence'
                     |#{this}
                 .hidden.content
                     i.icon
-                        img.ui.image(src="https://png.icons8.com/delete/color/24" width="24" height="24")
+                        +icon24 name='delete'
                     |#{this}
 
 template(name='intention_tags')
     .inline.field
         label 
-            img.ui.avatar.image(src="https://png.icons8.com/spotlight/color/24" width="24" height="24")
+            +icon24 name='spotlight' classes='avatar'
             |My intention for this entry is to...
         input#add_intention_tag(type='text' placeholder='press enter after each answer' maxlength='50' )
         each intention_tags
             a.ui.basic.large.animated.fade.large.button.doc_tag
                 .visible.content
                     i.icon
-                        img.ui.image(src="https://png.icons8.com/spotlight/color/24" width="24" height="24")
+                        +icon24 name='spotlight' classes='ui image'
                     |#{this}
                 .hidden.content
                     i.icon
-                        img.ui.image(src="https://png.icons8.com/delete/color/24" width="24" height="24")
+                        +icon24 name='delete' classes='ui image'
                     |#{this}
 
 

@@ -1,35 +1,36 @@
 template(name='view_section')
     // +nav
     .ui.container
-        .ui.breadcrumb
-            a.section(href='/') Home
-            .divider  / 
-            a.section(href='/courses') Courses
-            .divider  / 
-            a.section(href="/course/sol") Source of Light
-            .divider  / 
-            a.section(href="/course/sol/modules") Modules
-            .divider  / 
-            a.section(href="/course/sol/module/#{module.number}") #{module.number}: #{module.title}
-            .divider  / 
-            a.section(href="/course/sol/module/#{module.number}/sections") Sections
-            .divider  / 
-            .section #{section.number}: #{section.title}
-        .ui.hidden.divider
+        // .ui.breadcrumb
+        //     a.section(href='/') Home
+        //     .divider  / 
+        //     a.section(href='/courses') Courses
+        //     .divider  / 
+        //     a.section(href="/course/sol") Source of Light
+        //     .divider  / 
+        //     a.section(href="/course/sol/modules") Modules
+        //     .divider  / 
+        //     a.section(href="/course/sol/module/#{module.number}") #{module.number}: #{module.title}
+        //     .divider  / 
+        //     a.section(href="/course/sol/module/#{module.number}/sections") Sections
+        //     .divider  / 
+        //     .section #{section.number}: #{section.title}
+        // .ui.hidden.divider
         if Template.subscriptionsReady
             .ui.grid
                 .center.aligned.row
                     .sixteen.wide.column
-                        a.ui.basic.button(href="/view/#{module._id}") 
-                            i.up.chevron.arrow.icon
+                        a.ui.basic.circular.button(href="/view/#{module._id}") 
+                            +icon48 name="chevron-up" classes='avatar'
                             |Module #{module.number}: #{module.title}
                 .center.aligned.row
                     .three.wide.column
                         if previous_section
                             // a.ui.basic.small.button(href="/course/sol/module/#{module.number}/section/#{previous_section.number}")
-                            a.ui.basic.small.button(href="/view/#{previous_section._id}")
-                                i.left.chevron.icon
-                                |#{previous_section.number}: #{previous_section.title}
+                            a.ui.basic.fluid.circular.button(href="/view/#{previous_section._id}")
+                                +icon48 name="chevron-left" classes='avatar'
+                                // |#{previous_section.number}: #{previous_section.title}
+                                |#{previous_section.title}
                     .ten.wide.column
                         h1.ui.center.aligned.header Section #{section.number}: #{section.title}
                         // if isInRole 'admin'
@@ -37,15 +38,17 @@ template(name='view_section')
                     .three.wide.column
                         if section_complete
                             if next_section_exists
-                                a.ui.basic.small.right.button(href="/view/#{next_section._id}")
-                                    |#{next_section.number}: #{next_section.title}
-                                    i.right.chevron.icon
+                                a.ui.basic.fluid.circular.button(href="/view/#{next_section._id}")
+                                    // |#{next_section.number}: #{next_section.title}
+                                    | #{next_section.title}
+                                    +icon48 name="chevron-right" classes='avatar'
                             else
-                                a.ui.basic.fluid.button(href="/view/#{module._id}") 
-                                    i.large.icons
-                                        i.green.check.circle.icon
-                                        i.reply.corner.icon
-                                    | Module #{module.number} Sections Complete
+                                a.ui.basic.fluid.circular.animated.fade.button(href="/view/#{module._id}") 
+                                    .visible.content
+                                        +icon48 name="checked" classes='avatar'
+                                        | Module #{module.number} Sections Complete
+                                    .hidden.content
+                                        +icon48 name="return" classes='avatar'
     
                 // a.item(href="/course/sol/module/#{module.number}/section/#{section.number}/questions" class="{{isActiveRoute name='questions'}}") Collaboration
             .ui.stackable.grid
@@ -58,17 +61,17 @@ template(name='view_section')
                     //             | #{section_progress_doc.percent_complete}%
                     if video_complete
                         .ui.fluid.basic.label 
-                            i.green.check.icon
+                            +icon48 name="checkmark" classes='avatar'
                             |Video Watched
                         if section.content.length
                             .item
                                 .popup_takeaway.ui.basic.fluid.button 
-                                    i.external.icon
+                                    +icon48 name="external" classes='avatar'
                                     |Video Takeaways
     
                     else
                         .ui.basic.fluid.label 
-                            i.square.outline.icon
+                            +icon48 name="unchecked-checkbox" classes='avatar'
                             |Video
                     if reflective_question_docs.count
                         .ui.sub.dividing.header #{section_progress_doc.section_answer_count}/ #{section_progress_doc.section_question_count} Questions Answered
@@ -89,8 +92,9 @@ template(name='view_section')
                     .ui.hidden.divider
                     .ui.styled.fluid.accordion
                         h3.title
-                            i.large.newspaper.icon
+                            +icon48 name='paper' classes='ui avatar image'
                             | Transcript
+                            i.dropdown.icon
                         .content
                             // +doc_content tags=section_transcript_tags pinnable=true
                             +doc_by_parentid_and_type parent_id=section._id type='section_transcript' tags='section,transcript'
@@ -98,16 +102,16 @@ template(name='view_section')
                     .ui.center.aligned.basic.segment
                         if currentUser
                             if video_complete
-                                .unmark_video_complete.ui.blue.fluid.button 
-                                    i.check.icon
+                                .unmark_video_complete.ui.blue.circular.fluid.button 
+                                    // +icon48 name='checkmark' classes='ui avatar image'
                                     |Video Watched
                                 if section.content.length
                                     .popup_takeaway.ui.basic.large.button 
-                                        i.external.icon
+                                        +icon48 name='external' classes='ui avatar image'
                                         |Video Takeaways
                             else
-                                .mark_video_complete.ui.basic.fluid.button 
-                                    i.square.outline.icon
+                                .mark_video_complete.ui.basic.fluid.circular.button 
+                                    +icon48 name='unchecked-checkbox' classes='ui avatar image'
                                     |Mark Video Watched
                     with section
                         if isInRole 'admin'
@@ -125,22 +129,22 @@ template(name='view_section')
                             // if video_complete
                         if section_complete
                             .ui.horizontal.divider.header
-                                i.green.check.circle.icon
+                                +icon48 name='checked' classes='ui avatar image'
                                 |Section Complete
                             if next_section_exists
-                                a.ui.basic.fluid.button(href="/view/#{next_section._id}")
+                                a.ui.basic.fluid.circular.large.button(href="/view/#{next_section._id}")
                                     | Continue to Section #{next_section.number}: #{next_section.title}
-                                    i.right.chevron.icon 
+                                    +icon48 name='chevron-right' classes='ui avatar image'
                             else
                                 .ui.horizontal.divider.header
-                                    i.green.check.circle.icon
+                                    +icon48 name='checked' classes='ui avatar image'
                                     | All Module #{module.number} Sections Complete
                                 a.ui.basic.fluid.button(href="/view/#{module._id}") 
-                                    i.reply.icon
+                                    +icon48 name='return' classes='ui avatar image'
                                     | Return to Module #{module.number}: #{module.title}
                         .ui.divider
                     #calculate_section_progress.ui.fluid.basic.button 
-                        i.refresh.icon
+                        +icon48 name='refresh' classes='ui avatar image'
                         |Calculate Section Progress
                     #section_percent_complete_bar.ui.indicating.progress(data-percent=section_progress_doc.percent_complete)
                         .bar

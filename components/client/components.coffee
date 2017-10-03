@@ -176,3 +176,7 @@ Template.view_read_toggle.events
 #     # closed: ->
 #     #     Bert.alert "Payment Canceled", 'info', 'growl-top-right'
 # )
+
+
+# Template.icon.helpers
+    # 
