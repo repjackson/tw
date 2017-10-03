@@ -80,6 +80,13 @@ Template.nav.events
         new_checkin_doc_id = Docs.insert type: 'checkin'
         FlowRouter.go("/edit/#{new_checkin_doc_id}")
     
+    "click #report_bug": ->
+        bug_description = prompt "Please decribe the bug:"
+        Docs.insert
+            type: 'bug_report'
+            body: bug_description
+            link: window.location.href
+    
     'click #add_journal_entry': ->
         new_journal_id = Docs.insert
             type: 'journal'

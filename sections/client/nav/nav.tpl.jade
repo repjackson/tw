@@ -110,10 +110,12 @@
                         .ui.divider
                         each unread_notifications
                             .item #{subject.name} #{predicate} #{object.name}
+            a#report_bug.icon.item(href="#"  data-position="bottom center" data-content="Report a Bug")
+                .ui.image
+                    +icon48 name='bug'
             a.icon.item(href="/dashboard" class="{{isActivePath '/dashboard'}}" data-position="bottom center" data-content="Dashboard")
                 .ui.image
-                    img(src="https://png.icons8.com/dashboard/color/48" title="Dashboard" width="48" height="48")
-        
+                    +icon48 name='dashboard'
             if cart_items
                 a.icon.mobile.hidden.item(href='/cart' class="{{isActivePath '/cart'}}" data-position="bottom center" data-content="Shopping Cart")
                     i.large.icons
