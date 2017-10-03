@@ -16,13 +16,14 @@ template(name='course_pins')
             each pinned_tags
                 .ui.basic.button.select_tag(class=cloud_tag_class) 
                     | #{this.name}
-            each pinned_docs
-                +pin
+            .ui.stackable.centered.cards
+                each pinned_docs
+                    +pin
                 
 template(name='pin')
-    .ui.fluid.segment
+    .ui.card
         .content
-            +pin_corner_button
+            +pin_button
             .header
                 each tags
                     .ui.large.basic.label(class=tag_class) #{this}

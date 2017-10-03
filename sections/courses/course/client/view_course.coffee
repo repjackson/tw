@@ -51,14 +51,14 @@ Template.view_course.onRendered ->
         # console.log Session.get 'section_number'
             Meteor.setTimeout ->
                 # $('.ui.accordion').accordion()            
-                sol_progress_doc = 
+                course_progress_doc = 
                     Docs.findOne
                         type: 'course_progress'
                         author_id: Meteor.userId()
-                # console.log sol_progress_doc
-                if sol_progress_doc
+                # console.log course_progress_doc
+                if course_progress_doc
                     $('#sol_percent_complete_bar').progress(
-                        percent: sol_progress_doc.sol_progress_percent
+                        percent: course_progress_doc.sol_progress_percent
                         autoSuccess: false
                         );
             , 500
@@ -72,17 +72,19 @@ Template.view_course.helpers
         if course
             _.where(course.agreements, user_id: Meteor.userId() )
 
-    sol_progress_doc: ->
-        Docs.findOne
+    course_progress_doc: ->
+        doc = Docs.findOne
             type: 'course_progress'
             author_id: Meteor.userId()
+        # console.log doc
+        doc
         
     welcome_icon_class: ->
-        sol_progress_doc = 
+        course_progress_doc = 
             Docs.findOne
                 type: 'course_progress'
                 author_id: Meteor.userId()
-        if sol_progress_doc and sol_progress_doc.welcome_complete then 'yellow' else ''        
+        if course_progress_doc and course_progress_doc.welcome_complete then 'yellow' else ''        
         
 Template.view_course.events
     # 'click #add_module': ->

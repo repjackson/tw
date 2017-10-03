@@ -2,12 +2,12 @@ template(name='view_course')
     +nav
     .ui.container
         .ui.hidden.divider
-        .ui.breadcrumb
-            a.section(href='/') Home
-            .divider  / 
-            a.section(href='/courses') Courses
-            .divider  / 
-            .active.section #{course.title}
+        // .ui.breadcrumb
+        //     a.section(href='/') Home
+        //     .divider  / 
+        //     a.section(href='/courses') Courses
+        //     .divider  / 
+        //     .active.section #{course.title}
         .ui.stackable.grid
             .centered.row
                 img.ui.image(src="{{c.url course.image_id }}")
@@ -20,25 +20,32 @@ template(name='view_course')
             .five.wide.column
                 .ui.vertical.fluid.pointing.large.menu
                     a.item(href="/course/sol/dashboard" class="{{isActiveRoute name='course_dashboard'}}") 
-                        i.dashboard.icon
+                        i.icon
+                            +icon24 name="dashboard"
                         |Dashboard
                     a.item(href="/course/sol/welcome" class="{{isActiveRoute name='course_welcome'}}") 
-                        i.star.icon(class=welcome_icon_class)
-                        .ui.blue.label #{sol_progress_doc.welcome_count}/3
+                        i.icon
+                            +icon24 name="front-gate-open"
+                        // i.star.icon(class=welcome_icon_class)
+                        .ui.blue.label #{course_progress_doc.welcome_count}/3
                         |Welcome
                     // if has_agreed
                     a.item(href="/course/sol/modules" class="{{isActiveRoute name='course_modules'}}") 
-                        i.list.layout.icon
+                        i.icon
+                            +icon24 name="questionnaire"
                         |Modules
-                        .ui.blue.label #{sol_progress_doc.module_complete_count}/#{sol_progress_doc.sol_module_count}
+                        .ui.blue.label #{course_progress_doc.module_complete_count}/#{course_progress_doc.sol_module_count}
                     a.item(href="/course/sol/members" class="{{isActiveRoute name='course_members'}}") 
-                        i.users.icon
+                        i.icon
+                            +icon24 name="people"
                         |Members
                     a.item(href="/course/sol/pins" class="{{isActiveRoute name='course_pins'}}") 
-                        i.pin.icon
+                        i.icon
+                            +icon24 name="push-pin" classes='avatar'
                         |Pins
                     a.item(href="/course/sol/stats" class="{{isActiveRoute name='course_stats'}}") 
-                        i.line.chart.icon
+                        i.icon
+                            +icon24 name="combo-chart"
                         |Stats
                     // else
                     //     .disabled.item 
@@ -64,14 +71,14 @@ template(name='view_course')
                         +doc_subtitle tags='course,sol'
                         +doc_price tags='course,sol'
                             .ui.list
-                                .item current module #{sol_progress_doc.current_module}
-                                .item module_complete_count #{sol_progress_doc.module_complete_count}
+                                .item current module #{course_progress_doc.current_module}
+                                .item module_complete_count #{course_progress_doc.module_complete_count}
                 #calculate_sol_progress.ui.basic.fluid.button Calc SOL Progress
-                with sol_progress_doc
+                with course_progress_doc
                     #sol_percent_complete_bar.ui.blue.indicating.progress(data-percent=section_progress_doc.percent_complete)
                         .bar
                             .progress
-                                | #{sol_progress_doc.sol_progress_percent}%
+                                | #{course_progress_doc.sol_progress_percent}%
 
             .ten.wide.column
                 +Template.dynamic template=course_content

@@ -1,8 +1,20 @@
 template(name='course_welcome')
     #course_welcome_menu.ui.top.attached.tabular.stackable.menu
-        a.active.item(data-tab="welcome_tab") Welcome
-        a.item(data-tab="terms_tab") Terms of Agreement
-        a.item(data-tab="inspiration_tab") What Inspired SOL
+        a.active.item(data-tab="welcome_tab") 
+            .ui.header
+                i.icon
+                    +icon24 name="handshake"
+            |Welcome
+        a.item(data-tab="terms_tab") 
+            .ui.header
+                i.icon
+                    +icon24 name="signature" 
+            |Terms of Agreement
+        a.item(data-tab="inspiration_tab")
+            .ui.header
+                i.icon
+                    +icon24 name="irrigation" 
+            |What Inspired SOL
     .ui.bottom.attached.tab.active.segment(data-tab='welcome_tab')
         +welcome_video
     .ui.bottom.attached.tab.segment(data-tab='terms_tab')
@@ -15,18 +27,19 @@ template(name='welcome_video')
     +doc_content tags='sol,welcome,content'
     .ui.styled.fluid.accordion
         h3.title
-            i.large.newspaper.icon
+            +icon48 name="paper" classes='avatar'
             | Transcript
         .content
             +doc_content tags='sol,welcome,transcript'
     .ui.hidden.divider
     if currentUser
         if welcome_video_watched
-            #unmark_welcome_video_complete.ui.blue.fluid.button 
-                i.check.icon
+            #unmark_welcome_video_complete.ui.blue.circular.fluid.button 
                 |Welcome Video Watched
         else
-            #mark_welcome_video_complete.ui.basic.fluid.button Mark Welcome Video Watched
+            #mark_welcome_video_complete.ui.basic.fluid.circular.button
+                +icon48 name="unchecked-checkbox" classes='avatar'
+                |Mark Welcome Video Watched
 
     
     
@@ -177,16 +190,17 @@ template(name='inspiration_video')
     +doc_content tags='sol,inspiration,content'
     .ui.styled.fluid.accordion
         h3.title
-            i.large.newspaper.icon
+            +icon48 name="paper" classes='avatar'
             | Transcript
         .content
             +doc_content tags='sol,inspiration,transcript'
     .ui.hidden.divider
     if currentUser
         if inspiration_video_watched
-            #unmark_inspiration_video_complete.ui.blue.fluid.button 
-                i.check.icon
+            #unmark_inspiration_video_complete.ui.blue.circular.fluid.button 
                 |Inspiration Video Watched
         else
-            #mark_inspiration_video_complete.ui.basic.fluid.button Mark Inspiration Video Watched
-
+            #mark_inspiration_video_complete.ui.basic.circular.fluid.button 
+                +icon48 name="unchecked-checkbox" classes='avatar'
+                |Mark Inspiration Video Watched
+            

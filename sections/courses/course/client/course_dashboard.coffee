@@ -21,7 +21,7 @@ Template.course_dashboard.helpers
         if course
             _.where(course.agreements, user_id: Meteor.userId() )
     
-    sol_progress_doc: ->
+    course_progress_doc: ->
         Docs.findOne
             type: 'course_progress'
             author_id: Meteor.userId()

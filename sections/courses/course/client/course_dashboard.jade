@@ -4,40 +4,38 @@ template(name='course_dashboard')
         .ui.two.centered.stackable.cards
             a.ui.raised.card(href='/course/sol/welcome')
                 .content
-                    .header 
-                        i.star.icon
+                    .center.aligned.header 
+                        +icon48 name="front-gate-open"
                         |Welcome
                     .description
                         .ui.list
-                            .item Welcome Video
-                            .item Terms of Agreement
-                            .item SOL Inspiration
                             .ui.basic.label 
-                                |#{sol_progress_doc.welcome_count}
+                                |#{course_progress_doc.welcome_count}
                             |/
                             .ui.basic.label 3
                             |Completed
+                            // .item Welcome Video
+                            // .item Terms of Agreement
+                            // .item SOL Inspiration
 
             if has_agreed  
                 a.ui.raised.card(href='/course/sol/modules')
                     .content
-                        .header
-                            i.users.icon
+                        .center.aligned.header
+                            +icon48 name="questionnaire"
                             |Modules
                         .description
-                            .ui.basic.label #{sol_progress_doc.module_complete_count}
+                            .ui.basic.label #{course_progress_doc.module_complete_count}
                             |/
-                            .ui.basic.label #{sol_progress_doc.sol_module_count}
+                            .ui.basic.label #{course_progress_doc.sol_module_count}
                             |Completed
-                        //     .ui.list
-                        //         .item Welcome Video
-                        //         .item Terms of Agreement
-                        //         .item SOL Inspiration
+                            .ui.list
+                                .item Current Module: #{course_progress_doc.current_module}
     
                 a.ui.raised.card(href='/course/sol/members')
                     .content
-                        .header 
-                            i.users.icon
+                        .center.aligned.header 
+                            +icon48 name="people"
                             |Members
                         // .description
                         //     .ui.list
@@ -46,8 +44,8 @@ template(name='course_dashboard')
                         //         .item SOL Inspiration
                 a.ui.raised.card(href='/course/sol/stats')
                     .content
-                        .header
-                            i.line.chart.icon
+                        .center.aligned.header
+                            +icon48 name="combo-chart"
                             |Stats
                         // .description
                         //     .ui.list
@@ -56,8 +54,8 @@ template(name='course_dashboard')
                         //         .item SOL Inspiration
                 a.ui.raised.card(href='/course/sol/pins')
                     .content
-                        .header
-                            i.pin.icon
+                        .center.aligned.header
+                            +icon48 name="push-pin" classes='avatar'
                             | Pins
                         // .description
                         //     .ui.list
@@ -68,7 +66,7 @@ template(name='course_dashboard')
                 .ui.raised.card
                     .content
                         .ui.grey.header
-                            i.list.icon
+                            +icon48 name="questionnaire" classes='avatar'
                             |Modules
                         .description
                             .ui.list
@@ -77,7 +75,7 @@ template(name='course_dashboard')
                 .ui.raised.card
                     .content
                         .ui.grey.header 
-                            i.users.icon
+                            +icon48 name="people" classes='avatar'
                             |Members
                         .description
                             .ui.list
@@ -85,7 +83,7 @@ template(name='course_dashboard')
                 .ui.disabled.card
                     .content
                         .ui.grey.header
-                            i.line.chart.icon
+                            +icon48 name="combo-chart"
                             |Stats
                         .description
                             .ui.list
