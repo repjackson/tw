@@ -1,29 +1,29 @@
-@selected_theme_tags = new ReactiveArray []
+@selected_intention_tags = new ReactiveArray []
 
-Template.theme_tag_filter.onCreated ->
+Template.intention_tag_filter.onCreated ->
     @autorun => 
-        Meteor.subscribe('theme_tags', 
+        Meteor.subscribe('intention_tags', 
             selected_theme_tags.array()
             selected_author_ids.array()
             selected_location_tags.array()
             selected_intention_tags.array()
-            type=@data.type
-            author_id=@data.author_id
+            selected_timestamp_tags.array()
+            # author_id=@data.author_id
             )
 
-Template.theme_tag_filter.helpers
-    theme_tags: ->
+Template.intention_tag_filter.helpers
+    intention_tags: ->
         doc_count = Docs.find(type:'journal').count()
-        # if selected_theme_tags.array().length
+        # if selected_intention_tags.array().length
         if 0 < doc_count < 3
-            Tags.find { 
+            Intention_tags.find { 
                 count: $lt: doc_count
-                }, limit:10
+                }, limit:20
         else
-            Tags.find({}, limit:10)
+            Intention_tags.find({}, limit:20)
             
             
-    cloud_tag_class: ->
+    intention_tag_class: ->
         button_class = []
         switch
             when @index <= 5 then button_class.push 'large '
@@ -32,29 +32,15 @@ Template.theme_tag_filter.helpers
             when @index <= 20 then button_class.push ' tiny'
         return button_class
 
-    selected_theme_tags: -> selected_theme_tags.array()
+    selected_intention_tags: -> selected_intention_tags.array()
     # selected_author_ids: -> selected_author_ids.array()
-    settings: -> {
-        position: 'bottom'
-        limit: 10
-        rules: [
-            {
-                collection: Tags
-                field: 'name'
-                matchAll: false
-                template: Template.tag_result
-            }
-            ]
-    }
 
 
 
-Template.theme_tag_filter.events
-    'click .select_theme_tag': -> selected_theme_tags.push @name
-    'click .unselect_theme_tag': -> selected_theme_tags.remove @valueOf()
-    'click #clear_theme_tags': -> selected_theme_tags.clear()
-
-
+Template.intention_tag_filter.events
+    'click .select_intention_tag': -> selected_intention_tags.push @name
+    'click .unselect_intention_tag': -> selected_intention_tags.remove @valueOf()
+    'click #clear_intention_tags': -> selected_intention_tags.clear()
 
     'keyup #search': (e,t)->
         e.preventDefault()
@@ -63,17 +49,17 @@ Template.theme_tag_filter.events
             when 13 #enter
                 switch val
                     when 'clear'
-                        selected_theme_tags.clear()
+                        selected_intention_tags.clear()
                         $('#search').val ''
                     else
                         unless val.length is 0
-                            selected_theme_tags.push val.toString()
+                            selected_intention_tags.push val.toString()
                             $('#search').val ''
             when 8
                 if val.length is 0
-                    selected_theme_tags.pop()
+                    selected_intention_tags.pop()
                     
     'autocompleteselect #search': (event, template, doc) ->
         # console.log 'selected ', doc
-        selected_theme_tags.push doc.name
+        selected_intention_tags.push doc.name
         $('#search').val ''

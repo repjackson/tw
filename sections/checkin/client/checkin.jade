@@ -3,11 +3,12 @@ template(name='checkin')
     .ui.stackable.grid
         .five.wide.column
             h1.ui.center.aligned.header Check In
-            #check_in.ui.green.fluid.button
-                i.large.icons
-                    i.check.icon
-                    i.plus.corner.icon
-                | Check In
+            if currentUser
+                #check_in.ui.green.fluid.button
+                    i.large.icons
+                        i.check.icon
+                        i.plus.corner.icon
+                    | Check In
             // +doc_content tags='checkin,blurb'
             // a.ui.basic.button(href='/checkin/calendar') 
             //     i.calendar.icon

@@ -1,7 +1,7 @@
 template(name='browse_journal')
     .ui.container
         h1.ui.center.aligned.header
-            img(src="https://png.icons8.com/reading/color/96" width="96" height="96")
+            +icon96 name='reading'
             | Browse Journal Entries
         // .ui.center.aligned.basic.segment
         //     +doc_content tags='journal,browse,blurb'
@@ -13,7 +13,8 @@ template(name='browse_journal')
                 #cloud
                     +theme_tag_filter type='journal'
                     +username_filter type='journal'
-                    +keyword_filter type='journal'
+                    +timestamp_facet
+                    // +keyword_filter type='journal'
                 // a#toggle_published.ui.basic.button(class=published_item_class) 
                 //     i.red.unhide.icon
                 //     |Published (#{published_count})
@@ -37,13 +38,9 @@ template(name='browse_entry_view')
     .ui.segment(class=journal_card_class)
         .content
             .description
+                +parent_doc_segment
                 .ui.basic.segment.large
                     |!{content}
-                +parent_doc_segment
-                .ui.divider
-        .ui.divided.stackable.grid
-            .ten.wide.column
-                .ui.basic.segment
                     with author
                         |by 
                         if profile.image_id
@@ -51,21 +48,32 @@ template(name='browse_entry_view')
                         a(href="/profile/#{username}") #{name} 
                         +staus_indicator
                     |#{when}
-                    .ui.hidden.divider
-                    +view_tags
-                    .extra
-                        span.right.floated
-                            +view_full_button
-                        +bookmark_button
-                        +edit_link_button
-                        unless is_author
-                            +thanks_button
-            .six.wide.column
-                .image
-                    if watson
+                // .ui.divider
+        .ui.styled.fluid.accordion
+            .title
+                .ui.header 
+                    +icon48 name='details' classes='ui avatar image'
+                    |Details 
+                    i.dropdown.icon
+            .content
+                .ui.divided.stackable.grid
+                    .ten.wide.column
                         .ui.basic.segment
-                            +doc_sentiment
-                            +doc_emotion
+                            .ui.hidden.divider
+                            +view_tags
+                            .ui.hidden.divider
+                            span.right.floated
+                                +view_full_button
+                            +bookmark_button
+                            +edit_link_button
+                            unless is_author
+                                +thanks_button
+                    .six.wide.column
+                        .image
+                            if watson
+                                .ui.basic.segment
+                                    +doc_sentiment
+                                    +doc_emotion
             // .meta
             //     i.large.icons
             //         i.idea.icon

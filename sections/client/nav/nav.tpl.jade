@@ -7,32 +7,42 @@
             .imogen Tori Webster
             .ui.menu
                 a.mobile.hidden.item(href='/about' class="{{isActivePath '/about'}}") 
-                    .ui.image
-                        img(src="https://png.icons8.com/info/color/24" width="24" height="24")
+                    i.icon
+                        .ui.avatar.image
+                            img(src="https://png.icons8.com/info/color/24" width="24" height="24")
                     |About
                 a.mobile.hidden.item(href='/services' class="{{isActivePath '/services'}}") 
-                    .ui.image
-                        img(src="https://png.icons8.com/service-bell/color/24" width="24" height="24")
+                    i.icon
+                        .ui.image
+                            img(src="https://png.icons8.com/service-bell/color/24" width="24" height="24")
                     |Services
                 a.mobile.hidden.item(href='/contact' class="{{isActivePath '/contact'}}") 
-                    .ui.image
-                        img(src="https://png.icons8.com/phone/color/24" width="24" height="24" )
+                    i.icon
+                        .ui.image
+                            img(src="https://png.icons8.com/phone/color/24" width="24" height="24" )
                     |Contact
     unless currentUser
         a.mobile.hidden.item(href='/' class="{{isActivePath '/'}}")
             .imogen Tori Webster
         a.mobile.hidden.item(href='/about' class="{{isActivePath '/about'}}") 
-            +icon24 name='info'
+            i.icon
+                .ui.image
+                    +icon24 name='info'
             |About
         a.mobile.hidden.item(href='/lightschool' class="{{isActivePath '/lightschool'}}") 
-            +icon24 name='library'
+            i.icon
+                .ui.image
+                    +icon24 name='library'
             |LightSchool
         a.mobile.hidden.item(href='/lightbank' class="{{isActivePath '/lightbank'}}") 
-            +icon24 name='summer'
+            i.icon
+                .ui.image
+                    +icon24 name='summer'
             |Lightbank
         a.mobile.hidden.item(href='/contact' class="{{isActivePath '/contact'}}") 
-            .ui.image
-                +icon24 name='phone'
+            i.icon
+                .ui.image
+                    +icon24 name='phone'
             |Contact
     else
         a.ui.mobile.hidden.simple.dropdown.item(href='/lightschool' ) 

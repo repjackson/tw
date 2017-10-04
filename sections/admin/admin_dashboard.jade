@@ -2,7 +2,7 @@ template(name='admin_dashboard')
     .ui.stackable.grid
         .five.wide.column
             .ui.segment
-                .ui.header Lightbank
+                +bug_reports
         .five.wide.column
             .ui.segment
                 .ui.header Journal
@@ -12,7 +12,19 @@ template(name='admin_dashboard')
             .ui.segment
                 .ui.header Checkin
 
-
+template(name='bug_reports')
+    .ui.header
+        +icon48 name='bug'
+        |Bug Reports
+        .ui.divided.list
+            each bug_reports
+                .item
+                    .content
+                        .header #{body}
+                        .description
+                            |by #{author.name} #{when}
+                        .meta
+                            a(href=link) #{link}
 
 
     // .ui.container

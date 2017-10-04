@@ -123,11 +123,11 @@ template(name='request_tori_feedback')
 template(name='parent_doc_segment')
     if parent_id
         .ui.styled.fluid.accordion
-            .active.title
+            .title
                 +icon48 name='response' classes='avatar'
                 |In response to...
                 i.dropdown.icon
-            .active.content
+            .content
                 with parent
                     |!{content}
                     // .ui.horizontal.divided.list
@@ -174,3 +174,5 @@ template(name='icon48')
     img.ui.image(src="https://png.icons8.com/#{name}/color/48" width="48" height="48" class=classes title=title)
 template(name='icon24')
     img(src="https://png.icons8.com/#{name}/color/24" width="24" height="24" title=title)
+template(name='icon96')
+    img(src="https://png.icons8.com/#{name}/color/96" width="96" height="96" title=title)

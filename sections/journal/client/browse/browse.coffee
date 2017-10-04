@@ -8,10 +8,12 @@ Template.browse_journal.onCreated ->
     self = @
     @autorun => 
         Meteor.subscribe('journal_docs', 
-            selected_theme_tags.array(), 
+            selected_theme_tags.array()
             selected_author_ids.array()
             selected_location_tags.array()
             selected_intention_tags.array()
+            selected_timestamp_tags.array()
+            'journal'
             false
             )
     @autorun -> Meteor.subscribe 'unread_journal_count'

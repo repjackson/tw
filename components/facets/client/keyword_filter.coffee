@@ -3,8 +3,11 @@
 Template.keyword_filter.onCreated ->
     @autorun => 
         Meteor.subscribe('watson_keywords', 
-            selected_keywords.array()
+            selected_theme_tags.array()
             selected_author_ids.array()
+            selected_location_tags.array()
+            selected_intention_tags.array()
+            selected_timestamp_tags.array()
             type=@data.type
             author_id=@data.author_id
             )

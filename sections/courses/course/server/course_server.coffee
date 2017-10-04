@@ -101,33 +101,39 @@ Meteor.methods
                 Docs.findOne
                     type: 'course_progress'
                     author_id: Meteor.userId()
-            console.log 'new progress doc:', sol_progress_doc
+            # console.log 'new progress doc:', sol_progress_doc
 
 
         sol_progress_percent = 0
         module_complete_count = 0
         current_module = 0
-        console.log 'course progress doc', sol_progress_doc
+        # console.log 'course progress doc', sol_progress_doc
         sol_module_count = Docs.find(type: 'module').count()
-        console.log 'sol_module_count', sol_module_count
-        for number in [1..sol_module_count]
-            
-            module_doc = Docs.findOne(type: 'module', number: number)
-
+        # console.log 'sol_module_count', sol_module_count
+        for course_number in [1..sol_module_count]
+            module_doc = Docs.findOne(type: 'module', number: course_number)
+            console.log 'first number', course_number
             module_progress_doc = 
                 Docs.findOne
                     type: 'module_progress'
                     parent_id: module_doc._id
                     author_id: Meteor.userId()
             if module_progress_doc
-                # console.log typeof module_progress_doc.module_progress_percent
-                if module_progress_doc.module_progress_percent > 0
-                    if Math.round(module_progress_doc.module_progress_percent) is 100 then module_complete_count += 1
-                    else current_module = number
-                    sol_progress_percent += 100/sol_module_count*module_progress_doc.module_progress_percent/100
+                console.log typeof module_progress_doc.module_progress_percent
+                if typeof(module_progress_doc.module_progress_percent) is 'number'
+                    console.log 'module', number, 'is a number'
+                    
+                    if module_progress_doc.module_progress_percent > 0
+                        if parseInt(Math.round(module_progress_doc.module_progress_percent)) is 100 
+                            module_complete_count += 1
+                            console.log 'module', course_number, 'complete'
+                        sol_progress_percent += 100/sol_module_count*module_progress_doc.module_progress_percent/100
+                else 
+                    console.log 'module', course_number, 'not complete'
+                    current_module = course_number
         # console.log 'sol progress', sol_progress_percent
         # console.log 'module_complete_count', module_complete_count
-        # console.log 'current_module', current_module
+        console.log 'current_module', current_module
         
         if sol_module_count is module_complete_count
             sol_modules_complete = true

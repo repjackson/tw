@@ -1,9 +1,9 @@
 template(name='course_stats')
     .ui.container
         h1.ui.center.aligned.header 
-            i.line.chart.icon
+            +icon96 name='combo-chart'
             | My SOL Stats
-        .ui.items
+        .ui.divided.items
             each modules
                 +module_stats
             
@@ -11,7 +11,7 @@ template(name='module_stats')
     .item
         .content
             .header
-                |#{body}
+                |Module #{number}
                 // |hi
             .meta
                 each tags
@@ -26,25 +26,25 @@ template(name='module_stats')
                 .ui.basic.segment
                     .ui.list
                         .item
-                            |module_progress_percent: #{module_progress_percent}
+                            |module_progress_percent: #{module_progress_doc.module_progress_percent}
                         .item
-                            |module_section_count: #{module_section_count}
+                            |module_section_count: #{module_progress_doc.module_section_count}
                         .item
-                            |section_complete_count: #{section_complete_count}
+                            |section_complete_count: #{module_progress_doc.section_complete_count}
                         .item
-                            |module_sections_complete: #{module_sections_complete}
+                            |module_sections_complete: #{module_progress_doc.module_sections_complete}
                         .item
-                            |debrief_question_count: #{debrief_question_count}
+                            |debrief_question_count: #{module_progress_doc.debrief_question_count}
                         .item
-                            |debrief_answer_count: #{debrief_answer_count}
+                            |debrief_answer_count: #{module_progress_doc.debrief_answer_count}
                         .item
-                            |module_debrief_complete: #{module_debrief_complete}
+                            |module_debrief_complete: #{module_progress_doc.module_debrief_complete}
                         .item
-                            |lightwork_question_count: #{lightwork_question_count}
+                            |lightwork_question_count: #{module_progress_doc.lightwork_question_count}
                         .item
-                            |lightwork_answer_count: #{lightwork_answer_count}
+                            |lightwork_answer_count: #{module_progress_doc.lightwork_answer_count}
                         .item
-                            |module_lightwork_complete: #{module_lightwork_complete}
+                            |module_lightwork_complete: #{module_progress_doc.module_lightwork_complete}
 
             .extra
                 .ui.divided.list

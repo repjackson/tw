@@ -3,6 +3,9 @@ Template.username_filter.onCreated ->
         Meteor.subscribe('author_ids', 
             selected_theme_tags.array()
             selected_author_ids.array()
+            selected_location_tags.array()
+            selected_intention_tags.array()
+            selected_timestamp_tags.array()
             type=@data.type
             )
         Meteor.subscribe 'usernames'

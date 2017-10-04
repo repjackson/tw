@@ -1,4 +1,12 @@
-publishComposite 'journal_docs', (selected_theme_tags, selected_author_ids, selected_location_tags, selected_intention_tags, view_private, view_unread)->
+publishComposite 'journal_docs', (
+    selected_theme_tags 
+    selected_author_ids=[]
+    selected_location_tags
+    selected_intention_tags
+    selected_timestamp_tags
+    type
+    view_private
+    view_unread)->
     {
         find: ->
             self = @
@@ -10,7 +18,8 @@ publishComposite 'journal_docs', (selected_theme_tags, selected_author_ids, sele
             # match.published = true
             if selected_intention_tags.length > 0 then match.intention_tags = $in: selected_intention_tags
             if selected_location_tags.length > 0 then match.location_tags = $in: selected_location_tags
-            
+            if selected_timestamp_tags.length > 0 then match.timestamp_tags = $in: selected_timestamp_tags
+
             match.type = 'journal'
 
             if view_private is true then match.author_id = Meteor.userId()

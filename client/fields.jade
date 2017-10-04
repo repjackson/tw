@@ -50,13 +50,13 @@ template(name='tags')
         each tags
             a.ui.basic.animated.fade.large.button.doc_tag
                 .visible.content
-                    i.icon
-                        +icon24 name='hashtag' classes='avatar'
+                    // i.icon
+                    //     +icon24 name='hashtag' classes='avatar'
                     |#{this}
                 .hidden.content
                     i.icon
                         +icon24 name='delete' classes='avatar'
-                    |#{this}
+                    // |#{this}
 
 template(name='location_tags')
     .inline.field
@@ -67,13 +67,13 @@ template(name='location_tags')
         each location_tags
             a.ui.basic.large.animated.fade.large.button.doc_tag
                 .visible.content
-                    i.icon
-                        +icon24 name='geo-fence'
+                    // i.icon
+                    //     +icon24 name='geo-fence'
                     |#{this}
                 .hidden.content
                     i.icon
                         +icon24 name='delete'
-                    |#{this}
+                    // |#{this}
 
 template(name='intention_tags')
     .inline.field
@@ -84,13 +84,13 @@ template(name='intention_tags')
         each intention_tags
             a.ui.basic.large.animated.fade.large.button.doc_tag
                 .visible.content
-                    i.icon
-                        +icon24 name='spotlight' classes='ui image'
+                    // i.icon
+                        // +icon24 name='spotlight' classes='ui image' classed='ui avatar image'
                     |#{this}
                 .hidden.content
                     i.icon
                         +icon24 name='delete' classes='ui image'
-                    |#{this}
+                    // |#{this}
 
 
 template(name='dollar_price')

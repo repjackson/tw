@@ -203,7 +203,7 @@ template(name='featured')
 
 template(name='favorite_button')
     .ui.basic.icon.button.favorite_item(class=favorite_item_class)
-        +icon48 name='eye' classes=''
+        +icon24 name='heart' classes=''
         if favorite_count
             | #{favorite_count}
 
@@ -281,7 +281,7 @@ template(name='subscribe_button')
 template(name='toggle_zen_mode_button')
     if zen_mode
         a#turn_off_zen_mode(href="#")
-            +icon48 name='lotus' classes='ui avatar image' title="Turn off Zen Mode"
+            +icon48 name='lotus' title="Turn off Zen Mode" classes='ui centered link image'
             // |Zen
     else
         a#turn_on_zen_mode(href='#')

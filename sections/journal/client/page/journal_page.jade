@@ -1,6 +1,6 @@
 template(name='view_journal')
     a.ui.basic.button(href='/journal')
-        +icon48 name='double-left'
+        +icon48 name='double-left' classes='ui avatar image'
         strong Journal
     .ui.container.document_container
         h1.ui.center.aligned.header View Journal Entry
@@ -16,6 +16,8 @@ template(name='view_journal')
                     +analyzed_watson_keywords
                 +child_docs
             .five.wide.column
+                if can_edit
+                    +edit_link_button
                 .ui.header
                     |by
                     img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
@@ -41,5 +43,3 @@ template(name='view_journal')
                 +read_by
                 +published
                 .ui.divider
-                if is_author
-                    +edit_link_button

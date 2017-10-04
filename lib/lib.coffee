@@ -1,6 +1,7 @@
 @Tags = new Meteor.Collection 'tags'
 @Location_tags = new Meteor.Collection 'location_tags'
 @Intention_tags = new Meteor.Collection 'intention_tags'
+@Timestamp_tags = new Meteor.Collection 'timestamp_tags'
 @Watson_keywords = new Meteor.Collection 'watson_keywords'
 @People_tags = new Meteor.Collection 'people_tags'
 @Docs = new Meteor.Collection 'docs'

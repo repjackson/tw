@@ -1,7 +1,7 @@
 if Meteor.isClient
     FlowRouter.route '/exercises', action: ->
         BlazeLayout.render 'layout',
-            sub_nav: 'member_nav'
+            # sub_nav: 'member_nav'
             # sub_sub_nav: 'inspire_u_nav'
             main: 'exercises'
     
