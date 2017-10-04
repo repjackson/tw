@@ -1,15 +1,15 @@
 @selected_timestamp_tags = new ReactiveArray []
 
-Template.timestamp_facet.onCreated ->
-    @autorun => 
-        Meteor.subscribe('timestamp_tags', 
-            selected_theme_tags.array()
-            selected_author_ids.array()
-            selected_location_tags.array()
-            selected_intention_tags.array()
-            selected_timestamp_tags.array()
-            # author_id=@data.author_id
-            )
+# Template.timestamp_facet.onCreated ->
+#     @autorun => 
+#         Meteor.subscribe('timestamp_tags', 
+#             selected_theme_tags.array()
+#             selected_author_ids.array()
+#             selected_location_tags.array()
+#             selected_intention_tags.array()
+#             selected_timestamp_tags.array()
+#             # author_id=@data.author_id
+#             )
 
 
 Template.timestamp_facet.helpers

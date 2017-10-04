@@ -1,18 +1,18 @@
-Template.username_filter.onCreated ->
+Template.username_facet.onCreated ->
     @autorun => 
-        Meteor.subscribe('author_ids', 
-            selected_theme_tags.array()
-            selected_author_ids.array()
-            selected_location_tags.array()
-            selected_intention_tags.array()
-            selected_timestamp_tags.array()
-            type=@data.type
-            )
+        # Meteor.subscribe('facet', 
+        #     selected_theme_tags.array()
+        #     selected_author_ids.array()
+        #     selected_location_tags.array()
+        #     selected_intention_tags.array()
+        #     selected_timestamp_tags.array()
+        #     type=@data.type
+        #     )
         Meteor.subscribe 'usernames'
 
 
 
-Template.username_filter.helpers
+Template.username_facet.helpers
     author_tags: ->
         author_usernames = []
         
@@ -31,7 +31,7 @@ Template.username_filter.helpers
         selected_author_usernames
     
     
-Template.username_filter.events
+Template.username_facet.events
     'click .select_author': ->
         selected_author = Meteor.users.findOne username: @username
         selected_author_ids.push selected_author._id

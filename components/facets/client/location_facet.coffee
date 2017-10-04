@@ -1,17 +1,17 @@
 @selected_location_tags = new ReactiveArray []
 
-Template.location_tag_filter.onCreated ->
-    @autorun => 
-        Meteor.subscribe('location_tags', 
-            selected_theme_tags.array()
-            selected_author_ids.array()
-            selected_location_tags.array()
-            selected_intention_tags.array()
-            selected_timestamp_tags.array()
-            # author_id=@data.author_id
-            )
+# Template.location_facet.onCreated ->
+#     @autorun => 
+#         Meteor.subscribe('facet', 
+#             selected_theme_tags.array()
+#             selected_author_ids.array()
+#             selected_location_tags.array()
+#             selected_intention_tags.array()
+#             selected_timestamp_tags.array()
+#             # author_id=@data.author_id
+#             )
 
-Template.location_tag_filter.helpers
+Template.location_facet.helpers
     location_tags: ->
         doc_count = Docs.find(type:'journal').count()
         # if selected_location_tags.array().length
@@ -37,7 +37,7 @@ Template.location_tag_filter.helpers
 
 
 
-Template.location_tag_filter.events
+Template.location_facet.events
     'click .select_location_tag': -> selected_location_tags.push @name
     'click .unselect_location_tag': -> selected_location_tags.remove @valueOf()
     'click #clear_location_tags': -> selected_location_tags.clear()

@@ -1,17 +1,17 @@
 @selected_intention_tags = new ReactiveArray []
 
-Template.intention_tag_filter.onCreated ->
-    @autorun => 
-        Meteor.subscribe('intention_tags', 
-            selected_theme_tags.array()
-            selected_author_ids.array()
-            selected_location_tags.array()
-            selected_intention_tags.array()
-            selected_timestamp_tags.array()
-            # author_id=@data.author_id
-            )
+# Template.intention_facet.onCreated ->
+#     @autorun => 
+#         Meteor.subscribe('facet', 
+#             selected_theme_tags.array()
+#             selected_author_ids.array()
+#             selected_location_tags.array()
+#             selected_intention_tags.array()
+#             selected_timestamp_tags.array()
+#             # author_id=@data.author_id
+#             )
 
-Template.intention_tag_filter.helpers
+Template.intention_facet.helpers
     intention_tags: ->
         doc_count = Docs.find(type:'journal').count()
         # if selected_intention_tags.array().length
@@ -37,7 +37,7 @@ Template.intention_tag_filter.helpers
 
 
 
-Template.intention_tag_filter.events
+Template.intention_facet.events
     'click .select_intention_tag': -> selected_intention_tags.push @name
     'click .unselect_intention_tag': -> selected_intention_tags.remove @valueOf()
     'click #clear_intention_tags': -> selected_intention_tags.clear()

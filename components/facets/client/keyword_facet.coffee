@@ -1,8 +1,8 @@
-@selected_theme_tags = new ReactiveArray []
+@selected_keywords = new ReactiveArray []
 
-Template.theme_tag_filter.onCreated ->
+Template.keyword_facet.onCreated ->
     @autorun => 
-        Meteor.subscribe('theme_tags', 
+        Meteor.subscribe('facet', 
             selected_theme_tags.array()
             selected_author_ids.array()
             selected_location_tags.array()
@@ -12,19 +12,19 @@ Template.theme_tag_filter.onCreated ->
             author_id=@data.author_id
             )
 
-Template.theme_tag_filter.helpers
-    theme_tags: ->
+Template.keyword_facet.helpers
+    keywords: ->
         doc_count = Docs.find(type:'journal').count()
-        # if selected_theme_tags.array().length
+        # if selected_keywords.array().length
         if 0 < doc_count < 3
-            Tags.find { 
+            Watson_keywords.find { 
                 count: $lt: doc_count
-                }, limit:10
+                }, limit:20
         else
-            Tags.find({}, limit:10)
+            Watson_keywords.find({}, limit:20)
             
             
-    cloud_tag_class: ->
+    cloud_keyword_class: ->
         button_class = []
         switch
             when @index <= 5 then button_class.push 'large '
@@ -33,14 +33,14 @@ Template.theme_tag_filter.helpers
             when @index <= 20 then button_class.push ' tiny'
         return button_class
 
-    selected_theme_tags: -> selected_theme_tags.array()
+    selected_keywords: -> selected_keywords.array()
     # selected_author_ids: -> selected_author_ids.array()
     settings: -> {
         position: 'bottom'
         limit: 10
         rules: [
             {
-                collection: Tags
+                collection: Watson_keywords
                 field: 'name'
                 matchAll: false
                 template: Template.tag_result
@@ -50,10 +50,10 @@ Template.theme_tag_filter.helpers
 
 
 
-Template.theme_tag_filter.events
-    'click .select_theme_tag': -> selected_theme_tags.push @name
-    'click .unselect_theme_tag': -> selected_theme_tags.remove @valueOf()
-    'click #clear_theme_tags': -> selected_theme_tags.clear()
+Template.keyword_facet.events
+    'click .select_keyword': -> selected_keywords.push @name
+    'click .unselect_keyword': -> selected_keywords.remove @valueOf()
+    'click #clear_keywords': -> selected_keywords.clear()
 
 
 
@@ -64,17 +64,17 @@ Template.theme_tag_filter.events
             when 13 #enter
                 switch val
                     when 'clear'
-                        selected_theme_tags.clear()
+                        selected_keywords.clear()
                         $('#search').val ''
                     else
                         unless val.length is 0
-                            selected_theme_tags.push val.toString()
+                            selected_keywords.push val.toString()
                             $('#search').val ''
             when 8
                 if val.length is 0
-                    selected_theme_tags.pop()
+                    selected_keywords.pop()
                     
     'autocompleteselect #search': (event, template, doc) ->
         # console.log 'selected ', doc
-        selected_theme_tags.push doc.name
+        selected_keywords.push doc.name
         $('#search').val ''

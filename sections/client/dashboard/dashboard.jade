@@ -3,18 +3,13 @@ template(name='dashboard')
         // h2.ui.center.aligned.header 
         //     img(src="https://png.icons8.com/dashboard/color/96" title="Dashboard" width="96" height="96")
         //     |Dashboard
-        .ui.three.column.stackable.grid
+        .ui.stackable.grid
             .column
                 .row    
                     a#courses.ui.icon.center.aligned.header
                         i.icon
                             img(src="https://png.icons8.com/classroom/color/96" width="96" height="96")
                         |Courses
-                .row    
-                    a.ui.icon.center.aligned.header(href='/bookmarks')
-                        i.icon
-                            img(src="https://png.icons8.com/bookmark-ribbon/color/96" width="96" height="96")
-                        |Bookmarks
                         
                 .row    
                     a.ui.icon.center.aligned.header(href='/people')
@@ -33,25 +28,25 @@ template(name='dashboard')
                         |Journal
             .column
                 .row    
-                    a.ui.icon.center.aligned.header(href='/checkin')
-                        i.icon
-                            img(src="https://png.icons8.com/in-progress/color/96" width="96" height="96")
-                        |Check In
-                .row    
-                    a.ui.icon.center.aligned.header(href='/quizes')
-                        i.icon
-                            img(src="https://png.icons8.com/report-card/color/96" width="96" height="96")
-                        |Quizzes
-                .row    
-                    a.ui.icon.center.aligned.header(href='/exercises')
-                        i.icon
-                            img(src="https://png.icons8.com/hand-with-pen/color/96" width="96" height="96")
-                        |Exercises
-                .row    
                     a.ui.icon.center.aligned.header(href='/conversations')
                         i.icon
                             img(src="https://png.icons8.com/chat/color/96" width="96" height="96")
                         |Conversations
+                .row    
+                    a.ui.icon.center.aligned.header(href='/checkin')
+                        i.icon
+                            img(src="https://png.icons8.com/in-progress/color/96" width="96" height="96")
+                        |Check In
+                // .row    
+                //     a.ui.icon.center.aligned.header(href='/quizes')
+                //         i.icon
+                //             img(src="https://png.icons8.com/report-card/color/96" width="96" height="96")
+                //         |Quizzes
+                // .row    
+                //     a.ui.icon.center.aligned.header(href='/exercises')
+                //         i.icon
+                //             img(src="https://png.icons8.com/hand-with-pen/color/96" width="96" height="96")
+                //         |Exercises
                 if isInRole 'admin'
                     .row    
                         a.ui.icon.center.aligned.header(href='/admin/dashboard')
@@ -59,6 +54,11 @@ template(name='dashboard')
                                 img(src="https://png.icons8.com/monarch/color/96" width="96" height="96")
                             | Admin
             .column
+                .row    
+                    a.ui.icon.center.aligned.header(href='/bookmarks')
+                        i.icon
+                            img(src="https://png.icons8.com/bookmark-ribbon/color/96" width="96" height="96")
+                        |Bookmarks
                 .row    
                     a.ui.icon.center.aligned.header(href="/karma")
                         i.icon

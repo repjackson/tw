@@ -11,9 +11,11 @@ template(name='browse_journal')
                 // .ui.dividing.header Filters
                 // +view_read_toggle
                 #cloud
-                    +theme_tag_filter type='journal'
-                    +username_filter type='journal'
-                    +timestamp_facet
+                    +theme_facet type='journal'
+                    // +username_facet type='journal'
+                    +intention_facet type='journal'
+                    +location_facet type='journal'
+                    +timestamp_facet type='journal'
                     // +keyword_filter type='journal'
                 // a#toggle_published.ui.basic.button(class=published_item_class) 
                 //     i.red.unhide.icon
@@ -40,7 +42,7 @@ template(name='browse_entry_view')
             .description
                 +parent_doc_segment
                 .ui.basic.segment.large
-                    |!{content}
+                    |!{content} 
                     with author
                         |by 
                         if profile.image_id

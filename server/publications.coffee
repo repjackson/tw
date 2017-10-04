@@ -50,56 +50,69 @@ Meteor.publish 'me', ->
             bookmarked_ids: 1
     
     
-Meteor.publish 'theme_tags', (selected_theme_tags, selected_author_ids=[], selected_location_tags, selected_intention_tags, type=null, author_id=null, parent_id=null, manual_limit=null, view_private, view_unread)->
+# Meteor.publish 'theme_tags', (
+#     selected_theme_tags
+#     selected_author_ids=[]
+#     selected_location_tags
+#     selected_intention_tags
+#     type=null
+#     author_id=null
+#     parent_id=null
+#     manual_limit=null
+#     view_private
+#     view_unread
+#     )->
     
-    self = @
-    match = {}
+#     self = @
+#     match = {}
     
-    # match.tags = $all: selected_theme_tags
-    if type then match.type = type
-    if parent_id then match.parent_id = parent_id
-    if selected_theme_tags.length > 0 then match.tags = $all: selected_theme_tags
-    if selected_author_ids.length > 0 then match.author_id = $in: selected_author_ids
-    if selected_location_tags.length > 0 then match.author_id = $in: selected_location_tags
-    if selected_intention_tags.length > 0 then match.author_id = $in: selected_intention_tags
+#     # match.tags = $all: selected_theme_tags
+#     if type then match.type = type
+#     if parent_id then match.parent_id = parent_id
+#     if selected_theme_tags.length > 0 then match.tags = $all: selected_theme_tags
+#     if selected_author_ids.length > 0 then match.author_id = $in: selected_author_ids
+#     if selected_location_tags.length > 0 then match.author_id = $in: selected_location_tags
+#     if selected_intention_tags.length > 0 then match.author_id = $in: selected_intention_tags
     
-    # match.published = true
-    # console.log 'limit:', manual_limit
-    if manual_limit then limit=manual_limit else limit=50
-    if author_id then match.author_id = author_id
-    # console.log 'theme match', match
+#     # match.published = true
+#     # console.log 'limit:', manual_limit
+#     if manual_limit then limit=manual_limit else limit=50
+#     if author_id then match.author_id = author_id
+#     # console.log 'theme match', match
     
-    if view_private is true then match.author_id = Meteor.userId()
-    else if view_private is 'resonates'
-        match.favoriters = $in: [@userId]
-    else if view_private is 'all'
-        match.published = true
-            
+#     if view_private is true then match.author_id = Meteor.userId()
+#     else if view_private is 'resonates'
+#         match.favoriters = $in: [@userId]
+#     else if view_private is 'all'
+#         match.published = true
+    
+    
+#     cloud = Docs.aggregate [
+#         { $match: match }
+#         { $project: tags: 1 }
+#         { $unwind: "$tags" }
+#         { $group: _id: '$tags', count: $sum: 1 }
+#         { $match: _id: $nin: selected_theme_tags }
+#         { $sort: count: -1, _id: 1 }
+#         { $limit: limit }
+#         { $project: _id: 0, name: '$_id', count: 1 }
+#         ]
+#     # console.log 'theme cloud, ', cloud
+#     cloud.forEach (tag, i) ->
+#         self.added 'tags', Random.id(),
+#             name: tag.name
+#             count: tag.count
+#             index: i
 
-    
-    
-    cloud = Docs.aggregate [
-        { $match: match }
-        { $project: tags: 1 }
-        { $unwind: "$tags" }
-        { $group: _id: '$tags', count: $sum: 1 }
-        { $match: _id: $nin: selected_theme_tags }
-        { $sort: count: -1, _id: 1 }
-        { $limit: limit }
-        { $project: _id: 0, name: '$_id', count: 1 }
-        ]
-    # console.log 'theme cloud, ', cloud
-    cloud.forEach (tag, i) ->
-        self.added 'tags', Random.id(),
-            name: tag.name
-            count: tag.count
-            index: i
-
-    self.ready()
+#     self.ready()
         
         
 
-publishComposite 'docs', (selected_theme_tags, type, limit, view_private)->
+publishComposite 'docs', (
+    selected_theme_tags
+    type, 
+    limit, 
+    view_private)->
     {
         find: ->
             self = @
