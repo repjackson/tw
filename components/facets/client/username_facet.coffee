@@ -17,9 +17,10 @@ Template.username_facet.helpers
         author_usernames = []
         
         for author_id in Author_ids.find().fetch()
-            found_user = Meteor.users.findOne(author_id.text).username
-            # if found_user
-                # console.log Meteor.users.findOne(author_id.text).username
+            
+            found_user = Meteor.users.findOne(author_id.text)
+            if found_user
+                console.log Meteor.users.findOne(author_id.text).username
             author_usernames.push Meteor.users.findOne(author_id.text)
         author_usernames
 

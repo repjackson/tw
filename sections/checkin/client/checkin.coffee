@@ -33,13 +33,27 @@ Template.checkin_calendar_view.helpers
 
 Template.checkin.onCreated -> 
     @autorun => 
-        Meteor.subscribe('checkin', 
+        Meteor.subscribe('facet', 
             selected_theme_tags.array()
             selected_author_ids.array()
-            limit=10
+            selected_location_tags.array()
+            selected_intention_tags.array()
+            selected_timestamp_tags.array()
+            type='checkin'
+            author_id=null
+            parent_id=null
+            manual_limit=null
             Session.get('view_private')
+            view_published=true
             Session.get('view_unread')
+            view_bookmarked=false
             )
+
+Template.checkin_doc_view.onCreated -> 
+    self = @
+    @autorun => Meteor.subscribe 'doc', @data._id
+ 
+
 
 Template.checkin.helpers
     docs: -> 

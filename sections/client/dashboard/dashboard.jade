@@ -8,34 +8,33 @@ template(name='dashboard')
                 .row    
                     a#courses.ui.icon.center.aligned.header
                         i.icon
-                            img(src="https://png.icons8.com/classroom/color/96" width="96" height="96")
+                            +icon96 name='classroom'
                         |Courses
-                        
                 .row    
                     a.ui.icon.center.aligned.header(href='/people')
                         i.icon
-                            img(src="https://png.icons8.com/people/color/96" title="People" width="96" height="96")
+                            +icon96 name='people'
                         |Community
                 .row    
                     a#lightbank.ui.icon.center.aligned.header
                         i.icon
-                            img(src="https://png.icons8.com/summer/color/96" width="96" height="96" )
+                            +icon96 name='summer'
                         |LightBank
                 .row    
                     a.ui.icon.center.aligned.header(href='/journal')
                         i.icon
-                            img(src="https://png.icons8.com/journal/color/96" width="96" height="96")
+                            +icon96 name='journal'
                         |Journal
             .column
                 .row    
                     a.ui.icon.center.aligned.header(href='/conversations')
                         i.icon
-                            img(src="https://png.icons8.com/chat/color/96" width="96" height="96")
+                            +icon96 name='chat'
                         |Conversations
                 .row    
                     a.ui.icon.center.aligned.header(href='/checkin')
                         i.icon
-                            img(src="https://png.icons8.com/in-progress/color/96" width="96" height="96")
+                            +icon96 name='in-progress'
                         |Check In
                 // .row    
                 //     a.ui.icon.center.aligned.header(href='/quizes')
@@ -51,13 +50,13 @@ template(name='dashboard')
                     .row    
                         a.ui.icon.center.aligned.header(href='/admin/dashboard')
                             i.icon
-                                img(src="https://png.icons8.com/monarch/color/96" width="96" height="96")
+                                +icon96 name='monarch'
                             | Admin
             .column
                 .row    
                     a.ui.icon.center.aligned.header(href='/bookmarks')
                         i.icon
-                            img(src="https://png.icons8.com/bookmark-ribbon/color/96" width="96" height="96")
+                            +icon96 name='bookmark-ribbon'
                         |Bookmarks
                 .row    
                     a.ui.icon.center.aligned.header(href="/karma")

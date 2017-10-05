@@ -9,17 +9,18 @@
                 a.mobile.hidden.item(href='/about' class="{{isActivePath '/about'}}") 
                     i.icon
                         .ui.avatar.image
+                            +icon24 name='info'
                             img(src="https://png.icons8.com/info/color/24" width="24" height="24")
                     |About
-                a.mobile.hidden.item(href='/services' class="{{isActivePath '/services'}}") 
-                    i.icon
-                        .ui.image
-                            img(src="https://png.icons8.com/service-bell/color/24" width="24" height="24")
-                    |Services
+                // a.mobile.hidden.item(href='/services' class="{{isActivePath '/services'}}") 
+                //     i.icon
+                //         .ui.image
+                //             +icon24 name='service-bell'
+                //     |Services
                 a.mobile.hidden.item(href='/contact' class="{{isActivePath '/contact'}}") 
                     i.icon
                         .ui.image
-                            img(src="https://png.icons8.com/phone/color/24" width="24" height="24" )
+                            +icon24 name='phone'
                     |Contact
     unless currentUser
         a.mobile.hidden.item(href='/' class="{{isActivePath '/'}}")

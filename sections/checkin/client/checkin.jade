@@ -19,8 +19,8 @@ template(name='checkin')
             .ui.dividing.header Filters
             +view_published_toggle
             +view_read_toggle
-            +theme_tag_filter type='checkin'
-            +username_filter type='checkin'
+            +theme_facet type='checkin'
+            +username_facet type='checkin'
         .eleven.wide.column
             .ui.centered.stackable.cards
                 each docs
