@@ -1,70 +1,98 @@
+// template(name='checkin')
+//     // .ui.divider
+//     .ui.stackable.grid
+//         .five.wide.column
+//             h1.ui.center.aligned.header Check In
+//             if currentUser
+//                 #check_in.ui.green.fluid.button
+//                     i.large.icons
+//                         i.check.icon
+//                         i.plus.corner.icon
+//                     | Check In
+//             // +doc_content tags='checkin,blurb'
+//             // a.ui.basic.button(href='/checkin/calendar') 
+//             //     i.calendar.icon
+//             //     |Calendar View
+//             .ui.icon.fluid.input
+//                 input#quick_add(type='text' placeholder='Quick Add with Tags (separated by spaces)')
+//                 i.green.plus.icon
+//             .ui.dividing.header Filters
+//             +view_published_toggle
+//             +view_read_toggle
+//             +theme_facet type='checkin'
+//             +username_facet type='checkin'
+//         .eleven.wide.column
+//             .ui.centered.stackable.cards
+//                 each docs
+//                     +checkin_doc_view
+
+
+// template(name='checkin_doc_view')
+//     .ui.card.document_container(class=checkin_card_class)
+//         .content
+//             |!{content}
+//             .meta
+//                 img.ui.avatar.image(src="https://png.icons8.com/tags/color/48" width="48" height="48")
+//                 each tags
+//                     .ui.tiny.circular.button.tag(class=tag_class) #{this}
+//             if location_tags
+//                 .ui.hidden.divider
+//                 .meta
+//                     img.ui.avatar.image(src="https://png.icons8.com/geo-fence/color/48" width="48" height="48")
+//                     each location_tags
+//                         .ui.tiny.circular.button.tag(class=tag_class) #{this}
+//             .ui.hidden.divider
+//         .content
+//             if is_author
+//                 |you
+//             else        
+//                 a(href="/profile/#{author.username}")
+//                     img.ui.avatar.image(src="{{c.url author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+//                     |#{author.name}
+//             |#{when}
+//             span.right.floated
+//                 if published
+//                     img.ui.avatar.image(src="https://png.icons8.com/eye/color/48" width="48" height="48")
+//                 else
+//                     img.ui.avatar.image(src="https://png.icons8.com/invisible/color/48" width="48" height="48")
+//         .content
+//             +bookmark_button
+//             unless is_author
+//                 +thanks_button
+//         .content
+//             span.right.floated
+//                 +view_full_button
+//             // +bookmark_button
+//             +edit_link_button
+                    
+                    
+// template(name='checkin_calendar_view')
+//     #checkin-calendar
+    
 template(name='checkin')
-    // .ui.divider
-    .ui.stackable.grid
-        .five.wide.column
-            h1.ui.center.aligned.header Check In
-            if currentUser
-                #check_in.ui.green.fluid.button
-                    i.large.icons
-                        i.check.icon
-                        i.plus.corner.icon
-                    | Check In
-            // +doc_content tags='checkin,blurb'
-            // a.ui.basic.button(href='/checkin/calendar') 
-            //     i.calendar.icon
-            //     |Calendar View
-            .ui.icon.fluid.input
-                input#quick_add(type='text' placeholder='Quick Add with Tags (separated by spaces)')
-                i.green.plus.icon
-            .ui.dividing.header Filters
-            +view_published_toggle
-            +view_read_toggle
-            +theme_facet type='checkin'
-            +username_facet type='checkin'
-        .eleven.wide.column
-            .ui.centered.stackable.cards
-                each docs
-                    +checkin_doc_view
-
-
-template(name='checkin_doc_view')
-    .ui.card.document_container(class=checkin_card_class)
-        .content
-            |!{content}
-            .meta
-                img.ui.avatar.image(src="https://png.icons8.com/tags/color/48" width="48" height="48")
-                each tags
-                    .ui.tiny.circular.button.tag(class=tag_class) #{this}
-            if location_tags
-                .ui.hidden.divider
-                .meta
-                    img.ui.avatar.image(src="https://png.icons8.com/geo-fence/color/48" width="48" height="48")
-                    each location_tags
-                        .ui.tiny.circular.button.tag(class=tag_class) #{this}
-            .ui.hidden.divider
-        .content
-            if is_author
-                |you
-            else        
-                a(href="/profile/#{author.username}")
-                    img.ui.avatar.image(src="{{c.url author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
-                    |#{author.name}
-            |#{when}
-            span.right.floated
-                if published
-                    img.ui.avatar.image(src="https://png.icons8.com/eye/color/48" width="48" height="48")
-                else
-                    img.ui.avatar.image(src="https://png.icons8.com/invisible/color/48" width="48" height="48")
-        .content
-            +bookmark_button
-            unless is_author
-                +thanks_button
-        .content
-            span.right.floated
-                +view_full_button
-            // +bookmark_button
-            +edit_link_button
-                    
-                    
-template(name='checkin_calendar_view')
-    #checkin-calendar
+    .ui.container
+        // .ui.center.aligned.basic.segment
+        //     +doc_content tags='journal,blurb'
+        .ui.stackable.grid
+            .row
+                .eight.wide.centered.column
+                    .ui.header Quick Add (tags separated by spaces)
+                    .ui.icon.fluid.large.input
+                        input#quick_add(type='text' placeholder='eg. running sunny happy excited')
+                        i.yellow.lightning.icon
+                    .ui.divider
+                    #create_checkin.ui.large.basic.fluid.big.button 
+                        .ui.image
+                            +icon48 name='plus'
+                        |Check In
+                    .ui.hidden.divider
+                    a.ui.large.basic.fluid.big.button(href="/checkins/mine")
+                        .ui.image
+                            +icon48 name='data-quality'
+                        |My Check-Ins
+                    .ui.hidden.divider
+                    a.ui.large.basic.fluid.big.button(href="/checkins/browse") 
+                        .ui.image
+                            +icon48 name='cloud-checked'
+                        |Browse Public Check-Ins
+    

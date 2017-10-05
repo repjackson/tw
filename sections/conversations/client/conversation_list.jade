@@ -10,7 +10,7 @@ template(name='conversation_list_item')
             .description
                 each participants
                     // a(href="/profile/#{username}")
-                    img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                    img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}" title=name)
                     // |#{name}
                     +staus_indicator
             .description

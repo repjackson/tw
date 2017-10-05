@@ -7,21 +7,21 @@ template(name='journal')
                 .eight.wide.centered.column
                     #add_journal_entry.ui.large.basic.fluid.big.button 
                         .ui.image
-                            img(src="https://png.icons8.com/create-document/color/48" width="48" height="48")
+                            +icon48 name='create-document'
                         |New Entry
                     a.ui.large.basic.fluid.big.button(href="/journal/mine")
                         .ui.image
-                            img(src="https://png.icons8.com/journal/color/48" width="48" height="48")
+                            +icon48 name='journal'
                         |My Entries
                     a.ui.large.basic.fluid.big.button(href="/journal/prompts")
                         .ui.image
-                            img(src="https://png.icons8.com/ask-question/color/48" width="48" height="48")
+                            +icon48 name='ask-question'
                         | Prompts
                     a.ui.large.basic.fluid.big.disabled.button(href="/journal/templates")
                         .ui.image
-                            img(src="https://png.icons8.com/template/color/48" width="48" height="48")
+                            +icon48 name='template'
                         |Templates
                     a.ui.large.basic.fluid.big.button(href="/journal/browse") 
                         .ui.image
-                            img(src="https://png.icons8.com/reading/color/48" width="48" height="48")
+                            +icon48 name='reading'
                         |Browse

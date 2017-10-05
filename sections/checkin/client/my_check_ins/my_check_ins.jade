@@ -1,0 +1,49 @@
+template(name='my_check_ins')
+    .ui.container
+        h1.ui.center.aligned.header
+            +icon96 name='data-quality'
+            | My Check-Ins
+        // .ui.center.aligned.basic.segment
+        //     +doc_content tags='checkin,browse,blurb'
+        .ui.stackable.grid
+            .four.wide.column
+                // .ui.dividing.header Filters
+                // +view_read_toggle
+                #cloud
+                    +theme_facet type='checkin'
+                    // +username_facet type='checkin'
+                    // +intention_facet type='checkin'
+                    +location_facet type='checkin'
+                    +timestamp_facet type='checkin'
+                    // +keyword_filter type='checkin'
+                // a#toggle_published.ui.basic.button(class=published_item_class) 
+                //     i.red.unhide.icon
+                //     |Published (#{published_count})
+                // a#toggle_unpublished.ui.basic.button(class=unpublished_item_class) 
+                //     i.red.hide.icon
+                //     |Unpublished (#{unpublished_count})
+            
+                // a#toggle_mine.ui.basic.button(class=mine_item_class) 
+                //     |Mine (#{mine_count})
+            
+            .twelve.wide.column
+                // .ui.centered.stackable.cards
+                .ui.relaxed.divided.items
+                    each my_check_ins
+                        +my_check_in_view
+        
+
+
+
+template(name='my_check_in_view')
+    .ui.segment(class=checkin_card_class)
+        .content
+            .description
+                +view_tags
+                .ui.basic.segment.large
+                    |!{content} 
+                |#{when}
+                // .ui.divider
+        .content
+            +edit_link_button
+            +published

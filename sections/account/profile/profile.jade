@@ -41,47 +41,48 @@ template(name='profile_layout')
                                             //     | Feed
                                             a.item(href="/profile/#{username}/about" class="{{isActiveRoute name='profile_about'}}") 
                                                 i.icon
-                                                    img(src="https://png.icons8.com/info/color/24" width="24" height="24")
+                                                    +icon24 name='info'
                                                 |About
                                             a.item(href="/profile/#{username}/contact" class="{{isActiveRoute name='profile_contact'}}") 
                                                 i.icon
-                                                    img(src="https://png.icons8.com/phone/color/24" width="24" height="24")
+                                                    +icon24 name='classroom'
                                                 |Contact #{name}
                                             a.item(href="/profile/#{username}/courses" class="{{isActiveRoute name='profile_courses'}}")
                                                 i.icon
-                                                    img(src="https://png.icons8.com/classroom/color/24" width="24" height="24")
+                                                    +icon24 name='classroom'
                                                 |Courses
-                                            a.item(href="/profile/#{username}/quizes" class="{{isActiveRoute name='profile_quizes'}}")
-                                                i.icon
-                                                    img(src="https://png.icons8.com/hand-with-pen/color/24" width="24" height="24")
-                                                |Quizes
                                             a.item(href="/profile/#{username}/social" class="{{isActiveRoute name='profile_social'}}") 
                                                 i.icon
-                                                    img(src="https://png.icons8.com/chat/color/24" width="24" height="24" )
+                                                    +icon24 name='chat'
                                                 |Social
-                                            a.item(href="/profile/#{username}/journal" class="{{isActiveRoute name='profile_journal'}}") 
-                                                i.icon
-                                                    img(src="https://png.icons8.com/journal/color/24" width="24" height="24")
-                                                | Journal
-                                            if isInRole 'admin'
+                                            if isInRole 'dev'
+                                                a.item(href="/profile/#{username}/quizzes" class="{{isActiveRoute name='profile_quizes'}}")
+                                                    i.icon
+                                                        +icon24 name='hand-with-pen'
+                                                    |Quizes
+                                                a.item(href="/profile/#{username}/journal" class="{{isActiveRoute name='profile_journal'}}") 
+                                                    i.icon
+                                                        +icon24 name='journal'
+                                                    | Journal
                                                 a.item(href="/profile/#{username}/badges" class="{{isActiveRoute name='profile_badges'}}") 
                                                     i.icon
-                                                        img(src="https://png.icons8.com/police-badge/color/24" width="24" height="24")
+                                                        +icon24 name='police-badge'
                                                     | Karma + Badges
                                     if is_person_by_username
                                         .ui.vertical.fluid.pointing.menu
                                             a.item(href="/profile/#{currentUser.username}/account" class="{{isActiveRoute name='account_settings'}}") 
                                                 i.icon
-                                                    img(src="https://png.icons8.com/settings/color/24" width="24" height="24")
+                                                    +icon24 name='settings'
                                                 |Account Settings
-                                            a.item(href="/profile/#{currentUser.username}/email_settings" class="{{isActiveRoute name='email_settings'}}") 
-                                                i.icon
-                                                    img(src="https://png.icons8.com/message/color/24" width="24" height="24")
-                                                |Email Settings
+                                            if isInRole 'dev'
+                                                a.item(href="/profile/#{currentUser.username}/email_settings" class="{{isActiveRoute name='email_settings'}}") 
+                                                    i.icon
+                                                        +icon24 name='message'
+                                                    |Email Settings
                                         .ui.vertical.fluid.menu
                                             a#logout.item(href="#" data-position="bottom center" data-content="Log Out")
                                                 i.icon
-                                                    img(src="https://png.icons8.com/burglary/color/24" width="24" height="24")
+                                                    +icon24 name='burglary'
                                                 |Log Out
 
     
@@ -92,33 +93,33 @@ template(name='profile_layout')
         
 template(name='profile_journal')
     h1.ui.center.aligned.header 
-        img(src="https://png.icons8.com/journal/color/96" width="96" height="96")
+        +icon96 name='journal'
         |Journal
     +public_journal
         
 template(name='profile_karma')
     h1.ui.center.aligned.header 
         a(href='/karma')
-            img(src="https://png.icons8.com/diamond/color/96" width="96" height="96")
+            +icon96 name='diamond'
         |Karma
     +karma
         
 template(name='profile_quizes')
     h1.ui.center.aligned.header 
-        img(src="https://png.icons8.com/report-card/color/96" width="96" height="96")
+        +icon96 name='report-card'
         |Quizes
     +public_quiz_sessions
 
 
 template(name='profile_courses')
     h1.ui.center.aligned.header 
-        img(src="https://png.icons8.com/classroom/color/96" width="96" height="96")
+        +icon96 name='classroom'
         |Courses
     +user_courses
 
 template(name='profile_social')
     h1.ui.center.aligned.header 
-        img(src="https://png.icons8.com/chat/color/48" width="48" height="48")
+        +icon96 name='chat'
         |Social
     // +user_friends
     +following
@@ -128,20 +129,20 @@ template(name='profile_social')
 template(name='profile_about')
     with person
         h1.ui.center.aligned.header 
-            img(src="https://png.icons8.com/info/color/96" width="96" height="96")
+            +icon96 name='info'
             |About
         .ui.hidden.divider
         .ui.two.column.stackable.grid
             .column
                 if tags
-                    img.ui.avatar.image(src="https://png.icons8.com/hashtag/color/48" width="48" height="48")
+                    +icon48 name='hashtag'
                     each tags
                         .user_tag.ui.circular.large.basic.label #{this}
                 // +toggle_friend
                 // .ui.hidden.divider
                 if profile.location
                     .ui.header 
-                        img.ui.avatar.image(src="https://png.icons8.com/user-location/color/48" width="48" height="48")
+                        +icon48 name='user-location'
                         | #{profile.location}
                 if profile.about_me
                     .ui.header About Me

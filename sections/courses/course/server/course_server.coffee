@@ -121,7 +121,7 @@ Meteor.methods
             if module_progress_doc
                 console.log typeof module_progress_doc.module_progress_percent
                 if typeof(module_progress_doc.module_progress_percent) is 'number'
-                    console.log 'module', number, 'is a number'
+                    console.log 'module', course_number, 'is a number'
                     
                     if module_progress_doc.module_progress_percent > 0
                         if parseInt(Math.round(module_progress_doc.module_progress_percent)) is 100 
