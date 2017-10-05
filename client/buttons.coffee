@@ -365,7 +365,7 @@ Template.mark_complete_button.events
 
 
 Template.mark_doc_complete_button.helpers
-    complete_button_class: -> if @complete then 'active' else 'basic'
+    complete_button_class: -> if @complete then 'blue' else 'basic'
 Template.mark_doc_complete_button.events
     'click .mark_complete': (e,t)-> 
         if @complete is true then Docs.update @_id, $set: complete: false else  Docs.update @_id, $set:complete: true
@@ -376,7 +376,7 @@ Template.bookmark_button.helpers
     bookmark_button_class: -> 
         if Meteor.user()
             if @bookmarked_ids and Meteor.userId() in  @bookmarked_ids then 'teal' else 'basic'
-        else 'grey disabled'
+        else 'basic disabled'
         
     bookmarked: -> Meteor.user()?.bookmarked_ids and @_id in Meteor.user().bookmarked_ids
 

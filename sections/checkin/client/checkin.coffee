@@ -49,9 +49,9 @@ Template.checkin.onCreated ->
             view_bookmarked=false
             )
 
-Template.checkin_doc_view.onCreated -> 
-    self = @
-    @autorun => Meteor.subscribe 'doc', @data._id
+# Template.checkin_doc_view.onCreated -> 
+#     self = @
+#     @autorun => Meteor.subscribe 'doc', @data._id
  
 
 

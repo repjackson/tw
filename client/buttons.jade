@@ -146,8 +146,8 @@ template(name='add_to_cart')
 
 template(name='delete_button')
     unless confirming
-        .delete.ui.icon.red.basic.button
-            +icon48 name="delete" classes='avatar'
+        .delete.ui.icon.red.basic.compact.button
+            +icon24 name="delete" classes='avatar'
     else
         .ui.basic.button.cancel Cancel
         .ui.red.button.confirm Confirm Delete
@@ -210,19 +210,19 @@ template(name='favorite_button')
 template(name='mark_complete_button')
     .mark_complete.ui.circular.button(class=complete_button_class) 
         if completed
-            i.checkmark.box.icon
+            +icon24 name='checkmark' classes=''
             | Completed
         else
-            i.square.outline.icon
+            +icon24 name='unchecked-checkbox' classes=''
             | Mark Complete
         
 template(name='mark_doc_complete_button')
     .mark_complete.ui.circular.button(class=complete_button_class) 
         if complete
-            i.checkmark.box.icon
+            +icon24 name='checkmark' classes=''
             | Completed
         else
-            i.square.outline.icon
+            +icon24 name='unchecked-checkbox' classes=''
             | Complete
         
 template(name='bookmark_button')

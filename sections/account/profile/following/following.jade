@@ -2,20 +2,18 @@ template(name='following')
     with target_user
         .ui.segment
             if currentUser
-                .ui.header
-                    // |You are
-                    if is_following
-                        // |following #{profile.first_name}. 
-                        #unfollow.ui.basic.large.circular.right.floated.button 
-                            +icon48 name='cancel-subscription' classes='ui avatar image'
-                            |Unfollow
-                    else
-                        // |not following #{profile.first_name}. 
-                        #follow.ui.basic.large.circular.right.floated.button 
-                            +icon48 name='renew' classes='ui avatar image'
-                            |Follow
+                if is_following
+                    // |following #{profile.first_name}. 
+                    #unfollow.ui.basic.large.circular.centered.button 
+                        +icon48 name='cancel-subscription' classes='ui avatar image'
+                        |Unfollow
+                else
+                    // |not following #{profile.first_name}. 
+                    #follow.ui.basic.large.circular.centered.button 
+                        +icon48 name='renew' classes='ui avatar image'
+                        |Follow
                 .ui.hidden.divider
-            .ui.two.column.grid
+            .ui.two.column.stackable.grid
                 .column
                     .ui.dividing.header #{profile.first_name} is Followed by
                     .ui.divided.list

@@ -61,3 +61,19 @@ template(name='toggle_icon')
         a.ui.toggle.checkbox
             input#toggle_icon(type='checkbox' checked=has_icon)
             label(for='toggle_icon') Icon Class
+
+
+// Viewing
+template(name='toggle_view_complete')
+    .field
+        a.ui.toggle.checkbox
+            input#toggle_view_complete(type='checkbox' checked=viewing_complete)
+            label(for='toggle_view_complete') View Complete
+            
+template(name='toggle_view_incomplete')
+    .field
+        a.ui.toggle.checkbox
+            input#toggle_view_incomplete(type='checkbox' checked=viewing_incomplete)
+            label(for='toggle_view_incomplete') View Incomplete
+            
+            

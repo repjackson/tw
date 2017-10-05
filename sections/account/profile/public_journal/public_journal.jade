@@ -1,7 +1,7 @@
 template(name='public_journal')
     with user
         if public_journal_entries.count
-            +theme_tag_filter type='journal' author_id=user._id
+            +theme_facet type='journal' author_id=user._id
             .ui.dividing.header
                 if is_user
                     |My Public Journal Reponses
@@ -12,6 +12,6 @@ template(name='public_journal')
                     +journal_doc_view
         else
             h4.ui.header #{name} doesn't have any public journal entries.
-            .ui.teal.labeled.icon.button
+            a.ui.teal.labeled.icon.button(href="/journal")
                 i.edit.icon
                 |View Journal Section

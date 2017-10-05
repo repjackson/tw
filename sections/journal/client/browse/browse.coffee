@@ -27,7 +27,7 @@ Template.browse_journal.onCreated ->
         
 Template.browse_entry_view.onCreated -> 
     self = @
-    @autorun => Meteor.subscribe 'doc', @data._id
+    # @autorun => Meteor.subscribe 'doc', @data._id
  
             
             

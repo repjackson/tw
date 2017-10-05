@@ -1,30 +1,35 @@
 template(name='admin_dashboard')
-    .ui.stackable.grid
-        .five.wide.column
-            .ui.segment
-                +bug_reports
-        .five.wide.column
-            .ui.segment
-                .ui.header Journal
-            .ui.segment
-                .ui.header Journal
-        .five.wide.column
-            .ui.segment
-                .ui.header Checkin
+    .ui.segment
+        +bug_reports
 
 template(name='bug_reports')
     .ui.header
         +icon48 name='bug'
         |Bug Reports
-        .ui.divided.list
-            each bug_reports
-                .item
-                    .content
-                        .header #{body}
-                        .description
-                            |by #{author.name} #{when}
-                        .meta
-                            a(href=link) #{link}
+    .ui.grid
+        .four.wide.column
+            .ui.form
+                .header View Settings
+                +toggle_view_complete
+                // +toggle_view_incomplete
+            +timestamp_facet    
+            +username_facet
+        .twelve.wide.column
+            .ui.stackable.cards
+                each bug_reports
+                    +bug_report
+
+template(name='bug_report')
+    .card
+        .content
+            .header #{body}
+            .meta
+                a(href=link) #{link}
+            .meta
+                |by #{author.name} #{when}
+            .extra.content
+                +mark_doc_complete_button
+                +delete_button
 
 
     // .ui.container

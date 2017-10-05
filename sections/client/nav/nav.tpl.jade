@@ -8,9 +8,8 @@
             .ui.menu
                 a.mobile.hidden.item(href='/about' class="{{isActivePath '/about'}}") 
                     i.icon
-                        .ui.avatar.image
+                        .ui.image
                             +icon24 name='info'
-                            img(src="https://png.icons8.com/info/color/24" width="24" height="24")
                     |About
                 // a.mobile.hidden.item(href='/services' class="{{isActivePath '/services'}}") 
                 //     i.icon
@@ -46,17 +45,18 @@
                     +icon24 name='phone'
             |Contact
     else
-        a.ui.mobile.hidden.simple.dropdown.item(href='/lightschool' ) 
+        // a.ui.mobile.hidden.simple.dropdown.item(href='/lightschool' ) 
+        a.ui.mobile.hidden.item(href='/courses' data-position="bottom center" data-content="LightSchool") 
             .ui.image
                 +icon48 name='library'
-            .ui.large.menu
-                .header.item
-                    .ui.header LightSchool
-                a.item(href='/courses' class="{{isActivePath '/courses'}}")
-                    i.icon
-                        .ui.image
-                            +icon24 name='classroom'
-                    |Courses
+            // .ui.large.menu
+            //     .header.item
+            //         .ui.header LightSchool
+            //     a.item(href='/courses' class="{{isActivePath '/courses'}}")
+            //         i.icon
+            //             .ui.image
+            //                 +icon24 name='classroom'
+            //         |Courses
                 // a.item(href='/lightschool/exercises' class="{{isActivePath '/lightschool/exercises'}}")
                 //     i.icon
                 //         .ui.image
@@ -121,7 +121,7 @@
                         .ui.divider
                         each unread_notifications
                             .item #{subject.name} #{predicate} #{object.name}
-            a#report_bug.icon.item(href="#"  data-position="bottom center" data-content="Report a Bug")
+            a#report_bug.icon.item(href="#"  data-position="bottom center" data-content="Report a Bug/Feature Request")
                 .ui.image
                     +icon48 name='bug'
             a.icon.item(href="/dashboard" class="{{isActivePath '/dashboard'}}" data-position="bottom center" data-content="Dashboard")

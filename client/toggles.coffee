@@ -87,3 +87,26 @@ Template.toggle_journal_prompt.events
         Docs.update FlowRouter.getParam('doc_id'), 
             $set:
                 is_journal_prompt: value
+
+
+# Viewing
+
+Template.toggle_view_complete.events
+    'change #toggle_view_complete': (e,t)->
+        # console.log e.currentTarget.value
+        value = $('#toggle_view_complete').is(":checked")
+        Session.set 'view_complete', value
+        
+Template.toggle_view_complete.helpers
+    viewing_complete: -> Session.get 'view_complete'
+    
+Template.toggle_view_incomplete.events
+    'change #toggle_view_incomplete': (e,t)->
+        # console.log e.currentTarget.value
+        value = $('#toggle_view_incomplete').is(":checked")
+        Session.set 'view_incomplete', value
+        
+Template.toggle_view_incomplete.helpers
+    viewing_incomplete: -> Session.get 'view_incomplete'
+    
+    

@@ -139,7 +139,9 @@ if Meteor.isClient
         is_author: -> Meteor.userId() and @author_id is Meteor.userId()
         tag_class: -> if @valueOf() in selected_theme_tags.array() then 'teal' else 'basic'
         when: -> moment(@timestamp).fromNow()
-            
+        light_bank_content_class: -> if 'quote' in @tags then 'large150' else ''
+    
+    
     Template.lightbank_doc_view.events
         'click .tag': -> if @valueOf() in selected_theme_tags.array() then selected_theme_tags.remove(@valueOf()) else selected_theme_tags.push(@valueOf())
 

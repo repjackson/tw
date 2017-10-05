@@ -42,16 +42,17 @@ template(name='course_dashboard')
                         //         .item Welcome Video
                         //         .item Terms of Agreement
                         //         .item SOL Inspiration
-                a.ui.raised.card(href='/course/sol/stats')
-                    .content
-                        .center.aligned.header
-                            +icon48 name="combo-chart"
-                            |Stats
-                        // .description
-                        //     .ui.list
-                        //         .item Welcome Video
-                        //         .item Terms of Agreement
-                        //         .item SOL Inspiration
+                if isInRole 'dev'        
+                    a.ui.raised.card(href='/course/sol/stats')
+                        .content
+                            .center.aligned.header
+                                +icon48 name="combo-chart"
+                                |Stats
+                            // .description
+                            //     .ui.list
+                            //         .item Welcome Video
+                            //         .item Terms of Agreement
+                            //         .item SOL Inspiration
                 a.ui.raised.card(href='/course/sol/pins')
                     .content
                         .center.aligned.header

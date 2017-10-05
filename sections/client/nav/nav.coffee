@@ -85,7 +85,7 @@ Template.nav.events
         Docs.insert
             type: 'bug_report'
             body: bug_description
-            link: window.location.href
+            link: window.location.pathname
     
     'click #add_journal_entry': ->
         new_journal_id = Docs.insert

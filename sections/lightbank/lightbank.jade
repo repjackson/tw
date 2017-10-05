@@ -59,7 +59,8 @@ template(name='lightbank_doc_view')
             //         .expand_card.ui.basic.icon.button
             //             i.expand.icon
             if has_content
-                |!{content}
+                .light_bank_content(class=light_bank_content_class)
+                    |!{content}
         // .content
         //     .meta
         //         img.ui.avatar.image(src="https://png.icons8.com/tags/color/48" width="48" height="48")

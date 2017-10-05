@@ -43,10 +43,11 @@ template(name='view_course')
                         i.icon
                             +icon24 name="push-pin" classes='avatar'
                         |Pins
-                    a.item(href="/course/sol/stats" class="{{isActiveRoute name='course_stats'}}") 
-                        i.icon
-                            +icon24 name="combo-chart"
-                        |Stats
+                    if isInRole 'dev'    
+                        a.item(href="/course/sol/stats" class="{{isActiveRoute name='course_stats'}}") 
+                            i.icon
+                                +icon24 name="combo-chart"
+                            |Stats
                     // else
                     //     .disabled.item 
                     //         i.list.layout.icon
