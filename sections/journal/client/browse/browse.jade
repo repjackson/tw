@@ -5,7 +5,6 @@ template(name='browse_journal')
             | Browse Journal Entries
         // .ui.center.aligned.basic.segment
         //     +doc_content tags='journal,browse,blurb'
-        // #convert_journal_docs.ui.button Convert Journal Docs
         .ui.stackable.grid
             .four.wide.column
                 // .ui.dividing.header Filters
@@ -51,6 +50,7 @@ template(name='browse_entry_view')
                         +staus_indicator
                     |#{when}
                 // .ui.divider
+                +view_tags
         .ui.styled.fluid.accordion
             .title
                 .ui.header 
@@ -62,7 +62,6 @@ template(name='browse_entry_view')
                     .ten.wide.column
                         .ui.basic.segment
                             .ui.hidden.divider
-                            +view_tags
                             .ui.hidden.divider
                             span.right.floated
                                 +view_full_button

@@ -5,19 +5,23 @@ FlowRouter.route '/journal/mine', action: (params) ->
 Template.my_journal.onCreated -> 
     self = @
     @autorun => 
-        Meteor.subscribe('journal_docs', 
+        Meteor.subscribe('facet', 
             selected_theme_tags.array()
-            [Meteor.userId()]
+            selected_author_ids.array()
             selected_location_tags.array()
             selected_intention_tags.array()
+            selected_timestamp_tags.array()
+            type='journal'
+            author_id=Meteor.userId()
+            parent_id=null
+            manual_limit=null
+            view_private=true
+            view_published=false
+            view_unread=false
+            view_bookmarked=false
             )
-    @autorun -> Meteor.subscribe 'unread_journal_count'
         
             
-            
-            
-            
-
 Template.my_entry_view.onRendered ->
     @autorun =>
         if @subscriptionsReady()

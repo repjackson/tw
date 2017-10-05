@@ -1,17 +1,5 @@
 @selected_theme_tags = new ReactiveArray []
 
-# Template.theme_facet.onCreated ->
-#     @autorun => 
-#         Meteor.subscribe('facet', 
-#             selected_theme_tags.array()
-#             selected_author_ids.array()
-#             selected_location_tags.array()
-#             selected_intention_tags.array()
-#             selected_timestamp_tags.array()
-#             type=@data.type
-#             author_id=@data.author_id
-#             )
-
 Template.theme_facet.helpers
     theme_tags: ->
         doc_count = Docs.find(type:'journal').count()
@@ -34,7 +22,6 @@ Template.theme_facet.helpers
         return button_class
 
     selected_theme_tags: -> selected_theme_tags.array()
-    # selected_author_ids: -> selected_author_ids.array()
     settings: -> {
         position: 'bottom'
         limit: 10
@@ -54,8 +41,6 @@ Template.theme_facet.events
     'click .select_theme_tag': -> selected_theme_tags.push @name
     'click .unselect_theme_tag': -> selected_theme_tags.remove @valueOf()
     'click #clear_theme_tags': -> selected_theme_tags.clear()
-
-
 
     'keyup #search': (e,t)->
         e.preventDefault()

@@ -7,16 +7,24 @@ if Meteor.isClient
     
     # Session.setDefault 'lightbank_view_mode', 'all'
     Template.lightbank.onCreated -> 
-        @autorun -> 
-            Meteor.subscribe('lightbank_docs', 
-                selected_theme_tags.array(), 
-                limit=10, 
-                view_resonates=Session.get('view_resonates'), 
-                view_bookmarked=Session.get('view_bookmarked'), 
-                view_completed=Session.get('view_completed')
+        @autorun => 
+            Meteor.subscribe('facet', 
+                selected_theme_tags.array()
+                selected_author_ids.array()
+                selected_location_tags.array()
+                selected_intention_tags.array()
+                selected_timestamp_tags.array()
+                type='lightbank'
+                author_id=Meteor.userId()
+                parent_id=null
+                manual_limit=null
+                view_private=false
                 view_published=Session.get('view_published')
-                view_unpublished=Session.get('view_unpublished')
+                view_unread=false
+                view_bookmarked=Session.get('view_bookmarked')
+                view_resonates=Session.get('view_resonates')
                 )
+
         @autorun -> Meteor.subscribe 'unpublished_lightbank_count'
         @autorun -> Meteor.subscribe 'published_lightbank_count'
     
@@ -136,49 +144,6 @@ if Meteor.isClient
         'click .tag': -> if @valueOf() in selected_theme_tags.array() then selected_theme_tags.remove(@valueOf()) else selected_theme_tags.push(@valueOf())
 
 if Meteor.isServer
-    publishComposite 'lightbank_docs', (selected_theme_tags, limit, view_resonates, view_bookmarked, view_completed, view_published, view_unpublished)->
-        {
-            find: ->
-                self = @
-                match = {}
-                # match.tags = $all: selected_theme_tags
-                if selected_theme_tags.length > 0 then match.tags = $all: selected_theme_tags
-                match.type = 'lightbank'
-                if view_resonates then match.favoriters = $in: [@userId]
-                if view_bookmarked then match.bookmarked_ids = $in: [@userId]
-                if view_completed then match.completed_ids = $in: [@userId]
-                if view_published then match.published = true
-                if view_unpublished then match.published = false
-                # if lightbank_view_mode and lightbank_view_mode is 'mine'
-                #     match.author_id
-            
-                if limit
-                    Docs.find match, 
-                        limit: limit
-                        sort: timestamp: -1
-                else
-                    Docs.find match,
-                        sort: timestamp: -1
-            children: [
-                { find: (doc) ->
-                    Meteor.users.find 
-                        _id: doc.author_id
-                    }
-                { find: (doc) ->
-                    if doc.favoriters
-                        Meteor.users.find 
-                            _id: $in: doc.favoriters
-                    }
-                
-                ]    
-        }
-
-
-
-
-
-
-
     Meteor.publish 'unpublished_lightbank_count', ->
         Counts.publish this, 'unpublished_lightbank_count', Docs.find(type: 'lightbank', published:false)
         return undefined    # otherwise coffeescript returns a Counts.publish

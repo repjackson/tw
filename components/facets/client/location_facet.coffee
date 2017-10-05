@@ -1,16 +1,5 @@
 @selected_location_tags = new ReactiveArray []
 
-# Template.location_facet.onCreated ->
-#     @autorun => 
-#         Meteor.subscribe('facet', 
-#             selected_theme_tags.array()
-#             selected_author_ids.array()
-#             selected_location_tags.array()
-#             selected_intention_tags.array()
-#             selected_timestamp_tags.array()
-#             # author_id=@data.author_id
-#             )
-
 Template.location_facet.helpers
     location_tags: ->
         doc_count = Docs.find(type:'journal').count()
@@ -33,7 +22,6 @@ Template.location_facet.helpers
         return button_class
 
     selected_location_tags: -> selected_location_tags.array()
-    # selected_author_ids: -> selected_author_ids.array()
 
 
 
@@ -41,8 +29,6 @@ Template.location_facet.events
     'click .select_location_tag': -> selected_location_tags.push @name
     'click .unselect_location_tag': -> selected_location_tags.remove @valueOf()
     'click #clear_location_tags': -> selected_location_tags.clear()
-
-
 
     'keyup #search': (e,t)->
         e.preventDefault()

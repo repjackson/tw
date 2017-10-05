@@ -1,14 +1,6 @@
 @selected_participant_ids = new ReactiveArray []
 
-
 Template.participant_facet.onCreated ->
-#     # @autorun -> Meteor.subscribe('tags', selected_conversation_tags.array(), 'conversation')
-#     @autorun -> Meteor.subscribe 'participant_ids', 
-#         selected_theme_tags.array()
-#         selected_author_ids.array()
-#         selected_location_tags.array()
-#         selected_intention_tags.array()
-#         selected_timestamp_tags.array()
     Meteor.subscribe 'usernames'
 
 Template.participant_facet.helpers

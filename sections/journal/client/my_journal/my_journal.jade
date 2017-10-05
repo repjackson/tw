@@ -1,7 +1,7 @@
 template(name='my_journal')
     // .ui.container
     h1.ui.center.aligned.header
-        img.ui.avatar.image(src="https://png.icons8.com/journal/color/96" width="96" height="96")
+        +icon96 name='journal' classes='ui avatar image'
         | My Journal Entries
     // .ui.center.aligned.basic.segment
     //     +doc_content tags='journal,mine,blurb'
@@ -10,9 +10,9 @@ template(name='my_journal')
             // .ui.dividing.header Filters
             // +view_published_toggle
             #cloud
-                +theme_tag_filter type='journal'
-                +location_tag_filter type='journal'
-                +intention_tag_filter type='journal'
+                +theme_facet type='journal'
+                +location_facet type='journal'
+                +intention_facet type='journal'
                 
                 // +keyword_filter type='journal'
             // a#toggle_published.ui.basic.button(class=published_item_class) 
@@ -38,31 +38,38 @@ template(name='my_entry_view')
     .ui.segment.document_container(class=journal_segment_class)
         .content
             .description
+                +parent_doc_segment
                 .ui.basic.segment.large
                     |!{content}
-                +parent_doc_segment
-                // .ui.divider
-        .ui.divided.stackable.grid
-            .ten.wide.column
-                .ui.basic.segment
-                    |written #{when}
-                    +view_tags
-                    .extra
-                        span.right.floated
-                            +view_full_button
-                        +bookmark_button
-                        +edit_link_button
-                        if is_author
-                            +published
-            .six.wide.column
-                .image
-                    .ui.basic.segment
-                        if watson
-                            +doc_sentiment
-                            +doc_emotion
-                        else
-                            if can_edit
-                                +call_watson
+            +view_tags
+            |written #{when}
+            .ui.divider
+        .ui.styled.fluid.accordion
+            .title
+                .ui.header 
+                    +icon48 name='details' classes='ui avatar image'
+                    |Details 
+                    i.dropdown.icon
+            .content
+                .ui.divided.stackable.grid
+                    .ten.wide.column
+                        .ui.basic.segment
+                            .extra
+                                span.right.floated
+                                    +view_full_button
+                                +bookmark_button
+                                +edit_link_button
+                                if is_author
+                                    +published
+                    .six.wide.column
+                        .image
+                            .ui.basic.segment
+                                if watson
+                                    +doc_sentiment
+                                    +doc_emotion
+                                else
+                                    if can_edit
+                                        +call_watson
             // .meta
             //     i.large.icons
             //         i.idea.icon

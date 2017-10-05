@@ -7,19 +7,6 @@ FlowRouter.route '/journal/browse', action: (params) ->
 Template.browse_journal.onCreated -> 
     self = @
     @autorun => 
-        # Meteor.subscribe('journal_docs', 
-        #     selected_theme_tags.array()
-        #     selected_author_ids.array()
-        #     selected_location_tags.array()
-        #     selected_intention_tags.array()
-        #     selected_timestamp_tags.array()
-        #     type='journal'
-        #     author_id=null
-        #     parent_id=null
-        #     manual_limit=null
-        #     view_private=false
-        #     view_unread=false
-        #     )
         Meteor.subscribe('facet', 
             selected_theme_tags.array()
             selected_author_ids.array()
@@ -33,6 +20,7 @@ Template.browse_journal.onCreated ->
             view_private=false
             view_published=true
             view_unread=false
+            view_bookmarked=false
             )
         
     @autorun -> Meteor.subscribe 'unread_journal_count'

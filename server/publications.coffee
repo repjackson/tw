@@ -49,102 +49,8 @@ Meteor.publish 'me', ->
             completed_ids: 1
             bookmarked_ids: 1
     
-    
-# Meteor.publish 'theme_tags', (
-#     selected_theme_tags
-#     selected_author_ids=[]
-#     selected_location_tags
-#     selected_intention_tags
-#     type=null
-#     author_id=null
-#     parent_id=null
-#     manual_limit=null
-#     view_private
-#     view_unread
-#     )->
-    
-#     self = @
-#     match = {}
-    
-#     # match.tags = $all: selected_theme_tags
-#     if type then match.type = type
-#     if parent_id then match.parent_id = parent_id
-#     if selected_theme_tags.length > 0 then match.tags = $all: selected_theme_tags
-#     if selected_author_ids.length > 0 then match.author_id = $in: selected_author_ids
-#     if selected_location_tags.length > 0 then match.author_id = $in: selected_location_tags
-#     if selected_intention_tags.length > 0 then match.author_id = $in: selected_intention_tags
-    
-#     # match.published = true
-#     # console.log 'limit:', manual_limit
-#     if manual_limit then limit=manual_limit else limit=50
-#     if author_id then match.author_id = author_id
-#     # console.log 'theme match', match
-    
-#     if view_private is true then match.author_id = Meteor.userId()
-#     else if view_private is 'resonates'
-#         match.favoriters = $in: [@userId]
-#     else if view_private is 'all'
-#         match.published = true
-    
-    
-#     cloud = Docs.aggregate [
-#         { $match: match }
-#         { $project: tags: 1 }
-#         { $unwind: "$tags" }
-#         { $group: _id: '$tags', count: $sum: 1 }
-#         { $match: _id: $nin: selected_theme_tags }
-#         { $sort: count: -1, _id: 1 }
-#         { $limit: limit }
-#         { $project: _id: 0, name: '$_id', count: 1 }
-#         ]
-#     # console.log 'theme cloud, ', cloud
-#     cloud.forEach (tag, i) ->
-#         self.added 'tags', Random.id(),
-#             name: tag.name
-#             count: tag.count
-#             index: i
 
-#     self.ready()
-        
-        
-
-publishComposite 'docs', (
-    selected_theme_tags
-    type, 
-    limit, 
-    view_private)->
-    {
-        find: ->
-            self = @
-            match = {}
-            # match.tags = $all: selected_theme_tags
-            if selected_theme_tags.length > 0 then match.tags = $all: selected_theme_tags
-            if type then match.type = type
-            # console.log view_private
-            if view_private is true then match.author_id = Meteor.userId()
-            else if view_private is false then match.published = true
-                    
-            if limit
-                Docs.find match, 
-                    limit: limit
-            else
-                Docs.find match
-        children: [
-            {
-                find: (doc)->
-                    Meteor.users.find
-                        _id: doc.author_id
-            }
-            {
-                find: (doc)->
-                    Docs.find
-                        _id: doc.parent_id
-            }
-        ]
-
-    }
-
-publishComposite 'doc', (id)->
+publishComposite 'doc', (id, ancestor_levels, descendent_levels)->
     {
         find: ->
             Docs.find id
@@ -255,20 +161,6 @@ Meteor.publish 'doc_by_tags', (tags)->
         tags: tags
 
     
-# publishComposite 'questions', (section_id)->
-#     {
-#         find: ->
-#             Docs.find 
-#                 type: 'question'
-#                 section_id: section_id
-#         children: [
-#             { find: (question) ->
-#                 Docs.find
-#                     type: 'answer'
-#                     question_id: question._id
-#             }
-#         ]
-#     }
     
         
 # Meteor.publish 'my_friends', ->
@@ -367,80 +259,8 @@ Meteor.publish 'people_tags', (selected_people_tags)->
 
 
 
-Meteor.publish 'bookmarked_tags', (selected_theme_tags)->
-    
-    self = @
-    match = {}
-    
-    match.bookmarked_ids = $in: [Meteor.userId()]
-    
-    # match.tags = $all: selected_theme_tags
-    if selected_theme_tags.length > 0 then match.tags = $all: selected_theme_tags
-    
-    cloud = Docs.aggregate [
-        { $match: match }
-        { $project: tags: 1 }
-        { $unwind: "$tags" }
-        { $group: _id: '$tags', count: $sum: 1 }
-        { $match: _id: $nin: selected_theme_tags }
-        { $sort: count: -1, _id: 1 }
-        { $limit: 20 }
-        { $project: _id: 0, name: '$_id', count: 1 }
-        ]
-    # console.log 'cloud, ', cloud
-    cloud.forEach (tag, i) ->
-        self.added 'tags', Random.id(),
-            name: tag.name
-            count: tag.count
-            index: i
-
-    self.ready()
-        
-publishComposite 'author_ids', (selected_theme_tags, selected_author_ids, type)->
-    
-    {
-        find: ->
-            self = @
-            match = {}
-            if type then match.type = type
-            if selected_theme_tags.length > 0 then match.tags = $all: selected_theme_tags
-            if selected_author_ids.length > 0 then match.author_id = $in: selected_author_ids
-            match.published = true
-            
-            cloud = Docs.aggregate [
-                { $match: match }
-                { $project: author_id: 1 }
-                { $group: _id: '$author_id', count: $sum: 1 }
-                { $match: _id: $nin: selected_author_ids }
-                { $sort: count: -1, _id: 1 }
-                { $limit: 20 }
-                { $project: _id: 0, text: '$_id', count: 1 }
-                ]
-        
-        
-            # console.log cloud
-            
-            # author_objects = []
-            # Meteor.users.find _id: $in: cloud.
-        
-            cloud.forEach (author_id) ->
-                self.added 'author_ids', Random.id(),
-                    text: author_id.text
-                    count: author_id.count
-            self.ready()
-        
-        children: [
-            { find: (doc) ->
-                Meteor.users.find 
-                    _id: doc.author_id
-                }
-            ]    
-    }
-    
-    
-    
 Meteor.publish 'usernames', ->
-    Meteor.users.find()
-        # fields: 
-        #     username: 1
-        #     profile: 1
+    Meteor.users.find
+        fields: 
+            username: 1
+            profile: 1
