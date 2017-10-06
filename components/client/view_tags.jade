@@ -1,35 +1,39 @@
 template(name='view_tags')
-    .meta
-        img.ui.avatar.image(src="https://png.icons8.com/hashtag/color/48" title='Theme Tags' width="48" height="48")
-        each tags
-            .ui.tiny.circular.compact.button.theme_tag(class=theme_tag_class) #{this}
-
-
-    if location_tags
-        .meta
-            img.ui.avatar.image(src="https://png.icons8.com/geo-fence/color/48" title='Location Tags'  width="48" height="48")
-            each location_tags
-                .ui.tiny.circular.compact.button.location_tag(class=location_tag_class) #{this}
-
     if intention_tags
         .meta
-            img.ui.avatar.image(src="https://png.icons8.com/spotlight/color/48" title='Intention Tags' width="48" height="48")
+            +icon48 name='spotlight' classes='ui avatar image' title='Intention Tags'
             each intention_tags
-                .ui.tiny.circular.compact.button.intention_tag(class=intention_tag_class) #{this}
+                .ui.circular.button.intention_tag(class=intention_tag_class) 
+                    // +icon24 name='spotlight'
+                    strong #{this}
+    if location_tags
+        .meta
+            +icon48 name='geo-fence' classes='ui avatar image' title='Location Tags'
+            each location_tags
+                .ui.circular.button.location_tag(class=location_tag_class)
+                    // +icon24 name='geo-fence' title='Location Tags'
+                    strong #{this}
+    .meta
+        +icon48 name='hashtag' classes='ui avatar image' title='Theme Tags'
+        each tags
+            .ui.circular.button.theme_tag(class=theme_tag_class)
+                // +icon24 name='hashtag' classes='ui avatar image'
+                strong #{this}
+
 
 template(name='view_tags_sidebar')
     .ui.dividing.header 
-        img.ui.avatar.image(src="https://png.icons8.com/hashtag/color/48" width="48" height="48")
+        +icon48 name='hashtag'
         |Theme Tags
     each tags
         .ui.basic.large.label.doc_tag #{this}
     .ui.dividing.header 
-        img.ui.avatar.image(src="https://png.icons8.com/geo-fence/color/48" width="48" height="48")
+        +icon48 name='geo-fence'
         |Location Tags
     each location_tags
         .ui.basic.large.label.location_tag #{this}
     .ui.dividing.header 
-        img.ui.avatar.image(src="https://png.icons8.com/flash-light/color/48" width="48" height="48")
+        +icon48 name='spotlight'
         |Intention Tags
     each intention_tags
         .ui.basic.large.label.intention_tag #{this}

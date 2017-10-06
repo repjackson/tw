@@ -3,6 +3,7 @@ $.cloudinary.config
 
 Session.setDefault 'cart_item', null
 Session.setDefault 'zen_mode', false
+Session.setDefault 'doc_limit', 10
 
 
 Session.setDefault 'view_private', true

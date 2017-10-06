@@ -2,7 +2,7 @@
 
 Template.theme_facet.helpers
     theme_tags: ->
-        doc_count = Docs.find(type:'journal').count()
+        doc_count = Docs.find(type:Template.currentData().type).count()
         # if selected_theme_tags.array().length
         if 0 < doc_count < 3
             Tags.find { 
@@ -15,10 +15,10 @@ Template.theme_facet.helpers
     cloud_tag_class: ->
         button_class = []
         switch
-            when @index <= 5 then button_class.push 'large '
-            when @index <= 10 then button_class.push ' '
-            when @index <= 15 then button_class.push 'small '
-            when @index <= 20 then button_class.push ' tiny'
+            when @index <= 5 then button_class.push ' '
+            when @index <= 10 then button_class.push 'small'
+            when @index <= 15 then button_class.push 'tiny '
+            when @index <= 20 then button_class.push ' mini'
         return button_class
 
     selected_theme_tags: -> selected_theme_tags.array()

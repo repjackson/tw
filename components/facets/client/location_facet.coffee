@@ -2,7 +2,7 @@
 
 Template.location_facet.helpers
     location_tags: ->
-        doc_count = Docs.find(type:'journal').count()
+        doc_count = Docs.find(type: Template.currentData().type).count()
         # if selected_location_tags.array().length
         if 0 < doc_count < 3
             Location_tags.find { 
@@ -15,10 +15,10 @@ Template.location_facet.helpers
     location_tag_class: ->
         button_class = []
         switch
-            when @index <= 5 then button_class.push 'large '
-            when @index <= 10 then button_class.push ' '
-            when @index <= 15 then button_class.push 'small '
-            when @index <= 20 then button_class.push ' tiny'
+            when @index <= 5 then button_class.push ' '
+            when @index <= 10 then button_class.push 'small'
+            when @index <= 15 then button_class.push 'tiny '
+            when @index <= 20 then button_class.push ' mini'
         return button_class
 
     selected_location_tags: -> selected_location_tags.array()

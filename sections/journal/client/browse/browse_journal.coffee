@@ -16,23 +16,28 @@ Template.browse_journal.onCreated ->
             type='journal'
             author_id=null
             parent_id=null
-            manual_limit=null
+            tag_limit=10
+            doc_limit=Session.get 'doc_limit'
             view_private=false
             view_published=true
-            view_unread=false
+            view_unread=Session.get 'view_unread'
             view_bookmarked=false
             )
         
-    @autorun -> Meteor.subscribe 'unread_journal_count'
+    # @autorun -> Meteor.subscribe 'unread_journal_count'
+   
+Template.browse_journal.events
+    'click #add_journal_entry': ->
+        new_journal_id = Docs.insert
+            type: 'journal'
+        FlowRouter.go("/edit/#{new_journal_id}")    
+   
+   
         
 Template.browse_entry_view.onCreated -> 
-    self = @
-    # @autorun => Meteor.subscribe 'doc', @data._id
+    @autorun => Meteor.subscribe 'author', @data._id
+    
  
-            
-            
-            
-
 Template.browse_entry_view.onRendered ->
     @autorun =>
         if @subscriptionsReady()
@@ -45,14 +50,11 @@ Template.browse_journal.helpers
     journal_entries: -> 
         match = {}
         match.type = 'journal'
-        if selected_author_ids.array().length > 0 then match.author_id = $in: selected_author_ids.array()
         Docs.find match, 
             sort:
                 timestamp: -1
-            limit: 5
 
     tag_class: -> if @valueOf() in selected_theme_tags.array() then 'teal' else 'basic'
-
         
     journal_card_class: -> if @published then 'blue' else ''
     
@@ -61,28 +63,9 @@ Template.browse_journal.helpers
 
 
 Template.browse_entry_view.helpers
-    tag_class: -> if @valueOf() in selected_theme_tags.array() then 'teal' else 'basic'
+    # tag_class: -> if @valueOf() in selected_theme_tags.array() then 'teal' else 'basic'
     journal_card_class: -> if @published then 'blue' else ''
 
-    read: -> Meteor.userId() in @read_by
-    liked: -> Meteor.userId() in @liked_by
-    
-    read_count: -> @read_by.length    
-    liked_count: -> @liked_by.length    
 
-
-Template.browse_entry_view.events
-    'click .tag': -> if @valueOf() in selected_theme_tags.array() then selected_theme_tags.remove(@valueOf()) else selected_theme_tags.push(@valueOf())
-
-    'click .mark_read': (e,t)-> 
-        $(e.currentTarget).closest('.journal_segment').transition('pulse')
-        Docs.update @_id, $addToSet: read_by: Meteor.userId()
-        
-    'click .mark_unread': (e,t)-> 
-        $(e.currentTarget).closest('.journal_segment').transition('pulse')
-        Docs.update @_id, $pull: read_by: Meteor.userId()
-
-
-
-
-
+# Template.browse_entry_view.events
+#     'click .tag': -> if @valueOf() in selected_theme_tags.array() then selected_theme_tags.remove(@valueOf()) else selected_theme_tags.push(@valueOf())

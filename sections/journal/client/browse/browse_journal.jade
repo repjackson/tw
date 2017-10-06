@@ -1,37 +1,35 @@
 template(name='browse_journal')
-    .ui.container
-        h1.ui.center.aligned.header
-            +icon96 name='reading'
-            | Browse Journal Entries
-        // .ui.center.aligned.basic.segment
-        //     +doc_content tags='journal,browse,blurb'
-        .ui.stackable.grid
+    .ui.stackable.grid
+        .centered.row
+            .three.wide.column
+                #create_checkin.ui.basic.circular.small.button 
+                    +icon48 name='create-document' classes='ui avatar image'
+                    |Add Entry
+            .nine.wide.column
+                h1.ui.center.aligned.header
+                    +icon96 name='reading'
+                    | Browse Public Journal Entries
             .four.wide.column
-                // .ui.dividing.header Filters
-                // +view_read_toggle
-                #cloud
-                    +theme_facet type='journal'
-                    // +username_facet type='journal'
-                    +intention_facet type='journal'
-                    +location_facet type='journal'
-                    +timestamp_facet type='journal'
-                    // +keyword_filter type='journal'
-                // a#toggle_published.ui.basic.button(class=published_item_class) 
-                //     i.red.unhide.icon
-                //     |Published (#{published_count})
-                // a#toggle_unpublished.ui.basic.button(class=unpublished_item_class) 
-                //     i.red.hide.icon
-                //     |Unpublished (#{unpublished_count})
-            
-                // a#toggle_mine.ui.basic.button(class=mine_item_class) 
-                //     |Mine (#{mine_count})
-            
-            .twelve.wide.column
-                // .ui.centered.stackable.cards
+                a.ui.basic.circular.small.button(href='/journal/mine') 
+                    +icon48 name='journal' classes='ui avatar image'
+                    |My Entries
+                    +icon48 name='rotate-left' classes='ui avatar image'
+        .row
+            .four.wide.column
+                +theme_facet type='journal'
+                +username_facet type='journal'
+                +intention_facet type='journal'
+                +location_facet type='journal'
+                +timestamp_facet type='journal'
+            .eight.wide.column
                 .ui.relaxed.divided.items
                     each journal_entries
                         +browse_entry_view
-        
+            .four.wide.column
+                // .ui.dividing.header Filters
+                // +view_read_toggle
+                +doc_limit
+
 
 
 
@@ -49,7 +47,6 @@ template(name='browse_entry_view')
                         a(href="/profile/#{username}") #{name} 
                         +staus_indicator
                     |#{when}
-                // .ui.divider
                 +view_tags
         .ui.styled.fluid.accordion
             .title

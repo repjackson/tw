@@ -1,37 +1,36 @@
 template(name='browse_check_ins')
-    .ui.container
-        h1.ui.center.aligned.header
-            +icon96 name='cloud-checked'
-            | Browse Public Check-Ins
-        // .ui.center.aligned.basic.segment
-        //     +doc_content tags='checkin,browse,blurb'
-        .ui.stackable.grid
+    // .ui.container
+    .ui.stackable.grid
+        .centered.row
+            .three.wide.column
+                #create_checkin.ui.basic.circular.small.button 
+                    +icon48 name='plus' classes='ui avatar image'
+                    |Check In
+                    // +icon48 name='rotate-right' classes='ui avatar image'
+            .eight.wide.column
+                h1.ui.center.aligned.header
+                    +icon96 name='cloud-checked'
+                    | Browse Public Check-Ins
             .four.wide.column
-                // .ui.dividing.header Filters
-                // +view_read_toggle
-                #cloud
-                    +theme_facet type='checkin'
-                    // +username_facet type='checkin'
-                    // +intention_facet type='checkin'
-                    +location_facet type='checkin'
-                    +timestamp_facet type='checkin'
-                    // +keyword_filter type='checkin'
-                // a#toggle_published.ui.basic.button(class=published_item_class) 
-                //     i.red.unhide.icon
-                //     |Published (#{published_count})
-                // a#toggle_unpublished.ui.basic.button(class=unpublished_item_class) 
-                //     i.red.hide.icon
-                //     |Unpublished (#{unpublished_count})
+                a.ui.basic.circular.small.button(href='/checkins/mine') 
+                    +icon48 name='data-quality' classes='ui avatar image'
+                    |My Check-Ins
+                    +icon48 name='rotate-right' classes='ui avatar image'
+        .row
+            .four.wide.column
+                +theme_facet type='checkin'
+                +username_facet type='checkin'
+                +location_facet type='checkin'
+                +timestamp_facet type='checkin'
             
-                // a#toggle_mine.ui.basic.button(class=mine_item_class) 
-                //     |Mine (#{mine_count})
-            
-            .twelve.wide.column
+            .eight.wide.column
                 // .ui.centered.stackable.cards
                 .ui.relaxed.divided.items
                     each public_checkins
                         +browse_checkin_view
-        
+            .four.wide.column
+                +doc_limit
+
 
 
 
@@ -40,29 +39,21 @@ template(name='browse_checkin_view')
         .content
             .description
                 +view_tags
-                .ui.basic.segment.large
-                    |!{content} 
-                    with author
-                        |by 
-                        if profile.image_id
-                            img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
-                        a(href="/profile/#{username}") #{name} 
-                        +staus_indicator
-                    |#{when}
-                // .ui.divider
-        .content
-            if is_author
-                +edit_link_button
-            unless is_author
-                +thanks_button
-            // .meta
-            //     i.large.icons
-            //         i.idea.icon
-            //         i.tags.corner.icon
-            //     each watson_keywords
-            //         .ui.tiny.circular.compact.button.tag(class=tag_class) #{this}
-            // .content
-            //         |by
-            //         if author.profile.image_id
-            //             img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
-            //         |#{author.name} #{when}
+                if content
+                    .ui.basic.segment
+                        .large150 !{content}
+                .ui.horizontal.list
+                    .item
+                        .large130
+                            with author
+                                |by 
+                                if profile.image_id
+                                    img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                                a(href="/profile/#{username}") #{name} 
+                                +staus_indicator
+                            |#{when}
+                    .item
+                        if is_author
+                            +edit_link_button
+                        unless is_author
+                            +thanks_button

@@ -16,12 +16,22 @@ Template.my_check_ins.onCreated ->
             type='checkin'
             author_id=null
             parent_id=null
-            manual_limit=null
+            tag_limit=10
+            doc_limit=Session.get 'doc_limit'
             view_private=true
             view_published=null
             view_unread=null
             view_bookmarked=null
             )
+        
+Template.my_check_ins.events
+    'click #create_checkin': ->
+        new_checkin_doc_id = Docs.insert type: 'checkin'
+        FlowRouter.go("/edit/#{new_checkin_doc_id}")
+
+        
+        
+        
         
 Template.my_check_in_view.onCreated -> 
     @autorun => Meteor.subscribe 'author', @data._id
@@ -45,7 +55,7 @@ Template.my_check_ins.helpers
         Docs.find match, 
             sort:
                 timestamp: -1
-            limit: 10
+            # limit: 10
 
     tag_class: -> if @valueOf() in selected_theme_tags.array() then 'teal' else 'basic'
 

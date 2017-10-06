@@ -7,7 +7,8 @@ Meteor.publish 'facet', (
     type
     author_id=null
     parent_id=null
-    manual_limit=null
+    tag_limit=null
+    doc_limit=null
     view_private
     view_published
     view_unread
@@ -26,11 +27,11 @@ Meteor.publish 'facet', (
 
         if selected_theme_tags.length > 0 then match.tags = $all: selected_theme_tags
         if selected_author_ids.length > 0 then match.author_id = $in: selected_author_ids
-        if selected_location_tags.length > 0 then match.location_tags = $in: selected_location_tags
-        if selected_intention_tags.length > 0 then match.intention_tags = $in: selected_intention_tags
-        if selected_timestamp_tags.length > 0 then match.timestamp_tags = $in: selected_timestamp_tags
+        if selected_location_tags.length > 0 then match.location_tags = $all: selected_location_tags
+        if selected_intention_tags.length > 0 then match.intention_tags = $all: selected_intention_tags
+        if selected_timestamp_tags.length > 0 then match.timestamp_tags = $all: selected_timestamp_tags
         
-        if manual_limit then limit=manual_limit else limit=50
+        if tag_limit then limit=tag_limit else limit=50
         if author_id then match.author_id = author_id
         
         if view_private is true then match.author_id = @userId
@@ -75,7 +76,7 @@ Meteor.publish 'facet', (
             { $group: _id: '$watson_keywords', count: $sum: 1 }
             { $match: _id: $nin: selected_theme_tags }
             { $sort: count: -1, _id: 1 }
-            { $limit: 20 }
+            { $limit: limit }
             { $project: _id: 0, name: '$_id', count: 1 }
             ]
         # console.log 'cloud, ', cloud
@@ -92,7 +93,7 @@ Meteor.publish 'facet', (
             { $group: _id: '$timestamp_tags', count: $sum: 1 }
             { $match: _id: $nin: selected_timestamp_tags }
             { $sort: count: -1, _id: 1 }
-            { $limit: 20 }
+            { $limit: limit }
             { $project: _id: 0, name: '$_id', count: 1 }
             ]
         # console.log 'intention timestamp_tags_cloud, ', timestamp_tags_cloud
@@ -110,7 +111,7 @@ Meteor.publish 'facet', (
             { $group: _id: '$intention_tags', count: $sum: 1 }
             { $match: _id: $nin: selected_intention_tags }
             { $sort: count: -1, _id: 1 }
-            { $limit: 20 }
+            { $limit: limit }
             { $project: _id: 0, name: '$_id', count: 1 }
             ]
         # console.log 'intention intention_tag_cloud, ', intention_tag_cloud
@@ -128,7 +129,7 @@ Meteor.publish 'facet', (
             { $group: _id: '$location_tags', count: $sum: 1 }
             { $match: _id: $nin: selected_location_tags }
             { $sort: count: -1, _id: 1 }
-            { $limit: 20 }
+            { $limit: limit }
             { $project: _id: 0, name: '$_id', count: 1 }
             ]
         # console.log 'location location_tag_cloud, ', location_tag_cloud
@@ -145,7 +146,7 @@ Meteor.publish 'facet', (
             { $group: _id: '$author_id', count: $sum: 1 }
             { $match: _id: $nin: selected_author_ids }
             { $sort: count: -1, _id: 1 }
-            { $limit: 20 }
+            { $limit: limit }
             { $project: _id: 0, text: '$_id', count: 1 }
             ]
     
@@ -167,8 +168,8 @@ Meteor.publish 'facet', (
         #         count: author_id.count
         
         doc_results = []
-
-        subHandle = Docs.find(match).observeChanges(
+        int_doc_limit = parseInt doc_limit
+        subHandle = Docs.find(match, {limit:int_doc_limit, sort: timestamp:-1}).observeChanges(
             added: (id, fields) ->
                 # console.log 'added doc', id, fields
                 doc_results.push id

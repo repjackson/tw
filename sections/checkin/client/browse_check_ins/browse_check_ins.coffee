@@ -16,13 +16,23 @@ Template.browse_check_ins.onCreated ->
             type='checkin'
             author_id=null
             parent_id=null
-            manual_limit=null
+            tag_limit=10
+            doc_limit=Session.get 'doc_limit'
             view_private=false
             view_published=true
             view_unread=false
             view_bookmarked=false
             )
         
+Template.browse_check_ins.events
+    'click #create_checkin': ->
+        new_checkin_doc_id = Docs.insert type: 'checkin'
+        FlowRouter.go("/edit/#{new_checkin_doc_id}")
+
+
+
+
+
 Template.browse_checkin_view.onCreated -> 
     @autorun => Meteor.subscribe 'author', @data._id
  

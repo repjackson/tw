@@ -14,14 +14,24 @@ Template.my_journal.onCreated ->
             type='journal'
             author_id=Meteor.userId()
             parent_id=null
-            manual_limit=null
+            tag_limit=10
+            doc_limit=Session.get 'doc_limit'
             view_private=true
             view_published=false
             view_unread=false
             view_bookmarked=false
             )
         
-            
+Template.my_journal.events
+    'click #add_journal_entry': ->
+        new_journal_id = Docs.insert
+            type: 'journal'
+        FlowRouter.go("/edit/#{new_journal_id}")    
+
+Template.my_entry_view.onCreated -> 
+    @autorun => Meteor.subscribe 'author', @data._id
+    
+    
 Template.my_entry_view.onRendered ->
     @autorun =>
         if @subscriptionsReady()
@@ -37,7 +47,6 @@ Template.my_journal.helpers
         Docs.find match, 
             sort:
                 timestamp: -1
-            limit: 10
 
 
     journal_card_class: -> if @published then 'blue' else ''

@@ -4,6 +4,12 @@ template(name='edit_checkin')
         .ui.stackable.grid.document_container
             .twelve.wide.column
                 .ui.form
+                    .field
+                        label Suggestions
+                        .ui.four.cards
+                            each check_in_suggestions
+                                .card
+                                    +icon48 name=icon_name
                     +tags
                     +location_tags
                     +content

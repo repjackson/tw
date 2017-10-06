@@ -1,6 +1,6 @@
 
 template(name='theme_facet')
-    .ui.center.aligned.header 
+    .ui.header 
         +icon48 name='hashtag'
         |Browse Themes
     .ui.left.icon.small.input
@@ -19,7 +19,7 @@ template(name='theme_facet')
             //     small #{this.count}
 
 template(name='location_facet')
-    .ui.center.aligned.header 
+    .ui.header 
         +icon48 name='geo-fence'
         |Location Tags
     if selected_location_tags
@@ -35,7 +35,7 @@ template(name='location_facet')
             //     small #{this.count}
 
 template(name='timestamp_facet')
-    .ui.center.aligned.header 
+    .ui.header 
         +icon48 name='calendar'
         |Date Tags
     if selected_timestamp_tags
@@ -52,7 +52,7 @@ template(name='timestamp_facet')
 
 
 template(name='intention_facet')
-    .ui.center.aligned.header 
+    .ui.header 
         +icon48 name='spotlight'
         |Intention Tags
     if selected_intention_tags
@@ -69,7 +69,7 @@ template(name='intention_facet')
             //     small #{this.count}
 
 template(name='keyword_facet')
-    .ui.center.aligned.header 
+    .ui.header 
         |Browse Keywords
         +icon48 name='hashtag'
     // .ui.left.icon.small.input

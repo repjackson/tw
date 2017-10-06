@@ -14,7 +14,7 @@ Template.keyword_facet.onCreated ->
 
 Template.keyword_facet.helpers
     keywords: ->
-        doc_count = Docs.find(type:'journal').count()
+        doc_count = Docs.find(type:Template.currentData().type).count()
         # if selected_keywords.array().length
         if 0 < doc_count < 3
             Watson_keywords.find { 
