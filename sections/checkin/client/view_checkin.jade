@@ -28,18 +28,20 @@ template(name='view_checkin')
                     img.ui.avatar.image(src="{{c.url author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
                     |by #{author.name}
                 .ui.sub.header #{when}
-                .ui.divider
-                +edit_link_button
+                // .ui.divider
                 .ui.dividing.header Actions
-                +bookmark_button
-                div
-                    +thanks_button
-                +resonate_button
                 +resonates_list
                 if is_author
                     +service_buttons
+                    +edit_link_button
+                    +published
+                else
+                div
+                    +thanks_button
+                    +bookmark_button
+                    +resonate_button
+                    
                 if watson
                     +doc_sentiment
                     +doc_emotion
                     +watson_keywords
-                +published

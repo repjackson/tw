@@ -24,6 +24,12 @@ Template.nav.onRendered ->
         $('.item').popup
             position : 'left center'
     , 1000
+    Meteor.setTimeout =>
+        $('.modal').modal({allowMultiple: false})
+    , 1000
+    Meteor.setTimeout =>
+        $('.confirm.modal').modal('attach events', '.report.modal .ok')
+    , 1000
 
 
 Template.nav.helpers
@@ -64,6 +70,8 @@ Template.nav.helpers
     #         sort: timestamp: -1
     #         limit: 10
 
+    bug_link: -> Session.get 'bug_link'
+    # can_submit_bug: -> Session.get 'can_submit_bug'
 Template.nav.events
 # 	'mouseenter .item': (e,t)-> $(e.currentTarget).closest('.icon').toggleClass( "large" )
 # 	'mouseleave .item': (e,t)-> $(e.currentTarget).closest('.icon').toggleClass( "large" )
@@ -81,11 +89,30 @@ Template.nav.events
         FlowRouter.go("/edit/#{new_checkin_doc_id}")
     
     "click #report_bug": ->
-        bug_description = prompt "Please decribe the bug:"
-        Docs.insert
-            type: 'bug_report'
-            body: bug_description
-            link: window.location.pathname
+        Session.set 'bug_link', window.location.pathname
+        $('.ui.report.modal').modal(
+            inverted: true
+            transition: 'horizontal flip'
+            # observeChanges: true
+            duration: 500
+            onApprove : ()->
+                val = $("#bug_description").val()
+                # window.alert val
+                Docs.insert
+                    type: 'bug_report'
+                    body: val
+                    link: window.location.pathname
+                $("#bug_description").val('')
+    
+                # $('.ui.confirm.modal').modal('show');
+            ).modal('show')
+        # bug_description = prompt "Please decribe the bug:"
+
+    'click #bug_icon': (e,t)->  
+        console.log e
+        $(e.currentTarget).closest('.bug_icon').transition('jiggle')
+
+    # 'keyup #bug_description': (e,t)-> Session.set 'can_submit_bug', true
     
     'click #add_journal_entry': ->
         new_journal_id = Docs.insert
