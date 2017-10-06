@@ -1,7 +1,7 @@
 template(name='my_journal')
     .ui.stackable.grid
         .centered.row
-            .three.wide.column
+            .four.wide.column
                 #create_checkin.ui.basic.circular.small.button 
                     +icon48 name='create-document' classes='ui avatar image'
                     |Add Entry
@@ -9,7 +9,7 @@ template(name='my_journal')
                 h1.ui.center.aligned.header
                     +icon96 name='journal' classes='ui avatar image'
                     | My Journal Entries
-            .four.wide.column
+            .three.wide.column
                 a.ui.basic.circular.small.button(href='/journal/browse') 
                     +icon48 name='reading' classes='ui avatar image'
                     |Browse Entries
@@ -19,11 +19,11 @@ template(name='my_journal')
                 +theme_facet type='journal'
                 +location_facet type='journal'
                 +intention_facet type='journal'
-            .eight.wide.column
+            .nine.wide.column
                 .ui.relaxed.divided.items
                     each journal_entries
                         +my_entry_view
-            .four.wide.column
+            .three.wide.column
                 // .ui.dividing.header Filters
                 // +view_published_toggle
                 +doc_limit
@@ -36,12 +36,13 @@ template(name='my_entry_view')
         .content
             .description
                 +parent_doc_segment
-                .ui.basic.segment.large
-                    |!{content}
-                    |written #{when}
+                .large130 !{content}
+            // +icon24 name='clock' classes='ui avatar image'
+            .ui.hidden.fitted.divider
+            strong written #{when}
+            .ui.hidden.fitted.divider
             +view_tags
-            .ui.divider
-        .ui.styled.fluid.accordion
+        .ui.fluid.accordion
             .title
                 .ui.header 
                     +icon48 name='details' classes='ui avatar image'

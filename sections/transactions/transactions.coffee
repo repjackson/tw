@@ -1,7 +1,7 @@
 if Meteor.isClient
     FlowRouter.route '/transactions', action: (params) ->
         BlazeLayout.render 'layout',
-            sub_nav: 'member_nav'
+            # sub_nav: 'member_nav'
             main: 'transactions'
     
     Template.transactions.onCreated ->

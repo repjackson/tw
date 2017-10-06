@@ -1,15 +1,15 @@
 template(name='browse_journal')
     .ui.stackable.grid
         .centered.row
-            .three.wide.column
-                #create_checkin.ui.basic.circular.small.button 
+            .four.wide.column
+                #create_checkin.ui.basic.circular.center.aligned.small.button 
                     +icon48 name='create-document' classes='ui avatar image'
                     |Add Entry
             .nine.wide.column
                 h1.ui.center.aligned.header
                     +icon96 name='reading'
                     | Browse Public Journal Entries
-            .four.wide.column
+            .three.wide.column
                 a.ui.basic.circular.small.button(href='/journal/mine') 
                     +icon48 name='journal' classes='ui avatar image'
                     |My Entries
@@ -21,11 +21,11 @@ template(name='browse_journal')
                 +intention_facet type='journal'
                 +location_facet type='journal'
                 +timestamp_facet type='journal'
-            .eight.wide.column
+            .nine.wide.column
                 .ui.relaxed.divided.items
                     each journal_entries
                         +browse_entry_view
-            .four.wide.column
+            .three.wide.column
                 // .ui.dividing.header Filters
                 // +view_read_toggle
                 +doc_limit
@@ -48,7 +48,7 @@ template(name='browse_entry_view')
                         +staus_indicator
                     |#{when}
                 +view_tags
-        .ui.styled.fluid.accordion
+        .ui.fluid.accordion
             .title
                 .ui.header 
                     +icon48 name='details' classes='ui avatar image'

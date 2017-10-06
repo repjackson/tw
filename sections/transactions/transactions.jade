@@ -1,21 +1,20 @@
 template(name='transactions')
-    .ui.container
-        .ui.horizontal.divider.header
-            i.exchange.icon
-            | #{currentUser.username} Transactions
-        .ui.header Your current point amount: #{currentUser.points}
-        table.ui.selectable.unstackable.table
-                thead
-                    tr
-                        th Title
-                        th Sale Price
-                        th When
-                        th Buyer
-                        th Seller
-                        th Actions
-                tbody
-                    each transactions
-                        +transaction
+    .ui.center.aligned.header
+        +icon96 name='handshake'
+        | #{currentUser.name} Transactions
+    .ui.header Your current point amount: #{currentUser.points}
+    table.ui.selectable.unstackable.table
+            thead
+                tr
+                    th Title
+                    th Sale Price
+                    th When
+                    th Buyer
+                    th Seller
+                    th Actions
+            tbody
+                each transactions
+                    +transaction
 
 template(name='transaction')                    
     tr
@@ -26,8 +25,9 @@ template(name='transaction')
                 img.ui.avatar.image(src=parent.image_url)
             a.ui.header(href="/view/#{parent._id}") 
                 |#{parent.title}
-            each parent.tags
-                .ui.small.basic.label #{this}
+            div    
+                each parent.tags
+                    .ui.small.basic.label #{this}
         td 
             if sale_dollar_price
                 |$#{sale_dollar_price}
@@ -41,6 +41,7 @@ template(name='transaction')
             img.ui.avatar.image(src="{{c.url recipient.author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
             |#{recipient.author.name}
         td 
-            a.ui.basic.button(href="/view/#{_id}")
-                | View Full
-                i.right.arrow.icon
+            +view_full_button
+            // a.ui.large.basic.button(href="/view/#{_id}")
+            //     | View Full
+            //     +icon24 name='double-right' classes='ui avatar image'
