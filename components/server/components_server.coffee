@@ -12,7 +12,7 @@ Meteor.methods
 
 Meteor.publish 'read_by', (doc_id)->
     doc = Docs.findOne doc_id
-    if doc.read_by
+    if doc and doc.read_by
         Meteor.users.find
             _id: $in: doc.read_by
             

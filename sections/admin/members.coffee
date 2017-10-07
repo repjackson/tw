@@ -4,7 +4,7 @@ if Meteor.isClient
         BlazeLayout.render 'layout',
             nav: 'nav'
             sub_nav: 'admin_nav'
-            main: 'user_table'
+            main: 'members'
      
     FlowRouter.route '/admin/pages', action: (params) ->
         BlazeLayout.render 'layout',
@@ -12,12 +12,12 @@ if Meteor.isClient
             sub_nav: 'admin_nav'
             main: 'pages'
  
-    Template.user_table.onCreated ->
+    Template.members.onCreated ->
         @autorun -> Meteor.subscribe('people', selected_people_tags.array())
         @autorun -> Meteor.subscribe 'courses'
     
     
-    Template.user_table.helpers
+    Template.members.helpers
         members: -> 
             Meteor.users.find {}
             
@@ -44,7 +44,7 @@ if Meteor.isClient
     
     
     
-    Template.user_table.events
+    Template.members.events
         'click .remove_admin': ->
             self = @
             swal {

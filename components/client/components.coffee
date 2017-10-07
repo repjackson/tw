@@ -20,24 +20,41 @@ Template.resonates_list.helpers
                 Meteor.users.find _id: $in: @favoriters
     
     
-Template.read_by.onCreated ->
-    @autorun => Meteor.subscribe 'read_by', FlowRouter.getParam('doc_id')
+Template.read_by_list.onCreated ->
+    @autorun => Meteor.subscribe 'read_by', Template.parentData()._id
     
-Template.read_by.helpers
+Template.read_by_list.helpers
     read_by: ->
         if @read_by
             if @read_by.length > 0
         # console.log @read_by
                 Meteor.users.find _id: $in: @read_by
+        else 
+            false
+            
+            
+Template.bookmarked_by_list.onCreated ->
+    @autorun => Meteor.subscribe 'bookmarked_by', Template.parentData()._id
     
-Template.toggle_doc_read.events
+Template.bookmarked_by_list.helpers
+    bookmarked_by: ->
+        if @bookmarked_ids
+            if @bookmarked_ids.length > 0
+        # console.log @bookmarked_ids
+                Meteor.users.find _id: $in: @bookmarked_ids
+        else 
+            false
+            
+            
+Template.mark_read.events
     'click .mark_read': (e,t)-> 
         Meteor.call 'mark_read', @_id
         
     'click .mark_unread': (e,t)-> Meteor.call 'mark_unread', @_id
 
-Template.toggle_doc_read.helpers
+Template.mark_read.helpers
     read: -> @read_by and Meteor.userId() in @read_by
+    # read: -> true
     
     
 

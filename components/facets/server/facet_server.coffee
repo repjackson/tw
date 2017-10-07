@@ -9,13 +9,11 @@ Meteor.publish 'facet', (
     parent_id=null
     tag_limit=null
     doc_limit=null
-    view_private
     view_published
-    view_unread
+    view_read
     view_bookmarked
     view_resonates
     view_complete
-    view_incomplete
     )->
     
         self = @
@@ -34,21 +32,19 @@ Meteor.publish 'facet', (
         if tag_limit then limit=tag_limit else limit=50
         if author_id then match.author_id = author_id
         
-        if view_private is true then match.author_id = @userId
+        # if view_private is true then match.author_id = @userId
         if view_resonates is 'resonates'then match.favoriters = $in: [@userId]
-        if view_published is true then match.published = true
-        if view_bookmarked is true then match.bookmarked_ids = $in: [@userId]
-
-        # if view_complete is true
-        #     if view_incomplete is true 
-        #         match.complete = $or:[true, false]
-        #     else
-        #         match.complete = true
-
-        if view_complete is true then match.complete = true
-
+        if view_read?
+            if view_read is true then match.read_by = $in: [@userId]
+            else if view_read is false then match.read_by = $nin: [@userId]
+        if view_published? then match.published = view_published
+        if view_bookmarked?
+            if view_bookmarked is true then match.bookmarked_ids = $in: [@userId]
+            else if view_bookmarked is false then match.bookmarked_ids = $nin: [@userId]
+        if view_complete? then match.complete = view_complete
+        # console.log view_complete
         
-        # console.log 'match:', match
+        console.log 'match:', match
         
         
         theme_tag_cloud = Docs.aggregate [
@@ -167,19 +163,19 @@ Meteor.publish 'facet', (
         #         text: author_id.text
         #         count: author_id.count
         
-        doc_results = []
+        # doc_results = []
         int_doc_limit = parseInt doc_limit
         subHandle = Docs.find(match, {limit:int_doc_limit, sort: timestamp:-1}).observeChanges(
             added: (id, fields) ->
                 # console.log 'added doc', id, fields
-                doc_results.push id
+                # doc_results.push id
                 self.added 'docs', id, fields
             changed: (id, fields) ->
                 # console.log 'changed doc', id, fields
                 self.changed 'docs', id, fields
             removed: (id) ->
                 # console.log 'removed doc', id, fields
-                doc_results.pull id
+                # doc_results.pull id
                 self.removed 'docs', id
         )
         
@@ -208,4 +204,5 @@ Meteor.publish 'facet', (
 
 Meteor.publish 'author', (doc_id)->
     doc = Docs.findOne doc_id
-    Meteor.users.find _id: doc.author_id
+    if doc 
+        Meteor.users.find _id: doc.author_id

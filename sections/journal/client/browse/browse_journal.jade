@@ -26,8 +26,9 @@ template(name='browse_journal')
                     each journal_entries
                         +browse_entry_view
             .three.wide.column
-                // .ui.dividing.header Filters
-                // +view_read_toggle
+                +bookmark_tritoggle
+                +read_tritoggle
+                // +resonate_tritoggle
                 +doc_limit
 
 
@@ -59,27 +60,19 @@ template(name='browse_entry_view')
                     .ten.wide.column
                         .ui.basic.segment
                             .ui.hidden.divider
-                            .ui.hidden.divider
                             span.right.floated
                                 +view_full_button
-                            +bookmark_button
-                            +edit_link_button
-                            unless is_author
+                            if is_author
+                                +edit_link_button
+                            else
+                                +bookmark_button
                                 +thanks_button
+                            +mark_read
+                            // +read_by
+
                     .six.wide.column
                         .image
                             if watson
                                 .ui.basic.segment
                                     +doc_sentiment
                                     +doc_emotion
-            // .meta
-            //     i.large.icons
-            //         i.idea.icon
-            //         i.tags.corner.icon
-            //     each watson_keywords
-            //         .ui.tiny.circular.compact.button.tag(class=tag_class) #{this}
-            // .content
-            //         |by
-            //         if author.profile.image_id
-            //             img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
-            //         |#{author.name} #{when}

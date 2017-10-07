@@ -16,9 +16,8 @@ Template.my_journal.onCreated ->
             parent_id=null
             tag_limit=10
             doc_limit=Session.get 'doc_limit'
-            view_private=true
-            view_published=false
-            view_unread=false
+            view_published=Session.get 'view_published'
+            view_read=null
             view_bookmarked=false
             )
         

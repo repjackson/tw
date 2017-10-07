@@ -1,0 +1,54 @@
+template(name='complete_tritoggle')
+    .ui.buttons
+        #view_complete.ui.button(class=view_complete_class data-tooltip='View Complete') 
+            +icon24 name='checked'
+        #view_all.ui.button(class=view_all_class data-tooltip='View All') 
+            +icon24 name='to-do'
+        #view_incomplete.ui.button(class=view_incomplete_class data-tooltip='View Incomplete')
+            +icon24 name='unchecked_checkmark'
+            
+template(name='published_tritoggle')
+    .ui.buttons
+        #view_published.ui.button(class=view_published_class data-tooltip='View Only Published') 
+            +icon24 name='eye'
+        #view_all.ui.button(class=view_all_class data-tooltip='View Published & Private') 
+            +icon24 name='query-outer-join-left'
+        #view_private.ui.button(class=view_private_class data-tooltip='View Only Private')
+            +icon24 name='invisible'
+            
+            
+template(name='read_tritoggle')
+    .ui.buttons
+        #view_read.ui.button(class=view_read_class data-tooltip='View Only Read') 
+            +icon24 name='read_message'
+        #view_all.ui.button(class=view_all_class data-tooltip='View All') 
+            +icon24 name='to-do'
+        #view_unread.ui.button(class=view_unread_class data-tooltip='View Only Unread')
+            +icon24 name='message'
+            
+template(name='bookmark_tritoggle')
+    .ui.buttons
+        #view_bookmarked.ui.button(class=view_bookmarked_class data-tooltip='View Only Bookmarked') 
+            +icon24 name='bookmark-ribbon'
+        #view_all.ui.button(class=view_all_class data-tooltip='View All') 
+            +icon24 name='to-do'
+        #view_unbookmarked.ui.button(class=view_unbookmarked_class data-tooltip='View Only Unbookmarked')
+            +icon24 name='unavailable'
+            
+template(name='resonate_tritoggle')
+    .ui.buttons
+        #view_bookmarked.ui.button(class=view_bookmarked_class data-tooltip='View Only Resonates') 
+            img.ui.avatar.image(src="https://png.icons8.com/heart-with-pulse/dusk/64" width="64" height="64")
+        #view_all.ui.button(class=view_all_class data-tooltip='View All') 
+            +icon24 name='to-do'
+        #view_unbookmarked.ui.button(class=view_unbookmarked_class data-tooltip='View Only Non-Resonates')
+            +icon24 name='unavailable'
+            
+template(name='doc_limit')
+    .ui.buttons
+        #make_5.ui.large.button(class=limit_5_class data-tooltip='View 5 Results') 
+            strong 5
+        #make_10.ui.large.button(class=limit_10_class data-tooltip='View 10 Results') 
+            strong 10
+        #make_20.ui.large.button(class=limit_20_class data-tooltip='View 20 Results')
+            strong  20

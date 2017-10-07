@@ -6,26 +6,6 @@ template(name='alpha')
     with child
         +Template.dynamic template=template_name
 
-    // #cloud.ui.basic.segment
-    //     .ui.left.icon.large.input
-    //         i.search.icon
-    //         +inputAutocomplete settings=settings id="search" class="" autocomplete="off" 
-    //     if selected_all_tags
-    //         #clear_tags.ui.active.icon.large.button
-    //             i.remove.icon
-    //         each selected_all_tags
-    //             .unselect_tag.ui.active.large.button
-    //                 strong #{this}
-    //     each all_tags
-    //         .ui.button.select_tag(class=cloud_tag_class) 
-    //             | #{this.name}
-    //             // | #{this.index}
-    //             small #{this.count}
-    //     .ui.hidden.divider
-    //     .ui.centered.cards
-            // each all_docs
-            //     +alpha_card 
-                // +dev_doc
 
 template(name='alpha_menu')
     .ui.borderless.top.attached.pointing.menu
@@ -62,12 +42,6 @@ template(name='alpha_menu')
                     else
                         i.user.icon
                     | Profile
-                // span.mobile.hidden    
-                //     if currentUser.name
-                //         | #{currentUser.name}
-                //     else
-                //         | #{currentUser.username}
-
                 if isInRole 'admin'
                     if admin_mode 
                         a#toggle_off_admin_mode.icon.item
@@ -77,10 +51,6 @@ template(name='alpha_menu')
                     else
                         a#toggle_on_admin_mode.icon.item
                             i.toggle.off.icon
-                            // |Admin Mode Off
-                    // a.icon.item(href='/admin/dashboard' class="{{isActivePath '/admin/dashboard'}}")
-                    //     i.configure.red.icon
-                        // | Admin
 
 
 template(name='alpha_card')

@@ -18,10 +18,12 @@ Template.browse_journal.onCreated ->
             parent_id=null
             tag_limit=10
             doc_limit=Session.get 'doc_limit'
-            view_private=false
             view_published=true
-            view_unread=Session.get 'view_unread'
-            view_bookmarked=false
+            view_read=Session.get 'view_read'
+            view_bookmarked=Session.get 'view_bookmarked'
+            view_resonates=null
+            view_complete=null
+            
             )
         
     # @autorun -> Meteor.subscribe 'unread_journal_count'

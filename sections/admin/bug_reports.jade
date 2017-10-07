@@ -1,0 +1,29 @@
+template(name='bug_reports')
+    h1.ui.center.aligned.header
+        +icon96 name='bug'
+        |Bug Reports
+    .ui.grid
+        .four.wide.column
+            .ui.form
+                // .header View Settings
+                // +toggle_view_complete
+                +view_complete_tritoggle
+                // +toggle_view_incomplete
+            +timestamp_facet    
+            +username_facet
+        .twelve.wide.column
+            .ui.stackable.cards
+                each bug_reports
+                    +bug_report
+
+template(name='bug_report')
+    .card
+        .content
+            .header #{body}
+            .meta
+                a(href=link) #{link}
+            .meta
+                |by #{author.name} #{when}
+            .extra.content
+                +mark_doc_complete_button
+                +delete_button

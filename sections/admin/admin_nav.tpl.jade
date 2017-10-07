@@ -1,23 +1,18 @@
 .ui.stackable.menu
-    .ui.container
-        a.item(href='/admin/dashboard') 
-            i.dashboard.icon
-            |Dashboard
-        a.item(href='/admin/members') 
-            i.users.icon
-            |Members
-        a.item(href='/admin/contact_submissions') 
-            i.edit.icon
-            |Contact Submissions
-        a.item(href='/admin/pages') 
-            i.clone.icon
-            |Pages
-        a.item(href='/admin/alpha') 
-            i.database.icon
-            |alpha
-        a.item(href='/plans') 
-            i.payment.icon
-            |Plans
+    .icon.item(data-position='bottom center' data-tooltip='Admin Menu')
+        +icon48 name='monarch' classes='ui image'
+    a.item(href='/admin/dashboard' data-position='bottom center' data-tooltip='Dashboard') 
+        +icon48 name='dashboard' classes='ui image'
+    a.item(href='/admin/members' data-position='bottom center' data-tooltip='Members') 
+        +icon48 name='people' classes='ui image'
+    a.item(href='/admin/contact_submissions' data-position='bottom center' data-tooltip='Contact Submissions') 
+        +icon48 name='form' classes='ui image'
+    a.item(href='/admin/pages' data-position='bottom center' data-tooltip='Pages') 
+        +icon48 name='mockup' classes='ui image'
+    a.item(href='/admin/alpha' data-position='bottom center' data-tooltip='Alpha') 
+        +icon48 name='alpha' classes='ui image'
+    a.item(href='/plans' data-position='bottom center' data-tooltip='Plans') 
+        +icon48 name='transaction' classes='ui image'
         
         // a.item(href='/admin/newsletter') Newsletter Subcriptions
 

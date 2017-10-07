@@ -24,7 +24,7 @@ template(name='resonates_list')
                                 //     .ui.basic.label #{this}
 
 
-template(name='toggle_doc_read')
+template(name='mark_read')
     // if read
     //     .mark_unread.ui.basic.button 
     //         +icon48 name='read-message' classes='avatar'
@@ -36,7 +36,7 @@ template(name='toggle_doc_read')
                 +icon48 name='message' classes='avatar'
                 |Mark Read
 
-template(name='read_by')
+template(name='read_by_list')
     // if read_by.count
     .ui.segment
         .ui.dividing.header
@@ -44,6 +44,24 @@ template(name='read_by')
             span.floated.right (#{read_by.count})
         .ui.divided.list
             each read_by
+                .item
+                    img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                    .content
+                        .header
+                            |#{name}
+                        .description
+                            +tiny_color_dots
+                            // each five_tags
+                            //     .ui.basic.label #{this}
+
+template(name='bookmarked_by_list')
+    // if read_by.count
+    .ui.segment
+        .ui.dividing.header
+            |Bookmarked by... 
+            span.floated.right (#{bookmarked_by.count})
+        .ui.divided.list
+            each bookmarked_by
                 .item
                     img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
                     .content

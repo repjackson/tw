@@ -1,18 +1,18 @@
 template(name='view_checkin')
     a.ui.basic.button(href='/checkin')
-        i.left.chevron.icon
+        +icon48 name='left_chevron' classes='ui avatar image'
         strong Check In's
     .ui.container
         h1.ui.center.aligned.header View Check In
         .ui.stackable.grid
             .ten.wide.column
                 .ui.dividing.header 
-                    img.ui.avatar.image(src="https://png.icons8.com/tags/color/48" width="48" height="48")
+                    +icon48 name='hashtag' classes='ui avatar image'
                     |Tags
                 each tags
                     .ui.basic.large.label.doc_tag #{this}
                 .ui.dividing.header 
-                    img.ui.avatar.image(src="https://png.icons8.com/geo-fence/color/48" width="48" height="48")
+                    +icon48 name='geo-fence' classes='ui avatar image'
                     |Location Tags
                 each location_tags
                     .ui.basic.large.label.location_tag #{this}

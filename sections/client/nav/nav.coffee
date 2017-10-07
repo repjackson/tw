@@ -22,14 +22,14 @@ Template.nav.onRendered ->
     # , 1000
     Meteor.setTimeout =>
         $('.item').popup
-            position : 'left center'
+            position : 'bottom center'
     , 1000
-    Meteor.setTimeout =>
-        $('.modal').modal({allowMultiple: false})
-    , 1000
-    Meteor.setTimeout =>
-        $('.confirm.modal').modal('attach events', '.report.modal .ok')
-    , 1000
+    # Meteor.setTimeout =>
+    #     $('.modal').modal({allowMultiple: false})
+    # , 1000
+    # Meteor.setTimeout =>
+    #     $('.confirm.modal').modal('attach events', '.report.modal .ok')
+    # , 1000
 
 
 Template.nav.helpers
@@ -100,6 +100,7 @@ Template.nav.events
                 # window.alert val
                 Docs.insert
                     type: 'bug_report'
+                    complete: false
                     body: val
                     link: window.location.pathname
                 $("#bug_description").val('')
