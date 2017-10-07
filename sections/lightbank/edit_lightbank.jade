@@ -1,17 +1,16 @@
 template(name='edit_lightbank')
-    h1.ui.center.aligned.header Edit Lightbank Entry
+    h1.ui.center.aligned.header
+        +icon96 name='nature' classes='ui mini spaced image'
+        |Edit Lightbank Entry
     .ui.stackable.grid.document_container
         .eleven.wide.column
-            .ui.form
-                +tags
-                if components.youtube
-                    +youtube
-                    if youtube
-                        +view_youtube
-                if components.image
-                    +edit_image
-                if components.content
-                    +content
+            +tags
+            if components.youtube
+                +youtube
+            if components.image
+                +edit_image
+            if components.content
+                +content
         .five.wide.column
             if tags
                 a.ui.fluid.green.big.button(href="/view/#{_id}") Save Lightbank Item
@@ -21,12 +20,9 @@ template(name='edit_lightbank')
             .ui.header 
                 +icon48 name='slider' classes='ui mini spaced image'
                 |Components
-            .ui.form
-                .grouped.fields
-                    +toggle_component name='youtube' label='Video' icon_name='movie'
-                    +toggle_component name='image' label='Image' icon_name='image'
-                    // +toggle_image
-                    +toggle_content
+            +toggle_component name='youtube' label='Video' icon_name='movie'
+            +toggle_component name='image' label='Image' icon_name='image'
+            +toggle_component name='content' label='Text' icon_name='outline'
             // .ui.segment
             //     .ui.form
             //         .grouped.fields
@@ -34,6 +30,9 @@ template(name='edit_lightbank')
                         // +toggle_resonates_button
                         // +toggle_bookmarkable_button
                         // +toggle_complete_button
+            .ui.header 
+                +icon48 name='settings' classes='ui mini spaced image'
+                |Settings
             +published
             .ui.header by #{author.name}
 

@@ -42,20 +42,23 @@ template(name='number')
 
 
 template(name='tags')
-    .required.inline.field
-        label 
-            +icon48 name='hashtag' classes='avatar'
+    .ui.segment
+        .ui.header
+            +icon48 name='hashtag' classes='ui mini spaced image'
             |Theme Tags
-        input#add_tag(type='text' placeholder='press enter after each' maxlength='50' )
+            &nbsp;
+            .ui.mini.input
+                // i.plus.icon
+                input#add_tag(type='text' placeholder='Add...' maxlength='50' )
         each tags
-            a.ui.basic.animated.fade.large.button.doc_tag
+            a.ui.basic.animated.fade.circular.button.doc_tag
                 .visible.content
                     // i.icon
                     //     +icon24 name='hashtag' classes='avatar'
                     |#{this}
                 .hidden.content
                     i.icon
-                        +icon24 name='delete' classes='avatar'
+                        +icon24 name='delete' classes='ui mini image'
                     // |#{this}
 
 template(name='location_tags')
@@ -149,40 +152,50 @@ template(name='content')
     
 template(name='edit_image')
     .ui.segment
-        .field
-            if image_id
-                label image
-                .ui.large.image
-                    img(src="{{c.url image_id width=500 crop='fit'}}")
-                    a#remove_photo.ui.top.left.attached.link.blue.label Remove
+        if image_id
+            .ui.header
+                 +icon48 name='image-file' classes='ui mini spaced image'
+                 |Uploaded Image
+            .ui.large.centered.image
+                img(src="{{c.url image_id width=500 crop='fit'}}")
+                a#remove_photo.ui.top.right.attached.link.red.basic.label
+                    +icon48 name='delete' classes='ui tiny spaced image'
+                if isInRole 'dev'
                     .ui.bottom.right.attached.blue.label Image Id: #{image_id}
-            else
-                unless image_url
-                    label Upload Image
+        else
+            unless image_url
+                .ui.labeled.input
+                    .ui.basic.label
+                        +icon48 name='add-image' classes='ui tiny spaced image'
+                        |Upload Image
                     input(type='file' name='upload_picture' accept='image/*')
-                    if isInRole 'admin'
-                        .field
-                            label or Choose Cloudinary Image Id
-                            input#input_image_id(type='text')
-            if image_url
-                label image
-                .ui.large.image
-                    img(src=image_url)
-                    a#remove_image_url.ui.top.left.attached.link.blue.label Remove
-                .ui.label Image URL: #{image_url}
-            else
-                unless image_id
-                    label Image URL
-                    input#image_url(type='text' value=image_url)
+                if isInRole 'dev'
+                    .field
+                        label or Choose Cloudinary Image Id
+                        input#input_image_id(type='text')
+        if image_url
+            label image
+            .ui.large.image
+                img(src=image_url)
+                a#remove_image_url.ui.top.left.attached.link.blue.label Remove
+            .ui.label Image URL: #{image_url}
+        else
+            unless image_id
+                label Image URL
+                input#image_url(type='text' value=image_url)
     
 template(name='youtube')
-    .field
-        label Youtube Id
-        .ui.left.icon.action.input
-            i.youtube.icon
+    .ui.segment
+        .ui.action.fluid.labeled.input
+            .ui.basic.label
+                +icon48 name='youtube' classes='ui mini spaced image'
+                |Youtube Id
             input#youtube(type='text' value=youtube)
-            .ui.icon.button#clear_youtube
-                i.remove.icon
+            .ui.icon.basic.button#clear_youtube
+                +icon24 name='delete'
+        if youtube
+            +view_youtube
+    
 
 template(name='view_youtube')
     // .ui.embed(data-source="youtube" data-id=youtube data-icon="video" data-placeholder="/images/video_placeholder.png")

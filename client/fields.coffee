@@ -211,10 +211,11 @@ Template.edit_image.events
             confirmButtonText: 'Remove'
             confirmButtonColor: '#da5347'
         }, =>
-            Meteor.call "c.delete_by_public_id", @image_id, (err,res) ->
+            Meteor.call "c.delete_by_public_id", @image_id, (err,res) =>
                 if not err
                     # Do Stuff with res
                     # console.log res
+                    # console.log @image_id, @_id
                     Docs.update @_id, 
                         $unset: 
                             image_id: 1
