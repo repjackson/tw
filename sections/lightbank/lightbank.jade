@@ -10,12 +10,12 @@ template(name='lightbank')
             +lightbank_cloud
             if isInRole 'admin'
                 if selected_theme_tags
-                    #add.ui.blue.button
-                        i.plus.icon
+                    #add.ui.blue.large.button
+                        +icon24 name='plus' classes='ui mini spaced image'
                         |Add with Selected Tags
                 else
-                    #add_lightbank_doc.ui.icon.basic.fluid.button
-                        i.plus.icon
+                    #add_lightbank_doc.ui.basic.large.fluid.button
+                        +icon48 name='plus' classes='ui mini spaced image'
                         |Add Lightbank Item
         
         .eight.wide.column
@@ -27,13 +27,17 @@ template(name='lightbank')
                 +icon24 name='filter' classes='ui avatar image'
                 |View Filters
             // +resonate_tritoggle
-            +bookmark_tritoggle
-            +read_tritoggle
-            +complete_tritoggle
-            +doc_limit
+            div
+                +bookmark_filter
+            div
+                +read_filter
+            div
+                +complete_filter
+            div
+                +doc_limit
             if isInRole 'admin'
                 .ui.dividing.header Admin
-                +published_tritoggle
+                +published_filter
         
 
 

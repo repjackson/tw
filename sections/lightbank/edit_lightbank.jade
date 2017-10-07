@@ -1,39 +1,41 @@
 template(name='edit_lightbank')
-    .ui.container
-        h1.ui.center.aligned.header Edit Lightbank Entry
-        .ui.stackable.grid
-            .eleven.wide.column
-                .ui.form
-                    +tags
-                    if has_youtube
-                        +youtube
-                        if youtube
-                            +view_youtube
-                    if has_image
-                        +edit_image
-                    if has_content
-                        +content
-            .five.wide.column
-                if tags
-                    a.ui.fluid.green.big.button(href="/view/#{_id}") Save Lightbank Item
-                else
-                    .ui.fluid.green.big.disabled.button Add Tags to Save
-                #delete_doc.ui.small.fluid.red.button Delete
-                .ui.dividing.header Components
-                .ui.form
-                    .grouped.fields
-                        +toggle_youtube
-                        +toggle_image
-                        +toggle_content
-                // .ui.segment
-                //     .ui.form
-                //         .grouped.fields
-                //             .label Buttons
-                            // +toggle_resonates_button
-                            // +toggle_bookmarkable_button
-                            // +toggle_complete_button
-                +published
-                .ui.header by #{author.name}
+    h1.ui.center.aligned.header Edit Lightbank Entry
+    .ui.stackable.grid.document_container
+        .eleven.wide.column
+            .ui.form
+                +tags
+                if components.youtube
+                    +youtube
+                    if youtube
+                        +view_youtube
+                if components.image
+                    +edit_image
+                if components.content
+                    +content
+        .five.wide.column
+            if tags
+                a.ui.fluid.green.big.button(href="/view/#{_id}") Save Lightbank Item
+            else
+                .ui.fluid.green.big.disabled.button Add Tags to Save
+            #delete_doc.ui.small.fluid.red.button Delete
+            .ui.header 
+                +icon48 name='slider' classes='ui mini spaced image'
+                |Components
+            .ui.form
+                .grouped.fields
+                    +toggle_component name='youtube' label='Video' icon_name='movie'
+                    +toggle_component name='image' label='Image' icon_name='image'
+                    // +toggle_image
+                    +toggle_content
+            // .ui.segment
+            //     .ui.form
+            //         .grouped.fields
+            //             .label Buttons
+                        // +toggle_resonates_button
+                        // +toggle_bookmarkable_button
+                        // +toggle_complete_button
+            +published
+            .ui.header by #{author.name}
 
-                if isInRole 'admin'
-                    +edit_author
+            if isInRole 'admin'
+                +edit_author

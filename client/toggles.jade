@@ -1,14 +1,26 @@
-template(name='toggle_youtube')
-    .field
-        a.ui.toggle.checkbox
-            input#toggle_youtube(type='checkbox' checked=has_youtube)
-            label(for='toggle_youtube') Video
+template(name='toggle_component')
+    .toggle_component.ui.circular.compact.button(class=button_class)
+        if has_component
+            +icon48 name=icon_name classes='ui mini spaced image'
+            strong #{label}
+        else
+            +ultraviolet_icon40 name=icon_name classes='ui mini spaced image'
+            | #{label}
 
-template(name='toggle_image')
-    .field
-        a.ui.toggle.checkbox
-            input#toggle_image(type='checkbox' checked=has_image)
-            label(for='toggle_image') Image
+// template(name='toggle_youtube')
+//     #toggle_youtube.ui.circular.compact.basic.button
+//         if has_youtube
+//             +icon48 name='toggle-on' classes='ui mini spaced image'
+//             strong Video
+//         else
+//             +icon48 name='toggle-off' classes='ui mini spaced image'
+//             | Video
+
+// template(name='toggle_image')
+//     .field
+//         a.ui.toggle.checkbox
+//             input#toggle_image(type='checkbox' checked=has_image)
+//             label(for='toggle_image') Image
 
 template(name='toggle_content')
     .field

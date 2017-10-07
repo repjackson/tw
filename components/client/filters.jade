@@ -1,48 +1,38 @@
-template(name='complete_tritoggle')
+template(name='complete_filter')
     .ui.buttons
         #view_complete.ui.button(class=view_complete_class data-tooltip='View Complete') 
-            +icon24 name='checked'
-        #view_all.ui.button(class=view_all_class data-tooltip='View Complete & Incomplete') 
-            +icon24 name='to-do'
+            +icon48 name='checked' classes='ui mini image'
         #view_incomplete.ui.button(class=view_incomplete_class data-tooltip='View Incomplete')
-            +icon24 name='unchecked_checkmark'
+            +icon48 name='unchecked_checkmark' classes='ui mini image'
             
-template(name='published_tritoggle')
+template(name='published_filter')
     .ui.buttons
         #view_published.ui.button(class=view_published_class data-tooltip='View Published') 
-            +icon24 name='eye'
-        #view_all.ui.button(class=view_all_class data-tooltip='View Published & Private') 
-            +icon24 name='query-outer-join-left'
+            +icon48 name='eye' classes='ui mini image'
         #view_private.ui.button(class=view_private_class data-tooltip='View Private')
-            +icon24 name='invisible'
+            +icon48 name='invisible' classes='ui mini image'
             
             
-template(name='read_tritoggle')
+template(name='read_filter')
     .ui.buttons
         #view_read.ui.button(class=view_read_class data-tooltip='View Read') 
-            +icon24 name='read_message'
-        #view_all.ui.button(class=view_all_class data-tooltip='View Read & Unread') 
-            +icon24 name='to-do'
+            +icon48 name='read_message' classes='ui mini image'
         #view_unread.ui.button(class=view_unread_class data-tooltip='View Unread')
-            +icon24 name='message'
+            +icon48 name='message' classes='ui mini image'
             
-template(name='bookmark_tritoggle')
+template(name='bookmark_filter')
     .ui.buttons
         #view_bookmarked.ui.button(class=view_bookmarked_class data-tooltip='View Bookmarked') 
-            +icon24 name='bookmark-ribbon'
-        #view_all.ui.button(class=view_all_class data-tooltip='View Bookmarked & Unbookmarked') 
-            +icon24 name='to-do'
+            +icon48 name='bookmark-ribbon' classes='ui mini image'
         #view_unbookmarked.ui.button(class=view_unbookmarked_class data-tooltip='View Unbookmarked')
-            +icon24 name='unavailable'
+            +ultraviolet_icon40 name='bookmark_ribbon' classes='ui mini image'
             
-template(name='resonate_tritoggle')
+template(name='resonate_filter')
     .ui.buttons
         #view_bookmarked.ui.button(class=view_bookmarked_class data-tooltip='View Resonates') 
             img.ui.avatar.image(src="https://png.icons8.com/heart-with-pulse/dusk/64" width="64" height="64")
-        #view_all.ui.button(class=view_all_class data-tooltip='View Resonates & Non') 
-            +icon24 name='to-do'
         #view_unbookmarked.ui.button(class=view_unbookmarked_class data-tooltip='View Non-Resonates')
-            +icon24 name='unavailable'
+            +icon48 name='unavailable' classes='ui mini image'
             
 template(name='doc_limit')
     .ui.buttons
