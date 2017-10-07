@@ -15,14 +15,16 @@ if Meteor.isClient
                 selected_intention_tags.array()
                 selected_timestamp_tags.array()
                 type='lightbank'
-                author_id=Meteor.userId()
+                author_id=null
                 parent_id=null
-                manual_limit=null
-                view_private=false
+                tag_limit=null
+                doc_limit=Session.get 'doc_limit'
                 view_published=Session.get('view_published')
-                view_unread=false
+                view_read=Session.get('view_read')
                 view_bookmarked=Session.get('view_bookmarked')
                 view_resonates=Session.get('view_resonates')
+                view_complete=Session.get 'view_complete'
+
                 )
 
         @autorun -> Meteor.subscribe 'unpublished_lightbank_count'
@@ -41,43 +43,16 @@ if Meteor.isClient
     
     Template.lightbank.helpers
         docs: -> 
-            if Session.get 'view_unpublished'
-                Docs.find
-                    type: 'lightbank'
-                    published: false
-            else
-                Docs.find {type:'lightbank' }, 
-                    sort:
-                        tag_count: 1
-                    limit: 5
+            Docs.find {type:'lightbank' }, 
+                sort:
+                    tag_count: 1
     
         tag_class: -> if @valueOf() in selected_theme_tags.array() then 'teal' else 'basic'
         selected_theme_tags: -> selected_theme_tags.array()
         is_editing: -> Session.get 'editing_id'
 
-        all_item_class: -> 
-            if Session.equals('view_resonates', false) and Session.equals('view_bookmarked', false) and Session.equals('view_completed', false)
-                'active' 
-            else ''
-            
         published_count: -> Counts.get('published_lightbank_count')
         unpublished_count: -> Counts.get('unpublished_lightbank_count')
-    
-        resonates_item_class: -> 
-            if not Meteor.userId() then 'disabled'
-            else if Session.equals 'view_resonates', true then 'active' else ''
-        bookmarked_item_class: -> 
-            if not Meteor.userId() then 'disabled'
-            else if Session.equals 'view_bookmarked', true then 'active' else ''
-        completed_item_class: -> 
-            if not Meteor.userId() then 'disabled'
-            else if Session.equals 'view_completed', true then 'active' else ''
-        published_item_class: -> 
-            if not Meteor.userId() then 'disabled'
-            else if Session.equals 'view_published', true then 'active' else ''
-        unpublished_item_class: -> 
-            if not Meteor.userId() then 'disabled'
-            else if Session.equals 'view_unpublished', true then 'active' else ''
     
     Template.lightbank.events
     
@@ -87,45 +62,6 @@ if Meteor.isClient
                 tags: selected_theme_tags.array()
             Session.set 'view_unpublished', true
             FlowRouter.go "/edit/#{new_id}"
-    
-        'click #set_mode_to_all': -> 
-            if Meteor.userId() 
-                Session.set 'view_bookmarked', false
-                Session.set 'view_resonates', false
-                Session.set 'view_completed', false
-            else FlowRouter.go '/sign-in'
-    
-        'click #toggle_resonates': -> 
-            if Meteor.userId() 
-                if Session.equals 'view_resonates', true
-                    Session.set 'view_resonates', false
-                else Session.set 'view_resonates', true
-            else FlowRouter.go '/sign-in'
-    
-        'click #toggle_bookmarked': -> 
-            if Meteor.userId() 
-                if Session.equals 'view_bookmarked', true
-                    Session.set 'view_bookmarked', false
-                else Session.set 'view_bookmarked', true
-            else FlowRouter.go '/sign-in'
-    
-        'click #toggle_completed': -> 
-            if Meteor.userId() 
-                if Session.equals 'view_completed', true 
-                    Session.set 'view_completed', false
-                else Session.set 'view_completed', true
-            else FlowRouter.go '/sign-in'
-    
-        'click #toggle_published': -> 
-            if Session.equals 'view_published', true 
-                Session.set 'view_published', false
-            else Session.set 'view_published', true
-    
-        'click #toggle_unpublished': -> 
-            if Session.equals 'view_unpublished', true 
-                Session.set 'view_unpublished', false
-            else Session.set 'view_unpublished', true
-    
     
     Template.edit_lightbank.events
         'click #delete_doc': ->

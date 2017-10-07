@@ -5,10 +5,10 @@ Meteor.publish 'facet', (
     selected_intention_tags
     selected_timestamp_tags
     type
-    author_id=null
-    parent_id=null
-    tag_limit=null
-    doc_limit=null
+    author_id
+    parent_id
+    tag_limit
+    doc_limit
     view_published
     view_read
     view_bookmarked
@@ -44,7 +44,7 @@ Meteor.publish 'facet', (
         if view_complete? then match.complete = view_complete
         # console.log view_complete
         
-        console.log 'match:', match
+        # console.log 'match:', match
         
         
         theme_tag_cloud = Docs.aggregate [

@@ -13,7 +13,6 @@ if Meteor.isClient
                 parent_id=null
                 tag_limit=null
                 doc_limit=null
-                view_private=null
                 view_published=null
                 view_read=null
                 view_bookmarked=null

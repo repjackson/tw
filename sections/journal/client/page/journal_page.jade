@@ -9,6 +9,7 @@ template(name='view_journal')
                 +parent_doc_segment
                 .ui.basic.segment
                     |!{content}
+                +view_tags_sidebar
                 if published
                     +comments
                 +doc_matches
@@ -31,7 +32,6 @@ template(name='view_journal')
                     +doc_sentiment
                     +doc_emotion
                     +watson_keywords
-                +view_tags_sidebar
                 .ui.dividing.header Actions
                 +bookmark_button
                 +reflect_button
@@ -40,6 +40,6 @@ template(name='view_journal')
                     +thanks_button
                 +resonates_list
                 +mark_read
-                +read_by
+                // +read_by
                 +published
                 .ui.divider

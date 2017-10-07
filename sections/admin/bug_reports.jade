@@ -4,11 +4,7 @@ template(name='bug_reports')
         |Bug Reports
     .ui.grid
         .four.wide.column
-            .ui.form
-                // .header View Settings
-                // +toggle_view_complete
-                +view_complete_tritoggle
-                // +toggle_view_incomplete
+            +complete_tritoggle
             +timestamp_facet    
             +username_facet
         .twelve.wide.column

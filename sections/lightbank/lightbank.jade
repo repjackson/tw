@@ -1,18 +1,14 @@
 template(name='lightbank')
-    .ui.center.aligned.basic.segment
-        +doc_content tags='lightbank,blurb'
+    h1.ui.center.aligned.header
+        +icon96 name='summer'
+        |Lightbank
+    // .ui.center.aligned.basic.segment
+    //     +doc_content tags='lightbank,blurb'
 
     .ui.stackable.grid
-        .six.wide.column
+        .four.wide.column
             +lightbank_cloud
             if isInRole 'admin'
-                .ui.two.item.stackable.menu
-                    a#toggle_published.item(class=published_item_class) 
-                        i.red.unhide.icon
-                        |Published (#{published_count})
-                    a#toggle_unpublished.item(class=unpublished_item_class) 
-                        i.red.hide.icon
-                        |Unpublished (#{unpublished_count})
                 if selected_theme_tags
                     #add.ui.blue.button
                         i.plus.icon
@@ -22,10 +18,22 @@ template(name='lightbank')
                         i.plus.icon
                         |Add Lightbank Item
         
-        .ten.wide.column
+        .eight.wide.column
             .ui.centered.stackable.cards
                 each docs
                     +lightbank_doc_view
+        .four.wide.column
+            .ui.header 
+                +icon24 name='filter' classes='ui avatar image'
+                |View Filters
+            // +resonate_tritoggle
+            +bookmark_tritoggle
+            +read_tritoggle
+            +complete_tritoggle
+            +doc_limit
+            if isInRole 'admin'
+                .ui.dividing.header Admin
+                +published_tritoggle
         
 
 
@@ -63,6 +71,6 @@ template(name='lightbank_doc_view')
             // if can_bookmark
             +bookmark_button
             // +view_full_button
-            +toggle_doc_read
+            +mark_read
             if can_edit
                 +edit_link_button

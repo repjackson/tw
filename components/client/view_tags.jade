@@ -22,17 +22,17 @@ template(name='view_tags')
 
 
 template(name='view_tags_sidebar')
-    .ui.dividing.header 
+    .ui.header 
         +icon48 name='hashtag'
-        |Theme Tags
+        |Theme
     each tags
         .ui.basic.large.label.doc_tag #{this}
-    .ui.dividing.header 
+    .ui.header 
         +icon48 name='geo-fence'
         |Location Tags
     each location_tags
         .ui.basic.large.label.location_tag #{this}
-    .ui.dividing.header 
+    .ui.header 
         +icon48 name='spotlight'
         |Intention Tags
     each intention_tags

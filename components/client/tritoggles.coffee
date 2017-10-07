@@ -1,9 +1,11 @@
 Template.doc_limit.events
+    'click #make_1': (e,t)-> Session.set 'doc_limit', 1
     'click #make_5': (e,t)-> Session.set 'doc_limit', 5
     'click #make_10': (e,t)-> Session.set 'doc_limit', 10
     'click #make_20': (e,t)-> Session.set 'doc_limit', 20
     
 Template.doc_limit.helpers
+    limit_1_class: -> if Session.equals('doc_limit', 1) then 'blue' else 'basic'
     limit_5_class: -> if Session.equals('doc_limit', 5) then 'blue' else 'basic'
     limit_10_class: -> if Session.equals('doc_limit', 10) then 'blue' else 'basic'
     limit_20_class: -> if Session.equals('doc_limit', 20) then 'blue' else 'basic'
@@ -51,7 +53,7 @@ Template.complete_tritoggle.helpers
 Template.bookmark_tritoggle.events
     'click #view_bookmarked': (e,t)-> Session.set 'view_bookmarked', true
     'click #view_all': (e,t)-> Session.set 'view_bookmarked', null
-    'click #view_inbookmarked': (e,t)-> Session.set 'view_bookmarked', false
+    'click #view_unbookmarked': (e,t)-> Session.set 'view_bookmarked', false
     
 Template.bookmark_tritoggle.helpers
     view_bookmarked_class: -> if Session.equals('view_bookmarked', true) then 'blue' else 'basic'
