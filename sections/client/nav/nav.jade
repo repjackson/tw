@@ -1,8 +1,8 @@
 template(name='nav')
     #nav_menu.ui.top.borderless.attached.large.menu
         a.toggle_sidebar.mobile.only.item
-            i.sidebar.icon
-            .imogen Tori Webster
+            +icon24 name='menu'
+            // .imogen Tori Webster
         if currentUser
             a.ui.mobile.hidden.simple.dropdown.item(href='/')
                 .imogen Tori Webster

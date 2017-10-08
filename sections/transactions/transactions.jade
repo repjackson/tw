@@ -1,20 +1,33 @@
 template(name='transactions')
-    .ui.center.aligned.header
-        +icon96 name='handshake'
-        | #{currentUser.name} Transactions
-    .ui.header Your current point amount: #{currentUser.points}
-    table.ui.selectable.unstackable.table
-            thead
-                tr
-                    th Title
-                    th Sale Price
-                    th When
-                    th Buyer
-                    th Seller
-                    th Actions
-            tbody
-                each transactions
-                    +transaction
+    .ui.stackable.grid
+        .centered.row
+            .four.wide.column
+                h2.ui.header
+                    +icon48 name='diamond' classes='ui inline image'
+                    |#{currentUser.points}
+            .eight.wide.column
+                h1.ui.center.aligned.header
+                    +icon96 name='handshake'
+                    | #{currentUser.name} Transactions
+            .four.wide.column
+                a.ui.basic.circular.small.button(href='/karma') 
+                    +icon48 name='diamon' classes='ui mini inline image'
+                    | Karma
+                    +icon48 name='rotate-left' classes='ui mini inline image'
+        .centered.row
+            .sixteen.wide.column
+                table.ui.selectable.unstackable.table
+                    thead
+                        tr
+                            th Title
+                            th Sale Price
+                            th When
+                            th Buyer
+                            th Seller
+                            th Actions
+                    tbody
+                        each transactions
+                            +transaction
 
 template(name='transaction')                    
     tr

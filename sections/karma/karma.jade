@@ -1,9 +1,20 @@
 template(name='karma')
-    .ui.container
-        h1.ui.horizontal.dividing.header 
-            i.heartbeat.outline.icon
-            |Karma (#{currentUser.points})
-        .ui.stackable.grid
+    .ui.stackable.grid
+        .centered.row
+            .four.wide.column
+                h2.ui.header
+                    +icon48 name='diamond' classes='ui inline image'
+                    |#{currentUser.points}
+            .eight.wide.column
+                h1.ui.center.aligned.header 
+                    +icon96 name='diamond'
+                    |Karma
+            .four.wide.column
+                a.ui.basic.circular.small.button(href='/transactions') 
+                    +icon48 name='handshake' classes='ui mini spaced image'
+                    | Transactions
+                    +icon48 name='rotate-left' classes='ui mini spaced image'
+        .row
             .four.wide.column
                 +karma_cloud
                 // .ui.dividing.header Actions
@@ -15,15 +26,9 @@ template(name='karma')
                 //     input#share_bookmarks(type='checkbox' checked=currentUser.profile.share_bookmarks)
                 //     label(for='share_bookmarks') Share Stats in Profile
             .twelve.wide.column
-                .ui.dividing.header Transactions
-                .ui.styled.fluid.accordion
-                    .title 
-                        i.exchange.icon
-                        |Transactions
-                        i.dropdown.icon
-                    .content
-                        +transactions
-                .ui.dividing.header Upvoted Documents
+                .ui.center.aligned.header
+                    +icon48 name='like'
+                    |Upvoted Documents
                 .ui.divided.relaxed.items
                     each upvoted_docs
                         .item
@@ -39,6 +44,7 @@ template(name='karma')
                                     .ui.basic.label #{type}
                                     | Points 
                                     .ui.basic.label #{points}
+                                .extra
                                     | Upvoters (#{upvoters.length})
                                     .ui.horizontal.list
                                         each upvoter_users
@@ -47,6 +53,4 @@ template(name='karma')
                                                     img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
                                                     |#{this.name}
                                                 
-                                    a.ui.basic.right.floated.teal.button(href="/view/#{_id}")
-                                        | Full
-                                        i.right.chevron.arrow.icon
+                                    +view_full_button

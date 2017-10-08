@@ -24,6 +24,7 @@ if Meteor.isClient
             users = []
             
             for upvoter_id in @upvoters
+                # console.log Meteor.users.findOne upvoter_id
                 users.push Meteor.users.findOne upvoter_id
             users
             
@@ -61,8 +62,9 @@ if Meteor.isServer
                     sort: points: -1
             children: [
                 { find: (doc) ->
+                    # console.log 'karma doc', doc
                     Meteor.users.find 
-                        _id: $in: [doc.upvoters]
+                        _id: $in: doc.upvoters
                     }
                 ]    
         }
