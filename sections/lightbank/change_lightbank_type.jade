@@ -1,0 +1,19 @@
+template(name='change_lightbank_type')
+    .ui.horizontal.divider.header 
+        +icon48 name='mockup' classes='ui mini spaced image'
+        |Type
+    #make_poem.ui.circular.button(class=poem_button_class) 
+        +icon48 name='rose' classes='ui mini spaced image'
+        |Poem
+    #make_journal_prompt.ui.circular.button(class=journal_prompt_button_class) 
+        +icon48 name='question-mark' classes='ui mini spaced image'
+        |Journal Prompt
+    #make_quote.ui.circular.button(class=quote_button_class) 
+        +icon48 name='get-quote' classes='ui mini spaced image'
+        |Quote
+    #make_passage.ui.circular.button(class=passage_button_class) 
+        +icon48 name='align-left' classes='ui mini spaced image'
+        |Passage
+    #make_custom.ui.circular.button(class=custom_button_class) 
+        +icon48 name='edit-property' classes='ui mini spaced image'
+        |Custom

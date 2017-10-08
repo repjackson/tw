@@ -1,8 +1,8 @@
 if Meteor.isClient    
-    Session.setDefault 'lightbank_view_mode', 'all'
+    # Session.setDefault 'lightbank_view_mode', 'all'
     # @selected_theme_tags = new ReactiveArray []
     
-    media_tags = ['tori webster','quote','poem', 'photo', 'image', 'video', 'essay', 'journal prompt','prompt']
+    # media_tags = ['tori webster','quote','poem', 'photo', 'image', 'video', 'essay', 'journal prompt','prompt']
     
     # Template.lightbank_cloud.onCreated ->
         # @autorun => 
@@ -17,9 +17,9 @@ if Meteor.isClient
         #         )
     
     Template.lightbank_cloud.helpers
-        media_tags: -> Tags.find(name: $in: media_tags)
+        # media_tags: -> Tags.find(name: $in: media_tags)
             
-        media_tags_exist: -> Tags.find(name: $in: media_tags).count()
+        # media_tags_exist: -> Tags.find(name: $in: media_tags).count()
             
         theme_tags: ->
             doc_count = Docs.find(type:'lightbank').count()
@@ -27,18 +27,19 @@ if Meteor.isClient
             if 0 < doc_count < 3
                 Tags.find { 
                     count: $lt: doc_count
-                    name: $nin: media_tags
+                    # name: $nin: media_tags
                     }, limit:20
             else
                 # console.log 'media tags?', media_tags
-                cursor = Tags.find({name: $nin: media_tags}, limit:20)
+                # cursor = Tags.find({name: $nin: media_tags}, limit:20)
+                cursor = Tags.find({}, limit:20)
                 
-        media_tag_class: -> 
-            button_class = []
-            if @valueOf() in selected_theme_tags.array() then button_class.push 'blue' else button_class.push 'basic'
+        # media_tag_class: -> 
+        #     button_class = []
+        #     if @valueOf() in selected_theme_tags.array() then button_class.push 'blue' else button_class.push 'basic'
     
-            if @name is 'tori webster' then button_class.push 'basic blue'
-            button_class
+        #     if @name is 'tori webster' then button_class.push 'basic blue'
+        #     button_class
     
         cloud_tag_class: ->
             button_class = []
@@ -94,36 +95,36 @@ if Meteor.isClient
             selected_theme_tags.push doc.name
             $('#search').val ''
     
-if Meteor.isServer
-    Meteor.publish 'lightbank_tags', (selected_theme_tags, limit, view_resonates, view_bookmarked, view_completed, view_published, view_unpublished)->
+# if Meteor.isServer
+    # Meteor.publish 'lightbank_tags', (selected_theme_tags, limit, view_resonates, view_bookmarked, view_completed, view_published, view_unpublished)->
         
-        self = @
-        match = {}
+    #     self = @
+    #     match = {}
         
-        match.type = 'lightbank'
-        if selected_theme_tags.length > 0 then match.tags = $all: selected_theme_tags
+    #     match.type = 'lightbank'
+    #     if selected_theme_tags.length > 0 then match.tags = $all: selected_theme_tags
         
-        if view_resonates then match.favoriters = $in: [@userId]
-        if view_bookmarked then match.bookmarked_ids = $in: [@userId]
-        if view_completed then match.completed_ids = $in: [@userId]
-        if view_published then match.published = true
-        if view_unpublished then match.published = false
+    #     if view_resonates then match.favoriters = $in: [@userId]
+    #     if view_bookmarked then match.bookmarked_ids = $in: [@userId]
+    #     if view_completed then match.completed_ids = $in: [@userId]
+    #     if view_published then match.published = true
+    #     if view_unpublished then match.published = false
         
-        cloud = Docs.aggregate [
-            { $match: match }
-            { $project: tags: 1 }
-            { $unwind: "$tags" }
-            { $group: _id: '$tags', count: $sum: 1 }
-            { $match: _id: $nin: selected_theme_tags }
-            { $sort: count: -1, _id: 1 }
-            { $limit: limit }
-            { $project: _id: 0, name: '$_id', count: 1 }
-            ]
-        # console.log 'cloud, ', cloud
-        cloud.forEach (tag, i) ->
-            self.added 'tags', Random.id(),
-                name: tag.name
-                count: tag.count
-                index: i
+    #     cloud = Docs.aggregate [
+    #         { $match: match }
+    #         { $project: tags: 1 }
+    #         { $unwind: "$tags" }
+    #         { $group: _id: '$tags', count: $sum: 1 }
+    #         { $match: _id: $nin: selected_theme_tags }
+    #         { $sort: count: -1, _id: 1 }
+    #         { $limit: limit }
+    #         { $project: _id: 0, name: '$_id', count: 1 }
+    #         ]
+    #     # console.log 'cloud, ', cloud
+    #     cloud.forEach (tag, i) ->
+    #         self.added 'tags', Random.id(),
+    #             name: tag.name
+    #             count: tag.count
+    #             index: i
     
-        self.ready()
+    #     self.ready()

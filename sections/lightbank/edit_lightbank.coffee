@@ -16,44 +16,8 @@ if Meteor.isClient
                 FlowRouter.go '/lightbank'
                 
     
-        'click #make_journal_prompt': ->
-            Docs.update FlowRouter.getParam('doc_id'),
-                $set: lightbank_type: 'journal_prompt'
-        
-        'click #make_passage': ->
-            Docs.update FlowRouter.getParam('doc_id'),
-                $set: lightbank_type: 'passage'
-        
-        'click #make_poem': ->
-            Docs.update FlowRouter.getParam('doc_id'),
-                $set: lightbank_type: 'poem'
-        
-        'click #make_quote': ->
-            Docs.update FlowRouter.getParam('doc_id'),
-                $set: lightbank_type: 'quote'
-        
-        'click #make_custom': ->
-            Docs.update FlowRouter.getParam('doc_id'),
-                $set: lightbank_type: 'custom'
-        
     Template.edit_lightbank.helpers
         lightbank_entry: -> Docs.findOne FlowRouter.getParam('doc_id')
-        poem_button_class: -> 
-            lightbank_doc = Docs.findOne FlowRouter.getParam('doc_id')
-            if lightbank_doc.lightbank_type is 'poem' then 'blue' else 'basic'
-        passage_button_class: -> 
-            lightbank_doc = Docs.findOne FlowRouter.getParam('doc_id')
-            if lightbank_doc.lightbank_type is 'passage' then 'blue' else 'basic'
-        quote_button_class: -> 
-            lightbank_doc = Docs.findOne FlowRouter.getParam('doc_id')
-            if lightbank_doc.lightbank_type is 'quote' then 'blue' else 'basic'
-        journal_prompt_button_class: -> 
-            lightbank_doc = Docs.findOne FlowRouter.getParam('doc_id')
-            if lightbank_doc.lightbank_type is 'journal_prompt' then 'blue' else 'basic'
-        custom_button_class: -> 
-            lightbank_doc = Docs.findOne FlowRouter.getParam('doc_id')
-            if lightbank_doc.lightbank_type is 'custom' then 'blue' else 'basic'
-        
         
         is_custom: -> 
             lightbank_doc = Docs.findOne FlowRouter.getParam('doc_id')

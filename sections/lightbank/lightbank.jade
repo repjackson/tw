@@ -27,14 +27,10 @@ template(name='lightbank')
                 .ui.header 
                     +icon24 name='filter' classes='ui avatar image'
                     |Type Filters
-                div
-                    +passage_filter
-                div
-                    +journal_prompt_filter
-                div
-                    +poem_filter
-                div
-                    +quote_filter
+                +passage_filter
+                +journal_prompt_filter
+                +poem_filter
+                +quote_filter
                 .ui.header 
                     +icon24 name='filter' classes='ui avatar image'
                     |Component Filters
@@ -94,3 +90,8 @@ template(name='lightbank_doc_view')
             +mark_read
             if can_edit
                 +edit_link_button
+        if isInRole 'admin'
+            .content
+                +change_lightbank_type
+                
+                

@@ -15,6 +15,7 @@ Meteor.publish 'facet', (
     view_resonates
     view_complete
     view_images
+    view_lightbank_type
     )->
     
         self = @
@@ -47,6 +48,10 @@ Meteor.publish 'facet', (
         
         # console.log 'match:', match
         if view_images? then match.components?.image = view_images
+        
+        # lightbank types
+        if view_lightbank_type? then match.lightbank_type = view_lightbank_type
+        # match.lightbank_type = $ne:'journal_prompt'
         
         theme_tag_cloud = Docs.aggregate [
             { $match: match }
@@ -166,7 +171,8 @@ Meteor.publish 'facet', (
         
         # doc_results = []
         int_doc_limit = parseInt doc_limit
-        subHandle = Docs.find(match, {limit:int_doc_limit, sort: timestamp:-1}).observeChanges(
+        # subHandle = Docs.find(match, {limit:int_doc_limit, sort: timestamp:-1}).observeChanges(
+        subHandle = Docs.find(match, {limit:20, sort: timestamp:-1}).observeChanges(
             added: (id, fields) ->
                 # console.log 'added doc', id, fields
                 # doc_results.push id
