@@ -17,7 +17,7 @@ if Meteor.isClient
                 type='lightbank'
                 author_id=null
                 parent_id=null
-                tag_limit=null
+                tag_limit=20
                 doc_limit=Session.get 'doc_limit'
                 view_published=Session.get('view_published')
                 view_read=Session.get('view_read')
@@ -67,9 +67,10 @@ if Meteor.isClient
     
     
     Template.lightbank_doc_view.helpers
-        is_author: -> Meteor.userId() and @author_id is Meteor.userId()
+        is_poem: -> @lightbank_type is 'poem'    
+        is_quote: -> @lightbank_type is 'quote'    
+        is_custom: -> @lightbank_type is undefined    
         tag_class: -> if @valueOf() in selected_theme_tags.array() then 'teal' else 'basic'
-        when: -> moment(@timestamp).fromNow()
         light_bank_content_class: -> if 'quote' in @tags then 'large150' else ''
     
     

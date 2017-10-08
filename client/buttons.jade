@@ -249,9 +249,9 @@ template(name='pin_corner_button')
         +icon48 name="push-pin" classes='avatar'
         
 template(name='view_full_button')
-    a.ui.basic.right.floated.button(href="/view/#{_id}")
+    a.ui.basic.circular.button(href="/view/#{_id}")
         |Full
-        +icon48 name="double-right" classes='avatar'
+        +icon48 name="double-right" classes='ui mini spaced image'
 
 template(name='edit_link_button')
     if can_edit

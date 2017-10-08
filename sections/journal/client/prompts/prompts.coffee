@@ -5,8 +5,25 @@ FlowRouter.route '/journal/prompts', action: (params) ->
 Template.journal_prompts.onCreated -> 
     self = @
     @autorun => 
-        Meteor.subscribe('journal_prompts', 
+        Meteor.subscribe('facet', 
             selected_theme_tags.array()
+            selected_author_ids.array()
+            selected_location_tags.array()
+            selected_intention_tags.array()
+            selected_timestamp_tags.array()
+            type='lightbank'
+            author_id=null
+            parent_id=null
+            tag_limit=20
+            doc_limit=Session.get 'doc_limit'
+            view_published = Session.get('view_published')
+            view_read = null
+            view_bookmarked=Session.get('view_bookmarked')
+            view_resonates = null
+            view_complete = null
+            view_images = null
+            view_lightbank_type = 'journal_prompt'
+
             )
             
 
@@ -38,23 +55,9 @@ Template.journal_prompt.helpers
     tag_class: -> if @valueOf() in selected_theme_tags.array() then 'teal' else 'basic'
     journal_card_class: -> if @published then 'blue' else ''
 
-    read: -> Meteor.userId() in @read_by
-    liked: -> Meteor.userId() in @liked_by
-    
-    read_count: -> @read_by.length    
-    liked_count: -> @liked_by.length    
-
 
 Template.journal_prompt.events
     'click .tag': -> if @valueOf() in selected_theme_tags.array() then selected_theme_tags.remove(@valueOf()) else selected_theme_tags.push(@valueOf())
-
-    'click .mark_read': (e,t)-> 
-        $(e.currentTarget).closest('.journal_segment').transition('pulse')
-        Docs.update @_id, $addToSet: read_by: Meteor.userId()
-        
-    'click .mark_unread': (e,t)-> 
-        $(e.currentTarget).closest('.journal_segment').transition('pulse')
-        Docs.update @_id, $pull: read_by: Meteor.userId()
 
 
 

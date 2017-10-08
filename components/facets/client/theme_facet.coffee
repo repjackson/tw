@@ -7,9 +7,9 @@ Template.theme_facet.helpers
         if 0 < doc_count < 3
             Tags.find { 
                 count: $lt: doc_count
-                }, limit:10
+                }, limit:20
         else
-            Tags.find({}, limit:10)
+            Tags.find({}, limit:20)
             
             
     cloud_tag_class: ->

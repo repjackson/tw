@@ -10,11 +10,16 @@ template(name='journal_prompts')
             .four.wide.column
                 #cloud
                     +theme_facet type='journal'
-            .twelve.wide.column
+            .nine.wide.column
                 .ui.relaxed.divided.items
                     each journal_prompts
                         +journal_prompt
-        
+            .three.wide.column
+                .ui.header 
+                    +icon24 name='filter' classes='ui avatar image'
+                    |Filter
+
+                +bookmark_filter
 
 
 
@@ -39,8 +44,7 @@ template(name='journal_prompt')
                 +reflect_button
                 if can_edit
                     +edit_link_button
-                span.floated.right
-                    +view_full_button
+                +view_full_button
             // .meta
             //     i.large.icons
             //         i.idea.icon
