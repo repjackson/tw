@@ -131,13 +131,16 @@ template(name='request_tori_feedback')
             +icon48 name='feedback' classes='avatar'
             | Feedback Requested 
             |Status: Pending
-        #cancel_request.ui.fluid.basic.button
+        #cancel_request.ui.fluid.basic.circular.button
             i.cancel.icon
             | Cancel Request
     else
-        #request_feedback.ui.fluid.basic.button
+        #request_feedback.ui.fluid.basic.circular.button
             +icon48 name='feedback' classes='avatar'
-            | Request Tori's Feedback
+            if label
+                |#{label}
+            else
+                | Request Tori's Feedback
             
                 
 template(name='parent_doc_segment')

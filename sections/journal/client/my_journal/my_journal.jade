@@ -36,6 +36,12 @@ template(name='my_journal')
 template(name='my_entry_view')
     .ui.segment.document_container(class=journal_segment_class)
         .content
+            if published
+                .ui.top.right.attached.basic.label(data-tooltip='Published')
+                    +icon48 name='eye'
+            else
+                .ui.top.right.attached.basic.label(data-tooltip='Private')
+                    +icon48 name='invisible'
             .description
                 +parent_doc_segment
                 .large130 !{content}
@@ -56,12 +62,11 @@ template(name='my_entry_view')
                     .ten.wide.column
                         .ui.basic.segment
                             .extra
-                                span.right.floated
-                                    +view_full_button
                                 +bookmark_button
                                 +edit_link_button
                                 if is_author
                                     +published
+                                +view_full_button
                     .six.wide.column
                         .image
                             .ui.basic.segment

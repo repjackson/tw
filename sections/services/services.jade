@@ -2,13 +2,13 @@ template(name='services')
     .ui.stackable.grid
         .four.wide.column
             h1.ui.dividing.header
-                i.configure.icon
+                +icon96 name='service-bell'
                 |Services
             if isInRole 'admin'
-                #add_service.ui.red.basic.fluid.button
-                    i.plus.icon
+                #add_service.ui.basic.fluid.button
+                    +icon48 name='plus' classes='ui mini spaced image'
                     |Add Service
-            +theme_tag_filter type='service'
+            +theme_facet type='service'
         .twelve.wide.column
             .ui.relaxed.divided.items
                 each services

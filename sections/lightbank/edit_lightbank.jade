@@ -51,7 +51,15 @@ template(name='edit_lightbank')
                         .ui.fluid.basic.disabled.button Add Tags to Save
                 .four.wide.column
                     #delete_doc.ui.fluid.icon.basic.button(data-tooltip='Delete')
-                        +icon48 name='delete' classes='ui mini spaced image'
+                        // +icon48 name='delete' classes='ui mini spaced image'
+                        i.large.remove.red.icon
+            .ui.header 
+                |created by 
+                if is_author
+                    |you
+                else
+                    |#{author.name}
+                |#{when}
             +change_lightbank_type lightbank_entry
             if is_custom
                 .ui.horizontal.divider.header 
@@ -71,8 +79,11 @@ template(name='edit_lightbank')
                 +icon48 name='sports-mode' classes='ui mini spaced image'
                 |Actions
             +call_watson
-            +published
-            .ui.header by #{author.name} #{when}
+            if isInRole 'admin'
+                +published
+            else
+                unless published
+                    +request_tori_feedback label='Submit for Approval'
 
             if isInRole 'admin'
                 +edit_author

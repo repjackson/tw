@@ -69,6 +69,8 @@ if Meteor.isClient
     Template.lightbank_doc_view.helpers
         is_poem: -> @lightbank_type is 'poem'    
         is_quote: -> @lightbank_type is 'quote'    
+        is_journal_prompt: -> @lightbank_type is 'journal_prompt'    
+        is_passage: -> @lightbank_type is 'passage'    
         is_custom: -> @lightbank_type is undefined    
         tag_class: -> if @valueOf() in selected_theme_tags.array() then 'teal' else 'basic'
         light_bank_content_class: -> if 'quote' in @tags then 'large150' else ''

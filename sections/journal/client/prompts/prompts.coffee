@@ -27,14 +27,6 @@ Template.journal_prompts.onCreated ->
             )
             
 
-Template.journal_prompt.onRendered ->
-    @autorun =>
-        if @subscriptionsReady()
-            Meteor.setTimeout ->
-                $('.ui.accordion').accordion()
-            , 500
-
-
 Template.journal_prompts.helpers
     journal_prompts: -> 
         match = {}
@@ -50,16 +42,3 @@ Template.journal_prompts.helpers
         
     journal_card_class: -> if @published then 'blue' else ''
     
-
-Template.journal_prompt.helpers
-    tag_class: -> if @valueOf() in selected_theme_tags.array() then 'teal' else 'basic'
-    journal_card_class: -> if @published then 'blue' else ''
-
-
-Template.journal_prompt.events
-    'click .tag': -> if @valueOf() in selected_theme_tags.array() then selected_theme_tags.remove(@valueOf()) else selected_theme_tags.push(@valueOf())
-
-
-
-
-

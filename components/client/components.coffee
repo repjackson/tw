@@ -106,29 +106,32 @@ Template.request_tori_feedback.onCreated ->
             
 Template.request_tori_feedback.helpers
     feedback_requested: ->
+        parent_doc = Template.parentData()
         Docs.findOne
             type: 'transaction'
             parent_id: 'AHQnLo2eDES57mzJD'
             author_id: Meteor.userId()
-            object_id: @_id
+            object_id: parent_doc._id
 
 
 Template.request_tori_feedback.events
     'click #request_feedback': ->
-        # console.log @
-        Meteor.call 'create_transaction', 'AHQnLo2eDES57mzJD', @_id, ->
-            Bert.alert "Transaction with Thoughtful Feedback created.", 'success', 'growl-top-right'
+        parent_doc = Template.parentData()
+        if parent_doc
+            Meteor.call 'create_transaction', 'AHQnLo2eDES57mzJD', parent_doc._id, ->
+                Bert.alert "Tori's Feedback Requested.", 'success', 'growl-top-right'
 
         
     'click #cancel_request': ->
+        parent_doc = Template.parentData()
         # console.log @
         request_transaction = Docs.findOne
             type: 'transaction'
             parent_id: 'AHQnLo2eDES57mzJD'
             author_id: Meteor.userId()
-            object_id: @_id
+            object_id: parent_doc._id
         Docs.remove request_transaction._id, ->
-            Bert.alert "Transaction with Thoughtful Feedback canceled.", 'info', 'growl-top-right'
+            Bert.alert "Feedback Request Canceled.", 'info', 'growl-top-right'
         
        
        
