@@ -26,9 +26,11 @@ template(name='browse_journal')
                     each journal_entries
                         +browse_entry_view
             .three.wide.column
-                +bookmark_tritoggle
-                +read_tritoggle
-                // +resonate_tritoggle
+                .ui.dividing.header
+                    +icon48 name='filter' classes='ui mini image'
+                    |Filter
+                +bookmark_filter
+                +read_filter
                 +doc_limit
 
 
@@ -59,7 +61,6 @@ template(name='browse_entry_view')
                 .ui.divided.stackable.grid
                     .ten.wide.column
                         .ui.basic.segment
-                            .ui.hidden.divider
                             span.right.floated
                                 +view_full_button
                             if is_author

@@ -24,8 +24,10 @@ template(name='my_journal')
                     each journal_entries
                         +my_entry_view
             .three.wide.column
-                // .ui.dividing.header Filters
-                +published_tritoggle
+                .ui.dividing.header
+                    +icon48 name='filter'
+                    |Filter
+                +published_filter
                 +doc_limit
         
 
@@ -42,11 +44,12 @@ template(name='my_entry_view')
             strong written #{when}
             .ui.hidden.fitted.divider
             +view_tags
+            .ui.hidden.divider
         .ui.fluid.accordion
             .title
                 .ui.header 
-                    +icon48 name='details' classes='ui avatar image'
-                    |Details 
+                    // +icon48 name='more' classes='ui avatar image'
+                    | More
                     i.dropdown.icon
             .content
                 .ui.divided.stackable.grid
@@ -68,14 +71,3 @@ template(name='my_entry_view')
                                 else
                                     if can_edit
                                         +call_watson
-            // .meta
-            //     i.large.icons
-            //         i.idea.icon
-            //         i.tags.corner.icon
-            //     each watson_keywords
-            //         .ui.tiny.circular.compact.button.tag(class=tag_class) #{this}
-            // .content
-            //         |by
-            //         if author.profile.image_id
-            //             img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
-            //         |#{author.name} #{when}

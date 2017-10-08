@@ -1,6 +1,6 @@
 template(name='title') 
-    .field
-        label Title
+    .ui.labeled.input
+        .ui.basic.label #{label}
         input#title(type='text' value=title)
 
 template(name='subtitle')
@@ -45,8 +45,7 @@ template(name='tags')
     .ui.segment
         .ui.header
             +icon48 name='hashtag' classes='ui mini spaced image'
-            |Theme Tags
-            &nbsp;
+            |Theme Tags &nbsp;
             .ui.mini.input
                 // i.plus.icon
                 input#add_tag(type='text' placeholder='Add...' maxlength='50' )
@@ -129,6 +128,11 @@ template(name='type')
         .inline.field
             label Type
             input#type(type='text' value=type)
+            
+template(name='author_name')
+    .ui.labeled.input
+        .ui.basic.label #{label} Author
+        input#author_name(type='text' value=author_name)
 
 template(name='edit_parent_id')
     .ui.form
@@ -145,7 +149,7 @@ template(name='location')
 
 template(name='content')
     .field
-        // label Content
+        label #{label}
         .froala-container
             +froalaReactive getFEContext
     
@@ -164,15 +168,16 @@ template(name='edit_image')
                     .ui.bottom.right.attached.blue.label Image Id: #{image_id}
         else
             unless image_url
-                .ui.labeled.input
+                .ui.labeled.fluid.input
                     .ui.basic.label
                         +icon48 name='add-image' classes='ui tiny spaced image'
                         |Upload Image
                     input(type='file' name='upload_picture' accept='image/*')
                 if isInRole 'dev'
-                    .field
-                        label or Choose Cloudinary Image Id
+                    .ui.header or Choose Cloudinary Image Id
+                    .ui.input
                         input#input_image_id(type='text')
+        .ui.horizontal.divider or                
         if image_url
             label image
             .ui.large.image
@@ -181,8 +186,13 @@ template(name='edit_image')
             .ui.label Image URL: #{image_url}
         else
             unless image_id
-                label Image URL
-                input#image_url(type='text' value=image_url)
+                .ui.labeled.icon.action.fluid.input
+                    .ui.basic.label 
+                        +icon48 name='add-link' classes='ui mini spaced image'
+                        |Paste Image URL
+                    input#image_url(type='text' value=image_url)
+                    .ui.basic.button
+                        +icon24 name='sent'
     
 template(name='youtube')
     .ui.segment

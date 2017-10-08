@@ -32,6 +32,7 @@ Docs.before.insert (userId, doc)->
     doc.author_id = Meteor.userId()
     doc.tag_count = doc.tags?.length
     doc.points = 0
+    doc.components = {}
     doc.read_by = [Meteor.userId()]
     doc.upvoters = []
     doc.downvoters = []

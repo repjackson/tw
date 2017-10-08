@@ -14,6 +14,7 @@ Meteor.publish 'facet', (
     view_bookmarked
     view_resonates
     view_complete
+    view_images
     )->
     
         self = @
@@ -45,7 +46,7 @@ Meteor.publish 'facet', (
         # console.log view_complete
         
         # console.log 'match:', match
-        
+        if view_images? then match.components?.image = view_images
         
         theme_tag_cloud = Docs.aggregate [
             { $match: match }

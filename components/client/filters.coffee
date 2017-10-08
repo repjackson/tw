@@ -50,6 +50,17 @@ Template.complete_filter.helpers
     view_incomplete_class: -> if Session.equals('view_complete', false) then 'blue' else 'basic'    
 
 
+Template.image_filter.events
+    'click #view_images': (e,t)-> 
+        if Session.equals('view_images', true) then Session.set('view_images', null) else Session.set('view_images', true)
+    'click #view_nonimages': (e,t)-> 
+        if Session.equals('view_images', false) then Session.set('view_images', null) else Session.set('view_images', false)
+    
+Template.image_filter.helpers
+    view_images_class: -> if Session.equals('view_images', true) then 'blue' else 'basic'
+    view_nonimages_class: -> if Session.equals('view_images', false) then 'blue' else 'basic'    
+
+
 
 Template.bookmark_filter.events
     'click #view_bookmarked': (e,t)-> 

@@ -30,9 +30,20 @@ template(name='bookmark_filter')
 template(name='resonate_filter')
     .ui.buttons
         #view_bookmarked.ui.button(class=view_bookmarked_class data-tooltip='View Resonates') 
-            img.ui.avatar.image(src="https://png.icons8.com/heart-with-pulse/dusk/64" width="64" height="64")
+            +dusk_icon64 name='heart-with-pulse' classes='ui mini image'
         #view_unbookmarked.ui.button(class=view_unbookmarked_class data-tooltip='View Non-Resonates')
             +icon48 name='unavailable' classes='ui mini image'
+
+
+
+// components
+
+template(name='image_filter')
+    .ui.buttons
+        #view_images.ui.button(class=view_images_class data-tooltip='View Images') 
+            +icon48 name='picture' classes='ui mini image'
+        #view_nonimages.ui.button(class=view_nonimages_class data-tooltip='View Non-Images')
+            +dusk_icon64 name='picture' classes='ui mini image'
             
 template(name='doc_limit')
     .ui.buttons

@@ -6,7 +6,7 @@ template(name='lightbank')
     //     +doc_content tags='lightbank,blurb'
 
     .ui.stackable.grid
-        .four.wide.column
+        .five.wide.column
             +lightbank_cloud
             if isInRole 'admin'
                 if selected_theme_tags
@@ -22,11 +22,12 @@ template(name='lightbank')
             .ui.centered.stackable.cards
                 each docs
                     +lightbank_doc_view
-        .four.wide.column
+        .three.wide.column
             .ui.header 
                 +icon24 name='filter' classes='ui avatar image'
                 |View Filters
-            // +resonate_tritoggle
+            div
+                +image_filter
             div
                 +bookmark_filter
             div
@@ -36,7 +37,7 @@ template(name='lightbank')
             div
                 +doc_limit
             if isInRole 'admin'
-                .ui.dividing.header Admin
+                .ui.header Admin
                 +published_filter
         
 

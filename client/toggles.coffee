@@ -38,13 +38,13 @@ Template.toggle_component.events
 #         Docs.update FlowRouter.getParam('doc_id'), 
 #             $set: has_youtube: has_youtube
         
-Template.toggle_content.events
-    'click #toggle_content': (e,t)->
-        $(e.currentTarget).closest('#toggle_content').transition('pulse')
-        has_content = Docs.findOne(FlowRouter.getParam('doc_id')).has_content
-        has_content = !has_content
-        Docs.update FlowRouter.getParam('doc_id'), 
-            $set: has_content: has_content
+# Template.toggle_content.events
+#     'click #toggle_content': (e,t)->
+#         $(e.currentTarget).closest('#toggle_content').transition('pulse')
+#         has_content = Docs.findOne(FlowRouter.getParam('doc_id')).has_content
+#         has_content = !has_content
+#         Docs.update FlowRouter.getParam('doc_id'), 
+#             $set: has_content: has_content
         
         
 Template.toggle_title.events

@@ -4,6 +4,12 @@ Template.subtitle.events
         Docs.update @_id,
             $set: subtitle: subtitle
             
+Template.author_name.events
+    'blur #author_name': ->
+        author_name = $('#author_name').val()
+        Docs.update Template.parentData()._id,
+            $set: author_name: author_name
+            
 Template.icon_class.events
     'blur #icon_class': ->
         icon_class = $('#icon_class').val()

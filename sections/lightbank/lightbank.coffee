@@ -24,6 +24,7 @@ if Meteor.isClient
                 view_bookmarked=Session.get('view_bookmarked')
                 view_resonates=Session.get('view_resonates')
                 view_complete=Session.get 'view_complete'
+                view_images = Session.get 'view_images'
 
                 )
 
@@ -62,13 +63,6 @@ if Meteor.isClient
                 tags: selected_theme_tags.array()
             Session.set 'view_unpublished', true
             FlowRouter.go "/edit/#{new_id}"
-    
-    Template.edit_lightbank.events
-        'click #delete_doc': ->
-            if confirm 'Delete this doc?'
-                Docs.remove @_id
-                FlowRouter.go '/lightbank'
-    
     
     
     Template.lightbank_doc_view.helpers

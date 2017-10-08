@@ -5,24 +5,61 @@ template(name='edit_lightbank')
     .ui.stackable.grid.document_container
         .eleven.wide.column
             +tags
-            if components.youtube
-                +youtube
-            if components.image
-                +edit_image
-            if components.content
-                +content
+            with lightbank_entry
+                if is_quote
+                    +author_name label='Quote'
+                    .ui.header Quote
+                    +content
+                if is_poem
+                    +title label='Poem Title'
+                    .ui.header Poem
+                    +content
+                if is_journal_prompt
+                    +author_name label='Prompt'
+                    .ui.header Prompt
+                    +content
+                if is_passage
+                    +author_name label='Passage'
+                    .ui.header Passage
+                    +content
+                if is_custom
+                    if components.youtube
+                        +youtube
+                    if components.image
+                        +edit_image
+                    if components.content
+                        +content
         .five.wide.column
             if tags
                 a.ui.fluid.green.big.button(href="/view/#{_id}") Save Lightbank Item
             else
                 .ui.fluid.green.big.disabled.button Add Tags to Save
             #delete_doc.ui.small.fluid.red.button Delete
-            .ui.header 
-                +icon48 name='slider' classes='ui mini spaced image'
-                |Components
-            +toggle_component name='youtube' label='Video' icon_name='movie'
-            +toggle_component name='image' label='Image' icon_name='image'
-            +toggle_component name='content' label='Text' icon_name='outline'
+            .ui.horizontal.divider.header 
+                +icon48 name='mockup' classes='ui mini spaced image'
+                |Type
+            #make_poem.ui.circular.button(class=poem_button_class) 
+                +icon48 name='rose' classes='ui mini spaced image'
+                |Poem
+            #make_journal_prompt.ui.circular.button(class=journal_prompt_button_class) 
+                +icon48 name='question-mark' classes='ui mini spaced image'
+                |Journal Prompt
+            #make_quote.ui.circular.button(class=quote_button_class) 
+                +icon48 name='get-quote' classes='ui mini spaced image'
+                |Quote
+            #make_passage.ui.circular.button(class=passage_button_class) 
+                +icon48 name='align-left' classes='ui mini spaced image'
+                |Passage
+            #make_custom.ui.circular.button(class=custom_button_class) 
+                +icon48 name='edit-property' classes='ui mini spaced image'
+                |Custom
+            if is_custom
+                .ui.horizontal.divider.header 
+                    +icon48 name='slider' classes='ui mini spaced image'
+                    |Components
+                +toggle_component name='youtube' label='Video' icon_name='movie'
+                +toggle_component name='image' label='Image' icon_name='image'
+                +toggle_component name='content' label='Text' icon_name='outline'
             // .ui.segment
             //     .ui.form
             //         .grouped.fields
@@ -30,11 +67,11 @@ template(name='edit_lightbank')
                         // +toggle_resonates_button
                         // +toggle_bookmarkable_button
                         // +toggle_complete_button
-            .ui.header 
+            .ui.horizontal.divider.header 
                 +icon48 name='settings' classes='ui mini spaced image'
                 |Settings
             +published
-            .ui.header by #{author.name}
+            .ui.header by #{author.name} #{when}
 
             if isInRole 'admin'
                 +edit_author

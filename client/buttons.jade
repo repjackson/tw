@@ -4,7 +4,7 @@ template(name='voting')
     // |#{points}
 
 template(name='thanks_button')
-    .ui.circular.icon.button.vote_up(class=thanks_button_class title="Thank #{author.profile.first_name} for Sharing")
+    .ui.circular.icon.button.vote_up(class=thanks_button_class data-tooltip="Thank #{author.profile.first_name} for Sharing")
         +icon24 name='applause' classes='ui avatar image'
         // if said_thanks
         //     |Thanks #{author.profile.first_name}
