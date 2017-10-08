@@ -1,5 +1,5 @@
 template(name='title') 
-    .ui.labeled.input
+    .ui.labeled.fluid.input
         .ui.basic.label #{label}
         input#title(type='text' value=title)
 
@@ -130,9 +130,9 @@ template(name='type')
             input#type(type='text' value=type)
             
 template(name='author_name')
-    .ui.labeled.input
+    .ui.labeled.fluid.input
         .ui.basic.label #{label} Author
-        input#author_name(type='text' value=author_name)
+        input#author_name(type='text' value="{{../author_name}}")
 
 template(name='edit_parent_id')
     .ui.form

@@ -5,7 +5,7 @@ template(name='view_lightbank')
             +icon48 name='double-left' classes='ui avatar image'
             |Lightbank
         .center.aligned.header View Lightbank Entry
-    .ui.container
+    .ui.container.document_container
         .ui.stackable.grid
             .ten.wide.column
                 if has_youtube
@@ -21,44 +21,49 @@ template(name='view_lightbank')
                 if has_content
                     .large
                         |!{content}
+                if author_name
+                    h3.ui.header
+                        |- #{author_name}
                 // if journal_prompt
                 +journal_responses
                 // +comments    
                 // +tag_rating
-                if watson
-                    +analyzed_watson_keywords
-                // +child_docs
-            .six.wide.column
-                .ui.dividing.header 
-                    +icon48 name='sports-mode'
-                    |Actions
-                +bookmark_button
-                +thanks_button
-                // +reflect_button
-                if isInRole 'admin'
-                    +call_watson
-                .ui.dividing.header 
+                .ui.header 
                     +icon48 name='hashtag'
-                    |Tags
+                    | Themes
                 each tags
                     .ui.basic.large.label.doc_tag #{this}
                 if watson
-                    +doc_sentiment
-                    +doc_emotion
-                    +watson_keywords
-    
-                .ui.dividing.header Resonates
-                +resonate_button
-                +resonates_list 
+                    .ui.segment
+                        .ui.header Content Analysis
+                        .ui.two.column.grid
+                            .column
+                                +doc_sentiment
+                                +watson_keywords
+                            .column
+                                +doc_emotion
+                        +analyzed_watson_keywords
+                // +child_docs
+            .six.wide.column
                 if isInRole 'admin'
-                    .ui.dividing.header 
+                    .ui.horizontal.divider.header 
                         +icon48 name='monarch' classes='ui avatar image'
                         |Admin
-                    if published
-                        .ui.basic.green.label Published
-                    else
-                        .ui.basic.label Unpublished
-                    .ui.hidden.fitted.divider
-                    .ui.header added by #{author.name} #{when}
-                +edit_link_button
+                    .ui.basic.segment
+                        +published
+                        .ui.hidden.fitted.divider
+                        .ui.header added by #{author.name} #{when}
+                        +edit_link_button
+                        +call_watson
+                .ui.horizontal.divider.header 
+                    +icon48 name='sports-mode'
+                    |Actions
+                .ui.basic.segment
+                    +bookmark_button
+                    +thanks_button
+                    // +reflect_button
+    
+                .ui.header Resonates
+                +resonate_button
+                +resonates_list 
 

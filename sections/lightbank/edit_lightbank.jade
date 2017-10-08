@@ -1,26 +1,37 @@
 template(name='edit_lightbank')
     h1.ui.center.aligned.header
-        +icon96 name='nature' classes='ui mini spaced image'
+        // +icon96 name='nature' classes='ui mini spaced image'
         |Edit Lightbank Entry
     .ui.stackable.grid.document_container
         .eleven.wide.column
-            +tags
             with lightbank_entry
                 if is_quote
+                    h2.ui.center.aligned.header
+                        +icon48 name='get-quote' classes='ui mini spaced image'
+                        |Quote
                     +author_name label='Quote'
-                    .ui.header Quote
+                    .ui.hidden.divider
                     +content
                 if is_poem
+                    h2.ui.center.aligned.header
+                        +icon48 name='rose' classes='ui mini spaced image'
+                        | Poem
                     +title label='Poem Title'
-                    .ui.header Poem
+                    .ui.hidden.divider
                     +content
                 if is_journal_prompt
+                    h2.ui.center.aligned.header
+                        +icon48 name='question-mark' classes='ui mini spaced image'
+                        | Journal Prompt
                     +author_name label='Prompt'
-                    .ui.header Prompt
+                    .ui.hidden.divider
                     +content
                 if is_passage
+                    h2.ui.center.aligned.header
+                        +icon48 name='align-left' classes='ui mini spaced image'
+                        | Passage
                     +author_name label='Passage'
-                    .ui.header Passage
+                    .ui.hidden.divider
                     +content
                 if is_custom
                     if components.youtube
@@ -29,12 +40,18 @@ template(name='edit_lightbank')
                         +edit_image
                     if components.content
                         +content
+            +tags
         .five.wide.column
-            if tags
-                a.ui.fluid.green.big.button(href="/view/#{_id}") Save Lightbank Item
-            else
-                .ui.fluid.green.big.disabled.button Add Tags to Save
-            #delete_doc.ui.small.fluid.red.button Delete
+            .ui.grid
+                .twelve.wide.column
+                    if tags
+                        a.ui.fluid.basic.button(href="/view/#{_id}" data-tooltip='Save')
+                            +icon48 name='checked' classes='ui mini spaced image'
+                    else
+                        .ui.fluid.basic.disabled.button Add Tags to Save
+                .four.wide.column
+                    #delete_doc.ui.fluid.icon.basic.button(data-tooltip='Delete')
+                        +icon48 name='delete' classes='ui mini spaced image'
             .ui.horizontal.divider.header 
                 +icon48 name='mockup' classes='ui mini spaced image'
                 |Type
@@ -68,8 +85,9 @@ template(name='edit_lightbank')
                         // +toggle_bookmarkable_button
                         // +toggle_complete_button
             .ui.horizontal.divider.header 
-                +icon48 name='settings' classes='ui mini spaced image'
-                |Settings
+                +icon48 name='sports-mode' classes='ui mini spaced image'
+                |Actions
+            +call_watson
             +published
             .ui.header by #{author.name} #{when}
 

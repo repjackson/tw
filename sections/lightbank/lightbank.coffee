@@ -25,6 +25,10 @@ if Meteor.isClient
                 view_resonates=Session.get('view_resonates')
                 view_complete=Session.get 'view_complete'
                 view_images = Session.get 'view_images'
+                view_poems = Session.get 'view_poems'
+                view_quotes = Session.get 'view_quotes'
+                view_journal_prompts = Session.get 'view_journal_prompts'
+                view_journal_passages = Session.get 'view_passages'
 
                 )
 

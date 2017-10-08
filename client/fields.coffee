@@ -6,6 +6,7 @@ Template.subtitle.events
             
 Template.author_name.events
     'blur #author_name': ->
+        # console.log Template.parentData()._id,
         author_name = $('#author_name').val()
         Docs.update Template.parentData()._id,
             $set: author_name: author_name

@@ -4,17 +4,17 @@ if Meteor.isClient
     
     media_tags = ['tori webster','quote','poem', 'photo', 'image', 'video', 'essay', 'journal prompt','prompt']
     
-    Template.lightbank_cloud.onCreated ->
-        @autorun => 
-            Meteor.subscribe('lightbank_tags', 
-                selected_theme_tags.array(), 
-                limit=100, 
-                view_resonates=Session.get('view_resonates'), 
-                view_bookmarked=Session.get('view_bookmarked'), 
-                view_completed=Session.get('view_completed')
-                view_published=Session.get('view_published')
-                view_unpublished=Session.get('view_unpublished')
-                )
+    # Template.lightbank_cloud.onCreated ->
+        # @autorun => 
+        #     Meteor.subscribe('lightbank_tags', 
+        #         selected_theme_tags.array(), 
+        #         limit=100, 
+        #         view_resonates=Session.get('view_resonates'), 
+        #         view_bookmarked=Session.get('view_bookmarked'), 
+        #         view_completed=Session.get('view_completed')
+        #         view_published=Session.get('view_published')
+        #         view_unpublished=Session.get('view_unpublished')
+        #         )
     
     Template.lightbank_cloud.helpers
         media_tags: -> Tags.find(name: $in: media_tags)

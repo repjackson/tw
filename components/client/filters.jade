@@ -36,7 +36,7 @@ template(name='resonate_filter')
 
 
 
-// components
+// lightbank components
 
 template(name='image_filter')
     .ui.buttons
@@ -44,6 +44,38 @@ template(name='image_filter')
             +icon48 name='picture' classes='ui mini image'
         #view_nonimages.ui.button(class=view_nonimages_class data-tooltip='View Non-Images')
             +dusk_icon64 name='picture' classes='ui mini image'
+
+
+
+// lightbank types
+            
+template(name='passage_filter')
+    .ui.buttons
+        #view_passages.ui.button(class=view_images_class data-tooltip='View Passages') 
+            +icon48 name='align-left' classes='ui mini image'
+        #view_non_passages.ui.button(class=view_non_passages_class data-tooltip='View Non-Passages')
+            +dusk_icon64 name='align-left' classes='ui mini image'
+            
+template(name='quote_filter')
+    .ui.buttons
+        #view_quotes.ui.button(class=view_quotes_class data-tooltip='View Quotes') 
+            +icon48 name='get-quote' classes='ui mini image'
+        #view_non_quotes.ui.button(class=view_non_quotes_class data-tooltip='View Non-Quotes')
+            +dusk_icon64 name='get-quote' classes='ui mini image'
+            
+template(name='journal_prompt_filter')
+    .ui.buttons
+        #view_journal_prompts.ui.button(class=view_journal_prompts_class data-tooltip='View Journal Prompts') 
+            +icon48 name='ask-question' classes='ui mini image'
+        #view_non_journal_prompts.ui.button(class=view_non_journal_prompts_class data-tooltip='View Non-Journal Prompts')
+            +dusk_icon64 name='ask-question' classes='ui mini image'
+            
+template(name='poem_filter')
+    .ui.buttons
+        #view_poem.ui.button(class=view_poems_class data-tooltip='View Poems') 
+            +icon48 name='rose' classes='ui mini image'
+        #view_non_quotes.ui.button(class=view_non_poems_class data-tooltip='View Non-Poems')
+            +dusk_icon64 name='rose' classes='ui mini image'
             
 template(name='doc_limit')
     .ui.buttons
@@ -53,5 +85,5 @@ template(name='doc_limit')
             strong 5
         #make_10.ui.large.button(class=limit_10_class data-tooltip='View 10 Results') 
             strong 10
-        #make_20.ui.large.button(class=limit_20_class data-tooltip='View 20 Results')
-            strong  20
+        // #make_20.ui.large.button(class=limit_20_class data-tooltip='View 20 Results')
+        //     strong  20

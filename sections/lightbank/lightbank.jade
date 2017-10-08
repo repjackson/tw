@@ -23,11 +23,26 @@ template(name='lightbank')
                 each docs
                     +lightbank_doc_view
         .three.wide.column
+            if isInRole 'dev'
+                .ui.header 
+                    +icon24 name='filter' classes='ui avatar image'
+                    |Type Filters
+                div
+                    +passage_filter
+                div
+                    +journal_prompt_filter
+                div
+                    +poem_filter
+                div
+                    +quote_filter
+                .ui.header 
+                    +icon24 name='filter' classes='ui avatar image'
+                    |Component Filters
+                div
+                    +image_filter
             .ui.header 
                 +icon24 name='filter' classes='ui avatar image'
-                |View Filters
-            div
-                +image_filter
+                |Status Filters
             div
                 +bookmark_filter
             div
