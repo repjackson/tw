@@ -194,14 +194,26 @@ template(name='stripe_cc_form')
     #card_element
     
 template(name='icon48')
-    img.ui.image(src="https://png.icons8.com/#{name}/color/48" width="48" height="48" class=classes title=title)
+    img.ui.image(src="https://png.icons8.com/#{name}/color/48" width="48" height="48" class=classes title=tooltip)
 template(name='icon24')
-    img(src="https://png.icons8.com/#{name}/color/24" width="24" height="24" class=classes title=title)
+    img(src="https://png.icons8.com/#{name}/color/24" width="24" height="24" class=classes title=tooltip)
 template(name='icon96')
-    img(src="https://png.icons8.com/#{name}/color/96" width="96" height="96" class=classes title=title)
+    img(src="https://png.icons8.com/#{name}/color/96" width="96" height="96" class=classes title=tooltip)
 
 template(name='ultraviolet_icon40')
-    img(src="https://png.icons8.com/#{name}/ultraviolet/40" class=classes title=title width="40" height="40")
+    img(src="https://png.icons8.com/#{name}/ultraviolet/40" class=classes title=tooltip width="40" height="40")
     
 template(name='dusk_icon64')    
-    img(src="https://png.icons8.com/#{name}/dusk/64" class=classes title=title width="64" height="64")    
+    img(src="https://png.icons8.com/#{name}/dusk/64" class=classes title=tooltip width="64" height="64")    
+    
+    
+template(name='published_status')
+    if published
+        .ui.basic.blue.large.label
+            +icon48 name='eye' classes='ui inline tiny image'
+            |Published
+    else
+        .ui.basic.large.label
+            +icon48 name='invisible' classes='ui inline tiny image'
+            | Not Published
+    

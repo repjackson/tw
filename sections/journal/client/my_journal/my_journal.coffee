@@ -19,6 +19,11 @@ Template.my_journal.onCreated ->
             view_published=Session.get 'view_published'
             view_read=null
             view_bookmarked=false
+            view_resonates
+            view_complete
+            view_images
+            view_lightbank_type
+
             )
         
 Template.my_journal.events

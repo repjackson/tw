@@ -1,13 +1,17 @@
-
 template(name='view_lightbank')
-    h1.ui.header
-        a.ui.basic.button(href='/lightbank')
-            +icon48 name='double-left' classes='ui avatar image'
-            |Lightbank
-        .center.aligned.header View Lightbank Entry
-    .ui.container.document_container
-        .ui.stackable.grid
-            .ten.wide.column
+    .ui.stackable.grid
+        .centered.row
+            .four.wide.column
+                a.ui.basic.button(href='/lightbank')
+                    +icon48 name='double-left' classes='ui avatar image'
+                    |Lightbank
+            .eight.wide.column
+                h1.ui.center.aligned.header 
+                    +icon96 name='nature' classes='ui tiny inline image'
+                    |View #{type_label}
+            .four.wide.column
+        .row.document_container
+            .twelve.wide.column.document_container
                 if has_youtube
                     if youtube
                         +view_youtube
@@ -18,9 +22,9 @@ template(name='view_lightbank')
                     if image_url
                         .ui.fluid.image
                             img(src=image_url)
-                if has_content
-                    .large
-                        |!{content}
+                // if has_content
+                .large
+                    |!{content}
                 if author_name
                     h3.ui.header
                         |- #{author_name}
@@ -44,17 +48,18 @@ template(name='view_lightbank')
                                 +doc_emotion
                         +analyzed_watson_keywords
                 // +child_docs
-            .six.wide.column
+            .four.wide.column
                 if isInRole 'admin'
                     .ui.horizontal.divider.header 
                         +icon48 name='monarch' classes='ui avatar image'
                         |Admin
                     .ui.basic.segment
                         +published
-                        .ui.hidden.fitted.divider
-                        .ui.header added by #{author.name} #{when}
-                        +edit_link_button
-                        +call_watson
+                if can_edit
+                    +edit_link_button
+                    +call_watson
+                    +published_status
+                .ui.header added by #{author.name} #{when}
                 .ui.horizontal.divider.header 
                     +icon48 name='sports-mode'
                     |Actions

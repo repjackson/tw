@@ -8,8 +8,8 @@ template(name='journal_prompts')
         // #convert_journal_docs.ui.button Convert Journal Docs
         .ui.stackable.grid
             .four.wide.column
-                #cloud
-                    +theme_facet type='journal'
+                +theme_facet type='journal'
+                +username_facet type='journal'
             .nine.wide.column
                 .ui.relaxed.divided.items
                     each journal_prompts
@@ -18,5 +18,4 @@ template(name='journal_prompts')
                 .ui.header 
                     +icon24 name='filter' classes='ui avatar image'
                     |Filter
-
                 +bookmark_filter

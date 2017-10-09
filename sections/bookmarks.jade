@@ -1,43 +1,40 @@
 template(name='bookmarks')
-    .ui.container
-        h1.ui.center.aligned.header 
-            i.bookmark.outline.icon
-            |My Bookmarks (#{bookmarks_count})
-        .ui.stackable.grid
-            .five.wide.column
-                .ui.dividing.header Tag Filter
-                if selected_theme_tags
-                    #clear_tags.ui.teal.icon.large.button
-                        i.remove.icon
-                    each selected_theme_tags
-                        .unselect_tag.ui.teal.large.button
-                            strong #{this}
-                each bookmarked_tags
-                    .ui.basic.button.select_tag(class=cloud_tag_class) 
-                        | #{this.name}
-                .ui.dividing.header Sharing
-                .ui.slider.checkbox
-                    input#share_bookmarks(type='checkbox' checked=currentUser.profile.share_bookmarks)
-                    label(for='share_bookmarks') Share Bookmarks in Profile
-            .eleven.wide.column
-                .ui.list
-                    each bookmark_docs
-                        +bookmark
-                        .ui.hidden.divider
-                        .ui.divider
+    h1.ui.center.aligned.header 
+        +icon96 name='bookmark-ribbon'
+        |My Bookmarks (#{bookmarks_count})
+    .ui.stackable.grid
+        .four.wide.column
+            +theme_facet
+            +username_facet
+        .eight.wide.column
+            .ui.segments
+                each bookmark_docs
+                    +bookmark
+        .four.wide.column
+            +icon48 name='filter'
+            +published_filter
+            div
+                +passage_filter
+                +journal_prompt_filter
+                +poem_filter
+                +quote_filter
+            div
+                +read_filter
+            div
+                +resonates_filter
                 
 template(name='bookmark')
-    .item
+    .ui.segment
         .content
             .header
                 each tags
-                    .ui.label(class=tag_class) #{this}
-            // .avatar
-                // a
-                //     | by
-                //     img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
-                //     |#{author.name}
-                // span.date #{from_now}
+                    .ui.circular.label(class=tag_class) #{this}
+            .avatar
+                a
+                    | by
+                    img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+                    |#{author.name}
+                span.date #{from_now}
             .description
                 .ui.basic.segment
                     if content
@@ -46,12 +43,10 @@ template(name='bookmark')
                         img.ui.small.image(src=image_url)
             .extra
                 .ui.horizontal.list
-                    // .item
-                    //     .ui.blue.basic.button
-                    //         | View
-                    //         i.right.chevron.icon
                     .item
                         +bookmark_button   
                     .item
                         span Type: 
                         .ui.basic.label #{type}
+                    .item
+                        +view_full_button

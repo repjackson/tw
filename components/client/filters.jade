@@ -27,11 +27,11 @@ template(name='bookmark_filter')
         #view_unbookmarked.ui.button(class=view_unbookmarked_class data-tooltip='View Unbookmarked')
             +ultraviolet_icon40 name='bookmark_ribbon' classes='ui mini image'
             
-template(name='resonate_filter')
+template(name='resonates_filter')
     .ui.buttons
-        #view_bookmarked.ui.button(class=view_bookmarked_class data-tooltip='View Resonates') 
+        #view_resonates.ui.button(class=view_resonates_class data-tooltip='View Resonates') 
             +dusk_icon64 name='heart-with-pulse' classes='ui mini image'
-        #view_unbookmarked.ui.button(class=view_unbookmarked_class data-tooltip='View Non-Resonates')
+        #view_non_resonates.ui.button(class=view_non_resonates_class data-tooltip='View Non-Resonates')
             +icon48 name='unavailable' classes='ui mini image'
 
 
@@ -59,7 +59,7 @@ template(name='journal_prompt_filter')
             
 template(name='poem_filter')
     #view_poems.ui.circular.button(class=view_poems_class data-tooltip='Poems') 
-        +icon48 name='rose' classes='ui mini image'
+        +icon48 name='close-up' classes='ui mini image'
             
 template(name='doc_limit')
     .ui.buttons

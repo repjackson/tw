@@ -5,7 +5,8 @@ template(name='voting')
 
 template(name='thanks_button')
     .ui.circular.icon.button.vote_up(class=thanks_button_class data-tooltip="Thank #{author.profile.first_name} for Sharing")
-        +icon24 name='applause' classes='ui avatar image'
+        // +icon24 name='applause' classes='ui avatar image'
+        img.ui.mini.image(src="https://png.icons8.com/pray-filled/ios7/50" width="50" height="50")
         // if said_thanks
         //     |Thanks #{author.profile.first_name}
         // else

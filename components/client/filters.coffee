@@ -20,8 +20,19 @@ Template.read_filter.events
     
 Template.read_filter.helpers
     view_read_class: -> if Session.equals('view_read', true) then 'blue' else 'basic'
-    view_all_class: -> if Session.equals('view_read', null) then 'blue' else 'basic'
     view_unread_class: -> if Session.equals('view_read', false) then 'blue' else 'basic'    
+    
+    
+    
+Template.resonates_filter.events
+    'click #view_resonates': (e,t)-> 
+        if Session.equals('view_resonates', true) then Session.set('view_resonates', null) else Session.set('view_resonates', true)
+    'click #view_non_resonates': (e,t)-> 
+        if Session.equals('view_resonates', false) then Session.set('view_resonates', null) else Session.set('view_resonates', false)
+    
+Template.resonates_filter.helpers
+    view_resonates_class: -> if Session.equals('view_resonates', true) then 'blue' else 'basic'
+    view_non_resonates_class: -> if Session.equals('view_resonates', false) then 'blue' else 'basic'    
     
     
     

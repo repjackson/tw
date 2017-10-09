@@ -35,7 +35,9 @@ Meteor.publish 'facet', (
         if author_id then match.author_id = author_id
         
         # if view_private is true then match.author_id = @userId
-        if view_resonates is 'resonates'then match.favoriters = $in: [@userId]
+        if view_resonates?
+            if view_resonates is true then match.favoriters = $in: [@userId]
+            else if view_resonates is false then match.favoriters = $nin: [@userId]
         if view_read?
             if view_read is true then match.read_by = $in: [@userId]
             else if view_read is false then match.read_by = $nin: [@userId]
@@ -46,7 +48,7 @@ Meteor.publish 'facet', (
         if view_complete? then match.complete = view_complete
         # console.log view_complete
         
-        # console.log 'match:', match
+        console.log 'match:', match
         if view_images? then match.components?.image = view_images
         
         # lightbank types

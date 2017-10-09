@@ -8,14 +8,14 @@ template(name='lightbank')
     .ui.stackable.grid
         .five.wide.column
             +theme_facet
+            +timestamp_facet
             .ui.hidden.divider
-            if isInRole 'admin'
-                #add_lightbank_doc.ui.basic.circular.large.fluid.button
-                    +icon48 name='plus' classes='ui mini spaced image'
-                    if isInRole 'admin'
-                        |Add Lightbank Item
-                    else if currentUser
-                        | Suggest Lightbank Item
+            #add_lightbank_doc.ui.basic.circular.large.fluid.button
+                +icon48 name='plus' classes='ui mini spaced image'
+                if isInRole 'admin'
+                    |Add Lightbank Item
+                else if currentUser
+                    | Suggest Lightbank Item
                 
         .eight.wide.column
             .ui.centered.stackable.cards
@@ -41,8 +41,8 @@ template(name='lightbank')
                 +bookmark_filter
             div
                 +read_filter
-            // div
-            //     +complete_filter
+            div
+                +resonates_filter
             div
                 +doc_limit
             if isInRole 'admin'

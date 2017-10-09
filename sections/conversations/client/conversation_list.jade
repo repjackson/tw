@@ -8,14 +8,16 @@ template(name='conversation_list_item')
     .ui.segment.conversation_list_item(href='#' class=conversation_list_item_class)
         .content
             .description
-                each participants
-                    // a(href="/profile/#{username}")
-                    img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}" data-tooltip=name)
-                    // |#{name}
-                    +staus_indicator
+                .ui.horizontal.list
+                    each participants
+                        .item
+                            // a(href="/profile/#{username}")
+                            img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}" title=name)
+                            |#{profile.first_name}
+                            +staus_indicator
             .description
                 each tags
-                    .ui.small.basic.label #{this}
+                    .ui.small.basic.circular.label #{this}
             .description
                 strong {{cutString last_message.body 100}}
             .description

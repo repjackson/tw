@@ -10,10 +10,14 @@ template(name='karma')
                     +icon96 name='diamond'
                     |Karma
             .four.wide.column
-                a.ui.basic.circular.small.button(href='/transactions') 
-                    +icon48 name='handshake' classes='ui mini spaced image'
-                    | Transactions
+                a.ui.basic.circular.small.button(href='/services') 
+                    +icon48 name='service-bell' classes='ui mini spaced image'
+                    | Services
                     +icon48 name='rotate-left' classes='ui mini spaced image'
+                // a.ui.basic.circular.small.button(href='/transactions') 
+                //     +icon48 name='handshake' classes='ui mini spaced image'
+                //     | Transactions
+                //     +icon48 name='rotate-left' classes='ui mini spaced image'
         .row
             .four.wide.column
                 +karma_cloud
@@ -25,7 +29,7 @@ template(name='karma')
                 // .ui.slider.checkbox
                 //     input#share_bookmarks(type='checkbox' checked=currentUser.profile.share_bookmarks)
                 //     label(for='share_bookmarks') Share Stats in Profile
-            .twelve.wide.column
+            .eight.wide.column
                 .ui.center.aligned.header
                     +icon48 name='like'
                     |Upvoted Documents
@@ -54,3 +58,11 @@ template(name='karma')
                                                     |#{this.name}
                                                 
                                     +view_full_button
+            .four.wide.column
+                .ui.dividing.header
+                    +icon48 name='sports-mode'
+                    |Actions
+                .ui.basic.circular.large.button
+                    +icon48 name='donate' classes='ui mini inline image'
+                    | Give Karma
+                    

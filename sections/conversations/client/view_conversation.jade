@@ -1,6 +1,6 @@
 template(name='view_conversation')
-    a.ui.basic.button(href='/conversations')
-        i.left.chevron.icon
+    a.ui.basic.circular.button(href='/conversations')
+        +icon48 name='chevron-left' classes='ui mini inline image'
         strong Conversations
     .ui.container
         h1.ui.center.aligned.header View Conversation 
@@ -9,16 +9,22 @@ template(name='view_conversation')
                 // +minimal_conversation_view this
                 +conversation_messages_pane this
             .five.wide.column
-                .ui.dividing.header Stats
+                .ui.dividing.header 
+                    +icon48 name='line-chart'
+                    |Stats
                 .ui.small.horizontal.statistic
                     .value #{message_count}
                     .label Total Messages
                 .ui.small.horizontal.statistic
                     .value #{unread_message_count} 
                     .label Unread Messages
-                .ui.dividing.header Description
+                .ui.dividing.header 
+                    +icon48 name='align-left'
+                    |Description
                 |!{content}
-                .ui.dividing.header Participants
+                .ui.dividing.header
+                    +icon48 name='queue'
+                    |Participants
                 .ui.divided.relaxed.list
                     each participants
                         .item
@@ -37,10 +43,14 @@ template(name='view_conversation')
                                     each five_tags
                                         .ui.tiny.basic.label #{this}
             
-                .ui.dividing.header Tags
+                .ui.dividing.header 
+                    +icon48 name='tags'
+                    |Conversation Tags
                 each tags
                     .ui.basic.large.label.doc_tag #{this}
-                .ui.dividing.header Actions
+                .ui.dividing.header 
+                    +icon48 name='sports=mode'
+                    |Actions
                 +subscribe_button
                 +bookmark_button
                 unless is_author
@@ -48,7 +58,9 @@ template(name='view_conversation')
                     +thanks_button
                 +resonates_list
 
-                .ui.dividing.header Visibility
+                .ui.dividing.header 
+                    +icon48 name='eye'
+                    |Visibility
                 if published
                     .ui.basic.green.large.label 
                         i.unlock.icon
@@ -57,6 +69,7 @@ template(name='view_conversation')
                     .ui.basic.large.label 
                         i.lock.icon
                         | Private
-                .ui.header by #{author.name}
+                .ui.header Started by #{author.name} #{when}
                 .ui.divider
-                +edit_link_button
+                if can_edit
+                    +edit_link_button

@@ -1,18 +1,30 @@
 template(name='services')
     .ui.stackable.grid
-        .four.wide.column
-            h1.ui.dividing.header
-                +icon96 name='service-bell'
-                |Services
-            if isInRole 'admin'
-                #add_service.ui.basic.fluid.button
-                    +icon48 name='plus' classes='ui mini spaced image'
-                    |Add Service
-            +theme_facet type='service'
-        .twelve.wide.column
-            .ui.relaxed.divided.items
-                each services
-                    +service_item
+        .centered.row
+            .four.wide.column
+                h2.ui.header
+                    +icon48 name='diamond' classes='ui inline image'
+                    |#{currentUser.points}
+            .eight.wide.column
+                h1.ui.center.aligned.header
+                    +icon96 name='service-bell'
+                    |Services
+            .four.wide.column
+                a.ui.basic.circular.small.button(href='/karma') 
+                    +icon48 name='diamon' classes='ui mini inline image'
+                    | Karma
+                    +icon48 name='rotate-left' classes='ui mini inline image'
+        .row
+            .four.wide.column
+                if isInRole 'admin'
+                    #add_service.ui.basic.fluid.button
+                        +icon48 name='plus' classes='ui mini spaced image'
+                        |Add Service
+                +theme_facet type='service'
+            .twelve.wide.column
+                .ui.relaxed.divided.items
+                    each services
+                        +service_item
 
 
 template(name='service_item')

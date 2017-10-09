@@ -17,7 +17,7 @@ template(name='full_conversation_view')
             //         i.lock.icon
             //         |Private
             div
-                i.tags.icon
+                +icon48 name='hashtag' classes='ui mini inline image'
                 each tags
                     .ui.basic.label(class=conversation_tag_class) #{this}
             div
@@ -34,12 +34,12 @@ template(name='conversation_messages_pane')
         if published
             .item
                 if in_conversation
-                    .ui.basic.button.leave_conversation
-                        i.sign.out.icon
+                    .ui.basic.circular.button.leave_conversation
+                        +icon48 name='leaving-queue' classes='ui mini inline image'
                         |Leave
                 else
-                    .ui.basic.button.join_conversation
-                        i.sign.in.icon
+                    .ui.basic.circular.button.join_conversation
+                        +icon48 name='joining-queue' classes='ui mini inline image'
                         |Join
         each participants
             .item.participant_item

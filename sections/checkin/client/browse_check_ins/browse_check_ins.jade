@@ -10,7 +10,7 @@ template(name='browse_check_ins')
             .eight.wide.column
                 h1.ui.center.aligned.header
                     +icon96 name='cloud-checked'
-                    | Browse Public Check-Ins
+                    | Browse Check-Ins
             .four.wide.column
                 a.ui.basic.circular.small.button(href='/checkins/mine') 
                     +icon48 name='data-quality' classes='ui avatar image'
@@ -29,6 +29,8 @@ template(name='browse_check_ins')
                     each public_checkins
                         +browse_checkin_view
             .four.wide.column
+                +bookmark_filter
+                +read_filter
                 +doc_limit
 
 
