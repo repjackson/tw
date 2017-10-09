@@ -70,29 +70,33 @@
 //     #checkin-calendar
     
 template(name='checkin')
-    .ui.container
-        // .ui.center.aligned.basic.segment
-        //     +doc_content tags='journal,blurb'
-        .ui.stackable.grid
-            .row
-                .eight.wide.centered.column
-                    .ui.header Quick Add (tags separated by spaces)
-                    .ui.icon.fluid.large.input
-                        input#quick_add(type='text' placeholder='eg. running sunny happy excited')
-                        i.yellow.lightning.icon
-                    .ui.divider
-                    #create_checkin.ui.large.basic.fluid.big.button 
-                        .ui.image
-                            +icon48 name='plus'
-                        |Check In
-                    .ui.hidden.divider
-                    a.ui.large.basic.fluid.big.button(href="/checkins/mine")
-                        .ui.image
-                            +icon48 name='data-quality'
-                        |My Check-Ins
-                    .ui.hidden.divider
-                    a.ui.large.basic.fluid.big.button(href="/checkins/browse") 
-                        .ui.image
-                            +icon48 name='cloud-checked'
-                        |Browse Public Check-Ins
+    // .ui.center.aligned.basic.segment
+    //     +doc_content tags='journal,blurb'
+    .ui.stackable.grid
+        .eight.wide.centered.column
+            .ui.center.aligned.header Quick Add (tags separated by spaces)
+            .ui.icon.fluid.large.input
+                input#quick_add(type='text' placeholder='eg. running sunny happy excited')
+                i.yellow.lightning.icon
+            .ui.divider
+            #create_checkin.ui.basic.fluid.big.button 
+                .ui.image
+                    +icon48 name='tree-planting'
+                |Check In
+            .ui.hidden.divider
+            a.ui.basic.fluid.big.button(href="/checkins/mine")
+                .ui.image
+                    +icon48 name='nature'
+                |My Check-Ins
+            .ui.hidden.divider
+            a.ui.basic.fluid.big.button(href="/checkins/browse") 
+                .ui.image
+                    +icon48 name='forest'
+                |Browse Check-Ins
+            if isInRole 'admin'
+                .ui.hidden.divider
+                a.ui.basic.fluid.big.button(href="/checkins/tags") 
+                    .ui.image
+                        +icon48 name='monarch'
+                    |Edit Check In Tags
     

@@ -14,10 +14,11 @@ template(name='template_name')
         input#template_name(type='text' value=template_name)
 
 template(name='icon_class')
-    .inline.field
-        label Icon Class 
-        input#icon_class(type='text' value=icon_class)
-        a(href="https://semantic-ui.com/elements/icon.html" target=_blank) List
+    .ui.form
+        .inline.field
+            label Icon Class 
+            input#icon_class(type='text' value=icon_class)
+            a(href="https://icons8.com/icon/new-icons/color" target=_blank) icons8
 
 template(name='created_date')
     .ui.form
@@ -63,7 +64,7 @@ template(name='tags')
 template(name='location_tags')
     .inline.field
         label 
-            +icon24 name='geo-fence' classes='avatar'
+            +icon48 name='geo-fence' classes='ui mini inline image'
             |Location Tags (eg. 'home', 'couch')
         input#add_location_tag(type='text' placeholder='press enter after each' maxlength='50' )
         each location_tags
@@ -144,7 +145,7 @@ template(name='location')
     .field
         label Location
         .ui.left.icon.input
-            i.compass.icon
+            +icon48 name='geo-fence'
             input#location(type='text' value=location)
 
 template(name='content')

@@ -1,0 +1,49 @@
+template(name='edit_checkin')
+    h1.ui.center.aligned.header 
+        +icon96 name='tree-planting'
+        |Add/Edit Check In
+    .ui.stackable.grid.document_container
+        .twelve.wide.column
+            .ui.form
+                .field
+                +check_in_tag_selection
+                +tags
+                +location_tags
+                +content
+                if watson 
+                    +analyzed_watson_keywords
+
+        .four.wide.column
+            if tags
+                a.ui.fluid.green.big.button(href="/view/#{_id}")
+                    |Save
+            else
+                .ui.fluid.green.big.disabled.button Add Tags to Save
+            .ui.hidden.fitted.divider
+            #delete_doc.ui.small.fluid.red.compact.button 
+                |Delete
+            +published
+            +request_tori_feedback
+            .ui.basic.segment
+                .ui.dividing.header Analysis
+                +call_watson
+                if watson
+                    +doc_sentiment
+                    +doc_emotion
+                    +watson_keywords
+
+            .ui.divider
+
+template(name='check_in_tag_selection')
+    label Suggestions
+    +theme_facet type='check_in_tag'
+    .ui.five.cards
+        each check_in_tags
+            a.check_in_tag.card(class=check_in_tag_class)
+                // .image
+                .content
+                    if check_in_tag_selected
+                        +icon96 name=icon_class classes='ui centered image'
+                    else
+                        +ios96 name=icon_class classes='ui centered image'
+                    .center.aligned.header #{icon_class}
