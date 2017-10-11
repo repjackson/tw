@@ -3,7 +3,7 @@ template(name='course_modules')
         if isInRole 'admin'
             i#add_sol_module.red.plus.link.icon(title='Add Module')
         else
-            i.list.layout.icon
+            +icon48 name="questionnaire" classes='ui mini inline image'
         |Modules
     each sol_modules
         if module_is_available
@@ -23,7 +23,7 @@ template(name='course_modules')
                     a.ui.header(href="/view/#{_id}") 
                         // a.ui.subheader(href="/view/#{_id}") id: #{_id}
                         if module_is_complete
-                            i.green.big.check.circle.icon
+                            +icon48 name="checked" classes='ui mini inline image'
                         |#{number}: #{title}
                     // |!{content}
                 if isInRole 'admin'

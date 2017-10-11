@@ -62,21 +62,22 @@ template(name='tags')
                     // |#{this}
 
 template(name='location_tags')
-    .inline.field
-        label 
-            +icon48 name='geo-fence' classes='ui mini inline image'
-            |Location Tags (eg. 'home', 'couch')
-        input#add_location_tag(type='text' placeholder='press enter after each' maxlength='50' )
-        each location_tags
-            a.ui.basic.large.animated.fade.large.button.doc_tag
-                .visible.content
-                    // i.icon
-                    //     +icon24 name='geo-fence'
-                    |#{this}
-                .hidden.content
-                    i.icon
-                        +icon24 name='delete'
-                    // |#{this}
+    .ui.form
+        .inline.field
+            label 
+                +icon48 name='geo-fence' classes='ui mini inline image'
+                |Location Tags (eg. 'home', 'couch')
+            input#add_location_tag(type='text' placeholder='press enter after each' maxlength='50' )
+            each location_tags
+                a.ui.basic.large.animated.fade.large.button.doc_tag
+                    .visible.content
+                        // i.icon
+                        //     +icon24 name='geo-fence'
+                        |#{this}
+                    .hidden.content
+                        i.icon
+                            +icon24 name='delete'
+                        // |#{this}
 
 template(name='intention_tags')
     .inline.field

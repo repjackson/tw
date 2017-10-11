@@ -48,7 +48,7 @@ Meteor.publish 'facet', (
         if view_complete? then match.complete = view_complete
         # console.log view_complete
         
-        console.log 'match:', match
+        # console.log 'match:', match
         if view_images? then match.components?.image = view_images
         
         # lightbank types

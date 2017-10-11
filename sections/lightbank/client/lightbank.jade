@@ -10,12 +10,10 @@ template(name='lightbank')
             +theme_facet
             +timestamp_facet
             .ui.hidden.divider
-            #add_lightbank_doc.ui.basic.circular.large.fluid.button
-                +icon48 name='plus' classes='ui mini spaced image'
-                if isInRole 'admin'
+            if currentUser
+                #add_lightbank_doc.ui.basic.circular.large.fluid.button
+                    +icon48 name='plus' classes='ui mini spaced image'
                     |Add Lightbank Item
-                else if currentUser
-                    | Suggest Lightbank Item
                 
         .eight.wide.column
             .ui.centered.stackable.cards
@@ -45,8 +43,7 @@ template(name='lightbank')
                 +resonates_filter
             div
                 +doc_limit
-            if isInRole 'admin'
-                .ui.header Admin
+            if is_author
                 +published_filter
         
 

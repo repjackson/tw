@@ -26,19 +26,19 @@ template(name='view_module')
             .center.aligned.row
                 .sixteen.wide.column
                     a.ui.basic.circular.button(href="/course/sol/dashboard") 
-                        +icon48 name="chevron-up" classes='avatar'
+                        +icon48 name="chevron-up" classes='ui mini inline image'
                         |Source of Light
             .center.aligned.row
                 .four.wide.column
                     if previous_module
                         // a.ui.basic.small.button(href="/course/sol/module/#{module.number}/section/#{previous_section.number}")
                         a.ui.basic.small.circular.button(href="/view/#{previous_module._id}")
-                            +icon48 name='chevron-left' classes='ui avatar image'
+                            +icon48 name='chevron-left' classes='ui mini inline image'
                             |#{previous_module.number}: #{previous_module.title}
                 .eight.wide.column
                     h1.ui.center.aligned.header 
                         if module_complete
-                            +icon48 name='checked' classes='ui avatar image'
+                            +icon48 name='checked' classes='ui mini inline image'
                         |Module #{module.number}: #{module.title}
                     // if isInRole 'admin'
                     //     |module_id: #{module._id}
@@ -48,7 +48,7 @@ template(name='view_module')
                     a.ui.basic.small.circular.button(href="/view/#{next_module._id}")
                         // |#{next_module.number}: #{next_module.title}
                         |#{next_module.title}
-                        +icon48 name='chevron-right' classes='ui avatar image'
+                        +icon48 name='chevron-right' classes='ui mini inline image'
             // a.item(href="/course/sol/module/#{module.number}/section/#{section.number}/reflective_questions" class="{{isActiveRoute name='reflective_questions'}}") Collaboration
         .ui.stackable.grid
             .five.wide.column
@@ -60,17 +60,17 @@ template(name='view_module')
                             .item 
                                 .header
                                     if module_progress_doc.module_debrief_complete
-                                        +icon24 name='checkmark' classes='ui avatar image'
+                                        +icon48 name='potted-plant' classes='ui mini spaced image'
                                     else
-                                        +icon24 name='unchecked-checkbox' classes='ui avatar image'
+                                        +icon48 name='tree-planting' classes='ui mini spaced image'
                                     |Debrief 
                                     |#{module_progress_doc.debrief_answer_count}/#{module_progress_doc.debrief_question_count}
                         .item 
                             .header
                                 if module_progress_doc.module_sections_complete
-                                    +icon24 name='checkmark' classes='ui avatar image'
+                                    +icon48 name='todo-list' classes='ui mini spaced image'
                                 else
-                                    +icon24 name='unchecked-checkbox' classes='ui avatar image'
+                                    +icon48 name='list' classes='ui mini spaced image'
                                 |Sections 
                                 | #{module_progress_doc.section_complete_count}/#{module_progress_doc.module_section_count}
                                 // .item Sections
@@ -80,9 +80,9 @@ template(name='view_module')
                         .item 
                             .header 
                                 if module_progress_doc.module_lightwork_complete
-                                    +icon24 name='checkmark' classes='ui avatar image'
+                                    +icon48 name='light-on' classes='ui mini spaced image'
                                 else
-                                    +icon24 name='unchecked-checkbox' classes='ui avatar image'
+                                    +icon48 name='light-off' classes='ui mini spaced image'
                                 |Lightwork 
                                 | #{module_progress_doc.lightwork_answer_count}/#{module_progress_doc.lightwork_question_count}
                         if download_count
@@ -93,7 +93,7 @@ template(name='view_module')
                                 .header Downloads #{download_count}
                     .ui.dividing.header Status
                     #calculate_module_progress.ui.fluid.basic.button 
-                        +icon48 name='refresh' classes='ui avatar image'
+                        +icon48 name='refresh' classes='ui mini spaced image'
                         |Calculate Module Progress
                     #module_percent_complete_bar.ui.blue.indicating.progress(data-percent=section_progress_doc.percent_complete)
                         .bar
@@ -103,10 +103,18 @@ template(name='view_module')
                         +user_module_progress_list
             .eleven.wide.column
                 .ui.top.attached.tabular.menu
-                    a.item(data-tab='debrief') Debrief
-                    a.active.item(data-tab='sections') Sections
-                    a.item(data-tab='lightwork') Lightwork
-                    a.item(data-tab='downloads') Downloads
+                    a.item(data-tab='debrief') 
+                        +icon48 name='potted-plant' classes='ui mini spaced image'
+                        |Debrief
+                    a.active.item(data-tab='sections')
+                        +icon48 name='list' classes='ui mini spaced image'
+                        |Sections
+                    a.item(data-tab='lightwork') 
+                        +icon48 name='light-off' classes='ui mini spaced image'
+                        |Lightwork
+                    a.item(data-tab='downloads') 
+                        +icon48 name='download' classes='ui mini spaced image'
+                        |Downloads
                 .ui.bottom.attached.tab.segment(data-tab='debrief')
                     .ui.basic.segment
                         +debrief
@@ -154,7 +162,7 @@ template(name='lightwork')
     .ui.hidden.divider
     .ui.styled.fluid.accordion
         h3.title
-            +icon48 name='paper' classes='ui avatar image'
+            +icon48 name='paper' classes='ui mini inline image'
             | Transcript
             i.dropdown.icon
         .content

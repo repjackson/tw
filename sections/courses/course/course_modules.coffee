@@ -54,11 +54,12 @@ if Meteor.isClient
                         Docs.findOne
                             type: 'module'
                             number: previous_module_number
-                    previous_module_progress_doc = 
-                        Docs.findOne 
-                            type: 'module_progress'
-                            parent_id: previous_module_doc._id
-                            author_id: Meteor.userId()
+                    if previous_module_doc
+                        previous_module_progress_doc = 
+                            Docs.findOne 
+                                type: 'module_progress'
+                                parent_id: previous_module_doc._id
+                                author_id: Meteor.userId()
                     if previous_module_progress_doc and previous_module_progress_doc.module_progress_percent > 99 then return true else return false
 
                 return false

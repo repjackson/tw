@@ -26,6 +26,10 @@ template(name='my_check_ins')
                     each my_check_ins
                         +my_check_in_view
             .four.wide.column
+                .ui.dividing.header
+                    +icon48 name='filter'
+                    |Filter
+                +published_filter
                 +doc_limit
         
 

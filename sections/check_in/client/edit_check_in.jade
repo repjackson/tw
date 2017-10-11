@@ -4,25 +4,27 @@ template(name='edit_checkin')
         |Add/Edit Check In
     .ui.stackable.grid.document_container
         .twelve.wide.column
-            .ui.form
-                .field
+            .ui.segment
                 +check_in_tag_selection
-                +tags
-                +location_tags
+            +tags
+            +location_tags
+            .ui.hidden.divider
+            if components.content
                 +content
-                if watson 
-                    +analyzed_watson_keywords
+            if watson 
+                +analyzed_watson_keywords
 
         .four.wide.column
             if tags
                 a.ui.fluid.green.big.button(href="/view/#{_id}")
-                    |Save
+                    |Save Check In
             else
                 .ui.fluid.green.big.disabled.button Add Tags to Save
             .ui.hidden.fitted.divider
             #delete_doc.ui.small.fluid.red.compact.button 
                 |Delete
             +published
+            +toggle_component name='content' label='Text' icon_name='outline'
             +request_tori_feedback
             .ui.basic.segment
                 .ui.dividing.header Analysis
@@ -32,12 +34,12 @@ template(name='edit_checkin')
                     +doc_emotion
                     +watson_keywords
 
-            .ui.divider
-
 template(name='check_in_tag_selection')
-    label Suggestions
+    .ui.center.aligned.header
+        +icon48 name='hint'
+        |Tag Suggestions
     +theme_facet type='check_in_tag'
-    .ui.five.cards
+    .ui.seven.cards
         each check_in_tags
             a.check_in_tag.card(class=check_in_tag_class)
                 // .image

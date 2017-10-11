@@ -31,7 +31,12 @@ Template.check_in_tags.onCreated ->
 
 Template.check_in_tags.helpers
     check_in_tags: -> 
-        Docs.find {type:'check_in_tag' }
+        if Session.get 'editing_id'
+            Docs.find Session.get('editing_id')
+        else
+            Docs.find {type:'check_in_tag' }, 
+                limit: 10
+                sort: timestamp: -1
 
     tag_class: -> if @valueOf() in selected_theme_tags.array() then 'teal' else 'basic'
 
@@ -39,8 +44,9 @@ Template.check_in_tags.helpers
 
 Template.check_in_tags.events
     'click #add_check_in_tag': ->
+        selected_theme_tags.clear()
         new_check_in_tag_id = Docs.insert type: 'check_in_tag'
-
+        Session.set 'editing_id', new_check_in_tag_id
 
 # Template.checkin_doc_view.helpers
 #     tag_class: -> if @valueOf() in selected_theme_tags.array() then 'teal' else 'basic'

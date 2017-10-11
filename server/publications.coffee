@@ -260,7 +260,8 @@ Meteor.publish 'people_tags', (selected_people_tags)->
 
 
 Meteor.publish 'usernames', ->
-    Meteor.users.find
+    Meteor.users.find {},
         fields: 
             username: 1
             profile: 1
+            points: 1

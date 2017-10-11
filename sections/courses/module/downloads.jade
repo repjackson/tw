@@ -1,11 +1,10 @@
 template(name='downloads')
     .ui.horizontal.divider.header
-        i.download.icon
+        +icon48 name='download' classes='ui mini inline image'
         |#{module.title} Module Downloads
     if isInRole 'admin'
         unless $.Session.get 'is_editing'
             #add_file.ui.basic.button 
-                i.red.configure.icon
                 |Add #{module.title} File
     .ui.divided.items
         each module_files

@@ -1,78 +1,90 @@
 template(name='dashboard')
-    .ui.text.container
+    .ui.container
         // h2.ui.center.aligned.header 
         //     img(src="https://png.icons8.com/dashboard/color/96" title="Dashboard" width="96" height="96")
         //     |Dashboard
         .ui.stackable.centered.grid
-            .four.wide.column
+            .three.wide.column
                 a#courses.ui.icon.center.aligned.header
                     i.icon
                         +icon96 name='classroom'
                     |My Courses
-            .four.wide.column
+            .three.wide.column
                 a.ui.icon.center.aligned.header(href='/people')
                     i.icon
                         +icon96 name='people'
                     |Community
-            .four.wide.column    
+            .three.wide.column    
                 a.ui.icon.center.aligned.header(href='/conversations')
                     i.icon
                         +icon96 name='chat'
                     |Conversations
-            .four.wide.column    
+            .three.wide.column    
                 a.ui.icon.center.aligned.header(href='/bookmarks')
                     i.icon
                         +icon96 name='bookmark-ribbon'
                     |Bookmarks
-            // .four.wide.column
+            // .three.wide.column
             //     a#lightbank.ui.icon.center.aligned.header
             //         i.icon
             //             +icon96 name='summer'
             //         |LightBank
-            // .four.wide.column
+            // .three.wide.column
             //     .row    
             //         a.ui.icon.center.aligned.header(href='/journal')
             //             i.icon
             //                 +icon96 name='journal'
             //             |Journal
-            .four.wide.column    
+            .three.wide.column    
                 a.ui.icon.center.aligned.header(href="/karma")
                     i.icon
                         +icon96 name='diamond'
                     |Karma
                     .ui.circular.basic.label #{currentUser.points}
-            .four.wide.column    
+            .three.wide.column    
                 a.ui.icon.center.aligned.header(href='/transactions')
                     i.icon
                         +icon96 name='handshake'
                     |Transactions
-            .four.wide.column    
+            if isInRole 'dev'
+                .three.wide.column    
+                    a.ui.icon.center.aligned.header(href='/shop')
+                        i.icon
+                            +icon96 name='shop'
+                        |Shop
+            if isInRole 'dev'
+                .three.wide.column    
+                    a.ui.icon.center.aligned.header(href='/stats')
+                        i.icon
+                            +icon96 name='combo-chart'
+                        |Stats
+            .three.wide.column    
                 a.ui.icon.center.aligned.header(href='/services')
                     i.icon
                         +icon96 name='service-bell'
                     | Services
-            .four.wide.column    
+            .three.wide.column    
                 a.ui.icon.center.aligned.header(href='/notifications')
                     i.icon
                         +icon96 name='notification'
                     |Notifications
-            .four.wide.column    
+            .three.wide.column    
                 a.ui.icon.center.aligned.header(href="/profile/#{currentUser.username}/account")
                     i.icon
                         +icon96 name='settings'
                     |Settings
             if isInRole 'admin'
-                .four.wide.column    
+                .three.wide.column    
                     a.ui.icon.center.aligned.header(href='/admin/dashboard')
                         i.icon
                             +icon96 name='monarch'
                         | Admin
-            .four.wide.column    
+            .three.wide.column    
                 a#logout.ui.icon.center.aligned.header(href='#')
                     i.icon
                         +icon96 name='burglary'
                     | Sign Out
-            // .four.wide.column    
+            // .three.wide.column    
             //     a.ui.icon.center.aligned.header(href='/checkin')
             //         i.icon
             //             +icon96 name='in-progress'

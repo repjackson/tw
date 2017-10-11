@@ -5,7 +5,7 @@ template(name='nav')
             // .imogen Tori Webster
         if currentUser
             a.ui.mobile.hidden.simple.dropdown.item(href='/')
-                .imogen Tori Webster
+                .imogen TW
                 .ui.menu
                     a.mobile.hidden.item(href='/about' class="{{isActivePath '/about'}}") 
                         i.icon
@@ -24,7 +24,7 @@ template(name='nav')
                         |Contact
         unless currentUser
             a.mobile.hidden.item(href='/' class="{{isActivePath '/'}}")
-                .imogen Tori Webster
+                .imogen TW
             a.mobile.hidden.item(href='/about' class="{{isActivePath '/about'}}") 
                 i.icon
                     .ui.image

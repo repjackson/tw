@@ -1,10 +1,10 @@
 template(name='view_transaction')
     a.ui.basic.button(href='/view/#{parent._id}')
-        i.left.chevron.icon
+        +icon48 name='chevron-left' classes='ui mini inline image'
         |'#{parent.title}' Service 
     div    
         a.ui.basic.button(href='/transactions')
-            i.left.chevron.icon
+            +icon48 name='chevron-left' classes='ui mini inline image'
             |My Transactions
     .ui.container
         h1.ui.center.aligned.header View Transaction
@@ -34,7 +34,7 @@ template(name='view_transaction')
                     .extra
                         a.ui.basic.button(href="/view/#{object._id}") 
                             |View Full
-                            i.right.chevron.arrosw.icon
+                            +icon48 name='chevron-right' classes='ui mini inline image'
             .five.wide.column
                 .ui.dividing.header When
                 |#{when}
@@ -56,24 +56,24 @@ template(name='view_transaction')
                 .ui.dividing.header Completed
                 p Once payment is made the seller (#{parent.author.name}) can mark transaction complete.  Seller can not unmark complete once buyer submits review.
                 if completed
-                    i.large.green.check.icon
+                    +icon48 name='inspection' classes='ui mini inline image'
                 else    
-                    i.large.circle.outline.icon
+                    +icon48 name='unchecked-checkbox' classes='ui mini inline image'
                 if can_mark_complete
                     if completed
                         #unmark_complete.ui.basic.button
-                            i.minus.icon
+                            +icon48 name='cancel' classes='ui mini inline image'
                             | Unmark Complete
                     else
                         #mark_complete.ui.basic.button
-                            i.check.icon
+                            +icon48 name='inspection' classes='ui mini inline image'
                             | Mark Complete
                 .ui.dividing.header Reviewed
                 if reviewed
-                    i.green.check.large.icon
+                    +icon48 name='confirm' classes='ui mini inline image'
                     |Reviewed
                 else
-                    i.square.outline.large.icon
+                    +icon48 name='unchecked-checkbox' classes='ui mini inline image'
                     |Not Reviewed
                 p When transaction is marked complete, the buyer (#{author.name}) can review the transaction with voting and tags.
                 if can_review

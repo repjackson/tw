@@ -122,27 +122,6 @@ template(name='service_buttons')
     +call_watson
                         
                         
-template(name='request_tori_feedback')
-    // .ui.dividing.header 
-    //     i.comments.outline.icon
-    //     |Request Feedback
-    if feedback_requested
-        .ui.header
-            +icon48 name='feedback' classes='avatar'
-            | Feedback Requested 
-            |Status: Pending
-        #cancel_request.ui.fluid.basic.circular.button
-            i.cancel.icon
-            | Cancel Request
-    else
-        #request_feedback.ui.fluid.basic.circular.button
-            +icon48 name='feedback' classes='avatar'
-            if label
-                |#{label}
-            else
-                | Request Tori's Feedback
-            
-                
 template(name='parent_doc_segment')
     if parent_id
         .ui.styled.fluid.accordion

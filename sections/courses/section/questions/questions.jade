@@ -40,12 +40,15 @@ template(name='question')
                 // +published
         else
             // .ui.top.right.attached.basic.label
-            .ui.header 
-                |#{number}: #{body}
+            .ui.stackable.grid
+                .fourteen.wide.column
+                    .ui.header 
+                        |#{number}: #{body}
+                .two.wide.column
+                    +pin_button
                 // if has_answered_question
                 //     .ui.right.corner.green.label
                 //         i.checkmark.icon
-            +pin_button
         if isInRole 'admin'
             +session_edit_button
                 // if isInRole 'dev'

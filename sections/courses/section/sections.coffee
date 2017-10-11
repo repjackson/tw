@@ -59,7 +59,11 @@ if Meteor.isClient
             else
                 previous_section_number = @number - 1
                 previous_section_doc = Docs.findOne(type:'section', number: previous_section_number)
-                previous_section_progress_doc = Docs.findOne(type:'section_progress', parent_id: previous_section_doc._id)
+                if previous_section_doc
+                    previous_section_progress_doc = 
+                        Docs.findOne
+                            type:'section_progress', 
+                            parent_id: previous_section_doc._id
 
                 if previous_section_progress_doc and previous_section_progress_doc.percent_complete is 100 then true else false
 

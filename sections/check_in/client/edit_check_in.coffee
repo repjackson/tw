@@ -26,7 +26,7 @@ Template.check_in_tag_selection.onCreated ->
             type='check_in_tag'
             author_id=null
             parent_id=null
-            tag_limit=10
+            tag_limit=20
             doc_limit=null
             view_published=null
             view_read=null
@@ -38,8 +38,8 @@ Template.check_in_tag_selection.onCreated ->
 
 Template.check_in_tag_selection.helpers
     check_in_tags: -> 
-        Docs.find
-            type: 'check_in_tag'
+        Docs.find {type: 'check_in_tag'},
+            limit: 7
          
 Template.check_in_tag_selection.helpers
     check_in_tag_class: ->
@@ -54,7 +54,7 @@ Template.check_in_tag_selection.events
     'click .check_in_tag': (e,t)->
         # console.log @
         check_in_doc = Docs.findOne FlowRouter.getParam('doc_id')
-        console.log check_in_doc
+        # console.log check_in_doc
         if @icon_class in check_in_doc.tags
             Docs.update check_in_doc._id,
                 $pull: tags: @icon_class

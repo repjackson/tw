@@ -3,7 +3,11 @@ if Meteor.isClient
         BlazeLayout.render 'layout',
             # sub_nav: 'member_nav'
             main: 'services'
-
+    
+    Template.service_item.onCreated ->
+        Meteor.subscribe 'author', @data._id
+        
+        
     Template.services.onCreated ->
         @autorun ->
             Meteor.subscribe('facet', 
