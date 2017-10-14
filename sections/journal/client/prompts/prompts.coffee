@@ -16,7 +16,7 @@ Template.journal_prompts.onCreated ->
             parent_id=null
             tag_limit=20
             doc_limit=Session.get 'doc_limit'
-            view_published = Session.get('view_published')
+            view_published = true
             view_read = null
             view_bookmarked=Session.get('view_bookmarked')
             view_resonates = null

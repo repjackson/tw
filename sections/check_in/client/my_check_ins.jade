@@ -4,17 +4,17 @@ template(name='my_check_ins')
         .centered.row
             .three.wide.column
                 #create_checkin.ui.basic.circular.small.button 
-                    +icon48 name='plus' classes='ui avatar image'
+                    +icon48 name='tree-planting' classes='ui mini inline image'
                     |Check In
-            .eight.wide.column
+            .nine.wide.column
                 h1.ui.center.aligned.header
-                    +icon96 name='data-quality'
+                    +icon96 name='grass' classes='ui mini inline image'
                     | My Check-Ins
             .four.wide.column
                 a.ui.basic.circular.small.button(href='/checkins/browse') 
-                    +icon48 name='cloud-checked' classes='ui avatar image'
+                    +icon48 name='forest' classes='ui mini inline image'
                     |Browse Check-Ins
-                    +icon48 name='rotate-left' classes='ui avatar image'
+                    +icon48 name='rotate-left' classes='ui mini inline image'
         .row
             .four.wide.column
                 +theme_facet type='checkin'

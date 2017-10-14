@@ -45,12 +45,12 @@ template(name='edit_lightbank')
             .ui.grid
                 .twelve.wide.column
                     if tags
-                        a.ui.fluid.basic.button(href="/view/#{_id}" data-tooltip='Save')
+                        a.ui.fluid.basic.circular.button(href="/view/#{_id}" data-tooltip='Save')
                             +icon48 name='checked' classes='ui mini inline image'
                     else
-                        .ui.fluid.basic.disabled.button Add Tags to Save
+                        .ui.fluid.basic.disabled.circular.button Add Tags to Save
                 .four.wide.column
-                    #delete_doc.ui.fluid.basic.button(data-tooltip='Delete')
+                    #delete_doc.ui.fluid.basic.circular.button(data-tooltip='Delete')
                         +icon48 name='delete' classes='ui mini inline image'
             .ui.header 
                 |created by 
@@ -61,7 +61,7 @@ template(name='edit_lightbank')
                 |#{when}
             +change_lightbank_type lightbank_entry
             if is_custom
-                .ui.horizontal.divider.header 
+                .ui.dividing.header 
                     +icon48 name='slider' classes='ui mini inline image'
                     |Components
                 +toggle_component name='youtube' label='Video' icon_name='movie'
@@ -74,7 +74,7 @@ template(name='edit_lightbank')
                         // +toggle_resonates_button
                         // +toggle_bookmarkable_button
                         // +toggle_complete_button
-            .ui.horizontal.divider.header 
+            .ui.dividing.header 
                 +icon48 name='sports-mode' classes='ui mini inline image'
                 |Actions
             if is_author

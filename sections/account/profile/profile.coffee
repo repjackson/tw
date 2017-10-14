@@ -71,12 +71,12 @@ if Meteor.isClient
                 sub_nav: 'member_nav'
                 profile_content: 'profile_karma'
     
-    FlowRouter.route '/profile/:username/quizes', 
-        name: 'profile_quizes'
+    FlowRouter.route '/profile/:username/quizzes', 
+        name: 'profile_quizzes'
         action: (params) ->
             BlazeLayout.render 'profile_layout',
                 sub_nav: 'member_nav'
-                profile_content: 'profile_quizes'
+                profile_content: 'profile_quizzes'
 
     FlowRouter.route '/profile/:username/journal', 
         name: 'profile_journal'

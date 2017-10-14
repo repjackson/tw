@@ -1,6 +1,8 @@
 
 template(name='theme_facet')
-    +icon48 name='hashtag' classes='ui mini inline image' tooltip='Browse Themes'
+    .ui.dividing.header
+        +icon48 name='hashtag' classes='ui mini inline image' tooltip='Browse Themes'
+        |Browse Themes
     .ui.left.icon.small.inline.input
         i.search.icon
         +inputAutocomplete settings=settings id="search" class="" autocomplete="off" placeholder='Search...'
@@ -16,13 +18,12 @@ template(name='theme_facet')
             | #{this.name}
             // if isInRole 'admin'
             //     small #{this.count}
-    .ui.divider
+    // .ui.divider
 
 template(name='location_facet')
-    // .ui.header 
-    //     +icon48 name='geo-fence'
-    //     |Location Tags
-    +icon48 name='geo-fence' classes='ui mini inline image' tooltip='Location Tags'
+    .ui.dividing.header 
+        +icon48 name='park-bench' classes='ui mini inline image' tooltip='Location Tags'
+        |Location Tags
     if selected_location_tags
         #clear_location_tags.ui.teal.icon.circular.button
             i.remove.icon
@@ -34,10 +35,12 @@ template(name='location_facet')
             | #{this.name}
             // if isInRole 'admin'
             //     small #{this.count}
-    .ui.divider
+    // .ui.divider
 
 template(name='timestamp_facet')
-    +icon48 name='calendar' classes='ui mini inline image' tooltip='Date Tags'
+    .ui.dividing.header
+        +icon48 name='calendar' classes='ui mini inline image' tooltip='Date Tags'
+        |Date Tags
     if selected_timestamp_tags
         #clear_timestamp_tags.ui.teal.icon.circular.button
             i.remove.icon
@@ -49,10 +52,12 @@ template(name='timestamp_facet')
             | #{this.name}
             // if isInRole 'admin'
             //     small #{this.count}
-    .ui.divider
+    // .ui.divider
 
 template(name='intention_facet')
-    +icon48 name='spotlight' classes='ui mini inline image' tooltip='Intention Tags'
+    .ui.dividing.header
+        +icon48 name='spotlight' classes='ui mini inline image' tooltip='Intention Tags'
+        | Intention Tags
     if selected_intention_tags
         #clear_intention_tags.ui.teal.icon.circular.button
             i.remove.icon
@@ -65,7 +70,7 @@ template(name='intention_facet')
             | #{this.name}
             // if isInRole 'admin'
             //     small #{this.count}
-    .ui.divider
+    // .ui.divider
 
 template(name='keyword_facet')
     .ui.header 
@@ -91,7 +96,9 @@ template(name='keyword_facet')
 
 
 template(name='username_facet')
-    +icon48 name='couple' classes='ui mini inline image' tooltip='Filter Authors'
+    .ui.dividing.header
+        +icon48 name='couple' classes='ui mini inline image' tooltip='Filter Authors'
+        |Filter Authors
     if selected_author_ids
         #clear_authors.ui.teal.icon.circular.button
             i.remove.icon
@@ -104,7 +111,7 @@ template(name='username_facet')
             | #{username}
             // if isInRole 'admin'
             //     small #{this.count}
-    .ui.divider
+    // .ui.divider
 
 template(name='participant_facet')
     .ui.header

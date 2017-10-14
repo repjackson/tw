@@ -4,18 +4,19 @@ template(name='bug_reports')
         |Bug Reports
     .ui.grid
         .four.wide.column
-            +complete_filter
             +timestamp_facet    
             +username_facet
-        .twelve.wide.column
+        .ten.wide.column
             .ui.stackable.cards
                 each bug_reports
                     +bug_report
+        .two.wide.column
+            +complete_filter
 
 template(name='bug_report')
     .card
         .content
-            .header #{body}
+            .description #{body}
             .meta
                 a(href=link) #{link}
             .meta

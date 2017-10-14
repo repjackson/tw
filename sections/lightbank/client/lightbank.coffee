@@ -12,16 +12,16 @@ Template.lightbank.onCreated ->
             selected_location_tags.array()
             selected_intention_tags.array()
             selected_timestamp_tags.array()
-            type='lightbank'
-            author_id=null
-            parent_id=null
-            tag_limit=20
-            doc_limit=Session.get 'doc_limit'
-            view_published=if Roles.userIsInRole(Meteor.userId(), 'admin') then Session.get('view_published') else true
-            view_read=Session.get('view_read')
-            view_bookmarked=Session.get('view_bookmarked')
-            view_resonates=Session.get('view_resonates')
-            view_complete=Session.get 'view_complete'
+            type = 'lightbank'
+            author_id = null
+            parent_id = null
+            tag_limit = 20
+            doc_limit = Session.get 'doc_limit'
+            view_published = if Roles.userIsInRole(Meteor.userId(), 'admin') then Session.get('view_published') else true
+            view_read = Session.get('view_read')
+            view_bookmarked = Session.get('view_bookmarked')
+            view_resonates = Session.get('view_resonates')
+            view_complete = Session.get 'view_complete'
             view_images = Session.get 'view_images'
             view_lightbank_type = Session.get 'view_lightbank_type'
 

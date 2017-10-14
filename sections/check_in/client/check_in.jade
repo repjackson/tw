@@ -72,7 +72,7 @@
 template(name='checkin')
     // .ui.center.aligned.basic.segment
     //     +doc_content tags='journal,blurb'
-    .ui.stackable.grid
+    .ui.stackable.padded.grid
         .eight.wide.centered.column
             .ui.center.aligned.header Quick Add (tags separated by spaces)
             .ui.icon.fluid.large.input
@@ -80,23 +80,19 @@ template(name='checkin')
                 i.yellow.lightning.icon
             .ui.divider
             #create_checkin.ui.basic.fluid.big.button 
-                .ui.image
-                    +icon48 name='tree-planting'
+                +icon48 name='tree-planting' classes='ui inline image'
                 |Check In
             .ui.hidden.divider
             a.ui.basic.fluid.big.button(href="/checkins/mine")
-                .ui.image
-                    +icon48 name='nature'
+                +icon48 name='grass' classes='ui inline image'
                 |My Check-Ins
             .ui.hidden.divider
             a.ui.basic.fluid.big.button(href="/checkins/browse") 
-                .ui.image
-                    +icon48 name='forest'
+                +icon48 name='forest' classes='ui inline image'
                 |Browse Check-Ins
             if isInRole 'admin'
                 .ui.hidden.divider
                 a.ui.basic.fluid.big.button(href="/checkins/tags") 
-                    .ui.image
-                        +icon48 name='monarch'
+                    +icon48 name='monarch' classes='ui inline image'
                     |Edit Check In Tags
     

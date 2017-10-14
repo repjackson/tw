@@ -30,7 +30,7 @@ template(name='profile_layout')
                                             unless is_user
                                                 +staus_indicator
                                         if is_user
-                                            a.ui.basic.fluid.large.button(href="/account/profile/edit/#{_id}") 
+                                            a.ui.basic.fluid.large.circular.button(href="/account/profile/edit/#{_id}") 
                                                 i.yellow.pencil.icon
                                                 // i.icon
                                                 //     img(src="https://png.icons8.com/edit/color/24" width="24" height="24")
@@ -45,7 +45,7 @@ template(name='profile_layout')
                                                 |About
                                             a.item(href="/profile/#{username}/contact" class="{{isActiveRoute name='profile_contact'}}") 
                                                 i.icon
-                                                    +icon24 name='phone'
+                                                    +icon24 name='contact'
                                                 |Contact #{name}
                                             a.item(href="/profile/#{username}/courses" class="{{isActiveRoute name='profile_courses'}}")
                                                 i.icon
@@ -56,15 +56,15 @@ template(name='profile_layout')
                                                     +icon24 name='chat'
                                                 |Social
                                             if isInRole 'dev'
-                                                a.item(href="/profile/#{username}/quizzes" class="{{isActiveRoute name='profile_quizes'}}")
+                                                a.red.item(href="/profile/#{username}/quizzes" class="{{isActiveRoute name='profile_quizzes'}}")
                                                     i.icon
                                                         +icon24 name='hand-with-pen'
-                                                    |Quizes
-                                                a.item(href="/profile/#{username}/journal" class="{{isActiveRoute name='profile_journal'}}") 
+                                                    |Quizzes
+                                                a.red.item(href="/profile/#{username}/journal" class="{{isActiveRoute name='profile_journal'}}") 
                                                     i.icon
                                                         +icon24 name='journal'
                                                     | Journal
-                                                a.item(href="/profile/#{username}/badges" class="{{isActiveRoute name='profile_badges'}}") 
+                                                a.red.item(href="/profile/#{username}/badges" class="{{isActiveRoute name='profile_badges'}}") 
                                                     i.icon
                                                         +icon24 name='police-badge'
                                                     | Karma + Badges
@@ -75,7 +75,7 @@ template(name='profile_layout')
                                                     +icon24 name='settings'
                                                 |Account Settings
                                             if isInRole 'dev'
-                                                a.item(href="/profile/#{currentUser.username}/email_settings" class="{{isActiveRoute name='email_settings'}}") 
+                                                a.red.item(href="/profile/#{currentUser.username}/email_settings" class="{{isActiveRoute name='email_settings'}}") 
                                                     i.icon
                                                         +icon24 name='message'
                                                     |Email Settings
@@ -86,7 +86,7 @@ template(name='profile_layout')
                                                 |Log Out
 
     
-                                .twelve.wide.column
+                                .ten.wide.column
                                     +Template.dynamic template=profile_content
 
 
@@ -104,10 +104,10 @@ template(name='profile_karma')
         |Karma
     +karma
         
-template(name='profile_quizes')
+template(name='profile_quizzes')
     h1.ui.center.aligned.header 
         +icon96 name='report-card'
-        |Quizes
+        |quizzes
     +public_quiz_sessions
 
 
@@ -135,7 +135,7 @@ template(name='profile_about')
         .ui.two.column.stackable.grid
             .column
                 if tags
-                    +icon48 name='hashtag'
+                    +icon48 name='hashtag' classes='ui inline image'
                     each tags
                         .user_tag.ui.circular.large.basic.label #{this}
                 // +toggle_friend

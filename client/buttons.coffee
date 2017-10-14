@@ -365,7 +365,7 @@ Template.mark_complete_button.events
 
 
 Template.mark_doc_complete_button.helpers
-    complete_button_class: -> if @complete then 'blue' else 'basic'
+    # complete_button_class: -> if @complete then 'blue' else 'basic'
 Template.mark_doc_complete_button.events
     'click .mark_complete': (e,t)-> 
         if @complete is true then Docs.update @_id, $set: complete: false else  Docs.update @_id, $set:complete: true
@@ -519,8 +519,8 @@ Template.toggle_zen_mode_button.helpers
 Template.toggle_zen_mode_button.events
     'click #turn_off_zen_mode': (e,t)-> 
         Session.set 'zen_mode', false
-        $(e.currentTarget).closest('.document_container').transition('pulse')
+        # $(e.currentTarget).closest('.document_container').transition('pulse')
     'click #turn_on_zen_mode': (e,t)-> 
-        $(e.currentTarget).closest('.document_container').transition('pulse')
+        # $(e.currentTarget).closest('.document_container').transition('pulse')
         Session.set 'zen_mode', true
     

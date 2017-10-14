@@ -3,16 +3,16 @@ Template.edit_lightbank.events
         swal {
             title: 'Remove Lightbank Entry?'
             type: 'warning'
-            animation: false
+            animation: true
             showCancelButton: true
             closeOnConfirm: true
-            cancelButtonText: 'No'
+            cancelButtonText: 'Cancel'
             confirmButtonText: 'Remove'
             confirmButtonColor: '#da5347'
         }, =>
-            swal 'Removed', 'success'
-            Docs.remove @_id
-            FlowRouter.go '/lightbank'
+            Docs.remove @_id, ->
+                # swal 'Removed', 'success'
+                FlowRouter.go '/lightbank'
             
 
 Template.edit_lightbank.helpers

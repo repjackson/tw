@@ -97,7 +97,7 @@ Meteor.publish 'facet', (
             { $group: _id: '$timestamp_tags', count: $sum: 1 }
             { $match: _id: $nin: selected_timestamp_tags }
             { $sort: count: -1, _id: 1 }
-            { $limit: limit }
+            { $limit: 10 }
             { $project: _id: 0, name: '$_id', count: 1 }
             ]
         # console.log 'intention timestamp_tags_cloud, ', timestamp_tags_cloud

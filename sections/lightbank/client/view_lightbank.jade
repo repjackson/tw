@@ -1,5 +1,5 @@
 template(name='view_lightbank')
-    .ui.stackable.grid
+    .ui.stackable.grid.container
         .centered.row
             .four.wide.column
                 a.ui.basic.button(href='/lightbank')
@@ -49,24 +49,22 @@ template(name='view_lightbank')
                         +analyzed_watson_keywords
                 // +child_docs
             .four.wide.column
-                if isInRole 'admin'
-                    .ui.horizontal.divider.header 
-                        +icon48 name='monarch' classes='ui avatar image'
-                        |Admin
-                    .ui.basic.segment
-                        +published
-                if can_edit
-                    +edit_link_button
-                    +call_watson
-                    +published_status
+                // if isInRole 'admin'
+                //     .ui.dividing.header 
+                //         +icon48 name='monarch' classes='ui avatar image'
+                //         |Admin
                 .ui.header added by #{author.name} #{when}
-                .ui.horizontal.divider.header 
+                .ui.dividing.header 
                     +icon48 name='sports-mode'
                     |Actions
-                .ui.basic.segment
-                    +bookmark_button
-                    +thanks_button
-                    // +reflect_button
+                +bookmark_button
+                +thanks_button
+                +reflect_button
                 +resonate_button
                 +resonates_list 
+                if can_edit
+                    +edit_link_button
+                    // +call_watson
+                    // +published_status
+                    +published
 

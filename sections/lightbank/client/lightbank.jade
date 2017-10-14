@@ -1,14 +1,14 @@
 template(name='lightbank')
-    h1.ui.center.aligned.header
+    h1.ui.center.aligned.header 
         +icon96 name='summer'
-        |Lightbank
+        span(data-position='bottom center' data-tooltip="Click on the buttons to the left to filter through content and find just what you're looking for. Quotes, videos, poems, etc.") Lightbank
     // .ui.center.aligned.basic.segment
     //     +doc_content tags='lightbank,blurb'
 
-    .ui.stackable.grid
+    .ui.stackable.grid.container
         .five.wide.column
             +theme_facet
-            +timestamp_facet
+            // +timestamp_facet
             .ui.hidden.divider
             if currentUser
                 #add_lightbank_doc.ui.basic.circular.large.fluid.button
@@ -20,9 +20,9 @@ template(name='lightbank')
                 each docs
                     +lightbank_doc_view
         .three.wide.column
-            .ui.header 
-                +icon24 name='filter' classes='ui avatar image'
-                // |Type Filters
+            .ui.dividing.header
+                +icon48 name='filter' classes='ui avatar image'
+                |Filters
             +passage_filter
             +journal_prompt_filter
             +poem_filter
@@ -43,7 +43,8 @@ template(name='lightbank')
                 +resonates_filter
             div
                 +doc_limit
-            if is_author
+            if isInRole 'admin'
+                .ui.dividing.header Admin
                 +published_filter
         
 
@@ -83,9 +84,9 @@ template(name='lightbank_doc_view')
             //             .ui.tiny.circular.button.tag(class=tag_class) #{this}
             .content
                 +resonate_button
-                +reflect_button
                 +bookmark_button
-                +view_full_button
+                +reflect_button
+                +view_full_button classes='right floated'
                 +mark_read
                 if can_edit
                     +edit_link_button

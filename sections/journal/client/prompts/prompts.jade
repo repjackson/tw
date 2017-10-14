@@ -1,12 +1,13 @@
 template(name='journal_prompts')
-    .ui.container
-        h1.ui.center.aligned.header
-            +icon96 name='ask-question'
-            | Journal Prompts
+    .ui.stackable.padded.grid
+        .centered.row
+            h1.ui.center.aligned.header
+                +icon96 name='ask-question'
+                | Journal Prompts
         // .ui.center.aligned.basic.segment
         //     +doc_content tags='journal,prompt,blurb'
         // #convert_journal_docs.ui.button Convert Journal Docs
-        .ui.stackable.grid
+        .row
             .four.wide.column
                 +theme_facet type='journal'
                 +username_facet type='journal'

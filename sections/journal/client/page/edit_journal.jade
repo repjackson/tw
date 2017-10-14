@@ -1,10 +1,12 @@
 template(name='edit_journal')
-    .ui.container.document_container
-        h1.ui.center.aligned.header Edit Journal Entry
-        .center.aligned
-            +toggle_zen_mode_button
-            .ui.hidden.divider
-        .ui.stackable.grid
+    .ui.padded.stackable.grid.document_container
+        .centered.row
+            h1.ui.center.aligned.header
+                +icon48 name='edit-file' classes='ui mini spaced image'
+                |Edit Journal Entry
+            span.right.floated    
+                +toggle_zen_mode_button
+        .row
             if zen_mode
                 .sixteen.wide.column
                     if parent_id
@@ -17,7 +19,6 @@ template(name='edit_journal')
                         +tags
                         if watson 
                             +analyzed_watson_keywords
-                    // |{{> jsonView json=watson}}
             else
                 .twelve.wide.column
                     if parent_id
@@ -30,7 +31,6 @@ template(name='edit_journal')
                         +tags
                         if watson 
                             +analyzed_watson_keywords
-                    // |{{> jsonView json=watson}}
                 .four.wide.column.edit_journal_sidebar
                     if tags
                         a.ui.fluid.green.big.button(href="/view/#{_id}") Save Journal Entry

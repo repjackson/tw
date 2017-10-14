@@ -26,24 +26,16 @@ template(name='nav')
             a.mobile.hidden.item(href='/' class="{{isActivePath '/'}}")
                 .imogen TW
             a.mobile.hidden.item(href='/about' class="{{isActivePath '/about'}}") 
-                i.icon
-                    .ui.image
-                        +icon24 name='info'
+                +icon48 name='info' classes='ui mini spaced image'
                 |About
             a.mobile.hidden.item(href='/lightschool' class="{{isActivePath '/lightschool'}}") 
-                i.icon
-                    .ui.image
-                        +icon24 name='library'
+                +icon48 name='library' classes='ui mini spaced image'
                 |LightSchool
             a.mobile.hidden.item(href='/lightbank' class="{{isActivePath '/lightbank'}}") 
-                i.icon
-                    .ui.image
-                        +icon24 name='summer'
+                +icon48 name='summer' classes='ui mini spaced image'
                 |Lightbank
             a.mobile.hidden.item(href='/contact' class="{{isActivePath '/contact'}}") 
-                i.icon
-                    .ui.image
-                        +icon24 name='phone'
+                +icon48 name='phone' classes='ui mini spaced image'
                 |Contact
         else
             // a.ui.mobile.hidden.simple.dropdown.item(href='/lightschool' ) 
@@ -89,11 +81,11 @@ template(name='nav')
                             .ui.image
                                 +icon24 name='ask-question'
                         | Prompts
-                    .ui.disabled.item
-                        i.icon
-                            .ui.image
-                                +icon24 name='template'
-                        |Templates
+                    // .ui.disabled.item
+                    //     i.icon
+                    //         .ui.image
+                    //             +icon24 name='template'
+                    //     |Templates
                     a.ui.item(href="/journal/browse") 
                         i.icon
                             .ui.image
@@ -150,8 +142,7 @@ template(name='nav')
                 
             else
                 a.ui.item(href='/sign-in') 
-                    .ui.image
-                        +icon24 name='signin'
+                    +icon48 name='signin' classes='ui mini inline spaced image'
                     | Sign In
     
     .ui.basic.small.report.modal

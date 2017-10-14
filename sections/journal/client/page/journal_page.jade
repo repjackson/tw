@@ -1,10 +1,13 @@
 template(name='view_journal')
-    a.ui.basic.button(href='/journal')
-        +icon48 name='double-left' classes='ui avatar image'
-        strong Journal
-    .ui.container.document_container
-        h1.ui.center.aligned.header View Journal Entry
-        .ui.stackable.grid
+    .ui.stackable.padded.grid.document_container
+        .row
+            .four.wide.column
+                a.ui.basic.button(href='/journal')
+                    +icon48 name='double-left' classes='ui avatar image'
+                    strong Journal
+            .eight.wide.column
+                h1.ui.center.aligned.header View Journal Entry
+        .row
             .ten.wide.column
                 +parent_doc_segment
                 .ui.basic.segment
@@ -42,4 +45,3 @@ template(name='view_journal')
                 +mark_read
                 // +read_by
                 +published
-                .ui.divider

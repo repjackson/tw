@@ -3,15 +3,15 @@ Template.edit_checkin.events
         swal {
             title: 'Remove Check-In?'
             type: 'warning'
-            animation: false
+            animation: true
             showCancelButton: true
             closeOnConfirm: true
-            cancelButtonText: 'No'
+            cancelButtonText: 'Cancel'
             confirmButtonText: 'Remove'
             confirmButtonColor: '#da5347'
         }, =>
-            swal 'Removed', 'success'
             Docs.remove @_id
+            swal 'Removed', 'success'
             FlowRouter.go '/checkin'
 
 Template.check_in_tag_selection.onCreated -> 

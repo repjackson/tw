@@ -1,9 +1,8 @@
 template(name='resonate_button')
-    .resonate_button.ui.circular.button(class=resonate_button_class) 
+    .resonate_button.ui.circular.icon.button(class=resonate_button_class data-tooltip='This Resonates with Me')
         // i.big.red.heartbeat.icon
         // <img src="https://png.icons8.com/heart-with-pulse/dusk/64" title="Heart with Pulse" width="64" height="64">        
-        img.ui.avatar.image(src="https://png.icons8.com/heart-with-pulse/dusk/64" width="64" height="64")
-        | This Resonates with Me
+        img.ui.mini.inline.image(src="https://png.icons8.com/heart-with-pulse/dusk/64" width="64" height="64")
         
 
 template(name='resonates_list')
@@ -32,9 +31,8 @@ template(name='mark_read')
     // else
     if currentUser
         unless read
-            .mark_read.ui.basic.button 
-                +icon48 name='message' classes='avatar'
-                |Mark Read
+            .mark_read.ui.basic.circular.icon.button(data-tooltip='Mark Read')
+                +icon48 name='message' classes='ui mini inline image'
 
 template(name='read_by_list')
     // if read_by.count
@@ -177,6 +175,7 @@ template(name='icon48')
 template(name='icon24')
     img(src="https://png.icons8.com/#{name}/color/24" width="24" height="24" class=classes title=tooltip)
 template(name='icon96')
+    // i.icon(src="https://png.icons8.com/#{name}/color/96" width="96" height="96" class=classes title=tooltip)
     img(src="https://png.icons8.com/#{name}/color/96" width="96" height="96" class=classes title=tooltip)
 
 template(name='ultraviolet_icon40')
@@ -186,6 +185,7 @@ template(name='dusk_icon64')
     img(src="https://png.icons8.com/#{name}/dusk/64" class=classes title=tooltip width="64" height="64")    
     
 template(name='ios96')
+    // i.icon(src="https://png.icons8.com/#{name}/p1em/96" class=classes width="96" height="96")
     img(src="https://png.icons8.com/#{name}/p1em/96" class=classes width="96" height="96")
 
 template(name='published_status')

@@ -1,5 +1,5 @@
 head
-    title TW
+    title Tori Webster Inspires
     meta(name='viewport', content='user-scalable=no, initial-scale=1.0, maximum-scale=1.0, width=device-width')
     meta(name='apple-mobile-web-app-capable', content='yes')
     meta(name='apple-mobile-web-app-status-bar-style', content='white')
@@ -87,14 +87,14 @@ template(name='layout')
             // +right_sidebar
             .pusher
                 #main_area
-                    .ui.basic.fluid.segment
-                        +Template.dynamic template=sub_nav
-                        +Template.dynamic template=sub_sub_nav
-                        +Template.dynamic template=cloud
-                        +Template.dynamic template=main
-                        unless isInRole 'dev'
-                            unless zen_mode
-                                +footer
+                    // .ui.basic.fluid.segment
+                    +Template.dynamic template=sub_nav
+                    +Template.dynamic template=sub_sub_nav
+                    +Template.dynamic template=cloud
+                    +Template.dynamic template=main
+                    unless isInRole 'dev'
+                        unless zen_mode
+                            +footer
                     // else
                             // +dev_footer
                     

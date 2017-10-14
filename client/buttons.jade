@@ -5,8 +5,8 @@ template(name='voting')
 
 template(name='thanks_button')
     .ui.circular.icon.button.vote_up(class=thanks_button_class data-tooltip="Thank #{author.profile.first_name} for Sharing")
-        // +icon24 name='applause' classes='ui avatar image'
-        img.ui.mini.image(src="https://png.icons8.com/pray-filled/ios7/50" width="50" height="50")
+        +icon24 name='applause' classes='ui mini inline image'
+        // img.ui.mini.image(src="https://png.icons8.com/pray-filled/ios7/50" width="50" height="50")
         // if said_thanks
         //     |Thanks #{author.profile.first_name}
         // else
@@ -35,13 +35,11 @@ template(name='thanks_button')
 
 template(name='reflect_button')
     if currentUser
-        #reflect.ui.circular.basic.button
-            +icon48 name='mirror' classes='ui avatar image'
-            |Reflect in Journal
+        #reflect.ui.circular.basic.icon.button(data-tooltip='Reflect in Journal')
+            +icon48 name='mirror' classes='ui mini inline image'
     else
-        .ui.circular.basic.disabled.button
-            +icon48 name='mirror' classes='ui avatar image'
-            |Reflect in Journal
+        .ui.circular.basic.disabled.icon.button(data-tooltip='Reflect in Journal')
+            +icon48 name='mirror' classes='ui mini inline image'
 
 template(name='big_both_voter')
     i.thumbs.up.link.huge.icon.vote_up(class=vote_up_button_class)
@@ -57,7 +55,7 @@ template(name='rank')
         .value #{rank_doc}
         .label Rank
     #increase_index.ui.icon.basic.circular.button
-        +icon48 name="chevron-up" classes='avatar'
+        +icon48 name="chevron-up" classes='ui mini inline image'
     // #decrease_index.ui.icon.basic.circular.button
     //     i.chevron.down.icon
 
@@ -69,11 +67,11 @@ template(name='toggle_friend')
     if currentUser
         if is_friend
             #remove_friend.ui.basic.button
-                +icon48 name="minus" classes='avatar'
+                +icon48 name="minus" classes='ui mini inline image'
                 |Unfriend
         else
             #add_friend.ui.basic.button
-                +icon48 name="plus" classes='avatar'
+                +icon48 name="plus" classes='ui mini inline image'
                 |Friend
 
 
@@ -82,13 +80,13 @@ template(name='session_edit_button')
     if currentUser
         unless is_editing
             .edit_this.ui.basic.icon.button(title="Edit #{tags}" class=button_classes)
-                +icon24 name="edit" classes='ui avatar image'
+                +icon24 name="edit" classes='ui mini inline image'
                 // i.icon
                 // |Edit
         else
             .save_doc.ui.basic.button(class=button_classes)
                 i.icon
-                    +icon48 name="checkmark" classes='avatar'
+                    +icon48 name="checkmark" classes='ui mini inline image'
                 |Save
 template(name='session_edit_icon')
     if currentUser
@@ -100,20 +98,20 @@ template(name='session_edit_icon')
 template(name='edit_button')
     if currentUser
         unless editing
-            .edit_this.ui.basic.button(title=tags)
+            .edit_this.ui.basic.button(data-tooltip=tags)
                 i.icon
-                    +icon24 name='edit' classes='ui avatar image'
+                    +icon24 name='edit' classes='ui mini inline image'
                 |Edit
         else
             .save_doc.ui.green.button
                 i.icon
-                    +icon24 name='checkmark' classes='ui avatar image'
+                    +icon24 name='checkmark' classes='ui mini inline image'
                 |Save
                 
 template(name='edit_icon')
     if currentUser
         unless editing
-            i.edit_this.large.pencil.link.icon(title=tags)
+            i.edit_this.large.pencil.link.icon(data-tooltip=tags)
         else
             .save_doc.ui.icon.green.basic.button
                 i.check.icon
@@ -124,7 +122,7 @@ template(name='edit_link')
             a.edit_this Edit
         else
             .save_doc.ui.basic.large.button
-                +icon24 name='checked' classes='ui avatar image'
+                +icon24 name='checked' classes='ui mini inline image'
                 |Save
 
 template(name='add_to_cart')
@@ -209,57 +207,55 @@ template(name='favorite_button')
             | #{favorite_count}
 
 template(name='mark_complete_button')
-    .mark_complete.ui.circular.button(class=complete_button_class) 
+    .mark_complete.ui.circular.icon.button(class=complete_button_class) 
         if completed
-            +icon24 name='checkmark' classes=''
-            | Completed
+            +icon48 name='checkmark' classes='ui mini inline image'
+            // | Completed
         else
-            +icon24 name='unchecked-checkbox' classes=''
-            | Mark Complete
+            +icon48 name='unchecked-checkbox' classes='ui mini inline image'
+            // | Mark Complete
         
 template(name='mark_doc_complete_button')
-    .mark_complete.ui.circular.button(class=complete_button_class) 
+    .mark_complete.ui.circular.icon.basic.button(class=complete_button_class) 
         if complete
-            +icon24 name='checkmark' classes=''
-            | Completed
+            +icon48 name='checkmark' classes='ui mini inline image'
+            // | Completed
         else
-            +icon24 name='unchecked-checkbox' classes=''
-            | Complete
+            +icon48 name='unchecked-checkbox' classes='ui mini inline image'
+            // | Complete
         
 template(name='bookmark_button')
-    .bookmark_button.ui.circular.button(class=bookmark_button_class) 
-        +icon48 name='bookmark' classes='avatar'
-        if bookmarked
-            | Bookmarked
-        else
-            | Bookmark
+    .bookmark_button.ui.circular.icon.button(class=bookmark_button_class data-tooltip='Bookmark') 
+        +icon48 name='bookmark' classes='ui mini inline image'
+        // if bookmarked
+        //     | Bookmarked
+        // else
+        //     | Bookmark
         
         
 template(name='pin_button')
-    .pin_button.ui.circular.icon.button(class=pin_button_class title='Pin this') 
+    .pin_button.ui.circular.icon.button(class=pin_button_class data-tooltip='Pin this') 
         if pinned
-            +icon24 name="push-pin" classes='avatar'
+            +icon24 name="push-pin" classes='ui mini inline image'
             // | Pinned
         else
-            +icon24 name="push-pin" classes='avatar'
+            +icon24 name="push-pin" classes='ui mini inline image'
             // | Pin
         
         
 template(name='pin_corner_button')
-    a.pin_button.ui.top.right.attached.button(class=pin_button_class title='Pin this') 
-        +icon48 name="push-pin" classes='avatar'
+    a.pin_button.ui.top.right.attached.button(class=pin_button_class data-tooltip='Pin this') 
+        +icon48 name="push-pin" classes='ui mini inline image'
         
 template(name='view_full_button')
-    a.ui.basic.circular.button(href="/view/#{_id}")
-        |Full
-        +icon48 name="double-right" classes='ui mini spaced image'
+    a.ui.basic.circular.icon.button(href="/view/#{_id}" class=classes data-tooltip='View Full')
+        +icon48 name="double-right" classes='ui mini inline image'
 
 template(name='edit_link_button')
     if can_edit
         // +call_watson
-        a.ui.basic.button(href="/edit/#{_id}")
+        a.ui.basic.icon.button(href="/edit/#{_id}" data-tooltip='Edit')
             +icon48 name='edit' classes='avatar'
-            |Edit
 
 
 template(name='add_doc_button')
@@ -272,10 +268,10 @@ template(name='subscribe_button')
     if is_participant
         #subscribe_button.ui.button(class=subscribe_buton_class)
             if subscribed
-                +icon48 name='checked' classes='ui avatar image'
+                +icon48 name='checked' classes='ui mini inline image'
                 | Subscribed
             else
-                +icon48 name='unchecked-checkbox' classes='ui avatar image'
+                +icon48 name='unchecked-checkbox' classes='ui mini inline image'
                 |Not Subscribed
                 
                 

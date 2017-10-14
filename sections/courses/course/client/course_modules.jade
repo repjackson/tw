@@ -63,7 +63,7 @@ template(name='course_modules')
                                     strong #{module_progress_doc.lightwork_answer_count}/#{module_progress_doc.lightwork_question_count}
                                     |Lightwork
                     else
-                        a.ui.green.button(href="/course/sol/module/#{number}")
+                        a.ui.green.button(href="/view/#{_id}")
                             |Start
                             i.right.arrow.icon
 

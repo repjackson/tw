@@ -92,7 +92,7 @@ Meteor.methods
                 type: 'course_progress'
                 author_id: Meteor.userId()
         if not sol_progress_doc
-            console.log 'didnt find progress doc, creating'
+            # console.log 'didnt find progress doc, creating'
             Docs.insert
                 type: 'course_progress'
                 author_id: Meteor.userId()
@@ -119,21 +119,21 @@ Meteor.methods
                     parent_id: module_doc._id
                     author_id: Meteor.userId()
             if module_progress_doc
-                console.log typeof module_progress_doc.module_progress_percent
+                # console.log typeof module_progress_doc.module_progress_percent
                 if typeof(module_progress_doc.module_progress_percent) is 'number'
-                    console.log 'module', course_number, 'is a number'
+                    # console.log 'module', course_number, 'is a number'
                     
                     if module_progress_doc.module_progress_percent > 0
                         if parseInt(Math.round(module_progress_doc.module_progress_percent)) is 100 
                             module_complete_count += 1
-                            console.log 'module', course_number, 'complete'
+                            # console.log 'module', course_number, 'complete'
                         sol_progress_percent += 100/sol_module_count*module_progress_doc.module_progress_percent/100
                 else 
-                    console.log 'module', course_number, 'not complete'
+                    # console.log 'module', course_number, 'not complete'
                     current_module = course_number
         # console.log 'sol progress', sol_progress_percent
         # console.log 'module_complete_count', module_complete_count
-        console.log 'current_module', current_module
+        # console.log 'current_module', current_module
         
         if sol_module_count is module_complete_count
             sol_modules_complete = true

@@ -1,15 +1,15 @@
 template(name='browse_journal')
-    .ui.stackable.grid
-        .centered.row
+    .ui.stackable.padded.grid
+        .center.aligned.row
             .four.wide.column
                 #create_checkin.ui.basic.circular.center.aligned.small.button 
                     +icon48 name='create-document' classes='ui avatar image'
                     |Add Entry
-            .nine.wide.column
+            .eight.wide.column
                 h1.ui.center.aligned.header
                     +icon96 name='reading'
                     | Browse Public Journal Entries
-            .three.wide.column
+            .four.wide.column
                 a.ui.basic.circular.small.button(href='/journal/mine') 
                     +icon48 name='journal' classes='ui avatar image'
                     |My Entries
