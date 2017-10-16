@@ -46,7 +46,10 @@ Template.registerHelper 'admin_mode', () ->  Session.get 'admin_mode'
 
 Template.registerHelper 'publish_when', () -> moment(@publish_date).fromNow()
 
-        
+Template.registerHelper 'theme_tag_class': -> if @valueOf() in selected_theme_tags.array() then 'teal' else 'basic'
+Template.registerHelper 'location_tag_class': -> if @valueOf() in selected_location_tags.array() then 'teal' else 'basic'
+Template.registerHelper 'intention_tag_class': -> if @valueOf() in selected_intention_tags.array() then 'teal' else 'basic'
+
 Template.registerHelper 'segment_class', () -> 
     if Roles.userIsInRole 'admin'
         if @published then 'raised blue' else ''

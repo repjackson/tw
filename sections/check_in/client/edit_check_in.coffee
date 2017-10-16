@@ -47,8 +47,8 @@ Template.edit_checkin.onCreated ->
             type='checkin'
             author_id=null
             parent_id=null
-            tag_limit=20
-            doc_limit=50
+            tag_limit=50
+            doc_limit=5
             view_published=null
             view_read=null
             view_bookmarked=null

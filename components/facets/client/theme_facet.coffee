@@ -6,6 +6,7 @@ Template.theme_facet.helpers
         # if selected_theme_tags.array().length
         if 0 < doc_count < 3
             Tags.find { 
+                # type:Template.currentData().type
                 count: $lt: doc_count
                 }, limit:20
         else

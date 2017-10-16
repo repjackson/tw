@@ -1,19 +1,19 @@
 template(name='karma')
     .ui.stackable.padded.grid
         .centered.row
-            .four.wide.column
-                h2.ui.header
-                    +icon48 name='diamond' classes='ui inline image'
-                    |#{currentUser.points}
-            .eight.wide.column
+            .four.wide.center.aligned.column
+                a.ui.basic.circular.small.button(href='/transactions') 
+                    +icon48 name='handshake' classes='ui mini inline image'
+                    | Transactions
+            .eight.wide.center.aligned.column
                 h1.ui.center.aligned.header 
                     +icon96 name='diamond'
-                    |Karma
-            .four.wide.column
-                a.ui.basic.circular.small.button(href='/services') 
-                    +icon48 name='service-bell' classes='ui mini spaced image'
-                    | Services
-                    +icon48 name='rotate-left' classes='ui mini spaced image'
+                    |#{currentUser.points} Karma
+            .four.wide.center.aligned.column
+                a.ui.basic.circular.small.button(href='/shop') 
+                    +icon48 name='shop' classes='ui mini spaced image'
+                    | Shop
+                    // +icon48 name='rotate-left' classes='ui mini spaced image'
                 // a.ui.basic.circular.small.button(href='/transactions') 
                 //     +icon48 name='handshake' classes='ui mini spaced image'
                 //     | Transactions

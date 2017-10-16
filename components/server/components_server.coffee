@@ -33,3 +33,12 @@ Meteor.publish 'document_tags', (doc_id)->
     Docs.find
         type: 'tag_rating'
         parent_id: doc_id        
+        
+        
+Meteor.publish 'response_count', (doc_id)->
+    Counts.publish this, 'response_count', 
+        Docs.find(
+            parent_id: doc_id
+        )
+    return undefined    # otherwise coffeescript returns a Counts.publish
+        

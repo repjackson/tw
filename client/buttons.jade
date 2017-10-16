@@ -126,22 +126,28 @@ template(name='edit_link')
                 |Save
 
 template(name='add_to_cart')
-    unless added
-        #add_to_cart.ui.fluid.teal.button
-            i.large.icons
-                i.add.to.cart.icon
-                i.corner.green.plus.icon
-            |Add to Cart
-    else
-        .ui.fluid.labeled.basic.button
-            #remove_from_cart.ui.basic.teal.button
+    if can_add
+        unless added
+            #add_to_cart.ui.fluid.teal.button
                 i.large.icons
                     i.add.to.cart.icon
-                    i.corner.red.minus.icon
-                |Remove from Cart
-            a.ui.basic.right.pointing.label(href='/cart')
-                |View Cart
-        
+                    i.corner.green.plus.icon
+                |Add to Cart
+        else
+            .ui.fluid.labeled.basic.button
+                #remove_from_cart.ui.basic.teal.button
+                    i.large.icons
+                        i.add.to.cart.icon
+                        i.corner.red.minus.icon
+                    |Remove from Cart
+                a.ui.basic.right.pointing.label(href='/cart')
+                    |View Cart
+    else        
+            .ui.fluid.disabled.button
+                i.large.icons
+                    i.add.to.cart.icon
+                    i.corner.green.plus.icon
+                | Not Enough Karma
 
 template(name='delete_button')
     unless confirming
@@ -286,3 +292,7 @@ template(name='toggle_zen_mode_button')
                 img(src="https://png.icons8.com/lotus/ios7/32" title="Turn on Zen Mode" width="32" height="32")
             // |Zen
         
+        
+template(name='view_tags_button')
+    .ui.circular.basic.button(data-tooltip=tags)
+        +icon48 name='hashtag' classes='ui inline image'

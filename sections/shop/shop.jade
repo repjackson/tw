@@ -1,0 +1,77 @@
+template(name='shop')
+    .ui.stackable.padded.grid
+        .centered.row
+            .four.wide.center.aligned.column
+                a.ui.basic.circular.small.button(href='/transactions') 
+                    +icon48 name='handshake' classes='ui mini inline image'
+                    | Transactions
+            .eight.wide.center.aligned.column
+                h1.ui.center.aligned.header
+                    +icon96 name='shop'
+                    | Shop
+            .four.wide.center.aligned.column
+                a.ui.basic.circular.small.button(href='/karma') 
+                    +icon48 name='diamond' classes='ui mini inline image'
+                    strong #{currentUser.points}
+                    | Karma
+                    // +icon48 name='rotate-left' classes='ui mini inline image'
+        .centered.row
+            .four.wide.column
+                if isInRole 'admin'
+                    #add_product.ui.basic.fluid.circular.button
+                        +icon48 name='plus' classes='ui mini spaced image'
+                        |Add Product
+                +theme_facet type='product'
+            .eight.wide.column
+                .ui.relaxed.divided.items
+                    each products
+                        +product
+            .three.wide.column
+                .ui.dividing.header
+                    +icon48 name='filter' classes='ui mini inline image'
+                    |Filters
+                div
+                    +bookmark_filter
+                // div
+                //     +read_filter
+                // div
+                //     +resonates_filter
+                div
+                    +doc_limit
+                if isInRole 'admin'
+                    .ui.dividing.header Admin
+                    +published_filter
+
+
+template(name='product')
+    .item
+        a.image(href="/view/#{_id}")
+            if image_id
+                img.ui.rounded.image(src="{{c.url image_id  width=175 height=175 crop='fill' gravity='face' }}")
+            if image_url
+                img(src=image_url)
+            .ui.center.aligned.header
+                // if dollar_price
+                //     | $#{dollar_price}
+                | #{point_price} 
+                if one_point
+                    |pt
+                else
+                    |pts
+
+        .content
+            a.header(href="/view/#{_id}") #{title}
+            .meta
+                img.ui.avatar.image(src="{{c.url author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                |by #{author.name}
+            .meta
+                each tags
+                    .ui.small.label(class=tag_class) #{this}
+            .description
+                | !{content}
+                span.right.floated
+                    +view_full_button
+            // .extra
+            //     i.tags.icon
+            //     each tags
+            //         .ui.compact.tiny.button.product_tag(class=tag_class) #{this}

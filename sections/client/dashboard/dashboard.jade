@@ -46,23 +46,17 @@ template(name='dashboard')
                     i.icon
                         +icon96 name='handshake'
                     |Transactions
-            if isInRole 'dev'
-                .three.wide.column    
-                    a.ui.icon.center.aligned.header(href='/shop')
-                        i.icon
-                            +icon96 name='shop'
-                        |Shop
+            .three.wide.column    
+                a.ui.icon.center.aligned.header(href='/shop')
+                    i.icon
+                        +icon96 name='shop'
+                    |Shop
             if isInRole 'dev'
                 .three.wide.column    
                     a.ui.icon.center.aligned.header(href='/stats')
                         i.icon
                             +icon96 name='combo-chart'
                         |Stats
-            .three.wide.column    
-                a.ui.icon.center.aligned.header(href='/services')
-                    i.icon
-                        +icon96 name='service-bell'
-                    | Services
             .three.wide.column    
                 a.ui.icon.center.aligned.header(href='/notifications')
                     i.icon

@@ -104,9 +104,10 @@ Template.location_tags.events
         $('#location_tag_select').val('')
    
    
-   'keyup #location_tag_select': (e,t)->
+    'keyup #location_tag_select': (e,t)->
         e.preventDefault()
         val = $('#location_tag_select').val().toLowerCase().trim()
+        # console.log e
         switch e.which
             when 13 #enter
                 unless val.length is 0
@@ -210,6 +211,15 @@ Template.number.events
         # console.log number
         Docs.update @_id,
             $set: number: number
+            
+Template.edit_quantity.events
+    'blur #quantity': (e) ->
+        # console.log @
+        val = $(e.currentTarget).closest('#quantity').val()
+        quantity = parseInt val
+        # console.log quantity
+        Docs.update @_id,
+            $set: quantity: quantity
             
             
 Template.title.events

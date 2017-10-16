@@ -455,6 +455,7 @@ Template.add_to_cart.helpers
             parent_id: @_id
             author_id: Meteor.userId()
             
+    can_add: -> @point_price < Meteor.user().points        
             
             
             

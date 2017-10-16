@@ -3,3 +3,27 @@ Template.edit_journal.events
         if confirm 'Delete this journal entry?'
             Docs.remove @_id
             FlowRouter.go '/journal'
+
+Template.edit_journal.onCreated -> 
+    self = @
+    @autorun => 
+        Meteor.subscribe('facet', 
+            selected_theme_tags.array()
+            selected_author_ids.array()
+            selected_location_tags.array()
+            selected_intention_tags.array()
+            selected_timestamp_tags.array()
+            type='journal'
+            author_id=null
+            parent_id=null
+            tag_limit=50
+            doc_limit=5
+            view_published=null
+            view_read=null
+            view_bookmarked=null
+            view_resonates=null
+            view_complete=null
+            view_images=null
+            view_lightbank_type=null
+
+            )

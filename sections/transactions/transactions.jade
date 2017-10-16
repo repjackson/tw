@@ -1,19 +1,19 @@
 template(name='transactions')
-    .ui.stackable.grid
+    .ui.stackable.padded.grid
         .centered.row
-            .four.wide.column
-                h2.ui.header
-                    +icon48 name='diamond' classes='ui inline image'
-                    |#{currentUser.points}
-            .eight.wide.column
+            .four.wide.center.aligned.column
+                a.ui.basic.circular.small.button(href='/shop') 
+                    +icon48 name='shop' classes='ui mini inline image'
+                    | Shop
+            .eight.wide.center.aligned.column
                 h1.ui.center.aligned.header
                     +icon96 name='handshake'
                     | #{currentUser.name} Transactions
-            .four.wide.column
+            .four.wide.center.aligned.column
                 a.ui.basic.circular.small.button(href='/karma') 
-                    +icon48 name='diamon' classes='ui mini inline image'
+                    +icon48 name='diamond' classes='ui mini inline image'
+                    strong #{currentUser.points}
                     | Karma
-                    +icon48 name='rotate-left' classes='ui mini inline image'
         .centered.row
             .sixteen.wide.column
                 table.ui.selectable.unstackable.table

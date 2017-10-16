@@ -1,14 +1,14 @@
 if Meteor.isClient
-    FlowRouter.route '/services', action: ->
+    FlowRouter.route '/shop', action: ->
         BlazeLayout.render 'layout',
             # sub_nav: 'member_nav'
-            main: 'services'
+            main: 'shop'
     
-    Template.service_item.onCreated ->
+    Template.product.onCreated ->
         Meteor.subscribe 'author', @data._id
         
         
-    Template.services.onCreated ->
+    Template.shop.onCreated ->
         @autorun ->
             Meteor.subscribe('facet', 
                 selected_theme_tags.array()
@@ -16,7 +16,7 @@ if Meteor.isClient
                 selected_location_tags.array()
                 selected_intention_tags.array()
                 selected_timestamp_tags.array()
-                type='service'
+                type='product'
                 author_id=null
                 parent_id=null
                 tag_limit=20
@@ -32,9 +32,9 @@ if Meteor.isClient
 
         Session.set 'layout_view', 'list'
     
-    Template.services.helpers
-        services: -> 
-            Docs.find {type: 'service'},
+    Template.shop.helpers
+        products: -> 
+            Docs.find {type: 'product'},
                 sort:
                     publish_date: -1
                 limit: 5
@@ -45,36 +45,37 @@ if Meteor.isClient
         list_layout_button_class: -> if Session.get('layout_view') is 'list' then 'teal' else 'basic'
         grid_layout_button_class: -> if Session.get('layout_view') is 'grid' then 'teal' else 'basic'
                 
-    Template.services.events
-        'click #add_service': ->
+    Template.shop.events
+        'click #add_product': ->
             id = Docs.insert
-                type: 'service'
+                type: 'product'
             FlowRouter.go "/edit/#{id}"
     
         'click #make_list_layout': -> Session.set 'layout_view', 'list'
         'click #make_grid_layout': -> Session.set 'layout_view', 'grid'
         
-    Template.service_item.helpers
+    Template.product.helpers
         tag_class: -> if @valueOf() in selected_theme_tags.array() then 'teal' else 'basic'
+        one_point: -> @point_price is 1
     
-    Template.service_item.events
-        'click .service_tag': ->
+    Template.product.events
+        'click .produdct_tag': ->
             if @valueOf() in selected_theme_tags.array() then selected_theme_tags.remove @valueOf() else selected_theme_tags.push @valueOf()
     
-    Template.edit_service.events
+    Template.edit_product.events
         'click #delete_doc': ->
-            if confirm 'Delete this Service?'
+            if confirm 'Delete this Product?'
                 Docs.remove @_id
-                FlowRouter.go '/services'
+                FlowRouter.go '/shop'
     
     
     
 if Meteor.isServer
-    Meteor.publish 'selected_services', ->
+    Meteor.publish 'selected_products', ->
         
         self = @
         match = {}
-        match.type = 'service'
+        match.type = 'product'
         # if not @userId or not Roles.userIsInRole(@userId, ['admin'])
         #     match.published = true
         

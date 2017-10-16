@@ -34,3 +34,28 @@ Template.edit_lightbank.helpers
         lightbank_doc = Docs.findOne FlowRouter.getParam('doc_id')
         lightbank_doc.lightbank_type is 'journal_prompt'
             
+            
+Template.edit_lightbank.onCreated -> 
+    self = @
+    @autorun => 
+        Meteor.subscribe('facet', 
+            selected_theme_tags.array()
+            selected_author_ids.array()
+            selected_location_tags.array()
+            selected_intention_tags.array()
+            selected_timestamp_tags.array()
+            type='lightbank'
+            author_id=null
+            parent_id=null
+            tag_limit=10
+            doc_limit=5
+            view_published=null
+            view_read=null
+            view_bookmarked=null
+            view_resonates=null
+            view_complete=null
+            view_images=null
+            view_lightbank_type=null
+
+            )
+            

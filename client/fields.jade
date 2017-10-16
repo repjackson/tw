@@ -41,6 +41,11 @@ template(name='number')
         .ui.basic.label Number
         input#number(type='number' min='0' value=number)
 
+template(name='edit_quantity')
+    .ui.labeled.input
+        .ui.basic.label Quantity (0 for infinite)
+        input#quantity(type='number' min='0' value=quantity)
+
 
 template(name='body_field')
     .ui.form
@@ -87,6 +92,8 @@ template(name='location_tags')
                     //     +icon24 name='geo-fence'
                     |#{this}
                 .hidden.content
+                    |&nbsp;
+                    |&nbsp;
                     i.remove.icon
                     // |#{this}
 

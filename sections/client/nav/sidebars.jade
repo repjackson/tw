@@ -14,6 +14,10 @@ template(name='left_sidebar')
             a.ui.toggle_sidebar.item(href='/journal') 
                 +icon48 name='journal' classes='ui centered image'
                 |Journal
+            a.ui.toggle_sidebar.item(href='/checkin') 
+                +icon48 name='sprout' classes='ui centered image'
+                |Check In
+            
         else
             a.toggle_sidebar.item(href='/about' class="{{isActivePath '/about'}}") 
                 +icon48 name='info' classes='ui centered image'

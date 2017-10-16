@@ -74,13 +74,14 @@ template(name='journal_prompt_view_small')
                 +icon48 name='ask-question'
             .light_bank_content(class=light_bank_content_class)
                 |!{content}
-            h4.ui.header
-                |- #{author_name}
-        // .content
-        //     .meta
-        //         +icon48 name='tags'
-        //         each tags
-        //             .ui.tiny.circular.button.tag(class=tag_class) #{this}
+            if author_name
+                h4.ui.header
+                    |- #{author_name}
+        .content
+            .meta
+                +icon48 name='hashtag' classes='ui mini inline image'
+                each tags
+                    .ui.tiny.basic.label #{this}
         .content
             +reflect_button
             +bookmark_button
@@ -88,5 +89,5 @@ template(name='journal_prompt_view_small')
             if can_edit
                 +edit_link_button
             +view_full_button
-                
+            +response_count
                                     
