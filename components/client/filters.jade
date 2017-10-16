@@ -5,6 +5,13 @@ template(name='complete_filter')
         #view_incomplete.ui.button(class=view_incomplete_class data-tooltip='View Only Incomplete')
             +icon48 name='unchecked_checkmark' classes='ui mini image'
             
+template(name='approved_filter')
+    .ui.buttons
+        #view_approved.ui.button(class=view_approved_class data-tooltip='View Only Approved') 
+            +icon48 name='approval' classes='ui mini inline image'
+        #view_unapproved.ui.button(class=view_unapproved_class data-tooltip='View Only Unapproved')
+            +ultraviolet_icon40 name='approval' classes='ui mini inline image'
+            
 template(name='published_filter')
     .ui.buttons
         #view_published.ui.button(class=view_published_class data-tooltip='View Only Published') 

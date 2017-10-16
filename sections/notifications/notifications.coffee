@@ -17,26 +17,35 @@ FlowRouter.route '/notifications', action: ->
 
 if Meteor.isClient
     Template.notifications.onCreated ->
-        @autorun -> Meteor.subscribe 'all_notifications'
-        @notification_view_mode = new ReactiveVar('all')
+        @autorun => 
+            Meteor.subscribe('facet', 
+                selected_theme_tags.array()
+                selected_author_ids.array()
+                selected_location_tags.array()
+                selected_intention_tags.array()
+                selected_timestamp_tags.array()
+                type = 'notification'
+                author_id = null
+                parent_id = null
+                tag_limit = 20
+                doc_limit = 10
+                view_published = null
+                view_read = Session.get('view_read')
+                view_bookmarked = null
+                view_resonates = null
+                view_complete = null
+                view_images = null
+                view_lightbank_type = null
+    
+                )
 
     Template.notifications.helpers
         notifications: -> 
-            if Template.instance().notification_view_mode.get() is 'unread'
-                Docs.find {
-                    type: 'notification'
-                    read_by: $nin: [Meteor.userId()]
-                    }, 
-                    sort: timestamp: -1
-            else        
-                Docs.find {
-                    type: 'notification'
-                    }, 
-                    sort: timestamp: -1
+            Docs.find {
+                type: 'notification'
+                }, 
+                sort: timestamp: -1
         
-        viewing_unread: -> Template.instance().notification_view_mode.get() is 'unread'  
-        viewing_all: -> Template.instance().notification_view_mode.get() is 'all'  
-
         
         # notifications_allowed: ->
         #     # console.log Notification.permission
@@ -57,39 +66,13 @@ if Meteor.isClient
         #         Docs.update {},
         #             $addToSet: read_by: Meteor.userId()
                     
-        'click #view_unread_notifications': (e,t)-> t.notification_view_mode.set('unread')    
-        'click #view_all_notifications': (e,t)-> t.notification_view_mode.set('all')    
-        
     Template.notification.helpers
         notification_segment_class: -> if Meteor.userId() in @read_by then 'basic' else ''
-        read: -> Meteor.userId() in @read_by
-        liked: -> Meteor.userId() in @liked_by
-        
-        read_count: -> @read_by.length    
-        liked_count: -> @liked_by.length    
         
         subject_name: -> if @subject_id is Meteor.userId() then 'You' else @subject().name()
         object_name: -> if @object_id is Meteor.userId() then 'you' else @object().name()
 
     Template.notification.events
-        'click .mark_read': (e,t)-> 
-            $(e.currentTarget).closest('.notification_segment').transition('pulse')
-            Docs.update @_id, $addToSet: read_by: Meteor.userId()
-            
-        'click .mark_unread': (e,t)-> 
-            $(e.currentTarget).closest('.notification_segment').transition('pulse')
-            Docs.update @_id, $pull: read_by: Meteor.userId()
-
-        'click .like': -> Docs.update @_id, $addToSet: liked_by: Meteor.userId()
-        'click .unlike': -> Docs.update @_id, $pull: liked_by: Meteor.userId()
-
-        
-        'click .delete_notfication': (e,t)-> 
-            if confirm 'Delete Notification?'
-                $(e.currentTarget).closest('.notification_segment').transition('fade left', '1000ms')
-                Meteor.setTimeout ->
-                    Docs.remove @_id
-                , 3000
     
 
 if Meteor.isServer

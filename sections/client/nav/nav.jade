@@ -107,21 +107,6 @@ template(name='nav')
                         | Browse
         .right.menu
             if currentUser
-                if isInRole 'dev'
-                    a.ui.icon.simple.dropdown.item(data-position="left center" data-content="Notifications")
-                        if unread_notifications_count
-                            +icon48 name='google-alerts'
-                        else
-                            +icon48 name='notification'
-                        .ui.large.menu(style="right: 0;left: auto;")
-                            a.item(href='/notifications')
-                                i.icon
-                                    .ui.image
-                                        +icon24 name='todo-list'
-                                |View All
-                            .ui.divider
-                            each unread_notifications
-                                .item #{subject.name} #{predicate} #{object.name}
                 a#report_bug.icon.item(href="#"  data-position="bottom center" data-content="Report a Bug/Feature Request")
                     .ui.image
                         +icon48 name='bug'

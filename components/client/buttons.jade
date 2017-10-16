@@ -230,6 +230,14 @@ template(name='mark_doc_complete_button')
             +icon48 name='unchecked-checkbox' classes='ui mini inline image'
             // | Complete
         
+template(name='mark_doc_approved_button')
+    if approved
+        .unapprove.ui.circular.icon.basic.button(data-tooltip='Unapprove')
+            +ultraviolet_icon40 name='approval' classes='ui mini inline image'
+    else
+        .approve.ui.circular.icon.basic.button(data-tooltip='Approve')
+            +icon48 name='approval' classes='ui mini inline image'
+        
 template(name='bookmark_button')
     .bookmark_button.ui.circular.icon.button(class=bookmark_button_class data-tooltip='Bookmark') 
         +icon48 name='bookmark' classes='ui mini inline image'

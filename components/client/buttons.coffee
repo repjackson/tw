@@ -371,6 +371,16 @@ Template.mark_doc_complete_button.events
         if @complete is true then Docs.update @_id, $set: complete: false else  Docs.update @_id, $set:complete: true
 
 
+Template.mark_doc_approved_button.helpers
+    # approved_button_class: -> if @approved then 'blue' else 'basic'
+Template.mark_doc_approved_button.events
+    'click .approve': (e,t)-> 
+        if confirm 'Approve Bug?'
+            Meteor.call 'approve_bug', @_id, ->
+            
+    'click .unapprove': ->
+        Docs.update @_id, $set: approved: false 
+        
 
 Template.bookmark_button.helpers
     bookmark_button_class: -> 

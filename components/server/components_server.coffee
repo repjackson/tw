@@ -8,7 +8,17 @@ Meteor.methods
         Docs.update doc_id,
             $pull: read_by: Meteor.userId()
 
-
+    approve_bug: (bug_id)->
+        bug = Docs.findOne bug_id
+        # console.log bug
+        Docs.update bug_id,
+            $set:approved: true
+        Docs.insert
+            type: 'notification'
+            recipient_id: bug.author_id
+            notification_type: 'bug_approval'
+            content: "<p>Your bug report <br>#{bug.body}<br> has been approved.  Your account has been credited 5 points.<br> You can view the transaction <a href={transaction_link}>here</a>."
+            
 
 Meteor.publish 'read_by', (doc_id)->
     doc = Docs.findOne doc_id

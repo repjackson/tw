@@ -1,5 +1,9 @@
 if Meteor.isClient
-    Template.bug_reports.onCreated -> 
+    FlowRouter.route '/bugs', action: (params) ->
+        BlazeLayout.render 'layout',
+            main: 'bugs'
+
+    Template.bugs.onCreated -> 
         self = @
         @autorun => 
             Meteor.subscribe('facet', 
@@ -21,11 +25,11 @@ if Meteor.isClient
                 )
 
         
-    Template.bug_report.onCreated ->
+    Template.bug.onCreated ->
         Meteor.subscribe 'author', @data._id
         
-    Template.bug_reports.helpers
-        bug_reports: ->
+    Template.bugs.helpers
+        bugs: ->
             Docs.find {
                 type: 'bug_report'
             }, sort: timestamp: -1

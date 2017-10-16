@@ -50,6 +50,8 @@ Template.published_filter.helpers
     
     
     
+    
+    
 Template.complete_filter.events
     'click #view_complete': (e,t)-> 
         if Session.equals('view_complete', true) then Session.set('view_complete', null) else Session.set('view_complete', true)
@@ -59,6 +61,21 @@ Template.complete_filter.events
 Template.complete_filter.helpers
     view_complete_class: -> if Session.equals('view_complete', true) then 'blue' else 'basic'
     view_incomplete_class: -> if Session.equals('view_complete', false) then 'blue' else 'basic'    
+
+
+
+Template.approved_filter.events
+    'click #view_approved': (e,t)-> 
+        if Session.equals('view_approved', true) then Session.set('view_approved', null) else Session.set('view_approved', true)
+    'click #view_unapproved': (e,t)-> 
+        if Session.equals('view_approved', false) then Session.set('view_approved', null) else Session.set('view_approved', false)
+    
+Template.approved_filter.helpers
+    view_approved_class: -> if Session.equals('view_approved', true) then 'blue' else 'basic'
+    view_unapproved_class: -> if Session.equals('view_approved', false) then 'blue' else 'basic'    
+
+
+
 
 
 Template.image_filter.events
