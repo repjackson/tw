@@ -14,7 +14,28 @@ Template.edit_checkin.events
             swal 'Removed', 'success'
             FlowRouter.go '/checkin'
 
-Template.check_in_tag_selection.onCreated -> 
+# Template.check_in_tag_selection.onCreated -> 
+#     self = @
+#     @autorun => 
+#         Meteor.subscribe('facet', 
+#             selected_theme_tags.array()
+#             selected_author_ids.array()
+#             selected_location_tags.array()
+#             selected_intention_tags.array()
+#             selected_timestamp_tags.array()
+#             type='check_in_tag'
+#             author_id=null
+#             parent_id=null
+#             tag_limit=20
+#             doc_limit=null
+#             view_published=null
+#             view_read=null
+#             view_bookmarked=null
+#             view_resonates=null
+#             view_complete=null
+#             )
+
+Template.edit_checkin.onCreated -> 
     self = @
     @autorun => 
         Meteor.subscribe('facet', 
@@ -23,11 +44,11 @@ Template.check_in_tag_selection.onCreated ->
             selected_location_tags.array()
             selected_intention_tags.array()
             selected_timestamp_tags.array()
-            type='check_in_tag'
+            type='checkin'
             author_id=null
             parent_id=null
             tag_limit=20
-            doc_limit=null
+            doc_limit=50
             view_published=null
             view_read=null
             view_bookmarked=null

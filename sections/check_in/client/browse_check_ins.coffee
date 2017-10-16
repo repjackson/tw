@@ -6,6 +6,10 @@ FlowRouter.route '/checkins/browse', action: (params) ->
 
 Template.browse_check_ins.onCreated -> 
     self = @
+    selected_theme_tags.clear()
+    selected_location_tags.clear()
+    selected_intention_tags.clear()
+
     @autorun => 
         Meteor.subscribe('facet', 
             selected_theme_tags.array()
@@ -24,6 +28,7 @@ Template.browse_check_ins.onCreated ->
             view_resonates=null
             view_complete=null
             )
+            
         
 Template.browse_check_ins.events
     'click #create_checkin': ->

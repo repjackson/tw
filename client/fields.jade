@@ -52,29 +52,65 @@ template(name='tags')
     .ui.header
         +icon48 name='hashtag' classes='ui mini spaced image'
         |Theme Tags &nbsp;
+        // .ui.mini.input
+        //     // i.plus.icon
+        //     input#add_tag(type='text' placeholder='Add...' maxlength='50' )
         .ui.mini.input
-            // i.plus.icon
-            input#add_tag(type='text' placeholder='Add...' maxlength='50' )
+            +inputAutocomplete settings=theme_select_settings id="theme_tag_select" class="" autocomplete="off" placeholder='Add Theme Tags...'
         each tags
-            a.ui.basic.circular.button.doc_tag #{this}
+            // a.ui.basic.circular.button.doc_tag #{this}
+            a.ui.basic.animated.fade.circular.button.doc_tag
+                .visible.content
+                    // i.icon
+                    //     +icon24 name='geo-fence'
+                    |#{this}
+                .hidden.content
+                    |&nbsp;
+                    |&nbsp;
+                    i.remove.icon
+                    // |#{this}
+            
 
 template(name='location_tags')
     .ui.header 
         +icon48 name='sofa' classes='ui mini spaced image'
         |Location Tags &nbsp;
         .ui.mini.input
-            input#add_location_tag(type='text' placeholder="eg. 'home', 'couch'" maxlength='50' )
+            +inputAutocomplete settings=location_select_settings id="location_tag_select" class="" autocomplete="off" placeholder='Add Location Tags...'
+        // .ui.mini.input
+        //     input#add_location_tag(type='text' placeholder="eg. 'home', 'couch'" maxlength='50' )
         each location_tags
-            a.ui.basic.circular.button.doc_tag #{this}
+            // a.ui.basic.circular.button.doc_tag #{this}
+            a.ui.basic.animated.fade.circular.button.doc_tag
+                .visible.content
+                    // i.icon
+                    //     +icon24 name='geo-fence'
+                    |#{this}
+                .hidden.content
+                    i.remove.icon
+                    // |#{this}
+
 
 template(name='intention_tags')
     .ui.header 
         +icon48 name='spotlight' classes='ui mini spaced image'
         |My intention for this entry is to... &nbsp;
         .ui.mini.input
-            input#add_intention_tag(type='text' maxlength='50' )
+            +inputAutocomplete settings=intention_select_settings id="intention_tag_select" class="" autocomplete="off" placeholder='Add Intention Tags...'
+        // .ui.mini.input
+        //     input#add_intention_tag(type='text' maxlength='50' )
         each intention_tags
-            a.ui.basic.circular.button.doc_tag #{this}
+            // a.ui.basic.circular.button.doc_tag #{this}
+            a.ui.basic.animated.fade.circular.button.doc_tag
+                .visible.content
+                    // i.icon
+                    //     +icon24 name='geo-fence'
+                    |#{this}
+                .center.aligned.hidden.content
+                    |&nbsp;
+                    |&nbsp;
+                    i.remove.icon
+                    // |#{this}
 
 
 template(name='dollar_price')

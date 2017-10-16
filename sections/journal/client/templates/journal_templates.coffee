@@ -19,9 +19,9 @@ if Meteor.isClient
             parent_id=null
             tag_limit=10
             doc_limit=Session.get 'doc_limit'
-            view_published=Session.get 'view_published'
+            view_published= Session.get 'view_published'
             view_read=null
-            view_bookmarked=false
+            view_bookmarked= Session.get 'view_bookmarked'
             view_resonates=null
             view_complete=null
             view_images=null

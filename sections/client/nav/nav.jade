@@ -75,7 +75,7 @@ template(name='nav')
                         i.icon
                             .ui.image
                                 +icon24 name='journal'
-                        |My Entries
+                        | Mine
                     a.ui.item(href="/journal/prompts")
                         i.icon
                             .ui.image
@@ -85,19 +85,26 @@ template(name='nav')
                         i.icon
                             .ui.image
                                 +icon24 name='template'
-                        |Templates
+                        | Templates
                     a.ui.item(href="/journal/browse") 
                         i.icon
                             .ui.image
                                 +icon24 name='reading'
-                        |Browse
+                        | Browse
     
-            a.mobile.hidden.item(href='/checkin' class="{{isActivePath '/checkin'}}" data-position="bottom center" data-content="Check In") 
-                .ui.image
-                    // +icon48 name='in-progress'
-                    +icon48 name='sprout'
-        
-            
+            a.ui.simple.dropdown.mobile.hidden.item(href='/checkin') 
+                +icon48 name='sprout'
+                .ui.big.menu
+                    .header.item
+                        .ui.header Check-Ins
+                    a.ui.item(href='/checkins/mine')
+                        i.icon
+                            +icon24 name='grass' classes='ui image'
+                        | Mine
+                    a.ui.item(href="/checkins/browse")
+                        i.icon
+                            +icon24 name='forest' classes='ui image'
+                        | Browse
         .right.menu
             if currentUser
                 if isInRole 'dev'

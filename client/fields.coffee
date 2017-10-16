@@ -52,55 +52,139 @@ Template.plain.events
 #         $('#add_tag').val(tag)
 
 Template.tags.events
-    'keydown #add_tag': (e,t)->
-        if e.which is 13
-            tag = $('#add_tag').val().toLowerCase().trim()
-            if tag.length > 0
-                Docs.update Template.currentData()._id,
-                    $addToSet: tags: tag
-                $('#add_tag').val('')
-            
+    "autocompleteselect input": (event, template, doc) ->
+        # console.log("selected ", doc)
+        Docs.update Template.currentData()._id,
+            $addToSet: tags: doc.name
+        $('#theme_tag_select').val('')
+   
+    'keyup #theme_tag_select': (e,t)->
+        e.preventDefault()
+        val = $('#theme_tag_select').val().toLowerCase().trim()
+        switch e.which
+            when 13 #enter
+                unless val.length is 0
+                    Docs.update Template.currentData()._id,
+                        $addToSet: tags: val
+                    $('#theme_tag_select').val ''
+            when 8
+                if val.length is 0
+                    result = Docs.findOne(Template.currentData()._id).tags.slice -1
+                    $('#theme_tag_select').val result[0]
+                    Docs.update Template.currentData()._id,
+                        $pop: tags: 1
+
 
     'click .doc_tag': (e,t)->
         tag = @valueOf()
         Docs.update Template.currentData()._id,
             $pull: tags: tag
-        $('#add_tag').val(tag)
+        $('#theme_tag_select').val(tag)
+        
+Template.tags.helpers
+    theme_select_settings: -> {
+        position: 'bottom'
+        limit: 10
+        rules: [
+            {
+                collection: Tags
+                field: 'name'
+                matchAll: true
+                template: Template.tag_pill
+            }
+            ]
+    }
 
 
 Template.location_tags.events
-    'keydown #add_location_tag': (e,t)->
-        if e.which is 13
-            tag = $('#add_location_tag').val().toLowerCase().trim()
-            if tag.length > 0
-                Docs.update Template.currentData()._id,
-                    $addToSet: location_tags: tag
-                $('#add_location_tag').val('')
-            
+    "autocompleteselect input": (event, template, doc) ->
+        # console.log("selected ", doc)
+        Docs.update Template.currentData()._id,
+            $addToSet: location_tags: doc.name
+        $('#location_tag_select').val('')
+   
+   
+   'keyup #location_tag_select': (e,t)->
+        e.preventDefault()
+        val = $('#location_tag_select').val().toLowerCase().trim()
+        switch e.which
+            when 13 #enter
+                unless val.length is 0
+                    Docs.update Template.currentData()._id,
+                        $addToSet: location_tags: val
+                    $('#location_tag_select').val ''
+            when 8
+                if val.length is 0
+                    result = Docs.findOne(Template.currentData()._id).location_tags.slice -1
+                    $('#location_tag_select').val result[0]
+                    Docs.update Template.currentData()._id,
+                        $pop: location_tags: 1
+
 
     'click .doc_tag': (e,t)->
         tag = @valueOf()
         Docs.update Template.currentData()._id,
             $pull: location_tags: tag
-        $('#add_location_tag').val(tag)
+        $('#location_tag_select').val(tag)
 
+
+Template.location_tags.helpers
+    location_select_settings: -> {
+        position: 'bottom'
+        limit: 10
+        rules: [
+            {
+                collection: Location_tags
+                field: 'name'
+                matchAll: true
+                template: Template.tag_pill
+            }
+            ]
+    }
 
 Template.intention_tags.events
-    'keydown #add_intention_tag': (e,t)->
-        if e.which is 13
-            tag = $('#add_intention_tag').val().toLowerCase().trim()
-            if tag.length > 0
-                Docs.update Template.currentData()._id,
-                    $addToSet: intention_tags: tag
-                $('#add_intention_tag').val('')
-            
+    "autocompleteselect input": (event, template, doc) ->
+        # console.log("selected ", doc)
+        Docs.update Template.currentData()._id,
+            $addToSet: intention_tags: doc.name
+        $('#intention_tag_select').val('')
+   
+   
+   'keyup #intention_tag_select': (e,t)->
+        e.preventDefault()
+        val = $('#intention_tag_select').val().toLowerCase().trim()
+        switch e.which
+            when 13 #enter
+                unless val.length is 0
+                    Docs.update Template.currentData()._id,
+                        $addToSet: intention_tags: val
+                    $('#intention_tag_select').val ''
+            when 8
+                if val.length is 0
+                    result = Docs.findOne(Template.currentData()._id).intention_tags.slice -1
+                    $('#intention_tag_select').val result[0]
+                    Docs.update Template.currentData()._id,
+                        $pop: intention_tags: 1
 
     'click .doc_tag': (e,t)->
         tag = @valueOf()
         Docs.update Template.currentData()._id,
             $pull: intention_tags: tag
-        $('#add_intention_tag').val(tag)
+        $('#intention_tag_select').val(tag)
 
+Template.intention_tags.helpers
+    intention_select_settings: -> {
+        position: 'bottom'
+        limit: 10
+        rules: [
+            {
+                collection: Intention_tags
+                field: 'name'
+                matchAll: true
+                template: Template.tag_pill
+            }
+            ]
+    }
 
 
 Template.dollar_price.events

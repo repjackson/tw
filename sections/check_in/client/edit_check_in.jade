@@ -1,7 +1,7 @@
 template(name='edit_checkin')
     h1.ui.center.aligned.header 
         +icon96 name='tree-planting'
-        |Add/Edit Check In
+        |Edit Check In
     .ui.stackable.grid.container.document_container
         .twelve.wide.column
             // .ui.segment
@@ -11,8 +11,6 @@ template(name='edit_checkin')
             .ui.hidden.divider
             if components.content
                 +content
-            if watson 
-                +analyzed_watson_keywords
 
         .four.wide.column
             .ui.middle.aligned.grid

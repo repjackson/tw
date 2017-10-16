@@ -4,6 +4,10 @@ FlowRouter.route '/checkins/mine', action: (params) ->
 
 Template.my_check_ins.onCreated -> 
     self = @
+    selected_theme_tags.clear()
+    selected_location_tags.clear()
+    selected_intention_tags.clear()
+    
     @autorun => 
         Meteor.subscribe('facet', 
             selected_theme_tags.array()
