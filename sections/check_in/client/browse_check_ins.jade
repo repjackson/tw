@@ -1,23 +1,23 @@
 template(name='browse_check_ins')
     // .ui.container
-    .ui.stackable.grid
+    .ui.stackable.padded.grid
         .centered.row
-            .three.wide.column
+            .three.wide.center.aligned.column
                 #create_checkin.ui.basic.circular.small.button 
-                    +icon48 name='plus' classes='ui avatar image'
+                    +icon48 name='plant-tree' classes='ui inline mini image'
                     |Check In
                     // +icon48 name='rotate-right' classes='ui avatar image'
-            .eight.wide.column
+            .eight.wide.center.aligned.column
                 h1.ui.center.aligned.header
-                    +icon96 name='cloud-checked'
+                    +icon96 name='forest'
                     | Browse Check-Ins
-            .four.wide.column
+            .four.wide.center.aligned.column
                 a.ui.basic.circular.small.button(href='/checkins/mine') 
-                    +icon48 name='data-quality' classes='ui avatar image'
+                    +icon48 name='grass' classes='ui inline mini image'
                     |My Check-Ins
-                    +icon48 name='rotate-right' classes='ui avatar image'
+                    // +icon48 name='rotate-right' classes='ui avatar image'
         .row
-            .four.wide.column
+            .five.wide.column
                 +theme_facet type='checkin'
                 +username_facet type='checkin'
                 +location_facet type='checkin'
@@ -28,7 +28,10 @@ template(name='browse_check_ins')
                 .ui.relaxed.divided.items
                     each public_checkins
                         +browse_checkin_view
-            .four.wide.column
+            .three.wide.column
+                .ui.dividing.header
+                    +icon48 name='filter'
+                    |Filter
                 +bookmark_filter
                 +read_filter
                 +doc_limit

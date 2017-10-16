@@ -1,6 +1,6 @@
 template(name='title') 
     .ui.labeled.fluid.input
-        .ui.basic.label #{label}
+        .ui.basic.label Title
         input#title(type='text' value=title)
 
 template(name='subtitle')
@@ -37,10 +37,15 @@ template(name='slug')
         input#slug(type='text' value=slug placeholder='computer readable name, no spaces, caps or punctuation')
 
 template(name='number')
-    .inline.field
-        label Number
+    .ui.labeled.input
+        .ui.basic.label Number
         input#number(type='number' min='0' value=number)
 
+
+template(name='body_field')
+    .ui.form
+        .field
+            textarea#body_field(rows='3') #{body}
 
 template(name='tags')
     // .ui.segment

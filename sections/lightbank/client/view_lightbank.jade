@@ -1,5 +1,5 @@
 template(name='view_lightbank')
-    .ui.stackable.grid.container
+    .ui.stackable.padded.grid
         .centered.row
             .four.wide.column
                 a.ui.basic.button(href='/lightbank')
@@ -32,11 +32,6 @@ template(name='view_lightbank')
                 +journal_responses
                 // +comments    
                 // +tag_rating
-                .ui.header 
-                    +icon48 name='hashtag'
-                    | Themes
-                each tags
-                    .ui.basic.large.label.doc_tag #{this}
                 if watson
                     .ui.segment
                         .ui.header Content Analysis
@@ -67,4 +62,9 @@ template(name='view_lightbank')
                     // +call_watson
                     // +published_status
                     +published
+                .ui.dividing.header 
+                    +icon48 name='hashtag'
+                    | Themes
+                each tags
+                    .ui.basic.large.label.doc_tag #{this}
 

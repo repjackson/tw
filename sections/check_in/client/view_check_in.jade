@@ -1,18 +1,21 @@
 template(name='view_checkin')
-    a.ui.basic.button(href='/checkin')
-        +icon48 name='left_chevron' classes='ui avatar image'
-        strong Check In's
-    .ui.container
-        h1.ui.center.aligned.header View Check In
-        .ui.stackable.grid
+    .ui.stackable.padded.grid
+        .row
+            .four.wide.column
+                a.ui.basic.button(href='/checkin')
+                    +icon48 name='sprout' classes='ui mini inline image'
+                    strong Check In's
+            .eight.wide.column
+                h1.ui.center.aligned.header View Check In
+        .centered.row
             .ten.wide.column
                 .ui.dividing.header 
-                    +icon48 name='hashtag' classes='ui avatar image'
+                    +icon48 name='hashtag' classes='ui mini inline image'
                     |Tags
                 each tags
                     .ui.basic.large.label.doc_tag #{this}
                 .ui.dividing.header 
-                    +icon48 name='geo-fence' classes='ui avatar image'
+                    +icon48 name='sofa' classes='ui mini inline image'
                     |Location Tags
                 each location_tags
                     .ui.basic.large.label.location_tag #{this}
@@ -20,9 +23,9 @@ template(name='view_checkin')
                     |!{content}
                 if published
                     +comments
-                +doc_matches
-                if watson
-                    +analyzed_watson_keywords
+                // +doc_matches
+                // if watson
+                //     +analyzed_watson_keywords
             .five.wide.column
                 .ui.header
                     img.ui.avatar.image(src="{{c.url author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
@@ -32,16 +35,16 @@ template(name='view_checkin')
                 .ui.dividing.header Actions
                 +resonates_list
                 if is_author
-                    +service_buttons
+                    // +service_buttons
                     +edit_link_button
                     +published
                 else
-                div
-                    +thanks_button
-                    +bookmark_button
-                    +resonate_button
+                    div
+                        +thanks_button
+                        +bookmark_button
+                        +resonate_button
                     
-                if watson
-                    +doc_sentiment
-                    +doc_emotion
-                    +watson_keywords
+                // if watson
+                //     +doc_sentiment
+                //     +doc_emotion
+                //     +watson_keywords

@@ -1,10 +1,11 @@
 template(name='edit_journal')
     .ui.padded.stackable.grid.document_container
         .centered.row
-            h1.ui.center.aligned.header
-                +icon48 name='edit-file' classes='ui mini spaced image'
-                |Edit Journal Entry
-            span.right.floated    
+            .ten.wide.column
+                h1.ui.center.aligned.header
+                    +icon48 name='edit-file' classes='ui mini spaced image'
+                    |Edit Journal Entry
+            .five.wide.column
                 +toggle_zen_mode_button
         .row
             if zen_mode
@@ -32,22 +33,25 @@ template(name='edit_journal')
                         if watson 
                             +analyzed_watson_keywords
                 .four.wide.column.edit_journal_sidebar
-                    if tags
-                        a.ui.fluid.green.big.button(href="/view/#{_id}") Save Journal Entry
-                    else
-                        .ui.fluid.green.big.disabled.button Add Tags to Save
-                    .ui.hidden.fitted.divider
-                    #delete_doc.ui.small.fluid.red.compact.button Delete
+                    .ui.grid
+                        .twelve.wide.column
+                            if tags
+                                a.ui.fluid.basic.circular.button(href="/view/#{_id}" data-tooltip='Save')
+                                    +icon48 name='checked' classes='ui mini inline image'
+                            else
+                                .ui.fluid.basic.disabled.circular.button Add Tags to Save
+                        .four.wide.column
+                            #delete_doc.ui.fluid.basic.circular.button(data-tooltip='Delete')
+                                +icon48 name='delete' classes='ui mini inline image'
                     +published
                     // .ui.divider
                     // +created_date
                     .ui.divider
-                    +request_tori_feedback
+                    // +request_tori_feedback
                     +call_watson
                     if watson
                         +doc_sentiment
                         +doc_emotion
                         +watson_keywords
-                    .ui.divider
                     if isInRole 'admin'
                         +edit_author

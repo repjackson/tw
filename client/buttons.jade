@@ -170,7 +170,7 @@ template(name='published')
             +icon48 name='eye' classes='avatar'
             |Public
         if can_edit
-            #unpublish.ui.icon.basic.button(title='Unpublish')
+            #unpublish.ui.icon.basic.button(data-tooltip='Unpublish')
                 +icon48 name='invisible' classes='avatar'
                 // | Make Private
     else
@@ -178,7 +178,7 @@ template(name='published')
             +icon48 name='invisible' classes='avatar'
             | Private
         if can_edit
-            #publish.ui.icon.basic.button(title='Publish')
+            #publish.ui.icon.basic.button(data-tooltip='Publish')
                 +icon48 name='eye' classes='avatar'
                 // | Make Public
 
@@ -259,7 +259,7 @@ template(name='edit_link_button')
 
 
 template(name='add_doc_button')
-    #add_doc.ui.basic.fluid.button
+    #add_doc.ui.basic.circular.fluid.button
         +icon48 name='plus' classes='avatar'
         | #{add_button_text}
 

@@ -1,22 +1,22 @@
 template(name='my_check_ins')
     // .ui.container
-    .ui.stackable.grid
+    .ui.stackable.padded.grid
         .centered.row
-            .three.wide.column
+            .three.wide.center.aligned.column
                 #create_checkin.ui.basic.circular.small.button 
                     +icon48 name='tree-planting' classes='ui mini inline image'
                     |Check In
-            .nine.wide.column
+            .nine.wide.center.aligned.column
                 h1.ui.center.aligned.header
-                    +icon96 name='grass' classes='ui mini inline image'
+                    +icon96 name='grass' classes='ui tiny inline image'
                     | My Check-Ins
-            .four.wide.column
+            .four.wide.center.aligned.column
                 a.ui.basic.circular.small.button(href='/checkins/browse') 
                     +icon48 name='forest' classes='ui mini inline image'
                     |Browse Check-Ins
-                    +icon48 name='rotate-left' classes='ui mini inline image'
+                    // +icon48 name='rotate-left' classes='ui mini inline image'
         .row
-            .four.wide.column
+            .five.wide.column
                 +theme_facet type='checkin'
                 +location_facet type='checkin'
                 +timestamp_facet type='checkin'
@@ -25,7 +25,7 @@ template(name='my_check_ins')
                 .ui.relaxed.divided.items
                     each my_check_ins
                         +my_check_in_view
-            .four.wide.column
+            .three.wide.column
                 .ui.dividing.header
                     +icon48 name='filter'
                     |Filter

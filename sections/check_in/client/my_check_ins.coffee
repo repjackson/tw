@@ -14,7 +14,7 @@ Template.my_check_ins.onCreated ->
             type='checkin'
             author_id=Meteor.userId()
             parent_id=null
-            tag_limit=10
+            tag_limit=20
             doc_limit=Session.get 'doc_limit'
             view_published=null
             view_read=null

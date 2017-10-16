@@ -1,0 +1,38 @@
+template(name='edit_journal_template')
+    .ui.padded.stackable.grid.document_container
+        .centered.row
+            .ten.wide.column
+                h1.ui.center.aligned.header
+                    +icon48 name='template' classes='ui mini spaced image'
+                    |Edit Journal Template
+            .five.wide.column
+        .row
+            .twelve.wide.column
+                +title
+                +tags
+                each journal_template_sections
+                    .ui.segment
+                        +title
+                        +number
+                        +delete_button
+            .four.wide.column.edit_journal_sidebar
+                .ui.middle.aligned.grid
+                    .twelve.wide.column
+                        if tags
+                            a.ui.fluid.basic.circular.button(href="/view/#{_id}" data-tooltip='Save')
+                                +icon48 name='checked' classes='ui mini inline image'
+                        else
+                            .ui.fluid.basic.disabled.circular.button Add Tags to Save
+                    .four.wide.column
+                        #delete_doc.ui.fluid.basic.circular.button(data-tooltip='Delete')
+                            +icon48 name='delete' classes='ui mini inline image'
+                +published
+                div
+                    #add_section.ui.basic.circular.button
+                        +icon48 name='add-row' classes='ui mini inline image'
+                        |Add Section
+                // .ui.divider
+                // +created_date
+                .ui.divider
+                if isInRole 'admin'
+                    +edit_author

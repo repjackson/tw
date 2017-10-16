@@ -1,4 +1,5 @@
 template(name='courses')
+    .ui.hidden.divider
     .ui.text.container
         h1.ui.center.aligned.header 
             +icon96 name='classroom'
@@ -22,6 +23,6 @@ template(name='courses')
                         //     .ui.basic.green.label Enrolled
                     .description
                         +doc_subtitle tags='course,sol'
-                    a.ui.right.floated.teal.button(href="/course/sol") 
+                    a.ui.right.floated.basic.large.button(href="/course/sol") 
                         |View
-                        i.right.chevron.icon
+                        +icon48 name='chevron-right' classes='ui mini inline image'

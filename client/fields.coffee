@@ -144,6 +144,14 @@ Template.slug.events
             $set: slug: slug
             
             
+Template.body_field.events
+    'blur #body_field': (e,t)->
+        # alert 'hi'
+        body_field = $(e.currentTarget).closest('#body_field').val()
+        Docs.update @_id,
+            $set: body: body_field
+            
+            
 Template.link.events
     'blur #link': (e,t)->
         link = $(e.currentTarget).closest('#link').val()

@@ -1,0 +1,48 @@
+template(name='view_journal_template')
+    .ui.stackable.padded.grid.document_container
+        .row
+            .four.wide.column
+                a.ui.basic.circular.small.button(href='/journal/templates')
+                    +icon48 name='double-left' classes='ui mini inline image'
+                    strong Journal Templates
+            .eight.wide.column
+                h1.ui.center.aligned.header View Journal Template
+        .centered.row
+            .ten.wide.column
+                h2.ui.center.aligned.header #{title}
+                each journal_template_sections
+                    .ui.segment 
+                        .ui.header #{number}: #{title}
+                +template_responses
+            .four.wide.column
+                if can_edit
+                    +edit_link_button
+                .ui.header
+                    |by
+                    img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+                    |#{author.name}
+                    with author
+                        +staus_indicator
+                    h3.ui.sub.header #{when}
+                .ui.dividing.header 
+                    +icon48 name='sports-mode'
+                    |Actions
+                +bookmark_button
+                +published
+                div
+                    #create_response.ui.circular.basic.button
+                        +icon48 name='form' classes='ui mini inline image'
+                        |Fill Out
+
+
+template(name='template_responses')
+    .ui.header Journal Template Responses
+    .ui.list
+        each template_responses
+            +template_response
+        
+template(name='template_response')
+    .item
+        .header  
+            a(href="/view/#{_id}")
+                |by #{author.name} #{when}

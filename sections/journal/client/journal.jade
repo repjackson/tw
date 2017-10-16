@@ -17,12 +17,11 @@ template(name='journal')
                         +icon48 name='ask-question'
                     | Prompts
                 .ui.hidden.divider 
-                if isInRole 'dev'
-                    a.ui.large.basic.fluid.big.disabled.button(href="/journal/templates")
-                        .ui.image
-                            +icon48 name='template'
-                        |Templates
-                    .ui.hidden.divider    
+                a.ui.large.basic.fluid.big.button(href="/journal/templates")
+                    .ui.image
+                        +icon48 name='template'
+                    |Templates
+                .ui.hidden.divider    
                 a.ui.large.basic.fluid.big.button(href="/journal/browse") 
                     .ui.image
                         +icon48 name='reading'

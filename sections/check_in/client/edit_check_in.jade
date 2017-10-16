@@ -33,15 +33,6 @@ template(name='edit_checkin')
                 +icon48 name='sports-mode' classes='ui mini inline image'
                 |Actions
             +published
-            +call_watson
-            // +request_tori_feedback
-            if watson
-                .ui.dividing.header 
-                    +icon48 name='biotech' classes='ui mini inline image'
-                    |Analysis
-                +doc_sentiment
-                +doc_emotion
-                +watson_keywords
 
 template(name='check_in_tag_selection')
     .ui.center.aligned.header

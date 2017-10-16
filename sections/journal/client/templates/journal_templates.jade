@@ -1,0 +1,48 @@
+template(name='journal_templates')
+    .ui.padded.stackable.grid
+        .row
+            .four.wide.column
+                if isInRole 'dev'
+                    a.ui.basic.button(href="/journal") 
+                        +icon48 name='double_left' classes='ui mini inline image'
+                        |Journal
+            .eight.wide.column
+                h1.ui.center.aligned.header
+                    +icon96 name='template' 
+                    | Journal Templates
+                // .ui.center.aligned.basic.segment
+                //     +doc_content tags='journal,templates,blurb'
+            .four.wide.column
+                if currentUser
+                    +add_doc_button type='journal_template' button_text='Add Journal Template'
+        .row
+            .four.wide.column
+                +theme_facet type='journal_template'
+            .eight.wide.column
+                each journal_templates
+                    +journal_template
+            .three.wide.column
+                .ui.dividing.header
+                    +icon48 name='filter'
+                    |Filter
+                +published_filter
+                +read_filter
+                +bookmark_filter
+
+template(name='journal_template')
+    .ui.segment(class=journal_card_class)
+        .content
+            h3.ui.center.aligned.header #{title}
+            .meta
+                +icon48 name='hashtag' classes='ui mini inline image'
+                each tags
+                    .ui.tiny.circular.compact.button.tag(class=tag_class) #{this}
+            +view_full_button
+        .content
+            |by
+            if author.profile.image_id
+                img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+            |#{author.name}
+            with author
+                +staus_indicator
+            |#{when}

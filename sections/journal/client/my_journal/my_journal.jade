@@ -13,7 +13,7 @@ template(name='my_journal')
                 a.ui.basic.circular.small.button(href='/journal/browse') 
                     +icon48 name='reading' classes='ui avatar image'
                     |Browse Entries
-                    +icon48 name='rotate-left' classes='ui avatar image'
+                    // +icon48 name='rotate-left' classes='ui avatar image'
         .row
             .four.wide.column
                 +theme_facet type='journal'
@@ -45,7 +45,8 @@ template(name='my_entry_view')
                     +icon48 name='invisible'
             .description
                 +parent_doc_segment
-                .large130 !{content}
+                .ui.basic.segment
+                    .large130 !{content}
             // +icon24 name='clock' classes='ui avatar image'
             .ui.hidden.fitted.divider
             strong written #{when}

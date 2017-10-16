@@ -130,6 +130,7 @@ template(name='parent_doc_segment')
             .content
                 with parent
                     |!{content}
+                    +view_full_button
                     // .ui.horizontal.divided.list
                     //     .item
                     //         img.ui.avatar.image(src="{{c.url author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
@@ -141,9 +142,6 @@ template(name='parent_doc_segment')
                     // img.ui.avatar.image(src="https://png.icons8.com/tags/color/48" width="48" height="48")
                     // each tags
                     //     .ui.basic.small.label #{this}
-                    .ui.basic.segment
-                        +view_full_button
-                    .ui.basic.segment
                     
 
 

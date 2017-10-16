@@ -90,7 +90,7 @@ template(name='checkin')
             a.ui.basic.fluid.big.button(href="/checkins/browse") 
                 +icon48 name='forest' classes='ui inline image'
                 |Browse Check-Ins
-            if isInRole 'admin'
+            if isInRole 'dev'
                 .ui.hidden.divider
                 a.ui.basic.fluid.big.button(href="/checkins/tags") 
                     +icon48 name='monarch' classes='ui inline image'

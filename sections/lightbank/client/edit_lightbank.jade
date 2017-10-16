@@ -1,89 +1,91 @@
 template(name='edit_lightbank')
-    h1.ui.center.aligned.header
-        // +icon96 name='nature' classes='ui mini inline image'
-        |Edit Lightbank Entry
-    .ui.stackable.grid.document_container
-        .eleven.wide.column
-            with lightbank_entry
-                if is_quote
-                    h2.ui.center.aligned.header
-                        +icon48 name='get-quote' classes='ui mini inline image'
-                        |Quote
-                    +author_name label='Quote'
-                    .ui.hidden.divider
-                    +content
-                if is_poem
-                    h2.ui.center.aligned.header
-                        +icon48 name='close-up' classes='ui mini inline image'
-                        | Poem
-                    +title label='Poem Title'
-                    .ui.hidden.divider
-                    +content
-                if is_journal_prompt
-                    h2.ui.center.aligned.header
-                        +icon48 name='question-mark' classes='ui mini inline image'
-                        | Journal Prompt
-                    +author_name label='Prompt'
-                    .ui.hidden.divider
-                    +content
-                if is_passage
-                    h2.ui.center.aligned.header
-                        +icon48 name='align-left' classes='ui mini spaced image'
-                        | Passage
-                    +author_name label='Passage'
-                    .ui.hidden.divider
-                    +content
-                if is_custom
-                    if components.youtube
-                        +youtube
-                    if components.image
-                        +edit_image
-                    if components.content
+    .ui.stackable.padded.grid.document_container
+        .centered.row
+            h1.ui.center.aligned.header
+                // +icon96 name='nature' classes='ui mini inline image'
+                |Edit Lightbank Entry
+        .centered.row
+            .eleven.wide.column
+                with lightbank_entry
+                    if is_quote
+                        h2.ui.center.aligned.header
+                            +icon48 name='get-quote' classes='ui mini inline image'
+                            |Quote
+                        +author_name label='Quote'
+                        .ui.hidden.divider
                         +content
-            +tags
-        .five.wide.column
-            .ui.grid
-                .twelve.wide.column
-                    if tags
-                        a.ui.fluid.basic.circular.button(href="/view/#{_id}" data-tooltip='Save')
-                            +icon48 name='checked' classes='ui mini inline image'
+                    if is_poem
+                        h2.ui.center.aligned.header
+                            +icon48 name='close-up' classes='ui mini inline image'
+                            | Poem
+                        +title label='Poem Title'
+                        .ui.hidden.divider
+                        +content
+                    if is_journal_prompt
+                        h2.ui.center.aligned.header
+                            +icon48 name='question-mark' classes='ui mini inline image'
+                            | Journal Prompt
+                        +author_name label='Prompt'
+                        .ui.hidden.divider
+                        +content
+                    if is_passage
+                        h2.ui.center.aligned.header
+                            +icon48 name='align-left' classes='ui mini spaced image'
+                            | Passage
+                        +author_name label='Passage'
+                        .ui.hidden.divider
+                        +content
+                    if is_custom
+                        if components.youtube
+                            +youtube
+                        if components.image
+                            +edit_image
+                        if components.content
+                            +content
+                +tags
+            .five.wide.column
+                .ui.grid
+                    .twelve.wide.column
+                        if tags
+                            a.ui.fluid.basic.circular.button(href="/view/#{_id}" data-tooltip='Save')
+                                +icon48 name='checked' classes='ui mini inline image'
+                        else
+                            .ui.fluid.basic.disabled.circular.button Add Tags to Save
+                    .four.wide.column
+                        #delete_doc.ui.fluid.basic.circular.button(data-tooltip='Delete')
+                            +icon48 name='delete' classes='ui mini inline image'
+                .ui.header 
+                    |created by 
+                    if is_author
+                        |you
                     else
-                        .ui.fluid.basic.disabled.circular.button Add Tags to Save
-                .four.wide.column
-                    #delete_doc.ui.fluid.basic.circular.button(data-tooltip='Delete')
-                        +icon48 name='delete' classes='ui mini inline image'
-            .ui.header 
-                |created by 
-                if is_author
-                    |you
-                else
-                    |#{author.name}
-                |#{when}
-            +change_lightbank_type lightbank_entry
-            if is_custom
+                        |#{author.name}
+                    |#{when}
+                +change_lightbank_type lightbank_entry
+                if is_custom
+                    .ui.dividing.header 
+                        +icon48 name='slider' classes='ui mini inline image'
+                        |Components
+                    +toggle_component name='youtube' label='Video' icon_name='movie'
+                    +toggle_component name='image' label='Image' icon_name='image'
+                    +toggle_component name='content' label='Text' icon_name='outline'
+                // .ui.segment
+                //     .ui.form
+                //         .grouped.fields
+                //             .label Buttons
+                            // +toggle_resonates_button
+                            // +toggle_bookmarkable_button
+                            // +toggle_complete_button
                 .ui.dividing.header 
-                    +icon48 name='slider' classes='ui mini inline image'
-                    |Components
-                +toggle_component name='youtube' label='Video' icon_name='movie'
-                +toggle_component name='image' label='Image' icon_name='image'
-                +toggle_component name='content' label='Text' icon_name='outline'
-            // .ui.segment
-            //     .ui.form
-            //         .grouped.fields
-            //             .label Buttons
-                        // +toggle_resonates_button
-                        // +toggle_bookmarkable_button
-                        // +toggle_complete_button
-            .ui.dividing.header 
-                +icon48 name='sports-mode' classes='ui mini inline image'
-                |Actions
-            if is_author
-                +published
-                .ui.hidden.divider
-            +call_watson
-            // else
-            //     unless published
-            //         +request_tori_feedback label='Submit for Approval'
-
-            if isInRole 'admin'
-                +edit_author
+                    +icon48 name='sports-mode' classes='ui mini inline image'
+                    |Actions
+                if is_author
+                    +published
+                    .ui.hidden.divider
+                // +call_watson
+                // else
+                //     unless published
+                //         +request_tori_feedback label='Submit for Approval'
+    
+                if isInRole 'admin'
+                    +edit_author
