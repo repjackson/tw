@@ -1,14 +1,14 @@
 if Meteor.isClient
-    FlowRouter.route '/shop', action: ->
+    FlowRouter.route '/requests', action: ->
         BlazeLayout.render 'layout',
             # sub_nav: 'member_nav'
-            main: 'shop'
+            main: 'needs'
     
-    Template.product.onCreated ->
+    Template.need.onCreated ->
         Meteor.subscribe 'author', @data._id
         
         
-    Template.shop.onCreated ->
+    Template.needs.onCreated ->
         @autorun ->
             Meteor.subscribe('facet', 
                 selected_theme_tags.array()
@@ -16,7 +16,7 @@ if Meteor.isClient
                 selected_location_tags.array()
                 selected_intention_tags.array()
                 selected_timestamp_tags.array()
-                type='product'
+                type='need'
                 author_id=null
                 parent_id=null
                 tag_limit=20
@@ -30,56 +30,56 @@ if Meteor.isClient
                 view_lightbank_type = null
                 )
 
-        Session.set 'layout_view', 'list'
+        # Session.set 'layout_view', 'list'
     
-    Template.shop.helpers
-        products: -> 
-            Docs.find {type: 'product'},
+    Template.needs.helpers
+        needs: -> 
+            Docs.find {type: 'need'},
                 sort:
                     publish_date: -1
                 limit: 5
                 
-        is_grid_view: -> Session.equals 'layout_view', 'grid'        
-        is_list_view: -> Session.equals 'layout_view', 'list'        
+        # is_grid_view: -> Session.equals 'layout_view', 'grid'        
+        # is_list_view: -> Session.equals 'layout_view', 'list'        
                 
-        list_layout_button_class: -> if Session.get('layout_view') is 'list' then 'teal' else 'basic'
-        grid_layout_button_class: -> if Session.get('layout_view') is 'grid' then 'teal' else 'basic'
+        # list_layout_button_class: -> if Session.get('layout_view') is 'list' then 'teal' else 'basic'
+        # grid_layout_button_class: -> if Session.get('layout_view') is 'grid' then 'teal' else 'basic'
                 
-    Template.shop.events
-        'click #add_product': ->
+    Template.needs.events
+        'click #add_need': ->
             id = Docs.insert
-                type: 'product'
+                type: 'need'
             FlowRouter.go "/edit/#{id}"
     
-        'click #make_list_layout': -> Session.set 'layout_view', 'list'
-        'click #make_grid_layout': -> Session.set 'layout_view', 'grid'
+        # 'click #make_list_layout': -> Session.set 'layout_view', 'list'
+        # 'click #make_grid_layout': -> Session.set 'layout_view', 'grid'
         
-    Template.product.helpers
+    Template.need.helpers
         tag_class: -> if @valueOf() in selected_theme_tags.array() then 'teal' else 'basic'
         one_point: -> @point_price is 1
     
-    Template.product.events
-        'click .produdct_tag': ->
+    Template.need.events
+        'click .need_tag': ->
             if @valueOf() in selected_theme_tags.array() then selected_theme_tags.remove @valueOf() else selected_theme_tags.push @valueOf()
     
-    Template.edit_product.events
+    Template.edit_need.events
         'click #delete_doc': ->
-            if confirm 'Delete this Product?'
+            if confirm 'Delete this request?'
                 Docs.remove @_id
-                FlowRouter.go '/shop'
+                FlowRouter.go '/requests'
     
     
     
 # if Meteor.isServer
-    # Meteor.publish 'selected_products', ->
+#     Meteor.publish 'selected_needs', ->
         
-    #     self = @
-    #     match = {}
-    #     match.type = 'product'
-    #     # if not @userId or not Roles.userIsInRole(@userId, ['admin'])
-    #     #     match.published = true
+#         self = @
+#         match = {}
+#         match.type = 'need'
+#         # if not @userId or not Roles.userIsInRole(@userId, ['admin'])
+#         #     match.published = true
         
     
-    #     Docs.find match
+#         Docs.find match
     
     

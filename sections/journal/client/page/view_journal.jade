@@ -9,15 +9,15 @@ template(name='view_journal')
                 h1.ui.center.aligned.header View Journal Entry
         .row
             .ten.wide.column
-                // +parent_doc_segment
+                +parent_doc_segment
                 .ui.basic.segment
                     |!{content}
-                // if published
-                //     +comments
-                // +doc_matches
-                // if watson
-                //     +analyzed_watson_keywords
-                // +child_docs
+                if published
+                    +comments
+                +doc_matches
+                if watson
+                    +analyzed_watson_keywords
+                +child_docs
             .five.wide.column
                 if can_edit
                     +edit_link_button

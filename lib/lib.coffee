@@ -13,6 +13,7 @@
 
 
 Docs.before.insert (userId, doc)->
+    
     timestamp = Date.now()
     doc.timestamp = timestamp
     # console.log moment(timestamp).format("dddd, MMMM Do YYYY, h:mm:ss a")
@@ -39,16 +40,28 @@ Docs.before.insert (userId, doc)->
     doc.published = false
     return
 
-# Docs.after.update ((userId, doc, fieldNames, modifier, options) ->
-#     doc.tag_count = doc.tags.length
-#     # console.log doc
-# ), fetchPrevious: true
+Docs.after.update ((userId, doc, fieldNames, modifier, options) ->
+    if doc.tags
+        doc.tag_count = doc.tags.length
+    # console.log doc
+    # doc.child_count = Meteor.call('calculate_child_count', doc._id)
+    # console.log Meteor.call 'calculate_child_count', doc._id, (err, res)-> return res
+), fetchPrevious: true
 
 
 # Docs.before.update (userId, doc, fieldNames, modifier, options) ->
 #   modifier.$set = modifier.$set or {}
 #   modifier.$set.tag_count = doc.tags.length
 #   return
+
+
+Docs.after.insert (userId, doc)->
+    if doc.parent_id
+        Meteor.call 'calculate_child_count', doc.parent_id
+
+Docs.after.remove (userId, doc)->
+    if doc.parent_id
+        Meteor.call 'calculate_child_count', doc.parent_id
 
 
 

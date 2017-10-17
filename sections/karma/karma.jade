@@ -62,7 +62,8 @@ template(name='karma')
                 .ui.dividing.header
                     +icon48 name='sports-mode'
                     |Actions
-                a.ui.basic.circular.large.button(href='/karma/send')
-                    +icon48 name='donate' classes='ui mini inline image'
-                    | Give Karma
+                if isInRole 'dev'
+                    a.ui.basic.circular.large.button(href='/karma/send')
+                        +icon48 name='donate' classes='ui mini inline image'
+                        | Give Karma
                     

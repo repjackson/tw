@@ -1,89 +1,94 @@
 template(name='dashboard')
-    .ui.container
+    .ui.text.container
         // h2.ui.center.aligned.header 
         //     img(src="https://png.icons8.com/dashboard/color/96" title="Dashboard" width="96" height="96")
         //     |Dashboard
-        .ui.stackable.centered.grid
-            .three.wide.column
+        .ui.stackable.centered.three.column.grid
+            .column
                 a#courses.ui.icon.center.aligned.header
                     i.icon
                         +icon96 name='classroom'
                     |My Courses
-            .three.wide.column
+            .column
                 a.ui.icon.center.aligned.header(href='/people')
                     i.icon
                         +icon96 name='people'
                     |Community
-            .three.wide.column    
+            .column    
                 a.ui.icon.center.aligned.header(href='/conversations')
                     i.icon
                         +icon96 name='chat'
                     |Conversations
-            .three.wide.column    
+            .column    
                 a.ui.icon.center.aligned.header(href='/bookmarks')
                     i.icon
                         +icon96 name='bookmark-ribbon'
                     |Bookmarks
-            // .three.wide.column
+            // .column
             //     a#lightbank.ui.icon.center.aligned.header
             //         i.icon
             //             +icon96 name='summer'
             //         |LightBank
-            // .three.wide.column
+            // .column
             //     .row    
             //         a.ui.icon.center.aligned.header(href='/journal')
             //             i.icon
             //                 +icon96 name='journal'
             //             |Journal
-            .three.wide.column    
+            .column    
                 a.ui.icon.center.aligned.header(href="/karma")
                     i.icon
                         +icon96 name='diamond'
                     |Karma
                     .ui.circular.basic.label #{currentUser.points}
-            .three.wide.column    
+            .column    
                 a.ui.icon.center.aligned.header(href='/transactions')
                     i.icon
                         +icon96 name='handshake'
                     |Transactions
-            .three.wide.column    
-                a.ui.icon.center.aligned.header(href='/shop')
-                    i.icon
-                        +icon96 name='shop'
-                    |Shop
             if isInRole 'dev'
-                .three.wide.column    
+                .column    
+                    a.ui.icon.center.aligned.header(href='/shop')
+                        i.icon
+                            +icon96 name='shop'
+                        |Shop
+                .column    
+                    a.ui.icon.center.aligned.header(href='/requests')
+                        i.icon
+                            +icon96 name='service-bell'
+                        | Requests
+                .column    
                     a.ui.icon.center.aligned.header(href='/stats')
                         i.icon
                             +icon96 name='combo-chart'
                         |Stats
-            .three.wide.column    
+            .column    
                 a.ui.icon.center.aligned.header(href='/bugs')
                     i.icon
                         +icon96 name='bug'
                     | Bugs
-            .three.wide.column    
+            .column    
                 a.ui.icon.center.aligned.header(href='/notifications')
                     i.icon
                         +icon96 name='notification'
                     |Notifications
-            .three.wide.column    
+            .column    
                 a.ui.icon.center.aligned.header(href="/profile/#{currentUser.username}/account")
                     i.icon
                         +icon96 name='settings'
                     |Settings
             if isInRole 'admin'
-                .three.wide.column    
+                .column    
                     a.ui.icon.center.aligned.header(href='/admin/dashboard')
                         i.icon
                             +icon96 name='monarch'
                         | Admin
-            .three.wide.column    
+            .column    
                 a#logout.ui.icon.center.aligned.header(href='#')
                     i.icon
                         +icon96 name='burglary'
                     | Sign Out
-            // .three.wide.column    
+            // .column    
             //     a.ui.icon.center.aligned.header(href='/checkin')
             //         i.icon
             //             +icon96 name='in-progress'

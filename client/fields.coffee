@@ -198,9 +198,14 @@ Template.dollar_price.events
 Template.point_price.events
     'change #point_price': ->
         point_price = parseInt $('#point_price').val()
-
         Docs.update @_id,
             $set: point_price: point_price
+            
+Template.bounty.events
+    'change #bounty': ->
+        bounty = parseInt $('#bounty').val()
+        Docs.update @_id,
+            $set: bounty: bounty
             
             
 Template.number.events

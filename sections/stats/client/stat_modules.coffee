@@ -1,5 +1,5 @@
 Template.leaderboard.onCreated ->
-    Meteor.subscribe 'usernames'
+    @autorun -> Meteor.subscribe('people', selected_people_tags.array())
 
 Template.leaderboard.helpers
     players: ->
@@ -7,18 +7,18 @@ Template.leaderboard.helpers
             sort: points: -1
             
 Template.journal_stats.onCreated ->
-    Meteor.subscribe 'usernames'
+    @autorun -> Meteor.subscribe('people', selected_people_tags.array())
 
 Template.journal_stats.helpers
-    journal_stats: ->
+    journal_authors: ->
         Meteor.users.find {},
             sort: points: -1
             
             
 Template.journal_stat.onCreated ->
-    Meteor.subscribe 'usernames'
+    # Meteor.subscribe 'usernames'
 Template.journal_stat.helpers
-    journal_stats: ->
+    journal_authors: ->
         Meteor.users.find {},
             sort: points: -1
             

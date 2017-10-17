@@ -167,9 +167,7 @@ Template.view_read_toggle.events
 
 # Template.icon.helpers
     # 
-Template.response_count.onCreated ->
-    @autorun => Meteor.subscribe 'response_counter', @data._id
+# Template.response_count.onCreated ->
+#     @autorun => Meteor.subscribe 'response_count', @data._id
 
     
-Template.response_count.helpers
-    response_count: -> Counts.get 'response_counter'

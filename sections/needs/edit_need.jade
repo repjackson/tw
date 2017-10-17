@@ -1,0 +1,25 @@
+template(name='edit_need')
+    .ui.padded.stackable.grid
+        .centered.row
+            .ten.wide.column
+                h1.ui.center.aligned.header Edit #{title} Request
+        .row
+            .eleven.wide.column
+                .ui.form
+                    +title
+                    +tags
+                    +content
+                    +edit_image
+            .five.wide.column
+                if tags
+                    a.ui.fluid.green.big.button(href="/view/#{_id}") Save Request
+                else
+                    .ui.fluid.green.big.disabled.button
+                        | Add Tags to Save
+                #delete_doc.ui.small.fluid.red.button Delete
+                .ui.divider
+                +bounty
+                +edit_quantity
+                +published
+                if isInRole 'admin'
+                    +edit_author

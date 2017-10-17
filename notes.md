@@ -189,3 +189,22 @@ Docs.update({tags:["section"]}, {$set:{type:'section'}}, {multi:true})
   "parent_id": "2eXMhxuv4LW4jWobr",
   "type": "module_progress"
 }
+
+
+approve bug
+get 5 points
+create transaction
+notifiy author
+how many points?
+
+user macro settings
+
+tori point settings
+
+offer 'bug report' in shop
+reward = will pay
+
+requests
+needs!
+
+bounties

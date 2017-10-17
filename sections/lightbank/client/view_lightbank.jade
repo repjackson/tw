@@ -10,8 +10,8 @@ template(name='view_lightbank')
                     +icon96 name='nature' classes='ui tiny inline image'
                     |View #{type_label}
             .four.wide.column
-        .row.document_container
-            .twelve.wide.column.document_container
+        .centered.row.document_container
+            .ten.wide.column.document_container
                 if has_youtube
                     if youtube
                         +view_youtube
@@ -43,12 +43,17 @@ template(name='view_lightbank')
                                 +doc_emotion
                         +analyzed_watson_keywords
                 // +child_docs
-            .four.wide.column
+            .five.wide.column
                 // if isInRole 'admin'
                 //     .ui.dividing.header 
                 //         +icon48 name='monarch' classes='ui avatar image'
                 //         |Admin
                 .ui.header added by #{author.name} #{when}
+                .ui.dividing.header 
+                    +icon48 name='combo-chart'
+                    | Stats
+                if child_count
+                    .ui.header Response Count: #{child_count}
                 .ui.dividing.header 
                     +icon48 name='sports-mode'
                     |Actions

@@ -1,5 +1,5 @@
 template(name='stats')
-    .ui.stackable.grid
+    .ui.stackable.padded.grid
         .centered.row
             .four.wide.column
                 h2.ui.header
@@ -10,25 +10,27 @@ template(name='stats')
                     +icon96 name='combo-chart'
                     | Stats
             .four.wide.column
-                a.ui.basic.circular.small.button(href='/services') 
-                    +icon48 name='service-bell' classes='ui mini spaced image'
-                    | Services
-                    +icon48 name='rotate-left' classes='ui mini spaced image'
+                a.ui.basic.circular.small.button(href='/shop') 
+                    +icon48 name='shop' classes='ui mini spaced image'
+                    | Shop
+                    // +icon48 name='rotate-left' classes='ui mini spaced image'
                 // a.ui.basic.circular.small.button(href='/transactions') 
                 //     +icon48 name='handshake' classes='ui mini spaced image'
                 //     | Transactions
                 //     +icon48 name='rotate-left' classes='ui mini spaced image'
         .row
             .four.wide.column
-                .ui.dividing.header Actions
+                // .ui.dividing.header Actions
                 // a.ui.basic.fluid.button(href="/stats/send")
                 //     i.send.icon
                 //     |Send stats
-                .ui.dividing.header Sharing
-                .ui.slider.checkbox
-                    input#share_stats(type='checkbox' checked=currentUser.profile.share.stats)
-                    label(for='share_bookmarks') Share Stats in Profile
-            .eight.wide.column
+                // .ui.dividing.header Sharing
+                // .ui.slider.checkbox
+                //     input#share_stats(type='checkbox' checked=currentUser.profile.share.stats)
+                //     label(for='share_bookmarks') Share Stats in Profile
+                +people_cloud
+
+            .four.wide.column
                 +leaderboard
             .four.wide.column
-                .ui.dividing.header Sort
+                +journal_stats

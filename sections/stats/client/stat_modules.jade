@@ -15,11 +15,12 @@ template(name='leaderboard')
     
 template(name='journal_stats')
     .ui.header 
-        +icon48 name='leaderboard'
+        +icon48 name='journal'
         | Journal Stats
     .ui.list
         each journal_authors
             +journal_stat
+            
 template(name='journal_stat')        
     .item
         .content
@@ -27,4 +28,6 @@ template(name='journal_stat')
                 img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
                 |#{name}
             .description
-                |Points: #{points}
+                .ui.header Total Journal Entries: #{total_journal_count}
+                .ui.header Public Journal Entries: #{public_journal_count}
+                .ui.header Private Journal Entries: #{private_journal_count}
