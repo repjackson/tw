@@ -57,7 +57,6 @@ head
 //                 | Sign In
 
 
-
 template(name='layout')
     +status
     // if isInRole 'dev'
@@ -91,6 +90,8 @@ template(name='layout')
                     +Template.dynamic template=sub_nav
                     +Template.dynamic template=sub_sub_nav
                     +Template.dynamic template=cloud
+                    // .react
+                    //     |{{> React component=PageAbout }}
                     +Template.dynamic template=main
                     unless isInRole 'dev'
                         unless zen_mode

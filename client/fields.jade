@@ -61,7 +61,7 @@ template(name='tags')
         //     // i.plus.icon
         //     input#add_tag(type='text' placeholder='Add...' maxlength='50' )
         .ui.mini.input
-            +inputAutocomplete settings=theme_select_settings id="theme_tag_select" class="" autocomplete="off" placeholder='Add Theme Tags...'
+            +inputAutocomplete settings=theme_select_settings id="theme_tag_select" class="" autocomplete="off"
         each tags
             // a.ui.basic.circular.button.doc_tag #{this}
             a.ui.basic.animated.fade.circular.button.doc_tag
@@ -81,7 +81,7 @@ template(name='location_tags')
         +icon48 name='sofa' classes='ui mini spaced image'
         |Location Tags &nbsp;
         .ui.mini.input
-            +inputAutocomplete settings=location_select_settings id="location_tag_select" class="" autocomplete="off" placeholder='Add Location Tags...'
+            +inputAutocomplete settings=location_select_settings id="location_tag_select" class="" autocomplete="off"
         // .ui.mini.input
         //     input#add_location_tag(type='text' placeholder="eg. 'home', 'couch'" maxlength='50' )
         each location_tags
@@ -103,7 +103,7 @@ template(name='intention_tags')
         +icon48 name='spotlight' classes='ui mini spaced image'
         |My intention for this entry is to... &nbsp;
         .ui.mini.input
-            +inputAutocomplete settings=intention_select_settings id="intention_tag_select" class="" autocomplete="off" placeholder='Add Intention Tags...'
+            +inputAutocomplete settings=intention_select_settings id="intention_tag_select" class="" autocomplete="off"
         // .ui.mini.input
         //     input#add_intention_tag(type='text' maxlength='50' )
         each intention_tags
@@ -139,11 +139,10 @@ template(name='bounty')
 
 
 template(name='link')
-    .field
-        label Link (include http://)
-        .ui.left.icon.input
-            i.linkify.icon
-            input#link(type='text' value=link)
+    .ui.labeled.icon.input
+        .ui.basic.label Link (include http://)
+        input#link(type='text' value=link)
+        i.linkify.icon
 
 
 template(name='page_name')

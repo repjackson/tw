@@ -5,12 +5,12 @@ template(name='following')
                 if is_following
                     // |following #{profile.first_name}. 
                     #unfollow.ui.basic.large.circular.centered.button 
-                        +icon48 name='cancel-subscription' classes='ui avatar image'
+                        +icon48 name='cancel-subscription' classes='ui mini inline image'
                         |Unfollow
                 else
                     // |not following #{profile.first_name}. 
                     #follow.ui.basic.large.circular.centered.button 
-                        +icon48 name='renew' classes='ui avatar image'
+                        +icon48 name='renew' classes='ui mini inline image'
                         |Follow
                 .ui.hidden.divider
             .ui.two.column.stackable.grid

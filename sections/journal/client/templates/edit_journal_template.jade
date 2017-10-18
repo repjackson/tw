@@ -2,11 +2,7 @@ template(name='edit_journal_template')
     .ui.padded.stackable.grid.document_container
         .centered.middle.aligned.row
             .two.wide.column
-                if tags
-                    a.ui.large.fluid.basic.compact.circular.button(href="/view/#{_id}" data-position='bottom center' data-tooltip='Save')
-                        +icon48 name='checked' classes='ui mini inline image'
-                else
-                    .ui.large.basic.disabled.circular.button Add Tags to Save
+                +save_button
             .ten.wide.column
                 h1.ui.center.aligned.header
                     if icon_class

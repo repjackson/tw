@@ -92,7 +92,7 @@ template(name='view_section')
                     .ui.hidden.divider
                     .ui.styled.fluid.accordion
                         h3.title
-                            +icon48 name='paper' classes='ui avatar image'
+                            +icon48 name='paper' classes='ui mini inline image'
                             | Transcript
                             i.dropdown.icon
                         .content
@@ -103,15 +103,15 @@ template(name='view_section')
                         if currentUser
                             if video_complete
                                 .unmark_video_complete.ui.blue.circular.fluid.button 
-                                    // +icon48 name='checkmark' classes='ui avatar image'
+                                    // +icon48 name='checkmark' classes='ui mini inline image'
                                     |Video Watched
                                 if section.content.length
                                     .popup_takeaway.ui.basic.large.button 
-                                        +icon48 name='external' classes='ui avatar image'
+                                        +icon48 name='external' classes='ui mini inline image'
                                         |Video Takeaways
                             else
                                 .mark_video_complete.ui.basic.fluid.circular.button 
-                                    +icon48 name='unchecked-checkbox' classes='ui avatar image'
+                                    +icon48 name='unchecked-checkbox' classes='ui mini inline image'
                                     |Mark Video Watched
                     with section
                         if isInRole 'admin'
@@ -129,22 +129,22 @@ template(name='view_section')
                             // if video_complete
                         if section_complete
                             .ui.horizontal.divider.header
-                                +icon48 name='checked' classes='ui avatar image'
+                                +icon48 name='checked' classes='ui mini inline image'
                                 |Section Complete
                             if next_section_exists
                                 a.ui.basic.fluid.circular.large.button(href="/view/#{next_section._id}")
                                     | Continue to Section #{next_section.number}: #{next_section.title}
-                                    +icon48 name='chevron-right' classes='ui avatar image'
+                                    +icon48 name='chevron-right' classes='ui mini inline image'
                             else
                                 .ui.horizontal.divider.header
-                                    +icon48 name='checked' classes='ui avatar image'
+                                    +icon48 name='checked' classes='ui mini inline image'
                                     | All Module #{module.number} Sections Complete
                                 a.ui.basic.fluid.button(href="/view/#{module._id}") 
-                                    +icon48 name='return' classes='ui avatar image'
+                                    +icon48 name='return' classes='ui mini inline image'
                                     | Return to Module #{module.number}: #{module.title}
                         .ui.divider
                     #calculate_section_progress.ui.fluid.basic.button 
-                        +icon48 name='refresh' classes='ui avatar image'
+                        +icon48 name='refresh' classes='ui mini inline image'
                         |Calculate Section Progress
                     #section_percent_complete_bar.ui.indicating.progress(data-percent=section_progress_doc.percent_complete)
                         .bar

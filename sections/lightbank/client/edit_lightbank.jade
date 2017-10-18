@@ -1,40 +1,32 @@
 template(name='edit_lightbank')
     .ui.stackable.padded.grid.document_container
-        .centered.row
-            h1.ui.center.aligned.header
-                // +icon96 name='nature' classes='ui mini inline image'
-                |Edit Lightbank Entry
+        .centered.middle.aligned.row
+            .two.wide.column
+                +save_button
+            .eight.wide.column
+                h1.ui.center.aligned.header
+                    // +icon96 name='nature' classes='ui mini inline image'
+                    h2.ui.center.aligned.header
+                        if is_quote
+                            +icon48 name='get-quote' classes='ui mini inline image'
+                            |Edit Quote
+                        else if is_poem
+                            +icon48 name='close-up' classes='ui mini inline image'
+                            | Edit Poem
+                        else if is_journal_prompt
+                            +icon48 name='question-mark' classes='ui mini inline image'
+                            | Edit Journal Prompt
+                        else if is_passage
+                            +icon48 name='align-left' classes='ui mini spaced image'
+                            | Edit Passage
+                        else
+                            |Edit Lightbank Entry
+            .two.wide.column
+                #delete_doc.ui.fluid.basic.circular.button(data-position="bottom center" data-tooltip='Delete')
+                    +icon48 name='delete' classes='ui mini inline image'
         .centered.row
             .eleven.wide.column
                 with lightbank_entry
-                    if is_quote
-                        h2.ui.center.aligned.header
-                            +icon48 name='get-quote' classes='ui mini inline image'
-                            |Quote
-                        +author_name label='Quote'
-                        .ui.hidden.divider
-                        +content
-                    if is_poem
-                        h2.ui.center.aligned.header
-                            +icon48 name='close-up' classes='ui mini inline image'
-                            | Poem
-                        +title label='Poem Title'
-                        .ui.hidden.divider
-                        +content
-                    if is_journal_prompt
-                        h2.ui.center.aligned.header
-                            +icon48 name='question-mark' classes='ui mini inline image'
-                            | Journal Prompt
-                        +author_name label='Prompt'
-                        .ui.hidden.divider
-                        +content
-                    if is_passage
-                        h2.ui.center.aligned.header
-                            +icon48 name='align-left' classes='ui mini spaced image'
-                            | Passage
-                        +author_name label='Passage'
-                        .ui.hidden.divider
-                        +content
                     if is_custom
                         if components.youtube
                             +youtube
@@ -42,18 +34,19 @@ template(name='edit_lightbank')
                             +edit_image
                         if components.content
                             +content
+                    else
+                        if is_poem
+                            +title label='Poem Title'
+                        +content
+                        .ui.hidden.divider
+                        if is_quote
+                            +author_name label='Quote'
+                        if is_journal_prompt
+                            +author_name label='Prompt'
+                        if is_passage
+                            +author_name label='Passage'
                 +tags
             .five.wide.column
-                .ui.grid
-                    .twelve.wide.column
-                        if tags
-                            a.ui.fluid.basic.circular.button(href="/view/#{_id}" data-tooltip='Save')
-                                +icon48 name='checked' classes='ui mini inline image'
-                        else
-                            .ui.fluid.basic.disabled.circular.button Add Tags to Save
-                    .four.wide.column
-                        #delete_doc.ui.fluid.basic.circular.button(data-tooltip='Delete')
-                            +icon48 name='delete' classes='ui mini inline image'
                 .ui.header 
                     |created by 
                     if is_author

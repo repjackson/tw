@@ -41,7 +41,11 @@ Meteor.publish 'facet', (
         if view_read?
             if view_read is true then match.read_by = $in: [@userId]
             else if view_read is false then match.read_by = $nin: [@userId]
-        if view_published? then match.published = view_published
+        if view_published is true
+            match.published = $in: [1,0]
+        else if view_published is false
+            match.published = -1
+            
         if view_bookmarked?
             if view_bookmarked is true then match.bookmarked_ids = $in: [@userId]
             else if view_bookmarked is false then match.bookmarked_ids = $nin: [@userId]

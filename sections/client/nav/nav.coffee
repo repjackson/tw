@@ -11,8 +11,8 @@ Template.nav.onCreated ->
     # @autorun -> Meteor.subscribe 'unread_messages'
     # @autorun -> Meteor.subscribe 'all_notifications'
     # @autorun -> Meteor.subscribe 'doc', Session.get 'new_checkin_doc_id'
-    @autorun -> Meteor.subscribe 'unread_lightbank_count'
-    @autorun -> Meteor.subscribe 'unread_journal_count'
+    # @autorun -> Meteor.subscribe 'unread_lightbank_count'
+    # @autorun -> Meteor.subscribe 'unread_journal_count'
 
     
     
@@ -35,25 +35,25 @@ Template.nav.onRendered ->
 Template.nav.helpers
     cart_items: -> Docs.find({type: 'cart_item'},{author_id: Meteor.userId()}).count()
 
-    unread_message_count: ->
-        count = 0
-        my_conversations = Docs.find(
-            type: 'conversation'
-            participant_ids: $in: [Meteor.userId()]
-        ).fetch()
+    # unread_message_count: ->
+    #     count = 0
+    #     my_conversations = Docs.find(
+    #         type: 'conversation'
+    #         participant_ids: $in: [Meteor.userId()]
+    #     ).fetch()
         
-        for conversation in my_conversations
-            unread_count = Docs.find(
-                type: 'message'
-                group_id: conversation._id
-                read_by: $nin: [Meteor.userId()]
-            ).count()
-            count += unread_count
-        count
+    #     for conversation in my_conversations
+    #         unread_count = Docs.find(
+    #             type: 'message'
+    #             group_id: conversation._id
+    #             read_by: $nin: [Meteor.userId()]
+    #         ).count()
+    #         count += unread_count
+    #     count
 
 
-    unread_lightbank_count: -> Counts.get('unread_lightbank_count')
-    unread_journal_count: -> Counts.get('unread_journal_count')
+    # unread_lightbank_count: -> Counts.get('unread_lightbank_count')
+    # unread_journal_count: -> Counts.get('unread_journal_count')
 
         
     # bookmark_docs: -> 

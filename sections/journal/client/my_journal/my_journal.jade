@@ -3,17 +3,17 @@ template(name='my_journal')
         .centered.row
             .four.wide.column
                 #create_checkin.ui.basic.circular.small.button 
-                    +icon48 name='create-document' classes='ui avatar image'
+                    +icon48 name='create-document' classes='ui mini inline image'
                     |Add Entry
             .nine.wide.column
                 h1.ui.center.aligned.header
-                    +icon96 name='journal' classes='ui avatar image'
+                    +icon96 name='journal' classes='ui mini inline image'
                     | My Journal Entries
             .three.wide.column
                 a.ui.basic.circular.small.button(href='/journal/browse') 
-                    +icon48 name='reading' classes='ui avatar image'
+                    +icon48 name='reading' classes='ui mini inline image'
                     |Browse Entries
-                    // +icon48 name='rotate-left' classes='ui avatar image'
+                    // +icon48 name='rotate-left' classes='ui mini inline image'
         .row
             .four.wide.column
                 +theme_facet type='journal'
@@ -47,7 +47,7 @@ template(name='my_entry_view')
                 +parent_doc_segment
                 .ui.basic.segment
                     .large130 !{content}
-            // +icon24 name='clock' classes='ui avatar image'
+            // +icon24 name='clock' classes='ui mini inline image'
             .ui.hidden.fitted.divider
             strong written #{when}
             .ui.hidden.fitted.divider
@@ -56,7 +56,7 @@ template(name='my_entry_view')
         .ui.fluid.accordion
             .title
                 .ui.header 
-                    // +icon48 name='more' classes='ui avatar image'
+                    // +icon48 name='more' classes='ui mini inline image'
                     | More
                     i.dropdown.icon
             .content

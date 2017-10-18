@@ -1,15 +1,37 @@
 template(name='view_lightbank')
     .ui.stackable.padded.grid
-        .centered.row
-            .four.wide.column
-                a.ui.basic.button(href='/lightbank')
-                    +icon48 name='double-left' classes='ui avatar image'
+        .centered.middle.aligned.row
+            .four.wide.center.aligned.column
+                a.ui.basic.circular.button(href='/lightbank')
+                    +icon48 name='chevron-left' classes='ui mini inline image'
                     |Lightbank
-            .eight.wide.column
+            .eight.wide.center.aligned.column
                 h1.ui.center.aligned.header 
                     +icon96 name='nature' classes='ui tiny inline image'
+                    if is_quote
+                        h2.ui.center.aligned.header
+                            +icon48 name='get-quote' classes='ui mini inline image'
+                            |Edit Quote
+                    else if is_poem
+                        h2.ui.center.aligned.header
+                            +icon48 name='close-up' classes='ui mini inline image'
+                            | Edit Poem
+                    else if is_journal_prompt
+                        h2.ui.center.aligned.header
+                            +icon48 name='question-mark' classes='ui mini inline image'
+                            | Edit Journal Prompt
+                    else if is_passage
+                        h2.ui.center.aligned.header
+                            +icon48 name='align-left' classes='ui mini spaced image'
+                            | Edit Passage
+                    else
+                        |Edit Lightbank Entry
+    
                     |View #{type_label}
-            .four.wide.column
+            .four.wide.center.aligned.column
+                if can_edit
+                    +edit_link_button
+
         .centered.row.document_container
             .ten.wide.column.document_container
                 if has_youtube
@@ -46,7 +68,7 @@ template(name='view_lightbank')
             .five.wide.column
                 // if isInRole 'admin'
                 //     .ui.dividing.header 
-                //         +icon48 name='monarch' classes='ui avatar image'
+                //         +icon48 name='monarch' classes='ui mini inline image'
                 //         |Admin
                 .ui.header added by #{author.name} #{when}
                 .ui.dividing.header 
@@ -63,7 +85,6 @@ template(name='view_lightbank')
                 +resonate_button
                 +resonates_list 
                 if can_edit
-                    +edit_link_button
                     // +call_watson
                     // +published_status
                     +published

@@ -1,8 +1,12 @@
 template(name='edit_product')
     .ui.padded.stackable.grid
         .centered.row
+            .two.wide.column
+                +save_button
             .ten.wide.column
                 h1.ui.center.aligned.header Edit #{title} Product
+            .two.wide.column
+                #delete_doc.ui.small.fluid.red.button Delete
         .row
             .eleven.wide.column
                 .ui.form
@@ -11,13 +15,6 @@ template(name='edit_product')
                     +content
                     +edit_image
             .five.wide.column
-                if tags
-                    a.ui.fluid.green.big.button(href="/view/#{_id}") Save Product
-                else
-                    .ui.fluid.green.big.disabled.button
-                        | Add Tags to Save
-                #delete_doc.ui.small.fluid.red.button Delete
-                .ui.divider
                 +point_price
                 +edit_quantity
                 +published

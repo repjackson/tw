@@ -4,13 +4,14 @@ template(name='bugs')
             .sixteen.wide.column
                 h1.ui.center.aligned.header
                     +icon96 name='bug'
-                    |Bug Reports
+                    |Bug Reports/ Feature Requests
+                .ui.center.aligned.header Each approved bug earns 5 karma.    
         .row
             .three.wide.column
                 +timestamp_facet    
                 +username_facet
             .eleven.wide.column
-                .ui.stackable.three.cards
+                .ui.items
                     each bugs
                         +bug
             .two.wide.column
@@ -21,17 +22,17 @@ template(name='bugs')
                 +approved_filter
 
 template(name='bug')
-    .card
+    .item
         .content
             .description #{body}
             .meta
                 a(href=link) #{link}
             .meta
                 |by #{author.name} #{when}
-            .extra.content
-                if isInRole 'dev'
-                    +mark_doc_approved_button
-                    if approved
-                        +mark_doc_complete_button
-                    else
-                        +delete_button
+        .extra
+            if isInRole 'dev'
+                +mark_doc_approved_button
+                if approved
+                    +mark_doc_complete_button
+                else
+                    +delete_button

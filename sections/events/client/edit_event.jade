@@ -1,32 +1,42 @@
 template(name='edit_event')
-    h1.ui.center.aligned.header 
-        +icon96 name='tree-planting'
-        |Edit Event
-    .ui.stackable.grid.container.document_container
+    .ui.padded.stackable.grid
+        .middle.aligned.centered.row
+            .three.wide.center.aligned.column
+                +save_button
+            .ten.wide.center.aligned.column
+                h1.ui.center.aligned.header 
+                    +icon96 name='event'
+                    | Edit
+                    if title
+                        |'#{title}'
+                    | Event
+            .three.wide.center.aligned.column
+                #delete_doc.ui.fluid.basic.small.circular.button(data-position="center bottom" data-tooltip='Delete')
+                    +icon48 name='delete' classes='ui mini inline image'
         .twelve.wide.column
-            // .ui.segment
-            //     +event_tag_selection
+            +title
             +tags
             +location_tags
+            if components.youtube
+                +youtube
+            if components.image
+                +edit_image
+            if components.content
+                +content
             .ui.hidden.divider
             if components.content
                 +content
+            if components.link
+                +link
 
         .four.wide.column
-            .ui.middle.aligned.grid
-                .eleven.wide.column
-                    if tags
-                        a.ui.fluid.basic.circular.button(href="/view/#{_id}" data-tooltip='Save')
-                            +icon48 name='checkmark' classes='ui mini inline image'
-                    else
-                        .ui.fluid.basic.disabled.circular.button Add Tags to Save
-                .five.wide.column
-                    #delete_doc.ui.fluid.basic.small.circular.button(data-tooltip='Delete')
-                        +icon48 name='delete' classes='ui mini inline image'
             .ui.dividing.header 
                 +icon48 name='slider' classes='ui mini inline image'
                 |Components
+            +toggle_component name='youtube' label='Video' icon_name='movie'
+            +toggle_component name='image' label='Image' icon_name='image'
             +toggle_component name='content' label='Text' icon_name='outline'
+            +toggle_component name='link' label='Link' icon_name='link'
             .ui.dividing.header 
                 +icon48 name='sports-mode' classes='ui mini inline image'
                 |Actions

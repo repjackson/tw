@@ -167,7 +167,7 @@ if Meteor.isServer
             match.published = true
             if selected_participant_ids.length > 0 then match.participant_ids = $in: selected_participant_ids
         else if view_published = false
-            match.published = false
+            match.published = -1
             selected_participant_ids.push Meteor.userId()
             match.participant_ids = $in: selected_participant_ids
         # if view_mode

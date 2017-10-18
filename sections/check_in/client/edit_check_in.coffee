@@ -12,7 +12,7 @@ Template.edit_checkin.events
         }, =>
             Docs.remove @_id
             swal 'Removed', 'success'
-            FlowRouter.go '/checkin'
+            FlowRouter.go '/checkins/mine'
 
 # Template.check_in_tag_selection.onCreated -> 
 #     self = @

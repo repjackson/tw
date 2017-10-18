@@ -22,7 +22,7 @@ Template.browse_check_ins.onCreated ->
             parent_id=null
             tag_limit=20
             doc_limit=Session.get 'doc_limit'
-            view_published=true
+            view_published=1
             view_read=Session.get 'view_read'
             view_bookmarked=Session.get 'view_bookmarked'
             view_resonates=null

@@ -1,36 +1,34 @@
 template(name='edit_checkin')
-    h1.ui.center.aligned.header 
-        +icon96 name='tree-planting'
-        |Edit Check In
-    .ui.stackable.grid.container.document_container
-        .twelve.wide.column
-            // .ui.segment
-            //     +check_in_tag_selection
-            +tags
-            +location_tags
-            .ui.hidden.divider
-            if components.content
-                +content
-
-        .four.wide.column
-            .ui.middle.aligned.grid
-                .eleven.wide.column
-                    if tags
-                        a.ui.fluid.basic.circular.button(href="/view/#{_id}" data-tooltip='Save')
-                            +icon48 name='checkmark' classes='ui mini inline image'
-                    else
-                        .ui.fluid.basic.disabled.circular.button Add Tags to Save
-                .five.wide.column
-                    #delete_doc.ui.fluid.basic.small.circular.button(data-tooltip='Delete')
-                        +icon48 name='delete' classes='ui mini inline image'
-            .ui.dividing.header 
-                +icon48 name='slider' classes='ui mini inline image'
-                |Components
-            +toggle_component name='content' label='Text' icon_name='outline'
-            .ui.dividing.header 
-                +icon48 name='sports-mode' classes='ui mini inline image'
-                |Actions
-            +published
+    .ui.stackable.padded.grid
+        .centered.middle.aligned.row
+            .two.wide.column
+                +save_button
+            .ten.wide.column
+                h1.ui.center.aligned.header 
+                    +icon96 name='tree-planting'
+                    |Edit Check In
+            .two.wide.column
+                #delete_doc.ui.fluid.basic.small.circular.button(data-position='bottom center' data-tooltip='Delete')
+                    +icon48 name='delete' classes='ui mini inline image'
+        .centered.row
+            .ten.wide.column
+                // .ui.segment
+                //     +check_in_tag_selection
+                +tags
+                +location_tags
+                .ui.hidden.divider
+                if components.content
+                    +content
+    
+            .four.wide.column
+                .ui.dividing.header 
+                    +icon48 name='slider' classes='ui mini inline image'
+                    |Components
+                +toggle_component name='content' label='Text' icon_name='outline'
+                .ui.dividing.header 
+                    +icon48 name='sports-mode' classes='ui mini inline image'
+                    |Actions
+                +published
 
 template(name='check_in_tag_selection')
     .ui.center.aligned.header

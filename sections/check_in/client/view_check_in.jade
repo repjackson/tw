@@ -1,12 +1,16 @@
 template(name='view_checkin')
     .ui.stackable.padded.grid
-        .row
-            .four.wide.column
-                a.ui.basic.button(href='/checkin')
+        .middle.aligned.centered.row
+            .four.wide.center.aligned.column
+                a.ui.basic.circular.button(href='/checkin')
                     +icon48 name='sprout' classes='ui mini inline image'
                     strong Check In's
-            .eight.wide.column
+            .eight.wide.center.aligned.column
                 h1.ui.center.aligned.header View Check In
+            .four.wide.center.aligned.column
+                if is_author
+                    // +service_buttons
+                    +edit_link_button
         .centered.row
             .ten.wide.column
                 .ui.dividing.header 
@@ -35,8 +39,6 @@ template(name='view_checkin')
                 .ui.dividing.header Actions
                 +resonates_list
                 if is_author
-                    // +service_buttons
-                    +edit_link_button
                     +published
                 else
                     div

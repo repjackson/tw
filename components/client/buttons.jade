@@ -152,7 +152,7 @@ template(name='add_to_cart')
 template(name='delete_button')
     unless confirming
         .delete.ui.icon.red.basic.compact.button
-            +icon24 name="delete" classes='avatar'
+            +icon24 name="delete" classes='ui mini inline image'
     else
         .ui.basic.button.cancel Cancel
         .ui.red.button.confirm Confirm Delete
@@ -171,22 +171,28 @@ template(name='delete_link')
 
 template(name='published')
     // .ui.dividing.header Visibility
-    if published
         .ui.large.blue.label
-            +icon48 name='eye' classes='avatar'
-            |Public
+            +icon48 name='eye' classes='ui mini inline image'
         if can_edit
-            #unpublish.ui.icon.basic.button(data-tooltip='Unpublish')
-                +icon48 name='invisible' classes='avatar'
-                // | Make Private
-    else
-        .ui.large.basic.label
-            +icon48 name='invisible' classes='avatar'
-            | Private
+        .ui.large.blue.label(data-tooltip="Viewable but not attributed")
+            +icon48 name='ignore' classes='ui mini inline image'
+    div
         if can_edit
-            #publish.ui.icon.basic.button(data-tooltip='Publish')
-                +icon48 name='eye' classes='avatar'
-                // | Make Public
+            #publish.ui.icon.button(data-tooltip='Publish' class=published_class)
+                +icon48 name='eye' classes='ui mini inline image'
+                if published
+                    | Published
+            #publish_anonymously.ui.icon.button(data-tooltip='Publish Anonymously' class=published_anonymously_class)
+                +icon48 name='ignore' classes='ui mini inline image'
+                if published_anonymously
+                    |Published Anonymously
+            #unpublish.ui.icon.button(data-tooltip='Unpublish' class=private_class)
+                +icon48 name='invisible' classes='ui mini inline image'
+                if private
+                    | Private
+        // .ui.large.basic.label
+        //     +icon48 name='invisible' classes='ui mini inline image'
+        // if can_edit
 
 
 
@@ -231,13 +237,22 @@ template(name='mark_doc_complete_button')
             // | Complete
         
 template(name='mark_doc_approved_button')
-    if approved
-        .unapprove.ui.circular.icon.basic.button(data-tooltip='Unapprove')
-            +ultraviolet_icon40 name='approval' classes='ui mini inline image'
+    if isInRole 'dev'
+        if approved
+            .unapprove.ui.circular.icon.basic.button(data-tooltip='Unapprove')
+                +ultraviolet_icon40 name='approval' classes='ui mini inline image'
+        else
+            .approve.ui.circular.icon.basic.button(data-tooltip='Approve')
+                +icon48 name='approval' classes='ui mini inline image'
     else
-        .approve.ui.circular.icon.basic.button(data-tooltip='Approve')
-            +icon48 name='approval' classes='ui mini inline image'
-        
+        if approved
+            .ui.basic.circular.label(data-tooltip='Unapproved')
+                +ultraviolet_icon40 name='approval' classes='ui mini inline image'
+        else
+            .ui.basic.circular.label(data-tooltip='Approved')
+                +icon48 name='approval' classes='ui mini inline image'
+         
+         
 template(name='bookmark_button')
     .bookmark_button.ui.circular.icon.button(class=bookmark_button_class data-tooltip='Bookmark') 
         +icon48 name='bookmark' classes='ui mini inline image'
@@ -268,13 +283,13 @@ template(name='view_full_button')
 template(name='edit_link_button')
     if can_edit
         // +call_watson
-        a.ui.basic.icon.button(href="/edit/#{_id}" data-tooltip='Edit')
-            +icon48 name='edit' classes='avatar'
+        a.ui.basic.icon.large.circular.button(href="/edit/#{_id}" data-position="bottom center" data-tooltip='Edit')
+            +icon48 name='edit' classes='ui mini inline image'
 
 
 template(name='add_doc_button')
     #add_doc.ui.basic.circular.fluid.button
-        +icon48 name='plus' classes='avatar'
+        +icon48 name='plus' classes='ui mini inline image'
         | #{add_button_text}
 
 

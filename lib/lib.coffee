@@ -10,6 +10,9 @@
 @Upvoter_ids = new Meteor.Collection 'upvoter_ids'
 
 
+# @Component =
+#     create: (spec) ->
+#         React.createFactory React.createClass(spec)
 
 
 Docs.before.insert (userId, doc)->

@@ -1,7 +1,7 @@
 Template.edit_event.events
     'click #delete_doc': ->
         swal {
-            title: 'Remove Check-In?'
+            title: 'Remove Event?'
             type: 'warning'
             animation: true
             showCancelButton: true
@@ -12,7 +12,7 @@ Template.edit_event.events
         }, =>
             Docs.remove @_id
             swal 'Removed', 'success'
-            FlowRouter.go '/event'
+            FlowRouter.go '/events'
 
 # Template.event_tag_selection.onCreated -> 
 #     self = @

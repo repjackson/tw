@@ -1,12 +1,12 @@
 template(name='browse_check_ins')
     // .ui.container
     .ui.stackable.padded.grid
-        .centered.row
+        .centered.middle.aligned.row
             .three.wide.center.aligned.column
                 #create_checkin.ui.basic.circular.small.button 
                     +icon48 name='plant-tree' classes='ui inline mini image'
                     |Check In
-                    // +icon48 name='rotate-right' classes='ui avatar image'
+                    // +icon48 name='rotate-right' classes='ui mini inline image'
             .eight.wide.center.aligned.column
                 h1.ui.center.aligned.header
                     +icon96 name='forest'
@@ -15,7 +15,7 @@ template(name='browse_check_ins')
                 a.ui.basic.circular.small.button(href='/checkins/mine') 
                     +icon48 name='grass' classes='ui inline mini image'
                     |My Check-Ins
-                    // +icon48 name='rotate-right' classes='ui avatar image'
+                    // +icon48 name='rotate-right' classes='ui mini inline image'
         .row
             .five.wide.column
                 +theme_facet type='checkin'

@@ -1,8 +1,14 @@
 template(name='edit_need')
     .ui.padded.stackable.grid
-        .centered.row
+        .centered.middle.aligned.row
+            .two.wide.column
+                +save_button
             .ten.wide.column
                 h1.ui.center.aligned.header Edit #{title} Request
+            .two.wide.column
+                #delete_doc.ui.fluid.basic.small.circular.button(data-position='bottom center' data-tooltip='Delete')
+                    +icon48 name='delete' classes='ui mini inline image'
+
         .row
             .eleven.wide.column
                 .ui.form
@@ -11,12 +17,6 @@ template(name='edit_need')
                     +content
                     +edit_image
             .five.wide.column
-                if tags
-                    a.ui.fluid.green.big.button(href="/view/#{_id}") Save Request
-                else
-                    .ui.fluid.green.big.disabled.button
-                        | Add Tags to Save
-                #delete_doc.ui.small.fluid.red.button Delete
                 .ui.divider
                 +bounty
                 +edit_quantity

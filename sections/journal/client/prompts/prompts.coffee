@@ -3,6 +3,12 @@ FlowRouter.route '/journal/prompts', action: (params) ->
         main: 'journal_prompts'
 
 Template.journal_prompts.onCreated -> 
+    selected_theme_tags.clear()
+    selected_author_ids.clear()
+    selected_location_tags.clear()
+    selected_intention_tags.clear()
+    selected_timestamp_tags.clear()
+
     self = @
     @autorun => 
         Meteor.subscribe('facet', 

@@ -75,15 +75,15 @@ template(name='events')
     .ui.stackable.padded.grid
         .eight.wide.centered.column
             #create_event.ui.basic.fluid.big.button 
-                +icon48 name='tree-planting' classes='ui inline image'
-                |Events
+                +icon48 name='calendar-plus' classes='ui inline image'
+                |Add Event
             .ui.hidden.divider
             a.ui.basic.fluid.big.button(href="/events/mine")
-                +icon48 name='grass' classes='ui inline image'
+                +icon48 name='calendar' classes='ui inline image'
                 |My Events
             .ui.hidden.divider
             a.ui.basic.fluid.big.button(href="/events/browse") 
-                +icon48 name='forest' classes='ui inline image'
+                +icon48 name='party' classes='ui inline image'
                 |Browse Events
             // if isInRole 'dev'
             //     .ui.hidden.divider
