@@ -67,12 +67,12 @@ Template.tags.events
                     Docs.update Template.currentData()._id,
                         $addToSet: tags: val
                     $('#theme_tag_select').val ''
-            when 8
-                if val.length is 0
-                    result = Docs.findOne(Template.currentData()._id).tags.slice -1
-                    $('#theme_tag_select').val result[0]
-                    Docs.update Template.currentData()._id,
-                        $pop: tags: 1
+            # when 8
+            #     if val.length is 0
+            #         result = Docs.findOne(Template.currentData()._id).tags.slice -1
+            #         $('#theme_tag_select').val result[0]
+            #         Docs.update Template.currentData()._id,
+            #             $pop: tags: 1
 
 
     'click .doc_tag': (e,t)->
@@ -83,7 +83,7 @@ Template.tags.events
         
 Template.tags.helpers
     theme_select_settings: -> {
-        position: 'bottom'
+        position: 'top'
         limit: 10
         rules: [
             {
@@ -114,12 +114,12 @@ Template.location_tags.events
                     Docs.update Template.currentData()._id,
                         $addToSet: location_tags: val
                     $('#location_tag_select').val ''
-            when 8
-                if val.length is 0
-                    result = Docs.findOne(Template.currentData()._id).location_tags.slice -1
-                    $('#location_tag_select').val result[0]
-                    Docs.update Template.currentData()._id,
-                        $pop: location_tags: 1
+            # when 8
+            #     if val.length is 0
+            #         result = Docs.findOne(Template.currentData()._id).location_tags.slice -1
+            #         $('#location_tag_select').val result[0]
+            #         Docs.update Template.currentData()._id,
+            #             $pop: location_tags: 1
 
 
     'click .doc_tag': (e,t)->
@@ -151,7 +151,7 @@ Template.intention_tags.events
         $('#intention_tag_select').val('')
    
    
-   'keyup #intention_tag_select': (e,t)->
+    'keyup #intention_tag_select': (e,t)->
         e.preventDefault()
         val = $('#intention_tag_select').val().toLowerCase().trim()
         switch e.which
@@ -160,12 +160,12 @@ Template.intention_tags.events
                     Docs.update Template.currentData()._id,
                         $addToSet: intention_tags: val
                     $('#intention_tag_select').val ''
-            when 8
-                if val.length is 0
-                    result = Docs.findOne(Template.currentData()._id).intention_tags.slice -1
-                    $('#intention_tag_select').val result[0]
-                    Docs.update Template.currentData()._id,
-                        $pop: intention_tags: 1
+            # when 8
+            #     if val.length is 0
+            #         result = Docs.findOne(Template.currentData()._id).intention_tags.slice -1
+            #         $('#intention_tag_select').val result[0]
+            #         Docs.update Template.currentData()._id,
+            #             $pop: intention_tags: 1
 
     'click .doc_tag': (e,t)->
         tag = @valueOf()

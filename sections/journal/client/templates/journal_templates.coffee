@@ -4,7 +4,9 @@ if Meteor.isClient
             main: 'journal_templates'
     
     # @selected_author_ids = new ReactiveArray []
-
+    Template.journal_template.onCreated -> 
+        Meteor.subscribe 'author', @data._id
+        Meteor.subscribe 'child_docs', @data._id
     Template.journal_templates.onCreated -> 
         self = @
         @autorun => 
@@ -17,7 +19,7 @@ if Meteor.isClient
             type='journal_template'
             author_id=null
             parent_id=null
-            tag_limit=10
+            tag_limit=20
             doc_limit=Session.get 'doc_limit'
             view_published= Session.get 'view_published'
             view_read=null
@@ -29,14 +31,10 @@ if Meteor.isClient
 
             )
             
-                
-                
-                
-                
-    Template.view_journal.onCreated ->
-        Meteor.setTimeout ->
-            $('.progress').progress()
-        , 2000
+    # Template.view_journal.onCreated ->
+    #     Meteor.setTimeout ->
+    #         $('.progress').progress()
+    #     , 2000
 
     
     Template.journal_template.onRendered ->
@@ -62,6 +60,11 @@ if Meteor.isClient
     Template.journal_template.helpers
         tag_class: -> if @valueOf() in selected_theme_tags.array() then 'teal' else 'basic'
         journal_card_class: -> if @published then 'blue' else ''
+        journal_template_sections: ->
+            Docs.find {
+                type: 'journal_template_section'
+                parent_id: @_id
+                }, sort: number: 1
 
     Template.journal_template.events
         'click .tag': -> if @valueOf() in selected_theme_tags.array() then selected_theme_tags.remove(@valueOf()) else selected_theme_tags.push(@valueOf())

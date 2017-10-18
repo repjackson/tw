@@ -3,7 +3,7 @@ template(name='dashboard')
         // h2.ui.center.aligned.header 
         //     img(src="https://png.icons8.com/dashboard/color/96" title="Dashboard" width="96" height="96")
         //     |Dashboard
-        .ui.stackable.centered.three.column.grid
+        .ui.stackable.centered.four.column.grid
             .column
                 a#courses.ui.icon.center.aligned.header
                     i.icon
@@ -47,6 +47,11 @@ template(name='dashboard')
                         +icon96 name='handshake'
                     |Transactions
             if isInRole 'dev'
+                .column    
+                    a.ui.icon.center.aligned.header(href='/events')
+                        i.icon
+                            +icon96 name='calendar'
+                        | Events
                 .column    
                     a.ui.icon.center.aligned.header(href='/shop')
                         i.icon

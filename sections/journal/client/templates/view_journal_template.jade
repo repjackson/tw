@@ -1,15 +1,24 @@
 template(name='view_journal_template')
     .ui.stackable.padded.grid.document_container
-        .row
-            .four.wide.column
+        .centered.row
+            .three.wide.center.aligned.column
                 a.ui.basic.circular.small.button(href='/journal/templates')
-                    +icon48 name='double-left' classes='ui mini inline image'
+                    +icon48 name='chevron-left' classes='ui mini inline image'
                     strong Journal Templates
-            .eight.wide.column
-                h1.ui.center.aligned.header View Journal Template
+            .ten.wide.center.aligned.column
+                h1.ui.center.aligned.header 
+                    if icon_class
+                        +icon96 name=icon_class classes='ui spaced image'
+                    else
+                        +icon96 name='template' classes='ui spaced image'
+
+                    |View '#{title}' Journal Template
+            .three.wide.center.aligned.column
+                #create_response.ui.circular.large.basic.button
+                    +icon48 name='form' classes='ui mini inline image'
+                    strong Fill Out
         .centered.row
             .ten.wide.column
-                h2.ui.center.aligned.header #{title}
                 each journal_template_sections
                     .ui.segment 
                         .ui.header #{number}: #{title}
@@ -29,14 +38,14 @@ template(name='view_journal_template')
                     |Actions
                 +bookmark_button
                 +published
-                div
-                    #create_response.ui.circular.basic.button
-                        +icon48 name='form' classes='ui mini inline image'
-                        |Fill Out
+                // div
+                //     #create_response.ui.circular.basic.button
+                //         +icon48 name='form' classes='ui mini inline image'
+                //         |Fill Out
 
 
 template(name='template_responses')
-    .ui.header Journal Template Responses
+    .ui.header Public Journal Template Responses
     .ui.list
         each template_responses
             +template_response

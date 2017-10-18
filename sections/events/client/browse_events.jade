@@ -1,0 +1,66 @@
+template(name='browse_events')
+    // .ui.container
+    .ui.stackable.padded.grid
+        .centered.row
+            .three.wide.center.aligned.column
+                #create_event.ui.basic.circular.small.button 
+                    +icon48 name='calendar-plus' classes='ui inline mini image'
+                    |Add Event
+                    // +icon48 name='rotate-right' classes='ui avatar image'
+            .eight.wide.center.aligned.column
+                h1.ui.center.aligned.header
+                    +icon96 name='party'
+                    | Browse Events
+            .four.wide.center.aligned.column
+                a.ui.basic.circular.small.button(href='/events/mine') 
+                    +icon48 name='grass' classes='ui inline mini image'
+                    |My Check-Ins
+                    // +icon48 name='rotate-right' classes='ui avatar image'
+        .row
+            .five.wide.column
+                +theme_facet type='event'
+                +username_facet type='event'
+                +location_facet type='event'
+                +timestamp_facet type='event'
+            
+            .eight.wide.column
+                // .ui.centered.stackable.cards
+                .ui.relaxed.divided.items
+                    each public_events
+                        +browse_event_view
+            .three.wide.column
+                .ui.dividing.header
+                    +icon48 name='filter'
+                    |Filter
+                +bookmark_filter
+                +read_filter
+                +doc_limit
+
+
+
+
+template(name='browse_event_view')
+    .ui.segment(class=event_card_class)
+        .content
+            .description
+                +view_tags
+                if content
+                    .ui.basic.segment
+                        .large150 !{content}
+                .ui.horizontal.list
+                    .item
+                        .large130
+                            with author
+                                |by 
+                                if profile.image_id
+                                    img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                                a(href="/profile/#{username}") #{name} 
+                                +staus_indicator
+                            |#{when}
+                    .item
+                        if is_author
+                            +edit_link_button
+                        unless is_author
+                            +thanks_button
+                            +resonate_button
+                            +view_full_button

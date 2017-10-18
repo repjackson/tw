@@ -1,42 +1,58 @@
 template(name='journal_templates')
     .ui.padded.stackable.grid
-        .row
-            .four.wide.column
-                if isInRole 'dev'
-                    a.ui.basic.button(href="/journal") 
-                        +icon48 name='double_left' classes='ui mini inline image'
-                        |Journal
-            .eight.wide.column
+        .centered.middle.aligned.row
+            .four.wide.center.aligned.column
+                a.ui.basic.circular.button(href="/journal") 
+                    +icon48 name='chevron-left' classes='ui mini inline image'
+                    |Journal
+            .eight.wide.center.aligned.column
                 h1.ui.center.aligned.header
                     +icon96 name='template' 
                     | Journal Templates
                 // .ui.center.aligned.basic.segment
                 //     +doc_content tags='journal,templates,blurb'
-            .four.wide.column
+            .three.wide.center.aligned.column
                 if currentUser
                     +add_doc_button type='journal_template' button_text='Add Journal Template'
-        .row
+                else
+                    .ui.disabled.button Sign In to Add Journal Template
+        .centered.row
             .four.wide.column
                 +theme_facet type='journal_template'
-            .eight.wide.column
+                +username_facet type='journal_template'
+                +timestamp_facet type='journal_template'
+            .nine.wide.column
                 each journal_templates
                     +journal_template
-            .three.wide.column
+            .two.wide.column
                 .ui.dividing.header
                     +icon48 name='filter'
                     |Filter
-                +published_filter
+                if isInRole 'admin'
+                    +published_filter
                 +bookmark_filter
+                +doc_limit
+
 
 template(name='journal_template')
     .ui.segment(class=journal_card_class)
         .content
-            h3.ui.center.aligned.header #{title}
+            h3.ui.center.aligned.header 
+                if icon_class
+                    +icon48 name=icon_class classes='ui spaced image'
+                else
+                    +icon48 name='template' classes='ui spaced image'
+
+                a(href="/view/#{_id}") #{title}
             .meta
                 +icon48 name='hashtag' classes='ui mini inline image'
                 each tags
                     .ui.tiny.circular.compact.button.tag(class=tag_class) #{this}
-            +view_full_button
+        .ui.basic.segment
+            .ui.list
+                each journal_template_sections
+                    .item #{number}: #{title}
+        
         .content
             |by
             if author.profile.image_id
@@ -45,3 +61,4 @@ template(name='journal_template')
             with author
                 +staus_indicator
             |#{when}
+            +view_full_button

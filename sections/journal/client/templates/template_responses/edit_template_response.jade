@@ -8,7 +8,7 @@ template(name='edit_template_response')
             .ten.wide.column
                 h1.ui.center.aligned.header
                     +icon48 name='form' classes='ui mini spaced image'
-                    |Edit Journal Template Response
+                    |Edit '#{journal_template.title}' Journal Template Response
             .three.wide.column
                 // a.ui.basic.circular.small.button(href='/journal/browse') 
                 //     +icon48 name='reading' classes='ui avatar image'
@@ -16,13 +16,16 @@ template(name='edit_template_response')
 
         .centered.row
             .twelve.wide.column
-                with journal_template
-                    h2.ui.center.aligned.header #{title}
-                    each tags
-                        .ui.basic.label #{this}
+                // with journal_template
+                //     h2.ui.center.aligned.header #{title}
                 each journal_template_sections
                     +journal_template_section
             .four.wide.column.edit_journal_sidebar
+                .ui.dividing.header
+                    +icon48 name='hashtag' classes='ui mini spaced image'
+                    |Tags
+                each journal_template.tags
+                    .ui.basic.label #{this}
                 .ui.middle.aligned.grid
                     .twelve.wide.column
                         a.ui.fluid.basic.circular.button(href="/view/#{_id}" data-tooltip='Save')

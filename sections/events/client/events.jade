@@ -1,0 +1,93 @@
+// template(name='event')
+//     // .ui.divider
+//     .ui.stackable.grid
+//         .five.wide.column
+//             h1.ui.center.aligned.header Events
+//             if currentUser
+//                 #event.ui.green.fluid.button
+//                     i.large.icons
+//                         i.check.icon
+//                         i.plus.corner.icon
+//                     | Events
+//             // +doc_content tags='event,blurb'
+//             // a.ui.basic.button(href='/event/calendar') 
+//             //     i.calendar.icon
+//             //     |Calendar View
+//             .ui.icon.fluid.input
+//                 input#quick_add(type='text' placeholder='Quick Add with Tags (separated by spaces)')
+//                 i.green.plus.icon
+//             .ui.dividing.header Filters
+//             +view_published_toggle
+//             +view_read_toggle
+//             +theme_facet type='event'
+//             +username_facet type='event'
+//         .eleven.wide.column
+//             .ui.centered.stackable.cards
+//                 each docs
+//                     +event_doc_view
+
+
+// template(name='event_doc_view')
+//     .ui.card.document_container(class=event_card_class)
+//         .content
+//             |!{content}
+//             .meta
+//                 img.ui.avatar.image(src="https://png.icons8.com/tags/color/48" width="48" height="48")
+//                 each tags
+//                     .ui.tiny.circular.button.tag(class=tag_class) #{this}
+//             if location_tags
+//                 .ui.hidden.divider
+//                 .meta
+//                     img.ui.avatar.image(src="https://png.icons8.com/geo-fence/color/48" width="48" height="48")
+//                     each location_tags
+//                         .ui.tiny.circular.button.tag(class=tag_class) #{this}
+//             .ui.hidden.divider
+//         .content
+//             if is_author
+//                 |you
+//             else        
+//                 a(href="/profile/#{author.username}")
+//                     img.ui.avatar.image(src="{{c.url author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+//                     |#{author.name}
+//             |#{when}
+//             span.right.floated
+//                 if published
+//                     img.ui.avatar.image(src="https://png.icons8.com/eye/color/48" width="48" height="48")
+//                 else
+//                     img.ui.avatar.image(src="https://png.icons8.com/invisible/color/48" width="48" height="48")
+//         .content
+//             +bookmark_button
+//             unless is_author
+//                 +thanks_button
+//         .content
+//             span.right.floated
+//                 +view_full_button
+//             // +bookmark_button
+//             +edit_link_button
+                    
+                    
+// template(name='event_calendar_view')
+//     #event-calendar
+    
+template(name='events')
+    // .ui.center.aligned.basic.segment
+    //     +doc_content tags='journal,blurb'
+    .ui.stackable.padded.grid
+        .eight.wide.centered.column
+            #create_event.ui.basic.fluid.big.button 
+                +icon48 name='tree-planting' classes='ui inline image'
+                |Events
+            .ui.hidden.divider
+            a.ui.basic.fluid.big.button(href="/events/mine")
+                +icon48 name='grass' classes='ui inline image'
+                |My Events
+            .ui.hidden.divider
+            a.ui.basic.fluid.big.button(href="/events/browse") 
+                +icon48 name='forest' classes='ui inline image'
+                |Browse Events
+            // if isInRole 'dev'
+            //     .ui.hidden.divider
+            //     a.ui.basic.fluid.big.button(href="/events/tags") 
+            //         +icon48 name='monarch' classes='ui inline image'
+            //         |Edit Events Tags
+    

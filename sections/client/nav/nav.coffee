@@ -111,9 +111,9 @@ Template.nav.events
 
     'click #bug_icon': (e,t)->  
         console.log e
-        $(e.currentTarget).closest('.bug_icon').transition('jiggle')
 
-    # 'keyup #bug_description': (e,t)-> Session.set 'can_submit_bug', true
+    # 'click #test': (e,t)->
+    #     $(e.currentTarget).closest('#nav_menu').transition('fade right')
     
     'click #add_journal_entry': ->
         new_journal_id = Docs.insert

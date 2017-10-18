@@ -1,0 +1,49 @@
+template(name='edit_event')
+    h1.ui.center.aligned.header 
+        +icon96 name='tree-planting'
+        |Edit Event
+    .ui.stackable.grid.container.document_container
+        .twelve.wide.column
+            // .ui.segment
+            //     +event_tag_selection
+            +tags
+            +location_tags
+            .ui.hidden.divider
+            if components.content
+                +content
+
+        .four.wide.column
+            .ui.middle.aligned.grid
+                .eleven.wide.column
+                    if tags
+                        a.ui.fluid.basic.circular.button(href="/view/#{_id}" data-tooltip='Save')
+                            +icon48 name='checkmark' classes='ui mini inline image'
+                    else
+                        .ui.fluid.basic.disabled.circular.button Add Tags to Save
+                .five.wide.column
+                    #delete_doc.ui.fluid.basic.small.circular.button(data-tooltip='Delete')
+                        +icon48 name='delete' classes='ui mini inline image'
+            .ui.dividing.header 
+                +icon48 name='slider' classes='ui mini inline image'
+                |Components
+            +toggle_component name='content' label='Text' icon_name='outline'
+            .ui.dividing.header 
+                +icon48 name='sports-mode' classes='ui mini inline image'
+                |Actions
+            +published
+
+template(name='event_tag_selection')
+    .ui.center.aligned.header
+        +icon48 name='hint'
+        |Tag Suggestions
+    +theme_facet type='event_tag'
+    .ui.seven.cards
+        each event_tags
+            a.event_tag.card(class=event_tag_class)
+                // .image
+                .content
+                    if event_tag_selected
+                        +icon96 name=icon_class classes='ui centered image'
+                    else
+                        +ios96 name=icon_class classes='ui centered image'
+                    .center.aligned.header #{icon_class}

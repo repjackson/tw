@@ -78,7 +78,7 @@ template(name='doc_matches')
             |Top Doc Matches (#{top_doc_matches.length})
             i.dropdown.icon
             if currentUser
-                #compute_doc_matches.ui.icon.basic.button(data-content='Compute Matches')
+                #compute_doc_matches.ui.icon.basic.button(data-tooltip='Compute Matches')
                     i.refresh.icon
         .content.match_content
             if top_doc_matches
@@ -111,7 +111,7 @@ template(name='doc_match')
             .content
                 |!{match_doc.content}
             .extra
-                +view_full_button   
+                +view_full_button match_doc
                 
                 
 template(name='service_buttons')

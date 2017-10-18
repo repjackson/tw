@@ -1,13 +1,24 @@
 template(name='edit_journal_template')
     .ui.padded.stackable.grid.document_container
-        .centered.row
+        .centered.middle.aligned.row
+            .two.wide.column
+                if tags
+                    a.ui.large.fluid.basic.compact.circular.button(href="/view/#{_id}" data-position='bottom center' data-tooltip='Save')
+                        +icon48 name='checked' classes='ui mini inline image'
+                else
+                    .ui.large.basic.disabled.circular.button Add Tags to Save
             .ten.wide.column
                 h1.ui.center.aligned.header
-                    +icon48 name='template' classes='ui mini spaced image'
-                    |Edit Journal Template
-            .five.wide.column
-        .row
-            .twelve.wide.column
+                    if icon_class
+                        +icon96 name=icon_class classes='ui spaced image'
+                    else
+                        +icon96 name='template' classes='ui spaced image'
+                    |Edit '#{title}' Journal Template
+            .two.wide.column
+                #delete_doc.ui.small.basic.compact.circular.button(data-position='bottom center' data-tooltip='Delete')
+                    +icon48 name='delete' classes='ui mini inline image'
+        .centered.row
+            .ten.wide.column
                 +title
                 +tags
                 each journal_template_sections
@@ -15,24 +26,16 @@ template(name='edit_journal_template')
                         +title
                         +number
                         +delete_button
-            .four.wide.column.edit_journal_sidebar
-                .ui.middle.aligned.grid
-                    .twelve.wide.column
-                        if tags
-                            a.ui.fluid.basic.circular.button(href="/view/#{_id}" data-tooltip='Save')
-                                +icon48 name='checked' classes='ui mini inline image'
-                        else
-                            .ui.fluid.basic.disabled.circular.button Add Tags to Save
-                    .four.wide.column
-                        #delete_doc.ui.fluid.basic.circular.button(data-tooltip='Delete')
-                            +icon48 name='delete' classes='ui mini inline image'
+            .four.wide.column
                 +published
+                .ui.hidden.divider
                 div
                     #add_section.ui.basic.circular.button
                         +icon48 name='add-row' classes='ui mini inline image'
                         |Add Section
-                // .ui.divider
+                .ui.hidden.divider
+                +icon_class
                 // +created_date
-                .ui.divider
+                .ui.hidden.divider
                 if isInRole 'admin'
                     +edit_author
