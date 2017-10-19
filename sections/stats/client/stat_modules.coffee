@@ -25,7 +25,10 @@ Template.journal_stat.events
     'click .calculate_user_journal_stats': ->
         Meteor.call 'calculate_user_journal_stats', @_id
         
-        
+
+
+
+
 Template.check_in_stats.onCreated ->
     # @autorun -> Meteor.subscribe('people', selected_people_tags.array())
 
@@ -42,6 +45,26 @@ Template.check_in_stat.helpers
 Template.check_in_stat.events
     'click .calculate_user_check_in_stats': ->
         Meteor.call 'calculate_user_check_in_stats', @_id
+        
+        
+        
+        
+Template.read_stats.onCreated ->
+    # @autorun -> Meteor.subscribe('people', selected_people_tags.array())
+
+Template.read_stats.helpers
+    readers: ->
+        Meteor.users.find { "stats.read": $gt: 0},
+            sort: "stats.read": -1
+            
+            
+Template.read_stat.onCreated ->
+    # Meteor.subscribe 'usernames'
+Template.read_stat.helpers
+            
+Template.read_stat.events
+    'click .calculate_user_read_stats': ->
+        Meteor.call 'calculate_user_read_stats', @_id
         
         
         

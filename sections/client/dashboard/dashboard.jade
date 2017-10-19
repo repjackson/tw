@@ -58,15 +58,20 @@ template(name='dashboard')
                             +icon96 name='shop'
                         |Shop
                 .column    
-                    a.ui.icon.center.aligned.header(href='/requests')
+                    a.ui.icon.center.aligned.header(href='/badges')
                         i.icon
-                            +icon96 name='service-bell'
-                        | Requests
-                .column    
-                    a.ui.icon.center.aligned.header(href='/stats')
-                        i.icon
-                            +icon96 name='combo-chart'
-                        |Stats
+                            +icon96 name='medal'
+                        | Badges
+            .column    
+                a.ui.icon.center.aligned.header(href='/requests')
+                    i.icon
+                        +icon96 name='service-bell'
+                    | Requests
+            .column    
+                a.ui.icon.center.aligned.header(href='/stats')
+                    i.icon
+                        +icon96 name='combo-chart'
+                    |Stats
             .column    
                 a.ui.icon.center.aligned.header(href='/bugs')
                     i.icon
@@ -82,12 +87,12 @@ template(name='dashboard')
                     i.icon
                         +icon96 name='settings'
                     |Settings
-            if isInRole 'admin'
-                .column    
-                    a.ui.icon.center.aligned.header(href='/admin/dashboard')
-                        i.icon
-                            +icon96 name='monarch'
-                        | Admin
+            // if isInRole 'admin'
+            //     .column    
+            //         a.ui.icon.center.aligned.header(href='/admin/dashboard')
+            //             i.icon
+            //                 +icon96 name='monarch'
+            //             | Admin
             .column    
                 a#logout.ui.icon.center.aligned.header(href='#')
                     i.icon

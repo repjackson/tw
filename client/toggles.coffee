@@ -16,7 +16,7 @@ Template.toggle_component.events
     'click .toggle_component': (e,t)->
         name_input = Template.currentData().name
         $(e.currentTarget).closest('#toggle_component').transition('pulse')
-        has_component = Docs.findOne(FlowRouter.getParam('doc_id'))["components"]["#{name_input}"]
+        has_component = Docs.findOne(FlowRouter.getParam('doc_id'))["components"]?["#{name_input}"]
         has_component = !has_component
         # console.log 'name', Template.currentData().name
         Docs.update FlowRouter.getParam('doc_id'), 

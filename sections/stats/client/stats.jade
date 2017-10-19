@@ -1,6 +1,6 @@
 template(name='stats')
     .ui.stackable.padded.grid
-        .centered.row
+        .centered.middle.aligned.row
             .four.wide.center.aligned.column
                 h2.ui.header
                     +icon48 name='diamond' classes='ui inline image'
@@ -19,7 +19,7 @@ template(name='stats')
                 //     | Transactions
                 //     +icon48 name='rotate-left' classes='ui mini spaced image'
         .row
-            .four.wide.column
+            .three.wide.column
                 // .ui.dividing.header Actions
                 // a.ui.basic.fluid.button(href="/stats/send")
                 //     i.send.icon
@@ -31,9 +31,12 @@ template(name='stats')
                 .ui.dividing.header Filter Tags
                 +people_cloud
 
-            .four.wide.column
+            .three.wide.column
                 +leaderboard
-            .four.wide.column
+            .three.wide.column
                 +journal_stats
-            .four.wide.column
+            .three.wide.column
                 +check_in_stats
+            .three.wide.column
+                +read_stats
+                

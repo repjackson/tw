@@ -25,7 +25,7 @@ template(name='edit_lightbank')
                 #delete_doc.ui.fluid.basic.circular.button(data-position="bottom center" data-tooltip='Delete')
                     +icon48 name='delete' classes='ui mini inline image'
         .centered.row
-            .eleven.wide.column
+            .twelve.wide.column
                 with lightbank_entry
                     if is_custom
                         if components.youtube
@@ -46,7 +46,7 @@ template(name='edit_lightbank')
                         if is_passage
                             +author_name label='Passage'
                 +tags
-            .five.wide.column
+            .four.wide.column
                 .ui.header 
                     |created by 
                     if is_author

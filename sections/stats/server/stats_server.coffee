@@ -63,3 +63,17 @@ Meteor.methods
             
             
             
+    'calculate_user_read_stats': (user_id)->
+        total_read_count = Docs.find(
+            read_by: $in: [user_id]
+            ).count()
+        # console.log total_read_count
+        Meteor.users.update user_id,
+            $set: "stats.read": total_read_count
+            
+            
+
+    'calculate_user_stats': (user_id)->
+        Meteor.call 'calculate_user_read_stats', user_id
+        Meteor.call 'calculate_user_check_in_stats', user_id
+        Meteor.call 'calculate_user_journal_stats', user_id

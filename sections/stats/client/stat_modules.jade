@@ -61,3 +61,25 @@ template(name='check_in_stat')
                     .ui.item Private: #{stats.check_in.private}
 
 
+template(name='read_stats')
+    .ui.header 
+        +icon48 name='reading'
+        | Read Stats
+    .ui.list
+        each readers
+            +read_stat
+            
+template(name='read_stat')        
+    .item
+        .content
+            .header
+                img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                |#{name}
+                if isInRole 'dev'
+                    .calculate_user_read_stats.ui.icon.small.compact.button
+                        i.refresh.icon
+            .description
+                .ui.list
+                    .ui.item # of Read Documents: #{stats.read}
+
+

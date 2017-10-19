@@ -1,0 +1,27 @@
+template(name='edit_badge')
+    .ui.padded.stackable.grid
+        .centered.middle.aligned.row
+            .two.wide.column
+                +save_button
+            .ten.wide.column
+                h1.ui.center.aligned.header 
+                    +icon96 name=icon_class classes='ui spaced image'
+                    |Edit '#{title}' Badge
+            .two.wide.column
+                #delete_doc.ui.fluid.basic.small.circular.button(data-position='bottom center' data-tooltip='Delete')
+                    +icon48 name='delete' classes='ui mini inline image'
+
+        .row
+            .eleven.wide.column
+                .ui.form
+                    +title
+                    +tags
+                    +content
+                    .ui.header 
+                        +icon48 name='monarch' classes='ui mini inline image'
+                        |Badge Rule 
+                    +body_field
+            .five.wide.column
+                +bounty
+                .ui.hidden.divider
+                +icon_class
