@@ -19,7 +19,9 @@ if Meteor.isClient
             response_id = Docs.insert
                 parent_id: FlowRouter.getParam('doc_id')
                 type: 'journal'
-            FlowRouter.go("/edit/#{response_id}")
+            Session.set 'editing', true
+            
+            FlowRouter.go("/view/#{response_id}")
 
 if Meteor.isServer
     Meteor.publish 'journal_responses', (parent_doc_id)->

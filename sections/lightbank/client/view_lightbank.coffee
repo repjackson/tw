@@ -63,6 +63,8 @@ Template.view_lightbank.events
         }, =>
             Docs.remove @_id, ->
                 # swal 'Removed', 'success'
+                Session.set 'editing', false
+
                 FlowRouter.go '/lightbank'
             
 

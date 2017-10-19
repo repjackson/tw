@@ -17,7 +17,9 @@ if Meteor.isClient
     Template.quizzes.events
         'click #add_quiz': ->
             id = Docs.insert type: 'quiz'
-            FlowRouter.go "/edit/#{id}"
+            Session.set 'editing', true
+
+            FlowRouter.go "/view/#{id}"
     
     
 if Meteor.isServer

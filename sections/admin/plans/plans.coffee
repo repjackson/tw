@@ -16,7 +16,8 @@ if Meteor.isClient
         'click #add_plan': ->
             id = Docs.insert
                 type: 'plan'
-            FlowRouter.go "/edit/#{id}"
+            Session.set 'editing', true
+            FlowRouter.go "/view/#{id}"
     
     Template.plan.helpers
     

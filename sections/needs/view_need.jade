@@ -1,26 +1,47 @@
 template(name='view_need')
-    unless editing
-        .ui.stackable.padded.grid
-            .centered.middle.aligned.row
-                .three.wide.column
+    .ui.stackable.padded.grid
+        .centered.middle.aligned.row
+            .three.wide.column
+                unless editing
                     a.ui.basic.circular.button(href='/requests')
                         +icon48 name='service-bell' classes='ui mini spaced image'
                         | Requests
-                .ten.wide.column
+                else
+                    #delete_doc.ui.fluid.basic.small.circular.button(data-position='bottom center' data-tooltip='Delete')
+                        +icon48 name='delete' classes='ui mini inline image'
+            .ten.wide.column
+                unless editing
                     h1.ui.center.aligned.header 
                         if icon_class
                             +icon96 name=icon_class classes='ui spaced image'
                         else
                             +icon96 name='service-bell' classes='ui spaced image'
                         |View '#{title}' Request
-                .three.wide.column
+                else                        
+                    h1.ui.center.aligned.header 
+                        if icon_class
+                            +icon96 name=icon_class classes='ui spaced image'
+                        else
+                            +icon96 name='service-bell' classes='ui spaced image'
+                        |Edit '#{title}' Request
+            .three.wide.column
+                unless editing
                     if can_edit
                         +toggle_editing_button
                     // a.ui.basic.circular.button(href='/shop')
                     //     +icon48 name='shop' classes='ui mini spaced image'
                     //     | Shop
-            .row
-                .ten.wide.column
+                else                        
+                    +save_button
+        .row
+            .ten.wide.column
+                if editing
+                    .ui.form
+                        +title
+                        +tags
+                        +content
+                        +edit_image
+                else
                     .ui.item
                         .ui.small.image
                             if image_id
@@ -37,7 +58,21 @@ template(name='view_need')
                         .ui.basic.large.label.doc_tag #{this}
                     
                     // +need_transactions
-                .five.wide.column
+            .five.wide.column
+                if editing
+                    +bounty
+                    .ui.hidden.divider
+                    +icon_class
+                    .ui.hidden.divider
+                    +edit_recipient
+                    .ui.hidden.divider
+                    +edit_quantity
+                    .ui.hidden.divider
+                    +published
+                    if isInRole 'admin'
+                        .ui.hidden.divider
+                        +edit_author
+                else
                     .ui.header requested of 
                         img.ui.avatar.image(src="{{c.url recipient.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
                         |#{recipient.name}
@@ -56,46 +91,3 @@ template(name='view_need')
                         |Actions
                     // +submit_proposal
                     +bookmark_button
-                    // .ui.dividing.header
-                    //     +icon48 name='true-false' classes='ui inline mini image'
-                    //     |Reviews
-                    // h4 Review Points: #{points}
-        
-                    // +
-    else
-        .ui.padded.stackable.grid
-            .centered.middle.aligned.row
-                .two.wide.column
-                    #delete_doc.ui.fluid.basic.small.circular.button(data-position='bottom center' data-tooltip='Delete')
-                        +icon48 name='delete' classes='ui mini inline image'
-                .ten.wide.column
-                    h1.ui.center.aligned.header 
-                        if icon_class
-                            +icon96 name=icon_class classes='ui spaced image'
-                        else
-                            +icon96 name='service-bell' classes='ui spaced image'
-                        |Edit '#{title}' Request
-                .two.wide.column
-                    +save_button
-    
-            .row
-                .eleven.wide.column
-                    .ui.form
-                        +title
-                        +tags
-                        +content
-                        +edit_image
-                .five.wide.column
-                    +bounty
-                    .ui.hidden.divider
-                    +icon_class
-                    .ui.hidden.divider
-                    +edit_recipient
-                    .ui.hidden.divider
-                    +edit_quantity
-                    .ui.hidden.divider
-                    +published
-                    if isInRole 'admin'
-                        .ui.hidden.divider
-                        +edit_author
-                        

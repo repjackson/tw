@@ -42,8 +42,9 @@ Template.view_journal_template.events
         new_response_id = Docs.insert
             type: 'template_response'
             parent_id: FlowRouter.getParam('doc_id')
+        Session.set 'editing', true
             
-        FlowRouter.go "/edit/#{new_response_id}"    
+        FlowRouter.go "/view/#{new_response_id}"    
         
 
 Template.template_responses.helpers

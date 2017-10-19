@@ -22,6 +22,8 @@ Template.edit_template_response.events
             confirmButtonColor: '#da5347'
         }, =>
             Docs.remove @_id
+            Session.set 'editing', false
+            
             swal 'Removed', 'success'
             FlowRouter.go '/journal/templates'
             

@@ -44,7 +44,8 @@ Template.events.events
         new_event_doc_id = Docs.insert 
             tags: []
             type: 'event'
-        FlowRouter.go("/edit/#{new_event_doc_id}")
+        Session.set 'editing', true
+        FlowRouter.go("/view/#{new_event_doc_id}")
 
     'keyup #quick_add': (e,t)->
         e.preventDefault

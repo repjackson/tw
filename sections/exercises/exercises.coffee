@@ -19,7 +19,8 @@ if Meteor.isClient
     Template.exercises.events
         'click #add_exercise': ->
             id = Docs.insert type: 'exercise'
-            FlowRouter.go "/edit/#{id}"
+            Session.set 'editing', true    
+            FlowRouter.go "/view/#{id}"
     
     
 if Meteor.isServer

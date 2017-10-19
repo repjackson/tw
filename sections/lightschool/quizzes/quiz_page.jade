@@ -13,12 +13,6 @@ template(name='quiz_page')
                 img.ui.centered.image(src="{{c.url image_id height=500 width=800 background='white' crop='lpad'}}")
             h1.ui.header
                 |#{title}
-                if isInRole 'admin'
-                    a.ui.basic.button(href="/edit/#{_id}")
-                        i.red.configure.icon
-                        |Edit
-                // each tags
-                //     .ui.basic.label #{this}
 
             .ui.stackable.divided.grid
                 .twelve.wide.column
@@ -68,9 +62,6 @@ template(name='quiz_page')
                     //     .ui.dividing.header 
                     //         i.large.red.configure.icon
                     //         |Admin
-                    //     a.ui.basic.button(href="/edit/#{_id}")
-                    //         i.pencil.icon
-                    //         |Edit Quiz
                     //     if published
                     //         .ui.green.label Published
                     //     else

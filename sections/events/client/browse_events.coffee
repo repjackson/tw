@@ -33,7 +33,8 @@ Template.browse_events.onCreated ->
 Template.browse_events.events
     'click #create_event': ->
         new_event_doc_id = Docs.insert type: 'event'
-        FlowRouter.go("/edit/#{new_event_doc_id}")
+        Session.set 'editing', true
+        FlowRouter.go("/view/#{new_event_doc_id}")
 
 
 

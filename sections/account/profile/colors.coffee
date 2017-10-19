@@ -33,7 +33,8 @@ if Meteor.isClient
     Template.colors.events
         'click #add_color': ->
             id = Docs.insert type: 'personality_color'
-            FlowRouter.go "/edit/#{id}"
+            Session.set 'editing', true
+            FlowRouter.go "/view/#{id}"
 
         'click .increase_index': (e,t)->
             if Meteor.user().profile.colors

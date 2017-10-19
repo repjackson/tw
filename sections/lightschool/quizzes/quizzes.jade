@@ -43,8 +43,3 @@ template(name='quiz_card')
                     h2.ui.header #{title}
             .description
                 |!{body}
-        .content
-            if isInRole 'admin'
-                a.ui.basic.right.floated.button(href="/edit/#{_id}")
-                    i.red.configure.icon
-                    |Edit Quiz    

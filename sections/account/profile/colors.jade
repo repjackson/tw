@@ -17,7 +17,7 @@ template(name='colors')
                 .content
                     |!{content}
                     if isInRole 'admin'
-                        a(href="/edit/#{_id}") Edit Color
+                        a(href="/view/#{_id}") Edit Color
         unless me.profile.colors
             #generate_colors.ui.basic.button Generate Colors
         else

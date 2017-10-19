@@ -11,6 +11,8 @@ Template.view_event.events
             confirmButtonColor: '#da5347'
         }, =>
             Docs.remove @_id
+            Session.set 'editing', false
+
             swal 'Removed', 'success'
             FlowRouter.go '/events'
 

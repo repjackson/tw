@@ -33,7 +33,8 @@ Template.browse_check_ins.onCreated ->
 Template.browse_check_ins.events
     'click #create_checkin': ->
         new_checkin_doc_id = Docs.insert type: 'checkin'
-        FlowRouter.go("/edit/#{new_checkin_doc_id}")
+        Session.set 'editing', true
+        FlowRouter.go("/view/#{new_checkin_doc_id}")
 
 
 

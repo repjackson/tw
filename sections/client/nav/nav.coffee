@@ -81,14 +81,13 @@ Template.nav.events
     # 'click #test': ->
     #     Notification.requestPermission()
     
-    # 'click #toggle_off_admin_mode': ->Session.set 'admin_mode', false
-    # 'click #toggle_on_admin_mode': ->Session.set 'admin_mode', true
+    'click #toggle_off_admin_mode': ->Session.set 'admin_mode', false
+    'click #toggle_on_admin_mode': ->Session.set 'admin_mode', true
     
-    'click #create_check_in': ->
-        new_checkin_doc_id = Docs.insert 
-            tags: []
-            type: 'checkin'
-        FlowRouter.go("/edit/#{new_checkin_doc_id}")
+    'click #check_in': ->
+        new_checkin_doc_id = Docs.insert type: 'checkin'
+        Session.set 'editing', true
+        FlowRouter.go("/view/#{new_checkin_doc_id}")
     
     "click #report_bug": ->
         Session.set 'bug_link', window.location.pathname
@@ -111,10 +110,17 @@ Template.nav.events
             ).modal('show')
         # bug_description = prompt "Please decribe the bug:"
 
+    'click #bug_icon': (e,t)->  
+        console.log e
+
+    # 'click #test': (e,t)->
+    #     $(e.currentTarget).closest('#nav_menu').transition('fade right')
+    
     'click #add_journal_entry': ->
         new_journal_id = Docs.insert
             type: 'journal'
-        FlowRouter.go("/edit/#{new_journal_id}")
+        Session.set 'editing', true
+        FlowRouter.go("/view/#{new_journal_id}")
     
 Template.left_sidebar.onRendered ->
     @autorun =>

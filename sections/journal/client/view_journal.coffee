@@ -12,6 +12,7 @@ Template.view_journal.events
         }, =>
             Docs.remove @_id
             swal 'Removed', 'success'
+            Session.set 'editing', false
             FlowRouter.go '/journal/mine'
 
 Template.view_journal.onCreated -> 

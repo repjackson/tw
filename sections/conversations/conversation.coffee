@@ -60,6 +60,8 @@ if Meteor.isClient
                 Meteor.call 'close_conversation', self._id, ->
                     FlowRouter.go '/conversations'
                 # console.log self
+                Session.set 'editing', false
+
                 # swal "Submission Removed", "",'success'
                 return
         

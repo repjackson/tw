@@ -1,32 +1,39 @@
 template(name='view_lightbank')
-    unless editing
-        .ui.stackable.padded.grid
-            .centered.middle.aligned.row
-                .four.wide.center.aligned.column
+    .ui.stackable.padded.grid
+        .centered.middle.aligned.row
+            .four.wide.center.aligned.column
+                if editing
+                    #delete_doc.ui.fluid.basic.circular.button(data-position="bottom center" data-tooltip='Delete')
+                        +icon48 name='delete' classes='ui mini inline image'
+                else
                     a.ui.basic.circular.button(href='/lightbank')
                         +icon48 name='chevron-left' classes='ui mini inline image'
                         |Lightbank
-                .eight.wide.center.aligned.column
-                    h1.ui.center.aligned.header 
-                        if is_quote
-                            +icon96 name='get-quote' classes='ui mini inline image'
-                            | View Quote
-                        else if is_poem
-                            +icon96 name='close-up' classes='ui mini inline image'
-                            | View Poem
-                        else if is_journal_prompt
-                            +icon96 name='question-mark' classes='ui mini inline image'
-                            | View Journal Prompt
-                        else if is_passage
-                            +icon96 name='align-left' classes='ui mini spaced image'
-                            | View Passage
-                        else
-                            | View Lightbank Entry
-                .four.wide.center.aligned.column
+            .eight.wide.center.aligned.column
+                h1.ui.center.aligned.header 
+                    if is_quote
+                        +icon96 name='get-quote' classes='ui mini inline image'
+                        | Quote
+                    else if is_poem
+                        +icon96 name='close-up' classes='ui mini inline image'
+                        | Poem
+                    else if is_journal_prompt
+                        +icon96 name='question-mark' classes='ui mini inline image'
+                        | Journal Prompt
+                    else if is_passage
+                        +icon96 name='align-left' classes='ui mini spaced image'
+                        | Passage
+                    else
+                        | Lightbank Entry
+                        
+            .four.wide.center.aligned.column
+                if editing
+                    +save_button
+                else
                     if can_edit
                         +toggle_editing_button
-    
-            .centered.row
+        .centered.row
+            unless editing
                 .ten.wide.column
                     if has_youtube
                         if youtube
@@ -60,61 +67,7 @@ template(name='view_lightbank')
                                     +doc_emotion
                             +analyzed_watson_keywords
                     // +child_docs
-                .four.wide.column
-                    // if isInRole 'admin'
-                    //     .ui.dividing.header 
-                    //         +icon48 name='monarch' classes='ui mini inline image'
-                    //         |Admin
-                    .ui.header added by #{author.name} #{when}
-                    .ui.dividing.header 
-                        +icon48 name='combo-chart'
-                        | Stats
-                    if child_count
-                        .ui.header Response Count: #{child_count}
-                    .ui.dividing.header 
-                        +icon48 name='sports-mode'
-                        |Actions
-                    +bookmark_button
-                    +thanks_button
-                    +reflect_button
-                    +resonate_button
-                    +resonates_list 
-                    if can_edit
-                        // +call_watson
-                        // +published_status
-                        +published
-                    .ui.dividing.header 
-                        +icon48 name='hashtag'
-                        | Themes
-                    each tags
-                        .ui.basic.large.label.doc_tag #{this}
-    else    
-        .ui.stackable.padded.grid.document_container
-            .centered.middle.aligned.row
-                .two.wide.column
-                    +save_button
-                .eight.wide.column
-                    h1.ui.center.aligned.header
-                        // +icon96 name='nature' classes='ui mini inline image'
-                        h2.ui.center.aligned.header
-                            if is_quote
-                                +icon48 name='get-quote' classes='ui mini inline image'
-                                |Edit Quote
-                            else if is_poem
-                                +icon48 name='close-up' classes='ui mini inline image'
-                                | Edit Poem
-                            else if is_journal_prompt
-                                +icon48 name='question-mark' classes='ui mini inline image'
-                                | Edit Journal Prompt
-                            else if is_passage
-                                +icon48 name='align-left' classes='ui mini spaced image'
-                                | Edit Passage
-                            else
-                                |Edit Lightbank Entry
-                .two.wide.column
-                    #delete_doc.ui.fluid.basic.circular.button(data-position="bottom center" data-tooltip='Delete')
-                        +icon48 name='delete' classes='ui mini inline image'
-            .centered.row
+            else    
                 .twelve.wide.column
                     with lightbank_entry
                         if is_custom
@@ -136,7 +89,8 @@ template(name='view_lightbank')
                             if is_passage
                                 +author_name label='Passage'
                     +tags
-                .four.wide.column
+            .four.wide.column
+                if editing
                     .ui.header 
                         |created by 
                         if is_author
@@ -172,3 +126,28 @@ template(name='view_lightbank')
         
                     if isInRole 'admin'
                         +edit_author
+                
+                else
+                    .ui.header added by #{author.name} #{when}
+                    .ui.dividing.header 
+                        +icon48 name='combo-chart'
+                        | Stats
+                    if child_count
+                        .ui.header Response Count: #{child_count}
+                    .ui.dividing.header 
+                        +icon48 name='sports-mode'
+                        |Actions
+                    +bookmark_button
+                    +thanks_button
+                    +reflect_button
+                    +resonate_button
+                    +resonates_list 
+                    if can_edit
+                        // +call_watson
+                        // +published_status
+                        +published
+                    .ui.dividing.header 
+                        +icon48 name='hashtag'
+                        | Themes
+                    each tags
+                        .ui.basic.large.label.doc_tag #{this}

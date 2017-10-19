@@ -44,7 +44,8 @@ Template.checkin.events
         new_checkin_doc_id = Docs.insert 
             tags: []
             type: 'checkin'
-        FlowRouter.go("/edit/#{new_checkin_doc_id}")
+        Session.set 'editing', true
+        FlowRouter.go("/view/#{new_checkin_doc_id}")
 
     'keyup #quick_add': (e,t)->
         e.preventDefault
@@ -58,13 +59,3 @@ Template.checkin.events
                 for tag in split_tags
                     selected_theme_tags.push tag
 
-# Template.checkin_doc_view.helpers
-#     tag_class: -> if @valueOf() in selected_theme_tags.array() then 'teal' else 'basic'
-
-#     # checkin_tags: -> _.difference(@tags, 'checkin')
-    
-#     checkin_card_class: -> if @published then 'blue' else ''
-
-
-# Template.checkin_doc_view.events
-#     'click .tag': -> if @valueOf() in selected_theme_tags.array() then selected_theme_tags.remove(@valueOf()) else selected_theme_tags.push(@valueOf())

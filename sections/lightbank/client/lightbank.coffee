@@ -61,7 +61,8 @@ Template.lightbank.events
             type:'lightbank'
             tags: selected_theme_tags.array()
         Session.set 'view_unpublished', true
-        FlowRouter.go "/edit/#{new_id}"
+        Session.set 'editing', true
+        FlowRouter.go "/view/#{new_id}"
 
 
 Template.lightbank_doc_view.helpers

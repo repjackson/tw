@@ -117,7 +117,8 @@ if Meteor.isClient
         'click #toggle_on_admin_mode': ->Session.set 'admin_mode', true
         'click #check_in': ->
             new_checkin_doc_id = Docs.insert type: 'checkin'
-            FlowRouter.go("/edit/#{new_checkin_doc_id}")
+            Session.set 'editing', true
+            FlowRouter.go("/view/#{new_checkin_doc_id}")
 
     Template.alpha_menu.helpers
         children: ->
