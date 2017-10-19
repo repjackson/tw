@@ -1,0 +1,101 @@
+template(name='view_journal')
+    .ui.stackable.padded.grid.document_container
+        .row
+            .four.wide.center.aligned.column
+                if editing
+                    #delete_doc.ui.fluid.basic.circular.button(data-position="bottom center" data-tooltip='Delete')
+                        +icon48 name='delete' classes='ui mini inline image'
+                else  
+                    a.ui.basic.circular.button(href='/journal')
+                        +icon48 name='journal' classes='ui mini inline image'
+                        strong Journal
+            .eight.wide.center.aligned.column
+                if editing
+                    h1.ui.center.aligned.header 
+                        +icon48 name='edit-file' classes='ui mini spaced image'
+                        |Edit Journal Entry
+                    +toggle_zen_mode_button
+                else
+                    h1.ui.center.aligned.header 
+                        |View Journal Entry
+            .four.wide.center.aligned.column
+                if editing
+                    +save_button
+                else
+                    if can_edit
+                        +toggle_editing_button
+        .centered.row
+            if editing
+                if zen_mode
+                    .sixteen.wide.column
+                        if parent_id
+                            +parent_doc_segment
+                            .ui.hidden.divider
+                        .ui.form
+                            +intention_tags
+                            +location_tags
+                            +content
+                            +tags
+                            if watson 
+                                +analyzed_watson_keywords
+                else
+                    .twelve.wide.column
+                        if parent_id
+                            +parent_doc_segment
+                            .ui.hidden.divider
+                        .ui.form
+                            +intention_tags
+                            +location_tags
+                            +content
+                            +tags
+                            if watson 
+                                +analyzed_watson_keywords
+                    .four.wide.column.edit_journal_sidebar
+                        +published
+                        // .ui.divider
+                        // +created_date
+                        .ui.divider
+                        // +request_tori_feedback
+                        +call_watson
+                        if watson
+                            +doc_sentiment
+                            +doc_emotion
+                            +watson_keywords
+                        if isInRole 'admin'
+                            +edit_author
+            else
+                .ten.wide.column
+                    +parent_doc_segment
+                    .ui.basic.segment
+                        .large130 !{content}
+                    if published
+                        +comments
+                    +doc_matches
+                    if watson
+                        +analyzed_watson_keywords
+                    +child_docs
+                    +view_tags_sidebar
+                .five.wide.column
+                    .ui.header
+                        |by
+                        img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+                        |#{author.name}
+                        with author
+                            +staus_indicator
+                        h3.ui.sub.header #{when}
+                    // if is_author
+                    //     +call_watson
+                    if watson
+                        +doc_sentiment
+                        +doc_emotion
+                        +watson_keywords
+                    .ui.dividing.header Actions
+                    +bookmark_button
+                    +reflect_button
+                    unless is_author
+                        +resonate_button
+                        +thanks_button
+                    +resonates_list
+                    +mark_read
+                    // +read_by
+                    +published

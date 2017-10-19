@@ -105,23 +105,18 @@ Template.toggle_friend.events
 
 Template.published.events
     'click #publish': (e,t)-> 
-        # $(e.currentTarget).closest('.document_container').transition('bounce')
-        Docs.update @_id, $set: published: 1
+        $(e.currentTarget).closest('.document_container').transition('bounce')
+        Docs.update @_id, $set: published: true
     'click #unpublish': (e,t)-> 
-        # $(e.currentTarget).closest('.document_container').transition('shake')
-        Docs.update @_id, $set: published: -1
-    'click #publish_anonymously': (e,t)-> 
-        # $(e.currentTarget).closest('.document_container').transition('pulse')
-        Docs.update @_id, $set: published: 0
+        $(e.currentTarget).closest('.document_container').transition('shake')
+        Docs.update @_id, $set: published: false
 
-Template.published.helpers
-    published: -> @published is 1 
-    published_anonymously: -> @published is 0 
-    private: -> @published is -1
-    published_class: -> if @published is 1  then 'blue' else 'basic'
-    published_anonymously_class: -> if @published is 0  then 'blue' else 'basic'
-    private_class: -> if @published is -1 then 'blue' else 'basic'
-         
+    'mouseenter .ui.dividing.header i.icon': (e,t)->
+        $(e.currentTarget).closest('.icon').addClass('loading')
+        
+    'mouseleave .ui.dividing.header i.icon': (e,t)->
+        $(e.currentTarget).closest('.icon').removeClass('loading')
+        
         
 Template.edit_button.onCreated ->
     @editing = new ReactiveVar(false)
@@ -540,3 +535,6 @@ Template.toggle_zen_mode_button.events
         # $(e.currentTarget).find('#nav_menu').transition('fade left')
         Session.set 'zen_mode', true
     
+    
+Template.toggle_editing_button.events
+    'click #toggle_editing': -> Session.set 'editing', true

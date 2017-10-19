@@ -1,4 +1,4 @@
-Template.edit_journal.events
+Template.view_journal.events
     'click #delete_doc': ->
         swal {
             title: 'Remove Journal Entry?'
@@ -14,7 +14,7 @@ Template.edit_journal.events
             swal 'Removed', 'success'
             FlowRouter.go '/journal/mine'
 
-Template.edit_journal.onCreated -> 
+Template.view_journal.onCreated -> 
     self = @
     @autorun => 
         Meteor.subscribe('facet', 

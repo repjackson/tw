@@ -170,4 +170,5 @@ Template.view_read_toggle.events
 # Template.response_count.onCreated ->
 #     @autorun => Meteor.subscribe 'response_count', @data._id
 
-    
+Template.save_button.events
+    'click #toggle_off_editing': -> Session.set 'editing', false

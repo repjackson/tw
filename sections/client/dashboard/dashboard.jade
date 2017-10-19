@@ -1,9 +1,9 @@
 template(name='dashboard')
-    .ui.text.container
+    .ui.container
         // h2.ui.center.aligned.header 
         //     img(src="https://png.icons8.com/dashboard/color/96" title="Dashboard" width="96" height="96")
         //     |Dashboard
-        .ui.stackable.centered.four.column.grid
+        .ui.stackable.centered.five.column.grid
             .column
                 a#courses.ui.icon.center.aligned.header
                     i.icon
@@ -62,6 +62,16 @@ template(name='dashboard')
                         i.icon
                             +icon96 name='medal'
                         | Badges
+                .column    
+                    a.ui.icon.center.aligned.header(href='/goals')
+                        i.icon
+                            +icon96 name='goal'
+                        | Goals
+                .column    
+                    a.ui.icon.center.aligned.header(href='/flow')
+                        i.icon
+                            +icon96 name='flow'
+                        | Flow
             .column    
                 a.ui.icon.center.aligned.header(href='/requests')
                     i.icon

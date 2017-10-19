@@ -54,26 +54,34 @@ template(name='body_field')
 
 template(name='tags')
     // .ui.segment
-    .ui.header
-        +icon48 name='hashtag' classes='ui mini spaced image'
-        |Theme Tags &nbsp;
-        // .ui.mini.input
-        //     // i.plus.icon
-        //     input#add_tag(type='text' placeholder='Add...' maxlength='50' )
-        .ui.mini.input
-            +inputAutocomplete settings=theme_select_settings id="theme_tag_select" class="" autocomplete="off"
+    if editing
+        .ui.header
+            +icon48 name='hashtag' classes='ui mini spaced image'
+            |Theme Tags &nbsp;
+            // .ui.mini.input
+            //     // i.plus.icon
+            //     input#add_tag(type='text' placeholder='Add...' maxlength='50' )
+            .ui.mini.input
+                +inputAutocomplete settings=theme_select_settings id="theme_tag_select" class="" autocomplete="off"
+            each tags
+                // a.ui.basic.circular.button.doc_tag #{this}
+                a.ui.basic.animated.fade.circular.button.doc_tag
+                    .visible.content
+                        // i.icon
+                        //     +icon24 name='geo-fence'
+                        |#{this}
+                    .hidden.content
+                        |&nbsp;
+                        |&nbsp;
+                        i.remove.icon
+                        // |#{this}
+    else
+        .ui.dividing.header
+            +icon48 name='hashtag' classes='ui inline mini image'
+            |Tags
         each tags
-            // a.ui.basic.circular.button.doc_tag #{this}
-            a.ui.basic.animated.fade.circular.button.doc_tag
-                .visible.content
-                    // i.icon
-                    //     +icon24 name='geo-fence'
-                    |#{this}
-                .hidden.content
-                    |&nbsp;
-                    |&nbsp;
-                    i.remove.icon
-                    // |#{this}
+            .ui.basic.large.label.doc_tag #{this}
+
             
 
 template(name='location_tags')
@@ -278,3 +286,20 @@ template(name='edit_recipient')
                 |#{username}
         +inputAutocomplete settings=recipient_select_settings id="recipient_select" class="" autocomplete="off" placeholder='Lookup...'
                     
+template(name='start_date')
+    .ui.labeled.input
+        .ui.basic.label Start Date
+        input#start_date(type='date' value=start_date)
+
+template(name='start_time')
+    .ui.labeled.input
+        .ui.basic.label Start Time
+        input#start_time(type='time' value=start_time)
+            
+template(name='end_date')
+    if editing
+        .ui.labeled.input
+            .ui.basic.label End Date/Time
+            input#end_date(type='date' value=end_date)
+    else
+        .ui.header End Date #{end_date}

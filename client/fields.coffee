@@ -82,6 +82,9 @@ Template.tags.events
         $('#theme_tag_select').val(tag)
         
 Template.tags.helpers
+    # editing_mode: -> 
+    #     console.log Session.get 'editing'
+    #     if Session.equals 'editing', true then true else false
     theme_select_settings: -> {
         position: 'top'
         limit: 10
@@ -636,3 +639,14 @@ Template.edit_recipient.helpers
     #     participants
 
 
+Template.start_date.events
+    'blur #start_date': ->
+        start_date = $('#start_date').val()
+        Docs.update @_id,
+            $set: start_date: start_date
+    
+Template.end_date.events
+    'blur #end_date': ->
+        end_date = $('#end_date').val()
+        Docs.update @_id,
+            $set: end_date: end_date

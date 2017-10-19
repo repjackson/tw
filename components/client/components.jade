@@ -198,4 +198,9 @@ template(name='published_status')
         .ui.basic.large.label
             +icon48 name='invisible' classes='ui inline tiny image'
             | Not Published
-    
+template(name='save_button')
+    if tags
+        #toggle_off_editing.ui.fluid.basic.circular.button(data-position='bottom center' data-tooltip='Save')
+            +icon48 name='checkmark' classes='ui mini inline image'
+    else
+        .ui.fluid.basic.disabled.circular.button Add Tags to Save

@@ -5,6 +5,7 @@ Session.setDefault 'cart_item', null
 Session.setDefault 'zen_mode', false
 Session.setDefault 'doc_limit', 10
 Session.setDefault 'view_complete', null
+Session.setDefault 'editing', false
 
 
 Session.setDefault 'view_private', true
@@ -43,6 +44,7 @@ Template.registerHelper 'can_edit', () ->  Meteor.userId() is @author_id or Role
 
 Template.registerHelper 'zen_mode', () -> Session.get 'zen_mode'
 Template.registerHelper 'admin_mode', () ->  Session.get 'admin_mode'
+Template.registerHelper 'editing', () ->  Session.get 'editing'
 
 Template.registerHelper 'publish_when', () -> moment(@publish_date).fromNow()
 

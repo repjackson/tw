@@ -237,21 +237,11 @@ template(name='mark_doc_complete_button')
             // | Complete
         
 template(name='mark_doc_approved_button')
-    if isInRole 'dev'
-        if approved
-            .unapprove.ui.circular.icon.basic.button(data-tooltip='Unapprove')
-                +ultraviolet_icon40 name='approval' classes='ui mini inline image'
-        else
-            .approve.ui.circular.icon.basic.button(data-tooltip='Approve')
-                +icon48 name='approval' classes='ui mini inline image'
+    if approved
+        .unapprove.ui.circular.icon.basic.button(data-tooltip='Unapprove')
+            +ultraviolet_icon40 name='approval' classes='ui mini inline image'
     else
-        if approved
-            .ui.basic.circular.label(data-tooltip='Unapproved')
-                +ultraviolet_icon40 name='approval' classes='ui mini inline image'
-        else
-            .ui.basic.circular.label(data-tooltip='Approved')
-                +icon48 name='approval' classes='ui mini inline image'
-         
+        .approve.ui.circular.icon.basic.button(data-tooltip='Approve')
          
 template(name='bookmark_button')
     .bookmark_button.ui.circular.icon.button(class=bookmark_button_class data-tooltip='Bookmark') 
@@ -282,8 +272,12 @@ template(name='view_full_button')
 
 template(name='edit_link_button')
     if can_edit
-        // +call_watson
         a.ui.basic.icon.large.circular.button(href="/edit/#{_id}" data-position="bottom center" data-tooltip='Edit')
+            +icon48 name='edit' classes='ui mini inline image'
+
+template(name='toggle_editing_button')
+    if can_edit
+        #toggle_editing.ui.basic.icon.large.circular.button(data-position="bottom center" data-tooltip='Edit')
             +icon48 name='edit' classes='ui mini inline image'
 
 
