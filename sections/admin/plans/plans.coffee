@@ -22,7 +22,7 @@ if Meteor.isClient
     
     Template.plan.events
     
-    Template.edit_plan.events
+    Template.view_plan.events
         'click #delete_plan': ->
             if confirm 'Delete this Plan?'
                 Docs.remove @_id

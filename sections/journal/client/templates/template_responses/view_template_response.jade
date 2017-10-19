@@ -10,9 +10,12 @@ template(name='view_template_response')
                     +icon48 name='form' classes='ui mini spaced image'
                     |View '#{journal_template.title}' Journal Template Response
             .four.wide.center.aligned.column
-                a.ui.basic.circular.small.button(href='/journal/templates') 
-                    +icon48 name='template' classes='ui mini inline image'
-                    |Journal Templates
+                if can_edit
+                    +toggle_editing_button
+                else
+                    a.ui.basic.circular.small.button(href='/journal/templates') 
+                        +icon48 name='template' classes='ui mini inline image'
+                        |Journal Templates
 
         .centered.row
             .twelve.wide.column
@@ -23,8 +26,6 @@ template(name='view_template_response')
                 each view_journal_template_sections
                     +view_journal_template_section
             .four.wide.column.edit_journal_sidebar
-                if can_edit
-                    +edit_link_button
                 .ui.header
                     |by
                     img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")

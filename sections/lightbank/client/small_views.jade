@@ -28,12 +28,10 @@ template(name='poem_view_small')
             +resonate_button
             +reflect_button
             +bookmark_button
-            +view_full_button
             +mark_read
             .ui.basic.label #{child_count} Responses
 
-            if can_edit
-                +edit_link_button
+            +view_full_button
                 
 template(name='quote_view_small')                    
     .ui.fluid.card(class=read_segment_class)
@@ -67,8 +65,6 @@ template(name='quote_view_small')
             +mark_read
             .ui.basic.label #{child_count} Responses
 
-            if can_edit
-                +edit_link_button
             +view_full_button
                 
 template(name='journal_prompt_view_small')                    
@@ -90,9 +86,7 @@ template(name='journal_prompt_view_small')
             +reflect_button
             +bookmark_button
             +mark_read
-            if can_edit
-                +edit_link_button
-            +view_full_button
             .ui.basic.label #{child_count} Responses
+            +view_full_button
 
                                     

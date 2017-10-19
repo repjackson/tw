@@ -63,9 +63,7 @@ template(name='browse_entry_view')
                         .ui.basic.segment
                             span.right.floated
                                 +view_full_button
-                            if is_author
-                                +edit_link_button
-                            else
+                            unless is_author
                                 +bookmark_button
                                 +thanks_button
                             +mark_read

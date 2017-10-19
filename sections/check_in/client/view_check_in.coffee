@@ -1,7 +1,7 @@
-Template.edit_event.events
+Template.view_checkin.events
     'click #delete_doc': ->
         swal {
-            title: 'Remove Event?'
+            title: 'Remove Check-In?'
             type: 'warning'
             animation: true
             showCancelButton: true
@@ -12,9 +12,9 @@ Template.edit_event.events
         }, =>
             Docs.remove @_id
             swal 'Removed', 'success'
-            FlowRouter.go '/events'
+            FlowRouter.go '/checkins/mine'
 
-# Template.event_tag_selection.onCreated -> 
+# Template.check_in_tag_selection.onCreated -> 
 #     self = @
 #     @autorun => 
 #         Meteor.subscribe('facet', 
@@ -23,7 +23,7 @@ Template.edit_event.events
 #             selected_location_tags.array()
 #             selected_intention_tags.array()
 #             selected_timestamp_tags.array()
-#             type='event_tag'
+#             type='check_in_tag'
 #             author_id=null
 #             parent_id=null
 #             tag_limit=20
@@ -35,7 +35,7 @@ Template.edit_event.events
 #             view_complete=null
 #             )
 
-Template.edit_event.onCreated -> 
+Template.view_checkin.onCreated -> 
     self = @
     @autorun => 
         Meteor.subscribe('facet', 
@@ -44,7 +44,7 @@ Template.edit_event.onCreated ->
             selected_location_tags.array()
             selected_intention_tags.array()
             selected_timestamp_tags.array()
-            type='event'
+            type='checkin'
             author_id=null
             parent_id=null
             tag_limit=50
@@ -57,29 +57,29 @@ Template.edit_event.onCreated ->
             )
 
 
-Template.event_tag_selection.helpers
-    event_tags: -> 
-        Docs.find {type: 'event_tag'},
+Template.check_in_tag_selection.helpers
+    check_in_tags: -> 
+        Docs.find {type: 'check_in_tag'},
             limit: 7
          
-Template.event_tag_selection.helpers
-    event_tag_class: ->
-        event_doc = Docs.findOne FlowRouter.getParam('doc_id')
-        if @icon_class in event_doc.tags then 'blue raised' else ''
+Template.check_in_tag_selection.helpers
+    check_in_tag_class: ->
+        check_in_doc = Docs.findOne FlowRouter.getParam('doc_id')
+        if @icon_class in check_in_doc.tags then 'blue raised' else ''
     
-    event_tag_selected: ->
-        event_doc = Docs.findOne FlowRouter.getParam('doc_id')
-        if @icon_class in event_doc.tags then true else false
+    check_in_tag_selected: ->
+        check_in_doc = Docs.findOne FlowRouter.getParam('doc_id')
+        if @icon_class in check_in_doc.tags then true else false
          
-Template.event_tag_selection.events
-    'click .event_tag': (e,t)->
+Template.check_in_tag_selection.events
+    'click .check_in_tag': (e,t)->
         # console.log @
-        event_doc = Docs.findOne FlowRouter.getParam('doc_id')
-        # console.log event_doc
-        if @icon_class in event_doc.tags
-            Docs.update event_doc._id,
+        check_in_doc = Docs.findOne FlowRouter.getParam('doc_id')
+        # console.log check_in_doc
+        if @icon_class in check_in_doc.tags
+            Docs.update check_in_doc._id,
                 $pull: tags: @icon_class
         else
-            Docs.update event_doc._id,
+            Docs.update check_in_doc._id,
                 $addToSet: tags: @icon_class
          

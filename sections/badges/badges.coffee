@@ -63,7 +63,7 @@ if Meteor.isClient
         'click .badge_tag': ->
             if @valueOf() in selected_theme_tags.array() then selected_theme_tags.remove @valueOf() else selected_theme_tags.push @valueOf()
     
-    Template.edit_badge.events
+    Template.view_badge.events
         'click #delete_doc': ->
             if confirm 'Delete this badge?'
                 Docs.remove @_id

@@ -180,15 +180,15 @@ template(name='published')
         if can_edit
             #publish.ui.icon.button(data-tooltip='Publish' class=published_class)
                 +icon48 name='eye' classes='ui mini inline image'
-                if published
+                if is_published
                     | Published
             #publish_anonymously.ui.icon.button(data-tooltip='Publish Anonymously' class=published_anonymously_class)
                 +icon48 name='ignore' classes='ui mini inline image'
                 if published_anonymously
-                    |Published Anonymously
+                    |Anonymous
             #unpublish.ui.icon.button(data-tooltip='Unpublish' class=private_class)
                 +icon48 name='invisible' classes='ui mini inline image'
-                if private
+                if is_private
                     | Private
         // .ui.large.basic.label
         //     +icon48 name='invisible' classes='ui mini inline image'
@@ -270,10 +270,6 @@ template(name='view_full_button')
     a.ui.basic.circular.icon.button(href="/view/#{_id}" class=classes data-tooltip='View Full')
         +icon48 name="double-right" classes='ui mini inline image'
 
-template(name='edit_link_button')
-    if can_edit
-        a.ui.basic.icon.large.circular.button(href="/edit/#{_id}" data-position="bottom center" data-tooltip='Edit')
-            +icon48 name='edit' classes='ui mini inline image'
 
 template(name='toggle_editing_button')
     if can_edit

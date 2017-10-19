@@ -103,19 +103,21 @@ Template.toggle_friend.events
 
         Meteor.call 'add_notification', @_id, 'unfriended', Meteor.userId()
 
+Template.published.helpers
+    published_class: -> if @published is 1 then 'blue' else 'basic'
+    published_anonymously_class: -> if @published is 0 then 'blue' else 'basic'
+    private_class: -> if @published is -1 then 'blue' else 'basic'
+    is_published: -> @published is 1
+    published_anonymously: -> @published is 0
+    is_private: -> @published is -1
 Template.published.events
     'click #publish': (e,t)-> 
-        $(e.currentTarget).closest('.document_container').transition('bounce')
-        Docs.update @_id, $set: published: true
+        Docs.update @_id, $set: published: 1
     'click #unpublish': (e,t)-> 
-        $(e.currentTarget).closest('.document_container').transition('shake')
-        Docs.update @_id, $set: published: false
-
-    'mouseenter .ui.dividing.header i.icon': (e,t)->
-        $(e.currentTarget).closest('.icon').addClass('loading')
+        Docs.update @_id, $set: published: -1
+    'click #publish_anonymously': ->
+        Docs.update @_id, $set: published: 0
         
-    'mouseleave .ui.dividing.header i.icon': (e,t)->
-        $(e.currentTarget).closest('.icon').removeClass('loading')
         
         
 Template.edit_button.onCreated ->

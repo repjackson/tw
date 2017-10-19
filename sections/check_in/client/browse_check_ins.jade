@@ -58,8 +58,6 @@ template(name='browse_checkin_view')
                                 +staus_indicator
                             |#{when}
                     .item
-                        if is_author
-                            +edit_link_button
                         unless is_author
                             +thanks_button
                             +resonate_button

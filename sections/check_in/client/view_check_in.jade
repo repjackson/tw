@@ -1,52 +1,100 @@
 template(name='view_checkin')
-    .ui.stackable.padded.grid
-        .middle.aligned.centered.row
-            .four.wide.center.aligned.column
-                a.ui.basic.circular.button(href='/checkin')
-                    +icon48 name='sprout' classes='ui mini inline image'
-                    strong Check In's
-            .eight.wide.center.aligned.column
-                h1.ui.center.aligned.header View Check In
-            .four.wide.center.aligned.column
-                if is_author
-                    // +service_buttons
-                    +edit_link_button
-        .centered.row
-            .ten.wide.column
-                .ui.dividing.header 
-                    +icon48 name='hashtag' classes='ui mini inline image'
-                    |Tags
-                each tags
-                    .ui.basic.large.label.doc_tag #{this}
-                .ui.dividing.header 
-                    +icon48 name='sofa' classes='ui mini inline image'
-                    |Location Tags
-                each location_tags
-                    .ui.basic.large.label.location_tag #{this}
-                .ui.basic.segment
-                    |!{content}
-                if published
-                    +comments
-                // +doc_matches
-                // if watson
-                //     +analyzed_watson_keywords
-            .five.wide.column
-                .ui.header
-                    img.ui.avatar.image(src="{{c.url author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
-                    |by #{author.name}
-                .ui.sub.header #{when}
-                // .ui.divider
-                .ui.dividing.header Actions
-                +resonates_list
-                if is_author
+    unless editing
+        .ui.stackable.padded.grid
+            .middle.aligned.centered.row
+                .four.wide.center.aligned.column
+                    a.ui.basic.circular.button(href='/checkin')
+                        +icon48 name='sprout' classes='ui mini inline image'
+                        strong Check In's
+                .eight.wide.center.aligned.column
+                    h1.ui.center.aligned.header View Check In
+                .four.wide.center.aligned.column
+                    if is_author
+                        // +service_buttons
+                        +toggle_editing_button
+            .centered.row
+                .ten.wide.column
+                    .ui.dividing.header 
+                        +icon48 name='hashtag' classes='ui mini inline image'
+                        |Tags
+                    each tags
+                        .ui.basic.large.label.doc_tag #{this}
+                    .ui.dividing.header 
+                        +icon48 name='sofa' classes='ui mini inline image'
+                        |Location Tags
+                    each location_tags
+                        .ui.basic.large.label.location_tag #{this}
+                    .ui.basic.segment
+                        |!{content}
+                    if published
+                        +comments
+                    // +doc_matches
+                    // if watson
+                    //     +analyzed_watson_keywords
+                .five.wide.column
+                    .ui.header
+                        img.ui.avatar.image(src="{{c.url author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                        |by #{author.name}
+                    .ui.sub.header #{when}
+                    // .ui.divider
+                    .ui.dividing.header Actions
+                    +resonates_list
+                    if is_author
+                        +published
+                    else
+                        div
+                            +thanks_button
+                            +bookmark_button
+                            +resonate_button
+                        
+                    // if watson
+                    //     +doc_sentiment
+                    //     +doc_emotion
+                    //     +watson_keywords
+    else
+        .ui.stackable.padded.grid
+            .centered.middle.aligned.row
+                .two.wide.column
+                    +save_button
+                .ten.wide.column
+                    h1.ui.center.aligned.header 
+                        +icon96 name='tree-planting'
+                        |Edit Check In
+                .two.wide.column
+                    #delete_doc.ui.fluid.basic.small.circular.button(data-position='bottom center' data-tooltip='Delete')
+                        +icon48 name='delete' classes='ui mini inline image'
+            .centered.row
+                .ten.wide.column
+                    // .ui.segment
+                    //     +check_in_tag_selection
+                    +tags
+                    +location_tags
+                    .ui.hidden.divider
+                    if components.content
+                        +content
+        
+                .four.wide.column
+                    .ui.dividing.header 
+                        +icon48 name='slider' classes='ui mini inline image'
+                        |Components
+                    +toggle_component name='content' label='Text' icon_name='outline'
+                    .ui.dividing.header 
+                        +icon48 name='sports-mode' classes='ui mini inline image'
+                        |Actions
                     +published
-                else
-                    div
-                        +thanks_button
-                        +bookmark_button
-                        +resonate_button
-                    
-                // if watson
-                //     +doc_sentiment
-                //     +doc_emotion
-                //     +watson_keywords
+
+template(name='check_in_tag_selection')
+    .ui.center.aligned.header
+        +icon48 name='hint'
+        |Tag Suggestions
+    +theme_facet type='check_in_tag'
+    .ui.seven.cards
+        each check_in_tags
+            a.check_in_tag.card(class=check_in_tag_class)
+                // .image
+                .content
+                    if check_in_tag_selected
+                        +icon96 name=icon_class classes='ui centered image'
+                    else
+                        +ios96 name=icon_class classes='ui centered image'
+                    .center.aligned.header #{icon_class}

@@ -63,7 +63,7 @@ if Meteor.isClient
         'click .need_tag': ->
             if @valueOf() in selected_theme_tags.array() then selected_theme_tags.remove @valueOf() else selected_theme_tags.push @valueOf()
     
-    Template.edit_need.events
+    Template.view_need.events
         'click #delete_doc': ->
             if confirm 'Delete this request?'
                 Docs.remove @_id
