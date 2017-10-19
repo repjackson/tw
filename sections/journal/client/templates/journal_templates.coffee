@@ -69,12 +69,6 @@ if Meteor.isClient
     Template.journal_template.events
         'click .tag': -> if @valueOf() in selected_theme_tags.array() then selected_theme_tags.remove(@valueOf()) else selected_theme_tags.push(@valueOf())
 
-    Template.edit_journal.events
-        'click #delete_doc': ->
-            if confirm 'Delete this journal entry?'
-                Docs.remove @_id
-                FlowRouter.go '/journal'
-
 
 
 if Meteor.isServer

@@ -1,15 +1,19 @@
 template(name='people')
-    .ui.container
-        +doc_content tags='people cloud,blurb'
-        .ui.dividing.header Tag Filter
-        +people_cloud
-        .ui.hidden.divider
-        .ui.centered.stackable.cards
-            each people
-                +person
-        // .ui.stackable.grid
-        //     // .four.wide.column
-        //     .eleven.wide.column
+    .ui.stackable.padded.grid
+        .four.wide.column
+            .ui.dividing.header
+                +icon48 name='hashtag' classes='ui inline image'
+                | Browse Tags
+            +people_cloud
+        .twelve.wide.column
+            +doc_content tags='people cloud,blurb'
+            .ui.hidden.divider
+            .ui.centered.stackable.cards
+                each people
+                    +person
+            // .ui.stackable.grid
+            //     // .four.wide.column
+            //     .eleven.wide.column
 
 
 template(name='person')

@@ -53,6 +53,7 @@ Meteor.publish 'me', ->
             cart: 1
             completed_ids: 1
             bookmarked_ids: 1
+            stats: 1
     
 
 publishComposite 'doc', (id, ancestor_levels, descendent_levels)->
@@ -72,6 +73,13 @@ publishComposite 'doc', (id, ancestor_levels, descendent_levels)->
                 find: (doc)->
                     Meteor.users.find
                         _id: doc.author_id
+            }
+            {
+                # recipient
+                find: (doc)->
+                    if doc.recipient_id
+                        Meteor.users.find
+                            _id: doc.recipient_id
             }
             {
                 # object

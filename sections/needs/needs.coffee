@@ -6,6 +6,7 @@ if Meteor.isClient
     
     Template.need.onCreated ->
         Meteor.subscribe 'author', @data._id
+        Meteor.subscribe 'doc', @data._id
         
         
     Template.needs.onCreated ->

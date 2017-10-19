@@ -67,10 +67,10 @@ template(name='nav')
                 .ui.big.menu
                     .header.item
                         .ui.header Journal
-                    // #add_journal_entry.ui.item 
-                    //     i.icon
-                    //         +icon24 name='create-document'
-                    //     |New Entry
+                    #add_journal_entry.ui.item 
+                        i.icon
+                            +icon24 name='create-document'
+                        |New Entry
                     a.ui.item(href="/journal/mine")
                         i.icon
                             .ui.image
@@ -97,6 +97,10 @@ template(name='nav')
                 .ui.big.menu
                     .header.item
                         .ui.header Check-Ins
+                    #create_check_in.ui.item
+                        i.icon
+                            +icon24 name='plus' classes='ui image'
+                        | Add Check In
                     a.ui.item(href='/checkins/mine')
                         i.icon
                             +icon24 name='grass' classes='ui image'
@@ -152,7 +156,7 @@ template(name='nav')
             // if can_submit_bug
             .ui.green.ok.ok_button.button
                 // i.checkmark.icon
-                // +icon24 name='checkmark' classes='ui mini inline image'
+                // +icon24 name='checkmark' classes='ui avatar image'
                 | Submit
     // .ui.basic.small.confirm.modal
     //     h1.ui.center.aligned.header Thanks!

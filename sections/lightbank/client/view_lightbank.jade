@@ -7,33 +7,26 @@ template(name='view_lightbank')
                     |Lightbank
             .eight.wide.center.aligned.column
                 h1.ui.center.aligned.header 
-                    +icon96 name='nature' classes='ui tiny inline image'
                     if is_quote
-                        h2.ui.center.aligned.header
-                            +icon48 name='get-quote' classes='ui mini inline image'
-                            |Edit Quote
+                        +icon96 name='get-quote' classes='ui mini inline image'
+                        | View Quote
                     else if is_poem
-                        h2.ui.center.aligned.header
-                            +icon48 name='close-up' classes='ui mini inline image'
-                            | Edit Poem
+                        +icon96 name='close-up' classes='ui mini inline image'
+                        | View Poem
                     else if is_journal_prompt
-                        h2.ui.center.aligned.header
-                            +icon48 name='question-mark' classes='ui mini inline image'
-                            | Edit Journal Prompt
+                        +icon96 name='question-mark' classes='ui mini inline image'
+                        | View Journal Prompt
                     else if is_passage
-                        h2.ui.center.aligned.header
-                            +icon48 name='align-left' classes='ui mini spaced image'
-                            | Edit Passage
+                        +icon96 name='align-left' classes='ui mini spaced image'
+                        | View Passage
                     else
-                        |Edit Lightbank Entry
-    
-                    |View #{type_label}
+                        | View Lightbank Entry
             .four.wide.center.aligned.column
                 if can_edit
                     +edit_link_button
 
-        .centered.row.document_container
-            .ten.wide.column.document_container
+        .centered.row
+            .ten.wide.column
                 if has_youtube
                     if youtube
                         +view_youtube
@@ -45,13 +38,14 @@ template(name='view_lightbank')
                         .ui.fluid.image
                             img(src=image_url)
                 // if has_content
-                .large
+                .large130
                     |!{content}
                 if author_name
                     h3.ui.header
                         |- #{author_name}
                 // if journal_prompt
-                +journal_responses
+                if child_count
+                    +journal_responses
                 // +comments    
                 // +tag_rating
                 if watson
@@ -65,7 +59,7 @@ template(name='view_lightbank')
                                 +doc_emotion
                         +analyzed_watson_keywords
                 // +child_docs
-            .five.wide.column
+            .four.wide.column
                 // if isInRole 'admin'
                 //     .ui.dividing.header 
                 //         +icon48 name='monarch' classes='ui mini inline image'

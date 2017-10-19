@@ -47,20 +47,27 @@ template(name='needs')
 
 template(name='need')
     .item
+        .ui.tiny.image
+            if icon_class
+                +icon96 name=icon_class
+            else
+                +ultraviolet_icon80 name='service-bell'
         .content
             a.header(href="/view/#{_id}") #{title}
             .meta
-                |Bounty: 
-                // if dollar_price
-                //     | $#{dollar_price}
-                | #{bounty} 
-                if one_point
-                    |pt
-                else
-                    |pts
+                | #{bounty}pt Offer 
             .meta
+                |by 
                 img.ui.avatar.image(src="{{c.url author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
-                |by #{author.name}
+                |#{author.name}
+                if recipient_id
+                    |of 
+                    img.ui.avatar.spaced.image(src="{{c.url recipient.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                    | &nbsp; #{recipient.name}
+                else
+                    |to 
+                    +icon24 name='people' classes='ui spaced image'
+                    | &nbsp; Anyone
             .meta
                 each tags
                     .ui.small.label(class=tag_class) #{this}

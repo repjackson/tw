@@ -1,30 +1,48 @@
 template(name='view_need')
     .ui.stackable.padded.grid
-        .centered.row
-            .four.wide.column
+        .centered.middle.aligned.row
+            .three.wide.column
                 a.ui.basic.circular.button(href='/requests')
                     +icon48 name='service-bell' classes='ui mini spaced image'
                     | Requests
-            .twelve.wide.column
-                h1.ui.center.aligned.header View '#{title}' Request
-            // .four.wide.column
-            //     a.ui.basic.circular.button(href='/needs')
-            //         +icon48 name='needs' classes='ui mini spaced image'
-            //         | needs
+            .ten.wide.column
+                h1.ui.center.aligned.header 
+                    if icon_class
+                        +icon96 name=icon_class classes='ui spaced image'
+                    else
+                        +icon96 name='service-bell' classes='ui spaced image'
+                    |View '#{title}' Request
+            .three.wide.column
+                if can_edit
+                    +edit_link_button
+
+                // a.ui.basic.circular.button(href='/shop')
+                //     +icon48 name='shop' classes='ui mini spaced image'
+                //     | Shop
         .row
             .ten.wide.column
-                .ui.items
-                    .ui.item
-                        .ui.small.image
-                            if image_id
-                                img(src="{{c.url image_id}}")
-                            if image_url
-                                img(src=image_url)
-                        .content
-                            .description
-                                |!{content}
-                +need_transactions
+                .ui.item
+                    .ui.small.image
+                        if image_id
+                            img(src="{{c.url image_id}}")
+                        if image_url
+                            img(src=image_url)
+                    .content
+                        .description
+                            |!{content}
+                .ui.dividing.header
+                    +icon48 name='hashtag' classes='ui inline mini image'
+                    |Tags
+                each tags
+                    .ui.basic.large.label.doc_tag #{this}
+                
+                // +need_transactions
             .five.wide.column
+                .ui.header requested of 
+                    img.ui.avatar.image(src="{{c.url recipient.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                    |#{recipient.name}
+                    with recipient
+                        +staus_indicator
                 .ui.header by 
                     img.ui.avatar.image(src="{{c.url author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
                     |#{author.name}
@@ -32,49 +50,42 @@ template(name='view_need')
                         +staus_indicator
                     .sub.header #{when}
                 .ui.header Quantity: #{quantity}
-                .ui.basic.definition.table
-                    // thead
-                    //     tr
-                    //         th
-                    //         th 
-                    //             +icon48 name='diamond' classes='ui inline image'
-                    tbody
-                        tr
-                            td Your Balance
-                            td 
-                                .ui.header 
-                                    |#{currentUser.points}
-                                    +icon48 name='diamond' classes='ui inline mini image'
-                                    // .label points
-                        tr
-                            td Bounty
-                            td 
-                                .ui.header 
-                                    | #{bounty} 
-                                    +icon48 name='diamond' classes='ui inline mini image'
-                        tr
-                            td Balance after bounty
-                            td
-                                .ui.header 
-                                    | #{balance_after_transaction}
-                                    +icon48 name='diamond' classes='ui inline mini image'
+                .ui.header Offer: #{bounty}
+                // .ui.basic.definition.table
+                //     // thead
+                //     //     tr
+                //     //         th
+                //     //         th 
+                //     //             +icon48 name='diamond' classes='ui inline image'
+                //     tbody
+                //         tr
+                //             td Your Balance
+                //             td 
+                //                 .ui.header 
+                //                     |#{currentUser.points}
+                //                     +icon48 name='diamond' classes='ui inline mini image'
+                //                     // .label points
+                //         tr
+                //             td Bounty
+                //             td 
+                //                 .ui.header 
+                //                     | #{bounty} 
+                //                     +icon48 name='diamond' classes='ui inline mini image'
+                //         tr
+                //             td Balance after bounty
+                //             td
+                //                 .ui.header 
+                //                     | #{balance_after_transaction}
+                //                     +icon48 name='diamond' classes='ui inline mini image'
                 .ui.dividing.header 
                     +icon48 name='sports-mode' classes='ui inline mini image'
                     |Actions
                 // +submit_proposal
                 +bookmark_button
-                if can_edit
-                    +edit_link_button
-        
-                .ui.dividing.header
-                    +icon48 name='true-false' classes='ui inline mini image'
-                    |Reviews
-                h4 Review Points: #{points}
+                // .ui.dividing.header
+                //     +icon48 name='true-false' classes='ui inline mini image'
+                //     |Reviews
+                // h4 Review Points: #{points}
     
-                .ui.dividing.header
-                    +icon48 name='hashtag' classes='ui inline mini image'
-                    |Tags
-                each tags
-                    .ui.basic.large.label.doc_tag #{this}
                 // +published
                 // +tag_rating

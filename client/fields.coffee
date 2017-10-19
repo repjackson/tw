@@ -603,3 +603,36 @@ Template.edit_author.helpers
     #     for participant_id in @participant_ids
     #         participants.push Meteor.users.findOne(participant_id)
     #     participants
+Template.edit_recipient.onCreated ->
+    Meteor.subscribe 'usernames'
+
+Template.edit_recipient.events
+    "autocompleteselect input": (event, template, doc) ->
+        # console.log("selected ", doc)
+        Docs.update FlowRouter.getParam('doc_id'),
+            $set: recipient_id: doc._id
+        $('#recipient_select').val("")
+
+
+Template.edit_recipient.helpers
+    recipient_select_settings: -> {
+        position: 'bottom'
+        limit: 10
+        rules: [
+            {
+                collection: Meteor.users
+                field: 'username'
+                matchAll: true
+                template: Template.user_pill
+            }
+            ]
+    }
+
+    # edit_participant: ->
+    #     participants = []
+        
+    #     for participant_id in @participant_ids
+    #         participants.push Meteor.users.findOne(participant_id)
+    #     participants
+
+

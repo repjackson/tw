@@ -30,6 +30,8 @@ template(name='poem_view_small')
             +bookmark_button
             +view_full_button
             +mark_read
+            .ui.basic.label #{child_count} Responses
+
             if can_edit
                 +edit_link_button
                 
@@ -49,7 +51,7 @@ template(name='quote_view_small')
             //     span.right.floated 
             //         .expand_card.ui.basic.icon.button
             //             i.expand.icon
-            .light_bank_content(class=light_bank_content_class)
+            .large130
                 |!{content}
             h4.ui.header
                 |- #{author_name}
@@ -63,6 +65,8 @@ template(name='quote_view_small')
             +reflect_button
             +bookmark_button
             +mark_read
+            .ui.basic.label #{child_count} Responses
+
             if can_edit
                 +edit_link_button
             +view_full_button

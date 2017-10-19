@@ -1,4 +1,6 @@
 if Meteor.isClient
+    Template.view_need.onCreated ->
+    
     Template.view_need.helpers
         balance_after_transaction: -> Meteor.user().points + @bounty
 

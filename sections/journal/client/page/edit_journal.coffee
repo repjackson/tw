@@ -1,8 +1,18 @@
 Template.edit_journal.events
     'click #delete_doc': ->
-        if confirm 'Delete this journal entry?'
+        swal {
+            title: 'Remove Journal Entry?'
+            type: 'warning'
+            animation: true
+            showCancelButton: true
+            closeOnConfirm: true
+            cancelButtonText: 'Cancel'
+            confirmButtonText: 'Remove'
+            confirmButtonColor: '#da5347'
+        }, =>
             Docs.remove @_id
-            FlowRouter.go '/journal'
+            swal 'Removed', 'success'
+            FlowRouter.go '/journal/mine'
 
 Template.edit_journal.onCreated -> 
     self = @

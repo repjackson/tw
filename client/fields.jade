@@ -136,6 +136,7 @@ template(name='bounty')
     .ui.labeled.input
         .ui.basic.label Bounty
         input#bounty(type='number' min='0' value=bounty)
+        .ui.basic.label pts
 
 
 template(name='link')
@@ -256,16 +257,24 @@ template(name='participants')
             
             
 template(name='edit_author')
-    .ui.segment
-        .ui.red.header Admin
-        .ui.form
-            .field
-                label Author: 
-                    with author
-                        .ui.large.basic.label
-                            img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
-                            |#{username}
-                .ui.left.icon.large.input
-                    i.search.icon
-                    +inputAutocomplete settings=author_edit_settings id="author_select" class="" autocomplete="off" placeholder='Change Author'
+    .ui.dividing.header
+        +icon48 name='monarch' classes='ui mini spaced image'
+        |Admin
+    .ui.labeled.input
+        .ui.basic.label 
+            |Author: 
+            with author
+                img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                |#{username}
+        +inputAutocomplete settings=author_edit_settings id="author_select" class="" autocomplete="off" placeholder='Lookup...'
+                    
+                    
+template(name='edit_recipient')
+    .ui.labeled.input
+        .ui.basic.label 
+            |Recipient: 
+            with recipient
+                img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                |#{username}
+        +inputAutocomplete settings=recipient_select_settings id="recipient_select" class="" autocomplete="off" placeholder='Lookup...'
                     

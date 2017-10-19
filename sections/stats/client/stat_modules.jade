@@ -10,7 +10,7 @@ template(name='leaderboard')
                         img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
                         |#{name}
                     .description
-                        |Points: #{points}
+                        |#{points} pts
     
     
 template(name='journal_stats')
@@ -27,7 +27,37 @@ template(name='journal_stat')
             .header
                 img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
                 |#{name}
+                if isInRole 'dev'
+                    .calculate_user_journal_stats.ui.icon.small.compact.button
+                        i.refresh.icon
             .description
-                .ui.header Total Journal Entries: #{total_journal_count}
-                .ui.header Public Journal Entries: #{public_journal_count}
-                .ui.header Private Journal Entries: #{private_journal_count}
+                .ui.list
+                    .ui.item Total: #{stats.journal.total}
+                    .ui.item Public: #{stats.journal.published}
+                    .ui.item Private: #{stats.journal.private}
+
+
+template(name='check_in_stats')
+    .ui.header 
+        +icon48 name='sprout'
+        | Check-In Stats
+    .ui.list
+        each check_in_authors
+            +check_in_stat
+            
+template(name='check_in_stat')        
+    .item
+        .content
+            .header
+                img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                |#{name}
+                if isInRole 'dev'
+                    .calculate_user_check_in_stats.ui.icon.small.compact.button
+                        i.refresh.icon
+            .description
+                .ui.list
+                    .ui.item Total: #{stats.check_in.total}
+                    .ui.item Public: #{stats.check_in.published}
+                    .ui.item Private: #{stats.check_in.private}
+
+

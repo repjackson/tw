@@ -1,15 +1,15 @@
 template(name='stats')
     .ui.stackable.padded.grid
         .centered.row
-            .four.wide.column
+            .four.wide.center.aligned.column
                 h2.ui.header
                     +icon48 name='diamond' classes='ui inline image'
                     |#{currentUser.points}
-            .eight.wide.column
+            .eight.wide.center.aligned.column
                 h1.ui.center.aligned.header 
                     +icon96 name='combo-chart'
                     | Stats
-            .four.wide.column
+            .four.wide.center.aligned.column
                 a.ui.basic.circular.small.button(href='/shop') 
                     +icon48 name='shop' classes='ui mini spaced image'
                     | Shop
@@ -28,9 +28,12 @@ template(name='stats')
                 // .ui.slider.checkbox
                 //     input#share_stats(type='checkbox' checked=currentUser.profile.share.stats)
                 //     label(for='share_bookmarks') Share Stats in Profile
+                .ui.dividing.header Filter Tags
                 +people_cloud
 
             .four.wide.column
                 +leaderboard
             .four.wide.column
                 +journal_stats
+            .four.wide.column
+                +check_in_stats

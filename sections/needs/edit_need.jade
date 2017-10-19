@@ -2,12 +2,17 @@ template(name='edit_need')
     .ui.padded.stackable.grid
         .centered.middle.aligned.row
             .two.wide.column
-                +save_button
-            .ten.wide.column
-                h1.ui.center.aligned.header Edit #{title} Request
-            .two.wide.column
                 #delete_doc.ui.fluid.basic.small.circular.button(data-position='bottom center' data-tooltip='Delete')
                     +icon48 name='delete' classes='ui mini inline image'
+            .ten.wide.column
+                h1.ui.center.aligned.header 
+                    if icon_class
+                        +icon96 name=icon_class classes='ui spaced image'
+                    else
+                        +icon96 name='service-bell' classes='ui spaced image'
+                    |Edit '#{title}' Request
+            .two.wide.column
+                +save_button
 
         .row
             .eleven.wide.column
@@ -17,9 +22,15 @@ template(name='edit_need')
                     +content
                     +edit_image
             .five.wide.column
-                .ui.divider
                 +bounty
+                .ui.hidden.divider
+                +icon_class
+                .ui.hidden.divider
+                +edit_recipient
+                .ui.hidden.divider
                 +edit_quantity
+                .ui.hidden.divider
                 +published
                 if isInRole 'admin'
+                    .ui.hidden.divider
                     +edit_author
