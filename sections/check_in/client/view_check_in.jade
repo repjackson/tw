@@ -1,19 +1,33 @@
 template(name='view_checkin')
-    unless editing
-        .ui.stackable.padded.grid
-            .middle.aligned.centered.row
-                .four.wide.center.aligned.column
+    .ui.stackable.padded.grid
+        .middle.aligned.centered.row
+            .four.wide.center.aligned.column
+                if editing
+                    +save_button
+                else
                     a.ui.basic.circular.button(href='/checkin')
                         +icon48 name='sprout' classes='ui mini inline image'
                         strong Check In's
-                .eight.wide.center.aligned.column
-                    h1.ui.center.aligned.header View Check In
-                .four.wide.center.aligned.column
+            .eight.wide.center.aligned.column
+                h1.ui.center.aligned.header 
+                    +icon96 name='tree-planting'
+                    |Check In
+            .four.wide.center.aligned.column
+                if editing
+                    #delete_doc.ui.fluid.basic.small.circular.button(data-position='bottom center' data-tooltip='Delete')
+                        +icon48 name='delete' classes='ui mini inline image'
+                else
                     if is_author
-                        // +service_buttons
                         +toggle_editing_button
-            .centered.row
-                .ten.wide.column
+        .centered.row
+            .ten.wide.column
+                if editing
+                    +tags
+                    +location_tags
+                    .ui.hidden.divider
+                    if components.content
+                        +content
+                else
                     .ui.dividing.header 
                         +icon48 name='hashtag' classes='ui mini inline image'
                         |Tags
@@ -31,7 +45,17 @@ template(name='view_checkin')
                     // +doc_matches
                     // if watson
                     //     +analyzed_watson_keywords
-                .five.wide.column
+            .five.wide.column
+                if editing
+                    .ui.dividing.header 
+                        +icon48 name='slider' classes='ui mini inline image'
+                        |Components
+                    +toggle_component name='content' label='Text' icon_name='outline'
+                    .ui.dividing.header 
+                        +icon48 name='sports-mode' classes='ui mini inline image'
+                        |Actions
+                    +published
+                else
                     .ui.header
                         img.ui.avatar.image(src="{{c.url author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
                         |by #{author.name}
@@ -51,37 +75,6 @@ template(name='view_checkin')
                     //     +doc_sentiment
                     //     +doc_emotion
                     //     +watson_keywords
-    else
-        .ui.stackable.padded.grid
-            .centered.middle.aligned.row
-                .two.wide.column
-                    +save_button
-                .ten.wide.column
-                    h1.ui.center.aligned.header 
-                        +icon96 name='tree-planting'
-                        |Edit Check In
-                .two.wide.column
-                    #delete_doc.ui.fluid.basic.small.circular.button(data-position='bottom center' data-tooltip='Delete')
-                        +icon48 name='delete' classes='ui mini inline image'
-            .centered.row
-                .ten.wide.column
-                    // .ui.segment
-                    //     +check_in_tag_selection
-                    +tags
-                    +location_tags
-                    .ui.hidden.divider
-                    if components.content
-                        +content
-        
-                .four.wide.column
-                    .ui.dividing.header 
-                        +icon48 name='slider' classes='ui mini inline image'
-                        |Components
-                    +toggle_component name='content' label='Text' icon_name='outline'
-                    .ui.dividing.header 
-                        +icon48 name='sports-mode' classes='ui mini inline image'
-                        |Actions
-                    +published
 
 template(name='check_in_tag_selection')
     .ui.center.aligned.header

@@ -32,9 +32,14 @@ template(name='plain')
 
 
 template(name='slug')
-    .field
-        label Slug
-        input#slug(type='text' value=slug placeholder='computer readable name, no spaces, caps or punctuation')
+    .ui.labeled.input
+        .ui.basic.label Slug
+        input#slug(type='text' value=slug)
+
+template(name='plural_slug')
+    .ui.labeled.input
+        .ui.basic.label Plural Slug
+        input#plural_slug(type='text' value=plural_slug)
 
 template(name='number')
     .ui.labeled.input

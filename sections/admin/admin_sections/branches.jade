@@ -1,0 +1,26 @@
+template(name='branches')
+    .ui.stackable.grid
+        .four.wide.column
+            h1.ui.dividing.header
+                |Branches
+            if isInRole 'admin'
+                #add_branch.ui.basic.fluid.button Add Branch
+        .twelve.wide.column
+            each branches
+                +branch
+
+
+template(name='branch')
+    .ui.segment
+        .content
+            +icon96 name=icon_class
+            +title
+            +slug
+            +plural_slug
+            +icon_class
+            +tags
+            .description
+                | !{content}
+            .description
+                each twigs
+                    |#{name}

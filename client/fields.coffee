@@ -12,10 +12,11 @@ Template.author_name.events
             $set: author_name: author_name
             
 Template.icon_class.events
-    'blur #icon_class': ->
-        icon_class = $('#icon_class').val()
+    'blur #icon_class': (e,t)->
+        val = $(e.currentTarget).closest('#icon_class').val()
+
         Docs.update @_id,
-            $set: icon_class: icon_class
+            $set: icon_class: val
             
 Template.created_date.helpers
     created_date: -> 
@@ -244,6 +245,14 @@ Template.slug.events
         slug = $(e.currentTarget).closest('#slug').val()
         Docs.update @_id,
             $set: slug: slug
+            
+            
+Template.plural_slug.events
+    'blur #plural_slug': (e,t)->
+        # alert 'hi'
+        plural_slug = $(e.currentTarget).closest('#plural_slug').val()
+        Docs.update @_id,
+            $set: plural_slug: plural_slug
             
             
 Template.body_field.events
