@@ -2,19 +2,13 @@ template(name='shop')
     .ui.stackable.padded.grid
         .centered.middle.aligned.row
             .four.wide.center.aligned.column
-                a.ui.basic.circular.small.button(href='/transactions') 
-                    +icon48 name='handshake' classes='ui mini inline image'
-                    | Transactions
+                +button_link label='Transactions' url="/transactions" icon='handshake'
             .eight.wide.center.aligned.column
                 h1.ui.center.aligned.header
                     +icon96 name='shop'
                     | Shop
             .four.wide.center.aligned.column
-                a.ui.basic.circular.small.button(href='/karma') 
-                    +icon48 name='diamond' classes='ui mini inline image'
-                    strong #{currentUser.points}
-                    | Karma
-                    // +icon48 name='rotate-left' classes='ui mini inline image'
+                +button_link label='Karma' url="/karma" icon='diamond'
         .centered.row
             .four.wide.column
                 if isInRole 'admin'
@@ -62,8 +56,7 @@ template(name='product')
         .content
             a.header(href="/view/#{_id}") #{title}
             .meta
-                img.ui.avatar.image(src="{{c.url author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
-                |by #{author.name}
+                +author_info
             .meta
                 each tags
                     .ui.small.label(class=tag_class) #{this}
@@ -71,7 +64,3 @@ template(name='product')
                 | !{content}
                 span.right.floated
                     +view_full_button
-            // .extra
-            //     i.tags.icon
-            //     each tags
-            //         .ui.compact.tiny.button.product_tag(class=tag_class) #{this}

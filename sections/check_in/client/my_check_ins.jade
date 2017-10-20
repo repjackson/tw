@@ -11,10 +11,7 @@ template(name='my_check_ins')
                     +icon96 name='grass' classes='ui tiny inline image'
                     | My Check-Ins
             .four.wide.center.aligned.column
-                a.ui.basic.circular.small.button(href='/checkins/browse') 
-                    +icon48 name='forest' classes='ui mini inline image'
-                    |Browse Check-Ins
-                    // +icon48 name='rotate-left' classes='ui mini inline image'
+                +button_link label='Browse Check-Ins' url="/checkins/browse" icon='forest'
         .row
             .five.wide.column
                 +theme_facet type='checkin'

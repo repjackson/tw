@@ -51,6 +51,10 @@ Meteor.publish 'sol_course', ->
         tags: ['course','sol']
 
 
+Meteor.publish 'courses', ->
+    Docs.find
+        type: 'course'
+
 Meteor.publish 'sol_signers', ->
     course = Docs.findOne tags: ['course', 'sol']
     user_id_list =  _.pluck(course.agreements, 'user_id' )

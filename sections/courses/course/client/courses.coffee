@@ -4,13 +4,13 @@ FlowRouter.route '/courses', action: (params) ->
 
 
 Template.courses.onCreated -> 
-    @autorun => Meteor.subscribe('courses', view_mode=Session.get('view_mode'))
+    @autorun => Meteor.subscribe('courses')
 
 
 Template.courses.helpers
     courses: -> 
         Docs.find
-            tags: $all:['course']
+            type: 'course'
 
     all_item_class: -> if Session.equals 'view_mode', 'all' then 'active' else ''
     mine_item_class: -> 

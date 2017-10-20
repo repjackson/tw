@@ -76,13 +76,7 @@ template(name='view_journal')
                     +child_docs
                     +view_tags_sidebar
                 .five.wide.column
-                    .ui.header
-                        |by
-                        img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
-                        |#{author.name}
-                        with author
-                            +staus_indicator
-                        h3.ui.sub.header #{when}
+                    +author_info
                     // if is_author
                     //     +call_watson
                     if watson

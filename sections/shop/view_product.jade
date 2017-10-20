@@ -1,21 +1,38 @@
 template(name='view_product')
-    unless editing
-        .ui.stackable.padded.grid
-            .centered.row
-                .four.wide.column
+    .ui.stackable.padded.grid
+        .centered.row
+            .three.wide.column
+                if editing
+                    +save_button
+                else
                     a.ui.basic.circular.button(href='/shop')
                         +icon48 name='shop' classes='ui mini spaced image'
                         | Shop
-                .twelve.wide.column
-                    h1.ui.center.aligned.header View '#{title}' Product
-                .four.wide.column
+            .ten.wide.column
+                if editing
+                    h1.ui.center.aligned.header Edit #{title} Product
+                else
+                    h1.ui.center.aligned.header Viewing '#{title}' Product
+            .three.wide.column
+                if editing
+                    #delete_doc.ui.small.circular.basic.button
+                        +icon48 name='delete' classes='ui mini spaced image'
+                        
+                else
                     if can_edit
                         +toggle_editing_button
-                //     a.ui.basic.circular.button(href='/shop')
-                //         +icon48 name='shop' classes='ui mini spaced image'
-                //         | Shop
-            .row
-                .ten.wide.column
+            //     a.ui.basic.circular.button(href='/shop')
+            //         +icon48 name='shop' classes='ui mini spaced image'
+            //         | Shop
+        .row
+            .ten.wide.column
+                if editing
+                    .ui.form
+                        +title
+                        +tags
+                        +content
+                        +edit_image
+                else
                     .ui.items
                         .ui.item
                             .ui.small.image
@@ -27,7 +44,14 @@ template(name='view_product')
                                 .description
                                     |!{content}
                     +product_transactions
-                .five.wide.column
+            .five.wide.column
+                if editing
+                    +point_price
+                    +edit_quantity
+                    +published
+                    if isInRole 'admin'
+                        +edit_author
+                else
                     .ui.header by 
                         img.ui.avatar.image(src="{{c.url author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
                         |#{author.name}
@@ -79,26 +103,3 @@ template(name='view_product')
                         .ui.basic.large.label.doc_tag #{this}
                     // +published
                     // +tag_rating
-    else                
-        .ui.padded.stackable.grid
-            .centered.row
-                .two.wide.column
-                    +save_button
-                .ten.wide.column
-                    h1.ui.center.aligned.header Edit #{title} Product
-                .two.wide.column
-                    #delete_doc.ui.small.fluid.red.button Delete
-            .row
-                .eleven.wide.column
-                    .ui.form
-                        +title
-                        +tags
-                        +content
-                        +edit_image
-                .five.wide.column
-                    +point_price
-                    +edit_quantity
-                    +published
-                    if isInRole 'admin'
-                        +edit_author
-                    

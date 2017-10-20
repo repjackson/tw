@@ -2,18 +2,15 @@ template(name='my_journal')
     .ui.stackable.padded.grid
         .centered.row
             .four.wide.column
-                #create_checkin.ui.basic.circular.small.button 
+                #add_journal_entry.ui.basic.circular.small.button 
                     +icon48 name='create-document' classes='ui mini inline image'
                     |Add Entry
             .nine.wide.column
                 h1.ui.center.aligned.header
-                    +icon96 name='journal' classes='ui mini inline image'
+                    +icon96 name='journal' classes='ui inline image'
                     | My Journal Entries
             .three.wide.column
-                a.ui.basic.circular.small.button(href='/journal/browse') 
-                    +icon48 name='reading' classes='ui mini inline image'
-                    |Browse Entries
-                    // +icon48 name='rotate-left' classes='ui mini inline image'
+                +button_link label='Browse Entries' url="/journal/browse" icon='reading'
         .row
             .four.wide.column
                 +theme_facet type='journal'
@@ -25,9 +22,7 @@ template(name='my_journal')
                     each journal_entries
                         +my_entry_view
             .three.wide.column
-                .ui.dividing.header
-                    +icon48 name='filter'
-                    |Filter
+                +dividing_header icon='filter' label='Filter'
                 +published_filter
                 +doc_limit
         

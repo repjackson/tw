@@ -8,14 +8,9 @@ template(name='browse_check_ins')
                     |Check In
                     // +icon48 name='rotate-right' classes='ui mini inline image'
             .eight.wide.center.aligned.column
-                h1.ui.center.aligned.header
-                    +icon96 name='forest'
-                    | Browse Check-Ins
+                +page_header icon='forest' label='Browse Check-Ins'
             .four.wide.center.aligned.column
-                a.ui.basic.circular.small.button(href='/checkins/mine') 
-                    +icon48 name='grass' classes='ui inline mini image'
-                    |My Check-Ins
-                    // +icon48 name='rotate-right' classes='ui mini inline image'
+                +button_link label='My Check-Ins' url="/checkins/mine" icon='grass'
         .row
             .five.wide.column
                 +theme_facet type='checkin'
@@ -49,14 +44,7 @@ template(name='browse_checkin_view')
                         .large150 !{content}
                 .ui.horizontal.list
                     .item
-                        .large130
-                            with author
-                                |by 
-                                if profile.image_id
-                                    img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
-                                a(href="/profile/#{username}") #{name} 
-                                +staus_indicator
-                            |#{when}
+                        +author_info
                     .item
                         unless is_author
                             +thanks_button

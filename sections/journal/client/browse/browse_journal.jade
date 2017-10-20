@@ -10,10 +10,7 @@ template(name='browse_journal')
                     +icon96 name='reading'
                     | Browse Public Journal Entries
             .four.wide.column
-                a.ui.basic.circular.small.button(href='/journal/mine') 
-                    +icon48 name='journal' classes='ui mini inline image'
-                    |My Entries
-                    +icon48 name='rotate-left' classes='ui mini inline image'
+                +button_link label='My Entries' url="/journal/mine" icon='journal'
         .row
             .four.wide.column
                 +theme_facet type='journal'

@@ -198,9 +198,70 @@ template(name='published_status')
         .ui.basic.large.label
             +icon48 name='invisible' classes='ui inline tiny image'
             | Not Published
+            
+            
 template(name='save_button')
     if tags
         #toggle_off_editing.ui.fluid.basic.circular.button(data-position='bottom center' data-tooltip='Save')
             +icon48 name='checkmark' classes='ui mini inline image'
     else
         .ui.fluid.basic.disabled.circular.button Add Tags to Save
+
+
+template(name='author_info')
+    .ui.header
+        | added by 
+        if is_author
+            |you
+        else
+            with author
+                if profile.image_id
+                    img.ui.avatar.spaced.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                |&nbsp;
+                a(href="/profile/#{username}") #{name} 
+                +staus_indicator
+    .ui.sub.header #{when}
+
+template(name='recipient_info')
+    .ui.header requested of 
+        img.ui.avatar.image(src="{{c.url recipient.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+        |#{recipient.name}
+        with recipient
+            +staus_indicator
+
+
+
+
+template(name='doc_stats_module')
+    .ui.dividing.header 
+        +icon48 name='combo-chart'
+        | Stats
+    if child_count
+        .ui.header Response Count: #{child_count}
+
+template(name='actions_header')
+    .ui.dividing.header 
+        +icon48 name='sports-mode' classes='ui mini inline image'
+        |Actions
+
+
+template(name='components_header')
+    .ui.dividing.header 
+        +icon48 name='slider' classes='ui mini inline image'
+        |Components
+
+
+template(name='button_link')
+    a.ui.basic.circular.button(href=url)
+        +icon48 name=icon classes='ui mini spaced image'
+        | #{label}
+        
+template(name='dividing_header')
+    .ui.dividing.header 
+        +icon24 name=icon classes='ui mini inline image'
+        | #{label}
+        
+template(name='page_header')
+    h1.ui.center.aligned.header
+        +icon96 name=icon
+        | #{label}

@@ -6,9 +6,7 @@ template(name='view_lightbank')
                     #delete_doc.ui.fluid.basic.circular.button(data-position="bottom center" data-tooltip='Delete')
                         +icon48 name='delete' classes='ui mini inline image'
                 else
-                    a.ui.basic.circular.button(href='/lightbank')
-                        +icon48 name='chevron-left' classes='ui mini inline image'
-                        |Lightbank
+                    +button_link label='Lightbank' url='/lightbank' icon='chevron-left'
             .eight.wide.center.aligned.column
                 h1.ui.center.aligned.header 
                     if is_quote
@@ -33,8 +31,8 @@ template(name='view_lightbank')
                     if can_edit
                         +toggle_editing_button
         .centered.row
-            unless editing
-                .ten.wide.column
+            .ten.wide.column
+                unless editing
                     if has_youtube
                         if youtube
                             +view_youtube
@@ -67,8 +65,7 @@ template(name='view_lightbank')
                                     +doc_emotion
                             +analyzed_watson_keywords
                     // +child_docs
-            else    
-                .twelve.wide.column
+                else    
                     with lightbank_entry
                         if is_custom
                             if components.youtube
@@ -88,16 +85,9 @@ template(name='view_lightbank')
                                 +author_name label='Prompt'
                             if is_passage
                                 +author_name label='Passage'
-                    +tags
             .four.wide.column
+                +tags
                 if editing
-                    .ui.header 
-                        |created by 
-                        if is_author
-                            |you
-                        else
-                            |#{author.name}
-                        |#{when}
                     +change_lightbank_type lightbank_entry
                     if is_custom
                         .ui.dividing.header 
@@ -106,48 +96,18 @@ template(name='view_lightbank')
                         +toggle_component name='youtube' label='Video' icon_name='movie'
                         +toggle_component name='image' label='Image' icon_name='image'
                         +toggle_component name='content' label='Text' icon_name='outline'
-                    // .ui.segment
-                    //     .ui.form
-                    //         .grouped.fields
-                    //             .label Buttons
-                                // +toggle_resonates_button
-                                // +toggle_bookmarkable_button
-                                // +toggle_complete_button
-                    .ui.dividing.header 
-                        +icon48 name='sports-mode' classes='ui mini inline image'
-                        |Actions
-                    if is_author
-                        +published
-                        .ui.hidden.divider
-                    // +call_watson
-                    // else
-                    //     unless published
-                    //         +request_tori_feedback label='Submit for Approval'
-        
+                    +published
                     if isInRole 'admin'
                         +edit_author
                 
                 else
-                    .ui.header added by #{author.name} #{when}
-                    .ui.dividing.header 
-                        +icon48 name='combo-chart'
-                        | Stats
-                    if child_count
-                        .ui.header Response Count: #{child_count}
-                    .ui.dividing.header 
-                        +icon48 name='sports-mode'
-                        |Actions
+                    +author_info
+                    +doc_stats_module
+                    +actions_header
                     +bookmark_button
                     +thanks_button
                     +reflect_button
                     +resonate_button
                     +resonates_list 
                     if can_edit
-                        // +call_watson
-                        // +published_status
                         +published
-                    .ui.dividing.header 
-                        +icon48 name='hashtag'
-                        | Themes
-                    each tags
-                        .ui.basic.large.label.doc_tag #{this}

@@ -90,25 +90,32 @@ template(name='tags')
             
 
 template(name='location_tags')
-    .ui.header 
-        +icon48 name='sofa' classes='ui mini spaced image'
-        |Location Tags &nbsp;
-        .ui.mini.input
-            +inputAutocomplete settings=location_select_settings id="location_tag_select" class="" autocomplete="off"
-        // .ui.mini.input
-        //     input#add_location_tag(type='text' placeholder="eg. 'home', 'couch'" maxlength='50' )
+    if editing
+        .ui.header 
+            +icon48 name='sofa' classes='ui mini spaced image'
+            |Location Tags &nbsp;
+            .ui.mini.input
+                +inputAutocomplete settings=location_select_settings id="location_tag_select" class="" autocomplete="off"
+            // .ui.mini.input
+            //     input#add_location_tag(type='text' placeholder="eg. 'home', 'couch'" maxlength='50' )
+            each location_tags
+                // a.ui.basic.circular.button.doc_tag #{this}
+                a.ui.basic.animated.fade.circular.button.doc_tag
+                    .visible.content
+                        // i.icon
+                        //     +icon24 name='geo-fence'
+                        |#{this}
+                    .hidden.content
+                        |&nbsp;
+                        |&nbsp;
+                        i.remove.icon
+                        // |#{this}
+    else
+        .ui.dividing.header 
+            +icon48 name='sofa' classes='ui mini inline image'
+            |Location Tags
         each location_tags
-            // a.ui.basic.circular.button.doc_tag #{this}
-            a.ui.basic.animated.fade.circular.button.doc_tag
-                .visible.content
-                    // i.icon
-                    //     +icon24 name='geo-fence'
-                    |#{this}
-                .hidden.content
-                    |&nbsp;
-                    |&nbsp;
-                    i.remove.icon
-                    // |#{this}
+            .ui.basic.large.label.location_tag #{this}
 
 
 template(name='intention_tags')
@@ -140,16 +147,18 @@ template(name='dollar_price')
             input#dollar_price(type='number' min='0' value=dollar_price)
 
 template(name='point_price')
-    .ui.form
-        .inline.field
-            label Price in Points
-            input#point_price(type='number' min='0' value=point_price)
+    .ui.labeled.input
+        .ui.basic.label Point Price
+        input#point_price(type='number' min='0' value=point_price)
 
 template(name='bounty')
-    .ui.labeled.input
-        .ui.basic.label Bounty
-        input#bounty(type='number' min='0' value=bounty)
-        .ui.basic.label pts
+    if editing
+        .ui.labeled.input
+            .ui.basic.label Bounty
+            input#bounty(type='number' min='0' value=bounty)
+            .ui.basic.label pts
+    else
+        .ui.header Offer: #{bounty}
 
 
 template(name='link')
@@ -173,7 +182,7 @@ template(name='type')
             input#type(type='text' value=type)
             
 template(name='author_name')
-    .ui.labeled.fluid.input
+    .ui.labeled.fluid.large.input
         .ui.basic.label #{label} Author
         input#author_name(type='text' value="{{../author_name}}")
 
@@ -273,7 +282,7 @@ template(name='edit_author')
     .ui.dividing.header
         +icon48 name='monarch' classes='ui mini spaced image'
         |Admin
-    .ui.labeled.input
+    .ui.labeled.large.input
         .ui.basic.label 
             |Author: 
             with author

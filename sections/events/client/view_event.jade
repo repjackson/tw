@@ -1,28 +1,48 @@
 template(name='view_event')
-    unless editing
-        .ui.stackable.padded.grid
-            .row
-                .four.wide.column
-                    a.ui.basic.button(href='/events')
+    .ui.stackable.padded.grid
+        .row
+            .four.wide.column
+                if editing
+                    +save_button
+                else
+                    a.ui.basic.circular.button(href='/events')
                         +icon48 name='calendar' classes='ui mini inline image'
                         strong Events
-                .eight.wide.column
-                    h1.ui.center.aligned.header View Event
-                .four.wide.column
+            .eight.wide.column
+                h1.ui.center.aligned.header 
+                    +icon96 name='event'
+                    if editing
+                        | Editing
+                    else 
+                        | Viewing
+                    if title
+                        |'#{title}'
+                    | Event
+            .four.wide.column
+                if editing
+                    #delete_doc.ui.fluid.basic.small.circular.button(data-position="center bottom" data-tooltip='Delete')
+                        +icon48 name='delete' classes='ui mini inline image'
+                else
                     if is_author
                         +toggle_editing_button
-            .centered.row
-                .ten.wide.column
-                    .ui.dividing.header 
-                        +icon48 name='hashtag' classes='ui mini inline image'
-                        |Tags
-                    each tags
-                        .ui.basic.large.label.doc_tag #{this}
-                    .ui.dividing.header 
-                        +icon48 name='sofa' classes='ui mini inline image'
-                        |Location Tags
-                    each location_tags
-                        .ui.basic.large.label.location_tag #{this}
+        .centered.row
+            .ten.wide.column
+                +tags
+                +location_tags
+                if editing
+                    +title
+                    if components.youtube
+                        +youtube
+                    if components.image
+                        +edit_image
+                    if components.content
+                        +content
+                    .ui.hidden.divider
+                    if components.content
+                        +content
+                    if components.link
+                        +link
+                else
                     .ui.basic.segment
                         |!{content}
                     if published
@@ -30,67 +50,20 @@ template(name='view_event')
                     // +doc_matches
                     // if watson
                     //     +analyzed_watson_keywords
-                .five.wide.column
-                    .ui.header
-                        img.ui.avatar.image(src="{{c.url author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
-                        |by #{author.name}
-                    .ui.sub.header #{when}
-                    // .ui.divider
-                    .ui.dividing.header Actions
+            .five.wide.column
+                if editing
+                    +components_header
+                    +toggle_component name='youtube' label='Video' icon_name='movie'
+                    +toggle_component name='image' label='Image' icon_name='image'
+                    +toggle_component name='content' label='Text' icon_name='outline'
+                    +toggle_component name='link' label='Link' icon_name='link'
+                else
+                    +author_info
+                    +actions_header
                     +resonates_list
-                    if is_author
-                        // +service_buttons
-                        +published
-                    else
+                    unless is_author
                         div
                             +thanks_button
                             +bookmark_button
                             +resonate_button
-                        
-                    // if watson
-                    //     +doc_sentiment
-                    //     +doc_emotion
-                    //     +watson_keywords
-    else 
-        .ui.padded.stackable.grid
-            .middle.aligned.centered.row
-                .three.wide.center.aligned.column
-                    +save_button
-                .ten.wide.center.aligned.column
-                    h1.ui.center.aligned.header 
-                        +icon96 name='event'
-                        | Edit
-                        if title
-                            |'#{title}'
-                        | Event
-                .three.wide.center.aligned.column
-                    #delete_doc.ui.fluid.basic.small.circular.button(data-position="center bottom" data-tooltip='Delete')
-                        +icon48 name='delete' classes='ui mini inline image'
-            .twelve.wide.column
-                +title
-                +tags
-                +location_tags
-                if components.youtube
-                    +youtube
-                if components.image
-                    +edit_image
-                if components.content
-                    +content
-                .ui.hidden.divider
-                if components.content
-                    +content
-                if components.link
-                    +link
-    
-            .four.wide.column
-                .ui.dividing.header 
-                    +icon48 name='slider' classes='ui mini inline image'
-                    |Components
-                +toggle_component name='youtube' label='Video' icon_name='movie'
-                +toggle_component name='image' label='Image' icon_name='image'
-                +toggle_component name='content' label='Text' icon_name='outline'
-                +toggle_component name='link' label='Link' icon_name='link'
-                .ui.dividing.header 
-                    +icon48 name='sports-mode' classes='ui mini inline image'
-                    |Actions
                 +published

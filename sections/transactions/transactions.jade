@@ -2,18 +2,13 @@ template(name='transactions')
     .ui.stackable.padded.grid
         .centered.row
             .four.wide.center.aligned.column
-                a.ui.basic.circular.small.button(href='/shop') 
-                    +icon48 name='shop' classes='ui mini inline image'
-                    | Shop
+                +button_link label='Shop' url="/shop" icon='shop'
             .eight.wide.center.aligned.column
                 h1.ui.center.aligned.header
                     +icon96 name='handshake'
                     | #{currentUser.name} Transactions
             .four.wide.center.aligned.column
-                a.ui.basic.circular.small.button(href='/karma') 
-                    +icon48 name='diamond' classes='ui mini inline image'
-                    strong #{currentUser.points}
-                    | Karma
+                +button_link label='Karma' url="/karma" icon='diamond'
         .centered.row
             .sixteen.wide.column
                 table.ui.selectable.unstackable.table

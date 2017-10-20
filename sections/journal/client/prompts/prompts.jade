@@ -1,9 +1,12 @@
 template(name='journal_prompts')
     .ui.stackable.padded.grid
         .centered.row
-            h1.ui.center.aligned.header
-                +icon96 name='ask-question'
-                | Journal Prompts
+            .four.wide.column
+                +button_link label='Browse Entries' url="/journal/browse" icon='reading'
+            .eight.wide.column
+                +page_header label='Journal Prompts' icon='ask-question'
+            .four.wide.column
+                +button_link label='Journal Templates' url="/journal/templates" icon='template'
         // .ui.center.aligned.basic.segment
         //     +doc_content tags='journal,prompt,blurb'
         // #convert_journal_docs.ui.button Convert Journal Docs
@@ -16,8 +19,6 @@ template(name='journal_prompts')
                     each journal_prompts
                         +journal_prompt_view_small
             .three.wide.column
-                .ui.dividing.header 
-                    +icon24 name='filter' classes='ui mini inline image'
-                    |Filter
+                +dividing_header label='Filter' icon='filter'
                 +bookmark_filter
                 +doc_limit

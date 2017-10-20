@@ -1,51 +1,57 @@
 template(name='lightbank')
-    h1.ui.center.aligned.header 
-        +icon96 name='summer'
-        span(data-position='bottom center' data-tooltip="Click on the buttons to the left to filter through content and find just what you're looking for. Quotes, videos, poems, etc.") Lightbank
-    // .ui.center.aligned.basic.segment
-    //     +doc_content tags='lightbank,blurb'
-
     .ui.stackable.padded.grid
-        .five.wide.column
-            +theme_facet
-            // +timestamp_facet
-            .ui.hidden.divider
-            if currentUser
-                #add_lightbank_doc.ui.basic.circular.large.fluid.button
-                    +icon48 name='plus' classes='ui mini spaced image'
-                    |Add Lightbank Item
-                
-        .eight.wide.column
-            .ui.centered.stackable.cards
-                each docs
-                    +lightbank_doc_view
-        .three.wide.column
-            .ui.dividing.header
-                +icon48 name='filter' classes='ui mini inline image'
-                |Filters
-            +passage_filter
-            +journal_prompt_filter
-            +poem_filter
-            +quote_filter
-            // // .ui.header 
-            // //     +icon24 name='filter' classes='ui mini inline image'
-            // //     |Component Filters
-            // div
-            //     +image_filter
-            // .ui.header 
-            //     +icon24 name='filter' classes='ui mini inline image'
-            //     |Status Filters
-            div
-                +bookmark_filter
-            div
-                +read_filter
-            div
-                +resonates_filter
-            div
-                +doc_limit
-            if isInRole 'admin'
-                .ui.dividing.header Admin
-                +published_filter
+        .middle.aligned.row
+            .three.wide.center.aligned.column
+                +button_link label='Journal' url="/journal" icon='journal'
+            .ten.wide.center.aligned.column
+                h1.ui.center.aligned.header 
+                    +icon96 name='summer'
+                    span(data-position='bottom center' data-tooltip="Click on the buttons to the left to filter through content and find just what you're looking for. Quotes, videos, poems, etc.") Lightbank
+            .three.wide.center.aligned.column
+                +button_link label='Check Ins' url="/checkin" icon='sprout'
+        // .ui.center.aligned.basic.segment
+        //     +doc_content tags='lightbank,blurb'
+        .centered.row
+            .five.wide.column
+                +theme_facet
+                // +timestamp_facet
+                .ui.hidden.divider
+                if currentUser
+                    #add_lightbank_doc.ui.basic.circular.large.fluid.button
+                        +icon48 name='plus' classes='ui mini spaced image'
+                        |Add Lightbank Item
+                    
+            .eight.wide.column
+                .ui.centered.stackable.cards
+                    each docs
+                        +lightbank_doc_view
+            .three.wide.column
+                .ui.dividing.header
+                    +icon48 name='filter' classes='ui mini inline image'
+                    |Filters
+                +passage_filter
+                +journal_prompt_filter
+                +poem_filter
+                +quote_filter
+                // // .ui.header 
+                // //     +icon24 name='filter' classes='ui mini inline image'
+                // //     |Component Filters
+                // div
+                //     +image_filter
+                // .ui.header 
+                //     +icon24 name='filter' classes='ui mini inline image'
+                //     |Status Filters
+                div
+                    +bookmark_filter
+                div
+                    +read_filter
+                div
+                    +resonates_filter
+                div
+                    +doc_limit
+                if isInRole 'admin'
+                    .ui.dividing.header Admin
+                    +published_filter
         
 
 
