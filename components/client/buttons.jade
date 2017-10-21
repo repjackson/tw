@@ -274,8 +274,16 @@ template(name='view_full_button')
 
 template(name='toggle_editing_button')
     if can_edit
-        #toggle_editing.ui.basic.icon.large.circular.button(data-position="bottom center" data-tooltip='Edit')
-            +icon48 name='edit' classes='ui mini inline image'
+        if editing
+            #toggle_off_editing.ui.fluid.basic.circular.button(data-position='bottom center' data-tooltip='Save')
+                +icon48 name='checkmark' classes='ui mini inline image'
+        else
+            #toggle_editing.ui.basic.icon.large.circular.button(data-position="bottom center" data-tooltip='Edit')
+                +icon48 name='edit' classes='ui mini inline image'
+            // if tags
+            // else
+                // .ui.fluid.basic.disabled.circular.button Add Tags to Save
+
 
 
 template(name='add_doc_button')

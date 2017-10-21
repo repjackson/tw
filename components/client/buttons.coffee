@@ -541,3 +541,4 @@ Template.toggle_zen_mode_button.events
     
 Template.toggle_editing_button.events
     'click #toggle_editing': -> Session.set 'editing', true
+    'click #toggle_off_editing': -> Session.set 'editing', false

@@ -6,7 +6,7 @@ FlowRouter.route '/course/sol/dashboard',
 
 
 Template.course_dashboard.onCreated ->
-    @autorun -> Meteor.subscribe 'sol_progress'
+    # @autorun -> Meteor.subscribe 'sol_progress'
 
 
 Template.course_dashboard.onRendered ->

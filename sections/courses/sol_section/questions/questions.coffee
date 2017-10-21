@@ -15,11 +15,11 @@ if Meteor.isClient
                 type: type
                 parent_id: parent_id
                 }
-                # tags: ["sol","module #{mod_num}","section #{sec_num}","reflective question"] }
+                # tags: ["sol","module #{mod_num}","sol_section #{sec_num}","reflective question"] }
                 , { sort: number: 1} 
                 
         # questions_tags: ->
-        #     "sol","module #{FlowRouter.getParam('module_number')}","section #{FlowRouter.getParam('section_number')}","reflective question"
+        #     "sol","module #{FlowRouter.getParam('module_number')}","sol_section #{FlowRouter.getParam('sol_section_number')}","reflective question"
     
         any_questions: ->
             Docs.find({
@@ -35,13 +35,13 @@ if Meteor.isClient
             if Roles.userIsInRole Meteor.userId(), 'admin' then true
             else
                 # mod_num = FlowRouter.getParam('module_number')
-                # sec_num = FlowRouter.getParam('section_number')
+                # sec_num = FlowRouter.getParam('sol_section_number')
                 if @number is 1 then true
                 else
                     previous_number = @number - 1
                     
                     previous_question = Docs.findOne
-                        # tags: ["sol","module #{mod_num}","section #{sec_num}","reflective question"]
+                        # tags: ["sol","module #{mod_num}","sol_section #{sec_num}","reflective question"]
                         parent_id: Template.currentData().parent_id
                         number: previous_number
                     
@@ -98,14 +98,14 @@ if Meteor.isClient
             Session.set 'editing_id', new_id
 
 if Meteor.isServer
-    # publishComposite 'questions', (module_number, section_number)->
+    # publishComposite 'questions', (module_number, sol_section_number)->
     publishComposite 'questions', (type, parent_id)->
         {
             find: ->
                 Docs.find 
                     type: type
                     parent_id: parent_id
-                    # tags: ["sol","module #{module_number}", "section #{section_number}","reflective question"]
+                    # tags: ["sol","module #{module_number}", "sol_section #{sol_section_number}","reflective question"]
             children: [
                 { 
                     find: (question) ->

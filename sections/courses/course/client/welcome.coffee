@@ -27,8 +27,8 @@ Template.course_welcome.onRendered ->
     , 1000
 
 Template.welcome_video.onCreated ->
-    @autorun -> Meteor.subscribe 'sol_signers'
-    @autorun -> Meteor.subscribe 'sol_progress'
+    # @autorun -> Meteor.subscribe 'sol_signers'
+    # @autorun -> Meteor.subscribe 'sol_progress'
 
 
 Template.welcome_video.onRendered ->

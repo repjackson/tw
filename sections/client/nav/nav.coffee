@@ -3,11 +3,11 @@ Template.layout.events
     'click #logout': -> AccountsTemplates.logout()
 
 Template.body.events
-    'click .toggle_sidebar': -> $('.ui.sidebar').sidebar('toggle')
+    # 'click .toggle_sidebar': -> $('.ui.sidebar').sidebar('toggle')
     
 Template.nav.onCreated ->
     @autorun -> Meteor.subscribe 'me'
-    @autorun -> Meteor.subscribe 'cart'
+    # @autorun -> Meteor.subscribe 'cart'
     # @autorun -> Meteor.subscribe 'unread_messages'
     # @autorun -> Meteor.subscribe 'all_notifications'
     # @autorun -> Meteor.subscribe 'doc', Session.get 'new_checkin_doc_id'
@@ -33,7 +33,7 @@ Template.nav.onRendered ->
 
 
 Template.nav.helpers
-    cart_items: -> Docs.find({type: 'cart_item'},{author_id: Meteor.userId()}).count()
+    # cart_items: -> Docs.find({type: 'cart_item'},{author_id: Meteor.userId()}).count()
 
     # unread_message_count: ->
     #     count = 0
@@ -110,8 +110,8 @@ Template.nav.events
             ).modal('show')
         # bug_description = prompt "Please decribe the bug:"
 
-    'click #bug_icon': (e,t)->  
-        console.log e
+    # 'click #bug_icon': (e,t)->  
+    #     console.log e
 
     # 'click #test': (e,t)->
     #     $(e.currentTarget).closest('#nav_menu').transition('fade right')
@@ -122,31 +122,3 @@ Template.nav.events
         Session.set 'editing', true
         FlowRouter.go("/view/#{new_journal_id}")
     
-Template.left_sidebar.onRendered ->
-    @autorun =>
-        if @subscriptionsReady()
-            Meteor.setTimeout ->
-                $('.context.example .ui.sidebar')
-                    .sidebar({
-                        context: $('.context.example .bottom.segment')
-                        dimPage: false
-                        transition:  'push'
-                    })
-                    .sidebar('attach events', '.context.example .menu .toggle_sidebar.item')
-            , 1000
-            
-# Template.right_sidebar.onRendered ->
-#     @autorun =>
-#         if @subscriptionsReady()
-#             Meteor.setTimeout ->
-#                 $('.context.example .ui.sidebar')
-#                     .sidebar({
-#                         context: $('.context.example .bottom.segment')
-#                         dimPage: false
-#                         transition:  'overlay'
-#                     })
-#                     .sidebar('attach events', '.context.example .menu .toggle_sidebar.item')
-#                     ;
-#             , 500
-            
-            

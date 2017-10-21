@@ -27,7 +27,7 @@ template(name='welcome_video')
     +doc_content tags='sol,welcome,content'
     .ui.styled.fluid.accordion
         h3.title
-            +icon48 name="paper" classes='avatar'
+            +icon96 name="paper" classes='avatar'
             | Transcript
         .content
             +doc_content tags='sol,welcome,transcript'
@@ -38,7 +38,7 @@ template(name='welcome_video')
                 |Welcome Video Watched
         else
             #mark_welcome_video_complete.ui.basic.fluid.circular.button
-                +icon48 name="unchecked-checkbox" classes='avatar'
+                +icon96 name="unchecked-checkbox" classes='avatar'
                 |Mark Welcome Video Watched
 
     
@@ -190,7 +190,7 @@ template(name='inspiration_video')
     +doc_content tags='sol,inspiration,content'
     .ui.styled.fluid.accordion
         h3.title
-            +icon48 name="paper" classes='avatar'
+            +icon96 name="paper" classes='avatar'
             | Transcript
         .content
             +doc_content tags='sol,inspiration,transcript'
@@ -201,6 +201,6 @@ template(name='inspiration_video')
                 |Inspiration Video Watched
         else
             #mark_inspiration_video_complete.ui.basic.circular.fluid.button 
-                +icon48 name="unchecked-checkbox" classes='avatar'
+                +icon96 name="unchecked-checkbox" classes='avatar'
                 |Mark Inspiration Video Watched
             

@@ -40,7 +40,7 @@ Docs.before.insert (userId, doc)->
     doc.read_by = [Meteor.userId()]
     doc.upvoters = []
     doc.downvoters = []
-    doc.published = false
+    doc.published = -1
     return
 
 Docs.after.update ((userId, doc, fieldNames, modifier, options) ->

@@ -4,8 +4,8 @@ template(name='title')
         input#title(type='text' value=title)
 
 template(name='subtitle')
-    .inline.field
-        label Subtitle
+    .ui.labeled.fluid.input
+        .ui.basic.label Subtitle
         input#subtitle(type='text' value=subtitle)
 
 template(name='template_name')
@@ -14,11 +14,10 @@ template(name='template_name')
         input#template_name(type='text' value=template_name)
 
 template(name='icon_class')
-    .ui.action.labeled.input
-        .ui.basic.label Icon Class 
+    .ui.labeled.input
+        a.ui.basic.label(href="https://icons8.com/icon/new-icons/color" target='_blank' data-tooltip="Lookup at icons8")
+            |Icon 
         input#icon_class(type='text' value=icon_class)
-        a.ui.basic.icon.button(href="https://icons8.com/icon/new-icons/color" target='_blank' data-tooltip="Lookup at icons8")
-            i.external.icon
 
 template(name='created_date')
     .ui.form
@@ -141,10 +140,9 @@ template(name='intention_tags')
 
 
 template(name='dollar_price')
-    .ui.form
-        .field
-            label Price in $
-            input#dollar_price(type='number' min='0' value=dollar_price)
+    .ui.labeled.input
+        .ui.basic.label Price in $
+        input#dollar_price(type='number' min='0' value=dollar_price)
 
 template(name='point_price')
     .ui.labeled.input

@@ -208,3 +208,13 @@ requests
 needs!
 
 bounties
+
+
+bring the code to the surface
+badges track progress, based off of a db query, -> create tw programming language
+connect the human to the upper realm
+
+sections
+components
+collections
+items

@@ -5,7 +5,7 @@ template(name='course_dashboard')
             a.ui.raised.card(href='/course/sol/welcome')
                 .content
                     .center.aligned.header 
-                        +icon48 name="front-gate-open"
+                        +icon96 name="front-gate-open" classes='ui mini inline image'
                         |Welcome
                     .description
                         .ui.list
@@ -22,7 +22,7 @@ template(name='course_dashboard')
                 a.ui.raised.card(href='/course/sol/modules')
                     .content
                         .center.aligned.header
-                            +icon48 name="questionnaire"
+                            +icon96 name="questionnaire" classes='ui mini inline image'
                             |Modules
                         .description
                             .ui.basic.label #{course_progress_doc.module_complete_count}
@@ -35,7 +35,7 @@ template(name='course_dashboard')
                 a.ui.raised.card(href='/course/sol/members')
                     .content
                         .center.aligned.header 
-                            +icon48 name="people"
+                            +icon96 name="people" classes='ui mini inline image'
                             |Members
                         // .description
                         //     .ui.list
@@ -46,7 +46,7 @@ template(name='course_dashboard')
                     a.ui.raised.card(href='/course/sol/stats')
                         .content
                             .center.aligned.header
-                                +icon48 name="combo-chart"
+                                +icon96 name="combo-chart" classes='ui mini inline image'
                                 |Stats
                             // .description
                             //     .ui.list
@@ -56,7 +56,7 @@ template(name='course_dashboard')
                 a.ui.raised.card(href='/course/sol/pins')
                     .content
                         .center.aligned.header
-                            +icon48 name="push-pin" classes='avatar'
+                            +icon96 name="push-pin" classes='avatar' classes='ui mini inline image'
                             | Pins
                         // .description
                         //     .ui.list
@@ -67,7 +67,7 @@ template(name='course_dashboard')
                 .ui.raised.card
                     .content
                         .ui.grey.header
-                            +icon48 name="questionnaire" classes='avatar'
+                            +icon96 name="questionnaire" classes='avatar' classes='ui mini inline image'
                             |Modules
                         .description
                             .ui.list
@@ -76,7 +76,7 @@ template(name='course_dashboard')
                 .ui.raised.card
                     .content
                         .ui.grey.header 
-                            +icon48 name="people" classes='avatar'
+                            +icon96 name="people" classes='avatar' classes='ui mini inline image'
                             |Members
                         .description
                             .ui.list
@@ -84,7 +84,7 @@ template(name='course_dashboard')
                 .ui.disabled.card
                     .content
                         .ui.grey.header
-                            +icon48 name="combo-chart"
+                            +icon96 name="combo-chart" classes='ui mini inline image'
                             |Stats
                         .description
                             .ui.list

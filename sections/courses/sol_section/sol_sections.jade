@@ -1,13 +1,13 @@
-template(name='sections')        
-    .ui.horizontal.divider.header Sections
+template(name='sol_sections')        
+    .ui.horizontal.divider.header sol_sections
         if isInRole 'admin'
-            i#add_section.green.plus.link.small.icon(title='Add Section')
-    each sections
-        +section
+            i#add_sol_section.green.plus.link.small.icon(title='Add sol_section')
+    each sol_sections
+        +sol_section
         
         
-template(name='section')        
-    if section_is_available
+template(name='sol_section')        
+    if sol_section_is_available
         .ui.segment
             if editing
                 .ui.form
@@ -34,7 +34,7 @@ template(name='section')
                         +session_edit_icon
             else
                 a.ui.header(href="/view/#{_id}")
-                    if section_is_complete
+                    if sol_section_is_complete
                         +icon48 name='checked' classes='ui mini inline image'
                     |#{number}: #{title}
                 // if isInRole 'admin'
@@ -44,33 +44,33 @@ template(name='section')
                     // p parent_id: #{parent_id}
                     // p type: #{type}
                     +session_edit_icon
-                unless section_is_complete
+                unless sol_section_is_complete
                     .ui.divider
-                    .section_percent_complete_bar.ui.indicating.progress(data-percent=user_progress)
+                    .sol_section_percent_complete_bar.ui.indicating.progress(data-percent=user_progress)
                         .bar
                             .progress
                         .label
                     .ui.horizontal.relaxed.list
                         .item
-                            if section_progress_doc.video_complete
+                            if sol_section_progress_doc.video_complete
                                 i.green.film.icon
                             else
                                 i.disabled.film.icon
                             .content
-                                if section_progress_doc.video_complete
+                                if sol_section_progress_doc.video_complete
                                     |Video Watched
                                 else
                                     |Video Not Watched
-                        if section_progress_doc.section_question_count
+                        if sol_section_progress_doc.sol_section_question_count
                             .item
                                 .content
                                     i.tasks.icon
-                                    strong #{section_progress_doc.section_answer_count}/#{section_progress_doc.section_question_count}
+                                    strong #{sol_section_progress_doc.sol_section_answer_count}/#{sol_section_progress_doc.sol_section_question_count}
                                     |Questions Answered
                 else
                     if content
                         .item
-                            .section_summary.ui.basic.button 
+                            .sol_section_summary.ui.basic.button 
                                 +icon24 name='external' classes='ui mini inline image'
                                 |Takeaways
     else

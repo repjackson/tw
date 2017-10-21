@@ -1,90 +1,33 @@
 template(name='view_course')
-    +nav
-    .ui.container
-        .ui.hidden.divider
-        // .ui.breadcrumb
-        //     a.section(href='/') Home
-        //     .divider  / 
-        //     a.section(href='/courses') Courses
-        //     .divider  / 
-        //     .active.section #{course.title}
-        .ui.stackable.grid
-            .centered.row
-                img.ui.image(src="{{c.url course.image_id }}")
-                // .imogen.banner-text Source of Light
-                // h1.ui.center.aligned.header #{course.title}
-                // if isInRole 'dev'
-                //     |#{course._id}
-            // .centered.row
-            //     h4.ui.center.aligned.header #{course.subtitle}
-            .five.wide.column
-                .ui.vertical.fluid.pointing.large.menu
-                    a.item(href="/course/sol/dashboard" class="{{isActiveRoute name='course_dashboard'}}") 
-                        i.icon
-                            +icon24 name="dashboard"
-                        |Dashboard
-                    a.item(href="/course/sol/welcome" class="{{isActiveRoute name='course_welcome'}}") 
-                        i.icon
-                            +icon24 name="front-gate-open"
-                        // i.star.icon(class=welcome_icon_class)
-                        .ui.blue.label #{course_progress_doc.welcome_count}/3
-                        |Welcome
-                    // if has_agreed
-                    a.item(href="/course/sol/modules" class="{{isActiveRoute name='course_modules'}}") 
-                        i.icon
-                            +icon24 name="questionnaire"
-                        |Modules
-                        .ui.blue.label #{course_progress_doc.module_complete_count}/#{course_progress_doc.sol_module_count}
-                    a.item(href="/course/sol/members" class="{{isActiveRoute name='course_members'}}") 
-                        i.icon
-                            +icon24 name="people"
-                        |Members
-                    a.item(href="/course/sol/pins" class="{{isActiveRoute name='course_pins'}}") 
-                        i.icon
-                            +icon24 name="push-pin" classes='avatar'
-                        |Pins
-                    if isInRole 'dev'    
-                        a.item(href="/course/sol/stats" class="{{isActiveRoute name='course_stats'}}") 
-                            i.icon
-                                +icon24 name="combo-chart"
-                            |Stats
-                    // else
-                    //     .disabled.item 
-                    //         i.list.layout.icon
-                    //         |Modules (please agree to terms)
-                    //     .disabled.item 
-                    //         i.users.icon
-                    //         |Members (please agree to terms)
-                    //     .disabled.item
-                    //         i.pin.icon
-                    //         |Pins (please agree to terms)
-                    
-                    // a.item(href="/course/sol/collaboration" class="{{isActiveRoute name='course_collaboration'}}") Collaboration
-                    // a.item(href="/course/sol/downloads" class="{{isActiveRoute name='course_downloads'}}") Downloads
-                    // a.item(href="/course/sol/reminders" class="{{isActiveRoute name='course_reminders'}}") Reminders
-                // with course
-                if isInRole 'admin'
-                    .ui.segment
-                        .ui.header
-                            +icon48 name="monarch"
-                            |Admin
-                        +doc_title tags='course,sol'
-                        +doc_subtitle tags='course,sol'
-                        +doc_price tags='course,sol'
-                            .ui.list
-                                .item current module #{course_progress_doc.current_module}
-                                .item module_complete_count #{course_progress_doc.module_complete_count}
-                #calculate_sol_progress.ui.basic.fluid.button 
-                    +icon48 name='refresh' classes='ui mini inline image'
-                    |Calc SOL Progress
-                with course_progress_doc
-                    #sol_percent_complete_bar.ui.blue.indicating.progress(data-percent=section_progress_doc.percent_complete)
-                        .bar
-                            .progress
-                                | #{course_progress_doc.sol_progress_percent}%
-
+    .ui.stackable.padded.grid
+        .centered.middle.aligned.row
+            .three.wide.center.aligned.column
+            .ten.wide.center.aligned.column
+                h1.ui.center.aligned.header #{title}
+                h4.ui.center.aligned.header #{subtitle}
+            .three.wide.center.aligned.column
+                if editing
+                    +save_button
+                else
+                    if can_edit
+                        +toggle_editing_button
+        .centered.row
             .ten.wide.column
-                +Template.dynamic template=course_content
+                // +sections
+                each components
+                    if slug_exists
+                        +Template.dynamic template=slug data=doc
+                // +components
+                // +course_purchases
+            .six.wide.column
+                if editing
+                    if isInRole 'admin'
+                        +dividing_header label='Page Settings' icon='page'
+                        +title
+                        +subtitle
+                        +dollar_price
+                        +tags
+                    +component_menu        
 
     
 template(name='course_reminders')                
@@ -98,3 +41,55 @@ template(name='register_sol')
         h5.ui.center.aligned.header Please register an account to enroll in the SOL demo or login if you already have one.
         .ui.basic.segment
             +atForm state='signUp'
+            
+            
+template(name='course_purchases')
+    +dividing_header label='Purchases' icon='money'
+    .ui.cards
+        each purchases
+            .ui.card
+                .content
+                    .header #{title}
+                    .ui.header Buyer: #{author.name}
+                    .ui.header Sale Price: $#{sale_price}
+
+template(name='sections')
+    .ui.dividing.header
+        i.menu.icon
+        |Sections
+        if editing
+            #add_section.ui.basic.button
+                i.plus.icon
+                |Add Section
+    .ui.cards
+        each sections
+            .ui.card
+                .content
+                    if editing
+                        +title
+                        // +subtitle
+                        +icon_class
+                    else
+                        .header 
+                            +icon96 name=icon_class
+                            |#{title}
+             
+template(name='component_menu')
+    .ui.dividing.header Component Menu, bitch
+    each unselected_components
+        .select_component.ui.button 
+            +icon48 name=icon_class
+            |#{title}
+                            
+// template(name='components')
+//     if has_youtube
+//         +view_youtube
+//     if has_image
+//         if image_id
+//             .image
+//                 img(src="{{c.url image_id}}")
+//         if image_url
+//             .ui.large.image
+//                 img(src=image_url)
+//     if has_content
+//         |!{content}
