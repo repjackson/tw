@@ -279,7 +279,7 @@ Template.page_name.events
             
 Template.type.events
     'blur #type': (e,t)->
-        type = $('#type').val()
+        type = $(e.currentTarget).closest('#type').val()
         Docs.update @_id,
             $set: type: type
             
@@ -648,3 +648,33 @@ Template.end_date.events
         end_date = $('#end_date').val()
         Docs.update @_id,
             $set: end_date: end_date
+
+
+Template.remove_field.events
+    'click .remove_field':  ->
+        self = @
+        swal {
+            title: "Remove #{@field} field?"
+            type: 'warning'
+            animation: false
+            showCancelButton: true
+            closeOnConfirm: true
+            cancelButtonText: 'Cancel'
+            confirmButtonText: 'Remove'
+            confirmButtonColor: '#da5347'
+        }, =>
+            parent_doc = Docs.findOne FlowRouter.getParam('doc_id')
+            Docs.update parent_doc._id, 
+                $unset: 
+                    "#{self.field}": 1
+            # swal("#{self.field} removed", "", "success")
+            swal {
+                title: "Removed #{self.field} field."
+                type: 'success'
+                animation: false
+                showCancelButton: false
+                closeOnConfirm: true
+                # cancelButtonText: 'Cancel'
+                confirmButtonText: 'Ok'
+                # confirmButtonColor: '#da5347'
+            }

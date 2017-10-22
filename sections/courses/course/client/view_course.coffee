@@ -43,7 +43,6 @@ Template.view_course.onCreated ->
     # @autorun -> Meteor.subscribe 'sol_signers'
     # @autorun -> Meteor.subscribe 'sol_progress'
     # @autorun -> Meteor.subscribe 'child_docs', FlowRouter.getParam('doc_id')
-    @autorun -> Meteor.subscribe 'components'
 
 
 # Template.view_course.onRendered ->
@@ -70,16 +69,6 @@ Template.view_course.helpers
     doc: -> 
         doc = Docs.findOne FlowRouter.getParam('doc_id')
 
-    components: ->        
-        Docs.find
-            type: 'component'
-
-    slug_exists: ->
-        doc = Docs.findOne FlowRouter.getParam('doc_id')
-        # console.log @
-        # if doc["#{@slug}"]? then console.log "#{@slug} exists" else console.log "#{@slug} no" 
-        if doc["#{@slug}"]? then true else false
-        
     # has_agreed: ->
     #     course = Docs.findOne tags: ['course', 'sol']
     #     if course
@@ -99,45 +88,3 @@ Template.view_course.helpers
     #             author_id: Meteor.userId()
     #     if course_progress_doc and course_progress_doc.welcome_complete then 'yellow' else ''        
 
-Template.sections.helpers
-    sections: ->
-        Docs.find
-            parent_id: FlowRouter.getParam 'doc_id'
-            type: 'section'
-
-Template.sections.events
-    'click #add_section': ->
-        Docs.insert
-            parent_id: FlowRouter.getParam 'doc_id'
-            type: 'section'
-        
-Template.view_course.events
-    # 'click #add_module': ->
-    #     slug = FlowRouter.getParam('slug')
-    #     new_module_id = Modules.insert
-    #         parent_course_slug:slug 
-    #     FlowRouter.go "/course/#{slug}/module/#{new_module_id}/edit"
-            
-    # 'click #calculate_sol_progress': ->
-    #     Meteor.call 'calculate_sol_progress', (err, res)->
-    #         $('#sol_percent_complete_bar').progress('set percent', res);
-
-
-Template.component_menu.onCreated ->
-    @autorun -> Meteor.subscribe 'components'
-
-
-Template.component_menu.helpers
-    unselected_components: ->
-        doc = Docs.findOne FlowRouter.getParam('doc_id')
-        keys = _.keys doc
-        Docs.find
-            type: 'component'
-            slug: $nin: keys
-            
-Template.component_menu.events
-    'click .select_component': ->
-        # console.log @
-        slug = @slug
-        Docs.update FlowRouter.getParam('doc_id'),
-            $set: "#{slug}": ''

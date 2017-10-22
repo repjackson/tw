@@ -1,7 +1,3 @@
-template(name='edit_doc')
-    with doc
-        +Template.dynamic template=edit_type_template
-
 template(name='docs')
     .ui.container
         +cloud
@@ -11,48 +7,58 @@ template(name='docs')
         
 template(name='view_doc')
     with doc
-        +Template.dynamic template=view_type_template
-        // .ui.container
-        //     .ui.breadcrumb
-        //         a.section(href='/') Home
-        //         .divider  / 
-        //         a.section(href="/#{type}s") #{type}
-        //         .divider  / 
-        //         .active.section #{title}
-        //     .ui.hidden.divider
-        //     if image_id
-        //         img.ui.centered.image(src="{{c.url image_id height=500 width=800 background='white' crop='lpad'}}")
-        //     .ui.stackable.grid
-        //         .eleven.wide.column
-        //             h1.ui.dividing.header #{title}
-        //             |!{content}
-        //             +comments
-        //             +doc_matches
-        //         .five.wide.column
-        //             if price
-        //                 .ui.dividing.header Price $#{price}
-        //                 +add_to_cart
-        //             .ui.dividing.header Actions
-        //             +favorite_button
-        //             +voting
-        //             +resonate_button
-        //             +resonates_list
-        //             if tags
-        //                 .ui.dividing.header Tags
-        //                 each tags
-        //                     .ui.basic.label #{this}
-        //             // +user_card
-        //             if can_edit
-        //                 .ui.dividing.header 
-        //                     i.red.configure.icon
-        //                     |Admin
-        //                 .ui.hidden.fitted.divider
-        //                 .ui.header
-        //                     |Published:
-        //                     if published
-        //                         .ui.green.basic.label True
-        //                     else
-        //                         .ui.basic.label False
-        //                 .ui.header
-        //                     |Type:
-        //                     .ui.basic.label #{type}
+        // +Template.dynamic template=view_type_template
+        .ui.padded.stackable.grid
+            .centered.middle.aligned.row
+                .four.wide.center.aligned.column
+                    a.ui.basic.circular.button(href="/view/#{parent._id}")
+                        +icon48 name=parent.icon_class classes='ui mini inline image'
+                        | #{parent.title}
+                .eight.wide.center.aligned.column
+                    h1.ui.center.aligned.header
+                        +icon48 name=icon_class classes='ui mini inline image'
+                        | #{title}
+                .four.wide.center.aligned.column
+                    if can_edit
+                        +toggle_editing_button
+            .centered.row
+                .ten.wide.column
+                    +children
+                    each components
+                        if slug_exists
+                            +Template.dynamic template=slug data=doc
+                .four.wide.column
+                    if editing
+                        +component_menu
+                        
+                        
+                        
+template(name='children')
+    if editing
+        .ui.dividing.header
+            i.menu.icon
+            |Children
+            #add_child.ui.basic.button
+                i.plus.icon
+                |Add Child
+    .ui.cards
+        each children
+            .ui.card
+                .content
+                    if editing
+                        +title
+                        // +subtitle
+                        +type
+                        // +icon_class
+                    else
+                        a.header(href="/view/#{_id}") 
+                            if icon_class
+                                +icon96 name=icon_class
+                            |#{title}
+             
+template(name='component_menu')
+    .ui.dividing.header Component Menu
+    each unselected_components
+        .select_component.ui.basic.button 
+//             +icon48 name=icon_class classes='ui mini spaced image'
+//             |#{title}

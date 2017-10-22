@@ -1,12 +1,22 @@
 template(name='title') 
-    .ui.labeled.fluid.input
-        .ui.basic.label Title
-        input#title(type='text' value=title)
+    if editing
+        .ui.labeled.fluid.input
+            .ui.basic.label Title
+            input#title(type='text' value=title)
+    else
+        h2.ui.header 
+            if icon_class
+                +icon48 name=icon_class classes='ui mini inline image'
+            |#{title}
 
 template(name='subtitle')
-    .ui.labeled.fluid.input
-        .ui.basic.label Subtitle
-        input#subtitle(type='text' value=subtitle)
+    if editing
+        .ui.labeled.fluid.input
+            .ui.basic.label Subtitle
+            input#subtitle(type='text' value=subtitle)
+    else
+        h3.ui.header #{subtitle}
+
 
 template(name='template_name')
     .inline.field
@@ -14,10 +24,13 @@ template(name='template_name')
         input#template_name(type='text' value=template_name)
 
 template(name='icon_class')
-    .ui.labeled.input
-        a.ui.basic.label(href="https://icons8.com/icon/new-icons/color" target='_blank' data-tooltip="Lookup at icons8")
-            |Icon 
-        input#icon_class(type='text' value=icon_class)
+    if editing
+        .ui.labeled.input
+            a.ui.basic.label(href="https://icons8.com/icon/new-icons/color" target='_blank' data-tooltip="Lookup at icons8")
+                |Icon 
+            input#icon_class(type='text' value=icon_class)
+    else
+        +icon48 name=icon_class classes='ui mini inline image'
 
 template(name='created_date')
     .ui.form
@@ -160,11 +173,14 @@ template(name='bounty')
 
 
 template(name='link')
-    .ui.labeled.icon.input
-        .ui.basic.label Link (include http://)
-        input#link(type='text' value=link)
-        i.linkify.icon
-
+    if editing
+        .ui.labeled.icon.input
+            .ui.basic.label Link (include http://)
+            // i.linkify.icon
+            input#link(type='text' value=link)
+            +remove_field field='link'
+    else
+        a(href=link) #{link}
 
 template(name='page_name')
     .field
@@ -174,10 +190,9 @@ template(name='page_name')
 
 
 template(name='type')
-    .ui.form
-        .inline.field
-            label Type
-            input#type(type='text' value=type)
+    .ui.labeled.fluid.input
+        .ui.basic.label Type
+        input#type(type='text' value=type)
             
 template(name='author_name')
     .ui.labeled.fluid.large.input
@@ -326,3 +341,9 @@ template(name='end_date')
             input#end_date(type='date' value=end_date)
     else
         .ui.header End Date #{end_date}
+        
+        
+template(name='remove_field')
+    .remove_field.ui.basic.icon.button
+        i.remove.red.icon
+        

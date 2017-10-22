@@ -13,25 +13,19 @@ template(name='view_course')
                         +toggle_editing_button
         .centered.row
             .twelve.wide.column
-                // +sections
-                each components
-                    if slug_exists
-                        +Template.dynamic template=slug data=doc
+                // +children
+                // each components
+                //     if slug_exists
+                //         +Template.dynamic template=slug data=doc
                 // +components
                 // +course_purchases
             .four.wide.column
                 if editing
                     if isInRole 'admin'
                         +dividing_header label='Page Settings' icon='page'
-                        +tags
                     +component_menu        
 
     
-template(name='course_reminders')                
-    h2.ui.center.aligned.header Course Reminders            
-
-
-
 template(name='register_sol')
     .ui.text.container
         h2.ui.center.aligned.header Hi and Welcome to ToriWebster.com!
@@ -50,34 +44,6 @@ template(name='course_purchases')
                     .ui.header Buyer: #{author.name}
                     .ui.header Sale Price: $#{sale_price}
 
-template(name='sections')
-    .ui.dividing.header
-        i.menu.icon
-        |Sections
-        if editing
-            #add_section.ui.basic.button
-                i.plus.icon
-                |Add Section
-    .ui.cards
-        each sections
-            .ui.card
-                .content
-                    if editing
-                        +title
-                        // +subtitle
-                        +icon_class
-                    else
-                        .header 
-                            +icon96 name=icon_class
-                            |#{title}
-             
-template(name='component_menu')
-    .ui.dividing.header Component Menu
-    each unselected_components
-        .select_component.ui.button 
-            +icon48 name=icon_class
-            |#{title}
-                            
 // template(name='components')
 //     if has_youtube
 //         +view_youtube
