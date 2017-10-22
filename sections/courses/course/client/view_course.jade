@@ -12,20 +12,17 @@ template(name='view_course')
                     if can_edit
                         +toggle_editing_button
         .centered.row
-            .ten.wide.column
+            .twelve.wide.column
                 // +sections
                 each components
                     if slug_exists
                         +Template.dynamic template=slug data=doc
                 // +components
                 // +course_purchases
-            .six.wide.column
+            .four.wide.column
                 if editing
                     if isInRole 'admin'
                         +dividing_header label='Page Settings' icon='page'
-                        +title
-                        +subtitle
-                        +dollar_price
                         +tags
                     +component_menu        
 
@@ -75,7 +72,7 @@ template(name='sections')
                             |#{title}
              
 template(name='component_menu')
-    .ui.dividing.header Component Menu, bitch
+    .ui.dividing.header Component Menu
     each unselected_components
         .select_component.ui.button 
             +icon48 name=icon_class

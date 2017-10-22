@@ -297,7 +297,7 @@ Template.edit_parent_id.events
             $set: parent_id: parent_id
             
             
-Template.edit_image.events
+Template.image_id.events
     "change input[type='file']": (e) ->
         doc_id = @_id
         files = e.currentTarget.files
@@ -349,23 +349,12 @@ Template.edit_image.events
                 else
                     throw new Meteor.Error "it failed miserably"
 
+Template.image_url.events
     'click #remove_image_url': ->
         Docs.update @_id, 
             $unset: 
                 image_url: 1
         
-
-    #         console.log Cloudinary
-    # 		Cloudinary.delete "37hr", (err,res) ->
-    # 		    if err 
-    # 		        console.log "Upload Error: #{err}"
-    # 		    else
-    #     			console.log "Upload Result: #{res}"
-    #                 # Docs.update @_id, 
-    #                 #     $unset: image_id: 1
-
-
-
     'blur #image_url': ->
         image_url = $('#image_url').val()
         Docs.update @_id,
@@ -466,7 +455,7 @@ Template.youtube.events
         Docs.update @_id,
             $unset: youtube: 1
             
-Template.view_youtube.onRendered ->
+Template.youtube.onRendered ->
     Meteor.setTimeout (->
         $('.ui.embed').embed()
     ), 2000

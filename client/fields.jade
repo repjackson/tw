@@ -141,7 +141,7 @@ template(name='intention_tags')
 
 template(name='dollar_price')
     .ui.labeled.input
-        .ui.basic.label Price in $
+        .ui.basic.label $ Price
         input#dollar_price(type='number' min='0' value=dollar_price)
 
 template(name='point_price')
@@ -198,68 +198,79 @@ template(name='location')
             input#location(type='text' value=location)
 
 template(name='content')
-    .field
-        label #{label}
-        .froala-container
-            +froalaReactive getFEContext
+    if editing
+        .field
+            label #{label}
+            .froala-container
+                +froalaReactive getFEContext
+    else
+        |!{content}
     
-    
-template(name='edit_image')
-    .ui.segment
-        if image_id
-            .ui.header
-                 +icon48 name='image-file' classes='ui mini spaced image'
-                 |Uploaded Image
-            .ui.large.centered.image
-                img(src="{{c.url image_id width=500 crop='fit'}}")
-                a#remove_photo.ui.top.right.attached.link.red.basic.label
-                    +icon48 name='delete' classes='ui tiny spaced image'
-                if isInRole 'dev'
-                    .ui.bottom.right.attached.blue.label Image Id: #{image_id}
-        else
-            unless image_url
+template(name='image_id')
+    if editing
+        .ui.segment
+            if image_id
+                .ui.header
+                     +icon48 name='image-file' classes='ui mini spaced image'
+                     |Uploaded Image
+                .ui.large.centered.image
+                    img(src="{{c.url image_id width=500 crop='fit'}}")
+                    a#remove_photo.ui.top.right.attached.link.red.basic.label
+                        +icon48 name='delete' classes='ui tiny spaced image'
+                    if isInRole 'dev'
+                        .ui.bottom.right.attached.blue.label Image Id: #{image_id}
+            else
                 .ui.labeled.fluid.input
                     .ui.basic.label
                         +icon48 name='add-image' classes='ui tiny spaced image'
                         |Upload Image
                     input(type='file' name='upload_picture' accept='image/*')
-                if isInRole 'dev'
-                    .ui.header or Choose Cloudinary Image Id
-                    .ui.input
-                        input#input_image_id(type='text')
-        .ui.horizontal.divider or                
+                // if isInRole 'dev'
+                //     .ui.header or Choose Cloudinary Image Id
+                //     .ui.input
+                //         input#input_image_id(type='text')
+    else
+        img.ui.image(src="{{c.url image_id width=500 crop='fit'}}")
+        
+
+template(name='image_url')
+    if editing
         if image_url
-            label image
+            label Image URL
             .ui.large.image
                 img(src=image_url)
                 a#remove_image_url.ui.top.left.attached.link.blue.label Remove
             .ui.label Image URL: #{image_url}
         else
-            unless image_id
-                .ui.labeled.icon.action.fluid.input
-                    .ui.basic.label 
-                        +icon48 name='add-link' classes='ui mini spaced image'
-                        |Paste Image URL
-                    input#image_url(type='text' value=image_url)
-                    .ui.basic.button
-                        +icon24 name='sent'
+            .ui.labeled.icon.action.fluid.input
+                .ui.basic.label 
+                    +icon48 name='add-link' classes='ui mini spaced image'
+                    |Paste Image URL
+                input#image_url(type='text' value=image_url)
+                .ui.basic.button
+                    +icon24 name='sent'
+    else
+        .ui.large.image
+            img(src=image_url)
+        
     
 template(name='youtube')
-    .ui.segment
-        .ui.action.fluid.labeled.input
-            .ui.basic.label
-                +icon48 name='youtube' classes='ui mini spaced image'
-                |Youtube Id
-            input#youtube(type='text' value=youtube)
-            .ui.icon.basic.button#clear_youtube
-                +icon24 name='delete'
-        if youtube
-            +view_youtube
-    
+    if editing
+        .ui.segment
+            .ui.action.fluid.labeled.input
+                .ui.basic.label
+                    +icon48 name='youtube' classes='ui mini spaced image'
+                    |Youtube Id
+                input#youtube(type='text' value=youtube)
+                .ui.icon.basic.button#clear_youtube
+                    +icon24 name='delete'
+            if youtube
+                +view_youtube
+    else
+        // .ui.embed(data-source="youtube" data-id=youtube data-icon="video" data-placeholder="/images/video_placeholder.png")
+        .ui.embed(data-source="youtube" data-id=youtube)
 
-template(name='view_youtube')
-    // .ui.embed(data-source="youtube" data-id=youtube data-icon="video" data-placeholder="/images/video_placeholder.png")
-    .ui.embed(data-source="youtube" data-id=youtube)
+// template(name='view_youtube')
 
 
 template(name='participants')
