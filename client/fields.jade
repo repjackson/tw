@@ -3,11 +3,11 @@ template(name='title')
         .ui.labeled.fluid.input
             .ui.basic.label Title
             input#title(type='text' value=title)
-    else
-        h2.ui.header 
-            if icon_class
-                +icon48 name=icon_class classes='ui mini inline image'
-            |#{title}
+    // else
+    //     h2.ui.header 
+    //         if icon_class
+    //             +icon48 name=icon_class classes='ui mini inline image'
+    //         |#{title}
 
 template(name='subtitle')
     if editing
@@ -16,6 +16,12 @@ template(name='subtitle')
             input#subtitle(type='text' value=subtitle)
     else
         h3.ui.header #{subtitle}
+
+template(name='group')
+    if editing
+        .ui.labeled.fluid.input
+            .ui.basic.label Group
+            input#group(type='text' value=group)
 
 
 template(name='template_name')
@@ -29,8 +35,8 @@ template(name='icon_class')
             a.ui.basic.label(href="https://icons8.com/icon/new-icons/color" target='_blank' data-tooltip="Lookup at icons8")
                 |Icon 
             input#icon_class(type='text' value=icon_class)
-    else
-        +icon48 name=icon_class classes='ui mini inline image'
+    // else
+    //     +icon48 name=icon_class classes='ui mini inline image'
 
 template(name='created_date')
     .ui.form
@@ -347,3 +353,19 @@ template(name='remove_field')
     .remove_field.ui.basic.icon.button
         i.remove.red.icon
         
+        
+        
+template(name='child_view')
+    .ui.labeled.fluid.input
+        .ui.basic.label Child Type
+        input#child_type(type='text' value=child_type)
+    if card_view
+        .ui.cards
+            each typed_children
+                .ui.card
+                    .content
+                        a.header(href="/view/#{_id}") #{title}
+                        
+                        
+                        
+                        

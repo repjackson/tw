@@ -278,3 +278,10 @@ Meteor.publish 'usernames', ->
             username: 1
             profile: 1
             points: 1
+            
+            
+Meteor.publish 'doc_template', (doc_id)->
+    doc = Docs.findOne doc_id
+    Docs.find
+        type: 'doc_template'
+        doc_type: doc.type

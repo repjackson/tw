@@ -4,6 +4,12 @@ Template.subtitle.events
         Docs.update @_id,
             $set: subtitle: subtitle
             
+Template.group.events
+    'blur #group': ->
+        group = $('#group').val()
+        Docs.update @_id,
+            $set: group: group
+            
 Template.author_name.events
     'blur #author_name': ->
         # console.log Template.parentData()._id,
@@ -678,3 +684,12 @@ Template.remove_field.events
                 confirmButtonText: 'Ok'
                 # confirmButtonColor: '#da5347'
             }
+            
+            
+Template.child_view.helpers
+    typed_children: ->
+        parent_doc = Docs.findOne FlowRouter.getParam('doc_id')
+        doc_template = Docs.findOne type: 'doc_template'
+        Docs.find
+            parent_id: parent_doc._id
+            type: doc_template.type

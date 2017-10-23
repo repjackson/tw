@@ -27,14 +27,20 @@ Template.docs.helpers
 Template.view_doc.onCreated ->
     @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
     @autorun -> Meteor.subscribe 'components'
+    @autorun -> Meteor.subscribe 'doc_template', FlowRouter.getParam('doc_id')
 
 Template.view_doc.helpers
     doc: -> Docs.findOne FlowRouter.getParam('doc_id')
+    doc_template: -> Docs.findOne type: 'doc_template'
     view_type_template: -> "view_#{@type}"
-    
+    is_field: -> @type is 'field'        
+
     components: ->        
-        Docs.find
-            type: 'component'
+        doc_template = Docs.findOne type: 'doc_template'
+        doc_template?.components
+        
+        # Docs.find
+        #     type: 'component'
 
     slug_exists: ->
         doc = Docs.findOne FlowRouter.getParam('doc_id')
@@ -42,6 +48,13 @@ Template.view_doc.helpers
         # if doc["#{@slug}"]? then console.log "#{@slug} exists" else console.log "#{@slug} no" 
         if doc["#{@slug}"]? then true else false
     
+Template.view_doc.events
+    'click #create_doc_template': ->
+        console.log @
+        Docs.insert
+            type: 'doc_template'
+            doc_type: @type
+            components: []
     
     
 Template.children.helpers
@@ -56,33 +69,82 @@ Template.children.events
             parent_id: FlowRouter.getParam 'doc_id'
             # type: 'section'
         
-Template.view_course.events
-    # 'click #add_module': ->
-    #     slug = FlowRouter.getParam('slug')
-    #     new_module_id = Modules.insert
-    #         parent_course_slug:slug 
-    #     FlowRouter.go "/course/#{slug}/module/#{new_module_id}/edit"
-            
-    # 'click #calculate_sol_progress': ->
-    #     Meteor.call 'calculate_sol_progress', (err, res)->
-    #         $('#sol_percent_complete_bar').progress('set percent', res);
 
-
-Template.component_menu.onCreated ->
+Template.field_menu.onCreated ->
     @autorun -> Meteor.subscribe 'components'
 
 
-Template.component_menu.helpers
-    unselected_components: ->
+Template.field_menu.helpers
+    unselected_fields: ->
         doc = Docs.findOne FlowRouter.getParam('doc_id')
         keys = _.keys doc
         Docs.find
             type: 'component'
             slug: $nin: keys
             
-Template.component_menu.events
+Template.field_menu.events
     'click .select_component': ->
         # console.log @
         slug = @slug
-        Docs.update FlowRouter.getParam('doc_id'),
-            $set: "#{slug}": ''
+        doc_template = Docs.findOne type: 'doc_template'
+        Docs.update doc_template._id,
+            $addToSet:
+                components:
+                    type: 'field'
+                    field_id: slug
+            
+            
+Template.component_menu.events
+    'click #add_group': ->
+        # console.log Docs.findOne type: 'doc_template'
+        doc_template = Docs.findOne type: 'doc_template'
+        group = prompt 'Group name:'
+        Docs.update doc_template._id,
+            $addToSet: 
+                components: 
+                    type: 'group'
+                    group: group
+            
+    'click #add_field': ->
+        # console.log Docs.findOne type: 'doc_template'
+        doc_template = Docs.findOne type: 'doc_template'
+        Docs.update doc_template._id,
+            $addToSet: components: {type: 'field'}
+            
+            
+Template.field_component.helpers
+    doc: -> Docs.findOne FlowRouter.getParam('doc_id')
+    component_segment_class: -> if Session.get 'editing' then '' else 'basic'    
+Template.group_component.helpers
+    doc: -> Docs.findOne FlowRouter.getParam('doc_id')
+    component_segment_class: -> if Session.get 'editing' then '' else 'basic'    
+    
+    group_children: ->
+        doc = Docs.findOne FlowRouter.getParam('doc_id')
+        Docs.find
+            parent_id: doc._id
+            group: @group
+    
+Template.field_component.events
+    'click .remove_component': ->
+        doc_template = Docs.findOne type: 'doc_template'
+        console.log @
+        Docs.update doc_template._id,
+            $pull: components: @
+Template.group_component.events
+    'click .remove_component': ->
+        doc_template = Docs.findOne type: 'doc_template'
+        console.log @
+        Docs.update doc_template._id,
+            $pull: components: @
+            
+    # 'blur #group': (e,t)->
+    #     group = $(e.currentTarget).closest('#group').val()
+    #     doc_template = Docs.findOne type: 'doc_template'
+    #     console.log @
+    #     Docs.update { _id: doc_template._id, components: @},
+    #         $set: 
+    #             "components.$":  
+    #                 group: group
+        
+            

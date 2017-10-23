@@ -166,7 +166,7 @@ if Meteor.isServer
         # console.log selected_participant_ids
         if selected_theme_tags.length > 0 then match.tags = $all: selected_theme_tags
         if view_published is true
-            match.published = true
+            match.published = 1
             if selected_participant_ids.length > 0 then match.participant_ids = $in: selected_participant_ids
         else if view_published = false
             match.published = -1

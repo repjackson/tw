@@ -22,43 +22,99 @@ template(name='view_doc')
                     if can_edit
                         +toggle_editing_button
             .centered.row
-                .ten.wide.column
-                    +children
+                .twelve.wide.column
                     each components
-                        if slug_exists
-                            +Template.dynamic template=slug data=doc
+                        if is_field
+                            +field_component
+                        else
+                            +group_component
+                        // if slug_exists
+                        //     +Template.dynamic template=slug data=doc
+                        //     .ui.hidden.divider
+                    +children
                 .four.wide.column
                     if editing
+                        +type
+                        unless doc_template
+                            .ui.header No #{type} Template Doc
+                            #create_doc_template.ui.basic.button Create #{type} Template Doc
                         +component_menu
+                        +field_menu
                         
                         
                         
 template(name='children')
     if editing
         .ui.dividing.header
-            i.menu.icon
-            |Children
+            +icon48 name='tree-structure' classes='ui mini inline image'
+            |All Children
             #add_child.ui.basic.button
                 i.plus.icon
                 |Add Child
-    .ui.cards
-        each children
-            .ui.card
-                .content
-                    if editing
-                        +title
-                        // +subtitle
-                        +type
-                        // +icon_class
-                    else
-                        a.header(href="/view/#{_id}") 
-                            if icon_class
-                                +icon96 name=icon_class
-                            |#{title}
+        .ui.basic.segment
+            .ui.cards
+                each children
+                    .ui.card
+                        .content
+                            if editing
+                                +title
+                                +group
+                                +type
+                                // +icon_class
+                            else
+                                a.header(href="/view/#{_id}") 
+                                    if icon_class
+                                        +icon96 name=icon_class
+                                    |#{title}
              
+template(name='field_menu')
+    .ui.dividing.header Fields Menu
+    each unselected_fields
+        .select_component.ui.basic.compact.small.fade.animated.button
+            .hidden.content
+                i.plus.large.blue.icon
+                |#{title}
+            .visible.content
+                +icon48 name=icon_class classes='ui mini spaced image'
+                |#{title}
+                
 template(name='component_menu')
-    .ui.dividing.header Component Menu
-    each unselected_components
-        .select_component.ui.basic.button 
-//             +icon48 name=icon_class classes='ui mini spaced image'
-//             |#{title}
+    #add_group.ui.basic.button Add Group
+    #add_field.ui.basic.button Add Field
+    
+    
+template(name='field_component')
+    .ui.segment(class=component_segment_class)
+        if editing
+            .ui.horizontal.list
+                .item Field Component
+                .item Field ID: #{field_id}
+                .item
+                    .remove_component.ui.basic.icon.button
+                        i.red.remove.icon
+        +Template.dynamic template=field_id data=doc
+    
+template(name='group_component')
+    .ui.segment(class=component_segment_class)
+        if editing
+            .ui.horizontal.list
+                .item Group Component
+                .item Group ID: #{group}
+                .item
+                    .remove_component.ui.basic.icon.button
+                        i.red.remove.icon
+        .ui.centered.cards
+            each group_children
+                .ui.card
+                    .content
+                        if editing
+                            +title
+                            +group
+                            +type
+                            +icon_class
+                        else
+                            a.header(href="/view/#{_id}") 
+                                if icon_class
+                                    +icon96 name=icon_class
+                                |#{title}
+                    
