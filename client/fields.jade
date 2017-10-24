@@ -368,4 +368,11 @@ template(name='child_view')
                         
                         
                         
-                        
+template(name='transcript')
+    .ui.styled.fluid.accordion
+        h3.title
+            +icon96 name="paper" classes='ui mini inline image'
+            | Transcript
+        .content
+            +doc_by_parentid_and_type parent_id=_id type='transcript'
+            // +doc_content tags='sol,welcome,transcript'

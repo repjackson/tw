@@ -693,3 +693,12 @@ Template.child_view.helpers
         Docs.find
             parent_id: parent_doc._id
             type: doc_template.type
+            
+    
+Template.transcript.onRendered ->
+    @autorun =>
+        if @subscriptionsReady()
+            Meteor.setTimeout ->
+                $('.ui.accordion').accordion()
+            , 1000
+            

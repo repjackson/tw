@@ -10,17 +10,26 @@ template(name='view_doc')
         // +Template.dynamic template=view_type_template
         .ui.padded.stackable.grid
             .centered.middle.aligned.row
+                a.ui.basic.circular.button(href="/view/#{parent._id}")
+                    +icon48 name=parent.icon_class classes='ui mini inline image'
+                    | #{parent.title}
+            .centered.middle.aligned.row
                 .four.wide.center.aligned.column
-                    a.ui.basic.circular.button(href="/view/#{parent._id}")
-                        +icon48 name=parent.icon_class classes='ui mini inline image'
-                        | #{parent.title}
+                    if younger_sibling
+                        a.ui.basic.circular.button(href="/view/#{younger_sibling._id}")
+                            +icon48 name=younger_sibling.icon_class classes='ui mini inline image'
+                            | #{younger_sibling.title}
                 .eight.wide.center.aligned.column
                     h1.ui.center.aligned.header
                         +icon48 name=icon_class classes='ui mini inline image'
                         | #{title}
+                        if can_edit
+                            +toggle_editing_button
                 .four.wide.center.aligned.column
-                    if can_edit
-                        +toggle_editing_button
+                    if older_sibling
+                        a.ui.basic.circular.button(href="/view/#{older_sibling._id}")
+                            +icon48 name=older_sibling.icon_class classes='ui mini inline image'
+                            | #{older_sibling.title}
             .centered.row
                 .twelve.wide.column
                     each components
@@ -32,8 +41,8 @@ template(name='view_doc')
                         //     +Template.dynamic template=slug data=doc
                         //     .ui.hidden.divider
                     +children
-                .four.wide.column
-                    if editing
+                if editing
+                    .four.wide.column
                         +type
                         unless doc_template
                             .ui.header No #{type} Template Doc
@@ -47,7 +56,7 @@ template(name='children')
     if editing
         .ui.dividing.header
             +icon48 name='tree-structure' classes='ui mini inline image'
-            |All Children
+            |All Children (add children to group to show)
             #add_child.ui.basic.button
                 i.plus.icon
                 |Add Child
@@ -60,7 +69,7 @@ template(name='children')
                                 +title
                                 +group
                                 +type
-                                // +icon_class
+                                +number
                             else
                                 a.header(href="/view/#{_id}") 
                                     if icon_class
@@ -70,13 +79,9 @@ template(name='children')
 template(name='field_menu')
     .ui.dividing.header Fields Menu
     each unselected_fields
-        .select_component.ui.basic.compact.small.fade.animated.button
-            .hidden.content
-                i.plus.large.blue.icon
-                |#{title}
-            .visible.content
-                +icon48 name=icon_class classes='ui mini spaced image'
-                |#{title}
+        .select_component.ui.basic.compact.small.button
+            +icon48 name=icon_class classes='ui mini spaced image'
+            |#{title}
                 
 template(name='component_menu')
     #add_group.ui.basic.button Add Group
@@ -87,7 +92,8 @@ template(name='field_component')
     .ui.segment(class=component_segment_class)
         if editing
             .ui.horizontal.list
-                .item Field Component
+                .item
+                    +icon48 name='rename' classes='ui mini inline image'
                 .item Field ID: #{field_id}
                 .item
                     .remove_component.ui.basic.icon.button
@@ -98,7 +104,8 @@ template(name='group_component')
     .ui.segment(class=component_segment_class)
         if editing
             .ui.horizontal.list
-                .item Group Component
+                .item
+                    +icon48 name='group-objects' classes='ui mini inline image'
                 .item Group ID: #{group}
                 .item
                     .remove_component.ui.basic.icon.button
@@ -112,6 +119,7 @@ template(name='group_component')
                             +group
                             +type
                             +icon_class
+                            +number
                         else
                             a.header(href="/view/#{_id}") 
                                 if icon_class

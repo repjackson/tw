@@ -15,8 +15,7 @@ Template.docs.helpers
                 tag_count: 1
             limit: 10
 
-    one_doc: -> 
-        Docs.find().count() is 1
+    one_doc: -> Docs.find().count() is 1
 
     tag_class: -> if @valueOf() in selected_theme_tags.array() then 'teal' else 'basic'
 
@@ -26,7 +25,6 @@ Template.docs.helpers
 
 Template.view_doc.onCreated ->
     @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
-    @autorun -> Meteor.subscribe 'components'
     @autorun -> Meteor.subscribe 'doc_template', FlowRouter.getParam('doc_id')
 
 Template.view_doc.helpers
@@ -34,6 +32,25 @@ Template.view_doc.helpers
     doc_template: -> Docs.findOne type: 'doc_template'
     view_type_template: -> "view_#{@type}"
     is_field: -> @type is 'field'        
+
+    younger_sibling: ->
+        doc = Docs.findOne FlowRouter.getParam('doc_id')
+        if doc.number
+            previous_number = doc.number - 1
+            Docs.findOne
+                group: doc.group
+                parent_id: doc.parent_id
+                number: previous_number
+
+    older_sibling: ->
+        doc = Docs.findOne FlowRouter.getParam('doc_id')
+        if doc.number
+            next_number = doc.number + 1
+            Docs.findOne
+                group: doc.group
+                parent_id: doc.parent_id
+                number: next_number
+
 
     components: ->        
         doc_template = Docs.findOne type: 'doc_template'
@@ -59,9 +76,10 @@ Template.view_doc.events
     
 Template.children.helpers
     children: ->
-        Docs.find
+        Docs.find {
             parent_id: FlowRouter.getParam 'doc_id'
-            # type: 'section'
+        }, sort: number: 1
+
 
 Template.children.events
     'click #add_child': ->
@@ -76,11 +94,14 @@ Template.field_menu.onCreated ->
 
 Template.field_menu.helpers
     unselected_fields: ->
-        doc = Docs.findOne FlowRouter.getParam('doc_id')
-        keys = _.keys doc
+        # doc = Docs.findOne FlowRouter.getParam('doc_id')
+        # console.log @slug
+        doc_template = Docs.findOne type: 'doc_template'
+        if doc_template
+            values = _.pluck doc_template.components, 'field_id'
         Docs.find
             type: 'component'
-            slug: $nin: keys
+            slug: $nin: values
             
 Template.field_menu.events
     'click .select_component': ->
@@ -93,6 +114,10 @@ Template.field_menu.events
                     type: 'field'
                     field_id: slug
             
+            
+Template.component_menu.onCreated ->
+    @autorun -> Meteor.subscribe 'components'
+
             
 Template.component_menu.events
     'click #add_group': ->
@@ -121,9 +146,11 @@ Template.group_component.helpers
     
     group_children: ->
         doc = Docs.findOne FlowRouter.getParam('doc_id')
-        Docs.find
+        Docs.find {
             parent_id: doc._id
             group: @group
+            }, sort: number: 1
+            
     
 Template.field_component.events
     'click .remove_component': ->
