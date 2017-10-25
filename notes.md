@@ -218,3 +218,11 @@ sections
 components
 collections
 items
+
+nav menu
+    has to attach to doc_template
+    course_module
+        nav_menu
+            sections
+            debrief
+            lightwork

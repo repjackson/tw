@@ -53,31 +53,43 @@ Template.view_doc.helpers
 
 
     components: ->        
-        doc_template = Docs.findOne type: 'doc_template'
-        doc_template?.components
+        doc = Docs.findOne FlowRouter.getParam('doc_id')
+        doc.components
         
         # Docs.find
         #     type: 'component'
 
-    slug_exists: ->
-        doc = Docs.findOne FlowRouter.getParam('doc_id')
-        # console.log @
-        # if doc["#{@slug}"]? then console.log "#{@slug} exists" else console.log "#{@slug} no" 
-        if doc["#{@slug}"]? then true else false
+    # slug_exists: ->
+    #     doc = Docs.findOne FlowRouter.getParam('doc_id')
+    #     # console.log @
+    #     # if doc["#{@slug}"]? then console.log "#{@slug} exists" else console.log "#{@slug} no" 
+    #     if doc["#{@slug}"]? then true else false
+        
+        
+    main_column_class: ->
+        if Session.equals 'editing', true then 'twelve wide column' else 'fourteen wide column'
+        
     
 Template.view_doc.events
-    'click #create_doc_template': ->
-        console.log @
-        Docs.insert
-            type: 'doc_template'
-            doc_type: @type
-            components: []
+    'click #disallow_responses': ->
+        Docs.update FlowRouter.getParam('doc_id'),
+            $set: responses_allowed: false
+
+    'click #allow_responses': ->
+        Docs.update FlowRouter.getParam('doc_id'),
+            $set: responses_allowed: true
     
-    
+Template.responses.helpers
+    responses: ->
+        Docs.find {
+            parent_id: FlowRouter.getParam 'doc_id'
+        }, sort: number: 1
+
 Template.children.helpers
     children: ->
         Docs.find {
             parent_id: FlowRouter.getParam 'doc_id'
+            author_id: Meteor.userId()
         }, sort: number: 1
 
 
@@ -85,8 +97,48 @@ Template.children.events
     'click #add_child': ->
         Docs.insert
             parent_id: FlowRouter.getParam 'doc_id'
+            type: 'section'
+        
+Template.responses.events
+    'click #add_response': ->
+        Docs.insert
+            parent_id: FlowRouter.getParam 'doc_id'
             # type: 'section'
         
+Template.response.onCreated ->
+    @editing = new ReactiveVar(false)
+
+Template.response.helpers
+    editing_mode: -> Template.instance().editing.get()
+
+Template.response.events
+    'click .edit_this': (e,t)-> t.editing.set true
+    'click .save_doc': (e,t)-> t.editing.set false
+
+    'keyup #tag_input': (e,t)->
+        e.preventDefault()
+        val = $('#tag_input').val().toLowerCase().trim()
+        switch e.which
+            when 13 #enter
+                unless val.length is 0
+                    Docs.update Template.currentData()._id,
+                        $addToSet: tags: val
+                    $('#tag_input').val ''
+            # when 8
+            #     if val.length is 0
+            #         result = Docs.findOne(Template.currentData()._id).tags.slice -1
+            #         $('#theme_tag_select').val result[0]
+            #         Docs.update Template.currentData()._id,
+            #             $pop: tags: 1
+
+
+    'click .doc_tag': (e,t)->
+        tag = @valueOf()
+        Docs.update Template.currentData()._id,
+            $pull: tags: tag
+        $('#tag_input').val(tag)
+
+
 
 Template.field_menu.onCreated ->
     @autorun -> Meteor.subscribe 'components'
@@ -94,11 +146,8 @@ Template.field_menu.onCreated ->
 
 Template.field_menu.helpers
     unselected_fields: ->
-        # doc = Docs.findOne FlowRouter.getParam('doc_id')
-        # console.log @slug
-        doc_template = Docs.findOne type: 'doc_template'
-        if doc_template
-            values = _.pluck doc_template.components, 'field_id'
+        doc = Docs.findOne FlowRouter.getParam('doc_id')
+        values = _.pluck doc.components, 'field_id'
         Docs.find
             type: 'component'
             slug: $nin: values
@@ -107,34 +156,13 @@ Template.field_menu.events
     'click .select_component': ->
         # console.log @
         slug = @slug
-        doc_template = Docs.findOne type: 'doc_template'
-        Docs.update doc_template._id,
+        doc = Docs.findOne FlowRouter.getParam('doc_id')
+        Docs.update doc._id,
             $addToSet:
                 components:
                     type: 'field'
                     field_id: slug
             
-            
-Template.component_menu.onCreated ->
-    @autorun -> Meteor.subscribe 'components'
-
-            
-Template.component_menu.events
-    'click #add_group': ->
-        # console.log Docs.findOne type: 'doc_template'
-        doc_template = Docs.findOne type: 'doc_template'
-        group = prompt 'Group name:'
-        Docs.update doc_template._id,
-            $addToSet: 
-                components: 
-                    type: 'group'
-                    group: group
-            
-    'click #add_field': ->
-        # console.log Docs.findOne type: 'doc_template'
-        doc_template = Docs.findOne type: 'doc_template'
-        Docs.update doc_template._id,
-            $addToSet: components: {type: 'field'}
             
             
 Template.field_component.helpers
@@ -154,24 +182,14 @@ Template.group_component.helpers
     
 Template.field_component.events
     'click .remove_component': ->
-        doc_template = Docs.findOne type: 'doc_template'
-        console.log @
-        Docs.update doc_template._id,
+        doc = Docs.findOne FlowRouter.getParam('doc_id')
+        # console.log @
+        Docs.update doc._id,
             $pull: components: @
 Template.group_component.events
     'click .remove_component': ->
-        doc_template = Docs.findOne type: 'doc_template'
-        console.log @
-        Docs.update doc_template._id,
+        doc = Docs.findOne FlowRouter.getParam('doc_id')
+        # console.log @
+        Docs.update doc._id,
             $pull: components: @
-            
-    # 'blur #group': (e,t)->
-    #     group = $(e.currentTarget).closest('#group').val()
-    #     doc_template = Docs.findOne type: 'doc_template'
-    #     console.log @
-    #     Docs.update { _id: doc_template._id, components: @},
-    #         $set: 
-    #             "components.$":  
-    #                 group: group
-        
             

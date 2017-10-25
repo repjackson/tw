@@ -14,10 +14,10 @@ template(name='course_modules')
                         +title
                         .field
                             +tags
-                        // .field
-                        //     +edit_parent_id
-                        // .field
-                        //     +type
+                        .field
+                            +edit_parent_id
+                        .field
+                            +type
                         +delete_button
                 else
                     a.ui.header(href="/view/#{_id}") 

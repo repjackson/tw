@@ -31,7 +31,7 @@ template(name='view_doc')
                             +icon48 name=older_sibling.icon_class classes='ui mini inline image'
                             | #{older_sibling.title}
             .centered.row
-                .twelve.wide.column
+                div(class=main_column_class)
                     each components
                         if is_field
                             +field_component
@@ -39,16 +39,28 @@ template(name='view_doc')
                             +group_component
                         // if slug_exists
                         //     +Template.dynamic template=slug data=doc
-                        //     .ui.hidden.divider
                     +children
+                    unless editing
+                        if responses_allowed
+                            +responses
+                    
                 if editing
                     .four.wide.column
-                        +type
-                        unless doc_template
-                            .ui.header No #{type} Template Doc
-                            #create_doc_template.ui.basic.button Create #{type} Template Doc
-                        +component_menu
+                        .ui.dividing.header
+                            +icon48 name='setting' classes='ui mini inline image'
+                            | Settings
+                        if responses_allowed
+                            #disallow_responses.ui.basic.button 
+                                +icon48 name='response' classes='ui mini inline image'
+                                |Responses Allowed
+                        else
+                            #allow_responses.ui.basic.button 
+                                +icon48 name='delete-message' classes='ui mini inline image'
+                                |Responses Not Allowed
                         +field_menu
+                        // else
+                        //     .ui.header No #{type} Template Doc
+                        //     #create_doc_template.ui.basic.button Create #{type} Template Doc
                         
                         
                         
@@ -56,25 +68,66 @@ template(name='children')
     if editing
         .ui.dividing.header
             +icon48 name='tree-structure' classes='ui mini inline image'
-            |All Children (add children to group to show)
+            | Sections
             #add_child.ui.basic.button
                 i.plus.icon
-                |Add Child
-        .ui.basic.segment
-            .ui.cards
-                each children
-                    .ui.card
-                        .content
-                            if editing
-                                +title
-                                +group
-                                +type
-                                +number
-                            else
-                                a.header(href="/view/#{_id}") 
-                                    if icon_class
-                                        +icon96 name=icon_class
-                                    |#{title}
+                | Add Section
+    .ui.centered.cards
+        each children
+            +child
+            
+template(name='responses')
+    .ui.dividing.header
+        +icon48 name='response' classes='ui mini inline image'
+        | Responses
+        #add_response.ui.basic.button
+            i.plus.icon
+            | Respond
+    .ui.segments
+        each responses
+            +response
+
+template(name='response')
+    .ui.segment
+        if editing_mode
+            .content
+                +body_field
+            // .ui.input
+            //     input#tag_input(type='text' placeholder='Add Tag...')
+            // each tags
+            //     // a.ui.basic.circular.button.doc_tag #{this}
+            //     a.ui.basic.button.doc_tag
+            //         |#{this}
+            .content
+                .save_doc.ui.basic.icon.button
+                    i.green.check.icon
+                +delete_button
+        else
+            .content
+                |#{body}
+            .content
+                if is_author
+                    .edit_this.ui.basic.icon.button
+                        i.blue.pencil.icon
+            // +icon48 name='hashtag' classes='ui inline mini image'
+            // |Tags
+            // each tags
+            //     .ui.basic.label.doc_tag #{this}
+
+template(name='child')
+    .ui.card
+        .content
+            if editing
+                +title
+                // +group
+                +type
+                +number
+                +delete_button
+            else
+                a.header(href="/view/#{_id}") 
+                    if icon_class
+                        +icon96 name=icon_class
+                    |#{title}
              
 template(name='field_menu')
     .ui.dividing.header Fields Menu
@@ -83,10 +136,6 @@ template(name='field_menu')
             +icon48 name=icon_class classes='ui mini spaced image'
             |#{title}
                 
-template(name='component_menu')
-    #add_group.ui.basic.button Add Group
-    #add_field.ui.basic.button Add Field
-    
     
 template(name='field_component')
     .ui.segment(class=component_segment_class)
@@ -121,8 +170,8 @@ template(name='group_component')
                             +icon_class
                             +number
                         else
-                            a.header(href="/view/#{_id}") 
-                                if icon_class
-                                    +icon96 name=icon_class
+                            a.ui.icon.center.aligned.header.header(href="/view/#{_id}") 
+                                i.icon
+                                    if icon_class
+                                        +icon96 name=icon_class
                                 |#{title}
-                    

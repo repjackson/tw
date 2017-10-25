@@ -46,7 +46,7 @@ if Meteor.isClient
                 Docs.find {
                     participant_ids: $in: [Meteor.userId()]
                     type: 'conversation'
-                    published: false
+                    published: -1
                 }, sort: timestamp: -1
             
         selected_conversation: ->

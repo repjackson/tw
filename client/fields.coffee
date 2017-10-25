@@ -5,8 +5,8 @@ Template.subtitle.events
             $set: subtitle: subtitle
             
 Template.group.events
-    'blur #group': ->
-        group = $('#group').val()
+    'blur #group': (e,t)->
+        group = $(e.currentTarget).closest('#group').val()
         Docs.update @_id,
             $set: group: group
             

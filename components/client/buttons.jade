@@ -151,8 +151,8 @@ template(name='add_to_cart')
 
 template(name='delete_button')
     unless confirming
-        .delete.ui.icon.red.basic.compact.button
-            +icon24 name="delete" classes='ui mini inline image'
+        .delete.ui.basic.icon.button
+            i.red.remove.icon
     else
         .ui.basic.button.cancel Cancel
         .ui.red.button.confirm Confirm Delete

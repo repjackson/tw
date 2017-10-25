@@ -26,13 +26,13 @@ if Meteor.isClient
             Docs.find
                 parent_id: @_id
                 # tags: $in: ["answer"]
-                published: true
+                published: 1
                 
         all_private_answers: ->        
             Docs.find
                 parent_id: @_id
                 # tags: $in: ["answer"]
-                published: false
+                published: -1
                 
                 
         my_answer: ->
