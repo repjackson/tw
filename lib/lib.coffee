@@ -79,6 +79,12 @@ Docs.helpers
     recipient: -> Meteor.users.findOne @recipient_id
     subject: -> Meteor.users.findOne @subject_id
     object: -> Docs.findOne @object_id
+    responded: -> 
+        response = Docs.findOne
+            author_id: Meteor.userId()
+            parent_id: @_id
+            type: 'response'
+        if response then true else false
 
 
 

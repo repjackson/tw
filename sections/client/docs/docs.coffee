@@ -79,6 +79,14 @@ Template.view_doc.events
         Docs.update FlowRouter.getParam('doc_id'),
             $set: responses_allowed: true
     
+    'click #create_parent': ->
+        new_parent_id = Docs.insert {}
+        Docs.update FlowRouter.getParam('doc_id'),
+            $set: parent_id: new_parent_id
+        FlowRouter.go "/view/#{new_parent_id}" 
+        
+    
+    
 Template.responses.helpers
     responses: ->
         Docs.find {
@@ -89,7 +97,8 @@ Template.children.helpers
     children: ->
         Docs.find {
             parent_id: FlowRouter.getParam 'doc_id'
-            author_id: Meteor.userId()
+            # author_id: Meteor.userId()
+            # type: 'child'
         }, sort: number: 1
 
 
@@ -97,13 +106,13 @@ Template.children.events
     'click #add_child': ->
         Docs.insert
             parent_id: FlowRouter.getParam 'doc_id'
-            type: 'section'
+            type: 'child'
         
 Template.responses.events
     'click #add_response': ->
         Docs.insert
             parent_id: FlowRouter.getParam 'doc_id'
-            # type: 'section'
+            type: 'response'
         
 Template.response.onCreated ->
     @editing = new ReactiveVar(false)
@@ -168,16 +177,6 @@ Template.field_menu.events
 Template.field_component.helpers
     doc: -> Docs.findOne FlowRouter.getParam('doc_id')
     component_segment_class: -> if Session.get 'editing' then '' else 'basic'    
-Template.group_component.helpers
-    doc: -> Docs.findOne FlowRouter.getParam('doc_id')
-    component_segment_class: -> if Session.get 'editing' then '' else 'basic'    
-    
-    group_children: ->
-        doc = Docs.findOne FlowRouter.getParam('doc_id')
-        Docs.find {
-            parent_id: doc._id
-            group: @group
-            }, sort: number: 1
             
     
 Template.field_component.events

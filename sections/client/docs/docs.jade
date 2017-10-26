@@ -10,26 +10,50 @@ template(name='view_doc')
         // +Template.dynamic template=view_type_template
         .ui.padded.stackable.grid
             .centered.middle.aligned.row
-                a.ui.basic.circular.button(href="/view/#{parent._id}")
-                    +icon48 name=parent.icon_class classes='ui mini inline image'
-                    | #{parent.title}
+                if parent
+                    a.ui.basic.circular.button(href="/view/#{parent._id}")
+                        if icon_class
+                            +icon48 name=parent.icon_class classes='ui mini inline image'
+                        else
+                            +icon48 name='chevron-up' classes='ui mini inline image'
+                        | #{parent.title}
+                else
+                    #create_parent.ui.basic.button Create Parent
             .centered.middle.aligned.row
                 .four.wide.center.aligned.column
                     if younger_sibling
                         a.ui.basic.circular.button(href="/view/#{younger_sibling._id}")
-                            +icon48 name=younger_sibling.icon_class classes='ui mini inline image'
+                            if younger_sibling.responded
+                                +icon48 name='checked' classes='ui mini inline image'
+                            else
+                                if younger_sibling.icon_class
+                                    +icon48 name=younger_sibling.icon_class classes='ui mini inline image'
+                                else
+                                    +icon48 name='circle' classes='ui mini inline image'
                             | #{younger_sibling.title}
                 .eight.wide.center.aligned.column
                     h1.ui.center.aligned.header
-                        +icon48 name=icon_class classes='ui mini inline image'
+                        if responded
+                            +icon48 name='checked' classes='ui mini inline image'
+                        else
+                            if icon_class
+                                +icon48 name=icon_class classes='ui mini inline image'
+                            else
+                                +icon48 name='circle' classes='ui mini inline image'
                         | #{title}
                         if can_edit
                             +toggle_editing_button
                 .four.wide.center.aligned.column
                     if older_sibling
                         a.ui.basic.circular.button(href="/view/#{older_sibling._id}")
-                            +icon48 name=older_sibling.icon_class classes='ui mini inline image'
                             | #{older_sibling.title}
+                            if older_sibling.responded
+                                +icon48 name='checked' classes='ui mini inline image'
+                            else
+                                if older_sibling.icon_class
+                                    +icon48 name=older_sibling.icon_class classes='ui mini inline image'
+                                else
+                                    +icon48 name='circle' classes='ui mini inline image'
             .centered.row
                 div(class=main_column_class)
                     each components
@@ -68,11 +92,11 @@ template(name='children')
     if editing
         .ui.dividing.header
             +icon48 name='tree-structure' classes='ui mini inline image'
-            | Sections
+            | Children
             #add_child.ui.basic.button
                 i.plus.icon
-                | Add Section
-    .ui.centered.cards
+                | Add Child
+    .ui.centered.stackable.five.column.grid
         each children
             +child
             
@@ -80,9 +104,10 @@ template(name='responses')
     .ui.dividing.header
         +icon48 name='response' classes='ui mini inline image'
         | Responses
-        #add_response.ui.basic.button
-            i.plus.icon
-            | Respond
+        unless responded
+            #add_response.ui.basic.button
+                i.plus.icon
+                | Respond
     .ui.segments
         each responses
             +response
@@ -115,19 +140,24 @@ template(name='response')
             //     .ui.basic.label.doc_tag #{this}
 
 template(name='child')
-    .ui.card
-        .content
-            if editing
-                +title
-                // +group
-                +type
-                +number
-                +delete_button
-            else
-                a.header(href="/view/#{_id}") 
-                    if icon_class
-                        +icon96 name=icon_class
-                    |#{title}
+    .column
+        if editing
+            +title
+            +type
+            +icon_class
+            +number
+            +delete_button
+        else
+            a.ui.icon.center.aligned.header(href="/view/#{_id}") 
+                i.icon
+                    if responded
+                        +icon96 name='checked'
+                    else
+                        if icon_class
+                            +icon96 name=icon_class
+                        else
+                            +icon96 name='circle'
+                |#{title}
              
 template(name='field_menu')
     .ui.dividing.header Fields Menu

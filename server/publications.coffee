@@ -96,6 +96,17 @@ publishComposite 'doc', (id, ancestor_levels, descendent_levels)->
                             group: doc.group
                             parent_id: doc.parent_id
                             number: next_number
+                children: [
+                    {
+                        #older sibling response
+                        find: (older_sibling)->
+                            Docs.find
+                                parent_id: older_sibling._id
+                                author_id: Meteor.userId()
+                        }
+                    
+                    ]
+                        
             }
             {
                 # younger numeric sibling
@@ -106,6 +117,16 @@ publishComposite 'doc', (id, ancestor_levels, descendent_levels)->
                             group: doc.group
                             parent_id: doc.parent_id
                             number: previous_number
+                children: [
+                    {
+                        #younger sibling response
+                        find: (younger_sibling)->
+                            Docs.find
+                                parent_id: younger_sibling._id
+                                author_id: Meteor.userId()
+                        }
+                    
+                    ]
             }
             {
                 # parent doc
@@ -123,19 +144,19 @@ publishComposite 'doc', (id, ancestor_levels, descendent_levels)->
                             find: (grandparent_doc)->
                                 Docs.find
                                     _id: grandparent_doc.parent_id
-                            children: [
-                                # great great grandparent doc
-                                find: (great_grandparent_doc)->
-                                    Docs.find
-                                        _id: great_grandparent_doc.parent_id
-                                children: [
-                                    # great great great grandparent doc
-                                    find: (great_great_grandparent_doc)->
-                                        Docs.find
-                                            _id: great_great_grandparent_doc.parent_id
-                                    ]
+                            # children: [
+                            #     # great great grandparent doc
+                            #     find: (great_grandparent_doc)->
+                            #         Docs.find
+                            #             _id: great_grandparent_doc.parent_id
+                            #     children: [
+                            #         # great great great grandparent doc
+                            #         find: (great_great_grandparent_doc)->
+                            #             Docs.find
+                            #                 _id: great_great_grandparent_doc.parent_id
+                            #         ]
                 
-                                ]
+                            #     ]
             
                             ]
                     }
