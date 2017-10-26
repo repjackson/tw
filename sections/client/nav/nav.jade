@@ -1,8 +1,9 @@
 template(name='nav')
     #nav_menu.ui.vertical.labeled.icon.menu
         if currentUser
-            a.ui.mobile.hidden.simple.dropdown.item(href='/')
-                .imogen TW
+            a.ui.mobile.hidden.simple.dropdown.item(href='/view/9639QAQ4yPbMLs7CA')
+                // .imogen TW
+                img.ui.image(src="{{c.url 'tw_logo' width=100 height=100 crop='fill'}}")
                 .ui.menu
                     a.mobile.hidden.item(href='/about' class="{{isActivePath '/about'}}") 
                         i.icon
