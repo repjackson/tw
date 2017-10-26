@@ -67,7 +67,7 @@ Template.view_doc.helpers
         
         
     main_column_class: ->
-        if Session.equals 'editing', true then 'twelve wide column' else 'fourteen wide column'
+        if Session.equals 'editing', true then 'ten wide column' else 'fourteen wide column'
         
     
 Template.view_doc.events

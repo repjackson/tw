@@ -65,10 +65,12 @@ template(name='number')
         input#number(type='number' min='0' value=number)
 
 template(name='edit_quantity')
-    .ui.labeled.input
-        .ui.basic.label Quantity (0 for infinite)
-        input#quantity(type='number' min='0' value=quantity)
-
+    if editing
+        .ui.labeled.input
+            .ui.basic.label Quantity (0 for infinite)
+            input#quantity(type='number' min='0' value=quantity)
+    else
+        .ui.header Quantity: #{quantity}
 
 template(name='body_field')
     .ui.form
