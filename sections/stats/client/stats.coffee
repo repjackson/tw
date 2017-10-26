@@ -6,7 +6,7 @@ if Meteor.isClient
     
     
     Template.stats.onCreated ->
-        @autorun => Meteor.subscribe('my_stats', selected_theme_tags.array(), selected_upvoter_ids.array())
+        @autorun => Meteor.subscribe('my_stats', selected_theme_tags.array())
 
         
     # Template.stats.onRendered ->

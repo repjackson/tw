@@ -24,44 +24,6 @@ template(name='dashboard')
                     i.icon
                         +icon96 name='bookmark-ribbon'
                     |Bookmarks
-            // .column
-            //     a#lightbank.ui.icon.center.aligned.header
-            //         i.icon
-            //             +icon96 name='summer'
-            //         |LightBank
-            // .column
-            //     .row    
-            //         a.ui.icon.center.aligned.header(href='/journal')
-            //             i.icon
-            //                 +icon96 name='journal'
-            //             |Journal
-            .column    
-                a.ui.icon.center.aligned.header(href="/karma")
-                    i.icon
-                        +icon96 name='diamond'
-                    |Karma
-                    .ui.circular.basic.label #{currentUser.points}
-            .column    
-                a.ui.icon.center.aligned.header(href='/transactions')
-                    i.icon
-                        +icon96 name='handshake'
-                    |Transactions
-            if isInRole 'dev'
-                .column    
-                    a.ui.icon.center.aligned.header(href='/events')
-                        i.icon
-                            +icon96 name='calendar'
-                        | Events
-                .column    
-                    a.ui.icon.center.aligned.header(href='/shop')
-                        i.icon
-                            +icon96 name='shop'
-                        |Shop
-                .column    
-                    a.ui.icon.center.aligned.header(href='/badges')
-                        i.icon
-                            +icon96 name='medal'
-                        | Badges
             .column    
                 a.ui.icon.center.aligned.header(href='/stats')
                     i.icon
@@ -72,11 +34,6 @@ template(name='dashboard')
                     i.icon
                         +icon96 name='bug'
                     | Bugs
-            .column    
-                a.ui.icon.center.aligned.header(href='/notifications')
-                    i.icon
-                        +icon96 name='notification'
-                    |Notifications
             .column    
                 a.ui.icon.center.aligned.header(href="/profile/#{currentUser.username}/account")
                     i.icon
