@@ -136,4 +136,5 @@ template(name='twig')
                 |#{title}
                 if body
                     .ui.basic.label #{body}
-                .ui.basic.label #{type}
+                if isInRole 'dev'
+                    .ui.basic.label #{type}
