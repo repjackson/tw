@@ -287,13 +287,9 @@ template(name='youtube')
                 input#youtube(type='text' value=youtube)
                 .ui.icon.basic.button#clear_youtube
                     +icon24 name='delete'
-            if youtube
-                +view_youtube
     else
         // .ui.embed(data-source="youtube" data-id=youtube data-icon="video" data-placeholder="/images/video_placeholder.png")
         .ui.embed(data-source="youtube" data-id=youtube)
-
-// template(name='view_youtube')
 
 
 template(name='participants')
