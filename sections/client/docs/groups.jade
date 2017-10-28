@@ -67,6 +67,8 @@ template(name='response')
 template(name='leaf')
     .ui.fluid.card
         unless editing
+            .ui.top.right.attached.basic.label(data-tooltip='Published Status')
+                +icon48 name=published_state_icon
             if title
                 .content
                     .header #{title}
@@ -96,11 +98,11 @@ template(name='leaf')
                 +view_full_button
                 // +mark_read
                 +author_info
-                if can_edit
+                if is_author
                     +delete_button
-                    +edit_parent_id
-                    |id: #{_id}
-                    +type
+                    // +edit_parent_id
+                    // |id: #{_id}
+                    // +type
         if editing
             +title
             +type
@@ -129,7 +131,9 @@ template(name='twig')
                             +icon96 name=icon_class
                         else
                             +icon96 name='circle'
-                |#{number}: #{title}
+                if number
+                    |#{number}: 
+                |#{title}
                 if body
                     .ui.basic.label #{body}
                 .ui.basic.label #{type}

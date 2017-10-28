@@ -56,17 +56,17 @@ Template.view_doc.helpers
                 number: next_number
 
     components: ->        
-        doc = Docs.findOne FlowRouter.getParam('doc_id')
-        doc.components
-        
-        # Docs.find
-        #     type: 'component'
-
-    # slug_exists: ->
     #     doc = Docs.findOne FlowRouter.getParam('doc_id')
-    #     # console.log @
-    #     # if doc["#{@slug}"]? then console.log "#{@slug} exists" else console.log "#{@slug} no" 
-    #     if doc["#{@slug}"]? then true else false
+    #     doc.components
+        
+        Docs.find
+            type: 'component'
+
+    slug_exists: ->
+        doc = Docs.findOne FlowRouter.getParam('doc_id')
+        # console.log @
+        # if doc["#{@slug}"]? then console.log "#{@slug} exists" else console.log "#{@slug} no" 
+        if doc["#{@slug}"]? then true else false
         
         
     main_column_class: ->

@@ -61,12 +61,12 @@ template(name='view_doc')
             .row
                 div(class=main_column_class)
                     each components
-                        if is_field
-                            +field_component
-                        else
-                            +group_component
-                        // if slug_exists
-                        //     +Template.dynamic template=slug data=doc
+                        if slug_exists
+                            +Template.dynamic template=slug data=doc
+                    //     if is_field
+                    //         +field_component
+                    //     else
+                    //         +group_component
                     if is_branch
                         +twigs
                     if is_twig

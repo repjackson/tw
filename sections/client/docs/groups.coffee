@@ -66,6 +66,12 @@ Template.leaves.events
             parent_id: FlowRouter.getParam 'doc_id'
             # type: 'child'
         
+Template.leaf.helpers
+    published_state_icon: ->
+        switch @published
+            when 1 then 'eye'
+            when 0 then 'ignore'
+            when -1 then 'invisible'
         
         
 Template.twigs.helpers
