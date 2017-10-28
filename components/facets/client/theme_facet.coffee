@@ -2,7 +2,8 @@
 
 Template.theme_facet.helpers
     theme_tags: ->
-        doc_count = Docs.find(type:Template.currentData().type).count()
+        
+        doc_count = Docs.find( parent_id:FlowRouter.getParam('doc_id') ).count()
         # if selected_theme_tags.array().length
         if 0 < doc_count < 3
             Tags.find { 

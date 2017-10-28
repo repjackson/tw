@@ -1,20 +1,20 @@
-template(name='view_sol_section')
+template(name='view_section')
     // +nav
     .ui.container
         // .ui.breadcrumb
-        //     a.sol_section(href='/') Home
+        //     a.section(href='/') Home
         //     .divider  / 
-        //     a.sol_section(href='/courses') Courses
+        //     a.section(href='/courses') Courses
         //     .divider  / 
-        //     a.sol_section(href="/course/sol") Source of Light
+        //     a.section(href="/course/sol") Source of Light
         //     .divider  / 
-        //     a.sol_section(href="/course/sol/modules") Modules
+        //     a.section(href="/course/sol/modules") Modules
         //     .divider  / 
-        //     a.sol_section(href="/course/sol/module/#{module.number}") #{module.number}: #{module.title}
+        //     a.section(href="/course/sol/module/#{module.number}") #{module.number}: #{module.title}
         //     .divider  / 
-        //     a.sol_section(href="/course/sol/module/#{module.number}/sol_sections") sol_sections
+        //     a.section(href="/course/sol/module/#{module.number}/sections") sections
         //     .divider  / 
-        //     .sol_section #{sol_section.number}: #{sol_section.title}
+        //     .section #{section.number}: #{section.title}
         // .ui.hidden.divider
         if Template.subscriptionsReady
             .ui.grid
@@ -25,45 +25,45 @@ template(name='view_sol_section')
                             |Module #{module.number}: #{module.title}
                 .center.aligned.row
                     .three.wide.column
-                        if previous_sol_section
-                            // a.ui.basic.small.button(href="/course/sol/module/#{module.number}/sol_section/#{previous_sol_section.number}")
-                            a.ui.basic.fluid.circular.button(href="/view/#{previous_sol_section._id}")
+                        if previous_section
+                            // a.ui.basic.small.button(href="/course/sol/module/#{module.number}/section/#{previous_section.number}")
+                            a.ui.basic.fluid.circular.button(href="/view/#{previous_section._id}")
                                 +icon48 name="chevron-left" classes='avatar'
-                                // |#{previous_sol_section.number}: #{previous_sol_section.title}
-                                |#{previous_sol_section.title}
+                                // |#{previous_section.number}: #{previous_section.title}
+                                |#{previous_section.title}
                     .ten.wide.column
-                        h1.ui.center.aligned.header sol_section #{sol_section.number}: #{sol_section.title}
+                        h1.ui.center.aligned.header section #{section.number}: #{section.title}
                         // if isInRole 'admin'
-                        //     | sol_section_id: #{sol_section._id}
+                        //     | section_id: #{section._id}
                     .three.wide.column
-                        if sol_section_complete
-                            if next_sol_section_exists
-                                a.ui.basic.fluid.circular.button(href="/view/#{next_sol_section._id}")
-                                    // |#{next_sol_section.number}: #{next_sol_section.title}
-                                    | #{next_sol_section.title}
+                        if section_complete
+                            if next_section_exists
+                                a.ui.basic.fluid.circular.button(href="/view/#{next_section._id}")
+                                    // |#{next_section.number}: #{next_section.title}
+                                    | #{next_section.title}
                                     +icon48 name="chevron-right" classes='avatar'
                             else
                                 a.ui.basic.fluid.circular.animated.fade.button(href="/view/#{module._id}") 
                                     .visible.content
                                         +icon48 name="checked" classes='avatar'
-                                        | Module #{module.number} sol_sections Complete
+                                        | Module #{module.number} sections Complete
                                     .hidden.content
                                         +icon48 name="return" classes='avatar'
     
-                // a.item(href="/course/sol/module/#{module.number}/sol_section/#{sol_section.number}/questions" class="{{isActiveRoute name='questions'}}") Collaboration
+                // a.item(href="/course/sol/module/#{module.number}/section/#{section.number}/questions" class="{{isActiveRoute name='questions'}}") Collaboration
             .ui.stackable.grid
                 .five.wide.column
                     // .ui.dividing.header Progress
-                    // #calculate_sol_section_progress.ui.fluid.basic.button Calculate sol_section Progress
-                    // #sol_section_percent_complete_bar.ui.blue.indicating.progress(data-percent=sol_section_progress_doc.percent_complete)
+                    // #calculate_section_progress.ui.fluid.basic.button Calculate section Progress
+                    // #section_percent_complete_bar.ui.blue.indicating.progress(data-percent=section_progress_doc.percent_complete)
                     //     .bar
                     //         .progress
-                    //             | #{sol_section_progress_doc.percent_complete}%
+                    //             | #{section_progress_doc.percent_complete}%
                     if video_complete
                         .ui.fluid.basic.label 
                             +icon48 name="checkmark" classes='avatar'
                             |Video Watched
-                        if sol_section.content.length
+                        if section.content.length
                             .item
                                 .popup_takeaway.ui.basic.fluid.button 
                                     +icon48 name="external" classes='avatar'
@@ -74,7 +74,7 @@ template(name='view_sol_section')
                             +icon48 name="unchecked-checkbox" classes='avatar'
                             |Video
                     if reflective_question_docs.count
-                        .ui.sub.dividing.header #{sol_section_progress_doc.sol_section_answer_count}/ #{sol_section_progress_doc.sol_section_question_count} Questions Answered
+                        .ui.sub.dividing.header #{section_progress_doc.section_answer_count}/ #{section_progress_doc.section_question_count} Questions Answered
                         .ui.list
                             each reflective_question_docs
                                     .item 
@@ -82,12 +82,12 @@ template(name='view_sol_section')
                                             i.green.check.icon
                                         | #{number}: #{body}
                     if isInRole 'admin'
-                        +user_sol_section_progress_list
+                        +user_section_progress_list
                 .eleven.wide.column
                     // if Template.subscriptionsReady
                     // #convert_content.ui.button Convert Contents
-                    // +doc_content tags=sol_section_content_tags pinnable=true
-                    +doc_by_parentid_and_type parent_id=sol_section._id type='sol_section_video' tags='sol_section,video'
+                    // +doc_content tags=section_content_tags pinnable=true
+                    +doc_by_parentid_and_type parent_id=section._id type='section_video' tags='section,video'
     
                     .ui.hidden.divider
                     .ui.styled.fluid.accordion
@@ -96,8 +96,8 @@ template(name='view_sol_section')
                             | Transcript
                             i.dropdown.icon
                         .content
-                            // +doc_content tags=sol_section_transcript_tags pinnable=true
-                            +doc_by_parentid_and_type parent_id=sol_section._id type='sol_section_transcript' tags='sol_section,transcript'
+                            // +doc_content tags=section_transcript_tags pinnable=true
+                            +doc_by_parentid_and_type parent_id=section._id type='section_transcript' tags='section,transcript'
     
                     .ui.center.aligned.basic.segment
                         if currentUser
@@ -105,7 +105,7 @@ template(name='view_sol_section')
                                 .unmark_video_complete.ui.blue.circular.fluid.button 
                                     // +icon48 name='checkmark' classes='ui mini inline image'
                                     |Video Watched
-                                if sol_section.content.length
+                                if section.content.length
                                     .popup_takeaway.ui.basic.large.button 
                                         +icon48 name='external' classes='ui mini inline image'
                                         |Video Takeaways
@@ -113,43 +113,43 @@ template(name='view_sol_section')
                                 .mark_video_complete.ui.basic.fluid.circular.button 
                                     +icon48 name='unchecked-checkbox' classes='ui mini inline image'
                                     |Mark Video Watched
-                    with sol_section
+                    with section
                         if isInRole 'admin'
                             +questions type='reflective_question' parent_id=this._id title='Reflection Questions'
                         else if video_complete
                             +questions type='reflective_question' parent_id=this._id title='Reflection Questions'
-                    if sol_section_progress_doc.questions_complete
-                        unless sol_section_complete
+                    if section_progress_doc.questions_complete
+                        unless section_complete
                             if question_docs.count
-                                #mark_sol_section_complete.ui.basic.large.fluid.button 
+                                #mark_section_complete.ui.basic.large.fluid.button 
                                     i.circle.outline.icon
-                                    |Calculate sol_section Progress
+                                    |Calculate section Progress
                     unless is_editing
-                        // if sol_section_progress_doc.questions_complete
+                        // if section_progress_doc.questions_complete
                             // if video_complete
-                        if sol_section_complete
+                        if section_complete
                             .ui.horizontal.divider.header
                                 +icon48 name='checked' classes='ui mini inline image'
-                                |sol_section Complete
-                            if next_sol_section_exists
-                                a.ui.basic.fluid.circular.large.button(href="/view/#{next_sol_section._id}")
-                                    | Continue to sol_section #{next_sol_section.number}: #{next_sol_section.title}
+                                |section Complete
+                            if next_section_exists
+                                a.ui.basic.fluid.circular.large.button(href="/view/#{next_section._id}")
+                                    | Continue to section #{next_section.number}: #{next_section.title}
                                     +icon48 name='chevron-right' classes='ui mini inline image'
                             else
                                 .ui.horizontal.divider.header
                                     +icon48 name='checked' classes='ui mini inline image'
-                                    | All Module #{module.number} sol_sections Complete
+                                    | All Module #{module.number} sections Complete
                                 a.ui.basic.fluid.button(href="/view/#{module._id}") 
                                     +icon48 name='return' classes='ui mini inline image'
                                     | Return to Module #{module.number}: #{module.title}
                         .ui.divider
-                    #calculate_sol_section_progress.ui.fluid.basic.button 
+                    #calculate_section_progress.ui.fluid.basic.button 
                         +icon48 name='refresh' classes='ui mini inline image'
-                        |Calculate sol_section Progress
-                    #sol_section_percent_complete_bar.ui.indicating.progress(data-percent=sol_section_progress_doc.percent_complete)
+                        |Calculate section Progress
+                    #section_percent_complete_bar.ui.indicating.progress(data-percent=section_progress_doc.percent_complete)
                         .bar
                             .progress
-                                | #{sol_section_progress_doc.percent_complete}%
+                                | #{section_progress_doc.percent_complete}%
         else
             .ui.header Loading...
 
@@ -157,12 +157,12 @@ template(name='view_sol_section')
     //     +dev_footer
         
         
-template(name='user_sol_section_progress_list')
+template(name='user_section_progress_list')
     .ui.horizontal.divider.header
         i.red.configure.icon
-        |Member sol_section Progress
+        |Member section Progress
     .ui.list    
-        each user_sol_section_progress_docs
+        each user_section_progress_docs
             .item
                 .header #{author.name}
                 // .content

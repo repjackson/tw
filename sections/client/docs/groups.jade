@@ -1,0 +1,135 @@
+template(name='group_component')
+    .ui.segment(class=component_segment_class)
+        if editing
+            .ui.horizontal.list
+                .item
+                    +icon48 name='group-objects' classes='ui mini inline image'
+                .item Group ID: #{group}
+                .item
+                    .remove_component.ui.basic.icon.button
+                        i.red.remove.icon
+        .ui.centered.cards
+            each group_children
+                .ui.card
+                    .content
+                        if editing
+                            +title
+                            +group
+                            +type
+                            +icon_class
+                            +number
+                        else
+                            a.ui.icon.center.aligned.header.header(href="/view/#{_id}") 
+                                i.icon
+                                    if icon_class
+                                        +icon96 name=icon_class
+                                |#{title}
+                                
+template(name='responses')
+    .ui.dividing.header
+        +icon48 name='response' classes='ui mini inline image'
+        | Responses
+        unless responded
+            #add_response.ui.basic.button
+                i.plus.icon
+                | Respond
+    .ui.segments
+        each responses
+            +response
+
+template(name='response')
+    .ui.segment
+        if editing_mode
+            .content
+                +body_field
+            // .ui.input
+            //     input#tag_input(type='text' placeholder='Add Tag...')
+            // each tags
+            //     // a.ui.basic.circular.button.doc_tag #{this}
+            //     a.ui.basic.button.doc_tag
+            //         |#{this}
+            .content
+                .save_doc.ui.basic.icon.button
+                    i.green.check.icon
+                +delete_button
+        else
+            .content
+                |#{body}
+            .content
+                if is_author
+                    .edit_this.ui.basic.icon.button
+                        i.blue.pencil.icon
+            // +icon48 name='hashtag' classes='ui inline mini image'
+            // |Tags
+            // each tags
+            //     .ui.basic.label.doc_tag #{this}
+
+template(name='leaf')
+    .ui.fluid.card
+        unless editing
+            if title
+                .content
+                    .header #{title}
+            if youtube
+                +youtube
+            if image_id
+                .image
+                    img(src="{{c.url image_id}}")
+            if image_url
+                .ui.large.image
+                    img(src=image_url)
+            if content
+                .content
+                    .large150 !{content}
+            if link
+                .content
+                    a(href=link target='_blank') #{link}
+            if body
+                .content #{body}
+            if tags
+                .content
+                    +view_tags
+            .content
+                // +resonate_button
+                +bookmark_button
+                // +reflect_button
+                +view_full_button
+                // +mark_read
+                +author_info
+                if can_edit
+                    +delete_button
+                    +edit_parent_id
+                    |id: #{_id}
+                    +type
+        if editing
+            +title
+            +type
+            +icon_class
+            +number
+            +delete_button
+                
+                
+template(name='twig')
+    if editing
+        .ui.fluid.card
+            +title
+            +type
+            +icon_class
+            +number
+            +edit_parent_id
+            +delete_button
+    else
+        .column
+            a.ui.icon.center.aligned.header(href="/view/#{_id}") 
+                i.icon
+                    if responded
+                        +icon96 name='checked'
+                    else
+                        if icon_class
+                            +icon96 name=icon_class
+                        else
+                            +icon96 name='circle'
+                |#{number}: #{title}
+                if body
+                    .ui.basic.label #{body}
+                .ui.basic.label #{type}

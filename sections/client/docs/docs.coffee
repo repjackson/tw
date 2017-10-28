@@ -5,27 +5,31 @@ FlowRouter.route '/view/:doc_id',
             main: 'view_doc'
 
 
-Template.docs.onCreated -> 
-    @autorun -> Meteor.subscribe('docs', selected_theme_tags.array(), type=null, 5)
-
-Template.docs.helpers
-    docs: -> 
-        Docs.find { }, 
-            sort:
-                tag_count: 1
-            limit: 10
-
-    one_doc: -> Docs.find().count() is 1
-
-    tag_class: -> if @valueOf() in selected_theme_tags.array() then 'teal' else 'basic'
-
-    selected_theme_tags: -> selected_theme_tags.array()
-
-
-
 Template.view_doc.onCreated ->
     @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
-    @autorun -> Meteor.subscribe 'doc_template', FlowRouter.getParam('doc_id')
+    @autorun -> Meteor.subscribe 'usernames'
+    
+    @autorun => 
+        Meteor.subscribe('facet', 
+            selected_theme_tags.array()
+            selected_author_ids.array()
+            selected_location_tags.array()
+            selected_intention_tags.array()
+            selected_timestamp_tags.array()
+            type = null
+            author_id = null
+            parent_id = FlowRouter.getParam('doc_id')
+            tag_limit = 20
+            doc_limit = 69
+            view_published = null
+            view_read = null
+            view_bookmarked = null
+            view_resonates = null
+            view_complete = null
+            view_images = null
+            view_lightbank_type = null
+
+            )
 
 Template.view_doc.helpers
     doc: -> Docs.findOne FlowRouter.getParam('doc_id')
@@ -51,7 +55,6 @@ Template.view_doc.helpers
                 parent_id: doc.parent_id
                 number: next_number
 
-
     components: ->        
         doc = Docs.findOne FlowRouter.getParam('doc_id')
         doc.components
@@ -69,15 +72,26 @@ Template.view_doc.helpers
     main_column_class: ->
         if Session.equals 'editing', true then 'ten wide column' else 'fourteen wide column'
         
+    branch_button_class: -> if @parent_type is 'branch' then 'blue' else 'basic'
+    twig_button_class: -> if @parent_type is 'twig' then 'blue' else 'basic'
+    leaf_button_class: -> if @parent_type is 'leaf' then 'blue' else 'basic'
+        
+    is_branch: -> @parent_type is 'branch'
+    is_twig: -> @parent_type is 'twig'
+    is_leaf: -> @parent_type is 'leaf'
     
 Template.view_doc.events
-    'click #disallow_responses': ->
+    'click #make_branch': ->
         Docs.update FlowRouter.getParam('doc_id'),
-            $set: responses_allowed: false
+            $set: parent_type: 'branch'
 
-    'click #allow_responses': ->
+    'click #make_twig': ->
         Docs.update FlowRouter.getParam('doc_id'),
-            $set: responses_allowed: true
+            $set: parent_type: 'twig'
+    
+    'click #make_leaf': ->
+        Docs.update FlowRouter.getParam('doc_id'),
+            $set: parent_type: 'leaf'
     
     'click #create_parent': ->
         new_parent_id = Docs.insert {}
@@ -86,69 +100,6 @@ Template.view_doc.events
         FlowRouter.go "/view/#{new_parent_id}" 
         
     
-    
-Template.responses.helpers
-    responses: ->
-        Docs.find {
-            parent_id: FlowRouter.getParam 'doc_id'
-        }, sort: number: 1
-
-Template.children.helpers
-    children: ->
-        Docs.find {
-            parent_id: FlowRouter.getParam 'doc_id'
-            # author_id: Meteor.userId()
-            # type: 'child'
-        }, sort: number: 1
-
-
-Template.children.events
-    'click #add_child': ->
-        Docs.insert
-            parent_id: FlowRouter.getParam 'doc_id'
-            type: 'child'
-        
-Template.responses.events
-    'click #add_response': ->
-        Docs.insert
-            parent_id: FlowRouter.getParam 'doc_id'
-            type: 'response'
-        
-Template.response.onCreated ->
-    @editing = new ReactiveVar(false)
-
-Template.response.helpers
-    editing_mode: -> Template.instance().editing.get()
-
-Template.response.events
-    'click .edit_this': (e,t)-> t.editing.set true
-    'click .save_doc': (e,t)-> t.editing.set false
-
-    'keyup #tag_input': (e,t)->
-        e.preventDefault()
-        val = $('#tag_input').val().toLowerCase().trim()
-        switch e.which
-            when 13 #enter
-                unless val.length is 0
-                    Docs.update Template.currentData()._id,
-                        $addToSet: tags: val
-                    $('#tag_input').val ''
-            # when 8
-            #     if val.length is 0
-            #         result = Docs.findOne(Template.currentData()._id).tags.slice -1
-            #         $('#theme_tag_select').val result[0]
-            #         Docs.update Template.currentData()._id,
-            #             $pop: tags: 1
-
-
-    'click .doc_tag': (e,t)->
-        tag = @valueOf()
-        Docs.update Template.currentData()._id,
-            $pull: tags: tag
-        $('#tag_input').val(tag)
-
-
-
 Template.field_menu.onCreated ->
     @autorun -> Meteor.subscribe 'components'
 
@@ -180,12 +131,6 @@ Template.field_component.helpers
             
     
 Template.field_component.events
-    'click .remove_component': ->
-        doc = Docs.findOne FlowRouter.getParam('doc_id')
-        # console.log @
-        Docs.update doc._id,
-            $pull: components: @
-Template.group_component.events
     'click .remove_component': ->
         doc = Docs.findOne FlowRouter.getParam('doc_id')
         # console.log @

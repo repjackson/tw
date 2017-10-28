@@ -113,7 +113,7 @@ template(name='edit_icon')
         unless editing
             i.edit_this.large.pencil.link.icon(data-tooltip=tags)
         else
-            .save_doc.ui.icon.green.basic.button
+            .save_doc.ui.icon.green.button
                 i.check.icon
 
 template(name='edit_link')
@@ -198,19 +198,6 @@ template(name='published')
 
 
 
-
-template(name='featured')
-    .field
-        if featured
-            #make_unfeatured.ui.basic.icon.button
-                i.toggle.on.icon
-        else
-            #make_featured.ui.basic.icon.button
-                i.toggle.off.icon
-        if featured
-            .ui.green.basic.label Featured
-        else
-            .ui.basic.label Unfeatured
 
 template(name='favorite_button')
     .ui.basic.icon.button.favorite_item(class=favorite_item_class)

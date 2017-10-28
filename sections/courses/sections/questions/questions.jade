@@ -11,8 +11,7 @@ template(name='questions')
             if isInRole 'admin'
                 i#add_question.green.plus.link.icon(title='Add Question')
         each question_docs
-            if has_answered_previous
-                +question
+            +question
                 
 template(name='question')
     .ui.segment(class=question_segment_class)

@@ -14,7 +14,7 @@ template(name='doc_content')
                         i.red.pencil.icon
                         // |Edit #{tags} Content
                 else
-                    .save_doc.ui.green.basic.button
+                    .save_doc.ui.green.button
                         i.check.icon
                         |Save Content
     else
@@ -37,7 +37,7 @@ template(name='doc_body')
                     unless editing
                         i.edit_this.large.pencil.link.icon(title=tags)
                     else
-                        .save_doc.ui.icon.green.basic.button
+                        .save_doc.ui.icon.green.button
                             i.check.icon
         else
             if isInRole 'admin'

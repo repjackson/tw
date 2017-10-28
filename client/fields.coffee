@@ -298,7 +298,7 @@ Template.template_name.events
             
 Template.edit_parent_id.events
     'blur #parent_id': (e,t)->
-        parent_id = $('#parent_id').val()
+        parent_id = $(e.currentTarget).closest('#parent_id').val()
         Docs.update @_id,
             $set: parent_id: parent_id
             

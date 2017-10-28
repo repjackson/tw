@@ -22,7 +22,7 @@ template(name='nav')
                         |Contact
         unless currentUser
             a.mobile.hidden.item(href='/' class="{{isActivePath '/'}}")
-                .imogen TW
+                img.ui.image(src="{{c.url 'tw_logo' width=100 height=100 crop='fill'}}")
             a.mobile.hidden.item(href='/about' class="{{isActivePath '/about'}}") 
                 +icon48 name='info' classes='ui mini spaced image'
                 |About

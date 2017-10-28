@@ -168,25 +168,26 @@ publishComposite 'doc', (id, ancestor_levels, descendent_levels)->
                     }
                 ]
             }
-            {
-                # child doc
-                find: (doc)->
-                    Docs.find
-                        parent_id: doc._id
-                children: [ 
-                    {
-                        find: (child_doc)->
-                            Meteor.users.find
-                                _id: child_doc.author_id
-                    }
-                    {
-                        find: (child_doc)->
-                            # console.log child_doc
-                            Docs.find
-                                parent_id: child_doc._id
-                    }
-                ]
-            }
+            # {
+            #     # child doc
+            #     find: (doc)->
+            #         Docs.find
+            #             parent_id: doc._id
+            #     children: [ 
+            #         {
+            #             find: (child_doc)->
+            #                 Meteor.users.find
+            #                     _id: child_doc.author_id
+            #         }
+            #         # {
+            #         #     #  granchild doc
+            #         #     find: (child_doc)->
+            #         #         # console.log child_doc
+            #         #         Docs.find
+            #         #             parent_id: child_doc._id
+            #         # }
+            #     ]
+            # }
         ]
     }
 
@@ -211,13 +212,13 @@ Meteor.publish 'doc_by_tags', (tags)->
     
     
     
-Meteor.publish 'me_card', ->
-    # console.log id
-    Meteor.users.find @userId,
-        fields:
-            tags: 1
-            profile: 1
-            points: 1    
+# Meteor.publish 'me_card', ->
+#     # console.log id
+#     Meteor.users.find @userId,
+#         fields:
+#             tags: 1
+#             profile: 1
+#             points: 1    
             
             
 Meteor.publish 'person', (id)->
@@ -301,8 +302,8 @@ Meteor.publish 'usernames', ->
             points: 1
             
             
-Meteor.publish 'doc_template', (doc_id)->
-    doc = Docs.findOne doc_id
-    Docs.find
-        type: 'doc_template'
-        doc_type: doc.type
+# Meteor.publish 'doc_template', (doc_id)->
+#     doc = Docs.findOne doc_id
+#     Docs.find
+#         type: 'doc_template'
+#         doc_type: doc.type

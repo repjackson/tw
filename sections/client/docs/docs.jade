@@ -1,9 +1,9 @@
-template(name='docs')
-    .ui.container
-        +cloud
-        // if one_doc
-        each docs
-            +doc_view
+// template(name='docs')
+//     .ui.container
+//         +cloud
+//         // if one_doc
+//         each docs
+//             +doc_view
         
 template(name='view_doc')
     with doc
@@ -17,6 +17,7 @@ template(name='view_doc')
                         else
                             +icon48 name='chevron-up' classes='ui mini inline image'
                         | #{parent.title}
+                        | #{parent.body}
                 else
                     #create_parent.ui.basic.button Create Parent
             .centered.middle.aligned.row
@@ -31,6 +32,7 @@ template(name='view_doc')
                                 else
                                     +icon48 name='circle' classes='ui mini inline image'
                             | #{younger_sibling.title}
+                            | #{younger_sibling.body}
                 .eight.wide.center.aligned.column
                     h1.ui.center.aligned.header
                         if responded
@@ -41,12 +43,14 @@ template(name='view_doc')
                             else
                                 +icon48 name='circle' classes='ui mini inline image'
                         | #{title}
+                        | #{body}
                         if can_edit
                             +toggle_editing_button
                 .four.wide.center.aligned.column
                     if older_sibling
                         a.ui.basic.circular.button(href="/view/#{older_sibling._id}")
                             | #{older_sibling.title}
+                            | #{older_sibling.body}
                             if older_sibling.responded
                                 +icon48 name='checked' classes='ui mini inline image'
                             else
@@ -54,7 +58,7 @@ template(name='view_doc')
                                     +icon48 name=older_sibling.icon_class classes='ui mini inline image'
                                 else
                                     +icon48 name='circle' classes='ui mini inline image'
-            .centered.row
+            .row
                 div(class=main_column_class)
                     each components
                         if is_field
@@ -63,101 +67,52 @@ template(name='view_doc')
                             +group_component
                         // if slug_exists
                         //     +Template.dynamic template=slug data=doc
-                    +children
-                    unless editing
-                        if responses_allowed
-                            +responses
+                    if is_branch
+                        +twigs
+                    if is_twig
+                        .ui.basic.center.aligned.segment
+                            +theme_facet
+                        +leaves
+                    // unless editing
+                    //     if responses_allowed
+                    //         +responses
                     
                 if editing
                     .six.wide.column
                         .ui.dividing.header
                             +icon48 name='setting' classes='ui mini inline image'
                             | Settings
-                        if responses_allowed
-                            #disallow_responses.ui.basic.button 
-                                +icon48 name='response' classes='ui mini inline image'
-                                |Responses Allowed
-                        else
-                            #allow_responses.ui.basic.button 
-                                +icon48 name='delete-message' classes='ui mini inline image'
-                                |Responses Not Allowed
-                        +field_menu
-                        // else
-                        //     .ui.header No #{type} Template Doc
-                        //     #create_doc_template.ui.basic.button Create #{type} Template Doc
+                        #make_branch.ui.button(class=branch_button_class data-tooltip='Just shows links to subsections') Branch
+                        #make_twig.ui.button(class=twig_button_class data-tooltip='Lists documents like Lightbank') Twig
+                        #make_leaf.ui.button(class=leaf_button_class data-tooltip='Document that shows fields') Leaf
+                        if is_leaf
+                            +field_menu
                         
                         
-                        
-template(name='children')
+template(name='twigs')
     if editing
         .ui.dividing.header
             +icon48 name='tree-structure' classes='ui mini inline image'
-            | Children
-            #add_child.ui.basic.button
+            | Twigs
+            #add_twig.ui.basic.button
                 i.plus.icon
-                | Add Child
-    .ui.centered.stackable.five.column.grid
-        each children
-            +child
+                | Add Twig
+    .ui.stackable.five.column.centered.grid
+        each twigs
+            +twig
             
-template(name='responses')
+             
+template(name='leaves')
     .ui.dividing.header
-        +icon48 name='response' classes='ui mini inline image'
-        | Responses
-        unless responded
-            #add_response.ui.basic.button
-                i.plus.icon
-                | Respond
-    .ui.segments
-        each responses
-            +response
-
-template(name='response')
-    .ui.segment
-        if editing_mode
-            .content
-                +body_field
-            // .ui.input
-            //     input#tag_input(type='text' placeholder='Add Tag...')
-            // each tags
-            //     // a.ui.basic.circular.button.doc_tag #{this}
-            //     a.ui.basic.button.doc_tag
-            //         |#{this}
-            .content
-                .save_doc.ui.basic.icon.button
-                    i.green.check.icon
-                +delete_button
-        else
-            .content
-                |#{body}
-            .content
-                if is_author
-                    .edit_this.ui.basic.icon.button
-                        i.blue.pencil.icon
-            // +icon48 name='hashtag' classes='ui inline mini image'
-            // |Tags
-            // each tags
-            //     .ui.basic.label.doc_tag #{this}
-
-template(name='child')
-    .column
-        if editing
-            +title
-            +type
-            +icon_class
-            +number
-            +delete_button
-        else
-            a.ui.icon.center.aligned.header(href="/view/#{_id}") 
-                i.icon
-                    if responded
-                        +icon96 name='checked'
-                    else
-                        if icon_class
-                            +icon96 name=icon_class
-                        else
-                            +icon96 name='circle'
-                |#{title}
+        +icon48 name='tree-structure' classes='ui mini inline image'
+        | Leaves
+        #add_leaf.ui.basic.button
+            i.plus.icon
+            | Add Leaf
+    .ui.stackable.five.column.grid
+        each leaves
+            +leaf
+            
              
 template(name='field_menu')
     .ui.dividing.header Fields Menu
@@ -179,29 +134,3 @@ template(name='field_component')
                         i.red.remove.icon
         +Template.dynamic template=field_id data=doc
     
-template(name='group_component')
-    .ui.segment(class=component_segment_class)
-        if editing
-            .ui.horizontal.list
-                .item
-                    +icon48 name='group-objects' classes='ui mini inline image'
-                .item Group ID: #{group}
-                .item
-                    .remove_component.ui.basic.icon.button
-                        i.red.remove.icon
-        .ui.centered.cards
-            each group_children
-                .ui.card
-                    .content
-                        if editing
-                            +title
-                            +group
-                            +type
-                            +icon_class
-                            +number
-                        else
-                            a.ui.icon.center.aligned.header.header(href="/view/#{_id}") 
-                                i.icon
-                                    if icon_class
-                                        +icon96 name=icon_class
-                                |#{title}
