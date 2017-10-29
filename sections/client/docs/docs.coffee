@@ -8,7 +8,8 @@ FlowRouter.route '/view/:doc_id',
 Template.view_doc.onCreated ->
     @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
     @autorun -> Meteor.subscribe 'usernames'
-    
+    @autorun -> Meteor.subscribe 'components'
+
     @autorun => 
         Meteor.subscribe('facet', 
             selected_theme_tags.array()
@@ -101,7 +102,7 @@ Template.view_doc.events
         
     
 Template.field_menu.onCreated ->
-    @autorun -> Meteor.subscribe 'components'
+    # @autorun -> Meteor.subscribe 'components'
 
 
 Template.field_menu.helpers

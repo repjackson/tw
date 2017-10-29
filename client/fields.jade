@@ -161,9 +161,13 @@ template(name='intention_tags')
 
 
 template(name='dollar_price')
-    .ui.labeled.input
-        .ui.basic.label $ Price
-        input#dollar_price(type='number' min='0' value=dollar_price)
+    if editing
+        .ui.labeled.input
+            .ui.basic.label $ Price
+            input#dollar_price(type='number' min='0' value=dollar_price)
+    else
+        .ui.header Price $#{dollar_price}
+
 
 template(name='point_price')
     .ui.labeled.input

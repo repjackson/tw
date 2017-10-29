@@ -67,8 +67,9 @@ template(name='response')
 template(name='leaf')
     .ui.fluid.card
         unless editing
-            .ui.top.right.attached.basic.label(data-tooltip='Published Status')
-                +icon48 name=published_state_icon
+            if isInRole 'admin'
+                .ui.top.right.attached.basic.label(data-tooltip='Published Status')
+                    +icon48 name=published_state_icon
             if title
                 .content
                     .header #{title}
@@ -88,14 +89,14 @@ template(name='leaf')
                     a(href=link target='_blank') #{link}
             if body
                 .content #{body}
-            if tags
-                .content
-                    +view_tags
+            // if tags
+            //     .content
+            //         +view_tags
             .content
                 // +resonate_button
                 +bookmark_button
                 // +reflect_button
-                +view_full_button
+                // +view_full_button
                 // +mark_read
                 +author_info
                 if is_author

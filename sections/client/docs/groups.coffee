@@ -57,6 +57,7 @@ Template.leaves.helpers
             parent_id: FlowRouter.getParam 'doc_id'
             # author_id: Meteor.userId()
             # type: 'child'
+            published: 1
         }, sort: number: 1
 
 
@@ -79,7 +80,7 @@ Template.twigs.helpers
         Docs.find {
             parent_id: FlowRouter.getParam 'doc_id'
             # author_id: Meteor.userId()
-            # type: 'child'
+            # published: 1
         }, sort: number: 1
 
 

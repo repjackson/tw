@@ -12,7 +12,7 @@ template(name='view_doc')
             .centered.middle.aligned.row
                 if parent
                     a.ui.basic.circular.button(href="/view/#{parent._id}")
-                        if icon_class
+                        if parent.icon_class
                             +icon48 name=parent.icon_class classes='ui mini inline image'
                         else
                             +icon48 name='chevron-up' classes='ui mini inline image'
@@ -58,20 +58,22 @@ template(name='view_doc')
                                     +icon48 name=older_sibling.icon_class classes='ui mini inline image'
                                 else
                                     +icon48 name='circle' classes='ui mini inline image'
-            .row
+            .centered.row
                 div(class=main_column_class)
-                    each components
-                        if slug_exists
-                            +Template.dynamic template=slug data=doc
+                    // each components
+                    //     if slug_exists
+                    //         +Template.dynamic template=slug data=doc
                     //     if is_field
                     //         +field_component
                     //     else
                     //         +group_component
+                    if content
+                        |!{content}
                     if is_branch
                         +twigs
                     if is_twig
-                        .ui.basic.center.aligned.segment
-                            +theme_facet
+                        // .ui.basic.center.aligned.segment
+                        //     +theme_facet
                         +leaves
                     // unless editing
                     //     if responses_allowed
@@ -103,12 +105,13 @@ template(name='twigs')
             
              
 template(name='leaves')
-    .ui.dividing.header
-        +icon48 name='tree-structure' classes='ui mini inline image'
-        | Leaves
-        #add_leaf.ui.basic.button
-            i.plus.icon
-            | Add Leaf
+    if currentUser
+        .ui.dividing.header
+            +icon48 name='tree-structure' classes='ui mini inline image'
+            | Leaves
+            #add_leaf.ui.basic.button
+                i.plus.icon
+                | Add Leaf
     .ui.stackable.five.column.grid
         each leaves
             +leaf

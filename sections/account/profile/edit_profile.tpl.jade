@@ -5,9 +5,6 @@
             .ui.stackable.grid
                 .five.wide.column    
                     .field
-                        // .field
-                        //     label Current image_id: #{image_id}
-                        //     input#input_image_id(type='text' placeholder='Change')
                         if profile.image_id
                             label Image
                             .ui.centered.image
@@ -62,29 +59,6 @@
                         label If I am not at work or in class then I am probably…
                         .ui.input
                             input#if_not_working(type='text' value=profile.if_not_working)
-                    // .ui.divider
-                    // .field
-                    //     if profile.published
-                    //         #unpublish.ui.basic.icon.green.button
-                    //             i.toggle.on.icon
-                    //     else
-                    //         #publish.ui.basic.icon.button
-                    //             i.toggle.off.icon
-                    //     if profile.published
-                    //         .ui.basic.label Published in Member Portal
-                    //     else
-                    //         .ui.basic.label Not Published in Member Portal
-                    // .ui.segment
-                    //     +atForm
-        // .ui.basic.segment.container
-        //     .ui.dividing.header Settings
-        //     // .ui.form
-        //     //     .field
-        //     //         label Subscribe to Newsletter
-                    
-        //     .ui.slider.checkbox
-        //         input#newsletter(type='checkbox' checked=user.profile.subscribe)
-        //         label(for='newsletter') Subscribe to Newsletter
         .field
                 .ui.center.aligned.basic.segment
                     #save_profile.ui.center.aligned.huge.teal.button

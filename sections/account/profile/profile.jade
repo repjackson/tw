@@ -13,13 +13,8 @@ template(name='profile_layout')
                 if is_user
                     a.ui.basic.fluid.large.circular.button(href="/account/profile/edit/#{_id}") 
                         i.yellow.pencil.icon
-                        // i.icon
-                        //     img(src="https://png.icons8.com/edit/color/24" width="24" height="24")
                         |Edit Profile
                 .ui.vertical.large.fluid.pointing.menu
-                    // a.item(href="/profile/#{username}/feed" class="{{isActiveRoute name='profile_feed'}}") 
-                    //     i.feed.large.icon
-                    //     | Feed
                     a.item(href="/profile/#{username}/about" class="{{isActiveRoute name='profile_about'}}") 
                         i.icon
                             +icon24 name='info'
@@ -28,38 +23,12 @@ template(name='profile_layout')
                         i.icon
                             +icon24 name='contact'
                         |Contact #{name}
-                    a.item(href="/profile/#{username}/courses" class="{{isActiveRoute name='profile_courses'}}")
-                        i.icon
-                            +icon24 name='classroom'
-                        |Courses
-                    a.item(href="/profile/#{username}/social" class="{{isActiveRoute name='profile_social'}}") 
-                        i.icon
-                            +icon24 name='chat'
-                        |Social
-                    if isInRole 'dev'
-                        a.red.item(href="/profile/#{username}/quizzes" class="{{isActiveRoute name='profile_quizzes'}}")
-                            i.icon
-                                +icon24 name='hand-with-pen'
-                            |Quizzes
-                        a.red.item(href="/profile/#{username}/journal" class="{{isActiveRoute name='profile_journal'}}") 
-                            i.icon
-                                +icon24 name='journal'
-                            | Journal
-                        a.red.item(href="/profile/#{username}/badges" class="{{isActiveRoute name='profile_badges'}}") 
-                            i.icon
-                                +icon24 name='police-badge'
-                            | Karma + Badges
             if is_person_by_username
                 .ui.vertical.fluid.pointing.menu
                     a.item(href="/profile/#{currentUser.username}/account" class="{{isActiveRoute name='account_settings'}}") 
                         i.icon
                             +icon24 name='settings'
                         |Account Settings
-                    if isInRole 'dev'
-                        a.red.item(href="/profile/#{currentUser.username}/email_settings" class="{{isActiveRoute name='email_settings'}}") 
-                            i.icon
-                                +icon24 name='message'
-                            |Email Settings
                 .ui.vertical.fluid.menu
                     a#logout.item(href="#" data-position="bottom center" data-content="Log Out")
                         i.icon
@@ -72,40 +41,6 @@ template(name='profile_layout')
 
 
         
-template(name='profile_journal')
-    h1.ui.center.aligned.header 
-        +icon96 name='journal'
-        |Journal
-    +public_journal
-        
-template(name='profile_karma')
-    h1.ui.center.aligned.header 
-        a(href='/karma')
-            +icon96 name='diamond'
-        |Karma
-    +karma
-        
-template(name='profile_quizzes')
-    h1.ui.center.aligned.header 
-        +icon96 name='report-card'
-        |quizzes
-    +public_quiz_sessions
-
-
-template(name='profile_courses')
-    h1.ui.center.aligned.header 
-        +icon96 name='classroom'
-        |Courses
-    +user_courses
-
-template(name='profile_social')
-    h1.ui.center.aligned.header 
-        +icon96 name='chat'
-        |Social
-    // +user_friends
-    +following
-    // +person_tags
-
         
 template(name='profile_about')
     with person
@@ -119,8 +54,6 @@ template(name='profile_about')
                     +icon48 name='hashtag' classes='ui inline image'
                     each tags
                         .user_tag.ui.circular.large.basic.label #{this}
-                // +toggle_friend
-                // .ui.hidden.divider
                 if profile.location
                     .ui.header 
                         +icon48 name='user-location'
@@ -131,12 +64,6 @@ template(name='profile_about')
             .column
                 .ui.header My True Colors Are:
                 +color_dots
-                // if points
-                //     .ui.small.teal.statistic
-                //         .value #{points}
-                //         .label Comment Karma
-                // if isInRole 'dev'
-                //     +tag_person this    
                 if profile.if_knew_me
                     .ui.header If you really knew me you would know…
                     |#{profile.if_knew_me}

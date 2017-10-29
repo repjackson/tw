@@ -14,19 +14,19 @@ head
 
 template(name='layout')
     +status
-    .ui.grid
-        .two.wide.column
-            #nav_menu
-                unless zen_mode
-                    +nav
-        .fourteen.wide.column
-            +Template.dynamic template=sub_nav
-            +Template.dynamic template=sub_sub_nav
-            +Template.dynamic template=cloud
-            +Template.dynamic template=main
-            unless isInRole 'dev'
-                unless zen_mode
-                    +footer
+    // .ui.grid
+        // .two.wide.column
+    #nav_menu
+        unless zen_mode
+            +nav
+    // .fourteen.wide.column
+    +Template.dynamic template=sub_nav
+    +Template.dynamic template=sub_sub_nav
+    +Template.dynamic template=cloud
+    +Template.dynamic template=main
+    unless isInRole 'dev'
+        unless zen_mode
+            +footer
                     
 
 

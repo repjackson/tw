@@ -1,9 +1,10 @@
 template(name='nav')
-    #nav_menu.ui.vertical.labeled.icon.menu
+    #nav_menu.ui.labeled.icon.menu
         if currentUser
             a.ui.mobile.hidden.simple.dropdown.item(href='/view/9639QAQ4yPbMLs7CA')
                 // .imogen TW
-                img.ui.image(src="{{c.url 'tw_logo' width=100 height=100 crop='fill'}}")
+                .ui.image
+                    img(src="{{c.url 'tw_logo' width=50 height=50 crop='fill'}}")
                 .ui.menu
                     a.mobile.hidden.item(href='/about' class="{{isActivePath '/about'}}") 
                         i.icon
@@ -22,7 +23,8 @@ template(name='nav')
                         |Contact
         unless currentUser
             a.mobile.hidden.item(href='/' class="{{isActivePath '/'}}")
-                img.ui.image(src="{{c.url 'tw_logo' width=100 height=100 crop='fill'}}")
+                .ui.image
+                    img(src="{{c.url 'tw_logo' width=50 height=50 crop='fill'}}")
             a.mobile.hidden.item(href='/about' class="{{isActivePath '/about'}}") 
                 +icon48 name='info' classes='ui mini spaced image'
                 |About
@@ -37,7 +39,7 @@ template(name='nav')
                 |Contact
         else
             // a.ui.mobile.hidden.simple.dropdown.item(href='/lightschool' ) 
-            a.ui.mobile.hidden.item(href='/view/erjtaDSCKwyGMxKt9' data-position="left center" data-content="LightSchool") 
+            a.ui.mobile.hidden.item(href='/view/erjtaDSCKwyGMxKt9' data-position="bottom center" data-content="LightSchool") 
                 .ui.image
                     +icon48 name='library'
                 // .ui.large.menu
@@ -58,7 +60,7 @@ template(name='nav')
                     //         .ui.image
                     //             +icon24 name='report-card'
                     //     |Quizzes
-            a.mobile.hidden.item(href='/lightbank' class="{{isActivePath '/lightbank'}}" data-position="left center" data-content="Lightbank") 
+            a.mobile.hidden.item(href='/lightbank' class="{{isActivePath '/lightbank'}}" data-position="bottom center" data-content="Lightbank") 
                 .ui.image
                     +icon48 name='summer' classes='ui image'
             a.ui.simple.dropdown.mobile.hidden.item(href='/journal') 
@@ -108,18 +110,18 @@ template(name='nav')
                         | Browse
         .right.menu
             if currentUser
-                a#report_bug.icon.item(href="#"  data-position="left center" data-content="Report a Bug/Feature Request")
+                a#report_bug.icon.item(href="#"  data-position="bottom center" data-content="Report a Bug/Feature Request")
                     .ui.image
                         +icon48 name='bug'
-                a.icon.item(href="/dashboard" class="{{isActivePath '/dashboard'}}" data-position="left center" data-content="Dashboard")
+                a.icon.item(href="/dashboard" class="{{isActivePath '/dashboard'}}" data-position="bottom center" data-content="Dashboard")
                     .ui.image
                         +icon48 name='dashboard'
                 // if cart_items
-                //     a.icon.mobile.hidden.item(href='/cart' class="{{isActivePath '/cart'}}" data-position="left center" data-content="Shopping Cart")
+                //     a.icon.mobile.hidden.item(href='/cart' class="{{isActivePath '/cart'}}" data-position="bottom center" data-content="Shopping Cart")
                 //         i.large.icons
                 //             i.cart.icon
                 //             i.corner.teal.asterisk.icon
-                a.icon.item(href="/profile/#{currentUser.username}" class="{{isActiveRoute name='view_profile'}}" data-position="left center" data-content="Profile")
+                a.icon.item(href="/profile/#{currentUser.username}" class="{{isActiveRoute name='view_profile'}}" data-position="bottom center" data-content="Profile")
                     if currentUser.profile.image_id
                         img.ui.avatar.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
                     else
@@ -129,7 +131,7 @@ template(name='nav')
                             | #{currentUser.name}
                         else
                             | #{currentUser.username}
-                // a#logout.icon.item(href="#" data-position="left center" data-content="Log Out")
+                // a#logout.icon.item(href="#" data-position="bottom center" data-content="Log Out")
                 //     .ui.image
                 //         img(src="https://png.icons8.com/burglary/color/48" width="48" height="48")
                 
