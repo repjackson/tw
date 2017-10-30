@@ -3,11 +3,11 @@ template(name='title')
         .ui.labeled.fluid.input
             .ui.basic.label Title
             input#title(type='text' value=title)
-    // else
-    //     h2.ui.header 
-    //         if icon_class
-    //             +icon48 name=icon_class classes='ui mini inline image'
-    //         |#{title}
+    else
+        // h2.ui.header 
+            // if icon_class
+            //     +icon48 name=icon_class classes='ui mini inline image'
+        |#{title}
 
 template(name='subtitle')
     if editing
@@ -73,10 +73,13 @@ template(name='edit_quantity')
         .ui.header Quantity: #{quantity}
 
 template(name='body_field')
-    .ui.form
-        .field
-            textarea#body_field(rows='3') #{body}
-
+    if editing
+        .ui.form
+            .field
+                textarea#body_field(rows='3') #{body}
+    else
+        .ui.basic.segment
+            |#{body}
 template(name='tags')
     // .ui.segment
     if editing

@@ -7,78 +7,83 @@
         
 template(name='view_doc')
     with doc
-        // +Template.dynamic template=view_type_template
-        .ui.padded.stackable.grid
-            .centered.middle.aligned.row
-                if parent
-                    a.ui.basic.circular.button(href="/view/#{parent._id}")
-                        if parent.icon_class
-                            +icon48 name=parent.icon_class classes='ui mini inline image'
-                        else
-                            +icon48 name='chevron-up' classes='ui mini inline image'
-                        | #{parent.title}
-                        | #{parent.body}
-                else
-                    #create_parent.ui.basic.button Create Parent
-            .centered.middle.aligned.row
-                .four.wide.center.aligned.column
-                    if younger_sibling
-                        a.ui.basic.circular.button(href="/view/#{younger_sibling._id}")
-                            if younger_sibling.responded
-                                +icon48 name='checked' classes='ui mini inline image'
-                            else
-                                if younger_sibling.icon_class
-                                    +icon48 name=younger_sibling.icon_class classes='ui mini inline image'
-                                else
-                                    +icon48 name='circle' classes='ui mini inline image'
-                            | #{younger_sibling.title}
-                            | #{younger_sibling.body}
-                .eight.wide.center.aligned.column
-                    h1.ui.center.aligned.header
-                        if responded
+        +Template.dynamic template=view_type_template
+
+
+template(name='new_view_doc')
+    .ui.padded.stackable.grid
+        .centered.middle.aligned.row
+            if parent
+                a.ui.basic.circular.button(href="/view/#{parent._id}")
+                    if parent.icon_class
+                        +icon48 name=parent.icon_class classes='ui mini inline image'
+                    else
+                        +icon48 name='chevron-up' classes='ui mini inline image'
+                    | #{parent.title}
+                    | #{parent.body}
+            else
+                #create_parent.ui.basic.button Create Parent
+        .centered.middle.aligned.row
+            .four.wide.center.aligned.column
+                if younger_sibling
+                    a.ui.basic.circular.button(href="/view/#{younger_sibling._id}")
+                        if younger_sibling.responded
                             +icon48 name='checked' classes='ui mini inline image'
                         else
-                            if icon_class
-                                +icon48 name=icon_class classes='ui mini inline image'
+                            if younger_sibling.icon_class
+                                +icon48 name=younger_sibling.icon_class classes='ui mini inline image'
                             else
                                 +icon48 name='circle' classes='ui mini inline image'
-                        | #{title}
-                        | #{body}
-                        if can_edit
-                            +toggle_editing_button
-                .four.wide.center.aligned.column
-                    if older_sibling
-                        a.ui.basic.circular.button(href="/view/#{older_sibling._id}")
-                            | #{older_sibling.title}
-                            | #{older_sibling.body}
-                            if older_sibling.responded
-                                +icon48 name='checked' classes='ui mini inline image'
+                        | #{younger_sibling.title}
+                        // | #{younger_sibling.body}
+            .eight.wide.center.aligned.column
+                h1.ui.center.aligned.header
+                    if responded
+                        +icon48 name='checked' classes='ui mini inline image'
+                    else
+                        if icon_class
+                            +icon48 name=icon_class classes='ui mini inline image'
+                        else
+                            +icon48 name='circle' classes='ui mini inline image'
+                    +title
+                    // | #{body}
+                    if can_edit
+                        +toggle_editing_button
+            .four.wide.center.aligned.column
+                if older_sibling
+                    a.ui.basic.circular.button(href="/view/#{older_sibling._id}")
+                        | #{older_sibling.title}
+                        // | #{older_sibling.body}
+                        if older_sibling.responded
+                            +icon48 name='checked' classes='ui mini inline image'
+                        else
+                            if older_sibling.icon_class
+                                +icon48 name=older_sibling.icon_class classes='ui mini inline image'
                             else
-                                if older_sibling.icon_class
-                                    +icon48 name=older_sibling.icon_class classes='ui mini inline image'
-                                else
-                                    +icon48 name='circle' classes='ui mini inline image'
-            .centered.row
+                                +icon48 name='circle' classes='ui mini inline image'
+        .centered.row
                 div(class=main_column_class)
-                    // each components
+                    // each doc.components
                     //     if slug_exists
                     //         +Template.dynamic template=slug data=doc
-                    //     if is_field
-                    //         +field_component
-                    //     else
-                    //         +group_component
-                    if content
-                        |!{content}
+                        // if is_field
+                        //     +field_component
+                        // else
+                        //     +group_component
+                    // if content
+                    +content
+                    if body
+                        +body_field
                     if is_branch
                         +twigs
                     if is_twig
                         // .ui.basic.center.aligned.segment
                         //     +theme_facet
                         +leaves
-                    // unless editing
-                    //     if responses_allowed
-                    //         +responses
-                    
+                        // unless editing
+                        //     if responses_allowed
+                        //         +responses
+                            
                 if editing
                     .six.wide.column
                         .ui.dividing.header
@@ -87,8 +92,8 @@ template(name='view_doc')
                         #make_branch.ui.button(class=branch_button_class data-tooltip='Just shows links to subsections') Branch
                         #make_twig.ui.button(class=twig_button_class data-tooltip='Lists documents like Lightbank') Twig
                         #make_leaf.ui.button(class=leaf_button_class data-tooltip='Document that shows fields') Leaf
-                        if is_leaf
-                            +field_menu
+                        // if is_leaf
+                        +field_menu
                         
                         
 template(name='twigs')
@@ -137,3 +142,146 @@ template(name='field_component')
                         i.red.remove.icon
         +Template.dynamic template=field_id data=doc
     
+    
+    
+template(name='group_component')
+    .ui.segment(class=component_segment_class)
+        if editing
+            .ui.horizontal.list
+                .item
+                    +icon48 name='group-objects' classes='ui mini inline image'
+                .item Group ID: #{group}
+                .item
+                    .remove_component.ui.basic.icon.button
+                        i.red.remove.icon
+        .ui.centered.cards
+            each group_children
+                .ui.card
+                    .content
+                        if editing
+                            +title
+                            +group
+                            +type
+                            +icon_class
+                            +number
+                        else
+                            a.ui.icon.center.aligned.header.header(href="/view/#{_id}") 
+                                i.icon
+                                    if icon_class
+                                        +icon96 name=icon_class
+                                |#{title}
+                                
+template(name='responses')
+    .ui.dividing.header
+        +icon48 name='response' classes='ui mini inline image'
+        | Responses
+        unless responded
+            #add_response.ui.basic.button
+                i.plus.icon
+                | Respond
+    .ui.segments
+        each responses
+            +response
+
+template(name='response')
+    .ui.segment
+        if editing_mode
+            .content
+                +body_field
+            // .ui.input
+            //     input#tag_input(type='text' placeholder='Add Tag...')
+            // each tags
+            //     // a.ui.basic.circular.button.doc_tag #{this}
+            //     a.ui.basic.button.doc_tag
+            //         |#{this}
+            .content
+                .save_doc.ui.basic.icon.button
+                    i.green.check.icon
+                +delete_button
+        else
+            .content
+                |#{body}
+            .content
+                if is_author
+                    .edit_this.ui.basic.icon.button
+                        i.blue.pencil.icon
+            // +icon48 name='hashtag' classes='ui inline mini image'
+            // |Tags
+            // each tags
+            //     .ui.basic.label.doc_tag #{this}
+
+template(name='leaf')
+    .ui.fluid.card
+        unless editing
+            if title
+                .content
+                    .header #{title}
+            if youtube
+                +youtube
+            if image_id
+                .image
+                    img(src="{{c.url image_id}}")
+            if image_url
+                .ui.large.image
+                    img(src=image_url)
+            if content
+                .content
+                    .large-text !{content}
+            if link
+                .content
+                    a(href=link target='_blank') #{link}
+            if body
+                .content #{body}
+            // if tags
+            //     .content
+            //         +view_tags
+            .content
+                if isInRole 'admin'
+                    .ui.basic.label(data-tooltip='Published Status')
+                        +icon48 name=published_state_icon
+                // +resonate_button
+                // +bookmark_button
+                // +reflect_button
+                +view_full_button
+                // +mark_read
+                +author_info
+                if is_author
+                    +delete_button
+                    // +edit_parent_id
+                    // |id: #{_id}
+                    // +type
+        if editing
+            +title
+            +type
+            +icon_class
+            +number
+            +delete_button
+                
+                
+template(name='twig')
+    if editing
+        .ui.fluid.card
+            +title
+            +type
+            +icon_class
+            +number
+            +edit_parent_id
+            +delete_button
+    else
+        .column
+            a.ui.icon.center.aligned.header(href="/view/#{_id}") 
+                i.icon
+                    if responded
+                        +icon96 name='checked'
+                    else
+                        if icon_class
+                            +icon96 name=icon_class
+                        else
+                            +icon96 name='circle'
+                if number
+                    |#{number}: 
+                |#{title}
+                if body
+                    .ui.basic.label #{body}
+                if isInRole 'dev'
+                    .ui.basic.label #{type}    

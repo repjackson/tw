@@ -35,9 +35,21 @@ Template.view_doc.onCreated ->
 Template.view_doc.helpers
     doc: -> Docs.findOne FlowRouter.getParam('doc_id')
     doc_template: -> Docs.findOne type: 'doc_template'
-    view_type_template: -> "view_#{@type}"
-    is_field: -> @type is 'field'        
+    view_type_template: -> 
+        doc = Docs.findOne FlowRouter.getParam('doc_id')
+        console.log doc.type
+        if doc.type
+            if doc.type is 'journal' or 'checkin' or 'lightbank' 
+                console.log 'true'
+                return "view_#{@type}"
+        else 
+            console.log 'false'
+            return 'new_view_doc'
+    # is_field: -> 
+    #     # console.log @type
+    #     @type is 'field'        
 
+Template.new_view_doc.helpers
     younger_sibling: ->
         doc = Docs.findOne FlowRouter.getParam('doc_id')
         if doc.number
@@ -55,6 +67,25 @@ Template.view_doc.helpers
                 group: doc.group
                 parent_id: doc.parent_id
                 number: next_number
+
+
+    view_template_old: -> 
+        Meteor.setTimeout (->
+        ), 500
+        # return false
+    view_new: -> 
+        Meteor.setTimeout (->
+            doc = Docs.findOne FlowRouter.getParam('doc_id')
+            console.log doc.type
+            if doc.type
+                if doc.type is 'journal' or 'checkin' or 'lightbank' 
+                    console.log 'dont view new'
+                    return false
+            else 
+                console.log 'view new'
+                true
+        ), 500
+        # return false
 
     components: ->        
     #     doc = Docs.findOne FlowRouter.getParam('doc_id')
@@ -137,4 +168,106 @@ Template.field_component.events
         # console.log @
         Docs.update doc._id,
             $pull: components: @
+            
+            
+            
+# Template.group_component.events
+#     'click .remove_component': ->
+#         doc = Docs.findOne FlowRouter.getParam('doc_id')
+#         # console.log @
+#         Docs.update doc._id,
+#             $pull: components: @
+
+# Template.responses.events
+#     'click #add_response': ->
+#         Docs.insert
+#             parent_id: FlowRouter.getParam 'doc_id'
+#             type: 'response'
+        
+# Template.response.onCreated ->
+#     @editing = new ReactiveVar(false)
+
+# Template.response.helpers
+#     editing_mode: -> Template.instance().editing.get()
+
+# Template.response.events
+#     'click .edit_this': (e,t)-> t.editing.set true
+#     'click .save_doc': (e,t)-> t.editing.set false
+
+#     'keyup #tag_input': (e,t)->
+#         e.preventDefault()
+#         val = $('#tag_input').val().toLowerCase().trim()
+#         switch e.which
+#             when 13 #enter
+#                 unless val.length is 0
+#                     Docs.update Template.currentData()._id,
+#                         $addToSet: tags: val
+#                     $('#tag_input').val ''
+#             # when 8
+#             #     if val.length is 0
+#             #         result = Docs.findOne(Template.currentData()._id).tags.slice -1
+#             #         $('#theme_tag_select').val result[0]
+#             #         Docs.update Template.currentData()._id,
+#             #             $pop: tags: 1
+
+
+#     'click .doc_tag': (e,t)->
+#         tag = @valueOf()
+#         Docs.update Template.currentData()._id,
+#             $pull: tags: tag
+#         $('#tag_input').val(tag)
+
+
+# Template.responses.helpers
+#     responses: ->
+#         Docs.find {
+#             parent_id: FlowRouter.getParam 'doc_id'
+#         }, sort: number: 1
+
+Template.leaves.helpers
+    leaves: ->
+        if Roles.userIsInRole 'admin'
+            Docs.find {
+                parent_id: FlowRouter.getParam 'doc_id'
+                # author_id: Meteor.userId()
+                # type: 'child'
+            }, sort: number: 1
+        else
+            Docs.find {
+                parent_id: FlowRouter.getParam 'doc_id'
+                # author_id: Meteor.userId()
+                # type: 'child'
+                published: 1
+            }, sort: number: 1
+
+
+Template.leaves.events
+    'click #add_leaf': ->
+        Docs.insert
+            parent_id: FlowRouter.getParam 'doc_id'
+            # type: 'child'
+        
+Template.leaf.helpers
+    published_state_icon: ->
+        switch @published
+            when 1 then 'eye'
+            when 0 then 'ignore'
+            when -1 then 'invisible'
+        
+        
+Template.twigs.helpers
+    twigs: ->
+        Docs.find {
+            parent_id: FlowRouter.getParam 'doc_id'
+            # author_id: Meteor.userId()
+            # published: 1
+        }, sort: number: 1
+
+
+Template.twigs.events
+    'click #add_twig': ->
+        Docs.insert
+            parent_id: FlowRouter.getParam 'doc_id'
+            type: 'twig'
+        
             

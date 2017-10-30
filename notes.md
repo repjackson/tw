@@ -1,4 +1,4 @@
-DEPLOY_HOSTNAME=us-east-1.galaxy-deploy.meteor.com meteor deploy --settings settings.json www.toriwebster.com
+meteor deploy --settings settings.json www.toriwebster.com
 
 
 <!--image-->

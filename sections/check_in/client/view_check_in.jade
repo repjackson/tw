@@ -40,8 +40,6 @@ template(name='view_checkin')
                         .ui.basic.large.label.location_tag #{this}
                     .ui.basic.segment
                         |!{content}
-                    if published
-                        +comments
                     // +doc_matches
                     // if watson
                     //     +analyzed_watson_keywords

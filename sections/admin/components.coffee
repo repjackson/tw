@@ -1,7 +1,6 @@
 FlowRouter.route '/components', action: (params) ->
     BlazeLayout.render 'layout',
         nav: 'nav'
-        sub_nav: 'admin_nav'
         main: 'components'
  
 if Meteor.isClient

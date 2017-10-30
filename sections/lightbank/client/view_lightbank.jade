@@ -49,11 +49,8 @@ template(name='view_lightbank')
                     if author_name
                         h3.ui.header
                             |- #{author_name}
-                    // if journal_prompt
                     if child_count
                         +journal_responses
-                    // +comments    
-                    // +tag_rating
                     if watson
                         .ui.segment
                             .ui.header Content Analysis

@@ -199,3 +199,23 @@ Meteor.methods
         
     verify_email: (user_id)->
         Accounts.sendVerificationEmail(user_id)        
+        
+        
+        
+    calculate_doc_responses: (doc_id)->
+        doc = Docs.findOne doc_id
+        doc_response = Docs.findOne parent_id: doc._id
+        if doc_response
+            Docs.update doc_id,
+                $addToSet: responder_ids: Meteor.userId()
+                
+        # calculate children_count
+        children_count = Docs.find(parent_id:doc_id).count()
+        console.log 'children_count', children_count
+        Docs.update doc_id,
+            $set: children_count: children_count
+            
+        
+            
+            
+            
