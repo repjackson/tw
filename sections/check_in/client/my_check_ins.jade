@@ -40,7 +40,7 @@ template(name='my_check_in_view')
                 .ui.basic.segment.large
                     |!{content} 
                 |#{when}
-                // .ui.divider
+                +published_label
         .content
             +published
             +view_full_button

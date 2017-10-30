@@ -20,8 +20,11 @@ db.docs.find({ tags }).forEach(
 )
 
 db.docs.updateMany( {}, { $rename: { "body": "content" } } )
+Docs.updateMany( {}, { $rename: { "parent_type": "child_view" } } )
 
-
+Docs.update({"parent_type": {$exists:true}}, { $rename: {"parent_type": "child_view"} }, {multi:true})
+Docs.update({"child_view": "twig"}, { $set: {"child_view": "list"} }, {multi:true})
+Docs.update({"child_view": "branch"}, { $set: {"child_view": "grid"} }, {multi:true})
 
 db.docs.find({ tags:{$in:['reflective', 'question']} }).forEach(
 db.docs.find({ tags:"['reflection', 'question']" }).forEach(

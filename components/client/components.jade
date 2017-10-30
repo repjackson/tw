@@ -265,3 +265,14 @@ template(name='page_header')
     h1.ui.center.aligned.header
         +icon96 name=icon
         | #{label}
+
+template(name='published_label')
+    if is_published
+        .ui.basic.label(data-tooltip='Published')
+            +icon48 name='eye'
+    if is_anonymous
+        .ui.basic.label(data-tooltip='Published')
+            +icon48 name='ignore'
+    if is_private
+        .ui.basic.label(data-tooltip='Private')
+            +icon48 name='invisible'

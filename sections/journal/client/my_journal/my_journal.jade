@@ -32,12 +32,6 @@ template(name='my_journal')
 template(name='my_entry_view')
     .ui.segment.document_container(class=journal_segment_class)
         .content
-            if published
-                .ui.top.right.attached.basic.label(data-tooltip='Published')
-                    +icon48 name='eye'
-            else
-                .ui.top.right.attached.basic.label(data-tooltip='Private')
-                    +icon48 name='invisible'
             .description
                 +parent_doc_segment
                 .ui.basic.segment
@@ -45,6 +39,7 @@ template(name='my_entry_view')
             // +icon24 name='clock' classes='ui mini inline image'
             .ui.hidden.fitted.divider
             strong written #{when}
+            +published_label
             .ui.hidden.fitted.divider
             +view_tags
             .ui.hidden.divider

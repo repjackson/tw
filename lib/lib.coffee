@@ -72,6 +72,10 @@ Docs.after.remove (userId, doc)->
 Docs.helpers
     author: -> Meteor.users.findOne @author_id
     when: -> moment(@timestamp).fromNow()
+    is_published: -> @published is 1
+    is_anonymous: -> @published is 0
+    is_private: -> @published is -1
+    
     only_child: -> Docs.findOne parent_id: @_id
     parent: -> Docs.findOne @parent_id
     recipient: -> Meteor.users.findOne @recipient_id

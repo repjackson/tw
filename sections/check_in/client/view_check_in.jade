@@ -3,7 +3,8 @@ template(name='view_checkin')
         .middle.aligned.centered.row
             .four.wide.center.aligned.column
                 if editing
-                    +save_button
+                    #delete_doc.ui.fluid.basic.small.circular.button(data-position='bottom center' data-tooltip='Delete')
+                        +icon48 name='delete' classes='ui mini inline image'
                 else
                     a.ui.basic.circular.button(href='/checkin')
                         +icon48 name='sprout' classes='ui mini inline image'
@@ -14,8 +15,7 @@ template(name='view_checkin')
                     |Check In
             .four.wide.center.aligned.column
                 if editing
-                    #delete_doc.ui.fluid.basic.small.circular.button(data-position='bottom center' data-tooltip='Delete')
-                        +icon48 name='delete' classes='ui mini inline image'
+                    +save_button
                 else
                     if is_author
                         +toggle_editing_button

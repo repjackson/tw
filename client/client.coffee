@@ -54,7 +54,7 @@ Template.registerHelper 'intention_tag_class': -> if @valueOf() in selected_inte
 
 Template.registerHelper 'segment_class', () -> 
     if Roles.userIsInRole 'admin'
-        if @published then 'raised blue' else ''
+        if @published is 1 then 'raised blue' else ''
     else
         ''
 

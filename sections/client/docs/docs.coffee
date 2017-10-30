@@ -37,19 +37,31 @@ Template.view_doc.helpers
     doc_template: -> Docs.findOne type: 'doc_template'
     view_type_template: -> 
         doc = Docs.findOne FlowRouter.getParam('doc_id')
-        console.log doc.type
+        # console.log doc.type
         if doc.type
-            if doc.type is 'journal' or 'checkin' or 'lightbank' 
-                console.log 'true'
-                return "view_#{@type}"
+            # console.log typeof doc.type
+            switch doc.type
+                when 'journal' 
+                    # console.log 'is journal'
+                    return "view_#{@type}"
+                when 'checkin' 
+                    # console.log 'doc.type is lightbank'
+                    return "view_#{@type}"
+                when 'lightbank' 
+                    # console.log 'doc.type is lightbank'
+                    return "view_#{@type}"
+                else 
+                    # console.log 'new view doc'
+                    return 'new_view_doc'
         else 
-            console.log 'false'
+            # console.log 'new view doc'
             return 'new_view_doc'
     # is_field: -> 
     #     # console.log @type
     #     @type is 'field'        
 
 Template.new_view_doc.helpers
+    doc: -> Docs.findOne FlowRouter.getParam('doc_id')
     younger_sibling: ->
         doc = Docs.findOne FlowRouter.getParam('doc_id')
         if doc.number
@@ -104,26 +116,21 @@ Template.new_view_doc.helpers
     main_column_class: ->
         if Session.equals 'editing', true then 'ten wide column' else 'fourteen wide column'
         
-    branch_button_class: -> if @parent_type is 'branch' then 'blue' else 'basic'
-    twig_button_class: -> if @parent_type is 'twig' then 'blue' else 'basic'
-    leaf_button_class: -> if @parent_type is 'leaf' then 'blue' else 'basic'
+    grid_button_class: -> if @child_view is 'grid' then 'blue' else 'basic'
+    list_button_class: -> if @child_view is 'list' then 'blue' else 'basic'
         
-    is_branch: -> @parent_type is 'branch'
-    is_twig: -> @parent_type is 'twig'
-    is_leaf: -> @parent_type is 'leaf'
+    grid_view: -> @child_view is 'grid'
+    list_view: -> @child_view is 'list'
     
 Template.view_doc.events
-    'click #make_branch': ->
+    'click #select_grid': ->
         Docs.update FlowRouter.getParam('doc_id'),
-            $set: parent_type: 'branch'
+            $set: child_view: 'grid'
 
-    'click #make_twig': ->
+    'click #select_list': ->
         Docs.update FlowRouter.getParam('doc_id'),
-            $set: parent_type: 'twig'
+            $set: child_view: 'list'
     
-    'click #make_leaf': ->
-        Docs.update FlowRouter.getParam('doc_id'),
-            $set: parent_type: 'leaf'
     
     'click #create_parent': ->
         new_parent_id = Docs.insert {}
@@ -224,8 +231,8 @@ Template.field_component.events
 #             parent_id: FlowRouter.getParam 'doc_id'
 #         }, sort: number: 1
 
-Template.leaves.helpers
-    leaves: ->
+Template.list.helpers
+    children: ->
         if Roles.userIsInRole 'admin'
             Docs.find {
                 parent_id: FlowRouter.getParam 'doc_id'
@@ -241,22 +248,9 @@ Template.leaves.helpers
             }, sort: number: 1
 
 
-Template.leaves.events
-    'click #add_leaf': ->
-        Docs.insert
-            parent_id: FlowRouter.getParam 'doc_id'
-            # type: 'child'
         
-Template.leaf.helpers
-    published_state_icon: ->
-        switch @published
-            when 1 then 'eye'
-            when 0 then 'ignore'
-            when -1 then 'invisible'
-        
-        
-Template.twigs.helpers
-    twigs: ->
+Template.grid.helpers
+    children: ->
         Docs.find {
             parent_id: FlowRouter.getParam 'doc_id'
             # author_id: Meteor.userId()
@@ -264,10 +258,4 @@ Template.twigs.helpers
         }, sort: number: 1
 
 
-Template.twigs.events
-    'click #add_twig': ->
-        Docs.insert
-            parent_id: FlowRouter.getParam 'doc_id'
-            type: 'twig'
-        
             

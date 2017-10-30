@@ -61,7 +61,7 @@ Template.my_check_ins.helpers
 
 Template.my_check_in_view.helpers
     tag_class: -> if @valueOf() in selected_theme_tags.array() then 'teal' else 'basic'
-    checkin_card_class: -> if @published then 'blue' else ''
+    checkin_card_class: -> if @published is 1 then 'blue' else ''
 
 
 Template.my_check_in_view.events
