@@ -3,11 +3,11 @@ template(name='title')
         .ui.labeled.fluid.input
             .ui.basic.label Title
             input#title(type='text' value=title)
-    else
-        // h2.ui.header 
-            // if icon_class
-            //     +icon48 name=icon_class classes='ui mini inline image'
-        |#{title}
+    // else
+    //     // h2.ui.header 
+    //         // if icon_class
+    //         //     +icon48 name=icon_class classes='ui mini inline image'
+    //     |#{title}
 
 template(name='subtitle')
     if editing
@@ -35,8 +35,8 @@ template(name='icon_class')
             a.ui.basic.label(href="https://icons8.com/icon/new-icons/color" target='_blank' data-tooltip="Lookup at icons8")
                 |Icon 
             input#icon_class(type='text' value=icon_class)
-    // else
-    //     +icon48 name=icon_class classes='ui mini inline image'
+        if icon_class    
+            +icon96 name=icon_class classes='ui inline image'
 
 template(name='created_date')
     .ui.form
@@ -378,6 +378,12 @@ template(name='transcript')
         h3.title
             +icon96 name="paper" classes='ui mini inline image'
             | Transcript
+            i.dropdown.icon
         .content
+            if editing
+                .froala-container
+                    +froalaReactive transcript_context
+            else
+                |!{transcript}
             +doc_by_parentid_and_type parent_id=_id type='transcript'
             // +doc_content tags='sol,welcome,transcript'

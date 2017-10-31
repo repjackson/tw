@@ -46,8 +46,7 @@ template(name='new_view_doc')
                                 +icon48 name=icon_class classes='ui mini inline image'
                             else
                                 +icon48 name='circle' classes='ui mini inline image'
-                        +title
-                        // | #{body}
+                        | #{title}
                         if can_edit
                             +toggle_editing_button
                 .four.wide.center.aligned.column
@@ -63,54 +62,118 @@ template(name='new_view_doc')
                                 else
                                     +icon48 name='circle' classes='ui mini inline image'
             .centered.row
-                    div(class=main_column_class)
-                        // each doc.components
-                        //     if slug_exists
-                        //         +Template.dynamic template=slug data=doc
-                            // if is_field
-                            //     +field_component
-                            // else
-                            //     +group_component
-                        // if content
-                        +content
+                div(class=main_column_class)
+                    if editing
+                        .ui.styled.fluid.accordion
+                            h3.title
+                                +icon96 name="rename" classes='ui mini inline image'
+                                | Fields
+                                i.dropdown.icon
+                            .content
+                                each components
+                                    if slug_exists
+                                        // .ui.segment(class=field_segment_class)
+                                        +Template.dynamic template=slug data=doc
+                                        if editing
+                                            +remove_field
+                                            .ui.hidden.divider
+                            h3.title
+                                +icon96 name="children" classes='ui mini inline image'
+                                | Child Documents
+                                i.dropdown.icon
+                            .content
+                                if body
+                                    +body_field
+                                if list_view
+                                    +list
+                                else
+                                    +grid
+                    else
+                        each components
+                            if slug_exists
+                                // .ui.segment(class=field_segment_class)
+                                +Template.dynamic template=slug data=doc
                         if body
                             +body_field
-                        if grid_view
-                            +grid
                         if list_view
-                            // .ui.basic.center.aligned.segment
-                            //     +theme_facet
                             +list
-                        //     // unless editing
-                        //     //     if responses_allowed
-                        //     //         +responses
-                                
-                    if editing
-                        .six.wide.column
-                            .ui.dividing.header
-                                +icon48 name='setting' classes='ui mini inline image'
-                                | Child View
+                        else
+                            +grid
+                            // if is_field
+                        //     +field_component
+                        // else
+                        //     +group_component
+                    // if content
+                    // +content
+                        // .ui.basic.center.aligned.segment
+                        //     +theme_facet
+                    //     // unless editing
+                    //     //     if responses_allowed
+                    //     //         +responses
                             
-                            #select_grid.ui.button(class=grid_button_class) 
-                                +icon48 name='grid-view' classes='ui mini inline image'
-                                |Grid
-                            #select_list.ui.button(class=list_button_class) 
-                                +icon48 name='list-view' classes='ui mini inline image'
-                                | List
-                            +field_menu
-                            
+                if editing
+                    .six.wide.column
+                        .ui.dividing.header
+                            +icon48 name='setting' classes='ui mini inline image'
+                            | Child View
+                        
+                        #select_grid.ui.button(class=grid_button_class) 
+                            +icon48 name='grid-view' classes='ui mini inline image'
+                            |Grid
+                        #select_list.ui.button(class=list_button_class) 
+                            +icon48 name='list-view' classes='ui mini inline image'
+                            | List
+                        +field_menu
+                        +edit_author
+                        +published
+
+                        
                         
 template(name='grid')
      .ui.stackable.five.column.centered.grid
         each children
             +grid_item
             
+template(name='grid_item')
+    if editing
+        .ui.fluid.card
+            +title
+            +type
+            +icon_class
+            +number
+            +edit_parent_id
+            +delete_button
+    else
+        .column
+            a.ui.icon.center.aligned.header(href="/view/#{_id}") 
+                i.icon
+                    if responded
+                        +icon96 name='checked'
+                    else
+                        if icon_class
+                            +dots100 name=icon_class
+                            // +icon96 name=icon_class
+                        else
+                            +icon96 name='circle'
+                if number
+                    |#{number}: 
+                |#{title}
+                if body
+                    .ui.basic.label #{body}
+            if isInRole 'dev'
+                // .ui.basic.label #{type}    
+                +published
              
 template(name='list')
-    .ui.stackable.five.column.grid
-        each children
-            +list_item
-            
+    .ui.stackable.centered.grid
+        .ten.wide.column
+            each children
+                +list_item
+        .three.wide.column
+            if isInRole 'admin'
+                .ui.dividing.header Admin
+                +published_filter
+
 template(name='list_item')
     .ui.fluid.card
         unless editing
@@ -138,8 +201,7 @@ template(name='list_item')
             //         +view_tags
             .content
                 if isInRole 'admin'
-                    .ui.basic.label(data-tooltip='Published Status')
-                        +icon48 name=published_state_icon
+                    +published_label
                 // +resonate_button
                 // +bookmark_button
                 // +reflect_button
@@ -159,11 +221,6 @@ template(name='list_item')
             +delete_button
   
   
-  
-  
-  
-  
-  
              
 template(name='field_menu')
     .ui.dividing.header Field Menu
@@ -173,46 +230,46 @@ template(name='field_menu')
             |#{title}
                 
     
-template(name='field_component')
-    .ui.segment(class=component_segment_class)
-        if editing
-            .ui.horizontal.list
-                .item
-                    +icon48 name='rename' classes='ui mini inline image'
-                .item Field ID: #{field_id}
-                .item
-                    .remove_component.ui.basic.icon.button
-                        i.red.remove.icon
-        +Template.dynamic template=field_id data=doc
+// template(name='field_component')
+//     .ui.segment(class=component_segment_class)
+//         if editing
+//             .ui.horizontal.list
+//                 .item
+//                     +icon48 name='rename' classes='ui mini inline image'
+//                 .item Field ID: #{field_id}
+//                 .item
+//                     .remove_component.ui.basic.icon.button
+//                         i.red.remove.icon
+//         +Template.dynamic template=field_id data=doc
     
     
     
-template(name='group_component')
-    .ui.segment(class=component_segment_class)
-        if editing
-            .ui.horizontal.list
-                .item
-                    +icon48 name='group-objects' classes='ui mini inline image'
-                .item Group ID: #{group}
-                .item
-                    .remove_component.ui.basic.icon.button
-                        i.red.remove.icon
-        .ui.centered.cards
-            each group_children
-                .ui.card
-                    .content
-                        if editing
-                            +title
-                            +group
-                            +type
-                            +icon_class
-                            +number
-                        else
-                            a.ui.icon.center.aligned.header.header(href="/view/#{_id}") 
-                                i.icon
-                                    if icon_class
-                                        +icon96 name=icon_class
-                                |#{title}
+// template(name='group_component')
+//     .ui.segment(class=component_segment_class)
+//         if editing
+//             .ui.horizontal.list
+//                 .item
+//                     +icon48 name='group-objects' classes='ui mini inline image'
+//                 .item Group ID: #{group}
+//                 .item
+//                     .remove_component.ui.basic.icon.button
+//                         i.red.remove.icon
+//         .ui.centered.cards
+//             each group_children
+//                 .ui.card
+//                     .content
+//                         if editing
+//                             +title
+//                             +group
+//                             +type
+//                             +icon_class
+//                             +number
+//                         else
+//                             a.ui.icon.center.aligned.header.header(href="/view/#{_id}") 
+//                                 i.icon
+//                                     if icon_class
+//                                         +icon96 name=icon_class
+//                                 |#{title}
                                 
 
 template(name='response')
@@ -244,30 +301,3 @@ template(name='response')
 
                 
                 
-template(name='grid_item')
-    if editing
-        .ui.fluid.card
-            +title
-            +type
-            +icon_class
-            +number
-            +edit_parent_id
-            +delete_button
-    else
-        .column
-            a.ui.icon.center.aligned.header(href="/view/#{_id}") 
-                i.icon
-                    if responded
-                        +icon96 name='checked'
-                    else
-                        if icon_class
-                            +icon96 name=icon_class
-                        else
-                            +icon96 name='circle'
-                if number
-                    |#{number}: 
-                |#{title}
-                if body
-                    .ui.basic.label #{body}
-                if isInRole 'dev'
-                    .ui.basic.label #{type}    

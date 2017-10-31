@@ -233,3 +233,6 @@ nav menu
 Docs.update({type:'lightbank'}, {$set:{parent_id:'nNSRYhiaya25BC2sA'}}, {multi:false})            
 Docs.update({type:'checkin'}, {$set:{parent_id:'jcZAas8DMrB89gScD'}}, {multi:true})            
 Docs.update({type: "journal", parent_id: { "$exists": false }}, {$set:{parent_id:'nzFBF5wGLceZ5jFoE'}}, {multi:true})            
+
+
+automated therapy

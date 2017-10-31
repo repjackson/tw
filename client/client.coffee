@@ -3,14 +3,13 @@ $.cloudinary.config
 
 Session.setDefault 'cart_item', null
 Session.setDefault 'zen_mode', false
-Session.setDefault 'doc_limit', 10
+# Session.setDefault 'doc_limit', 10
 Session.setDefault 'view_complete', null
 Session.setDefault 'editing', false
 
 
-Session.setDefault 'view_private', true
 Session.setDefault 'view_unread', false
-Session.setDefault 'admin_mode', false
+# Session.setDefault 'admin_mode', false
     
     
     

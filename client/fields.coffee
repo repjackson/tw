@@ -449,6 +449,79 @@ Template.content.helpers
             height: 300
         }
 
+Template.transcript.events
+    'blur .froala-container': (e,t)->
+        html = t.$('div.froala-reactive-meteorized-override').froalaEditor('html.get', true)
+        
+        # snippet = $('#snippet').val()
+        # if snippet.length is 0
+        #     snippet = $(html).text().substr(0, 300).concat('...')
+        doc_id = @_id
+
+        Docs.update doc_id,
+            $set: transcript: html
+                
+
+Template.transcript.helpers
+    transcript_context: ->
+        @current_doc = Docs.findOne @_id
+        self = @
+        {
+            _value: self.current_doc.transcript
+            _keepMarkers: true
+            _className: 'froala-reactive-meteorized-override'
+            toolbarInline: false
+            initOnClick: false
+            toolbarButtons:
+                [
+                  'fullscreen'
+                  'bold'
+                  'italic'
+                  'underline'
+                  'strikeThrough'
+                #   'subscript'
+                #   'superscript'
+                  '|'
+                #   'fontFamily'
+                  'fontSize'
+                  'color'
+                #   'inlineStyle'
+                #   'paragraphStyle'
+                  '|'
+                  'paragraphFormat'
+                  'align'
+                  'formatOL'
+                  'formatUL'
+                  'outdent'
+                  'indent'
+                  'quote'
+                #   '-'
+                  'insertLink'
+                #   'insertImage'
+                #   'insertVideo'
+                #   'embedly'
+                #   'insertFile'
+                #   'insertTable'
+                #   '|'
+                  'emoticons'
+                #   'specialCharacters'
+                #   'insertHR'
+                  'selectAll'
+                  'clearFormatting'
+                  '|'
+                #   'print'
+                #   'spellChecker'
+                #   'help'
+                  'html'
+                #   '|'
+                  'undo'
+                  'redo'
+                ]
+            imageInsertButtons: ['imageBack', '|', 'imageByURL']
+            tabSpaces: false
+            height: 300
+        }
+
 
 Template.youtube.events
     'blur #youtube': (e,t)->
@@ -658,9 +731,10 @@ Template.end_date.events
 
 Template.remove_field.events
     'click .remove_field':  ->
+        console.log @slug
         self = @
         swal {
-            title: "Remove #{@field} field?"
+            title: "Remove #{@slug} field?"
             type: 'warning'
             animation: false
             showCancelButton: true
@@ -672,10 +746,10 @@ Template.remove_field.events
             parent_doc = Docs.findOne FlowRouter.getParam('doc_id')
             Docs.update parent_doc._id, 
                 $unset: 
-                    "#{self.field}": 1
+                    "#{self.slug}": 1
             # swal("#{self.field} removed", "", "success")
             swal {
-                title: "Removed #{self.field} field."
+                title: "Removed #{self.slug} field."
                 type: 'success'
                 animation: false
                 showCancelButton: false

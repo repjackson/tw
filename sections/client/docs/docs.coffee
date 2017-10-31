@@ -22,7 +22,8 @@ Template.view_doc.onCreated ->
             parent_id = FlowRouter.getParam('doc_id')
             tag_limit = 20
             doc_limit = 69
-            view_published = null
+            view_published = 
+                if Roles.userIsInRole(Meteor.userId(), 'admin') then Session.get('view_published') else true 
             view_read = null
             view_bookmarked = null
             view_resonates = null
@@ -59,6 +60,15 @@ Template.view_doc.helpers
     # is_field: -> 
     #     # console.log @type
     #     @type is 'field'        
+
+Template.new_view_doc.onRendered ->
+    @autorun =>
+        if @subscriptionsReady()
+            Meteor.setTimeout ->
+                $('.ui.accordion').accordion()
+            , 1000
+
+
 
 Template.new_view_doc.helpers
     doc: -> Docs.findOne FlowRouter.getParam('doc_id')
@@ -113,8 +123,8 @@ Template.new_view_doc.helpers
         if doc["#{@slug}"]? then true else false
         
         
-    main_column_class: ->
-        if Session.equals 'editing', true then 'ten wide column' else 'fourteen wide column'
+    main_column_class: -> if Session.equals 'editing', true then 'ten wide column' else 'fourteen wide column'
+    field_segment_class: -> if Session.equals 'editing', true then '' else 'basic compact'
         
     grid_button_class: -> if @child_view is 'grid' then 'blue' else 'basic'
     list_button_class: -> if @child_view is 'list' then 'blue' else 'basic'
@@ -146,35 +156,33 @@ Template.field_menu.onCreated ->
 Template.field_menu.helpers
     unselected_fields: ->
         doc = Docs.findOne FlowRouter.getParam('doc_id')
-        values = _.pluck doc.components, 'field_id'
+        keys = _.keys doc
+        # console.log keys
         Docs.find
             type: 'component'
-            slug: $nin: values
+            slug: $nin: keys
             
 Template.field_menu.events
     'click .select_component': ->
-        # console.log @
+        # console.log @slug
         slug = @slug
         doc = Docs.findOne FlowRouter.getParam('doc_id')
         Docs.update doc._id,
-            $addToSet:
-                components:
-                    type: 'field'
-                    field_id: slug
+            $set: "#{slug}": ''
             
             
             
-Template.field_component.helpers
-    doc: -> Docs.findOne FlowRouter.getParam('doc_id')
-    component_segment_class: -> if Session.get 'editing' then '' else 'basic'    
+# Template.field_component.helpers
+#     doc: -> Docs.findOne FlowRouter.getParam('doc_id')
+#     component_segment_class: -> if Session.get 'editing' then '' else 'basic'    
             
     
-Template.field_component.events
-    'click .remove_component': ->
-        doc = Docs.findOne FlowRouter.getParam('doc_id')
-        # console.log @
-        Docs.update doc._id,
-            $pull: components: @
+# Template.field_component.events
+#     'click .remove_component': ->
+#         doc = Docs.findOne FlowRouter.getParam('doc_id')
+#         # console.log @
+#         Docs.update doc._id,
+#             $pull: components: @
             
             
             
@@ -233,7 +241,7 @@ Template.field_component.events
 
 Template.list.helpers
     children: ->
-        if Roles.userIsInRole 'admin'
+        if Roles.userIsInRole(Meteor.userId(), 'admin')
             Docs.find {
                 parent_id: FlowRouter.getParam 'doc_id'
                 # author_id: Meteor.userId()
