@@ -1,3 +1,12 @@
+template(name='field_type') 
+    if editing
+        .ui.labeled.fluid.input
+            .ui.basic.label Field Type
+            input#field_type(type='text' value=field_type)
+    else
+        | Field Type: #{field_type}
+
+
 template(name='title') 
     if editing
         .ui.labeled.fluid.input

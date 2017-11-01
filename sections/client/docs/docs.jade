@@ -1,10 +1,3 @@
-// template(name='docs')
-//     .ui.container
-//         +cloud
-//         // if one_doc
-//         each docs
-//             +doc_view
-        
 template(name='view_doc')
     with doc
         +Template.dynamic template=view_type_template
@@ -23,7 +16,8 @@ template(name='new_view_doc')
                         | #{parent.title}
                         | #{parent.body}
                 else
-                    #create_parent.ui.basic.button Create Parent
+                    if isInRole 'dev'
+                        #create_parent.ui.basic.button Create Parent
             .centered.middle.aligned.row
                 .four.wide.center.aligned.column
                     if younger_sibling
@@ -88,12 +82,12 @@ template(name='new_view_doc')
                                     if editing
                                         +remove_field
                                         .ui.hidden.divider
-                        h3.ui.dividing.header
-                            +icon96 name="children" classes='ui mini inline image'
-                            | Child Documents
-                        .content
                             if body
                                 +body_field
+                        h3.ui.dividing.header
+                            +icon96 name="flow-chart" classes='ui mini inline image'
+                            | Child Documents
+                        .content
                             if list_view
                                 +list
                             else
@@ -106,7 +100,8 @@ template(name='new_view_doc')
                         if body
                             +body_field
                         .ui.hidden.divider
-                        +response
+                        if response_completion
+                            +response
                         unless response_doc
                             if response_completion
                                 .ui.center.aligned.basic.segment
@@ -140,6 +135,11 @@ template(name='new_view_doc')
                         #select_list.ui.button(class=list_button_class) 
                             +icon48 name='list-view' classes='ui mini inline image'
                             | List
+                        #select_card_view.ui.button(class=cards_button_class) 
+                            +icon48 name='list-view' classes='ui mini inline image'
+                            | Cards
+                            
+                            
                         .ui.dividing.header
                             +icon48 name='checkmark' classes='ui mini inline image'
                             |Completion Type
@@ -152,6 +152,9 @@ template(name='new_view_doc')
                         #select_check_children_completion.ui.button(class=check_children_button_class) 
                             +icon48 name='flow-chart' classes='ui mini inline image'
                             | Check Children
+                        #select_no_completion.ui.button(class=no_completion_button_class) 
+                            +icon48 name='unavailable' classes='ui mini inline image'
+                            | None
                         +field_menu
                         
                         +edit_author
@@ -207,6 +210,9 @@ template(name='grid_item')
                     if number
                         |#{number}: 
                     |#{title}
+                if isInRole 'dev'
+                    a(href="/view/#{_id}") 
+                        i.external.link.icon
                     if body
                         .ui.basic.label #{body}
                 if isInRole 'dev'

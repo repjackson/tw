@@ -124,6 +124,7 @@ Template.new_view_doc.helpers
     response_button_class: -> if @completion_type is 'response' then 'blue' else 'basic'
     mark_read_button_class: -> if @completion_type is 'mark_read' then 'blue' else 'basic'
     check_children_button_class: -> if @completion_type is 'check_children' then 'blue' else 'basic'
+    no_completion_button_class: -> if @completion_type is 'none' then 'blue' else 'basic'
         
     grid_view: -> @child_view is 'grid'
     list_view: -> @child_view is 'list'
@@ -170,6 +171,10 @@ Template.new_view_doc.events
         Docs.update FlowRouter.getParam('doc_id'),
             $set: completion_type: 'check_children'
     
+    'click #select_no_completion': ->
+        Docs.update FlowRouter.getParam('doc_id'),
+            $set: completion_type: 'none'
+    
     'click #create_parent': ->
         new_parent_id = Docs.insert {}
         Docs.update FlowRouter.getParam('doc_id'),
@@ -196,10 +201,15 @@ Template.field_menu.helpers
             
 Template.field_menu.events
     'click .select_component': ->
-        slug = @slug
         doc = Docs.findOne FlowRouter.getParam('doc_id')
-        Docs.update doc._id,
-            $set: "#{slug}": ''
+        slug = @slug
+        # console.log @field_type
+        if @field_type is 'array'
+            Docs.update doc._id,
+                $set: "#{slug}": []
+        else
+            Docs.update doc._id,
+                $set: "#{slug}": ''
             
             
             

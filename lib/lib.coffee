@@ -145,8 +145,8 @@ Meteor.methods
             for child in children_array
                 if Meteor.userId() in child.completed_by
                     child_completion_count++
-            console.log 'child_completion_count', child_completion_count
-            console.log 'children_count', children_count
+            # console.log 'child_completion_count', child_completion_count
+            # console.log 'children_count', children_count
             if child_completion_count is children_count
                 Docs.update doc_id, 
                     $addToSet: completed_by: Meteor.userId()
