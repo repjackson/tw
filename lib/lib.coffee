@@ -107,6 +107,18 @@ Meteor.methods
             $set: "ratings.$.rating": rating
 
 
+    calculate_completion: (doc_id) ->
+        doc = Docs.findOne doc_id
+        # console.log doc.completion_type
+        if doc.completion_type is 'mark_read'
+            if Meteor.userId() in doc.read_by
+                Docs.update doc_id, 
+                    $addToSet: completed_by: Meteor.userId()
+            else
+                Docs.update doc_id, 
+                    $pull: completed_by: Meteor.userId()
+
+
 
 FlowRouter.route '/sol',
   triggersEnter: [ (context, redirect) ->

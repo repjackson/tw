@@ -61,14 +61,6 @@ Template.view_doc.helpers
     #     # console.log @type
     #     @type is 'field'        
 
-Template.new_view_doc.onRendered ->
-    @autorun =>
-        if @subscriptionsReady()
-            Meteor.setTimeout ->
-                $('.ui.accordion').accordion()
-            , 1000
-
-
 
 Template.new_view_doc.helpers
     doc: -> Docs.findOne FlowRouter.getParam('doc_id')
@@ -123,16 +115,33 @@ Template.new_view_doc.helpers
         if doc["#{@slug}"]? then true else false
         
         
-    main_column_class: -> if Session.equals 'editing', true then 'ten wide column' else 'fourteen wide column'
+    main_column_class: -> if Session.equals 'editing', true then 'eight wide column' else 'fourteen wide column'
     field_segment_class: -> if Session.equals 'editing', true then '' else 'basic compact'
         
     grid_button_class: -> if @child_view is 'grid' then 'blue' else 'basic'
     list_button_class: -> if @child_view is 'list' then 'blue' else 'basic'
+
+    response_button_class: -> if @completion_type is 'response' then 'blue' else 'basic'
+    mark_read_button_class: -> if @completion_type is 'mark_read' then 'blue' else 'basic'
+    check_children_button_class: -> if @completion_type is 'check_children' then 'blue' else 'basic'
         
     grid_view: -> @child_view is 'grid'
     list_view: -> @child_view is 'list'
     
-Template.view_doc.events
+    response_completion: -> @completion_type is 'response'
+    read_completion: -> @completion_type is 'mark_read'
+    
+    read: -> @read_by and Meteor.userId() in @read_by
+    
+Template.new_view_doc.events
+    'click .mark_read': (e,t)-> 
+        Meteor.call 'mark_read', @_id, =>
+            Meteor.call 'calculate_completion', @_id
+        
+    'click .mark_unread': (e,t)-> 
+        Meteor.call 'mark_unread', @_id, =>
+            Meteor.call 'calculate_completion', @_id
+    
     'click #select_grid': ->
         Docs.update FlowRouter.getParam('doc_id'),
             $set: child_view: 'grid'
@@ -140,6 +149,19 @@ Template.view_doc.events
     'click #select_list': ->
         Docs.update FlowRouter.getParam('doc_id'),
             $set: child_view: 'list'
+    
+    'click #select_response_completion': ->
+        Docs.update FlowRouter.getParam('doc_id'),
+            $set: completion_type: 'response'
+        
+    'click #select_mark_read_completion': ->
+        Docs.update FlowRouter.getParam('doc_id'),
+            $set: completion_type: 'mark_read'
+        
+    'click #select_check_children_completion': ->
+        Docs.update FlowRouter.getParam('doc_id'),
+            $set: completion_type: 'check_children'
+        
     
     
     'click #create_parent': ->

@@ -51,43 +51,48 @@ template(name='new_view_doc')
                             +toggle_editing_button
                 .four.wide.center.aligned.column
                     if older_sibling
-                        a.ui.basic.circular.button(href="/view/#{older_sibling._id}")
-                            | #{older_sibling.title}
-                            // | #{older_sibling.body}
-                            if older_sibling.responded
-                                +icon48 name='checked' classes='ui mini inline image'
-                            else
+                        if completed
+                            a.ui.basic.circular.button(href="/view/#{older_sibling._id}")
+                                | #{older_sibling.title}
                                 if older_sibling.icon_class
-                                    +icon48 name=older_sibling.icon_class classes='ui mini inline image'
-                                else
-                                    +icon48 name='circle' classes='ui mini inline image'
+                                    if older_sibling.completed
+                                        +icon48 name=older_sibling.icon_class classes='ui mini inline image'
+                                    else
+                                        +dots100 name=older_sibling.icon_class classes='ui mini inline image'
+                        else
+                            .ui.basic.disabled.circular.button
+                                | #{older_sibling.title}
+                                // | #{older_sibling.body}
+                                if older_sibling.icon_class
+                                    if older_sibling.completed
+                                        +icon48 name=older_sibling.icon_class classes='ui mini inline image'
+                                    else
+                                        +dots100 name=older_sibling.icon_class classes='ui mini inline image'
+                        
             .centered.row
                 div(class=main_column_class)
                     if editing
-                        .ui.styled.fluid.accordion
-                            h3.title
-                                +icon96 name="rename" classes='ui mini inline image'
-                                | Fields
-                                i.dropdown.icon
-                            .content
-                                each components
-                                    if slug_exists
-                                        // .ui.segment(class=field_segment_class)
-                                        +Template.dynamic template=slug data=doc
-                                        if editing
-                                            +remove_field
-                                            .ui.hidden.divider
-                            h3.title
-                                +icon96 name="children" classes='ui mini inline image'
-                                | Child Documents
-                                i.dropdown.icon
-                            .content
-                                if body
-                                    +body_field
-                                if list_view
-                                    +list
-                                else
-                                    +grid
+                        h3.ui.dividing.header
+                            +icon96 name="rename" classes='ui mini inline image'
+                            | Fields
+                        .content
+                            each components
+                                if slug_exists
+                                    // .ui.segment(class=field_segment_class)
+                                    +Template.dynamic template=slug data=doc
+                                    if editing
+                                        +remove_field
+                                        .ui.hidden.divider
+                        h3.ui.dividing.header
+                            +icon96 name="children" classes='ui mini inline image'
+                            | Child Documents
+                        .content
+                            if body
+                                +body_field
+                            if list_view
+                                +list
+                            else
+                                +grid
                     else
                         each components
                             if slug_exists
@@ -95,10 +100,25 @@ template(name='new_view_doc')
                                 +Template.dynamic template=slug data=doc
                         if body
                             +body_field
+                        .ui.hidden.divider
                         if list_view
                             +list
                         else
                             +grid
+                        if response_completion
+                            .ui.basic.button
+                                i.plus.icon
+                                | Respond
+                        if read_completion
+                            .ui.center.aligned.basic.segment
+                                if read
+                                    .mark_unread.ui.circular.blue.button 
+                                        +icon48 name='read-message' classes='avatar'
+                                        |Mark Unread
+                                else
+                                    .mark_read.ui.basic.circular.button
+                                        +icon48 name='message' classes='ui mini inline image'
+                                        |Mark Read
                             // if is_field
                         //     +field_component
                         // else
@@ -123,9 +143,23 @@ template(name='new_view_doc')
                         #select_list.ui.button(class=list_button_class) 
                             +icon48 name='list-view' classes='ui mini inline image'
                             | List
+                        .ui.dividing.header
+                            +icon48 name='checkmark' classes='ui mini inline image'
+                            |Completion Type
+                        #select_response_completion.ui.button(class=response_button_class) 
+                            +icon48 name='response' classes='ui mini inline image'
+                            | Response
+                        #select_mark_read_completion.ui.button(class=mark_read_button_class) 
+                            +icon48 name='read-message' classes='ui mini inline image'
+                            | Mark Read
+                        #select_check_children_completion.ui.button(class=check_children_button_class) 
+                            +icon48 name='flow-chart' classes='ui mini inline image'
+                            | Check Children
                         +field_menu
+                        
                         +edit_author
                         +published
+                        
 
                         
                         

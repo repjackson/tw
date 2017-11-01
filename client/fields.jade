@@ -374,16 +374,21 @@ template(name='child_view')
                         
                         
 template(name='transcript')
-    .ui.styled.fluid.accordion
-        h3.title
-            +icon96 name="paper" classes='ui mini inline image'
-            | Transcript
-            i.dropdown.icon
-        .content
-            if editing
-                .froala-container
-                    +froalaReactive transcript_context
-            else
+    if editing
+        .ui.header 
+            +icon48 name="paper" classes='ui mini inline image'
+            |Transcript
+        .froala-container
+            +froalaReactive transcript_context
+    else
+        .ui.styled.fluid.accordion
+            h3.title
+                +icon96 name="paper" classes='ui mini inline image'
+                | Transcript
+                i.dropdown.icon
+            .content
                 |!{transcript}
-            +doc_by_parentid_and_type parent_id=_id type='transcript'
-            // +doc_content tags='sol,welcome,transcript'
+                if isInRole 'dev'
+                    |old
+                +doc_by_parentid_and_type parent_id=_id type='transcript'
+                // +doc_content tags='sol,welcome,transcript'

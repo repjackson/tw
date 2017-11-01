@@ -14,25 +14,25 @@ Session.setDefault 'view_unread', false
     
     
     
-Meteor.startup ->
-    stripeKey = Meteor.settings.public.stripe.livePublishableKey
-    Stripe.setPublishableKey stripeKey
+# Meteor.startup ->
+#     stripeKey = Meteor.settings.public.stripe.livePublishableKey
+#     Stripe.setPublishableKey stripeKey
     
-    STRIPE =
-        getToken: (domElement, card, callback) ->
-            Stripe.card.createToken card, (status, response) ->
-                if response.error
-                    Bert.alert response.error.message, 'danger'
-                else
-                    STRIPE.setToken response.id, domElement, callback
-                return
-            return
-        setToken: (token, domElement, callback) ->
-            $(domElement).append $('<input type=\'hidden\' name=\'stripeToken\' />').val(token)
-            callback()
-            return
+#     STRIPE =
+#         getToken: (domElement, card, callback) ->
+#             Stripe.card.createToken card, (status, response) ->
+#                 if response.error
+#                     Bert.alert response.error.message, 'danger'
+#                 else
+#                     STRIPE.setToken response.id, domElement, callback
+#                 return
+#             return
+#         setToken: (token, domElement, callback) ->
+#             $(domElement).append $('<input type=\'hidden\' name=\'stripeToken\' />').val(token)
+#             callback()
+#             return
 
-    return
+#     return
 
     
 Template.registerHelper 'is_author', () ->  Meteor.userId() is @author_id
@@ -69,6 +69,8 @@ Template.registerHelper 'long_date', () -> moment(@timestamp).format("dddd, MMMM
 Template.registerHelper 'in_course', () -> @_id in Meteor.user().courses
 Template.registerHelper 'in_sol', () -> Roles.userIsInRole 'sol_member'
 Template.registerHelper 'in_demo', () -> Roles.userIsInRole 'sol_demo_member'
+
+Template.registerHelper 'completed', () -> Meteor.userId() in @completed_by
 
 
 
