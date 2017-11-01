@@ -70,7 +70,6 @@ Template.registerHelper 'in_course', () -> @_id in Meteor.user().courses
 Template.registerHelper 'in_sol', () -> Roles.userIsInRole 'sol_member'
 Template.registerHelper 'in_demo', () -> Roles.userIsInRole 'sol_demo_member'
 
-Template.registerHelper 'completed', () -> Meteor.userId() in @completed_by
 
 
 

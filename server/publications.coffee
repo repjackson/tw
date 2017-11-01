@@ -93,7 +93,7 @@ publishComposite 'doc', (id, ancestor_levels, descendent_levels)->
                     if doc.number
                         next_number = doc.number + 1
                         Docs.find
-                            group: doc.group
+                            # group: doc.group
                             parent_id: doc.parent_id
                             number: next_number
                 children: [
@@ -114,7 +114,7 @@ publishComposite 'doc', (id, ancestor_levels, descendent_levels)->
                     if doc.number
                         previous_number = doc.number - 1
                         Docs.find
-                            group: doc.group
+                            # group: doc.group
                             parent_id: doc.parent_id
                             number: previous_number
                 children: [

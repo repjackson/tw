@@ -239,7 +239,6 @@ Template.edit_quantity.events
             
 Template.title.events
     'blur #title': (e,t)->
-        # alert 'hi'
         title = $(e.currentTarget).closest('#title').val()
         Docs.update @_id,
             $set: title: title
@@ -247,7 +246,6 @@ Template.title.events
             
 Template.slug.events
     'blur #slug': (e,t)->
-        # alert 'hi'
         slug = $(e.currentTarget).closest('#slug').val()
         Docs.update @_id,
             $set: slug: slug
@@ -255,7 +253,6 @@ Template.slug.events
             
 Template.plural_slug.events
     'blur #plural_slug': (e,t)->
-        # alert 'hi'
         plural_slug = $(e.currentTarget).closest('#plural_slug').val()
         Docs.update @_id,
             $set: plural_slug: plural_slug
@@ -263,7 +260,6 @@ Template.plural_slug.events
             
 Template.body_field.events
     'blur #body_field': (e,t)->
-        # alert 'hi'
         body_field = $(e.currentTarget).closest('#body_field').val()
         Docs.update @_id,
             $set: body: body_field
@@ -731,7 +727,7 @@ Template.end_date.events
 
 Template.remove_field.events
     'click .remove_field':  ->
-        console.log @slug
+        # console.log @slug
         self = @
         swal {
             title: "Remove #{@slug} field?"

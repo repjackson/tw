@@ -15,7 +15,7 @@ template(name='subtitle')
             .ui.basic.label Subtitle
             input#subtitle(type='text' value=subtitle)
     else
-        h3.ui.header #{subtitle}
+        h3.ui.center.aligned.header #{subtitle}
 
 template(name='group')
     if editing
@@ -80,6 +80,8 @@ template(name='body_field')
     else
         .ui.basic.segment
             |#{body}
+            
+            
 template(name='tags')
     // .ui.segment
     if editing
@@ -260,7 +262,7 @@ template(name='image_id')
                 //     .ui.input
                 //         input#input_image_id(type='text')
     else
-        img.ui.image(src="{{c.url image_id width=500 crop='fit'}}")
+        img.ui.centered.image(src="{{c.url image_id width=500 crop='fit'}}")
         
 
 template(name='image_url')

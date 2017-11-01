@@ -88,8 +88,18 @@ Docs.helpers
             type: 'response'
         if response then true else false
 
+    completed: -> if @completed_by and Meteor.userId() in @completed_by then true else false
 
-
+    can_access: ->
+        previous_number = @number - 1
+        previous_doc = 
+            Docs.findOne
+                parent_id: @parent_id
+                number: previous_number
+        if previous_doc
+            if previous_doc.completed_by and Meteor.userId() in previous_doc.completed_by then true else false
+        else
+            true
 
 Meteor.methods
     add: (tags=[])->
@@ -117,8 +127,40 @@ Meteor.methods
             else
                 Docs.update doc_id, 
                     $pull: completed_by: Meteor.userId()
-
-
+        if doc.completion_type is 'response'
+            response_doc = 
+                Docs.findOne
+                    parent_id: doc_id
+                    author_id: Meteor.userId()
+            if response_doc
+                Docs.update doc_id, 
+                    $addToSet: completed_by: Meteor.userId()
+            else
+                Docs.update doc_id, 
+                    $pull: completed_by: Meteor.userId()
+        if doc.completion_type is 'check_children'
+            children_array = Docs.find(parent_id: doc_id).fetch()
+            children_count = Docs.find(parent_id: doc_id).count()
+            child_completion_count = 0
+            for child in children_array
+                if Meteor.userId() in child.completed_by
+                    child_completion_count++
+            console.log 'child_completion_count', child_completion_count
+            console.log 'children_count', children_count
+            if child_completion_count is children_count
+                Docs.update doc_id, 
+                    $addToSet: completed_by: Meteor.userId()
+            else
+                Docs.update doc_id, 
+                    $pull: completed_by: Meteor.userId()
+                
+        next_number = doc.number + 1
+        older_sibling = 
+            Docs.findOne 
+                parent_id: doc.parent_id
+                number: next_number
+        unless older_sibling
+            Meteor.call 'calculate_completion', doc.parent_id
 
 FlowRouter.route '/sol',
   triggersEnter: [ (context, redirect) ->

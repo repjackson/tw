@@ -133,6 +133,14 @@ Template.new_view_doc.helpers
     
     read: -> @read_by and Meteor.userId() in @read_by
     
+    response_doc: -> 
+        response_doc = Docs.findOne
+            parent_id: FlowRouter.getParam('doc_id')
+            author_id: Meteor.userId()
+        if response_doc then return true else false
+    
+    
+    
 Template.new_view_doc.events
     'click .mark_read': (e,t)-> 
         Meteor.call 'mark_read', @_id, =>
@@ -161,8 +169,6 @@ Template.new_view_doc.events
     'click #select_check_children_completion': ->
         Docs.update FlowRouter.getParam('doc_id'),
             $set: completion_type: 'check_children'
-        
-    
     
     'click #create_parent': ->
         new_parent_id = Docs.insert {}
@@ -170,8 +176,13 @@ Template.new_view_doc.events
             $set: parent_id: new_parent_id
         FlowRouter.go "/view/#{new_parent_id}" 
         
+    'click #create_response': ->
+        Docs.insert
+            parent_id: FlowRouter.getParam('doc_id')
+            
+        
     
-Template.field_menu.onCreated ->
+# Template.field_menu.onCreated ->
     # @autorun -> Meteor.subscribe 'components'
 
 
@@ -179,14 +190,12 @@ Template.field_menu.helpers
     unselected_fields: ->
         doc = Docs.findOne FlowRouter.getParam('doc_id')
         keys = _.keys doc
-        # console.log keys
         Docs.find
             type: 'component'
             slug: $nin: keys
             
 Template.field_menu.events
     'click .select_component': ->
-        # console.log @slug
         slug = @slug
         doc = Docs.findOne FlowRouter.getParam('doc_id')
         Docs.update doc._id,
@@ -194,86 +203,37 @@ Template.field_menu.events
             
             
             
-# Template.field_component.helpers
-#     doc: -> Docs.findOne FlowRouter.getParam('doc_id')
-#     component_segment_class: -> if Session.get 'editing' then '' else 'basic'    
+Template.response.onCreated ->
+    @editing = new ReactiveVar(false)
+
+Template.response.helpers
+    editing_mode: -> Template.instance().editing.get()
+    response: -> 
+        Docs.findOne
+            parent_id: FlowRouter.getParam('doc_id')
+            author_id: Meteor.userId()
             
-    
-# Template.field_component.events
-#     'click .remove_component': ->
-#         doc = Docs.findOne FlowRouter.getParam('doc_id')
-#         # console.log @
-#         Docs.update doc._id,
-#             $pull: components: @
-            
-            
-            
-# Template.group_component.events
-#     'click .remove_component': ->
-#         doc = Docs.findOne FlowRouter.getParam('doc_id')
-#         # console.log @
-#         Docs.update doc._id,
-#             $pull: components: @
+Template.response.events
+    'click .edit_this': (e,t)-> t.editing.set true
+    'click .save_doc': (e,t)-> 
+        t.editing.set false
+        Meteor.call 'calculate_completion', FlowRouter.getParam('doc_id')
 
-# Template.responses.events
-#     'click #add_response': ->
-#         Docs.insert
-#             parent_id: FlowRouter.getParam 'doc_id'
-#             type: 'response'
-        
-# Template.response.onCreated ->
-#     @editing = new ReactiveVar(false)
+    'blur #body_field': (e,t)->
+        body_field = $(e.currentTarget).closest('#body_field').val()
+        Docs.update @_id,
+            $set: body: body_field
 
-# Template.response.helpers
-#     editing_mode: -> Template.instance().editing.get()
-
-# Template.response.events
-#     'click .edit_this': (e,t)-> t.editing.set true
-#     'click .save_doc': (e,t)-> t.editing.set false
-
-#     'keyup #tag_input': (e,t)->
-#         e.preventDefault()
-#         val = $('#tag_input').val().toLowerCase().trim()
-#         switch e.which
-#             when 13 #enter
-#                 unless val.length is 0
-#                     Docs.update Template.currentData()._id,
-#                         $addToSet: tags: val
-#                     $('#tag_input').val ''
-#             # when 8
-#             #     if val.length is 0
-#             #         result = Docs.findOne(Template.currentData()._id).tags.slice -1
-#             #         $('#theme_tag_select').val result[0]
-#             #         Docs.update Template.currentData()._id,
-#             #             $pop: tags: 1
-
-
-#     'click .doc_tag': (e,t)->
-#         tag = @valueOf()
-#         Docs.update Template.currentData()._id,
-#             $pull: tags: tag
-#         $('#tag_input').val(tag)
-
-
-# Template.responses.helpers
-#     responses: ->
-#         Docs.find {
-#             parent_id: FlowRouter.getParam 'doc_id'
-#         }, sort: number: 1
 
 Template.list.helpers
     children: ->
         if Roles.userIsInRole(Meteor.userId(), 'admin')
             Docs.find {
                 parent_id: FlowRouter.getParam 'doc_id'
-                # author_id: Meteor.userId()
-                # type: 'child'
             }, sort: number: 1
         else
             Docs.find {
                 parent_id: FlowRouter.getParam 'doc_id'
-                # author_id: Meteor.userId()
-                # type: 'child'
                 published: 1
             }, sort: number: 1
 
@@ -283,8 +243,6 @@ Template.grid.helpers
     children: ->
         Docs.find {
             parent_id: FlowRouter.getParam 'doc_id'
-            # author_id: Meteor.userId()
-            # published: 1
         }, sort: number: 1
 
 

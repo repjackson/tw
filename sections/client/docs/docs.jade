@@ -28,22 +28,28 @@ template(name='new_view_doc')
                 .four.wide.center.aligned.column
                     if younger_sibling
                         a.ui.basic.circular.button(href="/view/#{younger_sibling._id}")
-                            if younger_sibling.responded
-                                +icon48 name='checked' classes='ui mini inline image'
-                            else
+                            if younger_sibling.completed
                                 if younger_sibling.icon_class
                                     +icon48 name=younger_sibling.icon_class classes='ui mini inline image'
+                                else
+                                    +icon48 name='checked' classes='ui mini inline image'
+                            else
+                                if younger_sibling.icon_class
+                                    +dots100 name=younger_sibling.icon_class classes='ui mini inline image'
                                 else
                                     +icon48 name='circle' classes='ui mini inline image'
                             | #{younger_sibling.title}
                             // | #{younger_sibling.body}
                 .eight.wide.center.aligned.column
                     h1.ui.center.aligned.header
-                        if responded
-                            +icon48 name='checked' classes='ui mini inline image'
-                        else
+                        if completed
                             if icon_class
                                 +icon48 name=icon_class classes='ui mini inline image'
+                            else
+                                +icon48 name='checked' classes='ui mini inline image'
+                        else
+                            if icon_class
+                                +dots100 name=icon_class classes='ui mini inline image'
                             else
                                 +icon48 name='circle' classes='ui mini inline image'
                         | #{title}
@@ -56,18 +62,17 @@ template(name='new_view_doc')
                                 | #{older_sibling.title}
                                 if older_sibling.icon_class
                                     if older_sibling.completed
-                                        +icon48 name=older_sibling.icon_class classes='ui mini inline image'
+                                        +icon48 name=older_sibling.icon_class classes='ui mini spaced image'
                                     else
-                                        +dots100 name=older_sibling.icon_class classes='ui mini inline image'
+                                        +dots100 name=older_sibling.icon_class classes='ui mini spaced image'
                         else
                             .ui.basic.disabled.circular.button
-                                | #{older_sibling.title}
-                                // | #{older_sibling.body}
+                                | #{older_sibling.title} &nbsp;
                                 if older_sibling.icon_class
                                     if older_sibling.completed
-                                        +icon48 name=older_sibling.icon_class classes='ui mini inline image'
+                                        +icon48 name=older_sibling.icon_class classes='ui mini spaced image'
                                     else
-                                        +dots100 name=older_sibling.icon_class classes='ui mini inline image'
+                                        +dots100 name=older_sibling.icon_class classes='ui mini spaced image'
                         
             .centered.row
                 div(class=main_column_class)
@@ -101,36 +106,28 @@ template(name='new_view_doc')
                         if body
                             +body_field
                         .ui.hidden.divider
-                        if list_view
-                            +list
+                        +response
+                        unless response_doc
+                            if response_completion
+                                .ui.center.aligned.basic.segment
+                                    #create_response.ui.circular.basic.button
+                                        +icon48 name='response' classes='ui inline image'
+                                        | Respond
                         else
+                            if list_view
+                                +list
+                        if grid_view
                             +grid
-                        if response_completion
-                            .ui.basic.button
-                                i.plus.icon
-                                | Respond
                         if read_completion
                             .ui.center.aligned.basic.segment
                                 if read
                                     .mark_unread.ui.circular.blue.button 
-                                        +icon48 name='read-message' classes='avatar'
+                                        +icon48 name='read-message' classes='ui inline image'
                                         |Mark Unread
                                 else
                                     .mark_read.ui.basic.circular.button
                                         +icon48 name='message' classes='ui mini inline image'
                                         |Mark Read
-                            // if is_field
-                        //     +field_component
-                        // else
-                        //     +group_component
-                    // if content
-                    // +content
-                        // .ui.basic.center.aligned.segment
-                        //     +theme_facet
-                    //     // unless editing
-                    //     //     if responses_allowed
-                    //     //         +responses
-                            
                 if editing
                     .six.wide.column
                         .ui.dividing.header
@@ -179,24 +176,43 @@ template(name='grid_item')
             +delete_button
     else
         .column
-            a.ui.icon.center.aligned.header(href="/view/#{_id}") 
-                i.icon
-                    if responded
-                        +icon96 name='checked'
-                    else
-                        if icon_class
-                            +dots100 name=icon_class
-                            // +icon96 name=icon_class
+            if can_access
+                a.ui.icon.center.aligned.header(href="/view/#{_id}") 
+                    i.icon
+                        if completed
+                            +icon96 name=icon_class
                         else
-                            +icon96 name='circle'
-                if number
-                    |#{number}: 
-                |#{title}
-                if body
-                    .ui.basic.label #{body}
-            if isInRole 'dev'
-                // .ui.basic.label #{type}    
-                +published
+                            if icon_class
+                                +dots100 name=icon_class
+                            else
+                                +icon96 name='circle'
+                    if number
+                        |#{number}: 
+                    |#{title}
+                    if body
+                        .ui.basic.label #{body}
+                if isInRole 'dev'
+                    // .ui.basic.label #{type}    
+                    +published
+            else
+                .ui.icon.center.aligned.disabled.header
+                    i.icon
+                        if completed
+                            +icon96 name=icon_class
+                        else
+                            if icon_class
+                                +dots100 name=icon_class
+                            else
+                                +icon96 name='circle'
+                    if number
+                        |#{number}: 
+                    |#{title}
+                    if body
+                        .ui.basic.label #{body}
+                if isInRole 'dev'
+                    // .ui.basic.label #{type}    
+                    +published
+        
              
 template(name='list')
     .ui.stackable.centered.grid
@@ -264,74 +280,24 @@ template(name='field_menu')
             |#{title}
                 
     
-// template(name='field_component')
-//     .ui.segment(class=component_segment_class)
-//         if editing
-//             .ui.horizontal.list
-//                 .item
-//                     +icon48 name='rename' classes='ui mini inline image'
-//                 .item Field ID: #{field_id}
-//                 .item
-//                     .remove_component.ui.basic.icon.button
-//                         i.red.remove.icon
-//         +Template.dynamic template=field_id data=doc
-    
-    
-    
-// template(name='group_component')
-//     .ui.segment(class=component_segment_class)
-//         if editing
-//             .ui.horizontal.list
-//                 .item
-//                     +icon48 name='group-objects' classes='ui mini inline image'
-//                 .item Group ID: #{group}
-//                 .item
-//                     .remove_component.ui.basic.icon.button
-//                         i.red.remove.icon
-//         .ui.centered.cards
-//             each group_children
-//                 .ui.card
-//                     .content
-//                         if editing
-//                             +title
-//                             +group
-//                             +type
-//                             +icon_class
-//                             +number
-//                         else
-//                             a.ui.icon.center.aligned.header.header(href="/view/#{_id}") 
-//                                 i.icon
-//                                     if icon_class
-//                                         +icon96 name=icon_class
-//                                 |#{title}
-                                
-
 template(name='response')
-    .ui.segment
-        if editing_mode
-            .content
-                +body_field
-            // .ui.input
-            //     input#tag_input(type='text' placeholder='Add Tag...')
-            // each tags
-            //     // a.ui.basic.circular.button.doc_tag #{this}
-            //     a.ui.basic.button.doc_tag
-            //         |#{this}
-            .content
-                .save_doc.ui.basic.icon.button
-                    i.green.check.icon
-                +delete_button
-        else
-            .content
-                |#{body}
-            .content
-                if is_author
-                    .edit_this.ui.basic.icon.button
-                        i.blue.pencil.icon
-            // +icon48 name='hashtag' classes='ui inline mini image'
-            // |Tags
-            // each tags
-            //     .ui.basic.label.doc_tag #{this}
-
-                
-                
+    with response
+        .ui.segment
+            .ui.header Your Response
+            if editing_mode
+                .content
+                    .ui.form
+                        .field
+                            textarea#body_field(rows='3') #{body}
+                .content
+                    .save_doc.ui.basic.large.circular.icon.button
+                        i.green.check.icon
+                    +delete_button
+            else
+                .content
+                    |#{body}
+                .content
+                    if is_author
+                        .edit_this.ui.basic.large.circular.icon.button
+                            i.blue.pencil.icon
+                    
