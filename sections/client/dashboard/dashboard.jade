@@ -1,8 +1,5 @@
 template(name='dashboard')
     .ui.container
-        // h2.ui.center.aligned.header 
-        //     img(src="https://png.icons8.com/dashboard/color/96" title="Dashboard" width="96" height="96")
-        //     |Dashboard
         .ui.stackable.centered.five.column.grid
             .column
                 a.ui.icon.center.aligned.header(href='/people')
@@ -24,29 +21,8 @@ template(name='dashboard')
                     i.icon
                         +icon96 name='settings'
                     |Settings
-            if isInRole 'admin'
-                .column    
-                    a.ui.icon.center.aligned.header(href='/admin/dashboard')
-                        i.icon
-                            +icon96 name='monarch'
-                        | Admin
             .column    
                 a#logout.ui.icon.center.aligned.header(href='#')
                     i.icon
                         +icon96 name='burglary'
                     | Sign Out
-            // .column    
-            //     a.ui.icon.center.aligned.header(href='/checkin')
-            //         i.icon
-            //             +icon96 name='in-progress'
-            //         |Check In
-            // .row    
-            //     a.ui.icon.center.aligned.header(href='/quizes')
-            //         i.icon
-            //             img(src="https://png.icons8.com/report-card/color/96" width="96" height="96")
-            //         |Quizzes
-            // .row    
-            //     a.ui.icon.center.aligned.header(href='/exercises')
-            //         i.icon
-            //             img(src="https://png.icons8.com/hand-with-pen/color/96" width="96" height="96")
-            //         |Exercises
