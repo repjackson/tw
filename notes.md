@@ -55,7 +55,10 @@ db.docs.find({ tags:{$exists:true} }).count()
 
 db.users.find({ courses:{$in:["sW4accx4fvZBK6wLn]} }).count()
 
+journal_prompt 4fkmEYESg457eR3mQ
 
+
+Docs.update({lightbank_type:'journal_prompt'},{$set:{parent_id:'4fkmEYESg457eR3mQ'}}, {multi:true})
 
 db.docs.find({ test_id: "daj5G56YWA35mGLYL" }).count()
 

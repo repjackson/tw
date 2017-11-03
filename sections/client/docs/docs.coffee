@@ -21,7 +21,7 @@ Template.view_doc.onCreated ->
             author_id = null
             parent_id = FlowRouter.getParam('doc_id')
             tag_limit = 20
-            doc_limit = 69
+            doc_limit = 20
             view_published = 
                 if Roles.userIsInRole(Meteor.userId(), 'admin') then Session.get('view_published') else true 
             view_read = null
@@ -102,32 +102,22 @@ Template.new_view_doc.helpers
         # return false
 
     components: ->        
-    #     doc = Docs.findOne FlowRouter.getParam('doc_id')
-    #     doc.components
+        #     doc = Docs.findOne FlowRouter.getParam('doc_id')
+        #     doc.components
         
         Docs.find
             type: 'component'
 
     slug_exists: ->
         doc = Docs.findOne FlowRouter.getParam('doc_id')
-        # console.log @
         # if doc["#{@slug}"]? then console.log "#{@slug} exists" else console.log "#{@slug} no" 
         if doc["#{@slug}"]? then true else false
         
+    can_add: -> @can_add is true
         
-    main_column_class: -> if Session.equals 'editing', true then 'eight wide column' else 'fourteen wide column'
+    # main_column_class: -> if Session.equals 'editing', true then 'ten wide column' else 'fourteen wide column'
     field_segment_class: -> if Session.equals 'editing', true then '' else 'basic compact'
         
-    grid_button_class: -> if @child_view is 'grid' then 'blue' else 'basic'
-    list_button_class: -> if @child_view is 'list' then 'blue' else 'basic'
-
-    response_button_class: -> if @completion_type is 'response' then 'blue' else 'basic'
-    mark_read_button_class: -> if @completion_type is 'mark_read' then 'blue' else 'basic'
-    check_children_button_class: -> if @completion_type is 'check_children' then 'blue' else 'basic'
-    no_completion_button_class: -> if @completion_type is 'none' then 'blue' else 'basic'
-        
-    grid_view: -> @child_view is 'grid'
-    list_view: -> @child_view is 'list'
     
     response_completion: -> @completion_type is 'response'
     read_completion: -> @completion_type is 'mark_read'
@@ -139,7 +129,13 @@ Template.new_view_doc.helpers
             parent_id: FlowRouter.getParam('doc_id')
             author_id: Meteor.userId()
         if response_doc then return true else false
+    grid_view: -> @child_view is 'grid'
+    list_view: -> @child_view is 'list'
+    card_view: -> @child_view is 'cards'
     
+    
+Template.doc_editing_sidebar.helpers
+    toggle_theme_tags_class: -> if @theme_tags_facet is true then 'blue' else 'basic'
     
     
 Template.new_view_doc.events
@@ -151,30 +147,6 @@ Template.new_view_doc.events
         Meteor.call 'mark_unread', @_id, =>
             Meteor.call 'calculate_completion', @_id
     
-    'click #select_grid': ->
-        Docs.update FlowRouter.getParam('doc_id'),
-            $set: child_view: 'grid'
-
-    'click #select_list': ->
-        Docs.update FlowRouter.getParam('doc_id'),
-            $set: child_view: 'list'
-    
-    'click #select_response_completion': ->
-        Docs.update FlowRouter.getParam('doc_id'),
-            $set: completion_type: 'response'
-        
-    'click #select_mark_read_completion': ->
-        Docs.update FlowRouter.getParam('doc_id'),
-            $set: completion_type: 'mark_read'
-        
-    'click #select_check_children_completion': ->
-        Docs.update FlowRouter.getParam('doc_id'),
-            $set: completion_type: 'check_children'
-    
-    'click #select_no_completion': ->
-        Docs.update FlowRouter.getParam('doc_id'),
-            $set: completion_type: 'none'
-    
     'click #create_parent': ->
         new_parent_id = Docs.insert {}
         Docs.update FlowRouter.getParam('doc_id'),
@@ -184,11 +156,34 @@ Template.new_view_doc.events
     'click #create_response': ->
         Docs.insert
             parent_id: FlowRouter.getParam('doc_id')
+      
+      
+    'click #add_child': ->
+        new_id = Docs.insert
+            parent_id: FlowRouter.getParam('doc_id')
+        FlowRouter.go("/view/#{new_id}")
+        Session.set 'editing', true
+      
+      
             
-        
-    
+Template.doc_editing_sidebar.events        
 # Template.field_menu.onCreated ->
     # @autorun -> Meteor.subscribe 'components'
+    'click #delete_doc': ->
+        swal {
+            title: 'Remove Document?'
+            type: 'warning'
+            animation: true
+            showCancelButton: true
+            closeOnConfirm: true
+            cancelButtonText: 'Cancel'
+            confirmButtonText: 'Remove'
+            confirmButtonColor: '#da5347'
+        }, =>
+            Docs.remove @_id
+            swal 'Removed', 'success'
+            Session.set 'editing', false
+            FlowRouter.go "/view/#{@parent_id}"
 
 
 Template.field_menu.helpers
@@ -255,5 +250,53 @@ Template.grid.helpers
             parent_id: FlowRouter.getParam 'doc_id'
         }, sort: number: 1
 
+Template.cards.helpers
+    children: ->
+        Docs.find {
+            parent_id: FlowRouter.getParam 'doc_id'
+        }, sort: number: 1
 
+
+Template.doc_editing_sidebar.onRendered ->
+    @autorun =>
+        if @subscriptionsReady()
+            Meteor.setTimeout ->
+                $('.ui.accordion').accordion()
+            , 1000
             
+# Template.doc_editing_main.onRendered ->
+#     @autorun =>
+#         if @subscriptionsReady()
+#             Meteor.setTimeout ->
+#                 $('.ui.accordion').accordion()
+#             , 1000
+            
+            
+Template.card.events
+    'click .expand_card': (e,t)->
+        $(e.currentTarget).closest('.card').toggleClass 'fluid'
+
+Template.toggle_key.helpers
+    toggle_key_button_class: -> 
+        # console.log @key
+        # console.log Template.parentData()
+        # console.log Template.parentData()["#{@key}"]
+        if @value
+            if Template.parentData()["#{@key}"] is @value then 'blue' else 'basic'
+        else if Template.parentData()["#{@key}"] is true then 'blue' else 'basic'
+
+
+Template.toggle_key.events
+    'click #toggle_key': ->
+        # console.log @
+        if @value
+            Docs.update FlowRouter.getParam('doc_id'), 
+                $set: "#{@key}": "#{@value}"
+        else if Template.parentData()["#{@key}"] is true
+            Docs.update FlowRouter.getParam('doc_id'), 
+                $set: "#{@key}": false
+        else
+            Docs.update FlowRouter.getParam('doc_id'), 
+                $set: "#{@key}": true
+            
+    

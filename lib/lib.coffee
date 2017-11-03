@@ -81,6 +81,7 @@ Docs.helpers
     recipient: -> Meteor.users.findOne @recipient_id
     subject: -> Meteor.users.findOne @subject_id
     object: -> Docs.findOne @object_id
+    has_children: -> if Docs.findOne(parent_id: @_id) then true else false
     responded: -> 
         response = Docs.findOne
             author_id: Meteor.userId()
@@ -88,7 +89,12 @@ Docs.helpers
             type: 'response'
         if response then true else false
 
-    completed: -> if @completed_by and Meteor.userId() in @completed_by then true else false
+    completed: -> 
+        if @completion_type is 'none' then true
+        else
+            if @completed_by and Meteor.userId() in @completed_by
+                true 
+            else false
 
     can_access: ->
         previous_number = @number - 1

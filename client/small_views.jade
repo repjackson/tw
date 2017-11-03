@@ -3,6 +3,8 @@ template(name='poem_view_small')
         .content
             .ui.top.right.attached.basic.label(data-tooltip='Poem')
                 +icon48 name='close-up'
+            +parent_doc_segment
+
             if has_youtube
                 +youtube
             if has_image
@@ -38,6 +40,8 @@ template(name='quote_view_small')
         .content
             .ui.top.right.attached.basic.label(data-tooltip='Quote')
                 +icon48 name='get-quote'
+            +parent_doc_segment
+                
             if has_image
                 if image_id
                     .image
@@ -72,6 +76,7 @@ template(name='journal_prompt_view_small')
         .content
             .ui.top.right.attached.basic.label(data-tooltip='Journal Prompt')
                 +icon48 name='ask-question'
+            +parent_doc_segment
             .light_bank_content(class=light_bank_content_class)
                 |!{content}
             if author_name
@@ -89,4 +94,50 @@ template(name='journal_prompt_view_small')
             .ui.basic.label #{child_count} Responses
             +view_full_button
 
-                                    
+template(name='lightbank_doc_view')
+    if is_poem
+        +poem_view_small
+    if is_quote
+        +quote_view_small
+    if is_passage
+        +passage_view_small
+    if is_journal_prompt
+        +journal_prompt_view_small
+    if is_custom    
+        .ui.fluid.card(class=read_segment_class)
+            .content
+                +parent_doc_segment
+
+                if has_youtube
+                    +youtube
+                if has_image
+                    if image_id
+                        .image
+                            img(src="{{c.url image_id}}")
+                    if image_url
+                        .ui.large.image
+                            img(src=image_url)
+                // .content
+                //     span.right.floated 
+                //         .expand_card.ui.basic.icon.button
+                //             i.expand.icon
+                if content
+                    // .light_bank_content(class=light_bank_content_class)
+                    |!{content}
+            .content
+                .meta
+                    img.ui.avatar.image(src="https://png.icons8.com/tags/color/48" width="48" height="48")
+                    each tags
+                        .ui.tiny.circular.button.tag(class=tag_class) #{this}
+            .content
+                +resonate_button
+                +bookmark_button
+                // +reflect_button
+                // +view_full_button classes='right floated'
+                +mark_read
+            // if isInRole 'admin'
+            //     .content
+            //         +change_lightbank_type
+                    
+                    
+                  

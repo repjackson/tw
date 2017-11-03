@@ -178,15 +178,15 @@ template(name='published')
             +icon48 name='ignore' classes='ui mini inline image'
     div
         if can_edit
-            #publish.ui.icon.button(data-tooltip='Publish' class=published_class)
+            #publish.ui.icon.compact.button(data-tooltip='Publish' class=published_class)
                 +icon48 name='eye' classes='ui mini inline image'
                 if is_published
                     | Published
-            #publish_anonymously.ui.icon.button(data-tooltip='Publish Anonymously' class=published_anonymously_class)
+            #publish_anonymously.ui.icon.compact.button(data-tooltip='Publish Anonymously' class=published_anonymously_class)
                 +icon48 name='ignore' classes='ui mini inline image'
                 if published_anonymously
                     |Anonymous
-            #unpublish.ui.icon.button(data-tooltip='Unpublish' class=private_class)
+            #unpublish.ui.icon.compact.button(data-tooltip='Unpublish' class=private_class)
                 +icon48 name='invisible' classes='ui mini inline image'
                 if is_private
                     | Private

@@ -104,16 +104,9 @@ template(name='tags')
                 +inputAutocomplete settings=theme_select_settings id="theme_tag_select" class="" autocomplete="off"
             each tags
                 // a.ui.basic.circular.button.doc_tag #{this}
-                a.ui.basic.animated.fade.circular.button.doc_tag
-                    .visible.content
-                        // i.icon
-                        //     +icon24 name='geo-fence'
-                        |#{this}
-                    .hidden.content
-                        |&nbsp;
-                        |&nbsp;
-                        i.remove.icon
-                        // |#{this}
+                a.ui.basic.circular.button.doc_tag
+                    i.remove.icon
+                    |#{this}
     else
         .ui.dividing.header
             +icon48 name='hashtag' classes='ui inline mini image'
@@ -305,6 +298,7 @@ template(name='youtube')
                 input#youtube(type='text' value=youtube)
                 .ui.icon.basic.button#clear_youtube
                     +icon24 name='delete'
+            .ui.embed(data-source="youtube" data-id=youtube)
     else
         // .ui.embed(data-source="youtube" data-id=youtube data-icon="video" data-placeholder="/images/video_placeholder.png")
         .ui.embed(data-source="youtube" data-id=youtube)
@@ -325,10 +319,7 @@ template(name='participants')
             
             
 template(name='edit_author')
-    .ui.dividing.header
-        +icon48 name='monarch' classes='ui mini spaced image'
-        |Admin
-    .ui.labeled.large.input
+    .ui.labeled.input
         .ui.basic.label 
             |Author: 
             with author

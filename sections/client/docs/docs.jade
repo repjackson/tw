@@ -69,29 +69,46 @@ template(name='new_view_doc')
                                         +dots100 name=older_sibling.icon_class classes='ui mini spaced image'
                         
             .centered.row
-                div(class=main_column_class)
+                // unless grid_view
+                // div(class=main_column_class)
+                .ten.wide.column
+                    unless editing
+                        .five.wide.column
+                            if theme_tags_facet
+                                +theme_facet
+                            if intention_tags_facet
+                                +intention_facet
+                            if location_tags_facet
+                                +location_facet
                     if editing
-                        h3.ui.dividing.header
-                            +icon96 name="rename" classes='ui mini inline image'
-                            | Fields
-                        .content
-                            each components
-                                if slug_exists
-                                    // .ui.segment(class=field_segment_class)
-                                    +Template.dynamic template=slug data=doc
-                                    if editing
-                                        +remove_field
-                                        .ui.hidden.divider
-                            if body
-                                +body_field
-                        h3.ui.dividing.header
-                            +icon96 name="flow-chart" classes='ui mini inline image'
-                            | Child Documents
-                        .content
-                            if list_view
-                                +list
-                            else
-                                +grid
+                        .ui.styled.fluid.accordion
+                            h3.active.title
+                                +icon96 name="rename" classes='ui mini inline image'
+                                | Fields
+                                i.dropdown.icon
+                            .active.content
+                                each components
+                                    if slug_exists
+                                        // .ui.segment(class=field_segment_class)
+                                        +Template.dynamic template=slug data=doc
+                                        if editing
+                                            +remove_field
+                                            .ui.hidden.divider
+                                if body
+                                    +body_field
+                            h3.title
+                                +icon96 name="flow-chart" classes='ui mini inline image'
+                                | Child Documents
+                                i.dropdown.icon
+                                #add_child.ui.basic.button
+                                    i.plus.icon
+                                    | Add Child Document
+
+                            .content
+                                if list_view
+                                    +list
+                                else
+                                    +grid
                     else
                         each components
                             if slug_exists
@@ -99,68 +116,166 @@ template(name='new_view_doc')
                                 +Template.dynamic template=slug data=doc
                         if body
                             +body_field
-                        .ui.hidden.divider
-                        if response_completion
-                            +response
-                        unless response_doc
+                        .ui.basic.center.aligned.segment
                             if response_completion
-                                .ui.center.aligned.basic.segment
-                                    #create_response.ui.circular.basic.button
-                                        +icon48 name='response' classes='ui inline image'
-                                        | Respond
-                        else
-                            if list_view
-                                +list
+                                +response
+                            if can_add
+                                #add_child.ui.basic.button
+                                    i.plus.icon
+                                    | Add Child Document
+                            unless response_doc
+                                if response_completion
+                                    .ui.center.aligned.basic.segment
+                                        #create_response.ui.circular.basic.button
+                                            +icon48 name='response' classes='ui inline image'
+                                            | Respond
+                        if list_view
+                            +list
                         if grid_view
                             +grid
+                        if card_view
+                            +cards
                         if read_completion
                             .ui.center.aligned.basic.segment
-                                if read
-                                    .mark_unread.ui.circular.blue.button 
-                                        +icon48 name='read-message' classes='ui inline image'
-                                        |Mark Unread
-                                else
-                                    .mark_read.ui.basic.circular.button
-                                        +icon48 name='message' classes='ui mini inline image'
-                                        |Mark Read
+                                if currentUser
+                                    if read
+                                        .mark_unread.ui.circular.blue.button 
+                                            +icon48 name='read-message' classes='ui inline image'
+                                            |Mark Unread
+                                    else
+                                        .mark_read.ui.basic.circular.button
+                                            +icon48 name='message' classes='ui mini inline image'
+                                            |Mark Read
                 if editing
                     .six.wide.column
-                        .ui.dividing.header
-                            +icon48 name='setting' classes='ui mini inline image'
-                            | Child View
-                        
-                        #select_grid.ui.button(class=grid_button_class) 
-                            +icon48 name='grid-view' classes='ui mini inline image'
-                            |Grid
-                        #select_list.ui.button(class=list_button_class) 
-                            +icon48 name='list-view' classes='ui mini inline image'
-                            | List
-                        #select_card_view.ui.button(class=cards_button_class) 
-                            +icon48 name='list-view' classes='ui mini inline image'
-                            | Cards
-                            
-                            
-                        .ui.dividing.header
-                            +icon48 name='checkmark' classes='ui mini inline image'
-                            |Completion Type
-                        #select_response_completion.ui.button(class=response_button_class) 
-                            +icon48 name='response' classes='ui mini inline image'
-                            | Response
-                        #select_mark_read_completion.ui.button(class=mark_read_button_class) 
-                            +icon48 name='read-message' classes='ui mini inline image'
-                            | Mark Read
-                        #select_check_children_completion.ui.button(class=check_children_button_class) 
-                            +icon48 name='flow-chart' classes='ui mini inline image'
-                            | Check Children
-                        #select_no_completion.ui.button(class=no_completion_button_class) 
-                            +icon48 name='unavailable' classes='ui mini inline image'
-                            | None
-                        +field_menu
-                        
-                        +edit_author
-                        +published
-                        
+                        +doc_editing_sidebar
+               
+// template(name='doc_editing_main')
+//     .ui.styled.fluid.accordion
+//         h3.active.title
+//             +icon96 name="rename" classes='ui mini inline image'
+//             | Fields
+//             i.dropdown.icon
+//         .active.content
+//             each components
+//                 if slug_exists
+//                     // .ui.segment(class=field_segment_class)
+//                     +Template.dynamic template=slug data=doc
+//                     if editing
+//                         +remove_field
+//                         .ui.hidden.divider
+//             if body
+//                 +body_field
+//         h3.title
+//             +icon96 name="flow-chart" classes='ui mini inline image'
+//             | Child Documents
+//             i.dropdown.icon
 
+//         .content
+//             if list_view
+//                 +list
+//             else
+//                 +grid
+
+
+               
+template(name='doc_editing_sidebar')
+    .ui.styled.fluid.accordion
+        h3.active.title
+            +icon48 name='rename' classes='ui mini inline image'
+            | Field Menu
+            i.dropdown.icon
+        .active.content
+            +field_menu
+
+        h3.title
+            +icon48 name='rhombus' classes='ui mini inline image'
+            | Facets
+            i.dropdown.icon
+        .content
+            +toggle_key key='theme_tags_facet' icon='hashtag' label='Theme Tags'
+            +toggle_key key='intention_tags_facet' icon='spotlight' label='Intention Tags'
+            +toggle_key key='location_tags_facet' icon='geo-fence' label='Location Tags'
+
+        h3.title
+            +icon48 name='access' classes='ui mini inline image'
+            | Access
+            i.dropdown.icon
+        .content
+            +toggle_key key='access' value='payment' icon='online-payment' label='Payment'
+            +toggle_key key='access' value='complete_previous' icon='past' label='Complete Younger Sibling'
+
+        h3.title
+            +icon48 name='flow-chart' classes='ui mini inline image'
+            | Child View
+            i.dropdown.icon
+        .content
+            +toggle_key key='child_view' value='grid' icon='grid-view' label='Grid'
+            +toggle_key key='child_view' value='list' icon='list-view' label='List'
+            +toggle_key key='child_view' value='cards' icon='mockup' label='Cards'
+        h3.title
+            +icon48 name='task-completed' classes='ui mini inline image'
+            |Completion Type
+            i.dropdown.icon
+        .content
+            +toggle_key key='completion_type' value='response' icon='response' label='Response'
+            +toggle_key key='completion_type' value='mark_read' icon='read-message' label='Mark Read'
+            +toggle_key key='completion_type' value='check_children' icon='flow-chart' label='Check Children'
+            +toggle_key key='completion_type' value='none' icon='unavailable' label='None'
+        h3.title
+            +icon48 name='user' classes='ui mini inline image'
+            | User Permissions
+            i.dropdown.icon
+        .content
+            +toggle_key key='add_child' icon='add-subnode' label='Add Child'
+        h3.title 
+            +icon48 name='monarch' classes='ui mini spaced image'
+            |Admin
+            i.dropdown.icon
+        .content
+            +edit_author
+        h3.title 
+            +icon48 name='sports-mode' classes='ui mini spaced image'
+            | Actions
+            i.dropdown.icon
+        .content
+            if has_children
+                .ui.disabled.red.button Remove Children to Delete
+            else
+                #delete_doc.ui.red.button Delete
+            +published
+            
+            
+            
+                        
+template(name='cards')
+    .ui.stackable.centered.cards
+        each children
+            +card
+            
+template(name='card')
+    .card
+        if youtube
+            +youtube
+        if image_id
+            .image
+                img(src="{{c.url image_id}}")
+        if image_url
+            .image
+                img(src=image_url)
+        .content
+            span.right.floated 
+                .expand_card.ui.basic.icon.button
+                    i.expand.icon
+            .header #{title}
+            if tags
+                .meta
+                    i.tags.icon
+                    each tags
+                        .ui.button.tag(class=tag_class) #{this}
+            .description !{content}
+        .content
+            +view_full_button
                         
                         
 template(name='grid')
@@ -171,12 +286,13 @@ template(name='grid')
 template(name='grid_item')
     if editing
         .ui.fluid.card
-            +title
-            +type
-            +icon_class
-            +number
-            +edit_parent_id
-            +delete_button
+            .content
+                +title
+                +type
+                +icon_class
+                +number
+                +edit_parent_id
+                +delete_button
     else
         .column
             if can_access
@@ -223,12 +339,13 @@ template(name='grid_item')
 template(name='list')
     .ui.stackable.centered.grid
         .ten.wide.column
-            each children
-                +list_item
-        .three.wide.column
-            if isInRole 'admin'
-                .ui.dividing.header Admin
-                +published_filter
+            .ui.centered.cards
+                each children
+                    +list_item
+        // .three.wide.column
+        //     if isInRole 'admin'
+        //         .ui.dividing.header Admin
+        //         +published_filter
 
 template(name='list_item')
     .ui.fluid.card
@@ -245,16 +362,17 @@ template(name='list_item')
                 .ui.large.image
                     img(src=image_url)
             if content
-                .content
-                    .large-text !{content}
+                .content 
+                    .large130 !{content}
+                    // .large-text !{content}
             if link
                 .content
                     a(href=link target='_blank') #{link}
             if body
                 .content #{body}
-            // if tags
-            //     .content
-            //         +view_tags
+            if tags
+                .content
+                    +view_tags
             .content
                 if isInRole 'admin'
                     +published_label
@@ -279,7 +397,6 @@ template(name='list_item')
   
              
 template(name='field_menu')
-    .ui.dividing.header Field Menu
     each unselected_fields
         .select_component.ui.basic.compact.small.button
             +icon48 name=icon_class classes='ui mini spaced image'
@@ -307,3 +424,8 @@ template(name='response')
                         .edit_this.ui.basic.large.circular.icon.button
                             i.blue.pencil.icon
                     
+template(name='toggle_key')
+    #toggle_key.ui.button(class=toggle_key_button_class) 
+        +icon48 name=icon classes='ui mini spaced image'
+        | #{label}
+      
