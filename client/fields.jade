@@ -127,16 +127,9 @@ template(name='location_tags')
             //     input#add_location_tag(type='text' placeholder="eg. 'home', 'couch'" maxlength='50' )
             each location_tags
                 // a.ui.basic.circular.button.doc_tag #{this}
-                a.ui.basic.animated.fade.circular.button.doc_tag
-                    .visible.content
-                        // i.icon
-                        //     +icon24 name='geo-fence'
-                        |#{this}
-                    .hidden.content
-                        |&nbsp;
-                        |&nbsp;
-                        i.remove.icon
-                        // |#{this}
+                a.ui.basic.circular.button.doc_tag
+                    i.remove.icon
+                    |#{this}
     else
         .ui.dividing.header 
             +icon48 name='sofa' classes='ui mini inline image'
@@ -155,16 +148,9 @@ template(name='intention_tags')
         //     input#add_intention_tag(type='text' maxlength='50' )
         each intention_tags
             // a.ui.basic.circular.button.doc_tag #{this}
-            a.ui.basic.animated.fade.circular.button.doc_tag
-                .visible.content
-                    // i.icon
-                    //     +icon24 name='geo-fence'
-                    |#{this}
-                .center.aligned.hidden.content
-                    |&nbsp;
-                    |&nbsp;
-                    i.remove.icon
-                    // |#{this}
+            a.ui.basic.circular.button.doc_tag
+                |#{this}
+                i.remove.icon
 
 
 template(name='dollar_price')

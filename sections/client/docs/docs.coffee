@@ -128,6 +128,7 @@ Template.new_view_doc.helpers
     grid_view: -> @child_view is 'grid'
     list_view: -> @child_view is 'list'
     card_view: -> @child_view is 'cards'
+    answer_view: -> @child_view is 'answers'
     check_ins_view: -> @child_view is 'check_ins'
     
     
@@ -252,6 +253,14 @@ Template.grid.helpers
         }, sort: number: 1
 
 Template.cards.helpers
+    children: ->
+        Docs.find {
+            parent_id: FlowRouter.getParam 'doc_id'
+        }, sort: 
+            number: 1
+            timestamp: -1
+            
+Template.answers.helpers
     children: ->
         Docs.find {
             parent_id: FlowRouter.getParam 'doc_id'

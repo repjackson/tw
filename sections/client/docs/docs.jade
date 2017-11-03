@@ -142,6 +142,8 @@ template(name='new_view_doc')
                             +cards
                         if check_ins_view
                             +check_ins
+                        if answer_view
+                            +answers
                         if read_completion
                             .ui.center.aligned.basic.segment
                                 if currentUser
@@ -207,6 +209,7 @@ template(name='doc_editing_sidebar')
             +toggle_key key='child_view' value='poems' icon='quill-with-ink' label='Poems'
             +toggle_key key='child_view' value='quotes' icon='quotes' label='Quotes'
             +toggle_key key='child_view' value='journal_prompts' icon='ask-question' label='Journal Prompts'
+            +toggle_key key='child_view' value='answers' icon='response' label='Answers'
             
         h3.title
             +icon48 name='task-completed' classes='ui mini inline image'
@@ -255,26 +258,6 @@ template(name='field_menu')
             |#{title}
                 
     
-template(name='response')
-    with response
-        .ui.segment
-            .ui.header Your Response
-            if editing_mode
-                .content
-                    .ui.form
-                        .field
-                            textarea#body_field(rows='3') #{body}
-                .content
-                    .save_doc.ui.basic.large.circular.icon.button
-                        i.green.check.icon
-                    +delete_button
-            else
-                .content
-                    |#{body}
-                .content
-                    if is_author
-                        .edit_this.ui.basic.large.circular.icon.button
-                            i.blue.pencil.icon
                     
 template(name='toggle_key')
     #toggle_key.ui.button(class=toggle_key_button_class) 

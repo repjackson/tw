@@ -158,4 +158,59 @@ template(name='lightbank_doc_view')
             //         +change_lightbank_type
                     
                     
-                  
+template(name='response')
+    with response
+        .ui.segment
+            .ui.header Your Response
+            if editing_mode
+                .content
+                    .ui.form
+                        .field
+                            textarea#body_field(rows='3') #{body}
+                .content
+                    .save_doc.ui.basic.large.circular.icon.button
+                        i.green.check.icon
+                    +delete_button
+            else
+                .content
+                    |#{body}
+                .content
+                    if is_author
+                        .edit_this.ui.basic.large.circular.icon.button
+                            i.blue.pencil.icon
+
+template(name='answers')
+    .ui.stackable.centered.cards
+        each children
+            +answer
+
+
+template(name='answer')
+    .ui.fluid.card
+        unless editing
+            if content
+                .content 
+                    .large130 !{content}
+                    // .large-text !{content}
+            if body
+                .content #{body}
+            .content
+                if isInRole 'admin'
+                    +published_label
+                // +reflect_button
+                +view_full_button
+                +mark_read
+                | by 
+                if is_author
+                    |you
+                else
+                    with author
+                        if profile.image_id
+                            img.ui.avatar.spaced.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                        |&nbsp;
+                        a(href="/profile/#{username}") #{name} 
+                        +staus_indicator
+                strong #{when}
+                if is_author
+                    +delete_button
+  
