@@ -48,9 +48,6 @@ Template.view_doc.helpers
                 when 'checkin' 
                     # console.log 'doc.type is lightbank'
                     return "view_#{@type}"
-                when 'lightbank' 
-                    # console.log 'doc.type is lightbank'
-                    return "view_#{@type}"
                 else 
                     # console.log 'new view doc'
                     return 'new_view_doc'
@@ -113,7 +110,6 @@ Template.new_view_doc.helpers
         # if doc["#{@slug}"]? then console.log "#{@slug} exists" else console.log "#{@slug} no" 
         if doc["#{@slug}"]? then true else false
         
-    can_add: -> @can_add is true
         
     # main_column_class: -> if Session.equals 'editing', true then 'ten wide column' else 'fourteen wide column'
     field_segment_class: -> if Session.equals 'editing', true then '' else 'basic compact'
@@ -132,6 +128,7 @@ Template.new_view_doc.helpers
     grid_view: -> @child_view is 'grid'
     list_view: -> @child_view is 'list'
     card_view: -> @child_view is 'cards'
+    check_ins_view: -> @child_view is 'check_ins'
     
     
 Template.doc_editing_sidebar.helpers
@@ -235,12 +232,16 @@ Template.list.helpers
         if Roles.userIsInRole(Meteor.userId(), 'admin')
             Docs.find {
                 parent_id: FlowRouter.getParam 'doc_id'
-            }, sort: number: 1
+            }, sort: 
+                number: 1
+                timestamp: -1
         else
             Docs.find {
                 parent_id: FlowRouter.getParam 'doc_id'
                 published: 1
-            }, sort: number: 1
+            }, sort: 
+                number: 1
+                timestamp: -1
 
 
         
@@ -254,7 +255,17 @@ Template.cards.helpers
     children: ->
         Docs.find {
             parent_id: FlowRouter.getParam 'doc_id'
-        }, sort: number: 1
+        }, sort: 
+            number: 1
+            timestamp: -1
+
+Template.check_ins.helpers
+    children: ->
+        Docs.find {
+            parent_id: FlowRouter.getParam 'doc_id'
+        }, sort: 
+            number: 1
+            timestamp: -1
 
 
 Template.doc_editing_sidebar.onRendered ->

@@ -97,15 +97,17 @@ Docs.helpers
             else false
 
     can_access: ->
-        previous_number = @number - 1
-        previous_doc = 
-            Docs.findOne
-                parent_id: @parent_id
-                number: previous_number
-        if previous_doc
-            if previous_doc.completed_by and Meteor.userId() in previous_doc.completed_by then true else false
+        if @access is 'available' then true
         else
-            true
+            previous_number = @number - 1
+            previous_doc = 
+                Docs.findOne
+                    parent_id: @parent_id
+                    number: previous_number
+            if previous_doc
+                if previous_doc.completed_by and Meteor.userId() in previous_doc.completed_by then true else false
+            else
+                true
 
 Meteor.methods
     add: (tags=[])->

@@ -1,3 +1,21 @@
+template(name='check_in_view')
+    .ui.segment
+        .content
+            .description
+                +view_tags
+                if content
+                    .ui.basic.segment
+                        .large150 !{content}
+                .ui.horizontal.list
+                    .item
+                        +author_info
+                    .item
+                        unless is_author
+                            +thanks_button
+                            +resonate_button
+                            +view_full_button
+
+
 template(name='poem_view_small')                    
     .ui.fluid.card(class=read_segment_class)
         .content

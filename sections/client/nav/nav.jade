@@ -94,20 +94,9 @@ template(name='nav')
                                 +icon24 name='reading'
                         | Browse
     
-            a.ui.simple.dropdown.mobile.hidden.item(href='/checkin') 
+            a.ui.simple.dropdown.mobile.hidden.item(href='/view/jFGwEzNgajnMad2MA' data-position="bottom center" data-content="Check In") 
                 .ui.image
                     +icon48 name='sprout' classes='ui image'
-                .ui.big.menu
-                    .header.item
-                        .ui.header Check-Ins
-                    a.ui.item(href='/checkins/mine')
-                        i.icon
-                            +icon24 name='grass' classes='ui image'
-                        | Mine
-                    a.ui.item(href="/checkins/browse")
-                        i.icon
-                            +icon24 name='forest' classes='ui image'
-                        | Browse
         .right.menu
             if currentUser
                 a#report_bug.icon.item(href="#"  data-position="bottom center" data-content="Report a Bug/Feature Request")

@@ -44,8 +44,8 @@ template(name='new_view_doc')
                         else
                             if icon_class
                                 +dots100 name=icon_class classes='ui mini inline image'
-                            else
-                                +icon48 name='circle' classes='ui mini inline image'
+                            // else
+                            //     +icon48 name='circle' classes='ui mini inline image'
                         | #{title}
                         if can_edit
                             +toggle_editing_button
@@ -71,15 +71,24 @@ template(name='new_view_doc')
             .centered.row
                 // unless grid_view
                 // div(class=main_column_class)
-                .ten.wide.column
-                    unless editing
-                        .five.wide.column
-                            if theme_tags_facet
-                                +theme_facet
-                            if intention_tags_facet
-                                +intention_facet
-                            if location_tags_facet
-                                +location_facet
+                unless editing
+                    .four.wide.column
+                        if can_add
+                            #add_child.ui.large.basic.button
+                                +icon48 name='add-subnode' classes='ui mini inline image'
+                                | Add Child Document
+                        .ui.hidden.divider
+                        if theme_tags_facet
+                            +theme_facet
+                        if intention_tags_facet
+                            +intention_facet
+                        if location_tags_facet
+                            +location_facet
+                        if timestamp_facet
+                            +timestamp_facet
+                        if username_facet
+                            +username_facet
+                .eight.wide.column
                     if editing
                         .ui.styled.fluid.accordion
                             h3.active.title
@@ -119,10 +128,6 @@ template(name='new_view_doc')
                         .ui.basic.center.aligned.segment
                             if response_completion
                                 +response
-                            if can_add
-                                #add_child.ui.basic.button
-                                    i.plus.icon
-                                    | Add Child Document
                             unless response_doc
                                 if response_completion
                                     .ui.center.aligned.basic.segment
@@ -135,6 +140,8 @@ template(name='new_view_doc')
                             +grid
                         if card_view
                             +cards
+                        if check_ins_view
+                            +check_ins
                         if read_completion
                             .ui.center.aligned.basic.segment
                                 if currentUser
@@ -149,43 +156,23 @@ template(name='new_view_doc')
                 if editing
                     .six.wide.column
                         +doc_editing_sidebar
-               
-// template(name='doc_editing_main')
-//     .ui.styled.fluid.accordion
-//         h3.active.title
-//             +icon96 name="rename" classes='ui mini inline image'
-//             | Fields
-//             i.dropdown.icon
-//         .active.content
-//             each components
-//                 if slug_exists
-//                     // .ui.segment(class=field_segment_class)
-//                     +Template.dynamic template=slug data=doc
-//                     if editing
-//                         +remove_field
-//                         .ui.hidden.divider
-//             if body
-//                 +body_field
-//         h3.title
-//             +icon96 name="flow-chart" classes='ui mini inline image'
-//             | Child Documents
-//             i.dropdown.icon
-
-//         .content
-//             if list_view
-//                 +list
-//             else
-//                 +grid
-
-
+                else
+                    .three.wide.column
+                        if view_published_filter
+                            +published_filter
+            
+template(name='check_ins')
+    each children
+        +check_in_view
+            
                
 template(name='doc_editing_sidebar')
     .ui.styled.fluid.accordion
-        h3.active.title
+        h3.title
             +icon48 name='rename' classes='ui mini inline image'
             | Field Menu
             i.dropdown.icon
-        .active.content
+        .content
             +field_menu
 
         h3.title
@@ -196,6 +183,8 @@ template(name='doc_editing_sidebar')
             +toggle_key key='theme_tags_facet' icon='hashtag' label='Theme Tags'
             +toggle_key key='intention_tags_facet' icon='spotlight' label='Intention Tags'
             +toggle_key key='location_tags_facet' icon='geo-fence' label='Location Tags'
+            +toggle_key key='username_facet' icon='user' label='Authors'
+            +toggle_key key='timestamp_facet' icon='time' label='Created'
 
         h3.title
             +icon48 name='access' classes='ui mini inline image'
@@ -204,6 +193,7 @@ template(name='doc_editing_sidebar')
         .content
             +toggle_key key='access' value='payment' icon='online-payment' label='Payment'
             +toggle_key key='access' value='complete_previous' icon='past' label='Complete Younger Sibling'
+            +toggle_key key='access' value='available' icon='enter' label='Available'
 
         h3.title
             +icon48 name='flow-chart' classes='ui mini inline image'
@@ -213,6 +203,11 @@ template(name='doc_editing_sidebar')
             +toggle_key key='child_view' value='grid' icon='grid-view' label='Grid'
             +toggle_key key='child_view' value='list' icon='list-view' label='List'
             +toggle_key key='child_view' value='cards' icon='mockup' label='Cards'
+            +toggle_key key='child_view' value='check_ins' icon='sprout' label='Check-Ins'
+            +toggle_key key='child_view' value='poems' icon='quill-with-ink' label='Poems'
+            +toggle_key key='child_view' value='quotes' icon='quotes' label='Quotes'
+            +toggle_key key='child_view' value='journal_prompts' icon='ask-question' label='Journal Prompts'
+            
         h3.title
             +icon48 name='task-completed' classes='ui mini inline image'
             |Completion Type
@@ -223,11 +218,17 @@ template(name='doc_editing_sidebar')
             +toggle_key key='completion_type' value='check_children' icon='flow-chart' label='Check Children'
             +toggle_key key='completion_type' value='none' icon='unavailable' label='None'
         h3.title
+            +icon48 name='filter' classes='ui mini inline image'
+            | Filters
+            i.dropdown.icon
+        .content
+            +toggle_key key='view_published_filter' icon='visible' label='Published'
+        h3.title
             +icon48 name='user' classes='ui mini inline image'
             | User Permissions
             i.dropdown.icon
         .content
-            +toggle_key key='add_child' icon='add-subnode' label='Add Child'
+            +toggle_key key='can_add' icon='add-subnode' label='Add Child'
         h3.title 
             +icon48 name='monarch' classes='ui mini spaced image'
             |Admin
@@ -245,156 +246,7 @@ template(name='doc_editing_sidebar')
                 #delete_doc.ui.red.button Delete
             +published
             
-            
-            
-                        
-template(name='cards')
-    .ui.stackable.centered.cards
-        each children
-            +card
-            
-template(name='card')
-    .card
-        if youtube
-            +youtube
-        if image_id
-            .image
-                img(src="{{c.url image_id}}")
-        if image_url
-            .image
-                img(src=image_url)
-        .content
-            span.right.floated 
-                .expand_card.ui.basic.icon.button
-                    i.expand.icon
-            .header #{title}
-            if tags
-                .meta
-                    i.tags.icon
-                    each tags
-                        .ui.button.tag(class=tag_class) #{this}
-            .description !{content}
-        .content
-            +view_full_button
-                        
-                        
-template(name='grid')
-     .ui.stackable.five.column.centered.grid
-        each children
-            +grid_item
-            
-template(name='grid_item')
-    if editing
-        .ui.fluid.card
-            .content
-                +title
-                +type
-                +icon_class
-                +number
-                +edit_parent_id
-                +delete_button
-    else
-        .column
-            if can_access
-                a.ui.icon.center.aligned.header(href="/view/#{_id}") 
-                    i.icon
-                        if completed
-                            +icon96 name=icon_class
-                        else
-                            if icon_class
-                                +dots100 name=icon_class
-                            else
-                                +icon96 name='circle'
-                    if number
-                        |#{number}: 
-                    |#{title}
-                    if body
-                        .ui.basic.label #{body}
-                if isInRole 'dev'
-                    // .ui.basic.label #{type}    
-                    +published
-            else
-                .ui.icon.center.aligned.disabled.header
-                    i.icon
-                        if completed
-                            +icon96 name=icon_class
-                        else
-                            if icon_class
-                                +dots100 name=icon_class
-                            else
-                                +icon96 name='circle'
-                    if number
-                        |#{number}: 
-                    |#{title}
-                if isInRole 'dev'
-                    a(href="/view/#{_id}") 
-                        i.external.link.icon
-                    if body
-                        .ui.basic.label #{body}
-                if isInRole 'dev'
-                    // .ui.basic.label #{type}    
-                    +published
-        
-             
-template(name='list')
-    .ui.stackable.centered.grid
-        .ten.wide.column
-            .ui.centered.cards
-                each children
-                    +list_item
-        // .three.wide.column
-        //     if isInRole 'admin'
-        //         .ui.dividing.header Admin
-        //         +published_filter
 
-template(name='list_item')
-    .ui.fluid.card
-        unless editing
-            if title
-                .content
-                    .header #{title}
-            if youtube
-                +youtube
-            if image_id
-                .image
-                    img(src="{{c.url image_id}}")
-            if image_url
-                .ui.large.image
-                    img(src=image_url)
-            if content
-                .content 
-                    .large130 !{content}
-                    // .large-text !{content}
-            if link
-                .content
-                    a(href=link target='_blank') #{link}
-            if body
-                .content #{body}
-            if tags
-                .content
-                    +view_tags
-            .content
-                if isInRole 'admin'
-                    +published_label
-                // +resonate_button
-                // +bookmark_button
-                // +reflect_button
-                +view_full_button
-                // +mark_read
-                +author_info
-                if is_author
-                    +delete_button
-                    // +edit_parent_id
-                    // |id: #{_id}
-                    // +type
-        if editing
-            +title
-            +type
-            +icon_class
-            +number
-            +delete_button
-  
-  
              
 template(name='field_menu')
     each unselected_fields
