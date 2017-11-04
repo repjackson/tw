@@ -1,19 +1,29 @@
 template(name='check_in_view')
     .ui.segment
         .content
-            .description
-                +view_tags
-                if content
-                    .ui.basic.segment
-                        .large150 !{content}
-                .ui.horizontal.list
-                    .item
-                        +author_info
-                    .item
-                        unless is_author
-                            +thanks_button
-                            +resonate_button
+            if is_editing
+                +tags
+                +location_tags
+                +published
+                +session_edit_button
+            else
+                .description
+                    +view_tags
+                    if content
+                        .ui.basic.segment
+                            .large150 !{content}
+                    .ui.horizontal.list
+                        .item
+                            +author_info
+                        .item
+                            unless is_author
+                                +thanks_button
+                                +resonate_button
+                            else
+                                +published
+                        .item
                             +view_full_button
+                            +session_edit_button
 
 
 template(name='poem_view_small')                    
@@ -161,29 +171,26 @@ template(name='lightbank_doc_view')
 template(name='response')
     with response
         .ui.blue.segment
-            .ui.header Your Response
+            .ui.header
+                |Your Response
+                +published_label
             if editing_mode
                 .content
                     .ui.form
                         .field
                             textarea#body_field(rows='3') #{body}
                 .content
-                    .save_doc.ui.basic.large.circular.icon.button
-                        i.green.check.icon
+                    .save_doc.ui.basic.big.circular.icon.button
+                        i.big.green.check.icon
                     +published
                     +delete_button
             else
                 .content
-                    |#{body}
+                    .large130 #{body}
                 .content
                     if is_author
                         .edit_this.ui.basic.large.circular.icon.button
                             i.blue.pencil.icon
-
-template(name='answers')
-    .ui.stackable.centered.cards
-        each children
-            +answer
 
 
 template(name='answer')
@@ -194,25 +201,39 @@ template(name='answer')
                     .large130 !{content}
                     // .large-text !{content}
             if body
-                .content #{body}
+                .content 
+                    .large130 #{body}
             .content
-                if isInRole 'admin'
-                    +published_label
-                // +reflect_button
-                +view_full_button
-                +mark_read
-                | by 
-                if is_author
-                    |you
-                else
-                    with author
-                        if profile.image_id
-                            img.ui.avatar.spaced.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                .ui.horizontal.list
+                    if isInRole 'admin'
+                        .item
+                            +published_label
+                    .item
+                        +view_full_button
+                    .item
+                        +mark_read
+                    .item
+                        | by 
                         |&nbsp;
-                        a(href="/profile/#{username}") 
-                            strong #{name} 
-                        +staus_indicator
-                small #{when}
-                if is_author
-                    +delete_button
-  
+                        if is_author
+                            |you
+                        else
+                            with author
+                                if profile.image_id
+                                    img.ui.avatar.spaced.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                                |&nbsp;
+                                a(href="/profile/#{username}") 
+                                    strong #{name} 
+                                +staus_indicator
+                    .item
+                        small #{when}
+                    .item
+                        #reply.ui.basic.circular.button(tooltip='Reply')
+                            +icon48 name='response' classes='ui mini inline image'
+                    .item
+                        if readers
+                            | Seen by:
+                        each readers
+                            .ui.tiny.basic.label #{name}
+                        // img.ui.avatar.image(src="{{c.url profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+

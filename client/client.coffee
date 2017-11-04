@@ -9,7 +9,7 @@ Session.setDefault 'editing', false
 
 
 Session.setDefault 'view_unread', false
-# Session.setDefault 'admin_mode', false
+Session.setDefault 'admin_mode', false
     
     
     
@@ -44,6 +44,9 @@ Template.registerHelper 'can_edit', () ->  Meteor.userId() is @author_id or Role
 Template.registerHelper 'zen_mode', () -> Session.get 'zen_mode'
 Template.registerHelper 'admin_mode', () ->  Session.get 'admin_mode'
 Template.registerHelper 'editing', () ->  Session.get 'editing'
+
+Template.registerHelper 'is_admin', () ->  
+    Roles.userIsInRole(Meteor.userId(), 'admin') and Session.equals 'admin_mode', true
 
 Template.registerHelper 'publish_when', () -> moment(@publish_date).fromNow()
 

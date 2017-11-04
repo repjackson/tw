@@ -7,6 +7,8 @@ FlowRouter.route '/view/:doc_id',
 
 Template.view_doc.onCreated ->
     @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
+    @autorun -> Meteor.subscribe 'doc', Session.get('editing_id')
+    
     @autorun -> Meteor.subscribe 'usernames'
     @autorun -> Meteor.subscribe 'components'
 
@@ -23,7 +25,7 @@ Template.view_doc.onCreated ->
             tag_limit = 20
             doc_limit = 20
             view_published = 
-                if Roles.userIsInRole(Meteor.userId(), 'admin') then Session.get('view_published') else true 
+                if Session.equals('admin_mode', true) then Session.get('view_published') else true 
             view_read = null
             view_bookmarked = null
             view_resonates = null
@@ -79,6 +81,24 @@ Template.new_view_doc.helpers
                 parent_id: doc.parent_id
                 number: next_number
 
+    children: ->
+        if Session.get 'editing_id'
+            Docs.find Session.get('editing_id')
+        
+        else if Roles.userIsInRole(Meteor.userId(), 'admin')
+            Docs.find {
+                parent_id: FlowRouter.getParam 'doc_id'
+            }, sort: 
+                number: 1
+                timestamp: -1
+        else
+            Docs.find {
+                parent_id: FlowRouter.getParam 'doc_id'
+                published: 1
+            }, sort: 
+                number: 1
+                timestamp: -1
+
 
     view_template_old: -> 
         Meteor.setTimeout (->
@@ -111,7 +131,13 @@ Template.new_view_doc.helpers
         if doc["#{@slug}"]? then true else false
         
         
-    # main_column_class: -> if Session.equals 'editing', true then 'ten wide column' else 'fourteen wide column'
+    main_column_class: -> 
+        if Session.equals 'editing', true 
+            'ten wide column' 
+        else if @theme_tags_facet or @location_tags_facet or @intention_tags_facet 
+            'eight wide column'
+        else
+            'fourteen wide column'
     field_segment_class: -> if Session.equals 'editing', true then '' else 'basic compact'
         
     
@@ -131,9 +157,16 @@ Template.new_view_doc.helpers
     answer_view: -> @child_view is 'answers'
     check_ins_view: -> @child_view is 'check_ins'
     
+
     
 Template.doc_editing_sidebar.helpers
     toggle_theme_tags_class: -> if @theme_tags_facet is true then 'blue' else 'basic'
+    selected_fields: ->
+        doc = Docs.findOne FlowRouter.getParam('doc_id')
+        keys = _.keys doc
+        Docs.find
+            type: 'component'
+            slug: $in: keys
     
     
 Template.new_view_doc.events
@@ -161,6 +194,11 @@ Template.new_view_doc.events
             parent_id: FlowRouter.getParam('doc_id')
         FlowRouter.go("/view/#{new_id}")
         Session.set 'editing', true
+      
+    'click #user_add': ->
+        new_id = Docs.insert
+            parent_id: FlowRouter.getParam('doc_id')
+        Session.set 'editing_id', new_id
       
       
             
@@ -228,55 +266,9 @@ Template.response.events
             $set: body: body_field
 
 
-Template.list.helpers
-    children: ->
-        if Roles.userIsInRole(Meteor.userId(), 'admin')
-            Docs.find {
-                parent_id: FlowRouter.getParam 'doc_id'
-            }, sort: 
-                number: 1
-                timestamp: -1
-        else
-            Docs.find {
-                parent_id: FlowRouter.getParam 'doc_id'
-                published: 1
-            }, sort: 
-                number: 1
-                timestamp: -1
 
 
         
-Template.grid.helpers
-    children: ->
-        Docs.find {
-            parent_id: FlowRouter.getParam 'doc_id'
-        }, sort: number: 1
-
-Template.cards.helpers
-    children: ->
-        Docs.find {
-            parent_id: FlowRouter.getParam 'doc_id'
-        }, sort: 
-            number: 1
-            timestamp: -1
-            
-Template.answers.helpers
-    children: ->
-        Docs.find {
-            parent_id: FlowRouter.getParam 'doc_id'
-        }, sort: 
-            number: 1
-            timestamp: -1
-
-Template.check_ins.helpers
-    children: ->
-        Docs.find {
-            parent_id: FlowRouter.getParam 'doc_id'
-        }, sort: 
-            number: 1
-            timestamp: -1
-
-
 Template.doc_editing_sidebar.onRendered ->
     @autorun =>
         if @subscriptionsReady()

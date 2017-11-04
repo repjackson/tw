@@ -56,17 +56,6 @@ template(name='grid_item')
                     +published
         
              
-template(name='list')
-    .ui.stackable.centered.grid
-        .ten.wide.column
-            .ui.centered.cards
-                each children
-                    +list_item
-        // .three.wide.column
-        //     if isInRole 'admin'
-        //         .ui.dividing.header Admin
-        //         +published_filter
-
 template(name='list_item')
     .ui.fluid.card
         unless editing
@@ -117,11 +106,6 @@ template(name='list_item')
               
             
                         
-template(name='cards')
-    .ui.stackable.centered.cards
-        each children
-            +card
-            
 template(name='card')
     .card
         if youtube

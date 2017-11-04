@@ -81,13 +81,16 @@ Template.nav.events
     # 'click #test': ->
     #     Notification.requestPermission()
     
-    'click #toggle_off_admin_mode': ->Session.set 'admin_mode', false
-    'click #toggle_on_admin_mode': ->Session.set 'admin_mode', true
+    'click #toggle_admin_mode': ->
+        if Session.equals('admin_mode', true) then Session.set('admin_mode', false)
+        else if Session.equals('admin_mode', false) then Session.set('admin_mode', true)
+            
     
-    'click #check_in': ->
-        new_checkin_doc_id = Docs.insert type: 'checkin'
-        Session.set 'editing', true
-        FlowRouter.go("/view/#{new_checkin_doc_id}")
+    
+    # 'click #check_in': ->
+    #     new_checkin_doc_id = Docs.insert type: 'checkin'
+    #     Session.set 'editing', true
+    #     FlowRouter.go("/view/#{new_checkin_doc_id}")
     
     "click #report_bug": ->
         Session.set 'bug_link', window.location.pathname

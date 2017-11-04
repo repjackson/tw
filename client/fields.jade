@@ -107,6 +107,20 @@ template(name='tags')
                 a.ui.basic.circular.button.doc_tag
                     i.remove.icon
                     |#{this}
+    else if is_editing
+        .ui.header
+            +icon48 name='hashtag' classes='ui mini spaced image'
+            |Theme Tags &nbsp;
+            // .ui.mini.input
+            //     // i.plus.icon
+            //     input#add_tag(type='text' placeholder='Add...' maxlength='50' )
+            .ui.mini.input
+                +inputAutocomplete settings=theme_select_settings id="theme_tag_select" class="" autocomplete="off"
+            each tags
+                // a.ui.basic.circular.button.doc_tag #{this}
+                a.ui.basic.circular.button.doc_tag
+                    i.remove.icon
+                    |#{this}
     else
         .ui.dividing.header
             +icon48 name='hashtag' classes='ui inline mini image'
@@ -118,6 +132,19 @@ template(name='tags')
 
 template(name='location_tags')
     if editing
+        .ui.header 
+            +icon48 name='sofa' classes='ui mini spaced image'
+            |Location Tags &nbsp;
+            .ui.mini.input
+                +inputAutocomplete settings=location_select_settings id="location_tag_select" class="" autocomplete="off"
+            // .ui.mini.input
+            //     input#add_location_tag(type='text' placeholder="eg. 'home', 'couch'" maxlength='50' )
+            each location_tags
+                // a.ui.basic.circular.button.doc_tag #{this}
+                a.ui.basic.circular.button.doc_tag
+                    i.remove.icon
+                    |#{this}
+    else if is_editing
         .ui.header 
             +icon48 name='sofa' classes='ui mini spaced image'
             |Location Tags &nbsp;

@@ -108,6 +108,16 @@ Docs.helpers
                 if previous_doc.completed_by and Meteor.userId() in previous_doc.completed_by then true else false
             else
                 true
+    readers: ->
+        if @read_by
+            readers = []
+            for reader_id in @read_by
+                readers.push Meteor.users.findOne reader_id
+            readers
+        else []
+
+
+
 
 Meteor.methods
     add: (tags=[])->
