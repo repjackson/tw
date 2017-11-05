@@ -8,6 +8,12 @@ Meteor.publish 'child_docs', (parent_id)->
     Docs.find
         parent_id: parent_id
     
+Meteor.publish 'my_children', (parent_id)->
+    Docs.find {
+        author_id: Meteor.userId()
+        parent_id: parent_id
+    }, limit: 10
+        
 Meteor.publish 'parent_doc', (child_id)->
     child_doc = Docs.findOne child_id
     Docs.find

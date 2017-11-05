@@ -308,7 +308,9 @@ Template.delete_button.events
     'click .delete': (e,t)-> t.confirming.set true
 
     'click .cancel': (e,t)-> t.confirming.set false
-    'click .confirm': (e,t)-> Docs.remove @_id
+    'click .confirm': (e,t)-> 
+        if Session.get 'editing_id' then Session.set 'editing_id', null
+        Docs.remove @_id
             
 Template.delete_link.onCreated ->
     @confirming = new ReactiveVar(false)

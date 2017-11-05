@@ -1,3 +1,6 @@
+@selected_author_ids = new ReactiveArray []
+
+
 Template.username_facet.onCreated ->
     @autorun => 
         # Meteor.subscribe('facet', 
@@ -9,8 +12,6 @@ Template.username_facet.onCreated ->
         #     type=@data.type
         #     )
         Meteor.subscribe 'usernames'
-
-
 
 Template.username_facet.helpers
     author_tags: ->

@@ -63,36 +63,9 @@ template(name='nav')
             a.mobile.hidden.item(href='/view/FajD7PCmWS6nRkiYj' class="{{isActivePath '/view/FajD7PCmWS6nRkiYj'}}" data-position="bottom center" data-content="Lightbank") 
                 .ui.image
                     +icon48 name='summer' classes='ui image'
-            a.ui.simple.dropdown.mobile.hidden.item(href='/journal') 
+            a.ui.simple.dropdown.mobile.hidden.item(href='/view/TadR2ThwgenSrTMHm') 
                 .ui.image
                     +icon48 name='journal' classes='ui image'
-                .ui.big.menu
-                    .header.item
-                        .ui.header Journal
-                    // #add_journal_entry.ui.item 
-                    //     i.icon
-                    //         +icon24 name='create-document'
-                    //     |New Entry
-                    a.ui.item(href="/journal/mine")
-                        i.icon
-                            .ui.image
-                                +icon24 name='journal'
-                        | Mine
-                    a.ui.item(href="/journal/prompts")
-                        i.icon
-                            .ui.image
-                                +icon24 name='ask-question'
-                        | Prompts
-                    a.ui.item(href="/journal/templates")
-                        i.icon
-                            .ui.image
-                                +icon24 name='template'
-                        | Templates
-                    a.ui.item(href="/journal/browse") 
-                        i.icon
-                            .ui.image
-                                +icon24 name='reading'
-                        | Browse
     
             a.ui.simple.dropdown.mobile.hidden.item(href='/view/jFGwEzNgajnMad2MA' data-position="bottom center" data-content="Check In") 
                 .ui.image
@@ -101,14 +74,14 @@ template(name='nav')
                 a#toggle_admin_mode.mobile.hidden.item(href='#' data-position="bottom center" data-content="Toggle Admin Mode") 
                     .ui.image
                         if admin_mode
-                            +icon48 name='monarch' classes='ui image'
+                            +icon48 name='user-shield' classes='ui image'
                         else
-                            +dots50 name='monarch' classes='ui image'
+                            +dots50 name='user-shield' classes='ui image'
         .right.menu
             if currentUser
-                a#report_bug.icon.item(href="#"  data-position="bottom center" data-content="Report a Bug/Feature Request")
-                    .ui.image
-                        +icon48 name='bug'
+                // a#report_bug.icon.item(href="#"  data-position="bottom center" data-content="Report a Bug/Feature Request")
+                //     .ui.image
+                //         +icon48 name='bug'
                 a.icon.item(href="/dashboard" class="{{isActivePath '/dashboard'}}" data-position="bottom center" data-content="Dashboard")
                     .ui.image
                         +icon48 name='dashboard'
@@ -136,23 +109,23 @@ template(name='nav')
                     +icon48 name='signin' classes='ui mini inline spaced image'
                     | Sign In
     
-    .ui.basic.small.report.modal
-        h1.ui.center.aligned.header
-            img.bug_icon.ui.avatar.image(src="https://png.icons8.com/bug/color/96" width="96" height="96")
-            |     Report Bug/ Feature Request
-        h3.ui.center.aligned.header Current Page: #{bug_link}
-        .content
-            .ui.fluid.input
-                input#bug_description(type='text' placeholder='Description...')
-        .actions
-            .ui.cancel.basic.button
-                // i.remove.icon
-                | Cancel
-            // if can_submit_bug
-            .ui.green.ok.ok_button.button
-                // i.checkmark.icon
-                // +icon24 name='checkmark' classes='ui avatar image'
-                | Submit
+    // .ui.basic.small.report.modal
+    //     h1.ui.center.aligned.header
+    //         img.bug_icon.ui.avatar.image(src="https://png.icons8.com/bug/color/96" width="96" height="96")
+    //         |     Report Bug/ Feature Request
+    //     h3.ui.center.aligned.header Current Page: #{bug_link}
+    //     .content
+    //         .ui.fluid.input
+    //             input#bug_description(type='text' placeholder='Description...')
+    //     .actions
+    //         .ui.cancel.basic.button
+    //             // i.remove.icon
+    //             | Cancel
+    //         // if can_submit_bug
+    //         .ui.green.ok.ok_button.button
+    //             // i.checkmark.icon
+    //             // +icon24 name='checkmark' classes='ui avatar image'
+    //             | Submit
     // .ui.basic.small.confirm.modal
     //     h1.ui.center.aligned.header Thanks!
     //         .ui.green.ok.large.ok_button.button

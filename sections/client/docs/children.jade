@@ -1,8 +1,3 @@
-template(name='grid')
-     .ui.stackable.five.column.centered.grid
-        each children
-            +grid_item
-            
 template(name='grid_item')
     if editing
         .ui.fluid.card
@@ -25,14 +20,10 @@ template(name='grid_item')
                                 +dots100 name=icon_class
                             else
                                 +icon96 name='circle'
-                    if number
-                        |#{number}: 
+                    if is_admin
+                        if number
+                            |#{number}: 
                     |#{title}
-                    if body
-                        .ui.basic.label #{body}
-                if isInRole 'dev'
-                    // .ui.basic.label #{type}    
-                    +published
             else
                 .ui.icon.center.aligned.disabled.header
                     i.icon
@@ -43,17 +34,17 @@ template(name='grid_item')
                                 +dots100 name=icon_class
                             else
                                 +icon96 name='circle'
-                    if number
-                        |#{number}: 
+                    if is_admin
+                        if number
+                            |#{number}: 
                     |#{title}
-                if isInRole 'dev'
-                    a(href="/view/#{_id}") 
-                        i.external.link.icon
-                    if body
-                        .ui.basic.label #{body}
-                if isInRole 'dev'
-                    // .ui.basic.label #{type}    
-                    +published
+            if is_admin
+                a(href="/view/#{_id}") 
+                    i.external.link.icon
+                if body
+                    .ui.basic.label #{body}
+                // .ui.basic.label #{type}    
+                +published
         
              
 template(name='list_item')

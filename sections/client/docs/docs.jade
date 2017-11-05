@@ -75,7 +75,7 @@ template(name='new_view_doc')
                             if can_add
                                 #user_add.ui.large.basic.button
                                     +icon48 name='plus' classes='ui mini inline image'
-                                    | Add #{title} Document
+                                    | Add #{child_template}
                             .ui.hidden.divider
                             if theme_tags_facet
                                 +theme_facet
@@ -108,15 +108,13 @@ template(name='new_view_doc')
                                 +icon96 name="flow-chart" classes='ui mini inline image'
                                 | Child Documents
                                 i.dropdown.icon
-                                #add_child.ui.basic.button
-                                    i.plus.icon
-                                    | Add Child Document
 
                             .content
-                                if list_view
-                                    +list
-                                else
-                                    +grid
+                                #admin_add.ui.basic.button
+                                    i.plus.icon
+                                    | Add Child Document
+                                each children
+                                    +grid_item
                     else
                         each components
                             if slug_exists
@@ -133,14 +131,16 @@ template(name='new_view_doc')
                                         #create_response.ui.circular.basic.button
                                             +icon48 name='response' classes='ui inline image'
                                             | Respond
-                        if child_count
-                            |Child Count: #{child_count}
+                        if is_admin
+                            if child_count
+                                |Child Count: #{child_count}
                         if list_view
                             each children
                                 +list_item
                         if grid_view
-                            each children
-                                +grid_item
+                             .ui.stackable.five.column.centered.grid
+                                each children
+                                    +grid_item
                         if card_view
                             each children
                                 +card
@@ -150,6 +150,11 @@ template(name='new_view_doc')
                         if answer_view
                             each children
                                 +answer
+                        if q_a_view                        
+                            +q_a
+                        if grandchild_list_view
+                            each children
+                                +grandchild_list
                         if read_completion
                             .ui.center.aligned.basic.segment
                                 if currentUser
@@ -215,6 +220,8 @@ template(name='doc_editing_sidebar')
             +toggle_key key='child_view' value='quotes' icon='quotes' label='Quotes'
             +toggle_key key='child_view' value='journal_prompts' icon='ask-question' label='Journal Prompts'
             +toggle_key key='child_view' value='answers' icon='response' label='Answers'
+            +toggle_key key='child_view' value='q_a' icon='faq' label='Q&A'
+            +toggle_key key='child_view' value='grandchild_list' icon='bulleted-list' label='Grandchild List'
             
         h3.title
             +icon48 name='task-completed' classes='ui mini inline image'
@@ -226,6 +233,7 @@ template(name='doc_editing_sidebar')
             +toggle_key key='completion_type' value='mark_read' icon='read-message' label='Mark Read'
             +toggle_key key='completion_type' value='check_children' icon='flow-chart' label='Check Children'
             +toggle_key key='completion_type' value='none' icon='unavailable' label='None'
+            +toggle_key key='completion_type' value='session' icon='time' label='Session'
         h3.title
             +icon48 name='filter' classes='ui mini inline image'
             | Filters
@@ -246,6 +254,7 @@ template(name='doc_editing_sidebar')
                         +icon48 name='add-subnode' classes='ui mini spaced image'
                         |Child Template
                     +toggle_key key='child_template' value='check_in' icon='sprout' label='Check In'
+                    +toggle_key key='child_template' value='session' icon='time' label='Session'
         h3.title 
             +icon48 name='monarch' classes='ui mini spaced image'
             |Admin
@@ -274,7 +283,7 @@ template(name='field_menu')
     
                     
 template(name='toggle_key')
-    #toggle_key.ui.button(class=toggle_key_button_class) 
+    #toggle_key.ui.compact.button(class=toggle_key_button_class) 
         +icon48 name=icon classes='ui mini spaced image'
         | #{label}
       

@@ -8,7 +8,7 @@ FlowRouter.route '/view/:doc_id',
 Template.view_doc.onCreated ->
     @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
     @autorun -> Meteor.subscribe 'doc', Session.get('editing_id')
-    
+    # @autorun -> Meteor.subscribe 'my_children', FlowRouter.getParam('doc_id')
     @autorun -> Meteor.subscribe 'usernames'
     @autorun -> Meteor.subscribe 'components'
 
@@ -23,7 +23,7 @@ Template.view_doc.onCreated ->
             author_id = null
             parent_id = FlowRouter.getParam('doc_id')
             tag_limit = 20
-            doc_limit = 20
+            doc_limit = 10
             view_published = 
                 if Session.equals('admin_mode', true) then Session.get('view_published') else true 
             view_read = null
@@ -40,22 +40,23 @@ Template.view_doc.helpers
     doc_template: -> Docs.findOne type: 'doc_template'
     view_type_template: -> 
         doc = Docs.findOne FlowRouter.getParam('doc_id')
+        return 'new_view_doc'
         # console.log doc.type
-        if doc.type
-            # console.log typeof doc.type
-            switch doc.type
-                when 'journal' 
-                    # console.log 'is journal'
-                    return "view_#{@type}"
-                when 'checkin' 
-                    # console.log 'doc.type is lightbank'
-                    return "view_#{@type}"
-                else 
-                    # console.log 'new view doc'
-                    return 'new_view_doc'
-        else 
-            # console.log 'new view doc'
-            return 'new_view_doc'
+        # if doc.type
+        #     # console.log typeof doc.type
+        #     # switch doc.type
+        #     #     when 'journal' 
+        #     #         # console.log 'is journal'
+        #     #         return "view_#{@type}"
+        #     #     when 'checkin' 
+        #     #         # console.log 'doc.type is lightbank'
+        #     #         return "view_#{@type}"
+        #     #     else 
+        #     #         # console.log 'new view doc'
+        #     #         return 'new_view_doc'
+        # else 
+        #     # console.log 'new view doc'
+        #     return 'new_view_doc'
     # is_field: -> 
     #     # console.log @type
     #     @type is 'field'        
@@ -100,23 +101,23 @@ Template.new_view_doc.helpers
                 timestamp: -1
 
 
-    view_template_old: -> 
-        Meteor.setTimeout (->
-        ), 500
-        # return false
-    view_new: -> 
-        Meteor.setTimeout (->
-            doc = Docs.findOne FlowRouter.getParam('doc_id')
-            console.log doc.type
-            if doc.type
-                if doc.type is 'journal' or 'checkin' or 'lightbank' 
-                    console.log 'dont view new'
-                    return false
-            else 
-                console.log 'view new'
-                true
-        ), 500
-        # return false
+    # view_template_old: -> 
+    #     Meteor.setTimeout (->
+    #     ), 500
+    #     # return false
+    # view_new: -> 
+    #     Meteor.setTimeout (->
+    #         doc = Docs.findOne FlowRouter.getParam('doc_id')
+    #         console.log doc.type
+    #         if doc.type
+    #             if doc.type is 'journal' or 'checkin' or 'lightbank' 
+    #                 console.log 'dont view new'
+    #                 return false
+    #         else 
+    #             console.log 'view new'
+    #             true
+    #     ), 500
+    #     # return false
 
     components: ->        
         #     doc = Docs.findOne FlowRouter.getParam('doc_id')
@@ -156,6 +157,8 @@ Template.new_view_doc.helpers
     card_view: -> @child_view is 'cards'
     answer_view: -> @child_view is 'answers'
     check_ins_view: -> @child_view is 'check_ins'
+    q_a_view: -> @child_view is 'q_a'
+    grandchild_list_view: -> @child_view is 'grandchild_list'
     
 
     
@@ -185,15 +188,16 @@ Template.new_view_doc.events
         FlowRouter.go "/view/#{new_parent_id}" 
         
     'click #create_response': ->
-        Docs.insert
-            parent_id: FlowRouter.getParam('doc_id')
-      
-      
-    'click #add_child': ->
         new_id = Docs.insert
             parent_id: FlowRouter.getParam('doc_id')
-        FlowRouter.go("/view/#{new_id}")
-        Session.set 'editing', true
+        Session.set 'editing_id', new_id
+
+      
+    'click #admin_add': ->
+        new_id = Docs.insert
+            parent_id: FlowRouter.getParam('doc_id')
+        # FlowRouter.go("/view/#{new_id}")
+        # Session.set 'editing', true
       
     'click #user_add': ->
         new_id = Docs.insert
@@ -258,6 +262,7 @@ Template.response.events
     'click .edit_this': (e,t)-> t.editing.set true
     'click .save_doc': (e,t)-> 
         t.editing.set false
+        Session.set 'editing_id', null
         Meteor.call 'calculate_completion', FlowRouter.getParam('doc_id')
 
     'blur #body_field': (e,t)->
