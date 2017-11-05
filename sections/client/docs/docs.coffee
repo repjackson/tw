@@ -135,7 +135,7 @@ Template.new_view_doc.helpers
     main_column_class: -> 
         if Session.equals 'editing', true 
             'ten wide column' 
-        else if @theme_tags_facet or @location_tags_facet or @intention_tags_facet 
+        else if @theme_tags_facet or @location_tags_facet or @intention_tags_facet or @username_facet
             'eight wide column'
         else
             'fourteen wide column'
