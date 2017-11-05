@@ -15,23 +15,23 @@
 #         React.createFactory React.createClass(spec)
 
 
-Docs.before.insert (userId, doc)->
+Docs.before.insert (userId, doc)=>
     
     timestamp = Date.now()
     doc.timestamp = timestamp
-    # # console.log moment(timestamp).format("dddd, MMMM Do YYYY, h:mm:ss a")
-    # date = moment(timestamp).format('Do')
-    # weekdaynum = moment(timestamp).isoWeekday()
-    # weekday = moment().isoWeekday(weekdaynum).format('dddd')
+    # console.log moment(timestamp).format("dddd, MMMM Do YYYY, h:mm:ss a")
+    date = moment(timestamp).format('Do')
+    weekdaynum = moment(timestamp).isoWeekday()
+    weekday = moment().isoWeekday(weekdaynum).format('dddd')
 
-    # month = moment(timestamp).format('MMMM')
-    # year = moment(timestamp).format('YYYY')
+    month = moment(timestamp).format('MMMM')
+    year = moment(timestamp).format('YYYY')
 
-    # date_array = [weekday, month, date, year]
-    # date_array = _.map(date_array, (el)-> el.toString().toLowerCase())
-    # # date_array = _.each(date_array, (el)-> console.log(typeof el))
-    # # console.log date_array
-    # doc.timestamp_tags = date_array
+    date_array = [weekday, month, date, year]
+    date_array = _.map(date_array, (el)-> el.toString().toLowerCase())
+    # date_array = _.each(date_array, (el)-> console.log(typeof el))
+    # console.log date_array
+    doc.timestamp_tags = date_array
 
     doc.author_id = Meteor.userId()
     doc.tag_count = doc.tags?.length
@@ -40,7 +40,7 @@ Docs.before.insert (userId, doc)->
     doc.read_by = [Meteor.userId()]
     doc.upvoters = []
     doc.downvoters = []
-    doc.published = -1
+    doc.published = 0
     return
 
 Docs.after.update ((userId, doc, fieldNames, modifier, options) ->

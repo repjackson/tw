@@ -9,8 +9,8 @@ if Meteor.isClient
     @selected_quiz_question_tags = new ReactiveArray []
     
     Template.quiz_page.onCreated ->
-        @autorun => Meteor.subscribe 'quiz_by_slug', FlowRouter.getParam('quiz_slug')
-        @autorun => Meteor.subscribe 'quiz_sessions', FlowRouter.getParam('quiz_slug')
+        # @autorun => Meteor.subscribe 'quiz_by_slug', FlowRouter.getParam('quiz_slug')
+        # @autorun => Meteor.subscribe 'sessions', FlowRouter.getParam('quiz_slug')
         @autorun => Meteor.subscribe 'quiz_questions', selected_quiz_question_tags.array(), FlowRouter.getParam('quiz_slug')
         @autorun => Meteor.subscribe('quiz_tags', selected_quiz_question_tags.array(), FlowRouter.getParam('quiz_slug'))
     
@@ -25,9 +25,7 @@ if Meteor.isClient
     Template.quiz_page.helpers
         quiz_cloud_tags: -> Tags.find({})
         selected_quiz_question_tags: -> selected_quiz_question_tags.array()
-        quiz: -> 
-            Docs.findOne 
-                slug: FlowRouter.getParam('quiz_slug')
+        quiz: -> Docs.findOne FlowRouter.getParam('doc_id')
     
         add_quiz_question_button_class: -> if selected_quiz_question_tags.array().length > 0 then 'active' else ''
     
@@ -36,20 +34,15 @@ if Meteor.isClient
                 Docs.find Session.get('editing_id')
             else
                 Docs.find {
-                    type: 'quiz_question'
-                    quiz_slug: FlowRouter.getParam('quiz_slug')
+                    type: 'question'
+                    parent_id: FlowRouter.getParam('doc_id')
                 }, sort: number: 1
-        my_sessions: ->
-            Docs.find
-                type: 'quiz_session'
-                author_id: Meteor.userId()
-                quiz_slug: FlowRouter.getParam('quiz_slug')
     
     Template.quiz_page.events
         'click #new_session': ->
             new_session_id = 
                 Docs.insert
-                    type: 'quiz_session'
+                    type: 'session'
                     quiz_slug: @slug
                     ratings: []
             FlowRouter.go("/quiz/#{@slug}/session/#{new_session_id}")
@@ -93,9 +86,9 @@ if Meteor.isClient
                 else 'teal'
 
 if Meteor.isServer
-    Meteor.publish 'quiz_sessions', (quiz_slug)->
+    Meteor.publish 'sessions', (quiz_slug)->
         Docs.find
-            type: 'quiz_session'
+            type: 'session'
             quiz_slug: quiz_slug
             author_id: @userId
             

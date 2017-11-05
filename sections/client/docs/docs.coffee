@@ -23,7 +23,7 @@ Template.view_doc.onCreated ->
             author_id = null
             parent_id = FlowRouter.getParam('doc_id')
             tag_limit = 20
-            doc_limit = 10
+            doc_limit = 20
             view_published = 
                 if Session.equals('admin_mode', true) then Session.get('view_published') else true 
             view_read = null
@@ -144,6 +144,7 @@ Template.new_view_doc.helpers
     
     response_completion: -> @completion_type is 'response'
     read_completion: -> @completion_type is 'mark_read'
+    session_completion: -> @completion_type is 'session'
     
     read: -> @read_by and Meteor.userId() in @read_by
     
@@ -159,6 +160,7 @@ Template.new_view_doc.helpers
     check_ins_view: -> @child_view is 'check_ins'
     q_a_view: -> @child_view is 'q_a'
     grandchild_list_view: -> @child_view is 'grandchild_list'
+    quiz_view: -> @child_view is 'quiz'
     
 
     

@@ -73,9 +73,11 @@ template(name='new_view_doc')
                     unless editing
                         .four.wide.column
                             if can_add
-                                #user_add.ui.large.basic.button
+                                #user_add.ui.large.basic.icon.button
                                     +icon48 name='plus' classes='ui mini inline image'
-                                    | #{child_template}
+                                    // | #{child_template}
+                            if session_completion
+                                #new_session.ui.blue.button New Session
                             .ui.hidden.divider
                             if theme_tags_facet
                                 +theme_facet
@@ -142,8 +144,9 @@ template(name='new_view_doc')
                                 each children
                                     +grid_item
                         if card_view
-                            each children
-                                +card
+                            .ui.cards
+                                each children
+                                    +card
                         if check_ins_view
                             each children
                                 +check_in_view
@@ -152,6 +155,8 @@ template(name='new_view_doc')
                                 +answer
                         if q_a_view                        
                             +q_a
+                        if quiz_view                        
+                            +quiz_page
                         if grandchild_list_view
                             each children
                                 +grandchild_list
@@ -222,6 +227,7 @@ template(name='doc_editing_sidebar')
             +toggle_key key='child_view' value='answers' icon='response' label='Answers'
             +toggle_key key='child_view' value='q_a' icon='faq' label='Q&A'
             +toggle_key key='child_view' value='grandchild_list' icon='bulleted-list' label='Grandchild List'
+            +toggle_key key='child_view' value='quiz' icon='report-card' label='Quiz'
             
         h3.title
             +icon48 name='task-completed' classes='ui mini inline image'
@@ -245,16 +251,18 @@ template(name='doc_editing_sidebar')
             | User Permissions
             i.dropdown.icon
             if can_add
-                .ui.basic.label Add: #{child_template}
+                .ui.basic.label Add
+                // .ui.basic.label Add: #{child_template}
         .content
             +toggle_key key='can_add' icon='add-subnode' label='Add Child'
-            if can_add
-                .ui.segment
-                    h5.ui.header 
-                        +icon48 name='add-subnode' classes='ui mini spaced image'
-                        |Child Template
-                    +toggle_key key='child_template' value='check_in' icon='sprout' label='Check In'
-                    +toggle_key key='child_template' value='session' icon='time' label='Session'
+            // if can_add
+            //     .ui.segment
+            //         h5.ui.header 
+            //             +icon48 name='add-subnode' classes='ui mini spaced image'
+            //             |Child Template
+            //         +toggle_key key='child_template' value='check_in' icon='sprout' label='Check In'
+            //         +toggle_key key='child_template' value='session' icon='time' label='Session'
+            //         +toggle_key key='child_template' value='facet' icon='rhombus' label='Facet'
         h3.title 
             +icon48 name='monarch' classes='ui mini spaced image'
             |Admin

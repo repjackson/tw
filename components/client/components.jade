@@ -246,17 +246,6 @@ template(name='doc_stats_module')
     if child_count
         .ui.header Response Count: #{child_count}
 
-template(name='actions_header')
-    .ui.dividing.header 
-        +icon48 name='sports-mode' classes='ui mini inline image'
-        |Actions
-
-
-template(name='components_header')
-    .ui.dividing.header 
-        +icon48 name='slider' classes='ui mini inline image'
-        |Components
-
 
 template(name='button_link')
     a.ui.basic.circular.button(href=url)

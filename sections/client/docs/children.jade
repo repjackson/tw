@@ -99,27 +99,16 @@ template(name='list_item')
             
                         
 template(name='card')
-    .card
-        if youtube
-            +youtube
-        if image_id
-            .image
-                img(src="{{c.url image_id}}")
-        if image_url
-            .image
-                img(src=image_url)
+    .ui.fluid.card
         .content
-            span.right.floated 
-                .expand_card.ui.basic.icon.button
-                    i.expand.icon
-            .header #{title}
-            if tags
-                .meta
-                    i.tags.icon
-                    each tags
-                        .ui.button.tag(class=tag_class) #{this}
-            .description !{content}
-        .content
-            +view_full_button
+            // +youtube
+            // +image_url
+            +content
+            // +image_id
+            +tags
+            if is_author
+                +session_edit_button
+                if editing
+                    +delete_button
                         
                         

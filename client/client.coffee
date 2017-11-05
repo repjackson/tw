@@ -43,7 +43,9 @@ Template.registerHelper 'can_edit', () ->  Meteor.userId() is @author_id or Role
 
 Template.registerHelper 'zen_mode', () -> Session.get 'zen_mode'
 Template.registerHelper 'admin_mode', () ->  Session.get 'admin_mode'
-Template.registerHelper 'editing', () ->  Session.get 'editing'
+Template.registerHelper 'editing', () ->  
+    Session.get('editing') or Session.equals('editing_id', @_id)
+
 
 Template.registerHelper 'is_admin', () ->  
     Roles.userIsInRole(Meteor.userId(), 'admin') and Session.equals 'admin_mode', true
@@ -73,7 +75,7 @@ Template.registerHelper 'in_course', () -> @_id in Meteor.user().courses
 Template.registerHelper 'in_sol', () -> Roles.userIsInRole 'sol_member'
 Template.registerHelper 'in_demo', () -> Roles.userIsInRole 'sol_demo_member'
 
-Template.registerHelper 'tag_class', ()-> if @valueOf() in selected_theme_tags.array() then 'active' else ''
+Template.registerHelper 'tag_class', ()-> if @valueOf() in selected_theme_tags.array() then 'blue' else 'basic'
 
 
 

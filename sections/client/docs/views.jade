@@ -260,6 +260,16 @@ template(name='q_a')
                             +published_label
         
 
+template(name='sessions')
+    if currentUser
+        +dividing_header icon='time' label='Your Sessions'
+        .ui.four.stackable.cards
+            each my_sessions
+                +session_card
+    else
+        .ui.header Log in to take quiz and track results.
+
+
 
 
 template(name='journal_entry_view')

@@ -24,3 +24,11 @@ Template.journal_entry_view.onRendered ->
 Template.journal_entry_view.helpers
     # tag_class: -> if @valueOf() in selected_theme_tags.array() then 'teal' else 'basic'
     journal_card_class: -> if @published then 'blue' else ''
+
+
+Template.sessions.helpers
+    my_sessions: ->
+        Docs.find
+            type: 'session'
+            author_id: Meteor.userId()
+            parent_id: FlowRouter.getParam('doc_id')

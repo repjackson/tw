@@ -96,21 +96,7 @@ template(name='tags')
     if editing
         .ui.header
             +icon48 name='hashtag' classes='ui mini spaced image'
-            |Theme Tags &nbsp;
-            // .ui.mini.input
-            //     // i.plus.icon
-            //     input#add_tag(type='text' placeholder='Add...' maxlength='50' )
-            .ui.mini.input
-                +inputAutocomplete settings=theme_select_settings id="theme_tag_select" class="" autocomplete="off"
-            each tags
-                // a.ui.basic.circular.button.doc_tag #{this}
-                a.ui.basic.circular.button.doc_tag
-                    i.remove.icon
-                    |#{this}
-    else if is_editing
-        .ui.header
-            +icon48 name='hashtag' classes='ui mini spaced image'
-            |Theme Tags &nbsp;
+            |Tags &nbsp;
             // .ui.mini.input
             //     // i.plus.icon
             //     input#add_tag(type='text' placeholder='Add...' maxlength='50' )
@@ -122,11 +108,12 @@ template(name='tags')
                     i.remove.icon
                     |#{this}
     else
-        .ui.dividing.header
-            +icon48 name='hashtag' classes='ui inline mini image'
-            |Tags
+        // .ui.dividing.header
+        //     +icon48 name='hashtag' classes='ui inline mini image'
+        //     |Tags
+        +icon48 name='hashtag' classes='ui inline mini image'
         each tags
-            .ui.basic.large.label #{this}
+            .ui.basic.label #{this}
 
             
 
@@ -311,10 +298,12 @@ template(name='youtube')
                 input#youtube(type='text' value=youtube)
                 .ui.icon.basic.button#clear_youtube
                     +icon24 name='delete'
-            .ui.embed(data-source="youtube" data-id=youtube)
+            if youtube
+                .ui.embed(data-source="youtube" data-id=youtube)
     else
         // .ui.embed(data-source="youtube" data-id=youtube data-icon="video" data-placeholder="/images/video_placeholder.png")
-        .ui.embed(data-source="youtube" data-id=youtube)
+        if youtube
+            .ui.embed(data-source="youtube" data-id=youtube)
 
 
 template(name='participants')
