@@ -11,10 +11,9 @@ Template.group.events
             $set: group: group
             
 Template.author_name.events
-    'blur #author_name': ->
-        # console.log Template.parentData()._id,
-        author_name = $('#author_name').val()
-        Docs.update Template.parentData()._id,
+    'blur #author_name': (e,t)->
+        author_name = $(e.currentTarget).closest('#author_name').val()
+        Docs.update @_id,
             $set: author_name: author_name
             
 Template.icon_class.events

@@ -1,176 +1,3 @@
-template(name='check_in_view')
-    .ui.segment
-        .content
-            if is_editing
-                +tags
-                +location_tags
-                +published
-                +delete_button
-                +session_edit_button
-            else
-                .description
-                    +view_tags
-                    if content
-                        .ui.basic.segment
-                            .large150 !{content}
-                    .ui.horizontal.list
-                        .item
-                            +author_info
-                        .item
-                            unless is_author
-                                +thanks_button
-                                +resonate_button
-                            else
-                                +published
-                        // .item
-                        //     +view_full_button
-                        if is_author
-                            .item
-                                +session_edit_button
-
-
-template(name='poem_view_small')                    
-    .ui.fluid.card(class=read_segment_class)
-        .content
-            .ui.top.right.attached.basic.label(data-tooltip='Poem')
-                +icon48 name='close-up'
-            +parent_doc_segment
-
-            if has_youtube
-                +youtube
-            if has_image
-                if image_id
-                    .image
-                        img(src="{{c.url image_id}}")
-                if image_url
-                    .ui.large.image
-                        img(src=image_url)
-            // .content
-            //     span.right.floated 
-            //         .expand_card.ui.basic.icon.button
-            //             i.expand.icon
-            if has_content
-                .light_bank_content(class=light_bank_content_class)
-                    |!{content}
-        // .content
-        //     .meta
-        //         +icon48 name='tags'
-        //         each tags
-        //             .ui.tiny.circular.button.tag(class=tag_class) #{this}
-        .content
-            +resonate_button
-            +reflect_button
-            +bookmark_button
-            +mark_read
-            .ui.basic.label #{child_count} Responses
-
-            +view_full_button
-                
-template(name='quote_view_small')                    
-    .ui.fluid.card(class=read_segment_class)
-        .content
-            .ui.top.right.attached.basic.label(data-tooltip='Quote')
-                +icon48 name='get-quote'
-            +parent_doc_segment
-                
-            if has_image
-                if image_id
-                    .image
-                        img(src="{{c.url image_id}}")
-                if image_url
-                    .ui.large.image
-                        img(src=image_url)
-            // .content
-            //     span.right.floated 
-            //         .expand_card.ui.basic.icon.button
-            //             i.expand.icon
-            .large130
-                |!{content}
-            h4.ui.header
-                |- #{author_name}
-        // .content
-        //     .meta
-        //         +icon48 name='tags'
-        //         each tags
-        //             .ui.tiny.circular.button.tag(class=tag_class) #{this}
-        .content
-            +resonate_button
-            +reflect_button
-            +bookmark_button
-            +mark_read
-            .ui.basic.label #{child_count} Responses
-
-            +view_full_button
-                
-template(name='journal_prompt_view_small')                    
-    .ui.fluid.card(class=read_segment_class)
-        .content
-            .ui.top.right.attached.basic.label(data-tooltip='Journal Prompt')
-                +icon48 name='ask-question'
-            +parent_doc_segment
-            .light_bank_content(class=light_bank_content_class)
-                |!{content}
-            if author_name
-                h4.ui.header
-                    |- #{author_name}
-        .content
-            .meta
-                +icon48 name='hashtag' classes='ui mini inline image'
-                each tags
-                    .ui.tiny.basic.label #{this}
-        .content
-            +reflect_button
-            +bookmark_button
-            +mark_read
-            .ui.basic.label #{child_count} Responses
-            +view_full_button
-
-template(name='lightbank_doc_view')
-    if is_poem
-        +poem_view_small
-    if is_quote
-        +quote_view_small
-    if is_passage
-        +passage_view_small
-    if is_journal_prompt
-        +journal_prompt_view_small
-    if is_custom    
-        .ui.fluid.card(class=read_segment_class)
-            .content
-                +parent_doc_segment
-
-                if has_youtube
-                    +youtube
-                if has_image
-                    if image_id
-                        .image
-                            img(src="{{c.url image_id}}")
-                    if image_url
-                        .ui.large.image
-                            img(src=image_url)
-                // .content
-                //     span.right.floated 
-                //         .expand_card.ui.basic.icon.button
-                //             i.expand.icon
-                if content
-                    // .light_bank_content(class=light_bank_content_class)
-                    |!{content}
-            .content
-                .meta
-                    img.ui.avatar.image(src="https://png.icons8.com/tags/color/48" width="48" height="48")
-                    each tags
-                        .ui.tiny.circular.button.tag(class=tag_class) #{this}
-            .content
-                +resonate_button
-                +bookmark_button
-                // +reflect_button
-                // +view_full_button classes='right floated'
-                +mark_read
-            // if isInRole 'admin'
-            //     .content
-            //         +change_lightbank_type
-                    
-                    
 template(name='response')
     with response
         .ui.blue.segment
@@ -214,18 +41,7 @@ template(name='answer')
                     // .item
                     //     +view_full_button
                     .item
-                        | by 
-                        |&nbsp;
-                        if is_author
-                            |you
-                        else
-                            with author
-                                if profile.image_id
-                                    img.ui.avatar.spaced.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
-                                |&nbsp;
-                                a(href="/profile/#{username}") 
-                                    strong #{name} 
-                                +staus_indicator
+                        +author_info
                     .item
                         small #{when}
                     .item
@@ -272,42 +88,68 @@ template(name='sessions')
 
 
 
-template(name='journal_entry_view')
-    .ui.segment(class=journal_card_class)
-        .content
-            .description
-                +parent_doc_segment
-                .ui.basic.segment.large
-                    |!{content} 
-                    with author
-                        |by 
-                        if profile.image_id
-                            img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
-                        a(href="/profile/#{username}") #{name} 
-                        +staus_indicator
-                    |#{when}
-                +view_tags
-        .ui.fluid.accordion
-            .title
-                .ui.header 
-                    +icon48 name='details' classes='ui mini inline image'
-                    |Details 
-                    i.dropdown.icon
+template(name='child_view')
+    .ui.fluid.card
+        unless editing
+            if title
+                .content
+                    .header 
+                        if icon_class
+                            +icon48 name=icon_class classes='ui inline image'
+                        |#{title}
+                        if end_date
+                            |by #{end_date}
+                    if slug
+                        .meta Slug: #{slug}
+            if youtube
+                +youtube
+            if image_id
+                .image
+                    img(src="{{c.url image_id}}")
+            if image_url
+                .ui.large.image
+                    img(src=image_url)
+            if content
+                .content 
+                    .large130 !{content}
+                    // .large-text !{content}
+                    if author_name
+                        h4.ui.header
+                            |- #{author_name}
+            if link
+                .content
+                    a(href=link target='_blank') #{link}
+            if body
+                .content #{body}
+            if tags
+                .content
+                    +view_tags
+            // if intention_tags
+            //     .content
+            //         +intention_tags
+            // if location_tags
+            //     .content
+            //         +location_tags
             .content
-                .ui.divided.stackable.grid
-                    .ten.wide.column
-                        .ui.basic.segment
-                            span.right.floated
-                                +view_full_button
-                            unless is_author
-                                +bookmark_button
-                                +thanks_button
-                            +mark_read
-                            // +read_by
-
-                    .six.wide.column
-                        .image
-                            if watson
-                                .ui.basic.segment
-                                    +doc_sentiment
-                                    +doc_emotion
+                if isInRole 'admin'
+                    +published_label
+                // +resonate_button
+                // +bookmark_button
+                // +reflect_button
+                // +view_full_button
+                // +mark_read
+                +author_info
+                if is_author
+                    +session_edit_button
+                //     +delete_button
+                    // +edit_parent_id
+                    // |id: #{_id}
+                    // +type
+        if editing
+            .content
+                each child_view_fields
+                    +Template.dynamic template=this data=doc
+            .content
+                +published
+                +session_edit_button
+                +delete_button

@@ -1,9 +1,3 @@
-    
-# Meteor.publish 'my_tickets', ->
-#     Docs.find
-#         author_id: @userId 
-#         type: 'support_ticket'
-        
 Meteor.publish 'child_docs', (parent_id)->
     Docs.find
         parent_id: parent_id
@@ -201,32 +195,6 @@ Meteor.publish 'doc_by_tags', (tags)->
     Docs.find
         tags: tags
 
-    
-    
-        
-# Meteor.publish 'my_friends', ->
-#     me = Meteor.users.findOne @userId
-#     if me.friends
-#         Meteor.users.find {_id: $in: me.friends}
-#         # fields: 
-#         #     tags: 1
-#         #     courses: 1
-#         #     friends: 1
-#         #     points: 1
-#         #     status: 1
-#         #     profile: 1
-    
-    
-    
-# Meteor.publish 'me_card', ->
-#     # console.log id
-#     Meteor.users.find @userId,
-#         fields:
-#             tags: 1
-#             profile: 1
-#             points: 1    
-            
-            
 Meteor.publish 'person', (id)->
     # console.log id
     Meteor.users.find id,
@@ -234,16 +202,6 @@ Meteor.publish 'person', (id)->
             tags: 1
             profile: 1
             points: 1            
-            
-            
-        
-# Meteor.publish 'person_card', (id)->
-#     # console.log id
-#     Meteor.users.find id,
-#         fields:
-#             tags: 1
-#             profile: 1
-#             points: 1        
             
             
 Meteor.publish 'people', (selected_people_tags)->
@@ -306,6 +264,11 @@ Meteor.publish 'usernames', ->
             username: 1
             profile: 1
             points: 1
+            
+Meteor.publish 'components', ->
+    Docs.find
+        # type: 'component'
+        parent_id: 'MzHSPbvCYPngq2Dcz'            
             
             
 # Meteor.publish 'doc_template', (doc_id)->

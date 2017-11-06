@@ -41,25 +41,6 @@ Template.view_doc.helpers
     view_type_template: -> 
         doc = Docs.findOne FlowRouter.getParam('doc_id')
         return 'new_view_doc'
-        # console.log doc.type
-        # if doc.type
-        #     # console.log typeof doc.type
-        #     # switch doc.type
-        #     #     when 'journal' 
-        #     #         # console.log 'is journal'
-        #     #         return "view_#{@type}"
-        #     #     when 'checkin' 
-        #     #         # console.log 'doc.type is lightbank'
-        #     #         return "view_#{@type}"
-        #     #     else 
-        #     #         # console.log 'new view doc'
-        #     #         return 'new_view_doc'
-        # else 
-        #     # console.log 'new view doc'
-        #     return 'new_view_doc'
-    # is_field: -> 
-    #     # console.log @type
-    #     @type is 'field'        
 
 
 Template.new_view_doc.helpers
@@ -101,30 +82,11 @@ Template.new_view_doc.helpers
                 timestamp: -1
 
 
-    # view_template_old: -> 
-    #     Meteor.setTimeout (->
-    #     ), 500
-    #     # return false
-    # view_new: -> 
-    #     Meteor.setTimeout (->
-    #         doc = Docs.findOne FlowRouter.getParam('doc_id')
-    #         console.log doc.type
-    #         if doc.type
-    #             if doc.type is 'journal' or 'checkin' or 'lightbank' 
-    #                 console.log 'dont view new'
-    #                 return false
-    #         else 
-    #             console.log 'view new'
-    #             true
-    #     ), 500
-    #     # return false
-
     components: ->        
-        #     doc = Docs.findOne FlowRouter.getParam('doc_id')
-        #     doc.components
-        
         Docs.find
-            type: 'component'
+            # type: 'component'
+            parent_id: 'MzHSPbvCYPngq2Dcz'
+            
 
     slug_exists: ->
         doc = Docs.findOne FlowRouter.getParam('doc_id')
@@ -135,10 +97,14 @@ Template.new_view_doc.helpers
     main_column_class: -> 
         if Session.equals 'editing', true 
             'ten wide column' 
-        else if @theme_tags_facet or @location_tags_facet or @intention_tags_facet or @username_facet
-            'eight wide column'
-        else
+        else if @child_view is 'grid'
             'fourteen wide column'
+        else
+            'eight wide column'
+        # else if @theme_tags_facet or @location_tags_facet or @intention_tags_facet or @username_facet
+        #     'eight wide column'
+        # else
+        #     'fourteen wide column'
     field_segment_class: -> if Session.equals 'editing', true then '' else 'basic compact'
         
     
@@ -161,6 +127,7 @@ Template.new_view_doc.helpers
     q_a_view: -> @child_view is 'q_a'
     grandchild_list_view: -> @child_view is 'grandchild_list'
     quiz_view: -> @child_view is 'quiz'
+    poems_view: -> @child_view is 'poems'
     
 
     
@@ -170,10 +137,19 @@ Template.doc_editing_sidebar.helpers
         doc = Docs.findOne FlowRouter.getParam('doc_id')
         keys = _.keys doc
         Docs.find
-            type: 'component'
+            # type: 'component'
+            parent_id: 'MzHSPbvCYPngq2Dcz'
             slug: $in: keys
     
+    child_field_class: ->
+        doc = Docs.findOne FlowRouter.getParam('doc_id')
+        if @slug in doc.child_fields then 'blue' else 'basic'
     
+    components: ->        
+        Docs.find
+            # type: 'component'
+            parent_id: 'MzHSPbvCYPngq2Dcz'
+
 Template.new_view_doc.events
     'click .mark_read': (e,t)-> 
         Meteor.call 'mark_read', @_id, =>
@@ -227,13 +203,22 @@ Template.doc_editing_sidebar.events
             Session.set 'editing', false
             FlowRouter.go "/view/#{@parent_id}"
 
+    'click .select_child_field': ->
+        doc = Docs.findOne FlowRouter.getParam('doc_id')
+        if doc.child_fields and @slug in doc.child_fields
+            Docs.update FlowRouter.getParam('doc_id'),
+                $pull: "child_fields": @slug
+        else
+            Docs.update FlowRouter.getParam('doc_id'),
+                $addToSet: "child_fields": @slug
 
 Template.field_menu.helpers
     unselected_fields: ->
         doc = Docs.findOne FlowRouter.getParam('doc_id')
         keys = _.keys doc
         Docs.find
-            type: 'component'
+            # type: 'component'
+            parent_id: 'MzHSPbvCYPngq2Dcz'
             slug: $nin: keys
             
 Template.field_menu.events

@@ -216,8 +216,10 @@ template(name='save_button')
 
 
 template(name='author_info')
-    .ui.header
-        | added by 
+    if is_anonymous
+        |by Anonymous
+    else
+        // | by 
         if is_author
             |you
         else
@@ -227,7 +229,7 @@ template(name='author_info')
                 |&nbsp;
                 a(href="/profile/#{username}") #{name} 
                 +staus_indicator
-    .ui.sub.header #{when}
+    // .ui.sub.header #{when}
 
 template(name='recipient_info')
     .ui.header requested of 

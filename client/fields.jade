@@ -215,8 +215,8 @@ template(name='type')
             
 template(name='author_name')
     .ui.labeled.fluid.large.input
-        .ui.basic.label #{label} Author
-        input#author_name(type='text' value="{{../author_name}}")
+        .ui.basic.label Author
+        input#author_name(type='text' value=author_name)
 
 template(name='edit_parent_id')
     .ui.form
@@ -364,16 +364,16 @@ template(name='remove_field')
         
         
         
-template(name='child_view')
-    .ui.labeled.fluid.input
-        .ui.basic.label Child Type
-        input#child_type(type='text' value=child_type)
-    if card_view
-        .ui.cards
-            each typed_children
-                .ui.card
-                    .content
-                        a.header(href="/view/#{_id}") #{title}
+// template(name='child_view')
+//     .ui.labeled.fluid.input
+//         .ui.basic.label Child Type
+//         input#child_type(type='text' value=child_type)
+//     if card_view
+//         .ui.cards
+//             each typed_children
+//                 .ui.card
+//                     .content
+//                         a.header(href="/view/#{_id}") #{title}
                         
                         
                         
