@@ -1,7 +1,8 @@
 template(name='profile_layout')
-    +nav
     .ui.stackable.padded.grid
         .four.wide.column
+            a.ui.circular.basic.center.aligned.button(href='/')
+                +icon48 name='yin-yang'
             with person
                 img.ui.small.centered.rounded.image(src="{{c.url profile.image_id width=400 height=400 gravity='face' crop='fill'}}")
                 .ui.center.aligned.header

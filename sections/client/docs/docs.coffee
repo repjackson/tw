@@ -131,6 +131,12 @@ Template.new_view_doc.helpers
     poems_view: -> @child_view is 'poems'
     
 
+Template.new_view_doc.events
+    'click #toggle_admin_mode': ->
+        if Session.equals('admin_mode', true) then Session.set('admin_mode', false)
+        else if Session.equals('admin_mode', false) then Session.set('admin_mode', true)
+
+
     
 Template.doc_editing_sidebar.helpers
     toggle_theme_tags_class: -> if @theme_tags_facet is true then 'blue' else 'basic'

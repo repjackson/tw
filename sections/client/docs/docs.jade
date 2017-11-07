@@ -7,18 +7,51 @@ template(name='new_view_doc')
     with doc
         .ui.padded.stackable.grid
             .centered.middle.aligned.row
-                if parent
-                    a.ui.basic.circular.button(href="/view/#{parent._id}")
-                        if parent.icon_class
-                            +icon48 name=parent.icon_class classes='ui mini inline image'
-                        else
-                            +icon48 name='chevron-up' classes='ui mini inline image'
-                        | #{parent.title}
-                        | #{parent.body}
-                else
-                    if isInRole 'dev'
-                        #create_parent.ui.basic.button Create Parent
-            .centered.middle.aligned.row
+                .four.wide.center.aligned.column
+                    if isInRole 'admin'
+                        a#toggle_admin_mode.ui.basic.circular.button(href='#' data-position="bottom center" data-content="Toggle Admin Mode") 
+                            .ui.image
+                                if admin_mode
+                                    +icon48 name='user-shield' classes='ui mini image'
+                                else
+                                    +dots50 name='user-shield' classes='ui mini image'
+                    else
+                        if currentUser
+                            a.ui.basic.circular.button(href='/people')
+                                .ui.image
+                                    +icon96 name='people' classes='ui mini image'
+                            a.ui.basic.circular.button(href='/conversations')
+                                .ui.image
+                                    +icon96 name='chat' classes='ui mini image'
+                .eight.wide.center.aligned.column
+                    if parent
+                        a.ui.basic.circular.button(href="/view/#{parent._id}")
+                            if parent.icon_class
+                                +icon48 name=parent.icon_class classes='ui mini inline image'
+                            else
+                                +icon48 name='chevron-up' classes='ui mini inline image'
+                            | #{parent.title}
+                            | #{parent.body}
+                    // else
+                    //     if isInRole 'dev'
+                    //         #create_parent.ui.basic.button Create Parent
+                .four.wide.center.aligned.column
+                    if currentUser
+                        a.ui.circular.basic.button(href="/profile/#{currentUser.username}" class="{{isActiveRoute name='view_profile'}}" data-position="bottom center" data-content="Profile")
+                            if currentUser.profile.image_id
+                                img.ui.avatar.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+                            else
+                                i.user.icon
+                            span.mobile.hidden    
+                                if currentUser.name
+                                    | #{currentUser.name}
+                                else
+                                    | #{currentUser.username}
+                    else
+                        a.ui.circular.basic.icon.button(href='/sign-in') 
+                            +icon48 name='signin' classes='ui mini inline spaced image'
+            // header row
+            .centered.middle.aligned.row 
                 .four.wide.center.aligned.column
                     if younger_sibling
                         a.ui.basic.circular.button(href="/view/#{younger_sibling._id}")
@@ -38,9 +71,9 @@ template(name='new_view_doc')
                     h1.ui.center.aligned.header
                         if completed
                             if icon_class
-                                +icon48 name=icon_class classes='ui mini spaced image'
+                                +icon96 name=icon_class classes='ui spaced image'
                             else
-                                +icon48 name='checked' classes='ui mini spaced image'
+                                +icon96 name='checked' classes='ui spaced image'
                         else
                             if icon_class
                                 +dots100 name=icon_class classes='ui mini spaced image'

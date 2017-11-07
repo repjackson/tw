@@ -1,11 +1,3 @@
-FlowRouter.route '/privacy', action: (params) ->
-    BlazeLayout.render 'layout',
-        main: 'privacy'
-
-FlowRouter.route '/terms-of-use', action: (params) ->
-    BlazeLayout.render 'layout',
-        main: 'terms-of-use'
-
 # Accounts.onLogin ->
 #     redirect = Session.get ‘redirectAfterLogin’
 #     if redirect?
@@ -54,7 +46,7 @@ AccountsTemplates.configure
 
     # Privacy Policy and Terms of Use
     # privacyUrl: 'privacy'
-    termsUrl: 'terms-of-use'
+    # termsUrl: 'terms-of-use'
 
 pwd = AccountsTemplates.removeField('password')
 AccountsTemplates.removeField 'email'
@@ -112,7 +104,7 @@ AccountsTemplates.configureRoute 'resetPwd'
 
 
 AccountsTemplates.configureRoute('signIn', {
-  redirect: '/dashboard',
+  redirect: '/view/puBqCqAFMxGJTcgav',
 });
 
 AccountsTemplates.configureRoute('signUp', {

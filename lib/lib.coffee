@@ -2,17 +2,10 @@
 @Location_tags = new Meteor.Collection 'location_tags'
 @Intention_tags = new Meteor.Collection 'intention_tags'
 @Timestamp_tags = new Meteor.Collection 'timestamp_tags'
-@Watson_keywords = new Meteor.Collection 'watson_keywords'
 @People_tags = new Meteor.Collection 'people_tags'
 @Docs = new Meteor.Collection 'docs'
 @Author_ids = new Meteor.Collection 'author_ids'
 @Participant_ids = new Meteor.Collection 'participant_ids'
-@Upvoter_ids = new Meteor.Collection 'upvoter_ids'
-
-# @Component =
-#     create: (spec) ->
-#         React.createFactory React.createClass(spec)
-
 
 Docs.before.insert (userId, doc)=>
     timestamp = Date.now()
@@ -123,12 +116,6 @@ Meteor.methods
     add: (tags=[])->
         id = Docs.insert {}
         return id
-    add_checkin: (tags=[])->
-        id = Docs.insert
-            tags: tags
-            type: 'checkin'
-        return id
-
 
     update_rating: (session_id, rating, question_id)->
         Docs.update {_id:session_id,  "ratings.question_id": question_id},
@@ -180,9 +167,9 @@ Meteor.methods
         unless older_sibling
             Meteor.call 'calculate_completion', doc.parent_id
 
-FlowRouter.route '/sol',
+FlowRouter.route '/',
   triggersEnter: [ (context, redirect) ->
-    redirect '/course/sol'
+    redirect '/view/puBqCqAFMxGJTcgav'
     return
  ]
 
@@ -190,31 +177,6 @@ FlowRouter.notFound =
     action: ->
         BlazeLayout.render 'layout', 
             main: 'not_found'
-
-
-FlowRouter.route '/', action: ->
-    BlazeLayout.render 'layout', 
-        main: 'home'
-
-
-FlowRouter.route '/contact', action: (params) ->
-    BlazeLayout.render 'layout',
-        main: 'contact'
-
-FlowRouter.route '/about', action: (params) ->
-    BlazeLayout.render 'layout',
-        main: 'about'
-
-
-
-Meteor.users.helpers
-    course_ob: -> 
-        Docs.find
-            type: 'course'
-            _id: $in: @courses
-
-
-
 
 
 
