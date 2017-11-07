@@ -15,14 +15,6 @@ template(name='new_view_doc')
                                     +icon48 name='user-shield' classes='ui mini image'
                                 else
                                     +dots50 name='user-shield' classes='ui mini image'
-                    else
-                        if currentUser
-                            a.ui.basic.circular.button(href='/people')
-                                .ui.image
-                                    +icon96 name='people' classes='ui mini image'
-                            a.ui.basic.circular.button(href='/conversations')
-                                .ui.image
-                                    +icon96 name='chat' classes='ui mini image'
                 .eight.wide.center.aligned.column
                     if parent
                         a.ui.basic.circular.button(href="/view/#{parent._id}")

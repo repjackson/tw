@@ -1,9 +1,9 @@
-Accounts.emailTemplates.siteName = "Tori Webster Inspires, LLC"
-Accounts.emailTemplates.from     = "TWI Admin <no-reply@toriwebster.com>"
+Accounts.emailTemplates.siteName = "TW"
+Accounts.emailTemplates.from     = "TW Admin <no-reply@toriwebster.com>"
 
 Accounts.emailTemplates.verifyEmail =
     subject: () ->
-        return "Tori Webster Inspires, LLC Email Verification"
+        return "TW Email Verification"
  
     text: ( user, url )->
         emailAddress   = user.emails[0].address
