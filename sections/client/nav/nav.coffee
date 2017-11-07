@@ -77,7 +77,7 @@ Template.nav.events
 # 	'mouseleave .item': (e,t)-> $(e.currentTarget).closest('.icon').toggleClass( "large" )
 
     'click #logout': -> AccountsTemplates.logout()
-    
+
     # 'click #test': ->
     #     Notification.requestPermission()
     

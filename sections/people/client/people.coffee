@@ -1,6 +1,5 @@
 FlowRouter.route '/people', action: (params) ->
     BlazeLayout.render 'layout',
-        # sub_nav: 'member_nav'
         main: 'people'
 
 

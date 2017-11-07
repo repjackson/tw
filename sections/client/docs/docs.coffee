@@ -32,6 +32,7 @@ Template.view_doc.onCreated ->
             view_complete = null
             view_images = null
             view_lightbank_type = null
+            editing_id = Session.get('editing_id')
 
             )
 

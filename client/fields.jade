@@ -69,9 +69,10 @@ template(name='plural_slug')
         input#plural_slug(type='text' value=plural_slug)
 
 template(name='number')
-    .ui.labeled.input
-        .ui.basic.label Number
-        input#number(type='number' min='0' value=number)
+    if editing
+        .ui.labeled.input
+            .ui.basic.label Number
+            input#number(type='number' min='0' value=number)
 
 template(name='edit_quantity')
     if editing

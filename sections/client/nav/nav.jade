@@ -1,96 +1,28 @@
 template(name='nav')
-    #nav_menu.ui.labeled.icon.menu
-        if currentUser
-            a.ui.mobile.hidden.simple.dropdown.item(href='/view/9639QAQ4yPbMLs7CA')
-                // .imogen TW
+    #nav_menu.ui.menu
+        a.ui.item(href='/view/9639QAQ4yPbMLs7CA')
+            // .imogen TW
+            .ui.image
+                +icon96 name='yin-yang' classes='ui mini image'
+        if isInRole 'admin'
+            a#toggle_admin_mode.item(href='#' data-position="bottom center" data-content="Toggle Admin Mode") 
                 .ui.image
-                    img(src="{{c.url 'tw_logo' width=50 height=50 crop='fill'}}")
-                .ui.menu
-                    a.mobile.hidden.item(href='/about' class="{{isActivePath '/about'}}") 
-                        i.icon
-                            .ui.image
-                                +icon24 name='info'
-                        |About
-                    // a.mobile.hidden.item(href='/services' class="{{isActivePath '/services'}}") 
-                    //     i.icon
-                    //         .ui.image
-                    //             +icon24 name='service-bell'
-                    //     |Services
-                    a.mobile.hidden.item(href='/contact' class="{{isActivePath '/contact'}}") 
-                        i.icon
-                            .ui.image
-                                +icon24 name='phone'
-                        |Contact
-        unless currentUser
-            a.mobile.hidden.item(href='/' class="{{isActivePath '/'}}")
+                    if admin_mode
+                        +icon48 name='user-shield' classes='ui mini image'
+                    else
+                        +dots50 name='user-shield' classes='ui mini image'
+            a.item(href='/people')
                 .ui.image
-                    img(src="{{c.url 'tw_logo' width=50 height=50 crop='fill'}}")
-            a.mobile.hidden.item(href='/about' class="{{isActivePath '/about'}}") 
-                +icon48 name='info' classes='ui mini spaced image'
-                |About
-            a.mobile.hidden.item(href='/view/erjtaDSCKwyGMxKt9' class="{{isActivePath '/view/erjtaDSCKwyGMxKt9'}}") 
-                +icon48 name='library' classes='ui mini spaced image'
-                |LightSchool
-            a.mobile.hidden.item(href='/view/FajD7PCmWS6nRkiYj' class="{{isActivePath '/view/FajD7PCmWS6nRkiYj'}}") 
-                +icon48 name='summer' classes='ui mini spaced image'
-                |Lightbank
-            a.mobile.hidden.item(href='/contact' class="{{isActivePath '/contact'}}") 
-                +icon48 name='phone' classes='ui mini spaced image'
-                |Contact
-        else
-            // a.ui.mobile.hidden.simple.dropdown.item(href='/lightschool' ) 
-            a.ui.mobile.hidden.item(href='/view/erjtaDSCKwyGMxKt9' data-position="bottom center" data-content="LightSchool") 
+                    +icon96 name='people' classes='ui mini image'
+            a.item(href='/conversations')
                 .ui.image
-                    +icon48 name='library'
-                // .ui.large.menu
-                //     .header.item
-                //         .ui.header LightSchool
-                //     a.item(href='/courses' class="{{isActivePath '/courses'}}")
-                //         i.icon
-                //             .ui.image
-                //                 +icon24 name='classroom'
-                //         |Courses
-                    // a.item(href='/lightschool/exercises' class="{{isActivePath '/lightschool/exercises'}}")
-                    //     i.icon
-                    //         .ui.image
-                    //             +icon24 name='hand-with-pen'
-                    //     |Exercises
-                    // a.item(href='/quizzes' class="{{isActivePath '/quizzes'}}")
-                    //     i.icon
-                    //         .ui.image
-                    //             +icon24 name='report-card'
-                    //     |Quizzes
-            a.mobile.hidden.item(href='/view/FajD7PCmWS6nRkiYj' class="{{isActivePath '/view/FajD7PCmWS6nRkiYj'}}" data-position="bottom center" data-content="Lightbank") 
-                .ui.image
-                    +icon48 name='summer' classes='ui image'
-            a.ui.simple.dropdown.mobile.hidden.item(href='/view/TadR2ThwgenSrTMHm') 
-                .ui.image
-                    +icon48 name='journal' classes='ui image'
-    
-            a.ui.simple.dropdown.mobile.hidden.item(href='/view/jFGwEzNgajnMad2MA' data-position="bottom center" data-content="Check In") 
-                .ui.image
-                    +icon48 name='sprout' classes='ui image'
-            if isInRole 'admin'
-                a#toggle_admin_mode.mobile.hidden.item(href='#' data-position="bottom center" data-content="Toggle Admin Mode") 
-                    .ui.image
-                        if admin_mode
-                            +icon48 name='user-shield' classes='ui image'
-                        else
-                            +dots50 name='user-shield' classes='ui image'
+                    +icon96 name='chat' classes='ui mini image'
         .right.menu
             if currentUser
-                // a#report_bug.icon.item(href="#"  data-position="bottom center" data-content="Report a Bug/Feature Request")
-                //     .ui.image
-                //         +icon48 name='bug'
-                a.icon.item(href="/dashboard" class="{{isActivePath '/dashboard'}}" data-position="bottom center" data-content="Dashboard")
+                a.item(href="/profile/#{currentUser.username}/account")
                     .ui.image
-                        +icon48 name='dashboard'
-                // if cart_items
-                //     a.icon.mobile.hidden.item(href='/cart' class="{{isActivePath '/cart'}}" data-position="bottom center" data-content="Shopping Cart")
-                //         i.large.icons
-                //             i.cart.icon
-                //             i.corner.teal.asterisk.icon
-                a.icon.item(href="/profile/#{currentUser.username}" class="{{isActiveRoute name='view_profile'}}" data-position="bottom center" data-content="Profile")
+                        +icon96 name='settings' classes='ui mini image'
+                a.item(href="/profile/#{currentUser.username}" class="{{isActiveRoute name='view_profile'}}" data-position="bottom center" data-content="Profile")
                     if currentUser.profile.image_id
                         img.ui.avatar.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
                     else
@@ -100,33 +32,10 @@ template(name='nav')
                             | #{currentUser.name}
                         else
                             | #{currentUser.username}
-                // a#logout.icon.item(href="#" data-position="bottom center" data-content="Log Out")
-                //     .ui.image
-                //         img(src="https://png.icons8.com/burglary/color/48" width="48" height="48")
-                
+                a#logout.item(href='#')
+                    .ui.image
+                        +icon96 name='burglary' classes='ui mini image'
             else
                 a.ui.item(href='/sign-in') 
                     +icon48 name='signin' classes='ui mini inline spaced image'
                     | Sign In
-    
-    // .ui.basic.small.report.modal
-    //     h1.ui.center.aligned.header
-    //         img.bug_icon.ui.avatar.image(src="https://png.icons8.com/bug/color/96" width="96" height="96")
-    //         |     Report Bug/ Feature Request
-    //     h3.ui.center.aligned.header Current Page: #{bug_link}
-    //     .content
-    //         .ui.fluid.input
-    //             input#bug_description(type='text' placeholder='Description...')
-    //     .actions
-    //         .ui.cancel.basic.button
-    //             // i.remove.icon
-    //             | Cancel
-    //         // if can_submit_bug
-    //         .ui.green.ok.ok_button.button
-    //             // i.checkmark.icon
-    //             // +icon24 name='checkmark' classes='ui avatar image'
-    //             | Submit
-    // .ui.basic.small.confirm.modal
-    //     h1.ui.center.aligned.header Thanks!
-    //         .ui.green.ok.large.ok_button.button
-    //             | You're welcome!

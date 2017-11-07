@@ -16,6 +16,7 @@ Meteor.publish 'facet', (
     view_complete
     view_images
     view_lightbank_type
+    editing_id
     )->
     
         self = @
@@ -58,6 +59,9 @@ Meteor.publish 'facet', (
         # lightbank types
         if view_lightbank_type? then match.lightbank_type = view_lightbank_type
         # match.lightbank_type = $ne:'journal_prompt'
+        
+        if editing_id
+            match._id = $ne: editing_id
         
         theme_tag_cloud = Docs.aggregate [
             { $match: match }

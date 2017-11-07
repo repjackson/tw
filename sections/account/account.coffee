@@ -4,7 +4,6 @@ if Meteor.isClient
     FlowRouter.route '/profile/:username/account', action: (params) ->
         name: 'account_settings'
         BlazeLayout.render 'profile_layout',
-            sub_nav: 'member_nav'
             profile_content: 'account'
     
     

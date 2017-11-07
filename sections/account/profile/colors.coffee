@@ -1,7 +1,6 @@
 if Meteor.isClient
     FlowRouter.route '/colors', action: (params) ->
         BlazeLayout.render 'layout',
-            sub_nav: 'member_nav'
             main: 'colors'
     
     

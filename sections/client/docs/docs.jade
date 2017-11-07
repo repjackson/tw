@@ -72,10 +72,11 @@ template(name='new_view_doc')
                 unless grid_view
                     unless editing
                         .four.wide.column
-                            if can_add
-                                #user_add.ui.large.circular.basic.icon.button
-                                    +icon48 name='plus' classes='ui mini inline image'
-                                    // | #{child_template}
+                            if currentUser
+                                if can_add
+                                    #user_add.ui.large.circular.basic.icon.button
+                                        +icon48 name='plus' classes='ui mini inline image'
+                                        // | #{child_template}
                             if session_completion
                                 #new_session.ui.blue.button New Session
                             .ui.hidden.divider
@@ -158,13 +159,14 @@ template(name='new_view_doc')
                                         .mark_read.ui.basic.circular.button
                                             +icon48 name='message' classes='ui mini inline image'
                                             |Mark Read
-                if editing
-                    .six.wide.column
-                        +doc_editing_sidebar
-                else
-                    .three.wide.column
-                        if view_published_filter
-                            +published_filter
+                if currentUser
+                    if editing
+                        .six.wide.column
+                            +doc_editing_sidebar
+                    else
+                        .three.wide.column
+                            if view_published_filter
+                                +published_filter
             
 template(name='doc_editing_sidebar')
     .ui.styled.fluid.accordion

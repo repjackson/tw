@@ -3,7 +3,6 @@ if Meteor.isClient
         name: 'view_quiz'
         action: (params) ->
             BlazeLayout.render 'layout',
-                # sub_nav: 'member_nav'
                 main: 'quiz_page'
     
     @selected_quiz_question_tags = new ReactiveArray []

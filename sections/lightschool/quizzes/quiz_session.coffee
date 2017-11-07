@@ -3,7 +3,6 @@ if Meteor.isClient
         name: 'edit_quiz_session'
         action: (params) ->
             BlazeLayout.render 'layout',
-                # sub_nav: 'member_nav'
                 main: 'quiz_session'
 
     Template.quiz_session.onCreated -> 
