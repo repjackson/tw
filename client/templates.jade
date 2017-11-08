@@ -5,22 +5,10 @@ head
     meta(name='apple-mobile-web-app-status-bar-style', content='white')
     meta(name='google-site-verification', content='6osbddgiRIkUEHj3ezFR6D2yOQuooBvvXsBliSWhAZA')
     link(href="https://fonts.googleapis.com/css?family=Cabin" rel="stylesheet")
-    link(rel="apple-touch-icon", sizes="180x180", href="/apple-touch-icon.png")
-    link(rel="icon", type="image/png", href="/favicon-32x32.png", sizes="32x32")
-    link(rel="icon", type="image/png", href="/favicon-16x16.png", sizes="16x16")
-    link(rel="manifest", href="/manifest.json")
-    link(rel="mask-icon", href="/safari-pinned-tab.svg", color="#5bbad5")
     meta(name="theme-color", content="#ffffff")
 
 template(name='layout')
     +status
-    // .ui.grid
-        // .two.wide.column
-    // #nav_menu
-    //     unless zen_mode
-    //         +nav
-    // .fourteen.wide.column
-    // +Template.dynamic template=sub_nav
     +Template.dynamic template=main
                     
 
@@ -31,7 +19,6 @@ template(name="tag_result")
 template(name='not_found')
     .ui.text.container
         .ui.center.aligned.header Not Found
-        // h5.ui.center.aligned.header Please report bugs using the bug icon above.
         
         
 template(name='staus_indicator')
@@ -52,7 +39,6 @@ template(name='user_list_item')
             .header
                 |#{name}
             .description
-                +tiny_color_dots
                 each five_tags
                     .ui.basic.label #{this}
 
@@ -71,8 +57,4 @@ template(name='tag_pill')
     .item
         .content
             .header
-                // img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
                 |#{name}
-            // .description
-            //     each five_tags
-            //         .ui.basic.small.label #{this}

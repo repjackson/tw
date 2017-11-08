@@ -131,6 +131,14 @@ template(name='child_view')
             //     .content
             //         +location_tags
             .content
+                .ui.list
+                    each custom_key_values
+                        .item
+                            .ui.basic.label #{key}: #{value}                        
+            .content
+                each child_custom_fields
+                    +view_custom_field label=label slug=slug
+            .content
                 if isInRole 'admin'
                     +published_label
                 // +resonate_button
@@ -139,17 +147,67 @@ template(name='child_view')
                 // +view_full_button
                 // +mark_read
                 +author_info
+                |#{when}
                 if is_author
+                    +session_edit_button
+                else if isInRole 'dev'
                     +session_edit_button
                 //     +delete_button
                     // +edit_parent_id
                     // |id: #{_id}
                     // +type
-        if editing
+        if editing                    
             .content
                 each child_view_fields
                     +Template.dynamic template=this data=doc
             .content
+                each child_custom_fields
+                    +custom_field_input label=label slug=slug
+            .content
+                .ui.header Custom Properties
+                .ui.labeled.input
+                    .ui.basic.label key
+                    input.custom_key(type='text')
+                .ui.labeled.input
+                    .ui.basic.label value
+                    input.custom_value(type='text')
+                #add_key_value.ui.basic.icon.circular.button
+                    i.plus.icon
+                .ui.list
+                    each custom_key_values
+                        .item
+                            .ui.basic.label #{key}: #{value}                        
+                            .remove_custom_field.ui.basic.small.circular.icon.button
+                                i.remove.icon
+            .content
                 +published
+                if isInRole 'dev'
+                    +edit_author
+            .content
                 +session_edit_button
                 +delete_button
+
+
+template(name='custom_field_input')
+    .ui.labeled.input
+        .ui.basic.label #{label}
+        input.custom_field_input(type='text' value=slug_value)
+
+template(name='view_custom_field')
+    div
+        .ui.basic.label #{label}: #{slug_value}
+        
+        
+template(name='session_edit_button')
+    if currentUser
+        if editing
+            .save_doc.ui.basic.large.circular.button(class=button_classes)
+                i.icon
+                    +icon48 name="checkmark" classes='ui mini inline image'
+                |Save
+        else
+            .edit_this.ui.basic.icon.large.circular.button(title="Edit #{tags}" class=button_classes)
+                +icon24 name="edit" classes='ui mini inline image'
+                // i.icon
+                // |Edit
+        

@@ -7,7 +7,7 @@ FlowRouter.route '/view/:doc_id',
 
 Template.view_doc.onCreated ->
     @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
-    @autorun -> Meteor.subscribe 'doc', Session.get('editing_id')
+    @autorun -> Meteor.subscribe 'doc', Session.get('inline_editing')
     # @autorun -> Meteor.subscribe 'my_children', FlowRouter.getParam('doc_id')
     @autorun -> Meteor.subscribe 'usernames'
     @autorun -> Meteor.subscribe 'components'
@@ -24,6 +24,7 @@ Template.view_doc.onCreated ->
             parent_id = FlowRouter.getParam('doc_id')
             tag_limit = 20
             doc_limit = 20
+            view_mine = Session.get 'view_mine'
             view_published = 
                 if Session.equals('admin_mode', true) then Session.get('view_published') else true 
             view_read = null
@@ -31,20 +32,13 @@ Template.view_doc.onCreated ->
             view_resonates = null
             view_complete = null
             view_images = null
-            view_lightbank_type = null
-            editing_id = Session.get('editing_id')
+            inline_editing = Session.get('inline_editing')
 
             )
 
 Template.view_doc.helpers
     doc: -> Docs.findOne FlowRouter.getParam('doc_id')
     doc_template: -> Docs.findOne type: 'doc_template'
-    view_type_template: -> 
-        doc = Docs.findOne FlowRouter.getParam('doc_id')
-        return 'new_view_doc'
-
-
-Template.new_view_doc.helpers
     doc: -> Docs.findOne FlowRouter.getParam('doc_id')
     younger_sibling: ->
         doc = Docs.findOne FlowRouter.getParam('doc_id')
@@ -65,8 +59,8 @@ Template.new_view_doc.helpers
                 number: next_number
 
     children: ->
-        if Session.get 'editing_id'
-            Docs.find Session.get('editing_id')
+        if Session.get 'inline_editing'
+            Docs.find Session.get('inline_editing')
         
         else if Roles.userIsInRole(Meteor.userId(), 'admin')
             Docs.find {
@@ -96,7 +90,7 @@ Template.new_view_doc.helpers
         
         
     main_column_class: -> 
-        if Session.equals 'editing', true 
+        if Session.equals 'page_editing', true 
             'ten wide column' 
         else if @child_view is 'grid'
             'fourteen wide column'
@@ -130,14 +124,49 @@ Template.new_view_doc.helpers
     quiz_view: -> @child_view is 'quiz'
     poems_view: -> @child_view is 'poems'
     
+Template.view_doc.events
+    'click .mark_read': (e,t)-> 
+        Meteor.call 'mark_read', @_id, =>
+            Meteor.call 'calculate_completion', @_id
+        
+    'click .mark_unread': (e,t)-> 
+        Meteor.call 'mark_unread', @_id, =>
+            Meteor.call 'calculate_completion', @_id
+    
+    'click #create_parent': ->
+        new_parent_id = Docs.insert {}
+        Docs.update FlowRouter.getParam('doc_id'),
+            $set: parent_id: new_parent_id
+        FlowRouter.go "/view/#{new_parent_id}" 
+        
+    'click #create_response': ->
+        new_id = Docs.insert
+            parent_id: FlowRouter.getParam('doc_id')
+        Session.set 'inline_editing', new_id
 
-Template.new_view_doc.events
+      
+    'click #admin_add': ->
+        new_id = Docs.insert
+            parent_id: FlowRouter.getParam('doc_id')
+        # FlowRouter.go("/view/#{new_id}")
+        # Session.set 'editing', true
+      
+    'click #user_add': ->
+        new_id = Docs.insert
+            parent_id: FlowRouter.getParam('doc_id')
+        Session.set 'inline_editing', new_id
+      
     'click #toggle_admin_mode': ->
         if Session.equals('admin_mode', true) then Session.set('admin_mode', false)
         else if Session.equals('admin_mode', false) then Session.set('admin_mode', true)
-
-
     
+    'click #toggle_view_mode': ->
+        if Session.equals('view_public', true) then Session.set('view_public', false)
+        else if Session.equals('view_public', false) then Session.set('view_public', true)
+
+
+
+
 Template.doc_editing_sidebar.helpers
     toggle_theme_tags_class: -> if @theme_tags_facet is true then 'blue' else 'basic'
     selected_fields: ->
@@ -157,38 +186,6 @@ Template.doc_editing_sidebar.helpers
             # type: 'component'
             parent_id: 'MzHSPbvCYPngq2Dcz'
 
-Template.new_view_doc.events
-    'click .mark_read': (e,t)-> 
-        Meteor.call 'mark_read', @_id, =>
-            Meteor.call 'calculate_completion', @_id
-        
-    'click .mark_unread': (e,t)-> 
-        Meteor.call 'mark_unread', @_id, =>
-            Meteor.call 'calculate_completion', @_id
-    
-    'click #create_parent': ->
-        new_parent_id = Docs.insert {}
-        Docs.update FlowRouter.getParam('doc_id'),
-            $set: parent_id: new_parent_id
-        FlowRouter.go "/view/#{new_parent_id}" 
-        
-    'click #create_response': ->
-        new_id = Docs.insert
-            parent_id: FlowRouter.getParam('doc_id')
-        Session.set 'editing_id', new_id
-
-      
-    'click #admin_add': ->
-        new_id = Docs.insert
-            parent_id: FlowRouter.getParam('doc_id')
-        # FlowRouter.go("/view/#{new_id}")
-        # Session.set 'editing', true
-      
-    'click #user_add': ->
-        new_id = Docs.insert
-            parent_id: FlowRouter.getParam('doc_id')
-        Session.set 'editing_id', new_id
-      
       
             
 Template.doc_editing_sidebar.events        
@@ -218,6 +215,41 @@ Template.doc_editing_sidebar.events
         else
             Docs.update FlowRouter.getParam('doc_id'),
                 $addToSet: "child_fields": @slug
+        
+    'click #add_custom_field': (e,t)->
+        doc = Docs.findOne FlowRouter.getParam('doc_id')
+        # console.log t.find
+        custom_field_label = $('.custom_field_label').val()
+        custom_field_slug = $('.custom_field_slug').val()
+        
+        Docs.update FlowRouter.getParam('doc_id'),
+            $addToSet: 
+                "custom_fields": 
+                    label: custom_field_label
+                    slug: custom_field_slug
+        
+        
+    # 'blur .custom_field_label': (e,t)->
+    #     doc = Docs.findOne FlowRouter.getParam('doc_id')
+    #     custom_field_label = $(e.currentTarget).closest('.custom_field_label').val()
+    #     console.log @
+    #     # Docs.update doc._id,
+    #     #     $set: plain: plain
+
+        
+    # 'blur .custom_field_slug': (e,t)->
+    #     doc = Docs.findOne FlowRouter.getParam('doc_id')
+    #     custom_field_slug = $(e.currentTarget).closest('.custom_field_slug').val()
+    #     console.log @
+    #     Docs.update doc._id,
+    #         $set: plain: plain
+
+    'click .remove_custom_field': (e,t)->
+        console.log @
+        doc = Docs.findOne FlowRouter.getParam('doc_id')
+        Docs.update FlowRouter.getParam('doc_id'),
+            $pull: custom_fields: @
+        
 
 Template.field_menu.helpers
     unselected_fields: ->
@@ -256,7 +288,7 @@ Template.response.events
     'click .edit_this': (e,t)-> t.editing.set true
     'click .save_doc': (e,t)-> 
         t.editing.set false
-        Session.set 'editing_id', null
+        Session.set 'inline_editing', null
         Meteor.call 'calculate_completion', FlowRouter.getParam('doc_id')
 
     'blur #body_field': (e,t)->

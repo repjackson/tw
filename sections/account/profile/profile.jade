@@ -1,76 +1,22 @@
-template(name='profile_layout')
+template(name='profile')
     .ui.stackable.padded.grid
         .four.wide.column
             a.ui.circular.basic.center.aligned.button(href='/')
                 +icon48 name='yin-yang'
             with person
-                img.ui.small.centered.rounded.image(src="{{c.url profile.image_id width=400 height=400 gravity='face' crop='fill'}}")
+                // img.ui.small.centered.rounded.image(src="{{c.url profile.image_id width=400 height=400 gravity='face' crop='fill'}}")
                 .ui.center.aligned.header
-                    if profile.first_name
-                        |#{profile.first_name} #{profile.last_name}
                     |(#{username})
                     unless is_user
                         +staus_indicator
                 if is_user
                     a.ui.basic.fluid.large.circular.button(href="/account/profile/edit/#{_id}") 
                         i.yellow.pencil.icon
-                        |Edit Profile
-                .ui.vertical.large.fluid.pointing.menu
-                    a.item(href="/profile/#{username}/about" class="{{isActiveRoute name='profile_about'}}") 
-                        i.icon
-                            +icon24 name='info'
-                        |About
-                    a.item(href="/profile/#{username}/contact" class="{{isActiveRoute name='profile_contact'}}") 
-                        i.icon
-                            +icon24 name='contact'
-                        |Contact #{name}
+                        |Edit
             if is_person_by_username
-                .ui.vertical.fluid.pointing.menu
-                    a.item(href="/profile/#{currentUser.username}/account" class="{{isActiveRoute name='account_settings'}}") 
-                        i.icon
-                            +icon24 name='settings'
-                        |Account Settings
-                .ui.vertical.fluid.menu
-                    a#logout.item(href="#" data-position="bottom center" data-content="Log Out")
-                        i.icon
-                            +icon24 name='burglary'
-                        |Log Out
-
-
+                a#logout.ui.basic.button(href="#" data-position="bottom center" data-content="Log Out")
+                    i.icon
+                        +icon24 name='exit'
+                    |Log Out
         .ten.wide.column
-            +Template.dynamic template=profile_content
-
-
-        
-        
-template(name='profile_about')
-    with person
-        h1.ui.center.aligned.header 
-            +icon96 name='info'
-            |About
-        .ui.hidden.divider
-        .ui.two.column.stackable.grid
-            .column
-                if tags
-                    +icon48 name='hashtag' classes='ui inline image'
-                    each tags
-                        .user_tag.ui.circular.large.basic.label #{this}
-                if profile.location
-                    .ui.header 
-                        +icon48 name='user-location'
-                        | #{profile.location}
-                if profile.about_me
-                    .ui.header About Me
-                    |#{profile.about_me}
-            .column
-                .ui.header My True Colors Are:
-                +color_dots
-                if profile.if_knew_me
-                    .ui.header If you really knew me you would know…
-                    |#{profile.if_knew_me}
-                if profile.if_not_working
-                    .ui.header If I am not at work or in class then I am probably…
-                    |#{profile.if_not_working}
-
-        
-        
+            +account

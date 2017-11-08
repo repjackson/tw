@@ -1,6 +1,6 @@
 Template.subtitle.events
-    'blur #subtitle': ->
-        subtitle = $('#subtitle').val()
+    'blur #subtitle': (e,t)->
+        subtitle = $(e.currentTarget).closest('#subtitle').val()
         Docs.update @_id,
             $set: subtitle: subtitle
             
@@ -29,15 +29,15 @@ Template.created_date.helpers
         @timestamp
 
 Template.created_date.events
-    'blur #created_date': ->
-        created_date = $('#created_date').val()
+    'blur #created_date': (e,t)->
+        created_date = $(e.currentTarget).closest('#created_date').val()
         console.log created_date
         # Docs.update @_id,
         #     $set: created_date: created_date
             
 Template.plain.events
-    'blur #plain': ->
-        plain = $('#plain').val()
+    'blur #plain': (e,t)->
+        plain = $(e.currentTarget).closest('#plain').val()
         Docs.update @_id,
             $set: plain: plain
             
@@ -198,21 +198,21 @@ Template.intention_tags.helpers
 
 
 Template.dollar_price.events
-    'change #dollar_price': ->
-        dollar_price = parseInt $('#dollar_price').val()
+    'change #dollar_price': (e)->
+        dollar_price = parseInt $(e.currentTarget).closest('#dollar_price').val()
 
         Docs.update @_id,
             $set: dollar_price: dollar_price
             
 Template.point_price.events
-    'change #point_price': ->
-        point_price = parseInt $('#point_price').val()
+    'change #point_price': (e)->
+        point_price = parseInt $(e.currentTarget).closest('#point_price').val()
         Docs.update @_id,
             $set: point_price: point_price
             
 Template.bounty.events
-    'change #bounty': ->
-        bounty = parseInt $('#bounty').val()
+    'change #bounty': (e)->
+        bounty = parseInt $(e.currentTarget).closest('#bounty').val()
         Docs.update @_id,
             $set: bounty: bounty
             
@@ -362,8 +362,8 @@ Template.image_url.events
             $unset: 
                 image_url: 1
         
-    'blur #image_url': ->
-        image_url = $('#image_url').val()
+    'blur #image_url': (e)->
+        image_url = $(e.currentTarget).closest('#image_url').val()
         Docs.update @_id,
             $set: image_url: image_url
 
@@ -657,8 +657,10 @@ Template.edit_author.onCreated ->
 Template.edit_author.events
     "autocompleteselect input": (event, template, doc) ->
         # console.log("selected ", doc)
+        # console.log("selected ", template)
+        
         if confirm 'Change author?'
-            Docs.update FlowRouter.getParam('doc_id'),
+            Docs.update template.data._id,
                 $set: author_id: doc._id
             $('#author_select').val("")
 
@@ -690,7 +692,7 @@ Template.edit_recipient.onCreated ->
 Template.edit_recipient.events
     "autocompleteselect input": (event, template, doc) ->
         # console.log("selected ", doc)
-        Docs.update FlowRouter.getParam('doc_id'),
+        Docs.update @_id,
             $set: recipient_id: doc._id
         $('#recipient_select').val("")
 
@@ -725,6 +727,7 @@ Template.start_date.events
     
 Template.end_date.events
     'blur #end_date': ->
+        name = $(e.currentTarget).closest('#name').val()
         end_date = $('#end_date').val()
         Docs.update @_id,
             $set: end_date: end_date

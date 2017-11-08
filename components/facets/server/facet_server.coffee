@@ -9,13 +9,13 @@ Meteor.publish 'facet', (
     parent_id
     tag_limit
     doc_limit
+    view_mine
     view_published
     view_read
     view_bookmarked
     view_resonates
     view_complete
     view_images
-    view_lightbank_type
     editing_id
     )->
     
@@ -46,6 +46,11 @@ Meteor.publish 'facet', (
             match.published = $in: [1,0]
         else if view_published is false
             match.published = -1
+            # match.
+            
+        if view_mine?
+            match.author_id = Meteor.userId()
+            
             
         if view_bookmarked?
             if view_bookmarked is true then match.bookmarked_ids = $in: [@userId]
@@ -55,10 +60,6 @@ Meteor.publish 'facet', (
         
         # console.log 'match:', match
         if view_images? then match.components?.image = view_images
-        
-        # lightbank types
-        if view_lightbank_type? then match.lightbank_type = view_lightbank_type
-        # match.lightbank_type = $ne:'journal_prompt'
         
         if editing_id
             match._id = $ne: editing_id
