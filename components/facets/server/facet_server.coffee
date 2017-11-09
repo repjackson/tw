@@ -9,7 +9,7 @@ Meteor.publish 'facet', (
     parent_id
     tag_limit
     doc_limit
-    view_mine
+    view_public
     view_published
     view_read
     view_bookmarked
@@ -48,7 +48,9 @@ Meteor.publish 'facet', (
             match.published = -1
             # match.
             
-        if view_mine?
+        if view_public is true
+            match.published = $in: [1,0]
+        else
             match.author_id = Meteor.userId()
             
             

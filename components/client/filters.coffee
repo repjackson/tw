@@ -102,35 +102,3 @@ Template.bookmark_filter.helpers
     
     
     
-# lightbank types
-
-Template.poem_filter.events
-    'click #view_poems': (e,t)-> 
-        if Session.equals('view_lightbank_type', 'poem') then Session.set('view_lightbank_type', null) else Session.set('view_lightbank_type', 'poem')
-    
-Template.poem_filter.helpers
-    view_poems_class: -> if Session.equals('view_lightbank_type', 'poem') then 'blue' else 'basic'
-
-Template.quote_filter.events
-    'click #view_quotes': (e,t)-> 
-        if Session.equals('view_lightbank_type', 'quote') then Session.set('view_lightbank_type', null) else Session.set('view_lightbank_type', 'quote')
-    
-Template.quote_filter.helpers
-    view_quotes_class: -> if Session.equals('view_lightbank_type', 'quote') then 'blue' else 'basic'
-
-Template.passage_filter.events
-    'click #view_passages': (e,t)-> 
-        if Session.equals('view_lightbank_type', 'passage') then Session.set('view_lightbank_type', null) else Session.set('view_lightbank_type', 'passage')
-    
-Template.passage_filter.helpers
-    view_passages_class: -> if Session.equals('view_lightbank_type', 'passage') then 'blue' else 'basic'
-
-Template.journal_prompt_filter.events
-    'click #view_journal_prompts': (e,t)-> 
-        if Session.equals('view_lightbank_type', 'journal_prompt') then Session.set('view_lightbank_type', null) else Session.set('view_lightbank_type', 'journal_prompt')
-    
-Template.journal_prompt_filter.helpers
-    view_journal_prompts_class: -> if Session.equals('view_lightbank_type', 'journal_prompt') then 'blue' else 'basic'
-
-
-    

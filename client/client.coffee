@@ -7,6 +7,7 @@ Session.setDefault 'inline_editing', false
 
 
 Session.setDefault 'admin_mode', false
+Session.setDefault 'view_public', false
     
     
     

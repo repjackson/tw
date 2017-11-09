@@ -91,16 +91,16 @@ template(name='sessions')
 template(name='child_view')
     .ui.fluid.card
         unless editing
-            if title
-                .content
-                    .header 
-                        if icon_class
-                            +icon48 name=icon_class classes='ui inline image'
+            .content
+                .header 
+                    if icon_class
+                        +icon48 name=icon_class classes='ui inline image'
+                    if title
                         |#{title}
-                        if end_date
-                            |by #{end_date}
-                    if slug
-                        .meta Slug: #{slug}
+                    if end_date
+                        |End Date: #{end_date}
+                if slug
+                    .meta Slug: #{slug}
             if youtube
                 +youtube
             if image_id
@@ -138,6 +138,13 @@ template(name='child_view')
             .content
                 each child_custom_fields
                     +view_custom_field label=label slug=slug
+            .content
+                if doc.can_bookmark
+                    +bookmark_button
+                if doc.can_vote
+                    +voting
+                if doc.can_complete
+                    +mark_complete_button
             .content
                 if isInRole 'admin'
                     +published_label

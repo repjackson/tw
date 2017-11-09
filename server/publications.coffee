@@ -96,16 +96,16 @@ publishComposite 'doc', (id, ancestor_levels, descendent_levels)->
                             # group: doc.group
                             parent_id: doc.parent_id
                             number: next_number
-                children: [
-                    {
-                        #older sibling response
-                        find: (older_sibling)->
-                            Docs.find
-                                parent_id: older_sibling._id
-                                author_id: Meteor.userId()
-                        }
+                # children: [
+                #     {
+                #         #older sibling response
+                #         find: (older_sibling)->
+                #             Docs.find
+                #                 parent_id: older_sibling._id
+                #                 author_id: Meteor.userId()
+                #         }
                     
-                    ]
+                #     ]
                         
             }
             {
@@ -117,16 +117,16 @@ publishComposite 'doc', (id, ancestor_levels, descendent_levels)->
                             # group: doc.group
                             parent_id: doc.parent_id
                             number: previous_number
-                children: [
-                    {
-                        #younger sibling response
-                        find: (younger_sibling)->
-                            Docs.find
-                                parent_id: younger_sibling._id
-                                author_id: Meteor.userId()
-                        }
+                # children: [
+                #     {
+                #         #younger sibling response
+                #         find: (younger_sibling)->
+                #             Docs.find
+                #                 parent_id: younger_sibling._id
+                #                 author_id: Meteor.userId()
+                #         }
                     
-                    ]
+                #     ]
             }
             {
                 # parent doc

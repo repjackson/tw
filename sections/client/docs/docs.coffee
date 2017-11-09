@@ -24,9 +24,9 @@ Template.view_doc.onCreated ->
             parent_id = FlowRouter.getParam('doc_id')
             tag_limit = 20
             doc_limit = 20
-            view_mine = Session.get 'view_mine'
-            view_published = 
-                if Session.equals('admin_mode', true) then Session.get('view_published') else true 
+            view_public = Session.get 'view_public'
+            view_published = null
+                # if Session.equals('admin_mode', true) then Session.get('view_published') else true 
             view_read = null
             view_bookmarked = null
             view_resonates = null
@@ -123,6 +123,9 @@ Template.view_doc.helpers
     grandchild_list_view: -> @child_view is 'grandchild_list'
     quiz_view: -> @child_view is 'quiz'
     poems_view: -> @child_view is 'poems'
+    
+    viewing_public: -> Session.equals 'view_public', true    
+    
     
 Template.view_doc.events
     'click .mark_read': (e,t)-> 

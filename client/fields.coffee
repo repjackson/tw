@@ -720,13 +720,13 @@ Template.edit_recipient.helpers
 
 
 Template.start_date.events
-    'blur #start_date': ->
+    'blur #start_date': (e)->
         start_date = $('#start_date').val()
         Docs.update @_id,
             $set: start_date: start_date
     
 Template.end_date.events
-    'blur #end_date': ->
+    'blur #end_date': (e)->
         name = $(e.currentTarget).closest('#name').val()
         end_date = $('#end_date').val()
         Docs.update @_id,

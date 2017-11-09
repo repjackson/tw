@@ -77,6 +77,10 @@ template(name='published')
 
 
 
+template(name='voting')
+    i.thumbs.up.link.big.icon.vote_up(class=vote_up_button_class)
+    i.thumbs.down.link.big.icon.vote_down(class=vote_down_button_class)
+    |#{points}
 
 template(name='favorite_button')
     .ui.basic.icon.button.favorite_item(class=favorite_item_class)
@@ -87,30 +91,21 @@ template(name='favorite_button')
 template(name='mark_complete_button')
     .mark_complete.ui.circular.icon.button(class=complete_button_class) 
         if completed
-            +icon48 name='checkmark' classes='ui mini inline image'
-            // | Completed
+            +icon96 name='checked-checkbox' classes='ui mini inline image'
         else
-            +icon48 name='unchecked-checkbox' classes='ui mini inline image'
-            // | Mark Complete
+            +icon96 name='unchecked-checkbox' classes='ui mini inline image'
         
 template(name='mark_doc_complete_button')
     .mark_complete.ui.circular.icon.basic.button(class=complete_button_class) 
         if complete
-            +icon48 name='checkmark' classes='ui mini inline image'
-            // | Completed
+            +icon96 name='checked-checkbox' classes='ui mini inline image'
         else
-            +icon48 name='unchecked-checkbox' classes='ui mini inline image'
-            // | Complete
+            +icon96 name='unchecked-checkbox' classes='ui mini inline image'
         
          
 template(name='bookmark_button')
     .bookmark_button.ui.circular.icon.button(class=bookmark_button_class data-tooltip='Bookmark') 
         +icon48 name='bookmark' classes='ui mini inline image'
-        // if bookmarked
-        //     | Bookmarked
-        // else
-        //     | Bookmark
-        
         
         
 template(name='view_full_button')

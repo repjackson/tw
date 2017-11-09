@@ -181,19 +181,45 @@ FlowRouter.notFound =
 
 
 Meteor.users.helpers
-    name: -> 
-        if @profile?.first_name and @profile?.last_name
-            "#{@profile.first_name}  #{@profile.last_name}"
-        else
-            "#{@username}"
-    last_login: -> 
-        moment(@status?.lastLogin.date).fromNow()
+    last_login: -> moment(@status?.lastLogin.date).fromNow()
 
     five_tags: -> if @tags then @tags[0..3]
     
             
             
 Meteor.methods
+    favorite: (doc)->
+        if doc.favoriters and Meteor.userId() in doc.favoriters
+            Docs.update doc._id,
+                $pull: favoriters: Meteor.userId()
+                $inc: favorite_count: -1
+        else
+            Docs.update doc._id,
+                $addToSet: favoriters: Meteor.userId()
+                $inc: favorite_count: 1
+    
+    
+    mark_complete: (doc)->
+        if doc.completed_ids and Meteor.userId() in doc.completed_ids
+            Docs.update doc._id,
+                $pull: completed_ids: Meteor.userId()
+                $inc: completed_count: -1
+        else
+            Docs.update doc._id,
+                $addToSet: completed_ids: Meteor.userId()
+                $inc: completed_count: 1
+    
+    
+    bookmark: (doc)->
+        if doc.bookmarked_ids and Meteor.userId() in doc.bookmarked_ids
+            Docs.update doc._id,
+                $pull: bookmarked_ids: Meteor.userId()
+                $inc: bookmarked_count: -1
+        else
+            Docs.update doc._id,
+                $addToSet: bookmarked_ids: Meteor.userId()
+                $inc: bookmarked_count: 1
+    
     vote_up: (id)->
         doc = Docs.findOne id
         if not doc.upvoters
@@ -252,56 +278,4 @@ Meteor.methods
             # Meteor.users.update Meteor.userId(), $inc: points: -1
         Meteor.call 'generate_downvoted_cloud', Meteor.userId()
 
-
-    favorite: (doc)->
-        if doc.favoriters and Meteor.userId() in doc.favoriters
-            Docs.update doc._id,
-                $pull: favoriters: Meteor.userId()
-                $inc: favorite_count: -1
-        else
-            Docs.update doc._id,
-                $addToSet: favoriters: Meteor.userId()
-                $inc: favorite_count: 1
-    
-    
-    mark_complete: (doc)->
-        if doc.completed_ids and Meteor.userId() in doc.completed_ids
-            Docs.update doc._id,
-                $pull: completed_ids: Meteor.userId()
-                $inc: completed_count: -1
-        else
-            Docs.update doc._id,
-                $addToSet: completed_ids: Meteor.userId()
-                $inc: completed_count: 1
-    
-    
-    bookmark: (doc)->
-        if doc.bookmarked_ids and Meteor.userId() in doc.bookmarked_ids
-            Docs.update doc._id,
-                $pull: bookmarked_ids: Meteor.userId()
-                $inc: bookmarked_count: -1
-        else
-            Docs.update doc._id,
-                $addToSet: bookmarked_ids: Meteor.userId()
-                $inc: bookmarked_count: 1
-    
-    pin: (doc)->
-        if doc.pinned_ids and Meteor.userId() in doc.pinned_ids
-            Docs.update doc._id,
-                $pull: pinned_ids: Meteor.userId()
-                $inc: pinned_count: -1
-        else
-            Docs.update doc._id,
-                $addToSet: pinned_ids: Meteor.userId()
-                $inc: pinned_count: 1
-    
-    subscribe: (doc)->
-        if doc.subscribed_ids and Meteor.userId() in doc.subscribed_ids
-            Docs.update doc._id,
-                $pull: subscribed_ids: Meteor.userId()
-                $inc: subscribed_count: -1
-        else
-            Docs.update doc._id,
-                $addToSet: subscribed_ids: Meteor.userId()
-                $inc: subscribed_count: 1
     

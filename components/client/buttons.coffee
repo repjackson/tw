@@ -16,6 +16,32 @@ Template.published.events
         
         
         
+Template.voting.helpers
+    vote_up_button_class: ->
+        if not Meteor.userId() then 'disabled'
+        else if @upvoters and Meteor.userId() in @upvoters then 'green'
+        else 'outline'
+
+    vote_down_button_class: ->
+        if not Meteor.userId() then 'disabled'
+        else if @downvoters and Meteor.userId() in @downvoters then 'red'
+        else 'outline'
+
+Template.voting.events
+    'click .vote_up': (e,t)-> 
+        if Meteor.userId()
+            Meteor.call 'vote_up', @_id
+            $(e.currentTarget).closest('.vote_up').transition('pulse')
+        else FlowRouter.go '/sign-in'
+
+    'click .vote_down': -> 
+        if Meteor.userId() 
+            Meteor.call 'vote_down', @_id
+            $(e.currentTarget).closest('.vote_down').transition('pulse')
+        else FlowRouter.go '/sign-in'
+        
+        
+        
 Template.edit_button.onCreated ->
     @editing = new ReactiveVar(false)
 Template.edit_button.helpers
@@ -33,8 +59,8 @@ Template.edit_button.events
 
 
 Template.session_edit_button.events
-    'click .edit_this': -> Session.set 'editing_id', @_id
-    'click .save_doc': -> Session.set 'editing_id', null
+    'click .edit_this': -> Session.set 'inline_editing', @_id
+    'click .save_doc': -> Session.set 'inline_editing', null
 
 Template.session_edit_button.helpers
     button_classes: -> Template.currentData().classes
@@ -50,7 +76,7 @@ Template.delete_button.events
 
     'click .cancel': (e,t)-> t.confirming.set false
     'click .confirm': (e,t)-> 
-        if Session.get 'editing_id' then Session.set 'editing_id', null
+        if Session.get 'inline_editing' then Session.set 'inline_editing', null
         Docs.remove @_id
             
 Template.delete_link.onCreated ->
@@ -98,7 +124,7 @@ Template.favorite_button.events
 Template.mark_complete_button.helpers
     complete_button_class: -> 
         if Meteor.user()
-            if @completed_ids and Meteor.userId() in @completed_ids then 'teal' else 'basic'
+            if @completed_ids and Meteor.userId() in @completed_ids then 'basic' else 'basic'
         else 'grey disabled'
     completed: -> 
         if Meteor.user()
