@@ -90,109 +90,109 @@ template(name='sessions')
 
 template(name='child_view')
     .ui.fluid.card
-        unless editing
-            .content
-                .header 
-                    if icon_class
-                        +icon48 name=icon_class classes='ui inline image'
-                    if title
-                        |#{title}
-                    if end_date
-                        |End Date: #{end_date}
+        .content
+            unless editing
+                if title
+                    .ui.header 
+                        | #{title}
+                if end_date
+                    .content 
+                        .ui.header End Date: #{end_date}
                 if slug
                     .meta Slug: #{slug}
-            if youtube
-                +youtube
-            if image_id
-                .image
-                    img(src="{{c.url image_id}}")
-            if image_url
-                .ui.large.image
-                    img(src=image_url)
-            if content
-                .content 
-                    .large130 !{content}
-                    // .large-text !{content}
-                    if author_name
-                        h4.ui.header
-                            |- #{author_name}
-            if link
+                if youtube
+                    +youtube
+                if image_id
+                    .image
+                        img(src="{{c.url image_id}}")
+                if image_url
+                    .ui.large.image
+                        img(src=image_url)
+                if content
+                    .content 
+                        .ui.basic.segment
+                            .large130 !{content}
+                        if watson.keywords
+                            +analyzed_watson_keywords
+                        if author_name
+                            h4.ui.header
+                                |- #{author_name}
+                if link
+                    .content
+                        a(href=link target='_blank') #{link}
+                if body
+                    .content #{body}
+                if tags
+                    .content
+                        +view_tags
+                // if intention_tags
+                //     .content
+                //         +intention_tags
+                // if location_tags
+                //     .content
+                //         +location_tags
+                if custom_key_values
+                    .content
+                        .ui.list
+                            each custom_key_values
+                                .item
+                                    .ui.basic.label #{key}: #{value}                        
+                if child_custom_fields
+                    .content
+                        each child_custom_fields
+                            +view_custom_field label=label slug=slug
                 .content
-                    a(href=link target='_blank') #{link}
-            if body
-                .content #{body}
-            if tags
+                    if doc.can_bookmark
+                        +bookmark_button
+                    if doc.can_vote
+                        +voting
+                    if doc.can_complete
+                        +mark_complete_button
                 .content
-                    +view_tags
-            // if intention_tags
-            //     .content
-            //         +intention_tags
-            // if location_tags
-            //     .content
-            //         +location_tags
-            .content
-                .ui.list
-                    each custom_key_values
-                        .item
-                            .ui.basic.label #{key}: #{value}                        
-            .content
-                each child_custom_fields
-                    +view_custom_field label=label slug=slug
-            .content
-                if doc.can_bookmark
-                    +bookmark_button
-                if doc.can_vote
-                    +voting
-                if doc.can_complete
-                    +mark_complete_button
-            .content
-                if isInRole 'admin'
-                    +published_label
-                // +resonate_button
-                // +bookmark_button
-                // +reflect_button
-                // +view_full_button
-                // +mark_read
-                +author_info
-                |#{when}
-                if is_author
+                    if isInRole 'admin'
+                        +published_label
+                    +view_full_button
+                    // +mark_read
+                    +author_info
+                    |#{when}
+                    if is_author
+                        +session_edit_button
+                    else if isInRole 'dev'
+                        +session_edit_button
+                    //     +delete_button
+                        // +edit_parent_id
+                        // |id: #{_id}
+                        // +type
+            if editing                    
+                .content
+                    each child_view_fields
+                        +Template.dynamic template=this data=doc
+                .content
+                    each child_custom_fields
+                        +custom_field_input label=label slug=slug
+                // .content
+                //     .ui.header Custom Properties
+                //     .ui.labeled.input
+                //         .ui.basic.label key
+                //         input.custom_key(type='text')
+                //     .ui.labeled.input
+                //         .ui.basic.label value
+                //         input.custom_value(type='text')
+                //     #add_key_value.ui.basic.icon.circular.button
+                //         i.plus.icon
+                //     .ui.list
+                //         each custom_key_values
+                //             .item
+                //                 .ui.basic.label #{key}: #{value}                        
+                //                 .remove_custom_field.ui.basic.small.circular.icon.button
+                //                     i.remove.icon
+                .content
+                    +published
+                    if is_admin
+                        +edit_author
+                .ui.basic.center.aligned.segment
                     +session_edit_button
-                else if isInRole 'dev'
-                    +session_edit_button
-                //     +delete_button
-                    // +edit_parent_id
-                    // |id: #{_id}
-                    // +type
-        if editing                    
-            .content
-                each child_view_fields
-                    +Template.dynamic template=this data=doc
-            .content
-                each child_custom_fields
-                    +custom_field_input label=label slug=slug
-            .content
-                .ui.header Custom Properties
-                .ui.labeled.input
-                    .ui.basic.label key
-                    input.custom_key(type='text')
-                .ui.labeled.input
-                    .ui.basic.label value
-                    input.custom_value(type='text')
-                #add_key_value.ui.basic.icon.circular.button
-                    i.plus.icon
-                .ui.list
-                    each custom_key_values
-                        .item
-                            .ui.basic.label #{key}: #{value}                        
-                            .remove_custom_field.ui.basic.small.circular.icon.button
-                                i.remove.icon
-            .content
-                +published
-                if isInRole 'dev'
-                    +edit_author
-            .content
-                +session_edit_button
-                +delete_button
+                    +delete_button
 
 
 template(name='custom_field_input')
@@ -208,13 +208,11 @@ template(name='view_custom_field')
 template(name='session_edit_button')
     if currentUser
         if editing
-            .save_doc.ui.basic.large.circular.button(class=button_classes)
-                i.icon
-                    +icon48 name="checkmark" classes='ui mini inline image'
-                |Save
+            .save_doc.ui.basic.large.circular.icon.button
+                +icon96 name="checkmark" classes='ui mini inline image'
         else
-            .edit_this.ui.basic.icon.large.circular.button(title="Edit #{tags}" class=button_classes)
-                +icon24 name="edit" classes='ui mini inline image'
+            .edit_this.ui.basic.icon.big.circular.button
+                +icon48 name="edit" classes='ui mini inline image'
                 // i.icon
                 // |Edit
         

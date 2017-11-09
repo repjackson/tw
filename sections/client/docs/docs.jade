@@ -89,27 +89,28 @@ template(name='view_doc')
                                         +dots100 name=older_sibling.icon_class classes='ui mini spaced image'
                         
             .centered.row
-                unless page_editing
-                    unless grid_view
-                        .four.wide.center.aligned.column
-                            if currentUser
-                                if can_add
-                                    #user_add.ui.large.circular.basic.icon.button
-                                        +icon48 name='plus' classes='ui mini inline image'
-                                        // | #{child_template}
-                            if session_completion
-                                #new_session.ui.blue.button New Session
-                            .ui.hidden.divider
-                            if theme_tags_facet
-                                +theme_facet
-                            if intention_tags_facet
-                                +intention_facet
-                            if location_tags_facet
-                                +location_facet
-                            if timestamp_facet
-                                +timestamp_facet
-                            if username_facet
-                                +username_facet
+                if can_view_facet_bar
+                    .four.wide.center.aligned.column
+                        if currentUser
+                            if can_add
+                                #user_add.ui.large.circular.basic.icon.button
+                                    +icon48 name='plus' classes='ui mini inline image'
+                                    // | #{child_template}
+                        if session_completion
+                            #new_session.ui.blue.button New Session
+                        .ui.hidden.divider
+                        if theme_tags_facet
+                            +theme_facet
+                        if keyword_facet
+                            +keyword_facet
+                        if intention_tags_facet
+                            +intention_facet
+                        if location_tags_facet
+                            +location_facet
+                        if timestamp_facet
+                            +timestamp_facet
+                        if username_facet
+                            +username_facet
                 div(class=main_column_class)
                     if page_editing
                         .ui.styled.fluid.accordion
@@ -183,19 +184,27 @@ template(name='view_doc')
                     if editing
                         .six.wide.column
                             +doc_editing_sidebar
-                    else
-                        unless grid_view
-                            .three.wide.center.aligned.column
-                                if view_published_filter
-                                    +published_filter
-                                if viewing_public
-                                    #toggle_view_mode.ui.icon.basic.circular.button 
-                                        +icon48 name='users' classes='ui spaced image'
-                                else
-                                    #toggle_view_mode.ui.icon.basic.circular.button
-                                        +icon48 name='customer' classes='ui spaced image'
-                                if can_bookmark
-                                    +bookmark_filter
+                if can_see_filter_bar
+                    .three.wide.center.aligned.column
+                        if view_published_filter
+                            +published_filter
+                        if viewing_public
+                            #toggle_view_mode.ui.icon.basic.circular.button 
+                                +icon48 name='users' classes='ui spaced image'
+                        else
+                            #toggle_view_mode.ui.icon.basic.circular.button
+                                +icon48 name='customer' classes='ui spaced image'
+                        if can_bookmark
+                            +bookmark_filter
+                        if can_complete
+                            +complete_filter
+                        if can_approve
+                            +approved_filter
+                        if can_mark_read
+                            +read_filter
+                                
+                                    
+                                    
 template(name='doc_editing_sidebar')
     .ui.styled.fluid.accordion
         h3.title
@@ -213,6 +222,7 @@ template(name='doc_editing_sidebar')
             i.dropdown.icon
         .content
             +toggle_key key='theme_tags_facet' icon='hashtag' label='Theme Tags'
+            +toggle_key key='keyword_facet' icon='tags' label='Analyzed Keywords'
             +toggle_key key='intention_tags_facet' icon='spotlight' label='Intention Tags'
             +toggle_key key='location_tags_facet' icon='geo-fence' label='Location Tags'
             +toggle_key key='username_facet' icon='user' label='Authors'

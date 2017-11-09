@@ -27,10 +27,9 @@ Template.view_doc.onCreated ->
             view_public = Session.get 'view_public'
             view_published = null
                 # if Session.equals('admin_mode', true) then Session.get('view_published') else true 
-            view_read = null
-            view_bookmarked = null
-            view_resonates = null
-            view_complete = null
+            view_read = Session.get 'view_read'
+            view_bookmarked = Session.get 'view_bookmarked'
+            view_complete = Session.get 'view_complete'
             view_images = null
             inline_editing = Session.get('inline_editing')
 
@@ -76,23 +75,20 @@ Template.view_doc.helpers
                 number: 1
                 timestamp: -1
 
-
-    components: ->        
+    components: ->
         Docs.find
             # type: 'component'
             parent_id: 'MzHSPbvCYPngq2Dcz'
             
-
     slug_exists: ->
         doc = Docs.findOne FlowRouter.getParam('doc_id')
         # if doc["#{@slug}"]? then console.log "#{@slug} exists" else console.log "#{@slug} no" 
         if doc["#{@slug}"]? then true else false
         
-        
     main_column_class: -> 
         if Session.equals 'page_editing', true 
             'ten wide column' 
-        else if @child_view is 'grid'
+        else if @child_view is 'grid' or Session.get('inline_editing')
             'fourteen wide column'
         else
             'eight wide column'
@@ -118,7 +114,6 @@ Template.view_doc.helpers
     list_view: -> @child_view is 'list'
     card_view: -> @child_view is 'cards'
     answer_view: -> @child_view is 'answers'
-    check_ins_view: -> @child_view is 'check_ins'
     q_a_view: -> @child_view is 'q_a'
     grandchild_list_view: -> @child_view is 'grandchild_list'
     quiz_view: -> @child_view is 'quiz'
@@ -126,6 +121,17 @@ Template.view_doc.helpers
     
     viewing_public: -> Session.equals 'view_public', true    
     
+    can_see_filter_bar: -> 
+        if Session.get('inline_editing') or @child_view is 'grid' or Session.get('page_editing') 
+            false
+        else
+            true
+    
+    can_view_facet_bar: ->
+        if Session.get('inline_editing') or @child_view is 'grid' or Session.get('page_editing') 
+            false
+        else
+            true
     
 Template.view_doc.events
     'click .mark_read': (e,t)-> 

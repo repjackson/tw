@@ -238,8 +238,11 @@ template(name='content')
             label #{label}
             .froala-container
                 +froalaReactive getFEContext
+        +call_watson
     else
         |!{content}
+    if watson.keywords
+        +analyzed_watson_keywords
     
 template(name='image_id')
     if editing

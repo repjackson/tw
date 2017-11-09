@@ -48,10 +48,10 @@ template(name='user_pill')
         .content
             .header
                 img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
-                |#{name}
-            .description
-                each five_tags
-                    .ui.basic.small.label #{this}
+                |#{username}
+            // .description
+            //     each five_tags
+            //         .ui.basic.small.label #{this}
 
 template(name='tag_pill')
     .item

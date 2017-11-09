@@ -56,7 +56,7 @@ Template.call_watson.events
                 # 'semantic_roles': {}
                 'sentiment': {}
         Meteor.call 'call_watson', parameters, @_id, ->
-            Bert.alert "Transaction with Content Analysis created.", 'success', 'growl-top-right'
+            # Bert.alert "Transaction with Content Analysis created.", 'success', 'growl-top-right'
 
 
 

@@ -62,9 +62,6 @@ Template.session_edit_button.events
     'click .edit_this': -> Session.set 'inline_editing', @_id
     'click .save_doc': -> Session.set 'inline_editing', null
 
-Template.session_edit_button.helpers
-    button_classes: -> Template.currentData().classes
-
 Template.delete_button.onCreated ->
     @confirming = new ReactiveVar(false)
             
