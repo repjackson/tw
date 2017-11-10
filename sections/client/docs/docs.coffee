@@ -7,11 +7,10 @@ FlowRouter.route '/view/:doc_id',
 
 Template.view_doc.onCreated ->
     @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
-    @autorun -> Meteor.subscribe 'doc', Session.get('inline_editing')
+    # @autorun -> Meteor.subscribe 'doc', Session.get('inline_editing')
     # @autorun -> Meteor.subscribe 'my_children', FlowRouter.getParam('doc_id')
-    @autorun -> Meteor.subscribe 'usernames'
-    @autorun -> Meteor.subscribe 'components'
-
+    # @autorun -> Meteor.subscribe 'usernames'
+    # @autorun -> Meteor.subscribe 'components'
     @autorun => 
         Meteor.subscribe('facet', 
             selected_theme_tags.array()
@@ -19,6 +18,7 @@ Template.view_doc.onCreated ->
             selected_location_tags.array()
             selected_intention_tags.array()
             selected_timestamp_tags.array()
+            selected_keywords.array()
             type = null
             author_id = null
             parent_id = FlowRouter.getParam('doc_id')
@@ -58,22 +58,27 @@ Template.view_doc.helpers
                 number: next_number
 
     children: ->
-        if Session.get 'inline_editing'
-            Docs.find Session.get('inline_editing')
+        doc = Docs.findOne FlowRouter.getParam('doc_id')
         
-        else if Roles.userIsInRole(Meteor.userId(), 'admin')
-            Docs.find {
-                parent_id: FlowRouter.getParam 'doc_id'
-            }, sort: 
-                number: 1
-                timestamp: -1
-        else
-            Docs.find {
-                parent_id: FlowRouter.getParam 'doc_id'
-                published: 1
-            }, sort: 
-                number: 1
-                timestamp: -1
+        if doc
+            if Session.get 'inline_editing'
+                Docs.find Session.get('inline_editing')
+            
+            else if Roles.userIsInRole(Meteor.userId(), 'admin')
+                Docs.find {
+                    parent_id: FlowRouter.getParam 'doc_id'
+                    }, {
+                        sort: { number: 1, timestamp: -1}
+                        limit: parseInt doc.result_limit
+                        }
+            else
+                Docs.find {
+                    parent_id: FlowRouter.getParam 'doc_id'
+                    published: 1
+                    }, {
+                        sort: { number: 1, timestamp: -1} 
+                        limit: parseInt doc.result_limit
+                        }
 
     components: ->
         Docs.find

@@ -1,16 +1,16 @@
 @selected_keywords = new ReactiveArray []
 
 Template.keyword_facet.onCreated ->
-    @autorun => 
-        Meteor.subscribe('facet', 
-            selected_theme_tags.array()
-            selected_author_ids.array()
-            selected_location_tags.array()
-            selected_intention_tags.array()
-            selected_timestamp_tags.array()
-            type=@data.type
-            author_id=@data.author_id
-            )
+    # @autorun => 
+    #     Meteor.subscribe('facet', 
+    #         selected_theme_tags.array()
+    #         selected_author_ids.array()
+    #         selected_location_tags.array()
+    #         selected_intention_tags.array()
+    #         selected_timestamp_tags.array()
+    #         type=@data.type
+    #         author_id=@data.author_id
+    #         )
 
 Template.keyword_facet.helpers
     keywords: ->

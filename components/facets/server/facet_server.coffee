@@ -4,6 +4,7 @@ Meteor.publish 'facet', (
     selected_location_tags
     selected_intention_tags
     selected_timestamp_tags
+    selected_keywords
     type
     author_id
     parent_id
@@ -31,6 +32,7 @@ Meteor.publish 'facet', (
         if selected_location_tags.length > 0 then match.location_tags = $all: selected_location_tags
         if selected_intention_tags.length > 0 then match.intention_tags = $all: selected_intention_tags
         if selected_timestamp_tags.length > 0 then match.timestamp_tags = $all: selected_timestamp_tags
+        if selected_keywords.length > 0 then match.selected_keywords = $all: selected_keywords
         
         if tag_limit then limit=tag_limit else limit=50
         if author_id then match.author_id = author_id
@@ -64,7 +66,8 @@ Meteor.publish 'facet', (
         if view_images? then match.components?.image = view_images
         
         if editing_id
-            match._id = $ne: editing_id
+            # match._id = $ne: editing_id
+            match._id = editing_id
         
         theme_tag_cloud = Docs.aggregate [
             { $match: match }

@@ -6,6 +6,7 @@
 @Docs = new Meteor.Collection 'docs'
 @Author_ids = new Meteor.Collection 'author_ids'
 @Participant_ids = new Meteor.Collection 'participant_ids'
+@Watson_keywords = new Meteor.Collection 'watson_keywords'
 
 Docs.before.insert (userId, doc)=>
     timestamp = Date.now()
