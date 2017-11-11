@@ -56,6 +56,9 @@ template(name='answer')
                             .ui.tiny.basic.label #{name}
                         // img.ui.avatar.image(src="{{c.url profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
 
+
+
+
 template(name='q_a')
     .ui.stackable.grid
         .ui.four.wide.column
@@ -93,7 +96,11 @@ template(name='child_view')
         .content
             unless editing
                 if title
-                    .ui.header 
+                    a.ui.header(href="/view/#{_id}") 
+                        if number
+                            |#{number}:
+                        if icon_class
+                            +icon48 name=icon_class classes='ui mini inline image'
                         | #{title}
                 if end_date
                     .content 
@@ -148,13 +155,19 @@ template(name='child_view')
                         +voting
                     if doc.can_complete
                         +mark_complete_button
+                    if doc.can_reply
+                        +reply_button
                 .content
                     if isInRole 'admin'
                         +published_label
-                    +view_full_button
                     // +mark_read
+                    unless doc.can_reply
+                        .ui.basic.circular.label(data-tooltip="#{child_count} Child Documents")
+                            +icon48 name="flow-chart" classes='ui mini inline image'
+                            |#{child_count}
                     +author_info
                     |#{when}
+                    +view_full_button
                     if is_author
                         +session_edit_button
                     else if isInRole 'dev'
@@ -163,6 +176,20 @@ template(name='child_view')
                         // +edit_parent_id
                         // |id: #{_id}
                         // +type
+                    
+                if doc.can_reply
+                    if child_count
+                        .ui.styled.fluid.accordion
+                            h3.title
+                                +icon96 name="response" classes='ui mini inline image'
+                                | #{child_count} Responses
+                                i.dropdown.icon
+                            .content
+                                .ui.divided.list
+                                    each grandchildren
+                                        .item
+                                            |!{content}
+                    
             if editing                    
                 .content
                     each child_view_fields

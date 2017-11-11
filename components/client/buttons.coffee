@@ -34,7 +34,7 @@ Template.voting.events
             $(e.currentTarget).closest('.vote_up').transition('pulse')
         else FlowRouter.go '/sign-in'
 
-    'click .vote_down': -> 
+    'click .vote_down': (e,t)-> 
         if Meteor.userId() 
             Meteor.call 'vote_down', @_id
             $(e.currentTarget).closest('.vote_down').transition('pulse')
@@ -145,7 +145,7 @@ Template.mark_doc_complete_button.events
 Template.bookmark_button.helpers
     bookmark_button_class: -> 
         if Meteor.user()
-            if @bookmarked_ids and Meteor.userId() in  @bookmarked_ids then 'teal' else 'basic'
+            if @bookmarked_ids and Meteor.userId() in  @bookmarked_ids then 'blue' else 'basic'
         else 'basic disabled'
         
     bookmarked: -> Meteor.user()?.bookmarked_ids and @_id in Meteor.user().bookmarked_ids
@@ -164,3 +164,14 @@ Template.bookmark_button.events
 Template.toggle_editing_button.events
     'click #toggle_editing': -> Session.set 'page_editing', true
     'click #toggle_off_editing': -> Session.set 'page_editing', false
+    
+    
+Template.reply_button.events
+    'click .reply': ->
+        # console.log @
+        child_id = Docs.insert
+            parent_id: @_id
+            type: 'reply'
+        Session.set 'inline_editing', child_id
+
+    

@@ -179,13 +179,13 @@ publishComposite 'doc', (id, ancestor_levels, descendent_levels)->
             #                 Meteor.users.find
             #                     _id: child_doc.author_id
             #         }
-            #         # {
-            #         #     #  granchild doc
-            #         #     find: (child_doc)->
-            #         #         # console.log child_doc
-            #         #         Docs.find
-            #         #             parent_id: child_doc._id
-            #         # }
+            #         {
+            #             #  granchild doc
+            #             find: (child_doc)->
+            #                 # console.log child_doc
+            #                 Docs.find
+            #                     parent_id: child_doc._id
+            #         }
             #     ]
             # }
         ]

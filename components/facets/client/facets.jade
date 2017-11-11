@@ -4,7 +4,8 @@ template(name='theme_facet')
     .ui.left.icon.small.inline.input
         i.search.icon
         +inputAutocomplete settings=settings id="search" class="" autocomplete="off" placeholder='Search...'
-    // |&nbsp;    
+    // |&nbsp;  
+    .ui.hidden.fitted.divider
     if selected_theme_tags
         #clear_theme_tags.ui.blue.icon.circular.button
             i.remove.icon

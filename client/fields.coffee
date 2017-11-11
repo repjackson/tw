@@ -62,6 +62,8 @@ Template.tags.events
         # console.log("selected ", doc)
         Docs.update Template.currentData()._id,
             $addToSet: tags: doc.name
+        Meteor.call 'calculate_tag_count', Template.currentData()._id
+
         $('#theme_tag_select').val('')
    
     'keyup #theme_tag_select': (e,t)->
@@ -73,6 +75,7 @@ Template.tags.events
                     Docs.update Template.currentData()._id,
                         $addToSet: tags: val
                     $('#theme_tag_select').val ''
+                    Meteor.call 'calculate_tag_count', Template.currentData()._id
             # when 8
             #     if val.length is 0
             #         result = Docs.findOne(Template.currentData()._id).tags.slice -1

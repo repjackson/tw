@@ -10,7 +10,7 @@ Template.view_doc.onCreated ->
     # @autorun -> Meteor.subscribe 'doc', Session.get('inline_editing')
     # @autorun -> Meteor.subscribe 'my_children', FlowRouter.getParam('doc_id')
     # @autorun -> Meteor.subscribe 'usernames'
-    # @autorun -> Meteor.subscribe 'components'
+    @autorun -> Meteor.subscribe 'components'
     @autorun => 
         Meteor.subscribe('facet', 
             selected_theme_tags.array()
@@ -24,6 +24,7 @@ Template.view_doc.onCreated ->
             parent_id = FlowRouter.getParam('doc_id')
             tag_limit = 20
             doc_limit = 20
+            view_voted = Session.get 'view_voted'
             view_public = Session.get 'view_public'
             view_published = null
                 # if Session.equals('admin_mode', true) then Session.get('view_published') else true 
@@ -34,11 +35,14 @@ Template.view_doc.onCreated ->
             inline_editing = Session.get('inline_editing')
 
             )
+Template.view_doc.onRendered ->
+    selected_theme_tags.clear()
 
 Template.view_doc.helpers
-    doc: -> Docs.findOne FlowRouter.getParam('doc_id')
-    doc_template: -> Docs.findOne type: 'doc_template'
-    doc: -> Docs.findOne FlowRouter.getParam('doc_id')
+    doc: -> 
+        doc = Docs.findOne FlowRouter.getParam('doc_id')
+        # console.log doc
+        return doc
     younger_sibling: ->
         doc = Docs.findOne FlowRouter.getParam('doc_id')
         if doc.number
@@ -59,25 +63,17 @@ Template.view_doc.helpers
 
     children: ->
         doc = Docs.findOne FlowRouter.getParam('doc_id')
-        
+        limit = if doc.result_limit then parseInt(doc.result_limit) else 20 
         if doc
             if Session.get 'inline_editing'
                 Docs.find Session.get('inline_editing')
             
-            else if Roles.userIsInRole(Meteor.userId(), 'admin')
-                Docs.find {
-                    parent_id: FlowRouter.getParam 'doc_id'
-                    }, {
-                        sort: { number: 1, timestamp: -1}
-                        limit: parseInt doc.result_limit
-                        }
             else
                 Docs.find {
                     parent_id: FlowRouter.getParam 'doc_id'
-                    published: 1
                     }, {
-                        sort: { number: 1, timestamp: -1} 
-                        limit: parseInt doc.result_limit
+                        sort: { points: -1, number: 1,  timestamp: -1}
+                        limit: limit
                         }
 
     components: ->
@@ -122,7 +118,7 @@ Template.view_doc.helpers
     q_a_view: -> @child_view is 'q_a'
     grandchild_list_view: -> @child_view is 'grandchild_list'
     quiz_view: -> @child_view is 'quiz'
-    poems_view: -> @child_view is 'poems'
+    flash_card_view: -> @child_view is 'flash_cards'
     
     viewing_public: -> Session.equals 'view_public', true    
     
@@ -168,6 +164,7 @@ Template.view_doc.events
     'click #user_add': ->
         new_id = Docs.insert
             parent_id: FlowRouter.getParam('doc_id')
+        Session.set 'view_voted', null 
         Session.set 'inline_editing', new_id
       
     'click #toggle_admin_mode': ->
@@ -178,7 +175,8 @@ Template.view_doc.events
         if Session.equals('view_public', true) then Session.set('view_public', false)
         else if Session.equals('view_public', false) then Session.set('view_public', true)
 
-
+Template.doc_editing_sidebar.onCreated ->
+    # @autorun -> Meteor.subscribe 'components'
 
 
 Template.doc_editing_sidebar.helpers

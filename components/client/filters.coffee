@@ -101,4 +101,15 @@ Template.bookmark_filter.helpers
     view_unbookmarked_class: -> if Session.equals('view_bookmarked', false) then 'blue' else 'basic'    
     
     
+Template.vote_filter.events
+    'click #view_upvoted': (e,t)-> if Session.equals('view_voted', 1) then Session.set('view_voted', null) else Session.set('view_voted', 1)
+    'click #view_unvoted': (e,t)-> if Session.equals('view_voted', 0) then Session.set('view_voted', null) else Session.set('view_voted', 0)
+    'click #view_downvoted': (e,t)-> if Session.equals('view_voted', -1) then Session.set('view_voted', null) else Session.set('view_voted', -1)
+    
+Template.vote_filter.helpers
+    view_upvoted_class: -> if Session.equals('view_voted', 1) then 'blue' else 'basic'
+    view_unvoted_class: -> if Session.equals('view_voted', 0) then 'blue' else 'basic'    
+    view_downvoted_class: -> if Session.equals('view_voted', -1) then 'blue' else 'basic'    
+    
+    
     

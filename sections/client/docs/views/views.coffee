@@ -17,6 +17,15 @@ Template.sessions.helpers
             author_id: Meteor.userId()
             parent_id: FlowRouter.getParam('doc_id')
 
+Template.child_view.onCreated ->
+    # @autorun => Meteor.subscribe 'child_docs', @data._id
+Template.child_view.onRendered ->
+    @autorun =>
+        if @subscriptionsReady()
+            Meteor.setTimeout ->
+                $('.ui.accordion').accordion()
+            , 1000
+
 
 Template.child_view.helpers
     child_view_fields: ->
@@ -27,6 +36,9 @@ Template.child_view.helpers
         # doc = Docs.findOne FlowRouter.getParam('doc_id')
         Template.parentData()
     
+    grandchildren: ->
+        parent = Template.parentData()
+        Docs.find parent_id: @_id 
     has_title: ->
         doc = Docs.findOne FlowRouter.getParam('doc_id')
         'title' in doc.child_fields

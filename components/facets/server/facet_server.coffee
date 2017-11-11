@@ -10,6 +10,7 @@ Meteor.publish 'facet', (
     parent_id
     tag_limit
     doc_limit
+    view_voted
     view_public
     view_published
     view_read
@@ -50,11 +51,21 @@ Meteor.publish 'facet', (
             match.published = -1
             # match.
             
+        if view_voted is 1
+            match.upvoters = $in: [Meteor.userId()]
+        else if view_voted is 0
+            match.upvoters = $nin: [Meteor.userId()]
+            match.downvoters = $nin: [Meteor.userId()]
+        else if view_voted is -1
+            match.downvoters = $in: [Meteor.userId()]
+            
+            
         if view_public is true
             match.published = $in: [1,0]
-        else
+        else if Meteor.userId()
             match.author_id = Meteor.userId()
-            
+        # else
+        #     match.published = $in: [1,0]
             
         if view_bookmarked?
             if view_bookmarked is true then match.bookmarked_ids = $in: [@userId]

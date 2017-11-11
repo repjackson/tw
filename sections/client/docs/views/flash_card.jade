@@ -1,0 +1,39 @@
+template(name='flash_cards')
+    .ui.cards
+        each flash_cards
+            +flash_card
+
+
+template(name='flash_card')
+    if inline_editing
+        .ui.card
+            .content
+                .ui.header Front
+                .ui.input
+                    textarea.front(rows='3') #{front}
+                .ui.header Back
+                .ui.input
+                    textarea.back(rows='3') #{back}
+                .ui.divider
+                +tags
+                +delete_button
+                +session_edit_button
+    else
+        .ui.card
+            // .image
+            //     img(src='/images/avatar/large/steve.jpg')
+            .content
+                .description
+                    .ui.text.shape
+                        .sides
+                            .ui.header.side.active
+                                | #{front}
+                            .ui.header.side
+                                | #{back}
+            .extra.content
+                a.ui.basic.icon.circular.button.flip
+                    i.large.retweet.icon
+                +voting
+                +session_edit_button
+
+

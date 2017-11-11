@@ -41,6 +41,15 @@ template(name='resonates_filter')
         #view_non_resonates.ui.button(class=view_non_resonates_class data-tooltip='View Only Non-Resonates')
             +icon48 name='unavailable' classes='ui mini image'
 
+template(name='vote_filter')
+    .ui.buttons
+        #view_upvoted.ui.button(class=view_upvoted_class data-tooltip='View Upvoted') 
+            +icon48 name='thumbs-up' classes='ui mini image'
+        #view_unvoted.ui.button(class=view_unvoted_class data-tooltip='View Unvoted')
+            +icon48 name='unchecked_checkmark' classes='ui mini image'
+        #view_downvoted.ui.button(class=view_downvoted_class data-tooltip='View Downvoted')
+            +icon48 name='thumbs-down' classes='ui mini image'
+
 
 
 // lightbank components

@@ -28,28 +28,33 @@ Docs.before.insert (userId, doc)=>
         doc.timestamp_tags = date_array
 
     doc.author_id = Meteor.userId()
-    doc.tag_count = doc.tags?.length
+    # doc.tag_count = doc.tags?.length
     doc.points = 0
     # doc.components = {}
     doc.read_by = [Meteor.userId()]
     doc.upvoters = []
     doc.downvoters = []
+    doc.completion_type = 'none'
+    doc.access = 'available'
     doc.published = 0
     return
 
-Docs.after.update ((userId, doc, fieldNames, modifier, options) ->
-    if doc.tags
-        doc.tag_count = doc.tags.length
-    # console.log doc
-    # doc.child_count = Meteor.call('calculate_child_count', doc._id)
-    # console.log Meteor.call 'calculate_child_count', doc._id, (err, res)-> return res
-), fetchPrevious: true
+# Docs.after.update ((userId, doc, fieldNames, modifier, options) ->
+#     # if doc.tags
+#     # doc.tag_count = doc.tags.length
+#     # console.log 'doc tags length',doc.tags.length
+#     # console.log 'modifier', modifier
+#     # doc.child_count = Meteor.call('calculate_child_count', doc._id)
+#     Meteor.call 'calculate_tag_count', doc._id, ->
+# ), fetchPrevious: true
 
 
 # Docs.before.update (userId, doc, fieldNames, modifier, options) ->
-#   modifier.$set = modifier.$set or {}
-#   modifier.$set.tag_count = doc.tags.length
-#   return
+# #   modifier.$set = modifier.$set or {}
+#     console.log doc.tags.length
+#     console.log 'modifier', modifier
+#     # modifier.$set.tag_count = doc.tags.length
+#     return
 
 
 Docs.after.insert (userId, doc)->
@@ -117,6 +122,14 @@ Meteor.methods
     add: (tags=[])->
         id = Docs.insert {}
         return id
+
+    calculate_tag_count: (doc_id)->
+        doc = Docs.findOne doc_id
+        tag_count = doc.tags.length
+        Docs.update doc_id, 
+            $set: tag_count: tag_count
+        
+
 
     update_rating: (session_id, rating, question_id)->
         Docs.update {_id:session_id,  "ratings.question_id": question_id},
