@@ -1,9 +1,9 @@
 
 template(name='theme_facet')
     // +icon48 name='hashtag' classes='ui mini inline image' tooltip='Browse Themes'
-    // .ui.left.icon.small.inline.input
-    //     i.search.icon
-    //     +inputAutocomplete settings=settings id="search" class="" autocomplete="off" placeholder='Search...'
+    .ui.left.icon.small.inline.input
+        i.search.icon
+        +inputAutocomplete settings=settings id="search" class="" autocomplete="off" 
     // |&nbsp;  
     // .ui.hidden.fitted.divider
     if selected_tags
@@ -21,13 +21,43 @@ template(name='theme_facet')
 
 
 template(name='home')
-    if currentUser
-        // #user_add.ui.large.basic.icon.button
-        //     i.plus.icon
-        .ui.icon.fluid.input
-            input#quick_add(type='text')
+    if editing
+        +edit
+    else
+        if currentUser
+            #add.ui.large.icon.button
+                i.plus.icon
+            // .ui.icon.fluid.input
+            //     input#quick_add(type='text')
+            //     i.plus.icon
+                    
+        .ui.large.label            
+            +loginButtons
+        +theme_facet
+    
+    
+template(name='edit')
+    with doc
+        .ui.icon.input
             i.plus.icon
-                
-    .ui.basic.large.label            
-        +loginButtons
-    +theme_facet
+            input#add_tag(type='text' maxlength='50' )
+        each tags
+            // a.ui.basic.button.doc_tag #{this}
+            .ui.large.button.doc_tag
+                i.remove.icon
+                |#{this}
+        div
+            #save.ui.large.icon.button
+                i.check.icon
+            +delete_button    
+
+    
+template(name='delete_button')
+    unless confirming
+        .delete.ui.icon.large.button
+            i.remove.icon
+    else
+        .ui.large.button.cancel cancel
+        .ui.large.button.confirm confirm
+        
+        

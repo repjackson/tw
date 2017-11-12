@@ -1,8 +1,3 @@
-FlowRouter.route '/view/:doc_id', 
-    name: 'view'
-    action: (params) ->
-        BlazeLayout.render 'layout',
-            main: 'home'
 @selected_tags = new ReactiveArray []
 
 Accounts.ui.config
@@ -18,9 +13,9 @@ Template.theme_facet.helpers
             Tags.find { 
                 # type:Template.currentData().type
                 count: $lt: doc_count
-                }, limit:50
+                }, limit:100
         else
-            Tags.find({}, limit:50)
+            Tags.find({}, limit:100)
             
             
     cloud_tag_class: ->
@@ -77,31 +72,16 @@ Template.theme_facet.events
 
 
 Template.home.onCreated ->
-    # @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
-    # @autorun -> Meteor.subscribe 'doc', Session.get('inline_editing')
-    # @autorun -> Meteor.subscribe 'my_children', FlowRouter.getParam('doc_id')
-    # @autorun -> Meteor.subscribe 'usernames'
-    # @autorun -> Meteor.subscribe 'components'
     @autorun => 
         Meteor.subscribe('facet', 
             selected_tags.array()
-            # inline_editing = Session.get('inline_editing')
+            # editing = Session.get('editing')
 
             )
 Template.home.onRendered ->
 
 Template.home.helpers
-    children: ->
-        doc = Docs.findOne FlowRouter.getParam('doc_id')
-        if doc
-            if Session.get 'inline_editing'
-                Docs.find Session.get('inline_editing')
-            
-            else
-                Docs.find {
-                    }, {
-                        sort: { timestamp: -1, points: -1, number: 1  }
-                        }
+    editing: -> Session.get 'editing'
     
 Template.home.events
     'keyup #quick_add': (e,t)->
@@ -119,41 +99,57 @@ Template.home.events
 
 
 
-    'click #user_add': ->
-        new_id = Docs.insert
-            parent_id: FlowRouter.getParam('doc_id')
-        Session.set 'inline_editing', new_id
-        
-        
-    "autocompleteselect input": (event, template, doc) ->
-        # console.log("selected ", doc)
-        Docs.update Template.currentData()._id,
-            $addToSet: tags: doc.name
-        Meteor.call 'calculate_tag_count', Template.currentData()._id
+    'click #add': ->
+        new_id = 
+            Docs.insert
+                timestamp: Date.now()
+                author_id: Meteor.userId()
 
-        $('#theme_tag_select').val('')
-   
-    'keyup #theme_tag_select': (e,t)->
+        Session.set 'editing', new_id
+        
+        
+Template.delete_button.onCreated ->
+    @confirming = new ReactiveVar(false)
+            
+Template.delete_button.helpers
+    confirming: -> Template.instance().confirming.get()
+
+Template.delete_button.events
+    'click .delete': (e,t)-> t.confirming.set true
+
+    'click .cancel': (e,t)-> t.confirming.set false
+    'click .confirm': (e,t)-> 
+        if Session.get 'editing' then Session.set 'editing', null
+        Docs.remove @_id
+            
+
+    
+Template.edit.helpers
+    doc: -> Docs.findOne Session.get('editing')
+    
+Template.edit.events
+    'keyup #add_tag': (e,t)->
         e.preventDefault()
-        val = $('#theme_tag_select').val().toLowerCase().trim()
+        val = $('#add_tag').val().toLowerCase().trim()
         switch e.which
             when 13 #enter
                 unless val.length is 0
-                    Docs.update Template.currentData()._id,
+                    Docs.update Session.get('editing'),
                         $addToSet: tags: val
-                    $('#theme_tag_select').val ''
-                    Meteor.call 'calculate_tag_count', Template.currentData()._id
+                    $('#add_tag').val ''
             # when 8
             #     if val.length is 0
             #         result = Docs.findOne(Template.currentData()._id).tags.slice -1
-            #         $('#theme_tag_select').val result[0]
+            #         $('#add_tag').val result[0]
             #         Docs.update Template.currentData()._id,
             #             $pop: tags: 1
 
 
     'click .doc_tag': (e,t)->
         tag = @valueOf()
-        Docs.update Template.currentData()._id,
+        Docs.update Session.get('editing'),
             $pull: tags: tag
-        $('#theme_tag_select').val(tag)
-        
+        $('#add_tag').val(tag)
+    
+    'click #save': ->
+        Session.set 'editing', null
