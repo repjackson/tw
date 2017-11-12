@@ -3,6 +3,73 @@ FlowRouter.route '/view/:doc_id',
     action: (params) ->
         BlazeLayout.render 'layout',
             main: 'view_doc'
+@selected_theme_tags = new ReactiveArray []
+
+Template.theme_facet.helpers
+    theme_tags: ->
+        
+        doc_count = Docs.find( parent_id:FlowRouter.getParam('doc_id') ).count()
+        # if selected_theme_tags.array().length
+        if 0 < doc_count < 3
+            Tags.find { 
+                # type:Template.currentData().type
+                count: $lt: doc_count
+                }, limit:20
+        else
+            Tags.find({}, limit:20)
+            
+            
+    cloud_tag_class: ->
+        button_class = []
+        switch
+            when @index <= 5 then button_class.push ' '
+            when @index <= 10 then button_class.push 'small'
+            when @index <= 15 then button_class.push 'tiny '
+            when @index <= 20 then button_class.push ' mini'
+        return button_class
+
+    selected_theme_tags: -> selected_theme_tags.array()
+    settings: -> {
+        position: 'bottom'
+        limit: 10
+        rules: [
+            {
+                collection: Tags
+                field: 'name'
+                matchAll: false
+                template: Template.tag_result
+            }
+            ]
+    }
+
+
+
+Template.theme_facet.events
+    'click .select_theme_tag': -> selected_theme_tags.push @name
+    'click .unselect_theme_tag': -> selected_theme_tags.remove @valueOf()
+    'click #clear_theme_tags': -> selected_theme_tags.clear()
+
+    'keyup #search': (e,t)->
+        e.preventDefault()
+        val = $('#search').val().toLowerCase().trim()
+        switch e.which
+            when 13 #enter
+                switch val
+                    when 'clear'
+                        selected_theme_tags.clear()
+                        $('#search').val ''
+                    else
+                        unless val.length is 0
+                            selected_theme_tags.push val.toString()
+                            $('#search').val ''
+            when 8
+                if val.length is 0
+                    selected_theme_tags.pop()
+                    
+    'autocompleteselect #search': (event, template, doc) ->
+        # console.log 'selected ', doc
+        selected_theme_tags.push doc.name
+        $('#search').val ''
 
 
 Template.view_doc.onCreated ->
@@ -10,15 +77,10 @@ Template.view_doc.onCreated ->
     # @autorun -> Meteor.subscribe 'doc', Session.get('inline_editing')
     # @autorun -> Meteor.subscribe 'my_children', FlowRouter.getParam('doc_id')
     # @autorun -> Meteor.subscribe 'usernames'
-    @autorun -> Meteor.subscribe 'components'
+    # @autorun -> Meteor.subscribe 'components'
     @autorun => 
         Meteor.subscribe('facet', 
             selected_theme_tags.array()
-            selected_author_ids.array()
-            selected_location_tags.array()
-            selected_intention_tags.array()
-            selected_timestamp_tags.array()
-            selected_keywords.array()
             type = null
             author_id = null
             parent_id = FlowRouter.getParam('doc_id')
@@ -28,10 +90,6 @@ Template.view_doc.onCreated ->
             view_public = Session.get 'view_public'
             view_published = null
                 # if Session.equals('admin_mode', true) then Session.get('view_published') else true 
-            view_read = Session.get 'view_read'
-            view_bookmarked = Session.get 'view_bookmarked'
-            view_complete = Session.get 'view_complete'
-            view_images = null
             inline_editing = Session.get('inline_editing')
 
             )
@@ -92,7 +150,7 @@ Template.view_doc.helpers
         else if Session.get('inline_editing')
             'fourteen wide column'
         else
-            'ten wide column'
+            'fourteen wide column'
         # else if @theme_tags_facet or @location_tags_facet or @intention_tags_facet or @username_facet
         #     'eight wide column'
         # else
@@ -174,184 +232,3 @@ Template.view_doc.events
     'click #toggle_view_mode': ->
         if Session.equals('view_public', true) then Session.set('view_public', false)
         else if Session.equals('view_public', false) then Session.set('view_public', true)
-
-Template.doc_editing_sidebar.onCreated ->
-    # @autorun -> Meteor.subscribe 'components'
-
-
-Template.doc_editing_sidebar.helpers
-    toggle_theme_tags_class: -> if @theme_tags_facet is true then 'blue' else 'basic'
-    selected_fields: ->
-        doc = Docs.findOne FlowRouter.getParam('doc_id')
-        keys = _.keys doc
-        Docs.find
-            # type: 'component'
-            parent_id: 'MzHSPbvCYPngq2Dcz'
-            slug: $in: keys
-    
-    child_field_class: ->
-        doc = Docs.findOne FlowRouter.getParam('doc_id')
-        if @slug in doc.child_fields then 'blue' else 'basic'
-    
-    components: ->        
-        Docs.find
-            # type: 'component'
-            parent_id: 'MzHSPbvCYPngq2Dcz'
-
-      
-            
-Template.doc_editing_sidebar.events        
-# Template.field_menu.onCreated ->
-    # @autorun -> Meteor.subscribe 'components'
-    'click #delete_doc': ->
-        swal {
-            title: 'Remove Document?'
-            type: 'warning'
-            animation: true
-            showCancelButton: true
-            closeOnConfirm: true
-            cancelButtonText: 'Cancel'
-            confirmButtonText: 'Remove'
-            confirmButtonColor: '#da5347'
-        }, =>
-            Docs.remove @_id
-            swal 'Removed', 'success'
-            Session.set 'editing', false
-            FlowRouter.go "/view/#{@parent_id}"
-
-    'click .select_child_field': ->
-        doc = Docs.findOne FlowRouter.getParam('doc_id')
-        if doc.child_fields and @slug in doc.child_fields
-            Docs.update FlowRouter.getParam('doc_id'),
-                $pull: "child_fields": @slug
-        else
-            Docs.update FlowRouter.getParam('doc_id'),
-                $addToSet: "child_fields": @slug
-        
-    'click #add_custom_field': (e,t)->
-        doc = Docs.findOne FlowRouter.getParam('doc_id')
-        # console.log t.find
-        custom_field_label = $('.custom_field_label').val()
-        custom_field_slug = $('.custom_field_slug').val()
-        
-        Docs.update FlowRouter.getParam('doc_id'),
-            $addToSet: 
-                "custom_fields": 
-                    label: custom_field_label
-                    slug: custom_field_slug
-        
-        
-    # 'blur .custom_field_label': (e,t)->
-    #     doc = Docs.findOne FlowRouter.getParam('doc_id')
-    #     custom_field_label = $(e.currentTarget).closest('.custom_field_label').val()
-    #     console.log @
-    #     # Docs.update doc._id,
-    #     #     $set: plain: plain
-
-        
-    # 'blur .custom_field_slug': (e,t)->
-    #     doc = Docs.findOne FlowRouter.getParam('doc_id')
-    #     custom_field_slug = $(e.currentTarget).closest('.custom_field_slug').val()
-    #     console.log @
-    #     Docs.update doc._id,
-    #         $set: plain: plain
-
-    'click .remove_custom_field': (e,t)->
-        console.log @
-        doc = Docs.findOne FlowRouter.getParam('doc_id')
-        Docs.update FlowRouter.getParam('doc_id'),
-            $pull: custom_fields: @
-        
-
-Template.field_menu.helpers
-    unselected_fields: ->
-        doc = Docs.findOne FlowRouter.getParam('doc_id')
-        keys = _.keys doc
-        Docs.find
-            # type: 'component'
-            parent_id: 'MzHSPbvCYPngq2Dcz'
-            slug: $nin: keys
-            
-Template.field_menu.events
-    'click .select_component': ->
-        doc = Docs.findOne FlowRouter.getParam('doc_id')
-        slug = @slug
-        # console.log @field_type
-        if @field_type is 'array'
-            Docs.update doc._id,
-                $set: "#{slug}": []
-        else
-            Docs.update doc._id,
-                $set: "#{slug}": ''
-            
-            
-            
-Template.response.onCreated ->
-    @editing = new ReactiveVar(false)
-
-Template.response.helpers
-    editing_mode: -> Template.instance().editing.get()
-    response: -> 
-        Docs.findOne
-            parent_id: FlowRouter.getParam('doc_id')
-            author_id: Meteor.userId()
-            
-Template.response.events
-    'click .edit_this': (e,t)-> t.editing.set true
-    'click .save_doc': (e,t)-> 
-        t.editing.set false
-        Session.set 'inline_editing', null
-        Meteor.call 'calculate_completion', FlowRouter.getParam('doc_id')
-
-    'blur #body_field': (e,t)->
-        body_field = $(e.currentTarget).closest('#body_field').val()
-        Docs.update @_id,
-            $set: body: body_field
-
-
-
-
-        
-Template.doc_editing_sidebar.onRendered ->
-    @autorun =>
-        if @subscriptionsReady()
-            Meteor.setTimeout ->
-                $('.ui.accordion').accordion()
-            , 1000
-            
-# Template.doc_editing_main.onRendered ->
-#     @autorun =>
-#         if @subscriptionsReady()
-#             Meteor.setTimeout ->
-#                 $('.ui.accordion').accordion()
-#             , 1000
-            
-            
-Template.card.events
-    'click .expand_card': (e,t)->
-        $(e.currentTarget).closest('.card').toggleClass 'fluid'
-
-Template.toggle_key.helpers
-    toggle_key_button_class: -> 
-        # console.log @key
-        # console.log Template.parentData()
-        # console.log Template.parentData()["#{@key}"]
-        if @value
-            if Template.parentData()["#{@key}"] is @value then 'blue' else 'basic'
-        else if Template.parentData()["#{@key}"] is true then 'blue' else 'basic'
-
-
-Template.toggle_key.events
-    'click #toggle_key': ->
-        # console.log @
-        if @value
-            Docs.update FlowRouter.getParam('doc_id'), 
-                $set: "#{@key}": "#{@value}"
-        else if Template.parentData()["#{@key}"] is true
-            Docs.update FlowRouter.getParam('doc_id'), 
-                $set: "#{@key}": false
-        else
-            Docs.update FlowRouter.getParam('doc_id'), 
-                $set: "#{@key}": true
-            
-    

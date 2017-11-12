@@ -85,30 +85,12 @@ template(name='voting')
     if is_admin
         |#{points}
 
-template(name='favorite_button')
-    .ui.basic.icon.button.favorite_item(class=favorite_item_class)
-        +icon24 name='heart' classes=''
-        if favorite_count
-            | #{favorite_count}
 
 
 template(name='reply_button')
     .ui.basic.icon.circular.button.reply
         +icon48 name='response' classes='ui inline image'
 
-template(name='mark_complete_button')
-    .mark_complete.ui.circular.icon.button(class=complete_button_class) 
-        if completed
-            +icon96 name='checked-checkbox' classes='ui mini inline image'
-        else
-            +icon96 name='unchecked-checkbox' classes='ui mini inline image'
-        
-template(name='mark_doc_complete_button')
-    .mark_complete.ui.circular.icon.basic.button(class=complete_button_class) 
-        if complete
-            +icon96 name='checked-checkbox' classes='ui mini inline image'
-        else
-            +icon96 name='unchecked-checkbox' classes='ui mini inline image'
         
          
 template(name='bookmark_button')
@@ -118,7 +100,8 @@ template(name='bookmark_button')
         
 template(name='view_full_button')
     a.ui.basic.circular.icon.button(href="/view/#{_id}" class=classes data-tooltip='View Full')
-        +icon48 name="double-right" classes='ui mini inline image'
+        // +icon48 name="double-right" classes='ui mini inline image'
+        i.right.chevron.large.icon
 
 
 template(name='toggle_editing_button')

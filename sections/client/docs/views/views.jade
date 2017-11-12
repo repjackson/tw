@@ -99,147 +99,39 @@ template(name='child_view')
                     a.ui.header(href="/view/#{_id}") 
                         if number
                             |#{number}:
-                        if icon_class
-                            +icon48 name=icon_class classes='ui mini inline image'
-                        | #{title}
-                if end_date
-                    .content 
-                        .ui.header End Date: #{end_date}
-                if slug
-                    .meta Slug: #{slug}
-                if youtube
-                    +youtube
-                if image_id
-                    .image
-                        img(src="{{c.url image_id}}")
-                if image_url
-                    .ui.large.image
-                        img(src=image_url)
-                if content
-                    .content 
-                        .ui.basic.segment
-                            .large130 !{content}
-                        if watson.keywords
-                            +analyzed_watson_keywords
-                        if author_name
-                            h4.ui.header
-                                |- #{author_name}
-                if link
-                    .content
-                        a(href=link target='_blank') #{link}
-                if body
-                    .content #{body}
+                .content 
+                    .ui.basic.segment
+                        .large130 !{content}
                 if tags
                     .content
                         +view_tags
-                // if intention_tags
-                //     .content
-                //         +intention_tags
-                // if location_tags
-                //     .content
-                //         +location_tags
-                if custom_key_values
-                    .content
-                        .ui.list
-                            each custom_key_values
-                                .item
-                                    .ui.basic.label #{key}: #{value}                        
-                if child_custom_fields
-                    .content
-                        each child_custom_fields
-                            +view_custom_field label=label slug=slug
                 .content
-                    if doc.can_bookmark
-                        +bookmark_button
-                    if doc.can_vote
-                        +voting
-                    if doc.can_complete
-                        +mark_complete_button
-                    if doc.can_reply
-                        +reply_button
-                .content
-                    // if isInRole 'admin'
-                    //     +published_label
-                    // +mark_read
-                    unless doc.can_reply
-                        .ui.basic.circular.label(data-tooltip="#{child_count} Child Documents")
-                            +icon48 name="flow-chart" classes='ui mini inline image'
-                            |#{child_count}
+                    |#{child_count}
                     +author_info
                     |#{when}
-                    +view_full_button
                     if is_author
                         +session_edit_button
-                    // else if isInRole 'dev'
-                    //     +session_edit_button
-                    //     +delete_button
-                        // +edit_parent_id
-                        // |id: #{_id}
-                        // +type
-                    
-                if doc.can_reply
-                    if child_count
-                        .ui.styled.fluid.accordion
-                            h3.title
-                                +icon96 name="response" classes='ui mini inline image'
-                                | #{child_count} Responses
-                                i.dropdown.icon
-                            .content
-                                .ui.divided.list
-                                    each grandchildren
-                                        .item
-                                            |!{content}
-                    
+                    +view_full_button
             if editing                    
                 .content
-                    each child_view_fields
-                        +Template.dynamic template=this data=doc
-                .content
-                    each child_custom_fields
-                        +custom_field_input label=label slug=slug
-                // .content
-                //     .ui.header Custom Properties
-                //     .ui.labeled.input
-                //         .ui.basic.label key
-                //         input.custom_key(type='text')
-                //     .ui.labeled.input
-                //         .ui.basic.label value
-                //         input.custom_value(type='text')
-                //     #add_key_value.ui.basic.icon.circular.button
-                //         i.plus.icon
-                //     .ui.list
-                //         each custom_key_values
-                //             .item
-                //                 .ui.basic.label #{key}: #{value}                        
-                //                 .remove_custom_field.ui.basic.small.circular.icon.button
-                //                     i.remove.icon
+                    +tags
+                    +content
                 .content
                     +published
-                    if is_admin
-                        +edit_author
                 .ui.basic.center.aligned.segment
                     +session_edit_button
                     +delete_button
-
-
-template(name='custom_field_input')
-    .ui.labeled.input
-        .ui.basic.label #{label}
-        input.custom_field_input(type='text' value=slug_value)
-
-template(name='view_custom_field')
-    div
-        .ui.basic.label #{label}: #{slug_value}
-        
-        
+                    
 template(name='session_edit_button')
     if currentUser
         if editing
             .save_doc.ui.basic.large.circular.icon.button
-                +icon96 name="checkmark" classes='ui mini inline image'
+                i.large.check.icon
+                // +icon96 name="checkmark" classes='ui mini inline image'
         else
             .edit_this.ui.basic.icon.big.circular.button
-                +icon48 name="edit" classes='ui mini inline image'
+                i.large.pencil.icon
+                // +icon48 name="edit" classes='ui mini inline image'
                 // i.icon
                 // |Edit
         

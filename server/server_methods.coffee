@@ -55,7 +55,12 @@ Meteor.methods
             tags: tags
         console.log result
                 
-                
+    calculate_child_count: (doc_id)->
+        child_count = Docs.find(parent_id: doc_id).count()
+        Docs.update doc_id, 
+            $set: child_count: child_count
+        
+      
                 
     update_username:  (username) ->
         userId = Meteor.userId()

@@ -96,51 +96,6 @@ Template.delete_link.events
         , 1000
 
 
-Template.favorite_button.helpers
-    favorite_count: -> @favorite_count
-    
-    favorite_item_class: -> 
-        if Meteor.userId()
-            if @favoriters and Meteor.userId() in @favoriters then 'red' else 'outline'
-        else 'grey disabled'
-
-
-Template.favorite_button.events
-    'click .favorite_item': (e,t)-> 
-        if Meteor.userId()
-            Meteor.call 'favorite', Template.parentData(0)
-            $(e.currentTarget).closest('.favorite_item').transition('pulse')
-
-        else FlowRouter.go '/sign-in'
-
-
-
-
-
-
-Template.mark_complete_button.helpers
-    complete_button_class: -> 
-        if Meteor.user()
-            if @completed_ids and Meteor.userId() in @completed_ids then 'basic' else 'basic'
-        else 'grey disabled'
-    completed: -> 
-        if Meteor.user()
-            if @completed_ids and Meteor.userId() in @completed_ids then true else false
-        else false
-Template.mark_complete_button.events
-    'click .mark_complete': (e,t)-> 
-        if Meteor.userId() 
-            Meteor.call 'mark_complete', Template.parentData(0)
-            $(e.currentTarget).closest('.mark_complete').transition('pulse')
-        else FlowRouter.go '/sign-in'
-
-
-Template.mark_doc_complete_button.helpers
-    # complete_button_class: -> if @complete then 'blue' else 'basic'
-Template.mark_doc_complete_button.events
-    'click .mark_complete': (e,t)-> 
-        if @complete is true then Docs.update @_id, $set: complete: false else  Docs.update @_id, $set:complete: true
-
 
 Template.bookmark_button.helpers
     bookmark_button_class: -> 

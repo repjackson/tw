@@ -29,10 +29,8 @@ kadira:blaze-layout
 accounts-base@1.4.0
 useraccounts:flow-routing
 useraccounts:semantic-ui
-lepozepo:cloudinary
 momentjs:moment
 reactive-var@1.0.11
-kevohagan:sweetalert
 raix:handlebar-helpers
 matb33:collection-hooks
 mizzao:autocomplete

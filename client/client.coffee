@@ -1,12 +1,8 @@
-$.cloudinary.config
-    cloud_name:"facet"
-
 Session.setDefault 'editing', false
 Session.setDefault 'page_editing', false
 Session.setDefault 'inline_editing', false
 
 
-Session.setDefault 'admin_mode', false
 Session.setDefault 'view_public', true
     
     

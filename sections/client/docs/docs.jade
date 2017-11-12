@@ -1,3 +1,25 @@
+
+template(name='theme_facet')
+    // +icon48 name='hashtag' classes='ui mini inline image' tooltip='Browse Themes'
+    .ui.left.icon.small.inline.input
+        i.search.icon
+        +inputAutocomplete settings=settings id="search" class="" autocomplete="off" placeholder='Search...'
+    // |&nbsp;  
+    // .ui.hidden.fitted.divider
+    if selected_theme_tags
+        #clear_theme_tags.ui.blue.icon.circular.button
+            i.remove.icon
+        each selected_theme_tags
+            .unselect_theme_tag.ui.blue.circular.button
+                strong #{this}
+    each theme_tags
+        .ui.basic.circular.button.select_theme_tag(class=theme_tag_class) 
+            | #{this.name}
+    // .ui.divider
+
+
+
+
 template(name='view_doc')
     with doc
         .ui.padded.stackable.grid
@@ -6,27 +28,13 @@ template(name='view_doc')
                 .eight.wide.center.aligned.column
                     if parent
                         a.ui.basic.circular.button(href="/view/#{parent._id}")
-                            if parent.icon_class
-                                +icon48 name=parent.icon_class classes='ui mini inline image'
-                            else
-                                +icon48 name='chevron-up' classes='ui mini inline image'
-                            | #{parent.title}
-                            | #{parent.body}
-                    // else
-                    //     if isInRole 'dev'
-                    //         #create_parent.ui.basic.button Create Parent
+                            each parent.tags
+                                .ui.small.basic.label
+                                    | #{this}
                 .four.wide.center.aligned.column
                     if currentUser
                         a.ui.circular.basic.button(href="/profile/#{currentUser.username}" data-position="bottom center" data-content="Profile")
-                            if currentUser.profile.image_id
-                                img.ui.avatar.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
-                            else
-                                i.user.icon
-                            span.mobile.hidden    
-                                if currentUser.name
-                                    | #{currentUser.name}
-                                else
-                                    | #{currentUser.username}
+                            | #{currentUser.username}
                     else
                         a.ui.circular.basic.icon.button(href='/sign-in') 
                             +icon48 name='signin' classes='ui mini inline spaced image'
@@ -35,323 +43,38 @@ template(name='view_doc')
                 .four.wide.center.aligned.column
                     if younger_sibling
                         a.ui.basic.circular.button(href="/view/#{younger_sibling._id}")
-                            if younger_sibling.completed
-                                if younger_sibling.icon_class
-                                    +icon48 name=younger_sibling.icon_class classes='ui mini spaced image'
-                                else
-                                    +icon48 name='checked' classes='ui mini spaced image'
-                            else
-                                if younger_sibling.icon_class
-                                    +dots100 name=younger_sibling.icon_class classes='ui mini spaced image'
-                                else
-                                    +icon48 name='circle' classes='ui mini spaced image'
-                            | #{younger_sibling.title}
+                            each younger_sibling.tags
+                                .ui.small.basic.label
+                                    | #{this}
                             // | #{younger_sibling.body}
                 .eight.wide.center.aligned.column
                     h1.ui.center.aligned.header
-                        if completed
-                            if icon_class
-                                +icon96 name=icon_class classes='ui spaced image'
-                            else
-                                +icon96 name='checked' classes='ui spaced image'
-                        else
-                            if icon_class
-                                +dots100 name=icon_class classes='ui mini spaced image'
-                            // else
-                            //     +icon48 name='circle' classes='ui mini spaced image'
-                        | #{title}
+                        each tags
+                            .ui.large.basic.label
+                                | #{this}
                         if can_edit
                             +toggle_editing_button
                 .four.wide.center.aligned.column
                     if older_sibling
-                        if completed
-                            a.ui.basic.circular.button(href="/view/#{older_sibling._id}")
-                                | #{older_sibling.title}
-                                if older_sibling.icon_class
-                                    if older_sibling.completed
-                                        +icon48 name=older_sibling.icon_class classes='ui mini spaced image'
-                                    else
-                                        +dots100 name=older_sibling.icon_class classes='ui mini spaced image'
-                        else
-                            .ui.basic.disabled.circular.button
-                                | #{older_sibling.title} &nbsp;
-                                if older_sibling.icon_class
-                                    if older_sibling.completed
-                                        +icon48 name=older_sibling.icon_class classes='ui mini spaced image'
-                                    else
-                                        +dots100 name=older_sibling.icon_class classes='ui mini spaced image'
+                        a.ui.basic.circular.button(href="/view/#{older_sibling._id}")
+                            each older_sibling.tags
+                                .ui.small.basic.label
+                                    | #{this}
                         
             .centered.row
-                if can_view_facet_bar
-                    .six.wide.center.aligned.column
-                        if currentUser
-                            if can_add
-                                #user_add.ui.large.circular.basic.icon.button
-                                    +icon48 name='plus' classes='ui mini inline image'
-                                    // | #{child_template}
-                            if session_completion
-                                #new_session.ui.blue.button New Session
-                        .ui.hidden.divider
-                        +theme_facet
-                        if keyword_facet
-                            +keyword_facet
-                        if intention_tags_facet
-                            +intention_facet
-                        if location_tags_facet
-                            +location_facet
-                        if timestamp_facet
-                            +timestamp_facet
-                        if username_facet
-                            +username_facet
-                div(class=main_column_class)
-                    if page_editing
-                        .ui.styled.fluid.accordion
-                            h3.active.title
-                                +icon96 name="rename" classes='ui mini inline image'
-                                | Fields
-                                i.dropdown.icon
-                            .active.content
-                                each components
-                                    if slug_exists
-                                        // .ui.segment(class=field_segment_class)
-                                        +Template.dynamic template=slug data=doc
-                                        if editing
-                                            +remove_field
-                                            .ui.hidden.divider
-                                if body
-                                    +body_field
-                            h3.title
-                                +icon96 name="flow-chart" classes='ui mini inline image'
-                                | Child Documents
-                                i.dropdown.icon
+                .ui.fourteen.wide.column
+                    if currentUser
+                        if can_add
+                            #user_add.ui.large.circular.basic.icon.button
+                                // +icon48 name='plus' classes='ui mini inline image'
+                                i.plus.icon
+                                // | #{child_template}
 
-                            .content
-                                #admin_add.ui.basic.button
-                                    i.plus.icon
-                                    | Add Child Document
-                                each children
-                                    +grid_item
-                    else
-                        each components
-                            if slug_exists
-                                // .ui.segment(class=field_segment_class)
-                                +Template.dynamic template=slug data=doc
-                        if body
-                            +body_field
-                        // if content
-                        //     +content
-                        .ui.basic.center.aligned.segment
-                            if response_completion
-                                +response
-                            unless response_doc
-                                if response_completion
-                                    .ui.center.aligned.basic.segment
-                                        #create_response.ui.circular.basic.button
-                                            +icon48 name='response' classes='ui inline image'
-                                            | Respond
-                        if is_admin
-                            if child_count
-                                |Child Count: #{child_count}
-                        // if list_view
-                        //     each children
-                        //         +list_item
-                        if grid_view
-                             .ui.stackable.five.column.centered.grid
-                                each children
-                                    +grid_item
-                        else if flash_card_view
-                            .ui.cards
-                                each children
-                                    +flash_card
-                        else
-                            .ui.cards
-                                each children
-                                    +child_view
-                        if read_completion
-                            .ui.center.aligned.basic.segment
-                                if currentUser
-                                    if read
-                                        .mark_unread.ui.circular.blue.button 
-                                            +icon48 name='read-message' classes='ui inline image'
-                                            |Mark Unread
-                                    else
-                                        .mark_read.ui.basic.circular.button
-                                            +icon48 name='message' classes='ui mini inline image'
-                                            |Mark Read
-                if currentUser
-                    if editing
-                        .six.wide.column
-                            +doc_editing_sidebar
-                // if can_see_filter_bar
-                //     .three.wide.center.aligned.column
-                //         if view_published_filter
-                //             +published_filter
-                //         if viewing_public
-                //             #toggle_view_mode.ui.icon.basic.circular.button(data-tooltip='Viewing Published')
-                //                 +icon48 name='users' classes='ui spaced image'
-                //         else
-                //             #toggle_view_mode.ui.icon.basic.circular.button(data-tooltip='Viewing Private')
-                //                 +icon48 name='customer' classes='ui spaced image'
-                //         if can_bookmark
-                //             +bookmark_filter
-                //         if can_complete
-                //             +complete_filter
-                //         if can_approve
-                //             +approved_filter
-                //         if can_mark_read
-                //             +read_filter
-                //         if can_vote
-                //             +vote_filter
-                                
-                                    
-                                    
-template(name='doc_editing_sidebar')
-    .ui.styled.fluid.accordion
-        h3.title
-            +icon48 name='rename' classes='ui mini inline image'
-            | Field Selection
-            i.dropdown.icon
-            each selected_fields
-                .ui.basic.label #{title}
-        .content
-            +field_menu
-
-        h3.title
-            +icon48 name='rhombus' classes='ui mini inline image'
-            | Facets
-            i.dropdown.icon
-        .content
-            +toggle_key key='theme_tags_facet' icon='hashtag' label='Theme Tags'
-            +toggle_key key='keyword_facet' icon='tags' label='Analyzed Keywords'
-            +toggle_key key='intention_tags_facet' icon='spotlight' label='Intention Tags'
-            +toggle_key key='location_tags_facet' icon='geo-fence' label='Location Tags'
-            +toggle_key key='username_facet' icon='user' label='Authors'
-            +toggle_key key='timestamp_facet' icon='time' label='Created'
-
-        h3.title
-            +icon48 name='access' classes='ui mini inline image'
-            | Access
-            i.dropdown.icon
-            .ui.basic.label #{access}
-        .content
-            +toggle_key key='access' value='payment' icon='online-payment' label='Payment'
-            +toggle_key key='access' value='complete_previous' icon='past' label='Complete Younger Sibling'
-            +toggle_key key='access' value='available' icon='enter' label='Available'
-
-        h3.title
-            +icon48 name='flow-chart' classes='ui mini inline image'
-            | Child View
-            i.dropdown.icon
-            .ui.basic.label #{child_view}
-        .content
-            +toggle_key key='child_view' value='grid' icon='grid-view' label='Grid'
-            +toggle_key key='child_view' value='list' icon='list-view' label='List'
-            +toggle_key key='child_view' value='cards' icon='mockup' label='Cards'
-            +toggle_key key='child_view' value='answers' icon='response' label='Answers'
-            +toggle_key key='child_view' value='q_a' icon='faq' label='Q&A'
-            +toggle_key key='child_view' value='grandchild_list' icon='bulleted-list' label='Grandchild List'
-            +toggle_key key='child_view' value='quiz' icon='report-card' label='Quiz'
-            +toggle_key key='child_view' value='flash_cards' icon='questions' label='Flash Cards'
-            
-        h3.title
-            +icon48 name='sports-mode' classes='ui mini inline image'
-            | Child Actions
-            i.dropdown.icon
-        .content
-            +toggle_key key='can_bookmark' icon='bookmark' label='Bookmark'
-            +toggle_key key='can_reply' icon='response' label='Respond'
-            +toggle_key key='can_vote' icon='elections' label='Vote'
-            +toggle_key key='can_complete' icon='checkmark' label='Complete'
-            
-        h3.title
-            +icon48 name='task-completed' classes='ui mini inline image'
-            |Completion Type
-            i.dropdown.icon
-            .ui.basic.label #{completion_type}
-        .content
-            +toggle_key key='completion_type' value='response' icon='response' label='Response'
-            +toggle_key key='completion_type' value='mark_read' icon='read-message' label='Mark Read'
-            +toggle_key key='completion_type' value='check_children' icon='flow-chart' label='Check Children'
-            +toggle_key key='completion_type' value='none' icon='unavailable' label='None'
-            +toggle_key key='completion_type' value='session' icon='time' label='Session'
-        h3.title
-            +icon48 name='filter' classes='ui mini inline image'
-            | Filters
-            i.dropdown.icon
-        .content
-            +toggle_key key='view_published_filter' icon='visible' label='Published'
-            .ui.hidden.divider
-            +toggle_key key='result_limit' value='1' label='1'
-            +toggle_key key='result_limit' value='5' label='5'
-            +toggle_key key='result_limit' value='10' label='10'
-        h3.title
-            +icon48 name='user' classes='ui mini inline image'
-            | User Permissions
-            i.dropdown.icon
-            if can_add
-                .ui.basic.label Add
-                // .ui.basic.label Add: #{child_template}
-        .content
-            +toggle_key key='can_add' icon='add-subnode' label='Add Child'
-            if can_add
-                .ui.segment
-                    h5.ui.header 
-                        +icon48 name='add-subnode' classes='ui mini spaced image'
-                        |Custom Fields
-                    .ui.header Add New Field
-                    .ui.labeled.input
-                        .ui.basic.label Label
-                        input.custom_field_label(type='text')
-                    .ui.labeled.input
-                        .ui.basic.label Slug
-                        input.custom_field_slug(type='text')
-                    #add_custom_field.ui.basic.icon.circular.button
-                        i.plus.icon
-                    .ui.list
-                        each custom_fields
-                            .item
-                                .ui.basic.label Label: #{label}
-                                .ui.basic.label Slug: #{slug}
-                                .remove_custom_field.ui.basic.small.circular.icon.button
-                                    i.remove.icon
-                .ui.segment
-                    h5.ui.header 
-                        +icon48 name='add-subnode' classes='ui mini spaced image'
-                        |Child Fields
-                    each components
-                        .select_child_field.ui.compact.small.button(class=child_field_class)
-                            +icon48 name=icon_class classes='ui mini spaced image'
-                            |#{title}
-        h3.title 
-            +icon48 name='monarch' classes='ui mini spaced image'
-            |Admin
-            i.dropdown.icon
-        .content
-            +edit_author
-        h3.title 
-            +icon48 name='sports-mode' classes='ui mini spaced image'
-            | Doc Actions
-            i.dropdown.icon
-        .content
-            if has_children
-                .ui.disabled.red.button Remove Children to Delete
-            else
-                #delete_doc.ui.red.button Delete
-            +published
-            
-
-             
-template(name='field_menu')
-    each unselected_fields
-        .select_component.ui.basic.compact.small.button
-            +icon48 name=icon_class classes='ui mini spaced image'
-            |#{title}
-                
-    
-                    
-template(name='toggle_key')
-    #toggle_key.ui.compact.button(class=toggle_key_button_class) 
-        if icon
-            +icon48 name=icon classes='ui mini spaced image'
-        | #{label}
-      
+                    +theme_facet
+                    +content
+                    if is_admin
+                        if child_count
+                            |Child Count: #{child_count}
+                    .ui.cards
+                        each children
+                            +child_view

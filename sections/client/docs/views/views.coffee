@@ -1,22 +1,3 @@
-Template.q_a.helpers
-    sessions: ->
-        Docs.find
-            parent_id: FlowRouter.getParam('doc_id')
-            type: 'session'
-    
-    questions: ->
-        Docs.find
-            parent_id: FlowRouter.getParam('doc_id')
-            type: $ne: 'session'
-
-
-Template.sessions.helpers
-    my_sessions: ->
-        Docs.find
-            type: 'session'
-            author_id: Meteor.userId()
-            parent_id: FlowRouter.getParam('doc_id')
-
 Template.child_view.onCreated ->
     # @autorun => Meteor.subscribe 'child_docs', @data._id
 Template.child_view.onRendered ->
@@ -54,26 +35,6 @@ Template.child_view.helpers
     child_custom_fields: ->
         doc = Docs.findOne FlowRouter.getParam('doc_id')
         doc.custom_fields
-        
-Template.custom_field_input.events
-    'blur .custom_field_input': (e,t)->
-        custom_field_input = $(e.currentTarget).closest('.custom_field_input').val()
-        console.log custom_field_input
-        console.log Template.parentData(2)
-        # Docs.update @_id,
-        #     $set: created_date: created_date
-        Docs.update Template.parentData(2)._id,
-            $set: "#{@slug}": custom_field_input
-            
-        
-Template.custom_field_input.helpers
-    slug_value: -> 
-        Docs.findOne(Template.parentData(2)._id)["#{@slug}"]
-Template.view_custom_field.helpers
-    slug_value: -> 
-        Docs.findOne(Template.parentData(2)._id)["#{@slug}"]
-        
-        
         
 Template.child_view.events
     'click #add_key_value': (e,t)->

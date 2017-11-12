@@ -47,26 +47,10 @@ template(name='icon_class')
         if icon_class    
             +icon96 name=icon_class classes='ui inline image'
 
-template(name='created_date')
-    .ui.form
-        .inline.field
-            label Created Date
-            input#created_date(type='datetime-local' value=created_date)
-
 template(name='plain')
     .field
         input#plain(type='text' value=plain)
 
-
-template(name='slug')
-    .ui.labeled.input
-        .ui.basic.label Slug
-        input#slug(type='text' value=slug)
-
-template(name='plural_slug')
-    .ui.labeled.input
-        .ui.basic.label Plural Slug
-        input#plural_slug(type='text' value=plural_slug)
 
 template(name='number')
     if editing
@@ -74,13 +58,6 @@ template(name='number')
             .ui.basic.label Number
             input#number(type='number' min='0' value=number)
 
-template(name='edit_quantity')
-    if editing
-        .ui.labeled.input
-            .ui.basic.label Quantity (0 for infinite)
-            input#quantity(type='number' min='0' value=quantity)
-    else
-        .ui.header Quantity: #{quantity}
 
 template(name='body_field')
     if editing
@@ -118,119 +95,12 @@ template(name='tags')
 
             
 
-template(name='location_tags')
-    if editing
-        .ui.header 
-            +icon48 name='sofa' classes='ui mini spaced image'
-            |Location Tags &nbsp;
-            .ui.mini.input
-                +inputAutocomplete settings=location_select_settings id="location_tag_select" class="" autocomplete="off"
-            // .ui.mini.input
-            //     input#add_location_tag(type='text' placeholder="eg. 'home', 'couch'" maxlength='50' )
-            each location_tags
-                // a.ui.basic.circular.button.doc_tag #{this}
-                a.ui.basic.circular.button.doc_tag
-                    i.remove.icon
-                    |#{this}
-    else if is_editing
-        .ui.header 
-            +icon48 name='sofa' classes='ui mini spaced image'
-            |Location Tags &nbsp;
-            .ui.mini.input
-                +inputAutocomplete settings=location_select_settings id="location_tag_select" class="" autocomplete="off"
-            // .ui.mini.input
-            //     input#add_location_tag(type='text' placeholder="eg. 'home', 'couch'" maxlength='50' )
-            each location_tags
-                // a.ui.basic.circular.button.doc_tag #{this}
-                a.ui.basic.circular.button.doc_tag
-                    i.remove.icon
-                    |#{this}
-    else
-        .ui.dividing.header 
-            +icon48 name='sofa' classes='ui mini inline image'
-            |Location Tags
-        each location_tags
-            .ui.basic.large.label.location_tag #{this}
-
-
-template(name='intention_tags')
-    .ui.header 
-        +icon48 name='spotlight' classes='ui mini spaced image'
-        |My intention for this entry is to... &nbsp;
-        .ui.mini.input
-            +inputAutocomplete settings=intention_select_settings id="intention_tag_select" class="" autocomplete="off"
-        // .ui.mini.input
-        //     input#add_intention_tag(type='text' maxlength='50' )
-        each intention_tags
-            // a.ui.basic.circular.button.doc_tag #{this}
-            a.ui.basic.circular.button.doc_tag
-                |#{this}
-                i.remove.icon
-
-
-template(name='dollar_price')
-    if editing
-        .ui.labeled.input
-            .ui.basic.label $ Price
-            input#dollar_price(type='number' min='0' value=dollar_price)
-    else
-        .ui.header Price $#{dollar_price}
-
-
-template(name='point_price')
-    .ui.labeled.input
-        .ui.basic.label Point Price
-        input#point_price(type='number' min='0' value=point_price)
-
-template(name='bounty')
-    if editing
-        .ui.labeled.input
-            .ui.basic.label Bounty
-            input#bounty(type='number' min='0' value=bounty)
-            .ui.basic.label pts
-    else
-        .ui.header Offer: #{bounty}
-
-
-template(name='link')
-    if editing
-        .ui.labeled.icon.input
-            .ui.basic.label Link (include http://)
-            // i.linkify.icon
-            input#link(type='text' value=link)
-            +remove_field field='link'
-    else
-        a(href=link) #{link}
-
-template(name='page_name')
-    .field
-        label Page Name
-        .ui.input
-            input#name(type='text' value=name)
-
-
-template(name='type')
-    .ui.labeled.fluid.input
-        .ui.basic.label Type
-        input#type(type='text' value=type)
-            
-template(name='author_name')
-    .ui.labeled.fluid.large.input
-        .ui.basic.label Author
-        input#author_name(type='text' value=author_name)
-
 template(name='edit_parent_id')
     .ui.form
         .inline.field
             label ParentID
             input#parent_id(type='text' value=parent_id)
 
-template(name='location')
-    .field
-        label Location
-        .ui.left.icon.input
-            +icon48 name='geo-fence'
-            input#location(type='text' value=location)
 
 template(name='content')
     if editing
@@ -238,38 +108,9 @@ template(name='content')
             label #{label}
             .froala-container
                 +froalaReactive getFEContext
-        +call_watson
     else
         .large130 !{content}
-    if watson.keywords
-        +analyzed_watson_keywords
     
-template(name='image_id')
-    if editing
-        .ui.segment
-            if image_id
-                .ui.header
-                     +icon48 name='image-file' classes='ui mini spaced image'
-                     |Uploaded Image
-                .ui.large.centered.image
-                    img(src="{{c.url image_id width=500 crop='fit'}}")
-                    a#remove_photo.ui.top.right.attached.link.red.basic.label
-                        +icon48 name='delete' classes='ui tiny spaced image'
-                    // if isInRole 'dev'
-                    //     .ui.bottom.right.attached.blue.label Image Id: #{image_id}
-            else
-                .ui.labeled.fluid.input
-                    .ui.basic.label
-                        +icon48 name='add-image' classes='ui tiny spaced image'
-                        |Upload Image
-                    input(type='file' name='upload_picture' accept='image/*')
-                // if isInRole 'dev'
-                //     .ui.header or Choose Cloudinary Image Id
-                //     .ui.input
-                //         input#input_image_id(type='text')
-    else
-        img.ui.centered.image(src="{{c.url image_id width=500 crop='fit'}}")
-        
 
 template(name='image_url')
     if editing
