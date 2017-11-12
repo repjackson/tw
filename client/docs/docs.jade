@@ -7,13 +7,13 @@ template(name='theme_facet')
     // |&nbsp;  
     // .ui.hidden.fitted.divider
     if selected_theme_tags
-        #clear_theme_tags.ui.blue.icon.circular.button
+        #clear_theme_tags.ui.blue.icon.button
             i.remove.icon
         each selected_theme_tags
-            .unselect_theme_tag.ui.blue.circular.button
+            .unselect_theme_tag.ui.blue.button
                 strong #{this}
     each theme_tags
-        .ui.basic.circular.button.select_theme_tag(class=theme_tag_class) 
+        .ui.basic.button.select_theme_tag(class=theme_tag_class) 
             | #{this.name}
     // .ui.divider
 
@@ -25,24 +25,33 @@ template(name='view_doc')
         .ui.padded.stackable.grid
             .centered.middle.aligned.row
                 .four.wide.center.aligned.column
+                    if currentUser
+                        #user_add.ui.large.basic.icon.button
+                            // +icon48 name='plus' classes='ui mini inline image'
+                            i.plus.icon
+                            // | #{child_template}
+                
                 .eight.wide.center.aligned.column
                     if parent
-                        a.ui.basic.circular.button(href="/view/#{parent._id}")
+                        a.ui.basic.large.button(href="/view/#{parent._id}")
+                            div
+                                i.chevron.up.large.icon
                             each parent.tags
                                 .ui.small.basic.label
                                     | #{this}
                 .four.wide.center.aligned.column
                     if currentUser
-                        a.ui.circular.basic.button(href="/profile/#{currentUser.username}" data-position="bottom center" data-content="Profile")
+                        a.ui.basic.button(href="/profile/#{currentUser.username}" data-position="bottom center" data-content="Profile")
                             | #{currentUser.username}
                     else
-                        a.ui.circular.basic.icon.button(href='/sign-in') 
+                        a.ui.basic.icon.button(href='/sign-in') 
                             +icon48 name='signin' classes='ui mini inline spaced image'
             // header row
             .centered.middle.aligned.row 
                 .four.wide.center.aligned.column
                     if younger_sibling
-                        a.ui.basic.circular.button(href="/view/#{younger_sibling._id}")
+                        a.ui.basic.button(href="/view/#{younger_sibling._id}")
+                            i.chevron.left.large.icon
                             each younger_sibling.tags
                                 .ui.small.basic.label
                                     | #{this}
@@ -52,29 +61,24 @@ template(name='view_doc')
                         each tags
                             .ui.large.basic.label
                                 | #{this}
-                        if can_edit
-                            +toggle_editing_button
+                        // if can_edit
+                        +toggle_editing_button
                 .four.wide.center.aligned.column
                     if older_sibling
-                        a.ui.basic.circular.button(href="/view/#{older_sibling._id}")
+                        a.ui.basic.button(href="/view/#{older_sibling._id}")
                             each older_sibling.tags
                                 .ui.small.basic.label
                                     | #{this}
+                            i.chevron.right.large.icon
                         
             .centered.row
                 .ui.fourteen.wide.column
-                    if currentUser
-                        if can_add
-                            #user_add.ui.large.circular.basic.icon.button
-                                // +icon48 name='plus' classes='ui mini inline image'
-                                i.plus.icon
-                                // | #{child_template}
-
-                    +theme_facet
+                    .ui.segment
+                        +theme_facet
                     +content
-                    if is_admin
-                        if child_count
-                            |Child Count: #{child_count}
-                    .ui.cards
+                    if child_count
+                        | #{child_count}
+                    .ui.hidden.divider
+                    .ui.centered.stackable.cards
                         each children
                             +child_view

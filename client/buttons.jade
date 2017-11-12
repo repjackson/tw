@@ -1,0 +1,26 @@
+
+template(name='delete_button')
+    unless confirming
+        .delete.ui.basic.icon.circular.large.button
+            i.red.remove.icon
+    else
+        .ui.basic.button.cancel Cancel
+        .ui.red.button.confirm Confirm Delete
+        
+
+template(name='reply_button')
+    .ui.basic.icon.circular.button.reply
+        +icon48 name='response' classes='ui inline image'
+
+        
+template(name='toggle_editing_button')
+    if can_edit
+        if editing
+            #toggle_off_editing.ui.basic.circular.button(data-position='bottom center' data-tooltip='Save')
+                +icon48 name='checkmark' classes='ui mini inline image'
+        else
+            #toggle_editing.ui.basic.circular.button(data-position="bottom center" data-tooltip='Edit')
+                +icon48 name='edit' classes='ui mini inline image'
+            // if tags
+            // else
+                // .ui.fluid.basic.disabled.circular.button Add Tags to Save

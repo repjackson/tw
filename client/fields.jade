@@ -7,46 +7,6 @@ template(name='field_type')
         | Field Type: #{field_type}
 
 
-template(name='title') 
-    if editing
-        .ui.labeled.fluid.input
-            .ui.basic.label Title
-            input#title(type='text' value=title)
-    // else
-    //     // h2.ui.header 
-    //         // if icon_class
-    //         //     +icon48 name=icon_class classes='ui mini inline image'
-    //     |#{title}
-
-template(name='subtitle')
-    if editing
-        .ui.labeled.fluid.input
-            .ui.basic.label Subtitle
-            input#subtitle(type='text' value=subtitle)
-    else
-        h3.ui.center.aligned.header #{subtitle}
-
-template(name='group')
-    if editing
-        .ui.labeled.fluid.input
-            .ui.basic.label Group
-            input#group(type='text' value=group)
-
-
-template(name='template_name')
-    .inline.field
-        label Template Name
-        input#template_name(type='text' value=template_name)
-
-template(name='icon_class')
-    if editing
-        .ui.labeled.input
-            a.ui.basic.label(href="https://icons8.com/icon/new-icons/color" target='_blank' data-tooltip="Lookup at icons8")
-                |Icon 
-            input#icon_class(type='text' value=icon_class)
-        if icon_class    
-            +icon96 name=icon_class classes='ui inline image'
-
 template(name='plain')
     .field
         input#plain(type='text' value=plain)
@@ -73,16 +33,16 @@ template(name='tags')
     // .ui.segment
     if editing
         .ui.header
-            +icon48 name='hashtag' classes='ui mini spaced image'
-            |Tags &nbsp;
+            // +icon48 name='hashtag' classes='ui mini spaced image'
+            // |Tags &nbsp;
             .ui.mini.input
                 // i.plus.icon
                 input#theme_tag_select(type='text' placeholder='Add...' maxlength='50' )
             // .ui.mini.input
             //     +inputAutocomplete settings=theme_select_settings id="theme_tag_select" class="" autocomplete="off"
             each tags
-                // a.ui.basic.circular.button.doc_tag #{this}
-                a.ui.basic.circular.button.doc_tag
+                // a.ui.basic.button.doc_tag #{this}
+                a.ui.basic.button.doc_tag
                     i.remove.icon
                     |#{this}
     else
@@ -149,95 +109,3 @@ template(name='youtube')
         // .ui.embed(data-source="youtube" data-id=youtube data-icon="video" data-placeholder="/images/video_placeholder.png")
         if youtube
             .ui.embed(data-source="youtube" data-id=youtube)
-
-
-template(name='participants')
-    .field
-        label Participants: 
-        each participants
-            .ui.large.basic.label
-                img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
-                |#{username}
-                #remove_participant.ui.icon.basic.small.compact.circular.button
-                    i.red.remove.icon
-        .ui.left.icon.large.input
-            i.search.icon
-            +inputAutocomplete settings=participants_edit_settings id="participant_select" class="" autocomplete="off" placeholder='Search Username...'
-            
-            
-template(name='edit_author')
-    .ui.labeled.input
-        .ui.basic.label 
-            |Author: 
-            with author
-                img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
-                |#{username}
-        +inputAutocomplete settings=author_edit_settings id="author_select" class="" autocomplete="off" placeholder='Lookup...'
-                    
-                    
-template(name='edit_recipient')
-    .ui.labeled.input
-        .ui.basic.label 
-            |Recipient: 
-            with recipient
-                img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
-                |#{username}
-        +inputAutocomplete settings=recipient_select_settings id="recipient_select" class="" autocomplete="off" placeholder='Lookup...'
-                    
-template(name='start_date')
-    .ui.labeled.input
-        .ui.basic.label Start Date
-        input#start_date(type='date' value=start_date)
-
-template(name='start_time')
-    .ui.labeled.input
-        .ui.basic.label Start Time
-        input#start_time(type='time' value=start_time)
-            
-template(name='end_date')
-    if editing
-        .ui.labeled.input
-            .ui.basic.label End Date/Time
-            input#end_date(type='date' value=end_date)
-    else
-        .ui.header End Date #{end_date}
-        
-        
-template(name='remove_field')
-    .remove_field.ui.basic.icon.button
-        i.remove.red.icon
-        
-        
-        
-// template(name='child_view')
-//     .ui.labeled.fluid.input
-//         .ui.basic.label Child Type
-//         input#child_type(type='text' value=child_type)
-//     if card_view
-//         .ui.cards
-//             each typed_children
-//                 .ui.card
-//                     .content
-//                         a.header(href="/view/#{_id}") #{title}
-                        
-                        
-                        
-template(name='transcript')
-    if editing
-        .ui.header 
-            +icon48 name="paper" classes='ui mini inline image'
-            |Transcript
-        .froala-container
-            +froalaReactive transcript_context
-    else
-        .ui.styled.fluid.accordion
-            h3.title
-                +icon96 name="paper" classes='ui mini inline image'
-                | Transcript
-                i.dropdown.icon
-            .content
-                |!{transcript}
-                // if isInRole 'dev'
-                //     |old
-                // +doc_by_parentid_and_type parent_id=_id type='transcript'
-                // +doc_content tags='sol,welcome,transcript'

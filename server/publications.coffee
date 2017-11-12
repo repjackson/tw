@@ -204,59 +204,6 @@ Meteor.publish 'person', (id)->
             points: 1            
             
             
-Meteor.publish 'people', (selected_people_tags)->
-    match = {}
-    if selected_people_tags.length > 0 then match.tags = $all: selected_people_tags
-    match._id = $ne: @userId
-    # match["profile.published"] = true
-    Meteor.users.find match,
-        limit: 20
-
-
-Meteor.publish 'people_tags', (selected_people_tags)->
-    self = @
-    match = {}
-    if selected_people_tags.length > 0 then match.tags = $all: selected_people_tags
-    match._id = $ne: @userId
-    # match["profile.published"] = true
-
-    # console.log match
-
-    people_cloud = Meteor.users.aggregate [
-        { $match: match }
-        { $project: tags: 1 }
-        { $unwind: '$tags' }
-        { $group: _id: '$tags', count: $sum: 1 }
-        { $match: _id: $nin: selected_people_tags }
-        { $sort: count: -1, _id: 1 }
-        { $limit: 20 }
-        { $project: _id: 0, name: '$_id', count: 1 }
-        ]
-    # console.log 'cloud, ', people_cloud
-    people_cloud.forEach (tag, i) ->
-        self.added 'people_tags', Random.id(),
-            name: tag.name
-            count: tag.count
-            index: i
-
-    self.ready()
-        
-
-
-# publishComposite 'transactions', ->
-#     {
-#         find: ->
-#             Docs.find
-#                 type: 'transaction'
-#                 author_id: @userId            
-#         children: [
-#             { find: (transaction) ->
-#                 Docs.find transaction.parent_id
-#                 }
-#             ]    
-#     }
-
-
 
 Meteor.publish 'usernames', ->
     Meteor.users.find {},
@@ -265,14 +212,3 @@ Meteor.publish 'usernames', ->
             profile: 1
             points: 1
             
-Meteor.publish 'components', ->
-    Docs.find
-        # type: 'component'
-        parent_id: 'MzHSPbvCYPngq2Dcz'            
-            
-            
-# Meteor.publish 'doc_template', (doc_id)->
-#     doc = Docs.findOne doc_id
-#     Docs.find
-#         type: 'doc_template'
-#         doc_type: doc.type

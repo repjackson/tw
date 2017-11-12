@@ -5,9 +5,6 @@ Meteor.publish 'facet', (
     parent_id
     tag_limit
     doc_limit
-    view_voted
-    view_public
-    view_published
     editing_id
     )->
     
@@ -23,22 +20,6 @@ Meteor.publish 'facet', (
         if tag_limit then limit=tag_limit else limit=50
         if author_id then match.author_id = author_id
         
-        if view_voted is 1
-            match.upvoters = $in: [Meteor.userId()]
-        else if view_voted is 0
-            match.upvoters = $nin: [Meteor.userId()]
-            match.downvoters = $nin: [Meteor.userId()]
-        else if view_voted is -1
-            match.downvoters = $in: [Meteor.userId()]
-            
-            
-        if view_public is true
-            match.published = $in: [1,0]
-        else if Meteor.userId()
-            match.author_id = Meteor.userId()
-        # else
-        #     match.published = $in: [1,0]
-            
         if editing_id
             # match._id = $ne: editing_id
             match._id = editing_id

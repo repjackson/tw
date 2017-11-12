@@ -4,7 +4,7 @@ head
     meta(name='apple-mobile-web-app-capable', content='yes')
     meta(name='apple-mobile-web-app-status-bar-style', content='white')
     meta(name='google-site-verification', content='6osbddgiRIkUEHj3ezFR6D2yOQuooBvvXsBliSWhAZA')
-    link(href="https://fonts.googleapis.com/css?family=Cabin" rel="stylesheet")
+    link(href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet")
     meta(name="theme-color", content="#ffffff")
 
 template(name='layout')
@@ -21,17 +21,6 @@ template(name='not_found')
         .ui.center.aligned.header Not Found
         
         
-template(name='staus_indicator')
-    if online 
-        // .ui.label(class='{{labelClass}}') 
-        img.ui.avatar.image(src="https://png.icons8.com/connection-status-on/color/48" data-tooltip='Online' width="48" height="48")
-        // |Online
-    else if idle
-        .ui.label(class='{{labelClass}}') Idle
-        // else 
-        //     |Offline
-
-
 template(name='user_list_item')
     .item
         img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")

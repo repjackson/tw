@@ -1,0 +1,39 @@
+template(name='child_view')
+    .ui.fluid.card
+        unless editing
+            .content 
+                .large130 !{content}
+            .content
+                each tags
+                    .ui.small.compact.button.theme_tag(class=theme_tag_class)
+                        // +icon24 name='hashtag' classes='ui mini inline image'
+                        strong #{this}
+            .content
+                .ui.basic.label #{child_count} child docs
+                |by #{author.username}
+                |#{when}
+                if is_author
+                    +session_edit_button
+            a.ui.bottom.attached.basic.button(href="/view/#{_id}" data-tooltip='View Full')
+                i.large.chevron.down.icon
+        if editing                    
+            .content
+                +tags
+                +content
+            .ui.basic.center.aligned.segment
+                +session_edit_button
+                +delete_button
+                    
+template(name='session_edit_button')
+    if currentUser
+        if editing
+            .save_doc.ui.basic.large.circular.icon.button
+                i.large.check.icon
+                // +icon96 name="checkmark" classes='ui mini inline image'
+        else
+            .edit_this.ui.basic.icon.large.circular.button
+                i.large.pencil.icon
+                // +icon48 name="edit" classes='ui mini inline image'
+                // i.icon
+                // |Edit
+        

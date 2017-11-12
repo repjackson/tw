@@ -113,15 +113,3 @@ AccountsTemplates.configureRoute('signUp', {
 
 
 AccountsTemplates.configureRoute 'verifyEmail'
-
-
-
-# orig_updateOrCreateUserFromExternalService = Accounts.updateOrCreateUserFromExternalService
-
-# Accounts.updateOrCreateUserFromExternalService = (serviceName, serviceData, options) ->
-#     loggedInUser = Meteor.user()
-#     if loggedInUser and typeof loggedInUser.services[serviceName] == 'undefined'
-#         setAttr = {}
-#         setAttr['services.' + serviceName] = serviceData
-#         Meteor.users.update loggedInUser._id, $set: setAttr
-#     orig_updateOrCreateUserFromExternalService.apply this, arguments
