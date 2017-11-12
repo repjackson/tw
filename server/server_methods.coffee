@@ -1,8 +1,6 @@
 Meteor.methods 
-    add_doc: (body, parent_id, tags) ->
+    add_doc: (tags) ->
         result = Docs.insert
-            body: body
-            parent_id: parent_id
             tags: tags
         console.log result
                 

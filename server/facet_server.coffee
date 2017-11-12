@@ -1,28 +1,15 @@
 Meteor.publish 'facet', (
     selected_theme_tags
-    type
-    author_id
-    parent_id
-    tag_limit
-    doc_limit
-    editing_id
     )->
     
         self = @
         match = {}
         
         # match.tags = $all: selected_theme_tags
-        if type then match.type = type
-        if parent_id then match.parent_id = parent_id
 
         if selected_theme_tags.length > 0 then match.tags = $all: selected_theme_tags
         
-        if tag_limit then limit=tag_limit else limit=50
-        if author_id then match.author_id = author_id
         
-        if editing_id
-            # match._id = $ne: editing_id
-            match._id = editing_id
         
         theme_tag_cloud = Docs.aggregate [
             { $match: match }
@@ -31,7 +18,7 @@ Meteor.publish 'facet', (
             { $group: _id: '$tags', count: $sum: 1 }
             { $match: _id: $nin: selected_theme_tags }
             { $sort: count: -1, _id: 1 }
-            { $limit: limit }
+            { $limit: 50 }
             { $project: _id: 0, name: '$_id', count: 1 }
             ]
         # console.log 'theme theme_tag_cloud, ', theme_tag_cloud
@@ -42,8 +29,7 @@ Meteor.publish 'facet', (
                 index: i
 
         # doc_results = []
-        int_doc_limit = parseInt doc_limit
-        subHandle = Docs.find(match, {limit:int_doc_limit, sort: timestamp:-1}).observeChanges(
+        subHandle = Docs.find(match, {limit:10, sort: timestamp:-1}).observeChanges(
             added: (id, fields) ->
                 # console.log 'added doc', id, fields
                 # doc_results.push id
@@ -78,9 +64,3 @@ Meteor.publish 'facet', (
         self.ready()
         
         self.onStop ()-> subHandle.stop()
-
-
-Meteor.publish 'author', (doc_id)->
-    doc = Docs.findOne doc_id
-    if doc 
-        Meteor.users.find _id: doc.author_id

@@ -27,16 +27,10 @@ shell-server@0.3.0
 kadira:flow-router
 kadira:blaze-layout
 accounts-base@1.4.0
-useraccounts:flow-routing
-useraccounts:semantic-ui
 momentjs:moment
 reactive-var@1.0.11
-raix:handlebar-helpers
 matb33:collection-hooks
 mizzao:autocomplete
-froala:editor-reactive@=2.4.2
-okgrow:analytics
-perak:codemirror
 reywood:publish-composite
 mobile-experience@1.0.5
 underscore@1.0.10
@@ -44,3 +38,4 @@ francocatena:status
 dynamic-import@0.2.0
 ecmascript@0.9.0
 stylus
+accounts-ui

@@ -22,12 +22,3 @@ Template.toggle_editing_button.events
     'click #toggle_off_editing': -> Session.set 'page_editing', false
     
     
-Template.reply_button.events
-    'click .reply': ->
-        # console.log @
-        child_id = Docs.insert
-            parent_id: @_id
-            type: 'reply'
-        Session.set 'inline_editing', child_id
-
-    

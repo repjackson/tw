@@ -5,29 +5,29 @@ Docs.before.insert (userId, doc)=>
     timestamp = Date.now()
     doc.timestamp = timestamp
     # console.log moment(timestamp).format("dddd, MMMM Do YYYY, h:mm:ss a")
-    date = moment(timestamp).format('Do')
-    weekdaynum = moment(timestamp).isoWeekday()
-    weekday = moment().isoWeekday(weekdaynum).format('dddd')
+    # date = moment(timestamp).format('Do')
+    # weekdaynum = moment(timestamp).isoWeekday()
+    # weekday = moment().isoWeekday(weekdaynum).format('dddd')
 
 
-    month = moment(timestamp).format('MMMM')
-    year = moment(timestamp).format('YYYY')
+    # month = moment(timestamp).format('MMMM')
+    # year = moment(timestamp).format('YYYY')
 
-    date_array = [weekday, month, date, year]
-    if _
-        date_array = _.map(date_array, (el)-> el.toString().toLowerCase())
-    # date_array = _.each(date_array, (el)-> console.log(typeof el))
-    # console.log date_array
-        doc.timestamp_tags = date_array
+    # date_array = [weekday, month, date, year]
+    # if _
+    #     date_array = _.map(date_array, (el)-> el.toString().toLowerCase())
+    # # date_array = _.each(date_array, (el)-> console.log(typeof el))
+    # # console.log date_array
+    #     doc.timestamp_tags = date_array
 
     doc.author_id = Meteor.userId()
     # doc.tag_count = doc.tags?.length
-    doc.points = 0
+    # doc.points = 0
     # doc.components = {}
-    doc.read_by = [Meteor.userId()]
-    doc.upvoters = []
-    doc.downvoters = []
-    doc.published = 0
+    # doc.read_by = [Meteor.userId()]
+    # doc.upvoters = []
+    # doc.downvoters = []
+    # doc.published = 0
     return
 
 # Docs.after.update ((userId, doc, fieldNames, modifier, options) ->
@@ -48,44 +48,22 @@ Docs.before.insert (userId, doc)=>
 #     return
 
 
-Docs.after.insert (userId, doc)->
-    if doc.parent_id
-        Meteor.call 'calculate_child_count', doc.parent_id
+# Docs.after.insert (userId, doc)->
+#     if doc.parent_id
+#         Meteor.call 'calculate_child_count', doc.parent_id
     
     
-Docs.after.remove (userId, doc)->
-    if doc.parent_id
-        Meteor.call 'calculate_child_count', doc.parent_id
+# Docs.after.remove (userId, doc)->
+#     if doc.parent_id
+#         Meteor.call 'calculate_child_count', doc.parent_id
 
 
 
 Docs.helpers
     author: -> Meteor.users.findOne @author_id
     when: -> moment(@timestamp).fromNow()
-    is_published: -> @published is 1
-    is_anonymous: -> @published is 0
-    is_private: -> @published is -1
-    
-    only_child: -> Docs.findOne parent_id: @_id
-    parent: -> Docs.findOne @parent_id
-    has_children: -> if Docs.findOne(parent_id: @_id) then true else false
-    responded: -> 
-        response = Docs.findOne
-            author_id: Meteor.userId()
-            parent_id: @_id
-            type: 'response'
-        if response then true else false
-
-
-    readers: ->
-        if @read_by
-            readers = []
-            for reader_id in @read_by
-                readers.push Meteor.users.findOne reader_id
-            readers
-        else []
-
-
+    # parent: -> Docs.findOne @parent_id
+    # has_children: -> if Docs.findOne(parent_id: @_id) then true else false
 
 
 Meteor.methods
@@ -93,20 +71,28 @@ Meteor.methods
         id = Docs.insert {}
         return id
 
-    calculate_tag_count: (doc_id)->
-        doc = Docs.findOne doc_id
-        tag_count = doc.tags.length
-        Docs.update doc_id, 
-            $set: tag_count: tag_count
+    # calculate_tag_count: (doc_id)->
+    #     doc = Docs.findOne doc_id
+    #     tag_count = doc.tags.length
+    #     Docs.update doc_id, 
+    #         $set: tag_count: tag_count
         
 
 
 
-FlowRouter.route '/',
-  triggersEnter: [ (context, redirect) ->
-    redirect '/view/puBqCqAFMxGJTcgav'
-    return
- ]
+# FlowRouter.route '/',
+#   triggersEnter: [ (context, redirect) ->
+#     redirect '/view/puBqCqAFMxGJTcgav'
+#     return
+#  ]
+
+FlowRouter.route '/', 
+    name: 'view'
+    action: (params) ->
+        BlazeLayout.render 'layout',
+            main: 'home'
+
+
 
 FlowRouter.notFound =
     action: ->

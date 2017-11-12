@@ -1,0 +1,33 @@
+
+template(name='theme_facet')
+    // +icon48 name='hashtag' classes='ui mini inline image' tooltip='Browse Themes'
+    // .ui.left.icon.small.inline.input
+    //     i.search.icon
+    //     +inputAutocomplete settings=settings id="search" class="" autocomplete="off" placeholder='Search...'
+    // |&nbsp;  
+    // .ui.hidden.fitted.divider
+    if selected_tags
+        #clear_theme_tags.ui.grey.icon.large.button
+            i.remove.icon
+        each selected_tags
+            .unselect_theme_tag.ui.grey.large.button
+                strong #{this}
+    each theme_tags
+        .ui.large.button.select_theme_tag(class=theme_tag_class) 
+            | #{this.name}
+    // .ui.divider
+
+
+
+
+template(name='home')
+    if currentUser
+        // #user_add.ui.large.basic.icon.button
+        //     i.plus.icon
+        .ui.icon.fluid.input
+            input#quick_add(type='text')
+            i.plus.icon
+                
+    .ui.basic.large.label            
+        +loginButtons
+    +theme_facet
