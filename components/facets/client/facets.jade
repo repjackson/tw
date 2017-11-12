@@ -15,8 +15,6 @@ template(name='theme_facet')
     each theme_tags
         .ui.basic.circular.button.select_theme_tag(class=theme_tag_class) 
             | #{this.name}
-            // if isInRole 'admin'
-            //     small #{this.count}
     // .ui.divider
 
 template(name='location_facet')
@@ -32,8 +30,6 @@ template(name='location_facet')
     each location_tags
         .ui.basic.circular.button.select_location_tag(class=location_tag_class) 
             | #{this.name}
-            // if isInRole 'admin'
-            //     small #{this.count}
     // .ui.divider
 
 template(name='timestamp_facet')

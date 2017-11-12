@@ -98,11 +98,11 @@ template(name='tags')
         .ui.header
             +icon48 name='hashtag' classes='ui mini spaced image'
             |Tags &nbsp;
-            // .ui.mini.input
-            //     // i.plus.icon
-            //     input#add_tag(type='text' placeholder='Add...' maxlength='50' )
             .ui.mini.input
-                +inputAutocomplete settings=theme_select_settings id="theme_tag_select" class="" autocomplete="off"
+                // i.plus.icon
+                input#theme_tag_select(type='text' placeholder='Add...' maxlength='50' )
+            // .ui.mini.input
+            //     +inputAutocomplete settings=theme_select_settings id="theme_tag_select" class="" autocomplete="off"
             each tags
                 // a.ui.basic.circular.button.doc_tag #{this}
                 a.ui.basic.circular.button.doc_tag
@@ -255,8 +255,8 @@ template(name='image_id')
                     img(src="{{c.url image_id width=500 crop='fit'}}")
                     a#remove_photo.ui.top.right.attached.link.red.basic.label
                         +icon48 name='delete' classes='ui tiny spaced image'
-                    if isInRole 'dev'
-                        .ui.bottom.right.attached.blue.label Image Id: #{image_id}
+                    // if isInRole 'dev'
+                    //     .ui.bottom.right.attached.blue.label Image Id: #{image_id}
             else
                 .ui.labeled.fluid.input
                     .ui.basic.label
@@ -396,7 +396,7 @@ template(name='transcript')
                 i.dropdown.icon
             .content
                 |!{transcript}
-                if isInRole 'dev'
-                    |old
-                +doc_by_parentid_and_type parent_id=_id type='transcript'
+                // if isInRole 'dev'
+                //     |old
+                // +doc_by_parentid_and_type parent_id=_id type='transcript'
                 // +doc_content tags='sol,welcome,transcript'

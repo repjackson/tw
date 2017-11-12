@@ -3,13 +3,6 @@ template(name='view_doc')
         .ui.padded.stackable.grid
             .centered.middle.aligned.row
                 .four.wide.center.aligned.column
-                    if isInRole 'admin'
-                        a#toggle_admin_mode.ui.basic.circular.button(href='#' data-position="bottom center" data-content="Toggle Admin Mode") 
-                            .ui.image
-                                if admin_mode
-                                    +icon48 name='user-shield' classes='ui mini image'
-                                else
-                                    +dots50 name='user-shield' classes='ui mini image'
                 .eight.wide.center.aligned.column
                     if parent
                         a.ui.basic.circular.button(href="/view/#{parent._id}")
@@ -24,7 +17,7 @@ template(name='view_doc')
                     //         #create_parent.ui.basic.button Create Parent
                 .four.wide.center.aligned.column
                     if currentUser
-                        a.ui.circular.basic.button(href="/profile/#{currentUser.username}" class="{{isActiveRoute name='view_profile'}}" data-position="bottom center" data-content="Profile")
+                        a.ui.circular.basic.button(href="/profile/#{currentUser.username}" data-position="bottom center" data-content="Profile")
                             if currentUser.profile.image_id
                                 img.ui.avatar.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
                             else
@@ -90,17 +83,16 @@ template(name='view_doc')
                         
             .centered.row
                 if can_view_facet_bar
-                    .four.wide.center.aligned.column
+                    .six.wide.center.aligned.column
                         if currentUser
                             if can_add
                                 #user_add.ui.large.circular.basic.icon.button
                                     +icon48 name='plus' classes='ui mini inline image'
                                     // | #{child_template}
-                        if session_completion
-                            #new_session.ui.blue.button New Session
+                            if session_completion
+                                #new_session.ui.blue.button New Session
                         .ui.hidden.divider
-                        if theme_tags_facet
-                            +theme_facet
+                        +theme_facet
                         if keyword_facet
                             +keyword_facet
                         if intention_tags_facet
@@ -190,26 +182,26 @@ template(name='view_doc')
                     if editing
                         .six.wide.column
                             +doc_editing_sidebar
-                if can_see_filter_bar
-                    .three.wide.center.aligned.column
-                        if view_published_filter
-                            +published_filter
-                        if viewing_public
-                            #toggle_view_mode.ui.icon.basic.circular.button(data-tooltip='Viewing Published')
-                                +icon48 name='users' classes='ui spaced image'
-                        else
-                            #toggle_view_mode.ui.icon.basic.circular.button(data-tooltip='Viewing Private')
-                                +icon48 name='customer' classes='ui spaced image'
-                        if can_bookmark
-                            +bookmark_filter
-                        if can_complete
-                            +complete_filter
-                        if can_approve
-                            +approved_filter
-                        if can_mark_read
-                            +read_filter
-                        if can_vote
-                            +vote_filter
+                // if can_see_filter_bar
+                //     .three.wide.center.aligned.column
+                //         if view_published_filter
+                //             +published_filter
+                //         if viewing_public
+                //             #toggle_view_mode.ui.icon.basic.circular.button(data-tooltip='Viewing Published')
+                //                 +icon48 name='users' classes='ui spaced image'
+                //         else
+                //             #toggle_view_mode.ui.icon.basic.circular.button(data-tooltip='Viewing Private')
+                //                 +icon48 name='customer' classes='ui spaced image'
+                //         if can_bookmark
+                //             +bookmark_filter
+                //         if can_complete
+                //             +complete_filter
+                //         if can_approve
+                //             +approved_filter
+                //         if can_mark_read
+                //             +read_filter
+                //         if can_vote
+                //             +vote_filter
                                 
                                     
                                     

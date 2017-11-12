@@ -72,7 +72,7 @@ Template.view_doc.helpers
                 Docs.find {
                     parent_id: FlowRouter.getParam 'doc_id'
                     }, {
-                        sort: { points: -1, number: 1,  timestamp: -1}
+                        sort: { timestamp: -1, points: -1, number: 1  }
                         limit: limit
                         }
 
@@ -89,10 +89,10 @@ Template.view_doc.helpers
     main_column_class: -> 
         if Session.equals 'page_editing', true 
             'ten wide column' 
-        else if @child_view is 'grid' or Session.get('inline_editing')
+        else if Session.get('inline_editing')
             'fourteen wide column'
         else
-            'eight wide column'
+            'ten wide column'
         # else if @theme_tags_facet or @location_tags_facet or @intention_tags_facet or @username_facet
         #     'eight wide column'
         # else
@@ -129,7 +129,7 @@ Template.view_doc.helpers
             true
     
     can_view_facet_bar: ->
-        if Session.get('inline_editing') or @child_view is 'grid' or Session.get('page_editing') 
+        if Session.get('inline_editing') or Session.get('page_editing') 
             false
         else
             true

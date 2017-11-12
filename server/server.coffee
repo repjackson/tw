@@ -10,22 +10,6 @@ Meteor.users.allow
 
 
 
-Meteor.publish 'userStatus', ->
-    Meteor.users.find { 'status.online': true }, 
-        fields: 
-            points: 1
-            tags: 1
-            
-            
-            
-Meteor.publish 'user_status_notification', ->
-    Meteor.users.find('status.online': true).observe
-        added: (id) ->
-            console.log "#{id} just logged in"
-        removed: (id) ->
-            console.log "#{id} just logged out"
-
-
 Cloudinary.config
     cloud_name: 'facet'
     api_key: Meteor.settings.cloudinary_key
@@ -42,9 +26,9 @@ Accounts.onCreateUser (options, user) ->
 
 
 Docs.allow
-    insert: (userId, doc) -> Roles.userIsInRole(userId, 'admin') or doc.author_id is userId
-    update: (userId, doc) -> Roles.userIsInRole(userId, 'admin') or doc.author_id is userId
-    remove: (userId, doc) -> Roles.userIsInRole(userId, 'admin') or doc.author_id is userId
+    insert: (userId, doc) -> doc.author_id is userId
+    update: (userId, doc) -> doc.author_id is userId
+    remove: (userId, doc) -> doc.author_id is userId
 
 
 # AccountsMeld.configure

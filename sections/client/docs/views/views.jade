@@ -35,9 +35,9 @@ template(name='answer')
                     .large130 #{body}
             .content
                 .ui.horizontal.list
-                    if isInRole 'admin'
-                        .item
-                            +published_label
+                    // if isInRole 'admin'
+                    //     .item
+                    //         +published_label
                     // .item
                     //     +view_full_button
                     .item
@@ -158,8 +158,8 @@ template(name='child_view')
                     if doc.can_reply
                         +reply_button
                 .content
-                    if isInRole 'admin'
-                        +published_label
+                    // if isInRole 'admin'
+                    //     +published_label
                     // +mark_read
                     unless doc.can_reply
                         .ui.basic.circular.label(data-tooltip="#{child_count} Child Documents")
@@ -170,8 +170,8 @@ template(name='child_view')
                     +view_full_button
                     if is_author
                         +session_edit_button
-                    else if isInRole 'dev'
-                        +session_edit_button
+                    // else if isInRole 'dev'
+                    //     +session_edit_button
                     //     +delete_button
                         // +edit_parent_id
                         // |id: #{_id}
