@@ -1,0 +1,55 @@
+template(name='conversation_message')
+    .ui.segment.message_segment(class=message_segment_class)
+        .ui.comments
+            .comment
+                a.avatar(href="/profile/#{username}")
+                    img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+                .content
+                    a.author(href="/profile/#{username}") #{author.name}
+                    .metadata
+                        span.date #{from_now}
+                    .text
+                        | #{body}
+                    .actions
+                        if is_author
+                            +delete_link
+                        else
+                            +voting
+                            if read
+                                a.mark_unread 
+                                    i.mail.icon
+                                    |Mark Unread
+                            else
+                                a.mark_read 
+                                    i.mail.outline.icon
+                                    |Mark Read
+                        |Read by:
+                        each readers
+                            .ui.tiny.basic.label #{name}
+                            // img.ui.avatar.image(src="{{c.url profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+                        if parent_id
+                            .ui.accordion
+                                .title
+                                    i.vertically.flipped.share.icon
+                                    |In reference to...
+                                    i.dropdown.icon
+                                .content
+                                    .ui.basic.segment
+                                        each parent.tags
+                                            .ui.small.basic.label #{this}
+                                        strong by #{parent.author.profile.first_name}
+                                        p #{parent.body}
+                                        if parent.parent_id
+                                            .ui.basic.segment
+                                                i.vertically.flipped.share.icon
+                                                each parent.parent.tags
+                                                    .ui.small.basic.label #{this}
+                                                p #{parent.parent.body}
+                                                if parent.parent.parent_id
+                                                    .ui.basic.segment
+                                                        i.vertically.flipped.share.icon
+                                                        each parent.parent.parent.tags
+                                                            .ui.small.basic.label #{this}
+                                                        if parent.parent.parent.title
+                                                            strong #{parent.parent.parent.title}
+                                                        p #{parent.parent.parent.body}

@@ -1,0 +1,42 @@
+template(name='people')
+    .ui.stackable.padded.grid
+        .four.wide.column
+            .ui.dividing.header
+                +icon48 name='hashtag' classes='ui inline image'
+                | Browse Tags
+            +people_cloud
+        .twelve.wide.column
+            +doc_content tags='people cloud,blurb'
+            .ui.hidden.divider
+            .ui.centered.stackable.cards
+                each people
+                    +person
+            // .ui.stackable.grid
+            //     // .four.wide.column
+            //     .eleven.wide.column
+
+
+template(name='person')
+    .ui.card
+        .image
+            a(href="/profile/#{username}")
+                img.ui.fluid.rounded.image(src="{{c.url profile.image_id width=400 height=400 gravity='face' crop='fill'}}")
+        .content
+            .header
+                a(href="/profile/#{username}")
+                    if profile.first_name
+                        | #{profile.first_name}
+                    if profile.last_name
+                        | #{profile.last_name}
+                    else    
+                        | #{username}
+                    +staus_indicator
+            if profile.location
+                .meta
+                    | #{profile.location}
+        .extra.content
+            +color_dots
+        .extra.content
+            each ten_tags
+                .ui.compact.tiny.circular.button.user_tag(class=person_tag_class) #{this}
+

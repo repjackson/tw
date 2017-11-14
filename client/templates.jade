@@ -1,16 +1,83 @@
 head
-    title the way
+    title Tori Webster Inspires
     meta(name='viewport', content='user-scalable=no, initial-scale=1.0, maximum-scale=1.0, width=device-width')
     meta(name='apple-mobile-web-app-capable', content='yes')
     meta(name='apple-mobile-web-app-status-bar-style', content='white')
     meta(name='google-site-verification', content='6osbddgiRIkUEHj3ezFR6D2yOQuooBvvXsBliSWhAZA')
-    link(href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet")
+    link(href="https://fonts.googleapis.com/css?family=Cabin" rel="stylesheet")
+    link(rel="apple-touch-icon", sizes="180x180", href="/apple-touch-icon.png")
+    link(rel="icon", type="image/png", href="/favicon-32x32.png", sizes="32x32")
+    link(rel="icon", type="image/png", href="/favicon-16x16.png", sizes="16x16")
+    link(rel="manifest", href="/manifest.json")
+    link(rel="mask-icon", href="/safari-pinned-tab.svg", color="#5bbad5")
     meta(name="theme-color", content="#ffffff")
 
-body
+template(name='layout')
     +status
-    +home                    
+    // .ui.grid
+        // .two.wide.column
+    #nav_menu
+        unless zen_mode
+            +nav
+    // .fourteen.wide.column
+    +Template.dynamic template=sub_nav
+    +Template.dynamic template=sub_sub_nav
+    +Template.dynamic template=cloud
+    +Template.dynamic template=main
+    unless isInRole 'dev'
+        unless zen_mode
+            +footer
+                    
 
 
 template(name="tag_result")
-    .ui.large.label #{name}
+    .ui.large.basic.label #{name}
+
+template(name='not_found')
+    .ui.text.container
+        .ui.center.aligned.header Not Found
+        h5.ui.center.aligned.header Please report bugs using the bug icon above.
+        
+        
+template(name='staus_indicator')
+    if online 
+        // .ui.label(class='{{labelClass}}') 
+        img.ui.avatar.image(src="https://png.icons8.com/connection-status-on/color/48" data-tooltip='Online' width="48" height="48")
+        // |Online
+    else if idle
+        .ui.label(class='{{labelClass}}') Idle
+        // else 
+        //     |Offline
+
+
+template(name='user_list_item')
+    .item
+        img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+        .content
+            .header
+                |#{name}
+            .description
+                +tiny_color_dots
+                each five_tags
+                    .ui.basic.label #{this}
+
+
+template(name='user_pill')
+    .item
+        .content
+            .header
+                img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                |#{name}
+            .description
+                each five_tags
+                    .ui.basic.small.label #{this}
+
+template(name='tag_pill')
+    .item
+        .content
+            .header
+                // img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                |#{name}
+            // .description
+            //     each five_tags
+            //         .ui.basic.small.label #{this}

@@ -1,0 +1,155 @@
+template(name='response')
+    with response
+        .ui.blue.segment
+            .ui.header
+                |Your Response
+                +published_label
+            if editing_mode
+                .content
+                    .ui.form
+                        .field
+                            textarea#body_field(rows='3') #{body}
+                .content
+                    .save_doc.ui.basic.big.circular.icon.button
+                        i.big.green.check.icon
+                    +published
+                    +delete_button
+            else
+                .content
+                    .large130 #{body}
+                .content
+                    if is_author
+                        .edit_this.ui.basic.large.circular.icon.button
+                            i.blue.pencil.icon
+
+
+template(name='answer')
+    .ui.fluid.card
+        unless editing
+            if content
+                .content 
+                    .large130 !{content}
+                    // .large-text !{content}
+            if body
+                .content 
+                    .large130 #{body}
+            .content
+                .ui.horizontal.list
+                    if isInRole 'admin'
+                        .item
+                            +published_label
+                    // .item
+                    //     +view_full_button
+                    .item
+                        +author_info
+                    .item
+                        small #{when}
+                    .item
+                        +mark_read
+                    // .item
+                    //     #reply.ui.basic.circular.icon.button(tooltip='Reply')
+                    //         +icon48 name='response' classes='ui mini inline image'
+                    .item
+                        if readers
+                            | Seen by:
+                        each readers
+                            .ui.tiny.basic.label #{name}
+                        // img.ui.avatar.image(src="{{c.url profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+
+template(name='q_a')
+    .ui.stackable.grid
+        .ui.four.wide.column
+            .ui.dividing.header Sessions
+            .ui.list
+                each sessions
+                    .item
+                        .header
+                            +author_info
+                            |#{when}
+        .ui.ten.wide.column
+            .ui.dividing.header Questions
+            each questions
+                .ui.fluid.card
+                    .content
+                        .header #{title}
+                        if is_admin
+                            +published_label
+        
+
+template(name='sessions')
+    if currentUser
+        +dividing_header icon='time' label='Your Sessions'
+        .ui.four.stackable.cards
+            each my_sessions
+                +session_card
+    else
+        .ui.header Log in to take quiz and track results.
+
+
+
+
+template(name='child_view')
+    .ui.fluid.card
+        unless editing
+            if title
+                .content
+                    .header 
+                        if icon_class
+                            +icon48 name=icon_class classes='ui inline image'
+                        |#{title}
+                        if end_date
+                            |by #{end_date}
+                    if slug
+                        .meta Slug: #{slug}
+            if youtube
+                +youtube
+            if image_id
+                .image
+                    img(src="{{c.url image_id}}")
+            if image_url
+                .ui.large.image
+                    img(src=image_url)
+            if content
+                .content 
+                    .large130 !{content}
+                    // .large-text !{content}
+                    if author_name
+                        h4.ui.header
+                            |- #{author_name}
+            if link
+                .content
+                    a(href=link target='_blank') #{link}
+            if body
+                .content #{body}
+            if tags
+                .content
+                    +view_tags
+            // if intention_tags
+            //     .content
+            //         +intention_tags
+            // if location_tags
+            //     .content
+            //         +location_tags
+            .content
+                if isInRole 'admin'
+                    +published_label
+                // +resonate_button
+                // +bookmark_button
+                // +reflect_button
+                // +view_full_button
+                // +mark_read
+                +author_info
+                if is_author
+                    +session_edit_button
+                //     +delete_button
+                    // +edit_parent_id
+                    // |id: #{_id}
+                    // +type
+        if editing
+            .content
+                each child_view_fields
+                    +Template.dynamic template=this data=doc
+            .content
+                +published
+                +session_edit_button
+                +delete_button
