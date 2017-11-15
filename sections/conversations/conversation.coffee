@@ -111,7 +111,7 @@ if Meteor.isServer
                     subject: "New Message from #{message_author.profile.first_name} #{message_author.profile.last_name}",
                     html: 
                         "<h4>#{message_author.profile.first_name} just sent the following message while you were offline: </h4>
-                        #{body} <br><br>
+                        #{text} <br><br>
                         
                         Click <a href=#{message_link}> here to view.</a><br><br>
                         You can unsubscribe from this conversation in the Actions panel.
@@ -119,7 +119,7 @@ if Meteor.isServer
                     
                     # html: 
                     #     "<h4>#{message_author.profile.first_name} just sent the following message: </h4>
-                    #     #{body} <br>
+                    #     #{text} <br>
                     #     In conversation with tags: #{conversation_doc.tags}. \n
                     #     In conversation with description: #{conversation_doc.description}. \n
                     #     \n

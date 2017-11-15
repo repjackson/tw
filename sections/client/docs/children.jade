@@ -3,7 +3,7 @@ template(name='grid_item')
         .ui.fluid.card
             .content
                 +title
-                +type
+                // +type
                 +icon_class
                 +number
                 +edit_parent_id
@@ -43,61 +43,11 @@ template(name='grid_item')
                 a(href="/view/#{_id}") 
                     i.external.link.icon
                 if body
-                    .ui.basic.label #{body}
+                    .ui.basic.label #{text}
                 // .ui.basic.label #{type}    
                 +published
         
              
-template(name='list_item')
-    .ui.fluid.card
-        unless editing
-            if title
-                .content
-                    .header #{title}
-            if youtube
-                +youtube
-            if image_id
-                .image
-                    img(src="{{c.url image_id}}")
-            if image_url
-                .ui.large.image
-                    img(src=image_url)
-            if content
-                .content 
-                    .large130 !{content}
-                    // .large-text !{content}
-            if link
-                .content
-                    a(href=link target='_blank') #{link}
-            if body
-                .content #{body}
-            if tags
-                .content
-                    +view_tags
-            .content
-                if isInRole 'admin'
-                    +published_label
-                // +resonate_button
-                // +bookmark_button
-                // +reflect_button
-                +view_full_button
-                // +mark_read
-                +author_info
-                if is_author
-                    +delete_button
-                    // +edit_parent_id
-                    // |id: #{_id}
-                    // +type
-        if editing
-            +title
-            +type
-            +icon_class
-            +number
-            +delete_button
-  
-              
-            
-                        
 template(name='card')
     .ui.fluid.card
         .content

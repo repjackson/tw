@@ -59,9 +59,10 @@ template(name='plain')
 
 
 template(name='slug')
-    .ui.labeled.input
-        .ui.basic.label Slug
-        input#slug(type='text' value=slug)
+    if editing
+        .ui.labeled.input
+            .ui.basic.label Slug
+            input#slug(type='text' value=slug)
 
 template(name='plural_slug')
     .ui.labeled.input
@@ -69,9 +70,10 @@ template(name='plural_slug')
         input#plural_slug(type='text' value=plural_slug)
 
 template(name='number')
-    .ui.labeled.input
-        .ui.basic.label Number
-        input#number(type='number' min='0' value=number)
+    if editing
+        .ui.labeled.input
+            .ui.basic.label Number
+            input#number(type='number' min='0' value=number)
 
 template(name='edit_quantity')
     if editing
@@ -81,14 +83,14 @@ template(name='edit_quantity')
     else
         .ui.header Quantity: #{quantity}
 
-template(name='body_field')
+template(name='text')
     if editing
         .ui.form
             .field
-                textarea#body_field(rows='3') #{body}
+                textarea#text(rows='3') #{text}
     else
         .ui.basic.segment
-            |#{body}
+            |#{text}
             
             
 template(name='tags')
@@ -214,9 +216,13 @@ template(name='type')
         input#type(type='text' value=type)
             
 template(name='author_name')
-    .ui.labeled.fluid.large.input
-        .ui.basic.label Author
-        input#author_name(type='text' value=author_name)
+    if editing
+        .ui.labeled.fluid.large.input
+            .ui.basic.label Author
+            input#author_name(type='text' value=author_name)
+    else
+        .ui.header Author: #{author_name}
+
 
 template(name='edit_parent_id')
     .ui.form
@@ -238,7 +244,8 @@ template(name='content')
             .froala-container
                 +froalaReactive getFEContext
     else
-        |!{content}
+        .ui.basic.segment
+            .large130 !{content}
     
 template(name='image_id')
     if editing

@@ -32,7 +32,7 @@ template(name='doc_body')
                     +edit_body
                 else
                     span(class=doc_classes)
-                        |#{body}
+                        |#{text}
                 if isInRole 'admin'
                     unless editing
                         i.edit_this.large.pencil.link.icon(title=tags)
@@ -70,7 +70,7 @@ template(name='edit_body')
                 // label Body
                 input#body(type='text' value=body)
                 
-template(name='edit_body_field')
+template(name='edit_text')
     if is_editing
         .ui.form
             .field
@@ -78,7 +78,7 @@ template(name='edit_body_field')
             +session_edit_button
             +delete_button
     else
-        h4 #{body}
+        h4 #{text}
         if isInRole 'admin'
             +session_edit_button
 

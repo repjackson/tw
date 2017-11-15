@@ -1,9 +1,9 @@
 
 template(name='theme_facet')
     +icon48 name='hashtag' classes='ui mini inline image' tooltip='Browse Themes'
-    .ui.left.icon.small.inline.input
-        i.search.icon
-        +inputAutocomplete settings=settings id="search" class="" autocomplete="off" placeholder='Search...'
+    // .ui.left.icon.small.inline.input
+    //     i.search.icon
+    //     +inputAutocomplete settings=settings id="search" class="" autocomplete="off" placeholder='Search...'
     // |&nbsp;    
     if selected_theme_tags
         #clear_theme_tags.ui.blue.icon.circular.button
@@ -13,7 +13,7 @@ template(name='theme_facet')
                 strong #{this}
     each theme_tags
         .ui.basic.circular.button.select_theme_tag(class=theme_tag_class) 
-            | #{this.name}
+            strong #{this.name}
             // if isInRole 'admin'
             //     small #{this.count}
     // .ui.divider

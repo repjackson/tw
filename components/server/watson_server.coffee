@@ -62,7 +62,7 @@
             
 #             # html: 
 #             #     "<h4>#{message_author.profile.first_name} just sent the following message: </h4>
-#             #     #{body} <br>
+#             #     #{text} <br>
 #             #     In conversation with tags: #{conversation_doc.tags}. \n
 #             #     In conversation with description: #{conversation_doc.description}. \n
 #             #     \n

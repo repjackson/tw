@@ -9,7 +9,7 @@ template(name='conversation_message')
                     .metadata
                         span.date #{from_now}
                     .text
-                        | #{body}
+                        | #{text}
                     .actions
                         if is_author
                             +delete_link

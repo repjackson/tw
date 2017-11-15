@@ -23,7 +23,7 @@ Template.view_doc.onCreated ->
             author_id = null
             parent_id = FlowRouter.getParam('doc_id')
             tag_limit = 20
-            doc_limit = 20
+            doc_limit = 15
             view_published = 
                 if Session.equals('admin_mode', true) then Session.get('view_published') else true 
             view_read = null
@@ -37,14 +37,8 @@ Template.view_doc.onCreated ->
 
 Template.view_doc.helpers
     doc: -> Docs.findOne FlowRouter.getParam('doc_id')
-    doc_template: -> Docs.findOne type: 'doc_template'
-    view_type_template: -> 
-        doc = Docs.findOne FlowRouter.getParam('doc_id')
-        return 'new_view_doc'
 
 
-Template.new_view_doc.helpers
-    doc: -> Docs.findOne FlowRouter.getParam('doc_id')
     younger_sibling: ->
         doc = Docs.findOne FlowRouter.getParam('doc_id')
         if doc.number
@@ -97,7 +91,7 @@ Template.new_view_doc.helpers
     main_column_class: -> 
         if Session.equals 'editing', true 
             'ten wide column' 
-        else if @child_view is 'grid'
+        else if @child_view is 'nav'
             'fourteen wide column'
         else
             'eight wide column'
@@ -106,6 +100,9 @@ Template.new_view_doc.helpers
         # else
         #     'fourteen wide column'
     field_segment_class: -> if Session.equals 'editing', true then '' else 'basic compact'
+    flash_card_class: -> if Session.equals 'view_mode', 'flash_cards' then 'blue' else 'basic'
+    list_button_class: -> if Session.equals 'view_mode', 'list' then 'blue' else 'basic'
+    cards_button_class: -> if Session.equals 'view_mode', 'cards' then 'blue' else 'basic'
         
     
     response_completion: -> @completion_type is 'response'
@@ -119,15 +116,21 @@ Template.new_view_doc.helpers
             parent_id: FlowRouter.getParam('doc_id')
             author_id: Meteor.userId()
         if response_doc then return true else false
-    grid_view: -> @child_view is 'grid'
+    nav_view: -> @child_view is 'nav'
     list_view: -> @child_view is 'list'
-    card_view: -> @child_view is 'cards'
     answer_view: -> @child_view is 'answers'
-    check_ins_view: -> @child_view is 'check_ins'
+    
+    
+    child_view: ->
+        doc = Docs.findOne FlowRouter.getParam('doc_id')
+        if doc.can_change_view_mode
+            return Session.get('view_mode')
+        else
+            return 'list'
+    
     q_a_view: -> @child_view is 'q_a'
     grandchild_list_view: -> @child_view is 'grandchild_list'
     quiz_view: -> @child_view is 'quiz'
-    poems_view: -> @child_view is 'poems'
     
 
     
@@ -150,7 +153,7 @@ Template.doc_editing_sidebar.helpers
             # type: 'component'
             parent_id: 'MzHSPbvCYPngq2Dcz'
 
-Template.new_view_doc.events
+Template.view_doc.events
     'click .mark_read': (e,t)-> 
         Meteor.call 'mark_read', @_id, =>
             Meteor.call 'calculate_completion', @_id
@@ -170,6 +173,15 @@ Template.new_view_doc.events
             parent_id: FlowRouter.getParam('doc_id')
         Session.set 'editing_id', new_id
 
+      
+    'click #view_flash_cards': -> Session.set 'view_mode', 'flash_cards'
+
+    'click #view_list': -> Session.set 'view_mode', 'list'
+    'click #view_cards': -> Session.set 'view_mode', 'cards'
+
+      
+      
+      
       
     'click #admin_add': ->
         new_id = Docs.insert
@@ -236,7 +248,7 @@ Template.field_menu.events
             
             
 Template.response.onCreated ->
-    @editing = new ReactiveVar(false)
+    @editing = new ReactiveVar(true)
 
 Template.response.helpers
     editing_mode: -> Template.instance().editing.get()
@@ -252,10 +264,10 @@ Template.response.events
         Session.set 'editing_id', null
         Meteor.call 'calculate_completion', FlowRouter.getParam('doc_id')
 
-    'blur #body_field': (e,t)->
-        body_field = $(e.currentTarget).closest('#body_field').val()
+    'blur #text': (e,t)->
+        text = $(e.currentTarget).closest('#text').val()
         Docs.update @_id,
-            $set: body: body_field
+            $set: body: text
 
 
 

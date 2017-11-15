@@ -1,7 +1,9 @@
 template(name='voting')
-    i.thumbs.up.link.large.icon.vote_up(class=vote_up_button_class)
-    // i.thumbs.down.link.big.icon.vote_down(class=vote_down_button_class)
-    // |#{points}
+    .ui.basic.circular.icon.button
+        i.thumbs.up.link.big.icon.vote_up(class=vote_up_button_class)
+    .ui.basic.circular.icon.button
+        i.thumbs.down.link.big.icon.vote_down(class=vote_down_button_class)
+        // |#{points}
 
 template(name='thanks_button')
     .ui.circular.icon.button.vote_up(class=thanks_button_class data-tooltip="Thank #{author.profile.first_name} for Sharing")
@@ -79,22 +81,24 @@ template(name='toggle_friend')
 template(name='session_edit_button')
     if currentUser
         unless is_editing
-            .edit_this.ui.basic.icon.button(title="Edit #{tags}" class=button_classes)
-                +icon24 name="edit" classes='ui mini inline image'
+            .edit_this.ui.basic.icon.circular.button(title="Edit #{tags}" class=button_classes)
+                +icon48 name="edit" classes='ui mini inline image'
                 // i.icon
                 // |Edit
         else
-            .save_doc.ui.basic.button(class=button_classes)
-                i.icon
+            .ui.center.aligned.basic.segment
+                .save_doc.ui.basic.circular.large.icon.button(class=button_classes)
                     +icon48 name="checkmark" classes='ui mini inline image'
-                |Save
+                +delete_button
+
+                
 template(name='session_edit_icon')
     if currentUser
         unless is_editing
             i.red.pencil.link.icon.edit_this(title=tags class=button_classes)
         else
             .save_doc.ui.green.button(class=button_classes)
-                |Save
+                // |Save
 template(name='edit_button')
     if currentUser
         unless editing
@@ -151,11 +155,11 @@ template(name='add_to_cart')
 
 template(name='delete_button')
     unless confirming
-        .delete.ui.basic.icon.button
+        .delete.ui.basic.icon.circular.button
             i.red.remove.icon
     else
-        .ui.basic.button.cancel Cancel
-        .ui.red.button.confirm Confirm Delete
+        .ui.basic.circular.button.cancel Cancel
+        .ui.red.circular.button.confirm Confirm Delete
         
 template(name='delete_link')
     unless confirming

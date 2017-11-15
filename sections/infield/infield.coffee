@@ -104,7 +104,7 @@ if Meteor.isClient
             
             
             
-    Template.edit_body_field.events        
+    Template.edit_text.events        
         'blur #body': (e,t)->
             body = $(e.currentTarget).closest('#body').val()
             Docs.update @_id,

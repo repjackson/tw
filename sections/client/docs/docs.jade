@@ -1,10 +1,5 @@
 template(name='view_doc')
     with doc
-        +Template.dynamic template=view_type_template
-
-
-template(name='new_view_doc')
-    with doc
         .ui.padded.stackable.grid
             .centered.middle.aligned.row
                 if parent
@@ -14,7 +9,6 @@ template(name='new_view_doc')
                         else
                             +icon48 name='chevron-up' classes='ui mini inline image'
                         | #{parent.title}
-                        | #{parent.body}
                 else
                     if isInRole 'dev'
                         #create_parent.ui.basic.button Create Parent
@@ -46,6 +40,8 @@ template(name='new_view_doc')
                                 +dots100 name=icon_class classes='ui mini spaced image'
                             // else
                             //     +icon48 name='circle' classes='ui mini spaced image'
+                        if number
+                            |#{number}: 
                         | #{title}
                         if can_edit
                             +toggle_editing_button
@@ -105,10 +101,10 @@ template(name='new_view_doc')
                                             +remove_field
                                             .ui.hidden.divider
                                 if body
-                                    +body_field
+                                    +text
                             h3.title
                                 +icon96 name="flow-chart" classes='ui mini inline image'
-                                | Child Documents
+                                | #{child_count} Child Documents
                                 i.dropdown.icon
 
                             .content
@@ -123,7 +119,7 @@ template(name='new_view_doc')
                                 // .ui.segment(class=field_segment_class)
                                 +Template.dynamic template=slug data=doc
                         if body
-                            +body_field
+                            +text
                         .ui.basic.center.aligned.segment
                             if response_completion
                                 +response
@@ -139,14 +135,12 @@ template(name='new_view_doc')
                         // if list_view
                         //     each children
                         //         +list_item
-                        if grid_view
+                        if nav_view
                              .ui.stackable.five.column.centered.grid
                                 each children
                                     +grid_item
                         else
-                            .ui.cards
-                                each children
-                                    +child_view
+                            +Template.dynamic template=child_view
                         if read_completion
                             .ui.center.aligned.basic.segment
                                 if currentUser
@@ -163,8 +157,21 @@ template(name='new_view_doc')
                         +doc_editing_sidebar
                 else
                     .three.wide.column
-                        if view_published_filter
-                            +published_filter
+                        if can_change_view_mode
+                            .ui.dividing.header View Mode
+                            
+                            #view_list.ui.button(class=list_button_class)
+                                +icon48 name='list' classes='ui spaced mini image'
+                                |List
+                            #view_cards.ui.button(class=cards_button_class)
+                                +icon48 name='layout' classes='ui spaced mini image'
+                                | Cards
+                            if view_published_filter
+                                +published_filter
+                            if can_view_flash_cards
+                                #view_flash_cards.ui.button(class=flash_card_class)
+                                    +icon48 name='study' classes='ui spaced mini image'
+                                    |Flash Cards
             
 template(name='doc_editing_sidebar')
     .ui.styled.fluid.accordion
@@ -204,13 +211,26 @@ template(name='doc_editing_sidebar')
             i.dropdown.icon
             .ui.basic.label #{child_view}
         .content
-            +toggle_key key='child_view' value='grid' icon='grid-view' label='Grid'
-            +toggle_key key='child_view' value='list' icon='list-view' label='List'
+            +toggle_key key='child_view' value='nav' icon='grid-view' label='Nav'
+            // +toggle_key key='child_view' value='list' icon='list-view' label='List'
             +toggle_key key='child_view' value='cards' icon='mockup' label='Cards'
-            +toggle_key key='child_view' value='answers' icon='response' label='Answers'
-            +toggle_key key='child_view' value='q_a' icon='faq' label='Q&A'
-            +toggle_key key='child_view' value='grandchild_list' icon='bulleted-list' label='Grandchild List'
-            +toggle_key key='child_view' value='quiz' icon='report-card' label='Quiz'
+            // +toggle_key key='child_view' value='answers' icon='response' label='Answers'
+            // +toggle_key key='child_view' value='q_a' icon='faq' label='Q&A'
+            // +toggle_key key='child_view' value='grandchild_list' icon='bulleted-list' label='Grandchild List'
+            // +toggle_key key='child_view' value='quiz' icon='report-card' label='Quiz'
+        
+        h3.title
+            +icon48 name='preview-pane' classes='ui mini inline image'
+            | Available Child View Modes
+            i.dropdown.icon
+        .content
+            +toggle_key key='can_view_flash_cards'  icon='study' label='Flash Cards'
+            // +toggle_key key='child_view' value='list' icon='list-view' label='List'
+            +toggle_key key='child_view' value='cards' icon='mockup' label='Cards'
+            // +toggle_key key='child_view' value='answers' icon='response' label='Answers'
+            // +toggle_key key='child_view' value='q_a' icon='faq' label='Q&A'
+            // +toggle_key key='child_view' value='grandchild_list' icon='bulleted-list' label='Grandchild List'
+            // +toggle_key key='child_view' value='quiz' icon='report-card' label='Quiz'
             
         h3.title
             +icon48 name='task-completed' classes='ui mini inline image'
@@ -221,24 +241,22 @@ template(name='doc_editing_sidebar')
             +toggle_key key='completion_type' value='response' icon='response' label='Response'
             +toggle_key key='completion_type' value='mark_read' icon='read-message' label='Mark Read'
             +toggle_key key='completion_type' value='check_children' icon='flow-chart' label='Check Children'
-            +toggle_key key='completion_type' value='none' icon='unavailable' label='None'
             +toggle_key key='completion_type' value='session' icon='time' label='Session'
-        h3.title
-            +icon48 name='filter' classes='ui mini inline image'
-            | Filters
-            i.dropdown.icon
-        .content
-            +toggle_key key='view_published_filter' icon='visible' label='Published'
+            +toggle_key key='completion_type' value='none' icon='unavailable' label='None'
         
         h3.title
             +icon48 name='user' classes='ui mini inline image'
-            | User Permissions
+            | User Actions
             i.dropdown.icon
             if can_add
                 .ui.basic.label Add
+            if can_vote
+                .ui.basic.label Vote
                 // .ui.basic.label Add: #{child_template}
         .content
             +toggle_key key='can_add' icon='add-subnode' label='Add Child'
+            +toggle_key key='can_vote' icon='elections' label='Vote'
+            +toggle_key key='can_change_view_mode' icon='true-false' label='Choose View Mode'
             if can_add
                 .ui.segment
                     h5.ui.header 
@@ -248,12 +266,22 @@ template(name='doc_editing_sidebar')
                         .select_child_field.ui.compact.small.button(class=child_field_class)
                             +icon48 name=icon_class classes='ui mini spaced image'
                             |#{title}
+        
+        h3.title
+            +icon48 name='filter' classes='ui mini inline image'
+            | Filters
+            i.dropdown.icon
+        .content
+            +toggle_key key='view_published_filter' icon='visible' label='Published'
+        
         h3.title 
             +icon48 name='monarch' classes='ui mini spaced image'
             |Admin
             i.dropdown.icon
         .content
             +edit_author
+            +edit_parent_id
+        
         h3.title 
             +icon48 name='sports-mode' classes='ui mini spaced image'
             | Actions

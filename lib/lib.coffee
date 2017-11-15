@@ -41,6 +41,8 @@ Docs.before.insert (userId, doc)=>
     doc.upvoters = []
     doc.downvoters = []
     doc.published = 0
+    doc.access = 'available'
+    doc.completion_type = 'none'
     return
 
 Docs.after.update ((userId, doc, fieldNames, modifier, options) ->

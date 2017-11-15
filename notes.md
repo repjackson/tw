@@ -239,3 +239,8 @@ Docs.update({type: "journal", parent_id: { "$exists": false }}, {$set:{parent_id
 
 
 automated therapy
+
+
+flash card view
+    question main content
+    answer child with answer type

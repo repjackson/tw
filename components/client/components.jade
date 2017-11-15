@@ -221,12 +221,12 @@ template(name='author_info')
     else
         // | by 
         if is_author
-            |you
+            |by you
         else
             with author
                 if profile.image_id
                     img.ui.avatar.spaced.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
-                |&nbsp;
+                |&nbsp; by
                 a(href="/profile/#{username}") #{name} 
                 +staus_indicator
     // .ui.sub.header #{when}

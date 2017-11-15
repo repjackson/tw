@@ -1,14 +1,30 @@
-Template.q_a.helpers
-    sessions: ->
-        Docs.find
-            parent_id: FlowRouter.getParam('doc_id')
-            type: 'session'
+# Template.q_a.helpers
+#     sessions: ->
+#         Docs.find
+#             parent_id: FlowRouter.getParam('doc_id')
+#             type: 'session'
     
-    questions: ->
-        Docs.find
-            parent_id: FlowRouter.getParam('doc_id')
-            type: $ne: 'session'
+#     questions: ->
+#         Docs.find
+#             parent_id: FlowRouter.getParam('doc_id')
+#             type: $ne: 'session'
 
+Template.list.helpers
+    children: ->
+        if Session.get 'editing_id'
+            Docs.find Session.get('editing_id')
+        else
+            Docs.find
+                parent_id: FlowRouter.getParam('doc_id')
+    
+Template.cards.helpers
+    children: ->
+        if Session.get 'editing_id'
+            Docs.find Session.get('editing_id')
+        else
+            Docs.find
+                parent_id: FlowRouter.getParam('doc_id')
+    
 
 Template.sessions.helpers
     my_sessions: ->

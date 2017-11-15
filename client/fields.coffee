@@ -263,11 +263,11 @@ Template.plural_slug.events
             $set: plural_slug: plural_slug
             
             
-Template.body_field.events
-    'blur #body_field': (e,t)->
-        body_field = $(e.currentTarget).closest('#body_field').val()
+Template.text.events
+    'blur #text': (e,t)->
+        text = $(e.currentTarget).closest('#text').val()
         Docs.update @_id,
-            $set: body: body_field
+            $set: text: text
             
             
 Template.link.events
