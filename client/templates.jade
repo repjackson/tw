@@ -16,27 +16,23 @@ template(name='layout')
     +status
     // .ui.grid
         // .two.wide.column
-    #nav_menu
-        unless zen_mode
-            +nav
+    +nav
     // .fourteen.wide.column
     +Template.dynamic template=sub_nav
     +Template.dynamic template=sub_sub_nav
     +Template.dynamic template=cloud
     +Template.dynamic template=main
     unless isInRole 'dev'
-        unless zen_mode
-            +footer
+        +footer
                     
 
 
 template(name="tag_result")
-    .ui.large.basic.label #{name}
+    .ui.basic.label #{name}
 
 template(name='not_found')
     .ui.text.container
         .ui.center.aligned.header Not Found
-        h5.ui.center.aligned.header Please report bugs using the bug icon above.
         
         
 template(name='staus_indicator')
@@ -71,13 +67,3 @@ template(name='user_pill')
             .description
                 each five_tags
                     .ui.basic.small.label #{this}
-
-template(name='tag_pill')
-    .item
-        .content
-            .header
-                // img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
-                |#{name}
-            // .description
-            //     each five_tags
-            //         .ui.basic.small.label #{this}

@@ -1,7 +1,7 @@
 Template.resonate_button.helpers
     resonate_button_class: -> 
         if Meteor.userId()
-            if @favoriters and Meteor.userId() in @favoriters then 'teal' else 'basic'
+            if @favoriters and Meteor.userId() in @favoriters then 'blue' else 'basic'
         else 'disabled basic'
 
 Template.resonate_button.events

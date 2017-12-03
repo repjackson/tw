@@ -240,7 +240,9 @@ Docs.update({type: "journal", parent_id: { "$exists": false }}, {$set:{parent_id
 
 automated therapy
 
-
-flash card view
-    question main content
-    answer child with answer type
+journal template view
+    go through each question
+    each not responded
+    sort by numbers
+    create new session, save each response to session_id
+    have separate session view, used for multiple choice too

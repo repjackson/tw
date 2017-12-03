@@ -40,6 +40,7 @@ Docs.before.insert (userId, doc)=>
     doc.read_by = [Meteor.userId()]
     doc.upvoters = []
     doc.downvoters = []
+    doc.child_fields = ['title']
     doc.published = 0
     doc.access = 'available'
     doc.completion_type = 'none'
@@ -100,6 +101,7 @@ Docs.helpers
 
     can_access: ->
         if @access is 'available' then true
+        else if Session.equals 'admin_mode', true then true
         else
             previous_number = @number - 1
             previous_doc = 
@@ -148,31 +150,39 @@ Meteor.methods
                 Docs.update doc_id, 
                     $pull: completed_by: Meteor.userId()
         if doc.completion_type is 'response'
-            response_doc = 
-                Docs.findOne
+            # console.log 'response completion'
+            response_docs = 
+                Docs.find(
                     parent_id: doc_id
-                    author_id: Meteor.userId()
-            if response_doc
-                Docs.update doc_id, 
-                    $addToSet: completed_by: Meteor.userId()
-            else
-                Docs.update doc_id, 
-                    $pull: completed_by: Meteor.userId()
+                    # author_id: Meteor.userId()
+                    ).fetch()
+            if response_docs
+                # console.log 'response docs found', response_docs
+                for response_doc in response_docs
+                    Docs.update doc_id, 
+                        $addToSet: completed_by: response_doc.author_id
+            # else
+            #     Docs.update doc_id, 
+            #         $pull: completed_by: Meteor.userId()
         if doc.completion_type is 'check_children'
             children_array = Docs.find(parent_id: doc_id).fetch()
             children_count = Docs.find(parent_id: doc_id).count()
-            child_completion_count = 0
-            for child in children_array
-                if Meteor.userId() in child.completed_by
-                    child_completion_count++
-            # console.log 'child_completion_count', child_completion_count
-            # console.log 'children_count', children_count
-            if child_completion_count is children_count
-                Docs.update doc_id, 
-                    $addToSet: completed_by: Meteor.userId()
-            else
-                Docs.update doc_id, 
-                    $pull: completed_by: Meteor.userId()
+            for user in Meteor.users.find().fetch()
+                child_completion_count = 0
+                for child in children_array
+                    # if Meteor.userId() in child.completed_by
+                    if user._id in child.completed_by
+                        child_completion_count++
+                # console.log 'child_completion_count', child_completion_count
+                # console.log 'children_count', children_count
+                if child_completion_count is children_count
+                    Docs.update doc_id, 
+                        $addToSet: completed_by: user._id
+                        # $addToSet: completed_by: Meteor.userId()
+                else
+                    Docs.update doc_id, 
+                        $pull: completed_by: user._id
+                        # $pull: completed_by: Meteor.userId()
                 
         next_number = doc.number + 1
         older_sibling = 

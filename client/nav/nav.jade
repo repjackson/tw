@@ -1,12 +1,12 @@
 template(name='nav')
     #nav_menu.ui.labeled.icon.borderless.menu
         if currentUser
-            a.ui.mobile.hidden.simple.dropdown.item(href='/view/9639QAQ4yPbMLs7CA')
+            a.ui.simple.dropdown.item(href='/' class="{{isActivePath '/about'}}") 
                 // .imogen TW
                 .ui.image
                     img(src="{{c.url 'tw_logo' width=50 height=50 crop='fill'}}")
                 .ui.menu
-                    a.mobile.hidden.item(href='/about' class="{{isActivePath '/about'}}") 
+                    a.item(href='/about' class="{{isActivePath '/about'}}") 
                         i.icon
                             .ui.image
                                 +icon24 name='info'
@@ -16,13 +16,13 @@ template(name='nav')
                     //         .ui.image
                     //             +icon24 name='service-bell'
                     //     |Services
-                    a.mobile.hidden.item(href='/contact' class="{{isActivePath '/contact'}}") 
+                    a.item(href='/contact' class="{{isActivePath '/contact'}}") 
                         i.icon
                             .ui.image
                                 +icon24 name='phone'
                         |Contact
         unless currentUser
-            a.mobile.hidden.item(href='/' class="{{isActivePath '/'}}")
+            a.mobile.hidden.item(href='/view/9639QAQ4yPbMLs7CA' class="{{isActivePath '/view/9639QAQ4yPbMLs7CA'}}")
                 .ui.image
                     img(src="{{c.url 'tw_logo' width=50 height=50 crop='fill'}}")
             a.mobile.hidden.item(href='/about' class="{{isActivePath '/about'}}") 
@@ -71,7 +71,7 @@ template(name='nav')
                 .ui.image
                     +icon48 name='sprout' classes='ui image'
             if isInRole 'admin'
-                a#toggle_admin_mode.mobile.hidden.item(href='#' data-position="bottom center" data-content="Toggle Admin Mode") 
+                a#toggle_admin_mode.item(href='#' data-position="bottom center" data-content="Toggle Admin Mode") 
                     .ui.image
                         if admin_mode
                             +icon48 name='user-shield' classes='ui image'

@@ -2,7 +2,7 @@ $.cloudinary.config
     cloud_name:"facet"
 
 Session.setDefault 'cart_item', null
-Session.setDefault 'zen_mode', false
+Session.setDefault 'view_mode', 'cards'
 # Session.setDefault 'doc_limit', 10
 Session.setDefault 'view_complete', null
 Session.setDefault 'editing', false
@@ -41,7 +41,7 @@ Template.registerHelper 'is_person_by_username', () ->  Meteor.user().username i
 
 Template.registerHelper 'can_edit', () ->  Meteor.userId() is @author_id or Roles.userIsInRole(Meteor.userId(), 'admin')
 
-Template.registerHelper 'zen_mode', () -> Session.get 'zen_mode'
+# Template.registerHelper 'zen_mode', () -> Session.get 'zen_mode'
 Template.registerHelper 'admin_mode', () ->  Session.get 'admin_mode'
 Template.registerHelper 'editing', () ->  
     Session.get('editing') or Session.equals('editing_id', @_id)
@@ -61,6 +61,7 @@ Template.registerHelper 'segment_class', () ->
         if @published is 1 then 'raised blue' else ''
     else
         ''
+# Template.registerHelper 'card_class', () -> if Session.equals('admin_mode', true) then '' else 'noborders'
 
 Template.registerHelper 'read_segment_class', () -> if @read_by and Meteor.userId() in @read_by then 'raised green' else 'basic'
 Template.registerHelper 'ribbon_class', () -> if @published then 'blue' else 'basic'
@@ -71,9 +72,9 @@ Template.registerHelper 'long_date', () -> moment(@timestamp).format("dddd, MMMM
 # Template.registerHelper 'long_date', () -> moment(@timestamp).format("dddd, MMMM Do YYYY, h:mm:ss a")
 
 
-Template.registerHelper 'in_course', () -> @_id in Meteor.user().courses
-Template.registerHelper 'in_sol', () -> Roles.userIsInRole 'sol_member'
-Template.registerHelper 'in_demo', () -> Roles.userIsInRole 'sol_demo_member'
+# Template.registerHelper 'in_course', () -> @_id in Meteor.user().courses
+# Template.registerHelper 'in_sol', () -> Roles.userIsInRole 'sol_member'
+# Template.registerHelper 'in_demo', () -> Roles.userIsInRole 'sol_demo_member'
 
 Template.registerHelper 'tag_class', ()-> if @valueOf() in selected_theme_tags.array() then 'blue' else 'basic'
 

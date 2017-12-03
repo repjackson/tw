@@ -69,12 +69,12 @@ template(name='poem_filter')
         +icon48 name='close-up' classes='ui mini image'
             
 template(name='doc_limit')
-    .ui.buttons
-        #make_1.ui.large.button(class=limit_1_class data-tooltip='View 1 Result') 
-            strong 1
-        #make_5.ui.large.button(class=limit_5_class data-tooltip='View 5 Results') 
-            strong 5
-        #make_10.ui.large.button(class=limit_10_class data-tooltip='View 10 Results') 
-            strong 10
-        // #make_20.ui.large.button(class=limit_20_class data-tooltip='View 20 Results')
-        //     strong  20
+    .ui.header Result Limit
+    #make_1.ui.large.button(class=limit_1_class data-tooltip='View 1 Result') 
+        strong 1
+    #make_5.ui.large.button(class=limit_5_class data-tooltip='View 5 Results') 
+        strong 5
+    #make_10.ui.large.button(class=limit_10_class data-tooltip='View 10 Results') 
+        strong 10
+    // #make_20.ui.large.button(class=limit_20_class data-tooltip='View 20 Results')
+    //     strong  20

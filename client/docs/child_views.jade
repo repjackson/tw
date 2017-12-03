@@ -1,26 +1,26 @@
-template(name='response')
-    with response
-        .ui.blue.segment
-            .ui.header
-                |Your Response
-                +published_label
-            if editing_mode
-                .content
-                    .ui.form
-                        .field
-                            textarea#text(rows='3') #{text}
-                .content
-                    .save_doc.ui.basic.big.circular.icon.button
-                        i.big.green.check.icon
-                    +published
-                    +delete_button
-            else
-                .content
-                    .large130 #{text}
-                .content
-                    if is_author
-                        .edit_this.ui.basic.large.circular.icon.button
-                            i.blue.pencil.icon
+// template(name='response')
+//     with response
+//         .ui.blue.segment
+//             .ui.header
+//                 |Your Response
+//                 +published_label
+//             if editing_mode
+//                 .content
+//                     .ui.form
+//                         .field
+//                             textarea#text(rows='3') #{text}
+//                 .content
+//                     .save_doc.ui.basic.big.circular.icon.button
+//                         i.big.green.check.icon
+//                     +published
+//                     +delete_button
+//             else
+//                 .content
+//                     .large130 #{text}
+//                 .content
+//                     if is_author
+//                         .edit_this.ui.basic.large.circular.icon.button
+//                             i.blue.pencil.icon
 
 
 // template(name='answer')
@@ -56,24 +56,24 @@ template(name='response')
 //                             .ui.tiny.basic.label #{name}
 //                         // img.ui.avatar.image(src="{{c.url profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
 
-// template(name='q_a')
-//     .ui.stackable.grid
-//         .ui.four.wide.column
-//             .ui.dividing.header Sessions
-//             .ui.list
-//                 each sessions
-//                     .item
-//                         .header
-//                             +author_info
-//                             |#{when}
-//         .ui.ten.wide.column
-//             .ui.dividing.header Questions
-//             each questions
-//                 .ui.fluid.card
-//                     .content
-//                         .header #{title}
-//                         if is_admin
-//                             +published_label
+template(name='q_a')
+    .ui.stackable.grid
+        .ui.four.wide.column
+            .ui.dividing.header Sessions
+            .ui.list
+                each sessions
+                    .item
+                        .header
+                            +author_info
+                            |#{when}
+        .ui.ten.wide.column
+            .ui.dividing.header Questions
+            each questions
+                .ui.fluid.card
+                    .content
+                        .header #{title}
+                        if is_admin
+                            +published_label
         
 
 template(name='sessions')
@@ -84,12 +84,6 @@ template(name='sessions')
                 +session_card
     else
         .ui.header Log in to take quiz and track results.
-
-
-template(name='list')
-    .ui.cards
-        each children
-            +list_item
 
 
 template(name='list_item')
@@ -109,9 +103,9 @@ template(name='list_item')
                             |by #{end_date}
                     if slug
                         .meta Slug: #{slug}
-            if tags
-                .content
-                    +view_tags
+            // if tags
+            //     .content
+            //         +view_tags
             .content
                 if child_count
                     .ui.basic.label(data-tooltip="#{child_count} Responses")
@@ -139,19 +133,14 @@ template(name='list_item')
 
 
 
-template(name='cards')
-    .ui.cards
-        each children
-            +child_view
-
-template(name='child_view')
+template(name='card_view')
     .ui.fluid.card
         unless editing
-            if title
+            if show_header
                 .content
                     .header 
-                        if completed
-                            +icon48 name='checkmark' classes='ui inline image'
+                        // if completed
+                        //     +icon48 name='checkmark' classes='ui inline image'
                         if icon_class
                             +icon48 name=icon_class classes='ui inline image'
                         if number
@@ -179,6 +168,9 @@ template(name='child_view')
             if link
                 .content
                     a(href=link target='_blank') #{link}
+            if time_marker
+                .content
+                    h5.ui.header Time Marker: #{time_marker}
             if text
                 .content #{text}
             if tags
@@ -192,24 +184,32 @@ template(name='child_view')
             //         +location_tags
             .content
                 if child_count
-                    .ui.basic.label(data-tooltip="#{child_count} Responses")
+                    .ui.basic.label(data-tooltip="#{child_count} Child Documents")
                         +icon48 name='flow-chart' classes='ui tiny inline image'
                         |#{child_count}
                 if is_admin
+                    +title
                     +published_label
-                    +edit_parent_id
+                    // +edit_parent_id
                 if doc.can_vote
                     +voting
-                +view_full_button
+                if doc.can_bookmark
+                    +bookmark_button
+                if doc.can_mark_resonates
+                    +resonate_button
+                if doc.can_reflect
+                    +reflect_button
+            .content
                 +author_info
                 |#{when}
-                if is_author
-                    if doc.can_add
-                        +session_edit_button
+                if can_edit
+                    // if doc.can_add
+                    +session_edit_button
+                +view_full_button
         if editing
             .content
                 each child_view_fields
-                    +Template.dynamic template=this data=doc
+                    +Template.dynamic template=this data=parent_doc
             .content
                 +published
                 +session_edit_button

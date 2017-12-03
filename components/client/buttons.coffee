@@ -24,7 +24,7 @@ Template.thanks_button.helpers
     said_thanks: -> @upvoters and Meteor.userId() in @upvoters
     thanks_button_class: ->
         if not Meteor.userId() then 'disabled'
-        else if @upvoters and Meteor.userId() in @upvoters then 'teal'
+        else if @upvoters and Meteor.userId() in @upvoters then 'blue'
         else 'basic'
 
 # Template.thanks_button.onRendered ->
@@ -146,14 +146,22 @@ Template.edit_button.events
 
 Template.session_edit_button.events
     'click .edit_this': -> Session.set 'editing_id', @_id
-    'click .save_doc': -> Session.set 'editing_id', null
+    'click .save_doc': -> 
+        if @tags
+            selected_theme_tags.clear()
+            for tag in @tags
+                selected_theme_tags.push tag
+        Meteor.call 'calculate_completion', FlowRouter.getParam('doc_id')
+        Session.set 'editing_id', null
 
 Template.session_edit_button.helpers
     button_classes: -> Template.currentData().classes
 
 Template.session_edit_icon.events
     'click .edit_this': -> Session.set 'editing_id', @_id
-    'click .save_doc': -> Session.set 'editing_id', null
+    'click .save_doc': -> 
+        Meteor.call 'calculate_completion', FlowRouter.getParam('doc_id')
+        Session.set 'editing_id', null
 
 Template.session_edit_icon.helpers
     button_classes: -> Template.currentData().classes
@@ -354,7 +362,7 @@ Template.favorite_button.events
 Template.mark_complete_button.helpers
     complete_button_class: -> 
         if Meteor.user()
-            if @completed_ids and Meteor.userId() in @completed_ids then 'teal' else 'basic'
+            if @completed_ids and Meteor.userId() in @completed_ids then 'blue' else 'basic'
         else 'grey disabled'
     completed: -> 
         if Meteor.user()
@@ -389,7 +397,7 @@ Template.mark_doc_approved_button.events
 Template.bookmark_button.helpers
     bookmark_button_class: -> 
         if Meteor.user()
-            if @bookmarked_ids and Meteor.userId() in  @bookmarked_ids then 'teal' else 'basic'
+            if @bookmarked_ids and Meteor.userId() in  @bookmarked_ids then 'blue' else 'basic'
         else 'basic disabled'
         
     bookmarked: -> Meteor.user()?.bookmarked_ids and @_id in Meteor.user().bookmarked_ids
@@ -409,7 +417,7 @@ Template.bookmark_button.events
 Template.pin_button.helpers
     pin_button_class: -> 
         if Meteor.user()
-            if @pinned_ids and Meteor.userId() in  @pinned_ids then 'teal' else 'basic'
+            if @pinned_ids and Meteor.userId() in  @pinned_ids then 'blue' else 'basic'
         else 'grey disabled'
         
     pinned: -> Meteor.user()?.pinned_ids and @_id in Meteor.user().pinned_ids
@@ -424,7 +432,7 @@ Template.pin_button.events
 Template.pin_corner_button.helpers
     pin_button_class: -> 
         if Meteor.user()
-            if @pinned_ids and Meteor.userId() in  @pinned_ids then 'teal' else ''
+            if @pinned_ids and Meteor.userId() in  @pinned_ids then 'blue' else ''
         else 'grey disabled'
         
     pinned: -> Meteor.user()?.pinned_ids and @_id in Meteor.user().pinned_ids
@@ -471,9 +479,10 @@ Template.reflect_button.events
     'click #reflect': ->
         new_journal_id = Docs.insert
             type:'journal'
+            content: ''
             parent_id: @_id
-        Session.set 'editing', true
-        FlowRouter.go("/view/#{new_journal_id}")    
+        Session.set 'editing_id', new_journal_id
+        FlowRouter.go("/view/#{@_id}")    
         
         
 Template.add_doc_button.events
@@ -491,7 +500,7 @@ Template.add_doc_button.helpers
     
     
 Template.subscribe_button.helpers
-    subscribe_buton_class: -> if @subscribed_ids and Meteor.userId() in @subscribed_ids then 'teal' else 'basic'
+    subscribe_buton_class: -> if @subscribed_ids and Meteor.userId() in @subscribed_ids then 'blue' else 'basic'
     subscribed: -> if @subscribed_ids and Meteor.userId() in @subscribed_ids then true else false
     is_participant: -> Meteor.userId() in @participant_ids
         

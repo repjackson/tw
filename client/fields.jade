@@ -155,18 +155,25 @@ template(name='location_tags')
 
 
 template(name='intention_tags')
-    .ui.header 
-        +icon48 name='spotlight' classes='ui mini spaced image'
-        |My intention for this entry is to... &nbsp;
-        .ui.mini.input
-            +inputAutocomplete settings=intention_select_settings id="intention_tag_select" class="" autocomplete="off"
-        // .ui.mini.input
-        //     input#add_intention_tag(type='text' maxlength='50' )
+    if editing
+        .ui.header 
+            +icon48 name='spotlight' classes='ui mini spaced image'
+            |My intention for this entry is to... &nbsp;
+            .ui.mini.input
+                +inputAutocomplete settings=intention_select_settings id="intention_tag_select" class="" autocomplete="off"
+            // .ui.mini.input
+            //     input#add_intention_tag(type='text' maxlength='50' )
+            each intention_tags
+                // a.ui.basic.circular.button.doc_tag #{this}
+                a.ui.basic.circular.button.doc_tag
+                    i.remove.icon
+                    |#{this}
+    else
+        .ui.dividing.header 
+            +icon48 name='sofa' classes='ui mini inline image'
+            |Intention Tags
         each intention_tags
-            // a.ui.basic.circular.button.doc_tag #{this}
-            a.ui.basic.circular.button.doc_tag
-                |#{this}
-                i.remove.icon
+            .ui.basic.large.label.intention_tag #{this}
 
 
 template(name='dollar_price')
@@ -290,9 +297,9 @@ template(name='image_url')
                 input#image_url(type='text' value=image_url)
                 .ui.basic.button
                     +icon24 name='sent'
-    else
-        .ui.large.image
-            img(src=image_url)
+    // else
+    //     .ui.large.image
+    //         img(src=image_url)
         
     
 template(name='youtube')
@@ -356,6 +363,11 @@ template(name='start_time')
         .ui.basic.label Start Time
         input#start_time(type='time' value=start_time)
             
+template(name='time_marker')
+    .ui.labeled.input
+        .ui.basic.label Time Marker
+        input#time_marker(type='number' value=time_marker step="0.01" min="0")
+            
 template(name='end_date')
     if editing
         .ui.labeled.input
@@ -399,7 +411,8 @@ template(name='transcript')
                 i.dropdown.icon
             .content
                 |!{transcript}
-                if isInRole 'dev'
-                    |old
-                +doc_by_parentid_and_type parent_id=_id type='transcript'
+                // if isInRole 'dev'
+                //     |old
+                // +doc_by_parentid_and_type parent_id=_id type='transcript'
                 // +doc_content tags='sol,welcome,transcript'
+    .ui.hidden.divider

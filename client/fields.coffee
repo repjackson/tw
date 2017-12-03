@@ -98,8 +98,8 @@ Template.tags.helpers
             {
                 collection: Tags
                 field: 'name'
-                matchAll: true
-                template: Template.tag_pill
+                matchAll: false
+                template: Template.tag_result
             }
             ]
     }
@@ -445,6 +445,9 @@ Template.content.helpers
                   'undo'
                   'redo'
                 ]
+            toolbarButtonsMD: ['bold', 'italic', 'underline']
+            toolbarButtonsSM: ['bold', 'italic', 'underline']
+            toolbarButtonsXS: ['bold', 'italic', 'underline']
             imageInsertButtons: ['imageBack', '|', 'imageByURL']
             tabSpaces: false
             height: 300
@@ -729,6 +732,12 @@ Template.end_date.events
         Docs.update @_id,
             $set: end_date: end_date
 
+Template.time_marker.events
+    'blur #time_marker': ->
+        time_marker = parseFloat $('#time_marker').val()
+        Docs.update @_id,
+            $set: time_marker: time_marker
+
 
 Template.remove_field.events
     'click .remove_field':  ->
@@ -760,14 +769,6 @@ Template.remove_field.events
                 # confirmButtonColor: '#da5347'
             }
             
-            
-Template.child_view.helpers
-    typed_children: ->
-        parent_doc = Docs.findOne FlowRouter.getParam('doc_id')
-        doc_template = Docs.findOne type: 'doc_template'
-        Docs.find
-            parent_id: parent_doc._id
-            type: doc_template.type
             
     
 Template.transcript.onRendered ->
