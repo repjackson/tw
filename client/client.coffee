@@ -47,12 +47,12 @@ Template.registerHelper 'editing', () ->
     Session.get('editing') or Session.equals('editing_id', @_id)
 
 
-Template.registerHelper 'is_admin', () ->  
-    Roles.userIsInRole(Meteor.userId(), 'admin') and Session.equals 'admin_mode', true
+# Template.registerHelper 'is_admin', () ->  
+#     Roles.userIsInRole(Meteor.userId(), 'admin') and Session.equals 'admin_mode', true
 
 Template.registerHelper 'publish_when', () -> moment(@publish_date).fromNow()
 
-Template.registerHelper 'theme_tag_class': -> if @valueOf() in selected_theme_tags.array() then 'teal' else 'basic'
+Template.registerHelper 'theme_tag_class': -> if @valueOf() in selected_tags.array() then 'teal' else 'basic'
 Template.registerHelper 'location_tag_class': -> if @valueOf() in selected_location_tags.array() then 'teal' else 'basic'
 Template.registerHelper 'intention_tag_class': -> if @valueOf() in selected_intention_tags.array() then 'teal' else 'basic'
 
@@ -76,7 +76,7 @@ Template.registerHelper 'long_date', () -> moment(@timestamp).format("dddd, MMMM
 # Template.registerHelper 'in_sol', () -> Roles.userIsInRole 'sol_member'
 # Template.registerHelper 'in_demo', () -> Roles.userIsInRole 'sol_demo_member'
 
-Template.registerHelper 'tag_class', ()-> if @valueOf() in selected_theme_tags.array() then 'blue' else 'basic'
+Template.registerHelper 'tag_class', ()-> if @valueOf() in selected_tags.array() then 'blue' else 'basic'
 
 
 
@@ -89,6 +89,10 @@ Template.registerHelper 'message_segment_class', -> if @read then '' else 'blue 
 Template.registerHelper 'is_editing', () -> 
     # console.log 'this', @
     Session.equals 'editing_id', @_id
+
+Template.registerHelper 'is_editing_something', () -> 
+    # console.log 'this', @
+    Session.get('editing_id') or Session.get 'editing'
 
 
 Template.registerHelper 'is_dev', () -> Meteor.isDevelopment

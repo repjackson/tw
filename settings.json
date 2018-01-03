@@ -1,8 +1,8 @@
 {
   "public": {
     "stripe": {
-        "testPublishableKey": "pk_test_QzOggri5RAYyvLWS1tzxnuHV",
-        "livePublishableKey": "pk_live_oTdYsrpRnqJaHmpuqdiO1Hpt"
+        "testPublishableKey": "pk_test_EeQ9GTKynLzNMq5hiTCkg3Ec",
+        "livePublishableKey": "pk_live_I5XDcgYoZQHko5epFyMr5IWT"
       },
     "analyticsSettings": {
       "Google Analytics" : {"trackingId": "UA-93827813-1"}
@@ -10,8 +10,8 @@
   },
   "private": {
     "stripe": {
-      "testSecretKey": "sk_test_B36rKQQMGhzPDnn2JYcttKIR",
-      "liveSecretKey": "sk_live_mRy0s288JPLBPSofdgy8DhZb"
+      "testSecretKey": "sk_test_VmLHoYbhDWLPgrVp5GoTd0AR",
+      "liveSecretKey": "sk_live_f0QHHkiCuftpYG49819oyrFr"
     },
     "tone": {
       "url": "https://gateway.watsonplatform.net/tone-analyzer/api",

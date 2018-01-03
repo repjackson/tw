@@ -1,33 +1,36 @@
 template(name='view_doc')
     with doc
         .ui.padded.stackable.grid
-            .centered.middle.aligned.row
-                if parent
-                    a.ui.basic.circular.button(href="/view/#{parent._id}")
-                        if parent.icon_class
-                            +icon48 name=parent.icon_class classes='ui mini inline image'
-                        else
-                            +icon48 name='chevron-up' classes='ui mini inline image'
-                        | #{parent.title}
-                else if admin_mode
-                    #create_parent.ui.basic.circular.button Create Parent
+            unless editing
+                .centered.middle.aligned.row
+                    if parent
+                        if parent.can_access
+                            a.ui.basic.circular.button(href="/view/#{parent._id}")
+                                if parent.icon_class
+                                    +icon48 name=parent.icon_class classes='ui mini inline image'
+                                else
+                                    +icon48 name='chevron-up' classes='ui mini inline image'
+                                | #{parent.title}
+                    // else if admin_mode
+                    //     #create_parent.ui.basic.circular.button Create Parent
                     
             .centered.middle.aligned.row
                 .mobile.hidden.four.wide.center.aligned.column
-                    if younger_sibling
-                        a.ui.basic.circular.button(href="/view/#{younger_sibling._id}")
-                            if younger_sibling.completed
-                                if younger_sibling.icon_class
-                                    +icon48 name=younger_sibling.icon_class classes='ui mini spaced image'
+                    unless is_editing_something
+                        if younger_sibling
+                            a.ui.basic.circular.button(href="/view/#{younger_sibling._id}")
+                                if younger_sibling.completed
+                                    if younger_sibling.icon_class
+                                        +icon48 name=younger_sibling.icon_class classes='ui mini spaced image'
+                                    else
+                                        +icon48 name='checked' classes='ui mini spaced image'
                                 else
-                                    +icon48 name='checked' classes='ui mini spaced image'
-                            else
-                                if younger_sibling.icon_class
-                                    +dots100 name=younger_sibling.icon_class classes='ui mini spaced image'
-                                else
-                                    +icon48 name='circle' classes='ui mini spaced image'
-                            | #{younger_sibling.title}
-                            // | #{younger_sibling.body}
+                                    if younger_sibling.icon_class
+                                        +dots100 name=younger_sibling.icon_class classes='ui mini spaced image'
+                                    else
+                                        +icon48 name='circle' classes='ui mini spaced image'
+                                | #{younger_sibling.title}
+                                // | #{younger_sibling.body}
                 .eight.wide.center.aligned.column
                     h1.ui.center.aligned.header
                         if image_url
@@ -52,26 +55,28 @@ template(name='view_doc')
                             +toggle_editing_button
                             
                 .mobile.hidden.four.wide.center.aligned.column
-                    if older_sibling
-                        if completed
-                            a.ui.basic.circular.button(href="/view/#{older_sibling._id}")
-                                | #{older_sibling.title}
-                                if older_sibling.icon_class
-                                    if older_sibling.completed
-                                        +icon48 name=older_sibling.icon_class classes='ui mini spaced image'
-                                    else
-                                        +dots100 name=older_sibling.icon_class classes='ui mini spaced image'
-                        else
-                            .ui.basic.disabled.circular.button
-                                | #{older_sibling.title} &nbsp;
-                                if older_sibling.icon_class
-                                    if older_sibling.completed
-                                        +icon48 name=older_sibling.icon_class classes='ui mini spaced image'
-                                    else
-                                        +dots100 name=older_sibling.icon_class classes='ui mini spaced image'
-                        
+                    unless is_editing_something
+                        if older_sibling
+                            if completed
+                                a.ui.basic.circular.button(href="/view/#{older_sibling._id}")
+                                    | #{older_sibling.title}
+                                    if older_sibling.icon_class
+                                        if older_sibling.completed
+                                            +icon48 name=older_sibling.icon_class classes='ui mini spaced image'
+                                        else
+                                            +dots100 name=older_sibling.icon_class classes='ui mini spaced image'
+                            else
+                                .ui.basic.disabled.circular.button
+                                    | #{older_sibling.title} &nbsp;
+                                    if older_sibling.icon_class
+                                        if older_sibling.completed
+                                            +icon48 name=older_sibling.icon_class classes='ui mini spaced image'
+                                        else
+                                            +dots100 name=older_sibling.icon_class classes='ui mini spaced image'
+                        else if is_author
+                            #add_older_sibling.ui.basic.button Add Older Sibling
             .centered.row
-                unless editing
+                unless is_editing_something
                     .center.aligned.four.wide.column
                         if is_admin
                             #user_add.ui.large.circular.basic.blue.icon.button
@@ -82,7 +87,9 @@ template(name='view_doc')
                                 +icon48 name='plus' classes='ui mini inline image'
                                 // | #{child_template}
                         if session_completion
-                            #new_session.ui.blue.button New Session
+                            unless editing_session_id
+                                #new_session.ui.blue.button New Session
+                                +sessions
                         .ui.hidden.divider
                         if theme_tags_facet
                             +theme_facet
@@ -123,80 +130,82 @@ template(name='view_doc')
                                 each children
                                     +grid_item
                     else
-                        each components
-                            if slug_exists
-                                // .ui.segment(class=field_segment_class)
-                                div
-                                    +Template.dynamic template=slug data=doc
-                        // .ui.basic.center.aligned.segment
-                        // if response_completion
-                        //     +response
-                        unless response_doc
-                            if response_completion
+                        unless is_editing_session_id
+                            each components
+                                if slug_exists
+                                    // .ui.segment(class=field_segment_class)
+                                    div
+                                        +Template.dynamic template=slug data=doc
+                            // .ui.basic.center.aligned.segment
+                            // if response_completion
+                            //     +response
+                            unless response_doc
+                                if response_completion
+                                    .ui.center.aligned.basic.segment
+                                        #create_response.ui.circular.basic.button
+                                            +icon48 name='response' classes='ui inline image'
+                                            | Respond
+                            if is_admin
+                                if child_count
+                                    |#{child_count} children
+                            // if list_view
+                            //     each children
+                            //         +list_item
+                            .ui.stackable.centered.cards
+                                each children
+                                    // +card_view
+                                    +Template.dynamic template=doc_child_view
+                            if read_completion
                                 .ui.center.aligned.basic.segment
-                                    #create_response.ui.circular.basic.button
-                                        +icon48 name='response' classes='ui inline image'
-                                        | Respond
-                        if is_admin
-                            if child_count
-                                |#{child_count} children
-                        // if list_view
-                        //     each children
-                        //         +list_item
-                        .ui.stackable.centered.cards
-                            if nav_view
-                                each children
-                                    +grid_item
-                            else
-                                each children
-                                    +Template.dynamic template=child_view
-                        if read_completion
-                            .ui.center.aligned.basic.segment
-                                if currentUser
-                                    if read
-                                        .mark_unread.ui.circular.blue.button 
-                                            +icon48 name='read-message' classes='ui inline image'
-                                            |Mark Unread
-                                    else
-                                        .mark_read.ui.basic.circular.button
-                                            +icon48 name='message' classes='ui mini inline image'
-                                            |Mark Read
+                                    if currentUser
+                                        if read
+                                            .mark_unread.ui.circular.blue.button 
+                                                +icon48 name='read-message' classes='ui inline image'
+                                                |Mark Unread
+                                        else
+                                            .mark_read.ui.basic.circular.button
+                                                +icon48 name='message' classes='ui mini inline image'
+                                                |Mark Read
+                        else
+                            each children
+                                +editing_session_question
                 if editing
                     .six.wide.column
                         +doc_editing_sidebar
                 else
-                    .three.wide.column
-                        if is_admin
-                            if completion_type
-                                #calculate_completion.ui.basic.circular.icon.button(data-tooltip='Calculate Completion')
-                                    +icon48 name='reset' classes='ui mini spaced image'
-                            if completors.count
-                                .ui.segment
-                                    .ui.dividing.header
-                                        | #{completors.count} Completors
-                                    .ui.divided.list
-                                        each completors
-                                            .item
-                                                img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
-                                                .content
-                                                    .header
-                                                        |#{name}
-                                                    .description
-                                                        +tiny_color_dots
-                                                        // each five_tags
-                                                        //     .ui.basic.label #{this}
-                                
-                        if can_change_view_mode
-                            .ui.dividing.header View Mode
-                            
-                            +set_view_mode label='List' value='list' icon='list'
-                            +set_view_mode label='Cards' value='cards' icon='layout'
+                    unless is_editing_something
+                        .three.wide.column
+                            if is_admin
+                                if completion_type
+                                    #calculate_completion.ui.basic.circular.icon.button(data-tooltip='Calculate Completion')
+                                        +icon48 name='reset' classes='ui mini spaced image'
+                                if completors.count
+                                    .ui.segment
+                                        .ui.dividing.header
+                                            | #{completors.count} Completors
+                                        .ui.divided.list
+                                            each completors
+                                                .item
+                                                    img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                                                    .content
+                                                        .header
+                                                            |#{name}
+                                                        .description
+                                                            +tiny_color_dots
+                                                            // each five_tags
+                                                            //     .ui.basic.label #{this}
+                                    
                             if view_published_filter
                                 +published_filter
-                            if can_view_flash_cards
-                                +set_view_mode label='Flash Cards' value='flash_cards' icon='study'
-                            if can_view_qa_session
-                                +set_view_mode label='Q&A Session' value='qa_session' icon='faq'
+                            if can_change_view_mode
+                                .ui.dividing.header View Mode
+                                
+                                +set_view_mode label='List' value='list' icon='list'
+                                +set_view_mode label='Cards' value='cards' icon='layout'
+                                if can_view_flash_cards
+                                    +set_view_mode label='Flash Cards' value='flash_cards' icon='study'
+                                if can_view_qa_session
+                                    +set_view_mode label='Q&A Session' value='qa_session' icon='faq'
             
 template(name='doc_editing_sidebar')
     .ui.styled.fluid.accordion
@@ -228,6 +237,7 @@ template(name='doc_editing_sidebar')
         .content
             +toggle_key key='access' value='payment' icon='online-payment' label='Payment'
             +toggle_key key='access' value='complete_previous' icon='past' label='Complete Younger Sibling'
+            +toggle_key key='access' value='admin_only' icon='user-shield' label='Admin Only'
             +toggle_key key='access' value='available' icon='enter' label='Available'
 
         h3.title
@@ -248,12 +258,12 @@ template(name='doc_editing_sidebar')
             i.dropdown.icon
             .ui.basic.label #{child_view}
         .content
-            +toggle_key key='child_view' value='nav' icon='grid-view' label='Nav'
+            +toggle_key key='child_view' value='grid_item' icon='grid-view' label='Grid'
             // +toggle_key key='child_view' value='list' icon='list-view' label='List'
-            +toggle_key key='child_view' value='cards' icon='mockup' label='Cards'
+            +toggle_key key='child_view' value='card_view' icon='mockup' label='Cards'
             // +toggle_key key='child_view' value='answers' icon='response' label='Answers'
             // +toggle_key key='child_view' value='q_a' icon='faq' label='Q&A'
-            // +toggle_key key='child_view' value='grandchild_list' icon='bulleted-list' label='Grandchild List'
+            +toggle_key key='child_view' value='grandchild_list' icon='bulleted-list' label='Grandchild List'
             // +toggle_key key='child_view' value='quiz' icon='report-card' label='Quiz'
         
         h3.title
@@ -357,3 +367,18 @@ template(name='set_view_mode')
     #set_view_mode.ui.button(class=view_mode_button_class)
         +icon48 name=icon classes='ui spaced mini image'
         | #{label}
+
+
+template(name='editing_session_question')
+    .ui.fluid.card
+        .content
+            .header #{title}
+            if response
+                with response
+                    +content
+                    +session_edit_button
+            else
+                .ui.center.aligned.basic.segment
+                    .create_response.ui.circular.basic.button
+                        +icon48 name='response' classes='ui inline image'
+                        | Respond

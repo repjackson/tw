@@ -182,7 +182,7 @@ Meteor.publish 'doc_by_tags', (tags)->
     Docs.find
         tags: tags
 
-Meteor.publish 'person', (id)->
+Meteor.publish 'person_by_id', (id)->
     # console.log id
     Meteor.users.find id,
         fields:
@@ -191,6 +191,7 @@ Meteor.publish 'person', (id)->
             points: 1            
             
             
+
 Meteor.publish 'people', (selected_people_tags)->
     match = {}
     if selected_people_tags.length > 0 then match.tags = $all: selected_people_tags

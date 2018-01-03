@@ -27,9 +27,9 @@ Template.view_doc.onCreated ->
             author_id = null
             parent_id = FlowRouter.getParam('doc_id')
             tag_limit = 20
-            doc_limit = 15
+            doc_limit = 20
             view_published = 
-                if Session.equals('admin_mode', true) then Session.get('view_published') else true 
+                if Session.equals('admin_mode', true) then true else Session.get('view_published')
             view_read = null
             view_bookmarked = null
             view_resonates = null
@@ -40,7 +40,8 @@ Template.view_doc.onCreated ->
             )
 
 Template.view_doc.helpers
-    doc: -> Docs.findOne FlowRouter.getParam('doc_id')
+    doc: -> 
+        Docs.findOne FlowRouter.getParam('doc_id')
 
 
     younger_sibling: ->
@@ -81,6 +82,7 @@ Template.view_doc.helpers
         
         else if Roles.userIsInRole(Meteor.userId(), 'admin')
             Docs.find {
+                type: $ne: 'session'
                 parent_id: FlowRouter.getParam 'doc_id'
             }, {
                 sort: sort_object
@@ -88,6 +90,7 @@ Template.view_doc.helpers
             }
         else
             Docs.find {
+                type: $ne: 'session'
                 parent_id: FlowRouter.getParam 'doc_id'
                 published: 1
             }, {
@@ -143,26 +146,31 @@ Template.view_doc.helpers
             parent_id: FlowRouter.getParam('doc_id')
             author_id: Meteor.userId()
         if response_doc then return true else false
-    nav_view: -> @child_view is 'nav'
-    list_view: -> @child_view is 'list'
-    answer_view: -> @child_view is 'answers'
     
-    
-    child_view: ->
+    doc_child_view: ->
         doc = Docs.findOne FlowRouter.getParam('doc_id')
-        if doc.can_change_view_mode
-            switch Session.get('view_mode')
-                when 'list' then 'list_item'
-                when 'cards' then 'card_view'
-                when 'flash_cards' then 'flash_card'
-                when 'qa_session' then 'q_a'
-        else
-            return 'card_view'
+        doc.child_view
+        # if doc.can_change_view_mode
+        #     switch Session.get('view_mode')
+        #         when 'list' then 'list_item'
+        #         when 'cards' then 'card_view'
+        #         when 'flash_cards' then 'flash_card'
+        #         when 'qa_session' then 'q_a'
+        # else
+        # console.log doc.child_view
+        # console.log typeof doc.child_view
+        # if doc.child_view is 'grid_item'
+        #     console.log 'choosing nav'
+        #     return 'grid_item'
+        # else if doc.child_view is 'cards'
+        #     console.log 'card_view'
+        #     return 'card_view'
     
     q_a_view: -> @child_view is 'q_a'
     grandchild_list_view: -> @child_view is 'grandchild_list'
     quiz_view: -> @child_view is 'quiz'
     
+    is_editing_session_id: -> Session.get 'editing_session_id'
 
     
 Template.doc_editing_sidebar.helpers
@@ -183,6 +191,7 @@ Template.doc_editing_sidebar.helpers
         Docs.find
             # type: 'component'
             parent_id: 'MzHSPbvCYPngq2Dcz'
+
 
 Template.view_doc.events
     'click .mark_read': (e,t)-> 
@@ -219,6 +228,19 @@ Template.view_doc.events
         new_id = Docs.insert
             parent_id: FlowRouter.getParam('doc_id')
         Session.set 'editing_id', new_id
+      
+    'click #new_session': ->
+        new_session_id = Docs.insert
+            parent_id: FlowRouter.getParam('doc_id')
+            type: 'session'
+        Session.set 'editing_session_id', new_session_id
+      
+    'click #add_older_sibling': ->
+        new_older_sibling_id = Docs.insert
+            number: @number+1
+            parent_id: @parent_id
+        FlowRouter.go "/view/#{new_older_sibling_id}" 
+
       
       
             
@@ -356,3 +378,21 @@ Template.set_view_mode.helpers
       
 Template.set_view_mode.events
     'click #set_view_mode': -> Session.set 'view_mode', @value
+    
+Template.editing_session_question.helpers
+    response: ->
+        Docs.findOne 
+            author_id: Meteor.userId()
+            parent_id: @_id
+            
+Template.editing_session_question.onCreated -> 
+    Meteor.subscribe 'author', @data._id
+    Meteor.subscribe 'child_docs', @data._id
+            
+Template.editing_session_question.events
+    'click .create_response': ->
+        new_id = Docs.insert
+            parent_id: @_id
+        Session.set 'editing_id', new_id
+
+      

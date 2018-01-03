@@ -79,7 +79,7 @@ template(name='q_a')
 template(name='sessions')
     if currentUser
         +dividing_header icon='time' label='Your Sessions'
-        .ui.four.stackable.cards
+        .ui.fluid.cards
             each my_sessions
                 +session_card
     else
@@ -138,7 +138,7 @@ template(name='card_view')
         unless editing
             if show_header
                 .content
-                    .header 
+                    a.header(href="/view/#{_id}")
                         // if completed
                         //     +icon48 name='checkmark' classes='ui inline image'
                         if icon_class
@@ -148,6 +148,9 @@ template(name='card_view')
                         |#{title}
                         if end_date
                             |by #{end_date}
+                        if dollar_price
+                            .right.floated
+                                |$#{dollar_price}
                     if slug
                         .meta Slug: #{slug}
             if youtube
@@ -156,7 +159,7 @@ template(name='card_view')
                 .image
                     img(src="{{c.url image_id}}")
             if image_url
-                .ui.large.image
+                .ui.image
                     img(src=image_url)
             if content
                 .content 
@@ -188,7 +191,7 @@ template(name='card_view')
                         +icon48 name='flow-chart' classes='ui tiny inline image'
                         |#{child_count}
                 if is_admin
-                    +title
+                    +type
                     +published_label
                     // +edit_parent_id
                 if doc.can_vote
@@ -199,6 +202,30 @@ template(name='card_view')
                     +resonate_button
                 if doc.can_reflect
                     +reflect_button
+            if favorite_count
+                .content
+                    strong
+                        +icon48 name='heart' classes='ui mini inline image'
+                        | Resonates with #{favorite_count} 
+                    .ui.divided.horizontal.list
+                        each favoriter_list
+                            .item
+                                img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                                .content
+                                    .header
+                                        |#{name}
+            if upvoters
+                .content
+                    strong
+                        +icon48 name='thumbs-up' classes='ui mini inline image'
+                        | Upvoted by
+                    .ui.divided.horizontal.list
+                        each upvoter_list
+                            .item
+                                img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                                .content
+                                    .header
+                                        |#{name}
             .content
                 +author_info
                 |#{when}

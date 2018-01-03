@@ -21,13 +21,17 @@ template(name='profile_layout')
                         |About
                     a.item(href="/profile/#{username}/contact" class="{{isActiveRoute name='profile_contact'}}") 
                         i.icon
-                            +icon24 name='contact'
+                            +icon24 name='contact' classes='icon'
                         |Contact #{name}
             if is_person_by_username
                 .ui.vertical.fluid.pointing.menu
                     a.item(href="/profile/#{currentUser.username}/account" class="{{isActiveRoute name='account_settings'}}") 
                         i.icon
-                            +icon24 name='settings'
+                            +icon24 name='settings' classes='icon'
+                        |Account Settings
+                    a.item(href="/profile/#{currentUser.username}/membership" class="{{isActiveRoute name='account_settings'}}") 
+                        i.icon
+                            +icon24 name='settings' classes='icon'
                         |Account Settings
                 .ui.vertical.fluid.menu
                     a#logout.item(href="#" data-position="bottom center" data-content="Log Out")

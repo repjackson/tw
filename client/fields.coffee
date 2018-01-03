@@ -457,9 +457,6 @@ Template.transcript.events
     'blur .froala-container': (e,t)->
         html = t.$('div.froala-reactive-meteorized-override').froalaEditor('html.get', true)
         
-        # snippet = $('#snippet').val()
-        # if snippet.length is 0
-        #     snippet = $(html).text().substr(0, 300).concat('...')
         doc_id = @_id
 
         Docs.update doc_id,

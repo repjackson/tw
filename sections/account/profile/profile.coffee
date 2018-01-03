@@ -22,27 +22,6 @@ if Meteor.isClient
                 sub_nav: 'member_nav'
                 profile_content: 'profile_about'
     
-    FlowRouter.route '/profile/:username/feed', 
-        name: 'profile_feed'
-        action: (params) ->
-            BlazeLayout.render 'profile_layout',
-                sub_nav: 'member_nav'
-                profile_content: 'profile_feed'
-    
-    FlowRouter.route '/profile/:username/social', 
-        name: 'profile_social'
-        action: (params) ->
-            BlazeLayout.render 'profile_layout',
-                sub_nav: 'member_nav'
-                profile_content: 'profile_social'
-    
-    FlowRouter.route '/profile/:username/clouds', 
-        name: 'profile_clouds'
-        action: (params) ->
-            BlazeLayout.render 'profile_layout',
-                sub_nav: 'member_nav'
-                profile_content: 'profile_clouds'
-    
     FlowRouter.route '/profile/:username/contact', 
         name: 'profile_contact'
         action: (params) ->
@@ -50,19 +29,14 @@ if Meteor.isClient
                 sub_nav: 'member_nav'
                 profile_content: 'profile_contact'
     
-    FlowRouter.route '/profile/:username/conversations', 
-        name: 'profile_conversations'
+    FlowRouter.route '/profile/:username/membership', 
+        name: 'profile_membership'
         action: (params) ->
-            BlazeLayout.render 'profile_layout',
+            BlazeLayout.render 'profile_membership',
                 sub_nav: 'member_nav'
-                profile_content: 'profile_conversations'
+                profile_content: 'profile_membership'
     
-    FlowRouter.route '/profile/:username/courses', 
-        name: 'profile_courses'
-        action: (params) ->
-            BlazeLayout.render 'profile_layout',
-                sub_nav: 'member_nav'
-                profile_content: 'profile_courses'
+    
     
     FlowRouter.route '/profile/:username/karma', 
         name: 'profile_karma'

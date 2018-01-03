@@ -17,6 +17,21 @@ template(name='dashboard')
             //             +icon96 name='bug'
             //         | Bugs
             .column    
+                a.ui.icon.center.aligned.header(href='/view/FajD7PCmWS6nRkiYj' class="{{isActivePath '/view/FajD7PCmWS6nRkiYj'}}" data-position="bottom center" data-content="Lightbank") 
+                    i.icon
+                        +icon96 name='summer'
+                    |Lightbank
+            .column    
+                a.ui.icon.center.aligned.header(href='/view/TadR2ThwgenSrTMHm') 
+                    i.icon
+                        +icon96 name='journal'
+                    |Journal
+            .column    
+                a.ui.icon.center.aligned.header(href='/view/jFGwEzNgajnMad2MA' data-position="bottom center" data-content="Check In") 
+                    i.icon
+                        +icon96 name='sprout'
+                    |Check In
+            .column    
                 a.ui.icon.center.aligned.header(href="/profile/#{currentUser.username}/account")
                     i.icon
                         +icon96 name='settings'

@@ -45,6 +45,7 @@ Meteor.publish 'facet', (
             match.published = $in: [1,0]
         else if view_published is false
             match.published = -1
+            match.author_id = Meteor.userId()
             
         if view_bookmarked?
             if view_bookmarked is true then match.bookmarked_ids = $in: [@userId]

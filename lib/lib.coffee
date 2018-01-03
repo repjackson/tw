@@ -42,6 +42,7 @@ Docs.before.insert (userId, doc)=>
     doc.downvoters = []
     doc.child_fields = ['title']
     doc.published = 0
+    doc.child_view = 'card_view'
     doc.access = 'available'
     doc.completion_type = 'none'
     return
@@ -101,6 +102,8 @@ Docs.helpers
 
     can_access: ->
         if @access is 'available' then true
+        else if @access is 'admin_only'
+            if Roles.userIsInRole(Meteor.userId(), 'admin') and Session.equals('admin_mode', true) then true else false
         else if Session.equals 'admin_mode', true then true
         else
             previous_number = @number - 1
