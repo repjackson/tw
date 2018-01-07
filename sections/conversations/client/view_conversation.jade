@@ -73,7 +73,7 @@ template(name='view_conversation')
                     .ui.header Started by #{author.name} #{when}
                     .ui.divider
                     if can_edit
-                        +toggle_editing_button
+                        +edit_button
     else
         .ui.container
             h1.ui.center.aligned.header Edit Conversation

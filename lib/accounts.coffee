@@ -90,7 +90,7 @@ AccountsTemplates.addFields [
     {
         _id: 'email'
         type: 'email'
-        required: true
+        required: false
         displayName: 'email'
         re: /.+@(.+){2,}\.(.+){2,}/
         errStr: 'Invalid email'

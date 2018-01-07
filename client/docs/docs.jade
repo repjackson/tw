@@ -52,7 +52,7 @@ template(name='view_doc')
                         else
                             | #{title}
                         if can_edit
-                            +toggle_editing_button
+                            +edit_button
                             
                 .mobile.hidden.four.wide.center.aligned.column
                     unless is_editing_something
@@ -92,7 +92,7 @@ template(name='view_doc')
                                 +sessions
                         .ui.hidden.divider
                         if theme_tags_facet
-                            +theme_facet
+                            +tag_facet
                         if intention_tags_facet
                             +intention_facet
                         if location_tags_facet

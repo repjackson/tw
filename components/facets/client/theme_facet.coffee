@@ -1,6 +1,6 @@
 @selected_theme_tags = new ReactiveArray []
 
-Template.theme_facet.helpers
+Template.tag_facet.helpers
     theme_tags: ->
         
         doc_count = Docs.find( parent_id:FlowRouter.getParam('doc_id') ).count()
@@ -39,7 +39,7 @@ Template.theme_facet.helpers
 
 
 
-Template.theme_facet.events
+Template.tag_facet.events
     'click .select_theme_tag': -> selected_theme_tags.push @name
     'click .unselect_theme_tag': -> selected_theme_tags.remove @valueOf()
     'click #clear_theme_tags': -> selected_theme_tags.clear()
