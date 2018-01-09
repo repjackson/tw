@@ -1,0 +1,61 @@
+template(name='checkins')
+    .ui.stackable.padded.grid
+        .centered.row
+            h1.ui.header checkins
+        .row
+            .four.wide.column
+                // +tag_facet
+                .ui.hidden.divider
+                #add_checkin.ui.compact.basic.fluid.button
+                    i.green.plus.icon
+                    |Add checkin
+            .twelve.wide.column
+                .ui.cards
+                    each checkins
+                        +checkin_card
+
+
+template(name='checkin_card')
+    a.ui.card(href="/checkin/#{_id}")
+        .image
+            img(src="{{c.url image_id  height=300 crop='fill' gravity='face' }}")
+            if image_url
+                img.ui.centered.image(src=image_url)
+        .content
+            each tags
+                .ui.compact.button.checkin_tag(class=tag_class) #{this}
+                
+                
+                
+template(name='checkin')
+    with checkin
+        unless editing
+            .row
+                .three.wide.column
+                    a.ui.top.left.attached.basic.button(href="/checkins")
+                        i.arrow.left.icon
+                        |checkins
+                .twelve.wide.center.aligned.column
+                    h1.ui.header View checkin
+            .row
+                .ten.wide.column
+                    img.ui.centered.image(src="{{c.url image_id height=500 width=800 background='white' crop='lpad'}}")
+                    if image_url
+                        img.ui.centered.image(src=image_url)
+                    each tags
+                        .ui.basic.label #{this}
+                .five.wide.column
+                    +edit_button
+        else
+            .centered.row
+                h1.ui.center.aligned.header Edit checkin
+            .row
+                .twelve.wide.column
+                    .ui.form
+                        +tags
+                        +image_id
+                        +image_url
+                .four.wide.column
+                    +edit_button
+                    #delete_checkin.ui.red.icon.button
+                        i.trash.icon
