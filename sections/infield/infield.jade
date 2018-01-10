@@ -48,16 +48,16 @@ template(name='doc_body')
     else
         .ui.text.loader
             
-template(name='edit_content')
-    .ui.segment
-        .ui.form
-            .field
-                each tags
-                    .ui.basic.label #{this}
-            .field
-                // label Content
-                .froala-container
-                    +froalaReactive edit_doc_context
+// template(name='edit_content')
+//     .ui.segment
+//         .ui.form
+//             .field
+//                 each tags
+//                     .ui.basic.label #{this}
+//             .field
+//                 // label Content
+//                 .froala-container
+//                     +froalaReactive edit_doc_context
 
 
 template(name='edit_body')

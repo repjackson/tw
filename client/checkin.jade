@@ -1,0 +1,83 @@
+template(name='checkins')
+    .ui.stackable.padded.grid
+        .centered.row
+            h1.ui.header 
+                +icon96 name='sprout' classes='ui image'
+                |Check Ins
+        .row
+            .four.wide.column
+                if currentUser
+                    #add_checkin.ui.compact.basic.fluid.button
+                        i.green.plus.icon
+                        |Add Checkin
+                +tag_facet
+                +location_facet
+                +timestamp_facet
+                +username_facet
+                .ui.hidden.divider
+            .twelve.wide.column
+                .ui.cards
+                    each checkins
+                        +checkin_card
+
+
+template(name='checkin_card')
+    .ui.card
+        .image
+            img(src="{{c.url image_id  height=300 crop='fill' gravity='face' }}")
+            if image_url
+                img.ui.centered.image(src=image_url)
+        if location_tags
+            .content
+                +icon48 name='sofa' classes='ui mini inline image' title='Location Tags'
+                each location_tags
+                    .ui.circular.small.compact.button.location_tag(class=location_tag_class)
+                        strong #{this}
+        .content
+            +icon48 name='hashtag' classes='ui mini inline image' title='Theme Tags'
+            each tags
+                .ui.circular.small.compact.button.theme_tag(class=theme_tag_class)
+                    strong #{this}
+        .content
+            +author_info
+            |#{when}
+            a.ui.basic.right.floated.icon.button(href="/checkin/#{_id}")
+                i.right.arrow.icon
+                
+                
+template(name='view_checkin')
+    with checkin
+        .ui.stackable.padded.grid
+            unless editing
+                .row
+                    .three.wide.column
+                        a.ui.top.left.attached.basic.button(href="/checkin")
+                            i.arrow.left.icon
+                            |Check Ins
+                    .twelve.wide.center.aligned.column
+                        h1.ui.header View checkin
+                .row
+                    .ten.wide.column
+                        each tags
+                            .ui.basic.label #{this}
+                    .five.wide.column
+                        +author_info
+                        if is_author
+                            a.ui.basic.right.floated.icon.button(href="/checkin/#{_id}/edit")
+                                i.check.icon
+
+template(name='edit_checkin')
+    with checkin
+        .ui.stackable.padded.grid
+            .centered.row
+                h1.ui.center.aligned.header Edit checkin
+            .row
+                .twelve.wide.column
+                    .ui.form
+                        +edit_tags
+                        +edit_location_tags
+                .four.wide.column
+                    a.ui.basic.right.floated.icon.button(href="/checkin/#{_id}/view")
+                        i.check.icon
+                    #delete_checkin.ui.red.icon.button
+                        i.trash.icon

@@ -3,6 +3,7 @@ FlowRouter.route '/checkin', action: ->
         main: 'checkins'
 
 Template.checkins.onCreated ->
+    @autorun -> Meteor.subscribe 'usernames'
     @autorun => 
         Meteor.subscribe('facet', 
             selected_theme_tags.array()
@@ -11,8 +12,8 @@ Template.checkins.onCreated ->
             selected_intention_tags.array()
             selected_timestamp_tags.array()
             type = 'checkin'
+            parent_id = null
             author_id = null
-            parent_id = FlowRouter.getParam('doc_id')
             tag_limit = 20
             doc_limit = 20
             view_published = 
@@ -26,33 +27,57 @@ Template.checkins.onCreated ->
 
             )
 
+Template.checkin_card.onCreated ->
+    @autorun -> Meteor.subscribe 'usernames'
+
+
 
 Template.checkins.helpers
     checkins: -> Docs.find {type: 'checkin'}
+
+Template.checkin_card.helpers
+    theme_tag_class: -> if @valueOf() in selected_theme_tags.array() then 'blue' else 'basic'
+    location_tag_class: -> if @valueOf() in selected_location_tags.array() then 'blue' else 'basic'
+
+Template.checkin_card.events
+    'click .theme_tag': -> if @valueOf() in selected_theme_tags.array() then selected_theme_tags.remove(@valueOf()) else selected_theme_tags.push(@valueOf())
+    'click .location_tag': -> if @valueOf() in selected_location_tags.array() then selected_location_tags.remove(@valueOf()) else selected_location_tags.push(@valueOf())
+
+
             
-Template.checkin.events
+Template.checkins.events
     'click #add_checkin': ->
         id = Docs.insert
             type: 'checkin'
         FlowRouter.go "/checkin/#{id}"
-        Session.set 'editing', true
         
         
-FlowRouter.route '/checkin/:doc_id', action: (params) ->
+FlowRouter.route '/checkin/:doc_id/view', action: (params) ->
     BlazeLayout.render 'layout',
-        main: 'checkin'
+        main: 'view_checkin'
 
-Template.checkin.onCreated ->
+Template.view_checkin.onCreated ->
     @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
 
-Template.checkin.helpers
+Template.view_checkin.helpers
     checkin: -> Docs.findOne FlowRouter.getParam('doc_id')
     
     
-Template.checkin.events
-    'click #delete': ->
+FlowRouter.route '/checkin/:doc_id/edit', action: (params) ->
+    BlazeLayout.render 'layout',
+        main: 'edit_checkin'
+
+Template.edit_checkin.onCreated ->
+    @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
+
+Template.edit_checkin.helpers
+    checkin: -> Docs.findOne FlowRouter.getParam('doc_id')
+    
+    
+Template.edit_checkin.events
+    'click #delete_checkin': ->
         swal {
-            title: 'Delete?'
+            title: 'Delete check in?'
             # text: 'Confirm delete?'
             type: 'error'
             animation: false
@@ -62,6 +87,6 @@ Template.checkin.events
             confirmButtonText: 'Delete'
             confirmButtonColor: '#da5347'
         }, ->
-            checkin = Docs.findOne FlowRouter.getParam('checkin_id')
+            checkin = Docs.findOne FlowRouter.getParam('doc_id')
             Docs.remove checkin._id, ->
                 FlowRouter.go "/checkin"        

@@ -31,7 +31,7 @@ template(name='nav')
             a.mobile.hidden.item(href='/view/erjtaDSCKwyGMxKt9' class="{{isActivePath '/view/erjtaDSCKwyGMxKt9'}}") 
                 +icon48 name='library' classes='ui mini spaced image'
                 |LightSchool
-            a.mobile.hidden.item(href='/view/FajD7PCmWS6nRkiYj' class="{{isActivePath '/view/FajD7PCmWS6nRkiYj'}}") 
+            a.mobile.hidden.item(href='/lightbank' class="{{isActivePath '/lightbank'}}") 
                 +icon48 name='summer' classes='ui mini spaced image'
                 |Lightbank
             a.mobile.hidden.item(href='/contact' class="{{isActivePath '/contact'}}") 
@@ -60,23 +60,23 @@ template(name='nav')
                     //         .ui.image
                     //             +icon24 name='report-card'
                     //     |Quizzes
-            a.mobile.hidden.item(href='/view/FajD7PCmWS6nRkiYj' class="{{isActivePath '/view/FajD7PCmWS6nRkiYj'}}" data-position="bottom center" data-content="Lightbank") 
+            a.mobile.hidden.item(href='/lightbank' class="{{isActivePath '/lightbank'}}" data-position="bottom center" data-content="Lightbank") 
                 .ui.image
                     +icon48 name='summer' classes='ui image'
-            a.ui.simple.dropdown.mobile.hidden.item(href='/view/TadR2ThwgenSrTMHm') 
+            a.ui.simple.dropdown.mobile.hidden.item(href='/journal') 
                 .ui.image
                     +icon48 name='journal' classes='ui image'
     
-            a.ui.simple.dropdown.mobile.hidden.item(href='/view/jFGwEzNgajnMad2MA' data-position="bottom center" data-content="Check In") 
+            a.ui.simple.dropdown.mobile.hidden.item(href='/checkin' class="{{isActivePath '/checkin'}}" data-position="bottom center" data-content="Check In") 
                 .ui.image
                     +icon48 name='sprout' classes='ui image'
-            if isInRole 'admin'
-                a#toggle_admin_mode.item(href='#' data-position="bottom center" data-content="Toggle Admin Mode") 
-                    .ui.image
-                        if admin_mode
-                            +icon48 name='user-shield' classes='ui image'
-                        else
-                            +dots50 name='user-shield' classes='ui image'
+            // if isInRole 'admin'
+            //     a#toggle_admin_mode.item(href='#' data-position="bottom center" data-content="Toggle Admin Mode") 
+            //         .ui.image
+            //             if admin_mode
+            //                 +icon48 name='user-shield' classes='ui image'
+            //             else
+            //                 +dots50 name='user-shield' classes='ui image'
         .right.menu
             if currentUser
                 // a#report_bug.icon.item(href="#"  data-position="bottom center" data-content="Report a Bug/Feature Request")

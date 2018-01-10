@@ -120,14 +120,14 @@ template(name='edit_icon')
             .save_doc.ui.icon.green.button
                 i.check.icon
 
-template(name='edit_link')
-    if currentUser
-        unless editing
-            a.edit_this Edit
-        else
-            .save_doc.ui.basic.large.button
-                +icon24 name='checked' classes='ui mini inline image'
-                |Save
+// template(name='edit_link')
+//     if currentUser
+//         unless editing
+//             a.edit_this Edit
+//         else
+//             .save_doc.ui.basic.large.button
+//                 +icon24 name='checked' classes='ui mini inline image'
+//                 |Save
 
 template(name='add_to_cart')
     if can_add

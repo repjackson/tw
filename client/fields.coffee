@@ -57,7 +57,7 @@ Template.plain.events
 #             $pull: tags: tag
 #         $('#add_tag').val(tag)
 
-Template.tags.events
+Template.edit_tags.events
     "autocompleteselect input": (event, template, doc) ->
         # console.log("selected ", doc)
         Docs.update Template.currentData()._id,
@@ -87,7 +87,7 @@ Template.tags.events
             $pull: tags: tag
         $('#theme_tag_select').val(tag)
         
-Template.tags.helpers
+Template.edit_tags.helpers
     # editing_mode: -> 
     #     console.log Session.get 'editing'
     #     if Session.equals 'editing', true then true else false
@@ -105,7 +105,7 @@ Template.tags.helpers
     }
 
 
-Template.location_tags.events
+Template.edit_location_tags.events
     "autocompleteselect input": (event, template, doc) ->
         # console.log("selected ", doc)
         Docs.update Template.currentData()._id,
@@ -138,7 +138,7 @@ Template.location_tags.events
         $('#location_tag_select').val(tag)
 
 
-Template.location_tags.helpers
+Template.edit_location_tags.helpers
     location_select_settings: -> {
         position: 'bottom'
         limit: 10
@@ -152,7 +152,7 @@ Template.location_tags.helpers
             ]
     }
 
-Template.intention_tags.events
+Template.edit_intention_tags.events
     "autocompleteselect input": (event, template, doc) ->
         # console.log("selected ", doc)
         Docs.update Template.currentData()._id,
@@ -182,7 +182,7 @@ Template.intention_tags.events
             $pull: intention_tags: tag
         $('#intention_tag_select').val(tag)
 
-Template.intention_tags.helpers
+Template.edit_intention_tags.helpers
     intention_select_settings: -> {
         position: 'bottom'
         limit: 10
@@ -270,7 +270,7 @@ Template.text.events
             $set: text: text
             
             
-Template.link.events
+Template.edit_link.events
     'blur #link': (e,t)->
         link = $(e.currentTarget).closest('#link').val()
         Docs.update @_id,
@@ -290,12 +290,6 @@ Template.type.events
         Docs.update @_id,
             $set: type: type
             
-Template.template_name.events
-    'blur #template_name': (e,t)->
-        template_name = $('#template_name').val()
-        Docs.update @_id,
-            $set: template_name: template_name
-            
             
 Template.edit_parent_id.events
     'blur #parent_id': (e,t)->
@@ -304,7 +298,7 @@ Template.edit_parent_id.events
             $set: parent_id: parent_id
             
             
-Template.image_id.events
+Template.edit_image_id.events
     "change input[type='file']": (e) ->
         doc_id = @_id
         files = e.currentTarget.files
@@ -356,7 +350,7 @@ Template.image_id.events
                 else
                     throw new Meteor.Error "it failed miserably"
 
-Template.image_url.events
+Template.edit_image_url.events
     'click #remove_image_url': ->
         Docs.update @_id, 
             $unset: 
@@ -377,7 +371,7 @@ Template.location.events
         Docs.update doc_id,
             $set: location: location
 
-Template.content.events
+Template.edit_content.events
     'blur .froala-container': (e,t)->
         html = t.$('div.froala-reactive-meteorized-override').froalaEditor('html.get', true)
         
@@ -390,7 +384,7 @@ Template.content.events
             $set: content: html
                 
 
-Template.content.helpers
+Template.edit_content.helpers
     getFEContext: ->
         @current_doc = Docs.findOne @_id
         self = @
@@ -524,7 +518,7 @@ Template.transcript.helpers
         }
 
 
-Template.youtube.events
+Template.edit_youtube.events
     'blur #youtube': (e,t)->
         youtube = $(e.currentTarget).closest('#youtube').val()
         Docs.update @_id,
@@ -535,7 +529,12 @@ Template.youtube.events
         Docs.update @_id,
             $unset: youtube: 1
             
-Template.youtube.onRendered ->
+Template.edit_youtube.onRendered ->
+    Meteor.setTimeout (->
+        $('.ui.embed').embed()
+    ), 2000
+
+Template.view_youtube.onRendered ->
     Meteor.setTimeout (->
         $('.ui.embed').embed()
     ), 2000

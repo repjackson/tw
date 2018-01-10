@@ -3,7 +3,7 @@
 Template.tag_facet.helpers
     theme_tags: ->
         
-        doc_count = Docs.find( parent_id:FlowRouter.getParam('doc_id') ).count()
+        doc_count = Docs.find().count()
         # if selected_theme_tags.array().length
         if 0 < doc_count < 3
             Tags.find { 
@@ -11,8 +11,9 @@ Template.tag_facet.helpers
                 count: $lt: doc_count
                 }, limit:20
         else
-            Tags.find({}, limit:20)
-            
+            cursor = Tags.find({}, limit:20)
+            # console.log cursor.fetch()
+            return cursor
             
     cloud_tag_class: ->
         button_class = []

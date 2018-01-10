@@ -25,6 +25,7 @@ Meteor.publish 'facet', (
         if type then match.type = type
         if parent_id then match.parent_id = parent_id
 
+
         if selected_theme_tags.length > 0 then match.tags = $all: selected_theme_tags
         if selected_author_ids.length > 0 then match.author_id = $in: selected_author_ids
         if selected_location_tags.length > 0 then match.location_tags = $all: selected_location_tags

@@ -2,10 +2,8 @@ $.cloudinary.config
     cloud_name:"facet"
 
 Session.setDefault 'cart_item', null
-Session.setDefault 'view_mode', 'cards'
 # Session.setDefault 'doc_limit', 10
 Session.setDefault 'view_complete', null
-Session.setDefault 'editing', false
 
 
 Session.setDefault 'view_unread', false
@@ -43,9 +41,6 @@ Template.registerHelper 'can_edit', () ->  Meteor.userId() is @author_id or Role
 
 # Template.registerHelper 'zen_mode', () -> Session.get 'zen_mode'
 Template.registerHelper 'admin_mode', () ->  Session.get 'admin_mode'
-Template.registerHelper 'editing', () ->  
-    Session.get('editing') or Session.equals('editing_id', @_id)
-
 
 # Template.registerHelper 'is_admin', () ->  
 #     Roles.userIsInRole(Meteor.userId(), 'admin') and Session.equals 'admin_mode', true
@@ -84,15 +79,6 @@ Template.registerHelper 'tag_class', ()-> if @valueOf() in selected_tags.array()
 # messages
 Template.registerHelper 'message_segment_class', -> if @read then '' else 'blue raised'
 
-
-
-Template.registerHelper 'is_editing', () -> 
-    # console.log 'this', @
-    Session.equals 'editing_id', @_id
-
-Template.registerHelper 'is_editing_something', () -> 
-    # console.log 'this', @
-    Session.get('editing_id') or Session.get 'editing'
 
 
 Template.registerHelper 'is_dev', () -> Meteor.isDevelopment
