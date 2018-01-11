@@ -218,4 +218,11 @@ Meteor.methods
         
             
             
-            
+Meteor.methods
+    submit_contact_submission: (name, email, message)->
+        Docs.insert
+            type: 'contact_submission'
+            name: name
+            email: email
+            message: message
+                    

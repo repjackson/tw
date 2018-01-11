@@ -4,18 +4,18 @@ template(name='dashboard')
             .column
                 a.ui.icon.center.aligned.header(href='/people')
                     i.icon
-                        +icon96 name='people'
+                        +icon96 name='meeting'
                     |Community
             .column    
                 a.ui.icon.center.aligned.header(href='/conversations')
                     i.icon
                         +icon96 name='chat'
                     |Conversations
-            // .column    
-            //     a.ui.icon.center.aligned.header(href='/bugs')
-            //         i.icon
-            //             +icon96 name='bug'
-            //         | Bugs
+            .column    
+                a.ui.icon.center.aligned.header(href='/bugs')
+                    i.icon
+                        +icon96 name='bug'
+                    | Bugs
             .column    
                 a.ui.icon.center.aligned.header(href='/lightbank' class="{{isActivePath '/lightbank'}}" data-position="bottom center" data-content="Lightbank") 
                     i.icon
@@ -31,6 +31,12 @@ template(name='dashboard')
                     i.icon
                         +icon96 name='sprout'
                     |Check In
+            if isInRole 'admin'
+                .column    
+                    a.ui.icon.center.aligned.header(href='/admin' data-position="bottom center" data-content="Admin") 
+                        i.icon
+                            +icon96 name='fairytale'
+                        |Admin
             .column    
                 a.ui.icon.center.aligned.header(href="/profile/#{currentUser.username}/account")
                     i.icon

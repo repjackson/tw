@@ -9,7 +9,7 @@ Template.nav.onCreated ->
     @autorun -> Meteor.subscribe 'me'
     # @autorun -> Meteor.subscribe 'cart'
     # @autorun -> Meteor.subscribe 'unread_messages'
-    # @autorun -> Meteor.subscribe 'all_notifications'
+    @autorun -> Meteor.subscribe 'all_notifications'
     # @autorun -> Meteor.subscribe 'doc', Session.get 'new_checkin_doc_id'
     # @autorun -> Meteor.subscribe 'unread_lightbank_count'
     # @autorun -> Meteor.subscribe 'unread_journal_count'
@@ -73,9 +73,6 @@ Template.nav.helpers
     bug_link: -> Session.get 'bug_link'
     # can_submit_bug: -> Session.get 'can_submit_bug'
 Template.nav.events
-# 	'mouseenter .item': (e,t)-> $(e.currentTarget).closest('.icon').toggleClass( "large" )
-# 	'mouseleave .item': (e,t)-> $(e.currentTarget).closest('.icon').toggleClass( "large" )
-
     'click #logout': -> AccountsTemplates.logout()
     
     # 'click #test': ->

@@ -2,7 +2,7 @@
     .ui.text.container
         a.item(href="/dashboard" class="{{isActivePath '/dashboard'}}")
             .ui.image
-                img(src="https://png.icons8.com/dashboard/color/48" title="Dashboard" width="48" height="48")
+                +icon48 name='dashboard' classes='ui mini inline image'
             |Dashboard
         a.item(href="/profile/#{currentUser.username}" class="{{isActiveRoute name='view_profile'}}")
             if currentUser.profile.image_id

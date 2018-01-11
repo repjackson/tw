@@ -56,6 +56,8 @@ template(name='view_journal_entry')
                         h1.ui.header View Entry
                 .row
                     .ten.wide.column
+                        +view_intention_tags
+                        +view_location_tags
                         +view_content
                         each tags
                             .ui.basic.label #{this}
@@ -63,7 +65,7 @@ template(name='view_journal_entry')
                         +author_info    
                         |#{when}
                         if is_author
-                            a.ui.basic.right.floated.icon.button(href="/journal/#{_id}/edit")
+                            a.ui.basic.icon.button(href="/journal/#{_id}/edit")
                                 i.pencil.icon
                         
 template(name='edit_journal_entry')
@@ -74,12 +76,12 @@ template(name='edit_journal_entry')
             .row
                 .twelve.wide.column
                     .ui.form
+                        +edit_intention_tags
+                        +edit_location_tags
                         +edit_content
                         +edit_tags
-                        +edit_location_tags
-                        +edit_intention_tags
                 .four.wide.column
-                    a.ui.basic.right.floated.icon.button(href="/journal/#{_id}/view")
+                    a.ui.basic.icon.button(href="/journal/#{_id}/view")
                         i.check.icon
                     #delete_entry.ui.red.icon.button
                         i.trash.icon

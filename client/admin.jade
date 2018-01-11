@@ -1,0 +1,22 @@
+template(name='admin')
+    +contact_submissions
+
+template(name='contact_submissions')
+    .ui.container
+        .ui.hidden.divider
+        h1.ui.center.aligned.header Contact Submissions
+        table.ui.table
+            thead
+                tr
+                    th Name
+                    th Email
+                    th Message
+                    th Actions
+            tbody
+                each submissions
+                    tr
+                        td #{name}
+                        td #{email}
+                        td #{message}
+                        td 
+                            +delete_button

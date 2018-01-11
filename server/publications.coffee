@@ -253,14 +253,7 @@ Meteor.publish 'usernames', ->
             profile: 1
             points: 1
             
-Meteor.publish 'components', ->
+            
+Meteor.publish 'contact_submissions', ->
     Docs.find
-        # type: 'component'
-        parent_id: 'MzHSPbvCYPngq2Dcz'            
-            
-            
-# Meteor.publish 'doc_template', (doc_id)->
-#     doc = Docs.findOne doc_id
-#     Docs.find
-#         type: 'doc_template'
-#         doc_type: doc.type
+        type: 'contact_submission'            

@@ -49,7 +49,7 @@ Template.checkins.events
     'click #add_checkin': ->
         id = Docs.insert
             type: 'checkin'
-        FlowRouter.go "/checkin/#{id}"
+        FlowRouter.go "/checkin/#{id}/edit"
         
         
 FlowRouter.route '/checkin/:doc_id/view', action: (params) ->

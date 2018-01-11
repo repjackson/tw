@@ -41,7 +41,7 @@ template(name='checkin_card')
         .content
             +author_info
             |#{when}
-            a.ui.basic.right.floated.icon.button(href="/checkin/#{_id}")
+            a.ui.basic.right.floated.icon.button(href="/checkin/#{_id}/view")
                 i.right.arrow.icon
                 
                 
@@ -55,7 +55,7 @@ template(name='view_checkin')
                             i.arrow.left.icon
                             |Check Ins
                     .twelve.wide.center.aligned.column
-                        h1.ui.header View checkin
+                        h1.ui.header View Check In
                 .row
                     .ten.wide.column
                         each tags
@@ -63,21 +63,21 @@ template(name='view_checkin')
                     .five.wide.column
                         +author_info
                         if is_author
-                            a.ui.basic.right.floated.icon.button(href="/checkin/#{_id}/edit")
-                                i.check.icon
+                            a.ui.basic.blue.icon.button(href="/checkin/#{_id}/edit")
+                                i.pencil.icon
 
 template(name='edit_checkin')
     with checkin
         .ui.stackable.padded.grid
             .centered.row
-                h1.ui.center.aligned.header Edit checkin
+                h1.ui.center.aligned.header Edit Check In
             .row
                 .twelve.wide.column
                     .ui.form
                         +edit_tags
                         +edit_location_tags
                 .four.wide.column
-                    a.ui.basic.right.floated.icon.button(href="/checkin/#{_id}/view")
+                    a.ui.basic.green.icon.button(href="/checkin/#{_id}/view")
                         i.check.icon
-                    #delete_checkin.ui.red.icon.button
+                    #delete_checkin.ui.red.basic.icon.button
                         i.trash.icon

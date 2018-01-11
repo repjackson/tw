@@ -79,9 +79,9 @@ template(name='nav')
             //                 +dots50 name='user-shield' classes='ui image'
         .right.menu
             if currentUser
-                // a#report_bug.icon.item(href="#"  data-position="bottom center" data-content="Report a Bug/Feature Request")
-                //     .ui.image
-                //         +icon48 name='bug'
+                a#report_bug.icon.item(href="#"  data-position="bottom center" data-content="Report a Bug/Feature Request")
+                    .ui.image
+                        +icon48 name='bug'
                 a.icon.item(href="/dashboard" class="{{isActivePath '/dashboard'}}" data-position="bottom center" data-content="Dashboard")
                     .ui.image
                         +icon48 name='dashboard'
@@ -109,24 +109,24 @@ template(name='nav')
                     +icon48 name='signin' classes='ui mini inline spaced image'
                     | Sign In
     
-    // .ui.basic.small.report.modal
-    //     h1.ui.center.aligned.header
-    //         img.bug_icon.ui.avatar.image(src="https://png.icons8.com/bug/color/96" width="96" height="96")
-    //         |     Report Bug/ Feature Request
-    //     h3.ui.center.aligned.header Current Page: #{bug_link}
-    //     .content
-    //         .ui.fluid.input
-    //             input#bug_description(type='text' placeholder='Description...')
-    //     .actions
-    //         .ui.cancel.basic.button
-    //             // i.remove.icon
-    //             | Cancel
-    //         // if can_submit_bug
-    //         .ui.green.ok.ok_button.button
-    //             // i.checkmark.icon
-    //             // +icon24 name='checkmark' classes='ui avatar image'
-    //             | Submit
-    // .ui.basic.small.confirm.modal
-    //     h1.ui.center.aligned.header Thanks!
-    //         .ui.green.ok.large.ok_button.button
-    //             | You're welcome!
+    .ui.basic.small.report.modal
+        h1.ui.center.aligned.header
+            img.bug_icon.ui.avatar.image(src="https://png.icons8.com/bug/color/96" width="96" height="96")
+            |     Report Bug/ Feature Request
+        h3.ui.center.aligned.header Current Page: #{bug_link}
+        .content
+            .ui.fluid.input
+                input#bug_description(type='text' placeholder='Description...')
+        .actions
+            .ui.cancel.basic.button
+                // i.remove.icon
+                | Cancel
+            // if can_submit_bug
+            .ui.green.ok.ok_button.button
+                // i.checkmark.icon
+                // +icon24 name='checkmark' classes='ui avatar image'
+                | Submit
+    .ui.basic.small.confirm.modal
+        h1.ui.center.aligned.header Thanks!
+            .ui.green.ok.large.ok_button.button
+                | You're welcome!

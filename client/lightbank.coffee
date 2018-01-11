@@ -12,6 +12,7 @@ Template.lightbank.onCreated ->
             selected_timestamp_tags.array()
             type = 'lightbank'
             author_id = null
+            parent_id = null
             tag_limit = 20
             doc_limit = 5
             view_published = 

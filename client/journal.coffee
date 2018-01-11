@@ -47,11 +47,10 @@ Template.journal_card.events
 
             
 Template.journal.events
-    'click #add_journal': ->
+    'click #add_entry': ->
         id = Docs.insert
             type: 'journal'
-        FlowRouter.go "/journal/#{id}"
-        Session.set 'editing', true
+        FlowRouter.go "/journal/#{id}/edit"
         
     
     
