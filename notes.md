@@ -246,3 +246,10 @@ journal template view
     sort by numbers
     create new session, save each response to session_id
     have separate session view, used for multiple choice too
+    
+    
+overlap
+    linear intersection of journal tag list
+    realtime publication of tags overlaping
+    publication of intersection tags
+    pub of tags found with combined author_ids

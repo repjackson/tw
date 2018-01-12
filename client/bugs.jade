@@ -24,10 +24,14 @@ template(name='bug')
     .card
         .content
             .description #{body}
+            .description #{text}
             .meta
                 a(href=link) #{link}
             .meta
-                |by #{author.name} #{when}
+                +author_info
+            .meta
+                |#{when}
+                // |by #{author.name} #{when}
             .extra.content
                 if isInRole 'dev'
                     +mark_doc_approved_button

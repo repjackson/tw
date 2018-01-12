@@ -19,6 +19,10 @@ template(name='profile_layout')
                         i.icon
                             +icon24 name='info'
                         |About
+                    a.item(href="/profile/#{username}/comparison" class="{{isActiveRoute name='profile_comparison'}}") 
+                        i.icon
+                            +icon24 name='cloud'
+                        | Comparison
                     a.item(href="/profile/#{username}/contact" class="{{isActiveRoute name='profile_contact'}}") 
                         i.icon
                             +icon24 name='contact' classes='icon'

@@ -1,0 +1,23 @@
+template(name='profile_comparison')
+    h1.ui.center.aligned.header
+        +icon96 name='cloud' classes='ui mini inline image'
+        | Compare
+    if isInRole 'admin'
+        #calculate_user_clouds.ui.button calc user clouds
+    with user
+        if journal_list
+            .ui.header journal list
+            each journal_list
+                .ui.basic.label #{this}
+            .ui.header my journal list
+            each currentUser.journal_list
+                .ui.basic.label #{this}
+                
+        // if checkin_list
+        //     .ui.header check in list
+        //     each checkin_list
+        //         .ui.basic.label #{this}
+        //     .ui.header my checkin list
+        //     each currentUser.checkin_list
+        //         .ui.basic.label #{this}
+    +tag_facet

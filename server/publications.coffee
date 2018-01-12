@@ -257,3 +257,12 @@ Meteor.publish 'usernames', ->
 Meteor.publish 'contact_submissions', ->
     Docs.find
         type: 'contact_submission'            
+        
+Meteor.publish 'user_clouds', (username)->
+    other_person = Meteor.users.findOne username:username
+    Meteor.users.find {_id: $in: [other_person._id, Meteor.userId()] },
+        fields: 
+            journal_list: 1
+            journal_cloud: 1
+            checkin_list: 1
+            checkin_cloud: 1
