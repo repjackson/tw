@@ -1,0 +1,69 @@
+template(name='courses')
+    .ui.stackable.padded.grid
+        .centered.row
+            h1.ui.header 
+                +icon96 name='library' classes='ui image'
+                |Courses
+        .row
+            .four.wide.column
+                if currentUser
+                    #add_course.ui.compact.basic.fluid.button
+                        i.green.plus.icon
+                        |Add course
+                +tag_facet
+                .ui.hidden.divider
+            .twelve.wide.column
+                .ui.cards
+                    each courses
+                        +course_card
+
+
+template(name='course_card')
+    .ui.card
+        .image
+            img(src="{{c.url image_id  height=300 crop='fill' gravity='face' }}")
+            if image_url
+                img.ui.centered.image(src=image_url)
+        .content
+            .header #{title}
+        .content
+            a.ui.right.floated.basic.icon.button(href="/course/#{_id}/view")
+                i.right.arrow.icon
+                
+template(name='view_course')
+    with course
+        .ui.stackable.padded.grid
+            unless editing
+                .row
+                    .three.wide.column
+                        a.ui.top.left.attached.basic.button(href="/courses")
+                            i.arrow.left.icon
+                            |Courses
+                    .twelve.wide.center.aligned.column
+                        h1.ui.header View Course
+                .row
+                    .ten.wide.column
+                        each tags
+                            .ui.basic.label #{this}
+                    .five.wide.column
+                        +author_info
+                        if is_author
+                            a.ui.basic.blue.icon.button(href="/course/#{_id}/edit")
+                                i.pencil.icon
+
+template(name='edit_course')
+    with course
+        .ui.stackable.padded.grid
+            .centered.row
+                h1.ui.center.aligned.header Edit Course
+            .row
+                .twelve.wide.column
+                    .ui.form
+                        +edit_title
+                        +edit_tags
+                        +edit_content
+                .four.wide.column
+                    a.ui.basic.green.icon.button(href="/course/#{_id}/view")
+                        i.check.icon
+                    #delete_course.ui.red.basic.icon.button
+                        i.trash.icon

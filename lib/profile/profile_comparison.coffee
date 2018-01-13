@@ -10,7 +10,8 @@ FlowRouter.route '/profile/:username/comparison',
 if Meteor.isClient
     Template.profile_comparison.onCreated -> 
         @autorun -> Meteor.subscribe('user_clouds', FlowRouter.getParam('username'))
-        @autorun -> Meteor.subscribe('overlap', selected_theme_tags.array(), FlowRouter.getParam('username'))
+        @autorun -> Meteor.subscribe('overlap', selected_theme_tags.array(), FlowRouter.getParam('username'), 'journal')
+        # @autorun -> Meteor.subscribe('overlap', selected_theme_tags.array(), FlowRouter.getParam('username'), 'checkin')
 
     Template.profile_comparison.helpers
         user: -> Meteor.users.findOne username: FlowRouter.getParam('username')
@@ -19,6 +20,9 @@ if Meteor.isClient
             user = Meteor.users.findOne username: FlowRouter.getParam('username')
             user.authored_list
             
+            
+        docs: ->
+            Docs.find()
             
             
     Template.profile_comparison.events

@@ -2,17 +2,27 @@ template(name='profile_comparison')
     h1.ui.center.aligned.header
         +icon96 name='cloud' classes='ui mini inline image'
         | Compare
+    .ui.dividing.header Journal Tag Overlap
+    +tag_facet
     if isInRole 'admin'
         #calculate_user_clouds.ui.button calc user clouds
-    with user
-        if journal_list
-            .ui.header journal list
-            each journal_list
-                .ui.basic.label #{this}
-            .ui.header my journal list
-            each currentUser.journal_list
-                .ui.basic.label #{this}
-                
+    // with user
+    //     if journal_list
+    //         .ui.header #{user.profile.first_name}'s Journal Tags
+    //         each journal_list
+    //             .ui.basic.label #{this}
+    //         .ui.header Your Journal Tags
+    //         each currentUser.journal_list
+    //             .ui.basic.label #{this}
+    // .ui.header docs
+    each docs
+        .ui.fluid.card
+            .content
+                each tags
+                    .ui.basic.label #{this}
+            .content
+                +view_content
+                +author_info
         // if checkin_list
         //     .ui.header check in list
         //     each checkin_list
@@ -20,4 +30,3 @@ template(name='profile_comparison')
         //     .ui.header my checkin list
         //     each currentUser.checkin_list
         //         .ui.basic.label #{this}
-    +tag_facet

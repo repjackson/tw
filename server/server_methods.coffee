@@ -133,36 +133,6 @@ Meteor.methods
                 checkin_list: checkin_list
 
 
-        # upvoted_cloud = Docs.aggregate [
-        #     { $match: up_voters: $in: [Meteor.userId()] }
-        #     { $project: tags: 1 }
-        #     { $unwind: '$tags' }
-        #     { $group: _id: '$tags', count: $sum: 1 }
-        #     { $sort: count: -1, _id: 1 }
-        #     { $limit: 50 }
-        #     { $project: _id: 0, name: '$_id', count: 1 }
-        #     ]
-        # upvoted_list = (tag.name for tag in upvoted_cloud)
-        # Meteor.users.update user_id,
-            # $set:
-        #         upvoted_cloud: upvoted_cloud
-        #         upvoted_list: upvoted_list
-
-
-        # downvoted_cloud = Docs.aggregate [
-        #     { $match: down_voters: $in: [Meteor.userId()] }
-        #     { $project: tags: 1 }
-        #     { $unwind: '$tags' }
-        #     { $group: _id: '$tags', count: $sum: 1 }
-        #     { $sort: count: -1, _id: 1 }
-        #     { $limit: 50 }
-        #     { $project: _id: 0, name: '$_id', count: 1 }
-        #     ]
-        # downvoted_list = (tag.name for tag in downvoted_cloud)
-        # Meteor.users.update user_id,
-        #     $set:
-        #         downvoted_cloud: downvoted_cloud
-        #         downvoted_list: downvoted_list
 
     tagify_date_time: (val)->
         console.log moment(val).format("dddd, MMMM Do YYYY, h:mm:ss a")

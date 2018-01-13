@@ -253,3 +253,17 @@ overlap
     realtime publication of tags overlaping
     publication of intersection tags
     pub of tags found with combined author_ids
+
+simulate conversation between two people
+    create array of objects cloud 
+    list all flattened tags for each
+    find intersection between flattened list
+    for tag in intersection_journal_tags
+        find count of tag_name in you.cloud.name
+        find count of tag_name in me.cloud.name
+        you.cloud.name.count + me.cloud.name.count
+        save in result cloud
+        sort each object by count
+        return
+    result set represents overlap of terms
+    return to top creating linear list of terms including selected terms from previous result set
