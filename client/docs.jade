@@ -37,8 +37,8 @@ template(name='view_doc')
                         else if completed
                             if icon_class
                                 +icon48 name=icon_class classes='ui mini spaced image'
-                            else
-                                +icon48 name='checked' classes='ui mini spaced image'
+                            // else
+                            //     +icon48 name='checked' classes='ui mini spaced image'
                         else
                             if icon_class
                                 +dots100 name=icon_class classes='ui mini spaced image'
@@ -98,22 +98,28 @@ template(name='boilerplate')
 template(name='edit_doc')
     with doc
         .ui.stackable.padded.grid
-            .row
-                .four.wide.column
-                .eight.wide.centered.column
-                    h1.ui.header Editing '#{title}'
-                .four.wide.column
-                    a.ui.basic.button(href="/view/#{_id}") 
-                        i.checkmark.icon
-                        |Save
+            // .row
+            //     .four.wide.column
+            //     .eight.wide.centered.column
+            //         h1.ui.header Editing '#{title}'
+            //     .four.wide.column
     
             .row
                 .twelve.wide.column
-                    +edit_title
-                    +edit_icon
+                    // +edit_title
+                    // +edit_icon
                     if type
                         +Template.dynamic template=editing_template
                 .four.wide.column
+                    a.ui.green.fluid.button(href="/view/#{_id}") 
+                        |Save
+                    +published
+                    if has_children
+                        .ui.disabled.red.button Remove Children to Delete
+                    else
+                        #delete_doc.ui.red.button Delete
+
+
                     .ui.styled.fluid.accordion
                         h3.title
                             +icon48 name='shield' classes='ui mini inline image'
@@ -150,16 +156,6 @@ template(name='edit_doc')
                             // +edit_parent_id
                             +edit_type
                         
-                        h3.title 
-                            +icon48 name='sports-mode' classes='ui mini spaced image'
-                            | Actions
-                            i.dropdown.icon
-                        .content
-                            if has_children
-                                .ui.disabled.red.button Remove Children to Delete
-                            else
-                                #delete_doc.ui.red.button Delete
-                            +published
             
 
              

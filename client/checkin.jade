@@ -42,9 +42,7 @@ template(name='checkin_card')
         .content
             +author_info
             |#{when}
-            a.ui.basic.right.floated.icon.button(href="/checkin/#{_id}/view")
-                i.right.arrow.icon
-                
+            +view_full_button    
                 
 template(name='view_checkin')
     with checkin
@@ -59,28 +57,21 @@ template(name='view_checkin')
                         h1.ui.header View Check In
                 .row
                     .ten.wide.column
+                        .ui.header Tags
                         each tags
+                            .ui.basic.label #{this}
+                        .ui.header Location Tags
+                        each location_tags
                             .ui.basic.label #{this}
                     .five.wide.column
                         +author_info
                         if is_author
-                            a.ui.basic.blue.icon.button(href="/checkin/#{_id}/edit")
+                            a.ui.basic.blue.icon.button(href="/edit/#{_id}")
                                 i.pencil.icon
 
 template(name='edit_checkin')
     with checkin
-        .ui.stackable.padded.grid
-            .centered.row
-                h1.ui.center.aligned.header Edit Check In
-            .row
-                .twelve.wide.column
-                    .ui.form
-                        +edit_tags
-                        +edit_location_tags
-                        
-                .four.wide.column
-                    +published
-                    a.ui.basic.green.icon.button(href="/checkin/#{_id}/view")
-                        i.check.icon
-                    #delete_checkin.ui.red.basic.icon.button
-                        i.trash.icon
+        h1.ui.center.aligned.header Edit Check In
+        .ui.form
+            +edit_tags
+            +edit_location_tags

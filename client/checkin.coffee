@@ -1,6 +1,6 @@
 FlowRouter.route '/checkin', action: ->
-    FlowRouter.go "/view/jFGwEzNgajnMad2MA"
-    
+    BlazeLayout.render 'layout', 
+        main: 'view_checkins'
     
 Template.view_checkins.onCreated ->
     @autorun -> Meteor.subscribe 'usernames'
@@ -49,7 +49,7 @@ Template.view_checkins.events
     'click #add_checkin': ->
         id = Docs.insert
             type: 'checkin'
-        FlowRouter.go "/checkin/#{id}/edit"
+        FlowRouter.go "/edit/#{id}"
         
         
 # FlowRouter.route '/checkin/:doc_id/view', action: (params) ->

@@ -132,17 +132,17 @@ template(name='published')
     div
         if can_edit
             #publish.ui.icon.compact.button(data-tooltip='Publish' class=published_class)
-                +icon48 name='eye' classes='ui mini inline image'
-                if is_published
-                    | Published
+                +icon48 name='visible' classes='ui mini inline image'
+                // if is_published
+                //     | Published
             #publish_anonymously.ui.icon.compact.button(data-tooltip='Publish Anonymously' class=published_anonymously_class)
                 +icon48 name='ignore' classes='ui mini inline image'
-                if published_anonymously
-                    |Anonymous
+                // if published_anonymously
+                //     |Anonymous
             #unpublish.ui.icon.compact.button(data-tooltip='Unpublish' class=private_class)
                 +icon48 name='invisible' classes='ui mini inline image'
-                if is_private
-                    | Private
+                // if is_private
+                //     | Private
         // .ui.large.basic.label
         //     +icon48 name='invisible' classes='ui mini inline image'
         // if can_edit
