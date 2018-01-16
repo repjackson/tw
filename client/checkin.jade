@@ -1,15 +1,16 @@
-template(name='checkins')
+template(name='view_checkins')
     .ui.stackable.padded.grid
-        .centered.row
-            h1.ui.header 
-                +icon96 name='sprout' classes='ui image'
-                |Check Ins
+        // .centered.row
+        //     h1.ui.header 
+        //         +icon96 name='sprout' classes='ui image'
+        //         |Check Ins
         .row
             .four.wide.column
                 if currentUser
                     #add_checkin.ui.compact.basic.fluid.button
                         i.green.plus.icon
                         |Add Checkin
+                .ui.hidden.divider
                 +tag_facet
                 +location_facet
                 +timestamp_facet
@@ -76,7 +77,9 @@ template(name='edit_checkin')
                     .ui.form
                         +edit_tags
                         +edit_location_tags
+                        
                 .four.wide.column
+                    +published
                     a.ui.basic.green.icon.button(href="/checkin/#{_id}/view")
                         i.check.icon
                     #delete_checkin.ui.red.basic.icon.button

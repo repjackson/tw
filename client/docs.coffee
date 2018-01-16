@@ -5,44 +5,65 @@ FlowRouter.route '/view/:doc_id',
         BlazeLayout.render 'layout',
             main: 'view_doc'
 
+FlowRouter.route '/edit/:doc_id', 
+    name: 'edit'
+    action: (params) ->
+        BlazeLayout.render 'layout',
+            main: 'edit_doc'
+
 Template.view_doc.onRendered ->
     selected_theme_tags.clear()
     
 Template.view_doc.onCreated ->
     @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
-    @autorun -> Meteor.subscribe 'doc', Session.get('editing_id')
     # @autorun -> Meteor.subscribe 'my_children', FlowRouter.getParam('doc_id')
-    @autorun -> Meteor.subscribe 'usernames'
-    @autorun -> Meteor.subscribe 'components'
+    # @autorun -> Meteor.subscribe 'usernames'
+    # @autorun -> Meteor.subscribe 'child_docs', FlowRouter.getParam('doc_id')
+    @autorun => Meteor.subscribe 'completors', FlowRouter.getParam('doc_id')
+    # @autorun => 
+    #     Meteor.subscribe('facet', 
+    #         selected_theme_tags.array()
+    #         selected_author_ids.array()
+    #         selected_location_tags.array()
+    #         selected_intention_tags.array()
+    #         selected_timestamp_tags.array()
+    #         type = null
+    #         author_id = null
+    #         parent_id = FlowRouter.getParam('doc_id')
+    #         tag_limit = 20
+    #         doc_limit = 20
+    #         view_published = 
+    #             if Session.equals('admin_mode', true) then true else Session.get('view_published')
+    #         view_read = null
+    #         view_bookmarked = null
+    #         view_resonates = null
+    #         view_complete = null
+    #         view_images = null
+    #         view_lightbank_type = null
+
+    #         )
+
+
+Template.edit_doc.onCreated ->
+    @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
+    # @autorun -> Meteor.subscribe 'my_children', FlowRouter.getParam('doc_id')
+    # @autorun -> Meteor.subscribe 'usernames'
     @autorun => Meteor.subscribe 'completors', FlowRouter.getParam('doc_id')
 
-    @autorun => 
-        Meteor.subscribe('facet', 
-            selected_theme_tags.array()
-            selected_author_ids.array()
-            selected_location_tags.array()
-            selected_intention_tags.array()
-            selected_timestamp_tags.array()
-            type = null
-            author_id = null
-            parent_id = FlowRouter.getParam('doc_id')
-            tag_limit = 20
-            doc_limit = 20
-            view_published = 
-                if Session.equals('admin_mode', true) then true else Session.get('view_published')
-            view_read = null
-            view_bookmarked = null
-            view_resonates = null
-            view_complete = null
-            view_images = null
-            view_lightbank_type = null
 
-            )
+Template.edit_doc.helpers
+    doc: -> Docs.findOne FlowRouter.getParam('doc_id')
+    
+    editing_template: -> 
+        doc = Docs.findOne FlowRouter.getParam('doc_id')
+        "edit_#{doc.type}"
 
 Template.view_doc.helpers
-    doc: -> 
-        Docs.findOne FlowRouter.getParam('doc_id')
+    doc: -> Docs.findOne FlowRouter.getParam('doc_id')
 
+    viewing_template: -> 
+        doc = Docs.findOne FlowRouter.getParam('doc_id')
+        "view_#{doc.type}"
 
     younger_sibling: ->
         doc = Docs.findOne FlowRouter.getParam('doc_id')
@@ -62,70 +83,6 @@ Template.view_doc.helpers
                 parent_id: doc.parent_id
                 number: next_number
 
-    children: ->
-        doc = Docs.findOne FlowRouter.getParam('doc_id')
-
-        if doc.sort_by 
-            if doc.sort_by is 'number'
-                sort_object = number: 1
-            else if doc.sort_by is 'timestamp'
-                sort_object = timestamp: -1
-        else 
-            sort_object = {number: 1, timestamp: -1}
-            
-        doc_limit = if doc.result_limit then parseInt(doc.result_limit) else 20
-            
-        # console.log sort_object    
-            
-        if Session.get 'editing_id'
-            Docs.find Session.get('editing_id')
-        
-        else if Roles.userIsInRole(Meteor.userId(), 'admin')
-            Docs.find {
-                type: $ne: 'session'
-                parent_id: FlowRouter.getParam 'doc_id'
-            }, {
-                sort: sort_object
-                limit: doc_limit
-            }
-        else
-            Docs.find {
-                type: $ne: 'session'
-                parent_id: FlowRouter.getParam 'doc_id'
-                published: 1
-            }, {
-                sort: sort_object
-                limit: doc_limit
-            }
-
-    components: ->        
-        Docs.find
-            # type: 'component'
-            parent_id: 'MzHSPbvCYPngq2Dcz'
-            
-
-    slug_exists: ->
-        doc = Docs.findOne FlowRouter.getParam('doc_id')
-        # if doc["#{@slug}"]? then console.log "#{@slug} exists" else console.log "#{@slug} no" 
-        if doc["#{@slug}"]? then true else false
-        
-        
-    main_column_class: -> 
-        if Session.equals 'editing', true 
-            'ten wide column' 
-        else if Session.equals 'admin_mode', true
-            'eight wide column' 
-        else if @child_view is 'nav' and !@theme_tags_facet
-            'fourteen wide column'
-        else
-            'eight wide column'
-        # else if @theme_tags_facet or @location_tags_facet or @intention_tags_facet or @username_facet
-        #     'eight wide column'
-        # else
-        #     'fourteen wide column'
-    field_segment_class: -> if Session.equals 'editing', true then '' else 'basic compact'
-    
-    
     completors: ->
         if @completed_by
             if @completed_by.length > 0
@@ -147,25 +104,6 @@ Template.view_doc.helpers
             author_id: Meteor.userId()
         if response_doc then return true else false
     
-    doc_child_view: ->
-        doc = Docs.findOne FlowRouter.getParam('doc_id')
-        doc.child_view
-        # if doc.can_change_view_mode
-        #     switch Session.get('view_mode')
-        #         when 'list' then 'list_item'
-        #         when 'cards' then 'card_view'
-        #         when 'flash_cards' then 'flash_card'
-        #         when 'qa_session' then 'q_a'
-        # else
-        # console.log doc.child_view
-        # console.log typeof doc.child_view
-        # if doc.child_view is 'grid_item'
-        #     console.log 'choosing nav'
-        #     return 'grid_item'
-        # else if doc.child_view is 'cards'
-        #     console.log 'card_view'
-        #     return 'card_view'
-    
     q_a_view: -> @child_view is 'q_a'
     grandchild_list_view: -> @child_view is 'grandchild_list'
     quiz_view: -> @child_view is 'quiz'
@@ -173,24 +111,7 @@ Template.view_doc.helpers
     is_editing_session_id: -> Session.get 'editing_session_id'
 
     
-Template.doc_editing_sidebar.helpers
-    toggle_theme_tags_class: -> if @theme_tags_facet is true then 'blue' else 'basic'
-    selected_fields: ->
-        doc = Docs.findOne FlowRouter.getParam('doc_id')
-        keys = _.keys doc
-        Docs.find
-            # type: 'component'
-            parent_id: 'MzHSPbvCYPngq2Dcz'
-            slug: $in: keys
-    
-    child_field_class: ->
-        doc = Docs.findOne FlowRouter.getParam('doc_id')
-        if @slug in doc.child_fields then 'blue' else 'basic'
-    
-    components: ->        
-        Docs.find
-            # type: 'component'
-            parent_id: 'MzHSPbvCYPngq2Dcz'
+Template.edit_doc.helpers
 
 
 Template.view_doc.events
@@ -244,7 +165,7 @@ Template.view_doc.events
       
       
             
-Template.doc_editing_sidebar.events        
+Template.edit_doc.events        
     'click #delete_doc': ->
         swal {
             title: 'Remove Document?'
@@ -284,29 +205,6 @@ Template.doc_editing_sidebar.events
 
 
 
-Template.field_menu.helpers
-    unselected_fields: ->
-        doc = Docs.findOne FlowRouter.getParam('doc_id')
-        keys = _.keys doc
-        Docs.find
-            # type: 'component'
-            parent_id: 'MzHSPbvCYPngq2Dcz'
-            slug: $nin: keys
-            
-Template.field_menu.events
-    'click .select_component': ->
-        doc = Docs.findOne FlowRouter.getParam('doc_id')
-        slug = @slug
-        # console.log @field_type
-        if @field_type is 'array'
-            Docs.update doc._id,
-                $set: "#{slug}": []
-        else
-            Docs.update doc._id,
-                $set: "#{slug}": ''
-            
-            
-            
 # Template.response.onCreated ->
 #     @editing = new ReactiveVar(true)
 
@@ -333,7 +231,7 @@ Template.field_menu.events
 
 
         
-Template.doc_editing_sidebar.onRendered ->
+Template.edit_doc.onRendered ->
     @autorun =>
         if @subscriptionsReady()
             Meteor.setTimeout ->
@@ -373,11 +271,6 @@ Template.toggle_key.events
                 $set: "#{@key}": true
             
     
-Template.set_view_mode.helpers
-    view_mode_button_class: -> if Session.equals 'view_mode', @value then 'blue' else 'basic'
-      
-Template.set_view_mode.events
-    'click #set_view_mode': -> Session.set 'view_mode', @value
     
 Template.editing_session_question.helpers
     response: ->
@@ -396,3 +289,16 @@ Template.editing_session_question.events
         Session.set 'editing_id', new_id
 
       
+Template.boilerplate.onCreated ->
+    @autorun -> Meteor.subscribe 'child_docs', FlowRouter.getParam('doc_id')
+      
+      
+      
+
+Template.boilerplate.helpers
+    children: -> 
+        Docs.find {
+            parent_id: FlowRouter.getParam 'doc_id'
+        }, sort: number: 1
+
+        

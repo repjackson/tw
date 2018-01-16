@@ -1,9 +1,9 @@
-template(name='journal')
+template(name='view_journal_section')
     .ui.stackable.padded.grid
-        .centered.row
-            h1.ui.header 
-                +icon96 name='journal' classes='ui image'
-                |Journal
+        // .centered.row
+        //     h1.ui.header 
+        //         +icon96 name='journal' classes='ui image'
+        //         |Journal
         .row
             .four.wide.column
                 if currentUser
@@ -80,6 +80,7 @@ template(name='edit_journal_entry')
                         +edit_location_tags
                         +edit_content
                         +edit_tags
+                        +published
                 .four.wide.column
                     a.ui.basic.icon.button(href="/journal/#{_id}/view")
                         i.check.icon

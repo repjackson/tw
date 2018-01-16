@@ -85,3 +85,19 @@ Template.list_item.helpers
 Template.grid_item.helpers
     card_class: -> 
         if @can_access() then '' else 'noborders'
+
+
+
+Template.view_nav.onCreated ->
+    @autorun -> Meteor.subscribe 'child_docs', FlowRouter.getParam('doc_id')
+      
+      
+      
+
+Template.view_nav.helpers
+    children: -> 
+        Docs.find {
+            parent_id: FlowRouter.getParam 'doc_id'
+        }, sort: number: 1
+
+        

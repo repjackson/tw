@@ -120,68 +120,6 @@ Template.published.events
         
         
         
-Template.edit_button.onCreated ->
-    @editing = new ReactiveVar(false)
-Template.edit_button.helpers
-    editing: -> Template.instance().editing.get()
-Template.edit_icon.onCreated ->
-    @editing = new ReactiveVar(false)
-Template.edit_icon.helpers
-    editing: -> Template.instance().editing.get()
-Template.edit_link.onCreated ->
-    @editing = new ReactiveVar(false)
-Template.edit_link.helpers
-    editing: -> Template.instance().editing.get()
-
-Template.edit_button.events
-    'click .edit_this': (e,t)-> 
-        console.log @
-        console.log t.editing
-        t.editing.set true
-    'click .save_doc': (e,t)-> 
-        console.log t.editing
-        t.editing.set false
-
-
-
-Template.session_edit_button.events
-    'click .edit_this': -> Session.set 'editing_id', @_id
-    'click .save_doc': -> 
-        if @tags
-            selected_theme_tags.clear()
-            for tag in @tags
-                selected_theme_tags.push tag
-        Meteor.call 'calculate_completion', FlowRouter.getParam('doc_id')
-        Session.set 'editing_id', null
-
-Template.session_edit_button.helpers
-    button_classes: -> Template.currentData().classes
-
-Template.session_edit_icon.events
-    'click .edit_this': -> Session.set 'editing_id', @_id
-    'click .save_doc': -> 
-        Meteor.call 'calculate_completion', FlowRouter.getParam('doc_id')
-        Session.set 'editing_id', null
-
-Template.session_edit_icon.helpers
-    button_classes: -> Template.currentData().classes
-
-
-Template.edit_icon.events
-    'click .edit_this': (e,t)-> 
-        console.log t.editing
-        t.editing.set true
-    'click .save_doc': (e,t)-> 
-        console.log t.editing
-        t.editing.set false
-Template.edit_link.events
-    'click .edit_this': (e,t)-> 
-        console.log t.editing
-        t.editing.set true
-    'click .save_doc': (e,t)-> 
-        console.log t.editing
-        t.editing.set false
-
 
 Template.rating.onRendered ->
     # console.log 'template data', @data
@@ -543,7 +481,3 @@ Template.toggle_zen_mode_button.events
         # $(e.currentTarget).find('#nav_menu').transition('fade left')
         Session.set 'zen_mode', true
     
-    
-Template.edit_button.events
-    'click #toggle_editing': -> Session.set 'editing', true
-    'click #toggle_off_editing': -> Session.set 'editing', false

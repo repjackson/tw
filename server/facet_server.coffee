@@ -9,6 +9,7 @@ Meteor.publish 'facet', (
     parent_id
     tag_limit
     doc_limit
+    # sort_object
     view_published
     view_read
     view_bookmarked
@@ -214,9 +215,3 @@ Meteor.publish 'facet', (
         self.ready()
         
         self.onStop ()-> subHandle.stop()
-
-
-Meteor.publish 'author', (doc_id)->
-    doc = Docs.findOne doc_id
-    if doc 
-        Meteor.users.find _id: doc.author_id

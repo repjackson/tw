@@ -1,44 +1,24 @@
-template(name='courses')
-    .ui.stackable.padded.grid
-        .centered.row
-            h1.ui.header 
-                +icon96 name='library' classes='ui image'
-                |Courses
-        .row
-            .four.wide.column
-                if currentUser
-                    #add_course.ui.compact.basic.fluid.button
-                        i.green.plus.icon
-                        |Add course
-                +tag_facet
-                .ui.hidden.divider
-            .twelve.wide.column
-                .ui.cards
-                    each courses
-                        +course_card
+template(name='view_courses')
+    .ui.text.container
+        .ui.divided.items
+            each courses
+                +course_item
 
 
-template(name='course_card')
-    .ui.card
-        .image
-            img(src="{{c.url image_id  height=300 crop='fill' gravity='face' }}")
+template(name='course_item')
+    .item
+        a.ui.small.image(href="/view/#{_id}")
+            img(src="{{c.url image_id  height=500 crop='fill' }}")
             if image_url
-                img.ui.centered.image(src=image_url)
-        .content
-            .header #{title}
-        .content
-            a.ui.right.floated.basic.icon.button(href="/course/#{_id}/view")
-                i.right.arrow.icon
-                
+                img(src=image_url)
+        .middle.aligned.content
+            a.header(href="/view/#{_id}") #{title}
+
 template(name='view_course')
     with course
         .ui.stackable.padded.grid
             unless editing
                 .row
-                    .three.wide.column
-                        a.ui.top.left.attached.basic.button(href="/courses")
-                            i.arrow.left.icon
-                            |Courses
                     .twelve.wide.center.aligned.column
                         h1.ui.header View Course
                 .row
@@ -48,7 +28,7 @@ template(name='view_course')
                     .five.wide.column
                         +author_info
                         if is_author
-                            a.ui.basic.blue.icon.button(href="/course/#{_id}/edit")
+                            a.ui.basic.blue.icon.button(href="/edit/#{_id}")
                                 i.pencil.icon
 
 template(name='edit_course')
@@ -63,7 +43,7 @@ template(name='edit_course')
                         +edit_tags
                         +edit_content
                 .four.wide.column
-                    a.ui.basic.green.icon.button(href="/course/#{_id}/view")
+                    a.ui.basic.green.icon.button(href="/view/#{_id}")
                         i.check.icon
                     #delete_course.ui.red.basic.icon.button
                         i.trash.icon

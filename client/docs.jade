@@ -1,0 +1,184 @@
+template(name='view_doc')
+    with doc
+        .ui.padded.stackable.grid
+            unless editing
+                .centered.middle.aligned.row
+                    if parent
+                        if parent.can_access
+                            a.ui.basic.circular.button(href="/view/#{parent._id}")
+                                if parent.icon_class
+                                    +icon48 name=parent.icon_class classes='ui mini inline image'
+                                else
+                                    +icon48 name='chevron-up' classes='ui mini inline image'
+                                | #{parent.title}
+                    // else if admin_mode
+                    //     #create_parent.ui.basic.circular.button Create Parent
+                    
+            .centered.middle.aligned.row
+                .mobile.hidden.four.wide.center.aligned.column
+                    if younger_sibling
+                        a.ui.basic.circular.button(href="/view/#{younger_sibling._id}")
+                            if younger_sibling.completed
+                                if younger_sibling.icon_class
+                                    +icon48 name=younger_sibling.icon_class classes='ui mini spaced image'
+                                else
+                                    +icon48 name='checked' classes='ui mini spaced image'
+                            else
+                                if younger_sibling.icon_class
+                                    +dots100 name=younger_sibling.icon_class classes='ui mini spaced image'
+                                else
+                                    +icon48 name='circle' classes='ui mini spaced image'
+                            | #{younger_sibling.title}
+                            // | #{younger_sibling.body}
+                .eight.wide.center.aligned.column
+                    h1.ui.center.aligned.header
+                        if image_url
+                            img.ui.tiny.inline.image(src=image_url)
+                        else if completed
+                            if icon_class
+                                +icon48 name=icon_class classes='ui mini spaced image'
+                            else
+                                +icon48 name='checked' classes='ui mini spaced image'
+                        else
+                            if icon_class
+                                +dots100 name=icon_class classes='ui mini spaced image'
+                            // else
+                            //     +icon48 name='circle' classes='ui mini spaced image'
+                        if number
+                            |#{number}: 
+                        | #{title}
+                        a(href="/edit/#{_id}")
+                            i.pencil.link.icon
+                .mobile.hidden.four.wide.center.aligned.column
+                    if older_sibling
+                        if completed
+                            a.ui.basic.circular.button(href="/view/#{older_sibling._id}")
+                                | #{older_sibling.title}
+                                if older_sibling.icon_class
+                                    if older_sibling.completed
+                                        +icon48 name=older_sibling.icon_class classes='ui mini spaced image'
+                                    else
+                                        +dots100 name=older_sibling.icon_class classes='ui mini spaced image'
+                        else
+                            .ui.basic.disabled.circular.button
+                                | #{older_sibling.title} &nbsp;
+                                if older_sibling.icon_class
+                                    if older_sibling.completed
+                                        +icon48 name=older_sibling.icon_class classes='ui mini spaced image'
+                                    else
+                                        +dots100 name=older_sibling.icon_class classes='ui mini spaced image'
+                    // else if is_author
+                    //     #add_older_sibling.ui.basic.button Add Older Sibling
+            .centered.row
+                .sixteen.wide.column
+                    +Template.dynamic template=viewing_template
+            +boilerplate                
+
+   
+template(name='boilerplate')   
+    .ui.dividing.header boilerplate
+    |!{content}
+    .ui.cards
+        each children
+            .ui.card
+                .content
+                    a.header(href="/view/#{_id}") 
+                        if number
+                            |#{number}:
+                        |#{title}
+                    .description 
+                        |!{content}
+                        |#{text}
+                .content
+                    +author_info
+                    |#{when}
+                    +view_full_button
+                                    
+            
+template(name='edit_doc')
+    with doc
+        .ui.stackable.padded.grid
+            .row
+                .four.wide.column
+                .eight.wide.centered.column
+                    h1.ui.header Editing '#{title}'
+                .four.wide.column
+                    a.ui.basic.button(href="/view/#{_id}") 
+                        i.checkmark.icon
+                        |Save
+    
+            .row
+                .twelve.wide.column
+                    +edit_title
+                    +edit_icon
+                    if type
+                        +Template.dynamic template=editing_template
+                .four.wide.column
+                    .ui.styled.fluid.accordion
+                        h3.title
+                            +icon48 name='shield' classes='ui mini inline image'
+                            | Access
+                            i.dropdown.icon
+                            .ui.basic.label #{access}
+                        .content
+                            +toggle_key key='access' value='payment' icon='online-payment' label='Payment'
+                            +toggle_key key='access' value='complete_previous' icon='past' label='Complete Younger Sibling'
+                            +toggle_key key='access' value='admin_only' icon='user-shield' label='Admin Only'
+                            +toggle_key key='access' value='available' icon='enter' label='Available'
+                
+                        h3.title
+                            +icon48 name='task-completed' classes='ui mini inline image'
+                            |Completion Type
+                            i.dropdown.icon
+                            .ui.basic.label #{completion_type}
+                        .content
+                            +toggle_key key='completion_type' value='response' icon='response' label='Response'
+                            +toggle_key key='completion_type' value='mark_read' icon='read-message' label='Mark Read'
+                            +toggle_key key='completion_type' value='check_children' icon='flow-chart' label='Check Children'
+                            +toggle_key key='completion_type' value='session' icon='time' label='Session'
+                            +toggle_key key='completion_type' value='none' icon='unavailable' label='None'
+                            
+                        h3.title 
+                            +icon48 name='crown' classes='ui mini spaced image'
+                            |Admin
+                            i.dropdown.icon
+                        .content
+                            // #move_up.ui.basic.button
+                            //     +icon48 name='up' classes='ui mini spaced image'
+                            //     | Move Above Parent
+                            +edit_author
+                            // +edit_parent_id
+                            +edit_type
+                        
+                        h3.title 
+                            +icon48 name='sports-mode' classes='ui mini spaced image'
+                            | Actions
+                            i.dropdown.icon
+                        .content
+                            if has_children
+                                .ui.disabled.red.button Remove Children to Delete
+                            else
+                                #delete_doc.ui.red.button Delete
+                            +published
+            
+
+             
+template(name='toggle_key')
+    #toggle_key.ui.compact.button(class=toggle_key_button_class) 
+        +icon48 name=icon classes='ui mini spaced image'
+        | #{label}
+
+
+template(name='editing_session_question')
+    .ui.fluid.card
+        .content
+            .header #{title}
+            if response
+                with response
+                    +content
+                    +session_edit_button
+            else
+                .ui.center.aligned.basic.segment
+                    .create_response.ui.circular.basic.button
+                        +icon48 name='response' classes='ui inline image'
+                        | Respond

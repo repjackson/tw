@@ -21,8 +21,12 @@ if Meteor.isClient
             user.authored_list
             
             
-        docs: ->
-            Docs.find()
+        target_docs: -> 
+            user = Meteor.users.findOne username: FlowRouter.getParam('username')
+            Docs.find( author_id: user._id )
+            
+        your_docs: -> 
+            Docs.find( author_id: Meteor.userId() )
             
             
     Template.profile_comparison.events

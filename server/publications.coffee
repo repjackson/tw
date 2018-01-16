@@ -1,6 +1,6 @@
 Meteor.publish 'child_docs', (parent_id)->
-    Docs.find
-        parent_id: parent_id
+    Docs.find {parent_id: parent_id},
+        limit: 20
     
 Meteor.publish 'my_children', (parent_id)->
     Docs.find {
@@ -266,3 +266,90 @@ Meteor.publish 'user_clouds', (username)->
             journal_cloud: 1
             checkin_list: 1
             checkin_cloud: 1
+            
+            
+Meteor.publish 'components', ->
+    Docs.find
+        # type: 'component'
+        parent_id: 'MzHSPbvCYPngq2Dcz'            
+
+
+
+
+Meteor.publish 'new_facet', (
+    selected_theme_tags
+    type
+    tag_limit
+    doc_limit
+    )->
+        self = @
+        match = {}
+        
+        if selected_theme_tags.length > 0 then match.tags = $all: selected_theme_tags
+        if type then match.type = type
+        # if parent_id then match.parent_id = parent_id
+
+
+        console.log match    
+        
+        theme_tag_cloud = Docs.aggregate [
+            { $match: match }
+            { $project: tags: 1 }
+            { $unwind: "$tags" }
+            { $group: _id: '$tags', count: $sum: 1 }
+            { $match: _id: $nin: selected_theme_tags }
+            { $sort: count: -1, _id: 1 }
+            { $limit: 20 }
+            { $project: _id: 0, name: '$_id', count: 1 }
+            ]
+        # console.log 'theme theme_tag_cloud, ', theme_tag_cloud
+        theme_tag_cloud.forEach (tag, i) ->
+            self.added 'tags', Random.id(),
+                name: tag.name
+                count: tag.count
+                index: i
+
+
+        # doc_results = []
+        int_doc_limit = parseInt doc_limit
+        subHandle = Docs.find(match, {limit:20, sort: timestamp:-1}).observeChanges(
+            added: (id, fields) ->
+                # console.log 'added doc', id, fields
+                # doc_results.push id
+                self.added 'docs', id, fields
+            changed: (id, fields) ->
+                # console.log 'changed doc', id, fields
+                self.changed 'docs', id, fields
+            removed: (id) ->
+                # console.log 'removed doc', id, fields
+                # doc_results.pull id
+                self.removed 'docs', id
+        )
+        
+        # for doc_result in doc_results
+            
+        # user_results = Meteor.users.find(_id:$in:doc_results).observeChanges(
+        #     added: (id, fields) ->
+        #         # console.log 'added doc', id, fields
+        #         self.added 'docs', id, fields
+        #     changed: (id, fields) ->
+        #         # console.log 'changed doc', id, fields
+        #         self.changed 'docs', id, fields
+        #     removed: (id) ->
+        #         # console.log 'removed doc', id, fields
+        #         self.removed 'docs', id
+        # )
+        
+        
+        
+        # console.log 'doc handle count', subHandle._observeDriver._results
+
+        self.ready()
+        
+        self.onStop ()-> subHandle.stop()
+
+
+Meteor.publish 'author', (doc_id)->
+    doc = Docs.findOne doc_id
+    if doc 
+        Meteor.users.find _id: doc.author_id

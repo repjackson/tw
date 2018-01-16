@@ -15,14 +15,27 @@ template(name='profile_comparison')
     //         each currentUser.journal_list
     //             .ui.basic.label #{this}
     // .ui.header docs
-    each docs
-        .ui.fluid.card
-            .content
-                each tags
-                    .ui.basic.label #{this}
-            .content
-                +view_content
-                +author_info
+    .ui.two.column.grid
+        .column
+            .ui.header #{user.profile.first_name}'s Journal Entries
+            each target_docs
+                .ui.fluid.card
+                    .content
+                        each tags
+                            .ui.basic.label #{this}
+                    .content
+                        +view_content
+                        +author_info
+        .column
+            .ui.header Your Journal Entries
+            each your_docs
+                .ui.fluid.card
+                    .content
+                        each tags
+                            .ui.basic.label #{this}
+                    .content
+                        +view_content
+                        +author_info
         // if checkin_list
         //     .ui.header check in list
         //     each checkin_list

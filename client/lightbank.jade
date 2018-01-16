@@ -1,9 +1,9 @@
-template(name='lightbank')
+template(name='view_lightbank_section')
     .ui.stackable.padded.grid
-        .centered.row
-            h1.ui.header 
-                +icon96 name='sun' classes='ui image'
-                |Lightbank
+        // .centered.row
+        //     h1.ui.header 
+        //         +icon96 name='sun' classes='ui image'
+        //         |Lightbank
         .row
             .four.wide.column
                 #add_item.ui.compact.basic.fluid.button
@@ -65,36 +65,9 @@ template(name='lightbank_card')
         //                         .header
         //                             |#{name}
         .content
-            +author_info
-            |#{when}
             a.ui.basic.icon.button(href="/lightbank/#{_id}")
                 i.right.arrow.icon
                 
-template(name='view_lightbank_item')
-    with lightbank_item
-        .ui.stackable.padded.grid
-            .row
-                .three.wide.column
-                    a.ui.top.left.attached.basic.button(href="/lightbank")
-                        i.arrow.left.icon
-                        |Lightbank
-                .twelve.wide.center.aligned.column
-                    h1.ui.header View Lightbank Item
-            .row
-                .ten.wide.column
-                    if image_id
-                        +view_image_id
-                        // img.ui.centered.image(src="{{c.url image_id height=500 width=800 background='white' crop='lpad'}}")
-                    if image_url
-                        +view_image_url
-                        // img.ui.centered.image(src=image_url)
-                    +view_content
-                    each tags
-                        .ui.basic.label #{this}
-                .five.wide.column
-                    +author_info
-                    if is_author
-                        a.ui.button(href="/lightbank/#{_id}/edit") edit
 
 template(name='edit_lightbank_item')
     with lightbank_item

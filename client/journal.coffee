@@ -1,39 +1,25 @@
 FlowRouter.route '/journal', action: ->
     BlazeLayout.render 'layout', 
-        main: 'journal'
+        main: 'view_journal_section'
 
-Template.journal.onCreated ->
+Template.view_journal_section.onCreated ->
     @autorun => 
-        Meteor.subscribe('facet', 
+        Meteor.subscribe('new_facet', 
             selected_theme_tags.array()
-            selected_author_ids.array()
-            selected_location_tags.array()
-            selected_intention_tags.array()
-            selected_timestamp_tags.array()
             type = 'journal'
-            author_id = null
-            parent_id = null
             tag_limit = 20
             doc_limit = 5
-            view_published = 
-                if Session.equals('admin_mode', true) then true else Session.get('view_published')
-            view_read = null
-            view_bookmarked = null
-            view_resonates = null
-            view_complete = null
-            view_images = null
-            view_lightbank_type = null
 
             )
 
 Template.journal_card.onCreated ->
-    @autorun -> Meteor.subscribe 'usernames'
+    # @autorun -> Meteor.subscribe 'usernames'
 
-Template.journal.onCreated ->
-    @autorun -> Meteor.subscribe 'usernames'
+Template.view_journal_section.onCreated ->
+    # @autorun -> Meteor.subscribe 'usernames'
 
 
-Template.journal.helpers
+Template.view_journal_section.helpers
     entries: -> Docs.find {type: 'journal'}
 
 Template.journal_card.helpers
@@ -46,7 +32,7 @@ Template.journal_card.events
 
 
             
-Template.journal.events
+Template.view_journal_section.events
     'click #add_entry': ->
         id = Docs.insert
             type: 'journal'

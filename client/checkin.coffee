@@ -1,8 +1,8 @@
 FlowRouter.route '/checkin', action: ->
-    BlazeLayout.render 'layout', 
-        main: 'checkins'
-
-Template.checkins.onCreated ->
+    FlowRouter.go "/view/jFGwEzNgajnMad2MA"
+    
+    
+Template.view_checkins.onCreated ->
     @autorun -> Meteor.subscribe 'usernames'
     @autorun => 
         Meteor.subscribe('facet', 
@@ -32,7 +32,7 @@ Template.checkin_card.onCreated ->
 
 
 
-Template.checkins.helpers
+Template.view_checkins.helpers
     checkins: -> Docs.find {type: 'checkin'}
 
 Template.checkin_card.helpers
@@ -45,16 +45,16 @@ Template.checkin_card.events
 
 
             
-Template.checkins.events
+Template.view_checkins.events
     'click #add_checkin': ->
         id = Docs.insert
             type: 'checkin'
         FlowRouter.go "/checkin/#{id}/edit"
         
         
-FlowRouter.route '/checkin/:doc_id/view', action: (params) ->
-    BlazeLayout.render 'layout',
-        main: 'view_checkin'
+# FlowRouter.route '/checkin/:doc_id/view', action: (params) ->
+#     BlazeLayout.render 'layout',
+#         main: 'view_checkin'
 
 Template.view_checkin.onCreated ->
     @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
@@ -63,9 +63,9 @@ Template.view_checkin.helpers
     checkin: -> Docs.findOne FlowRouter.getParam('doc_id')
     
     
-FlowRouter.route '/checkin/:doc_id/edit', action: (params) ->
-    BlazeLayout.render 'layout',
-        main: 'edit_checkin'
+# FlowRouter.route '/checkin/:doc_id/edit', action: (params) ->
+#     BlazeLayout.render 'layout',
+#         main: 'edit_checkin'
 
 Template.edit_checkin.onCreated ->
     @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')

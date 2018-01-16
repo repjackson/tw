@@ -16,7 +16,7 @@ Template.author_name.events
         Docs.update @_id,
             $set: author_name: author_name
             
-Template.icon_class.events
+Template.edit_icon.events
     'blur #icon_class': (e,t)->
         val = $(e.currentTarget).closest('#icon_class').val()
 
@@ -236,7 +236,7 @@ Template.edit_quantity.events
             $set: quantity: quantity
             
             
-Template.title.events
+Template.edit_title.events
     'blur #title': (e,t)->
         title = $(e.currentTarget).closest('#title').val()
         Docs.update @_id,
@@ -268,6 +268,12 @@ Template.text.events
         text = $(e.currentTarget).closest('#text').val()
         Docs.update @_id,
             $set: text: text
+            
+Template.edit_type.events
+    'blur #type': (e,t)->
+        type = $(e.currentTarget).closest('#type').val()
+        Docs.update @_id,
+            $set: type: type
             
             
 Template.edit_link.events

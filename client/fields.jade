@@ -7,11 +7,10 @@ template(name='field_type')
         | Field Type: #{field_type}
 
 
-template(name='title') 
-    if editing
-        .ui.labeled.fluid.input
-            .ui.basic.label Title
-            input#title(type='text' value=title)
+template(name='edit_title') 
+    .ui.labeled.fluid.input
+        .ui.basic.label Title
+        input#title(type='text' value=title)
     // else
     //     // h2.ui.header 
     //         // if icon_class
@@ -32,15 +31,19 @@ template(name='group')
             .ui.basic.label Group
             input#group(type='text' value=group)
 
+template(name='edit_type')
+    .ui.labeled.fluid.input
+        .ui.basic.label Type
+        input#type(type='text' value=type)
 
-template(name='icon_class')
-    if editing
-        .ui.labeled.input
-            a.ui.basic.label(href="https://icons8.com/icon/new-icons/color" target='_blank' data-tooltip="Lookup at icons8")
-                |Icon 
-            input#icon_class(type='text' value=icon_class)
-        if icon_class    
-            +icon96 name=icon_class classes='ui inline image'
+
+template(name='edit_icon')
+    .ui.labeled.input
+        a.ui.basic.label(href="https://icons8.com/icon/new-icons/color" target='_blank' data-tooltip="Lookup at icons8")
+            |Icon 
+        input#icon_class(type='text' value=icon_class)
+    if icon_class    
+        +icon96 name=icon_class classes='ui inline image'
 
 template(name='created_date')
     .ui.form

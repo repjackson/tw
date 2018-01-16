@@ -22,10 +22,6 @@ Meteor.publish 'overlap', (
         #     my_list = Meteor.user().journal_list
         #     other_list = other_user.journal_list
 
-
-
-
-    
         self = @
         
         target_match = {}
