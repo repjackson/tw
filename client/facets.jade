@@ -95,7 +95,8 @@ template(name='keyword_facet')
 
 template(name='username_facet')
     .ui.dividing.header
-        +icon48 name='couple' classes='ui mini inline image' tooltip='Filter Authors'
+        img(src="https://png.icons8.com/color/100/000000/couple-man-woman.png")
+        // +icon48 name='couple' classes='ui mini inline image' tooltip='Filter Authors'
         |Filter Authors
     if selected_author_ids
         #clear_authors.ui.blue.icon.circular.button

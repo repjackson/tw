@@ -1,9 +1,9 @@
 template(name='view_journal_section')
     .ui.stackable.padded.grid
-        // .centered.row
-        //     h1.ui.header 
-        //         +icon96 name='journal' classes='ui image'
-        //         |Journal
+        .centered.row
+            h1.ui.header 
+                +icon96 name='journal' classes='ui image'
+                |Journal
         .row
             .four.wide.column
                 if currentUser
@@ -23,6 +23,8 @@ template(name='view_journal_section')
 
 template(name='journal_card')
     .ui.fluid.card
+        if parent_id
+            +parent_doc_segment
         .content
             .large130 !{content}
         if location_tags
@@ -46,27 +48,28 @@ template(name='journal_card')
 template(name='view_journal_entry')
     with journal_entry
         .ui.stackable.padded.centered.grid
-            unless editing
-                .row
-                    .three.wide.column
-                        a.ui.top.left.attached.basic.button(href="/journal")
-                            i.arrow.left.icon
-                            |Journal
-                    .twelve.wide.center.aligned.column
-                        h1.ui.header View Entry
-                .row
-                    .ten.wide.column
-                        +view_intention_tags
-                        +view_location_tags
-                        +view_content
-                        each tags
-                            .ui.basic.label #{this}
-                    .five.wide.column
-                        +author_info    
-                        |#{when}
-                        if is_author
-                            a.ui.basic.icon.button(href="/journal/#{_id}/edit")
-                                i.pencil.icon
+            .row
+                .three.wide.column
+                    a.ui.top.left.attached.basic.button(href="/journal")
+                        i.arrow.left.icon
+                        |Journal
+                .twelve.wide.center.aligned.column
+                    h1.ui.header View Entry
+            .row
+                .ten.wide.column
+                    if parent_id
+                        +parent_doc_segment
+                    +view_intention_tags
+                    +view_location_tags
+                    +view_content
+                    each tags
+                        .ui.basic.label #{this}
+                .five.wide.column
+                    +author_info    
+                    |#{when}
+                    if is_author
+                        a.ui.basic.icon.button(href="/journal/#{_id}/edit")
+                            i.pencil.icon
                         
 template(name='edit_journal_entry')
     with journal_entry
@@ -74,15 +77,13 @@ template(name='edit_journal_entry')
             .centered.row
                 h1.ui.center.aligned.header Edit Entry
             .row
-                .twelve.wide.column
-                    .ui.form
-                        +edit_intention_tags
-                        +edit_location_tags
-                        +edit_content
-                        +edit_tags
-                        +published
-                .four.wide.column
-                    a.ui.basic.icon.button(href="/journal/#{_id}/view")
-                        i.check.icon
-                    #delete_entry.ui.red.icon.button
-                        i.trash.icon
+                .sixteen.wide.column
+                    if parent_id
+                        +parent_doc_segment
+                    .ui.segment
+                        .ui.form
+                            +edit_intention_tags
+                            +edit_location_tags
+                            +edit_content
+                            +edit_tags
+                    +delete_popup route='/journal'

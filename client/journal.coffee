@@ -7,6 +7,7 @@ Template.view_journal_section.onCreated ->
         Meteor.subscribe('new_facet', 
             selected_theme_tags.array()
             type = 'journal'
+            parent_id = null
             tag_limit = 20
             doc_limit = 5
 
@@ -20,7 +21,11 @@ Template.view_journal_section.onCreated ->
 
 
 Template.view_journal_section.helpers
-    entries: -> Docs.find {type: 'journal'}
+    entries: -> 
+        Docs.find {
+            type: 'journal', 
+            published: $in: [1,0]
+            }
 
 Template.journal_card.helpers
     theme_tag_class: -> if @valueOf() in selected_theme_tags.array() then 'blue' else 'basic'

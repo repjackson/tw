@@ -108,7 +108,6 @@ Template.view_doc.helpers
     grandchild_list_view: -> @child_view is 'grandchild_list'
     quiz_view: -> @child_view is 'quiz'
     
-    is_editing_session_id: -> Session.get 'editing_session_id'
 
     
 Template.edit_doc.helpers
@@ -166,21 +165,6 @@ Template.view_doc.events
       
             
 Template.edit_doc.events        
-    'click #delete_doc': ->
-        swal {
-            title: 'Remove Document?'
-            type: 'warning'
-            animation: true
-            showCancelButton: true
-            closeOnConfirm: true
-            cancelButtonText: 'Cancel'
-            confirmButtonText: 'Remove'
-            confirmButtonColor: '#da5347'
-        }, =>
-            Docs.remove @_id
-            swal 'Removed', 'success'
-            Session.set 'editing', false
-            FlowRouter.go "/view/#{@parent_id}"
 
     'click .select_child_field': ->
         doc = Docs.findOne FlowRouter.getParam('doc_id')

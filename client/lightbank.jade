@@ -1,9 +1,9 @@
 template(name='view_lightbank_section')
     .ui.stackable.padded.grid
-        // .centered.row
-        //     h1.ui.header 
-        //         +icon96 name='sun' classes='ui image'
-        //         |Lightbank
+        .centered.row
+            h1.ui.header 
+                +icon96 name='sun' classes='ui image'
+                |Lightbank
         .row
             .four.wide.column
                 #add_item.ui.compact.basic.fluid.button
@@ -43,7 +43,7 @@ template(name='lightbank_card')
         if favorite_count
             .content
                 strong
-                    +icon48 name='heart' classes='ui mini inline image'
+                    +icon48 name='heart-health' classes='ui mini inline image'
                     | Resonates with #{favorite_count} 
                 .ui.divided.horizontal.list
                     each favoriter_list

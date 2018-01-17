@@ -43,6 +43,15 @@ template(name='reflect_button')
         .ui.circular.basic.disabled.icon.button(data-tooltip='Reflect in Journal')
             +icon48 name='mirror' classes='ui mini inline image'
 
+
+template(name='respond_button')
+    if currentUser
+        #respond.ui.circular.basic.icon.button(data-tooltip='Respond')
+            +icon48 name='response' classes='ui mini inline image'
+    else
+        .ui.circular.basic.disabled.icon.button(data-tooltip='Respond')
+            +icon48 name='response' classes='ui mini inline image'
+
 template(name='big_both_voter')
     i.thumbs.up.link.huge.icon.vote_up(class=vote_up_button_class)
     i.thumbs.down.link.huge.icon.vote_down(class=vote_down_button_class)
@@ -61,6 +70,12 @@ template(name='rank')
     // #decrease_index.ui.icon.basic.circular.button
     //     i.chevron.down.icon
 
+
+template(name='delete_popup')
+    if has_children
+        .ui.disabled.red.button Remove Children to Delete
+    else
+        #delete_doc.ui.red.button Delete
 
 
 

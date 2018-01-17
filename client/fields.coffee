@@ -275,6 +275,12 @@ Template.edit_type.events
         Docs.update @_id,
             $set: type: type
             
+Template.edit_child_type.events
+    'blur #child_type': (e,t)->
+        child_type = $(e.currentTarget).closest('#child_type').val()
+        Docs.update @_id,
+            $set: child_type: child_type
+            
             
 Template.edit_link.events
     'blur #link': (e,t)->

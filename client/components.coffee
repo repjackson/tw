@@ -102,6 +102,18 @@ Template.doc_match.helpers
             
         
         
+Template.parent_doc_accordion.onRendered ->
+    @autorun =>
+        if @subscriptionsReady()
+            Meteor.setTimeout ->
+                $('.ui.accordion').accordion()
+            , 500
+    
+Template.parent_doc_accordion.onCreated ->
+    # console.log @data
+    @autorun => Meteor.subscribe 'parent_doc', @data._id
+    
+    
 Template.parent_doc_segment.onRendered ->
     @autorun =>
         if @subscriptionsReady()

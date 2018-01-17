@@ -261,6 +261,27 @@ Template.delete_button.events
 Template.delete_link.onCreated ->
     @confirming = new ReactiveVar(false)
             
+     
+Template.delete_popup.events
+    'click #delete_doc': ->
+        parent = Template.parentData()
+        self = @
+        swal {
+            title: 'Remove Document?'
+            type: 'warning'
+            animation: true
+            showCancelButton: true
+            closeOnConfirm: true
+            cancelButtonText: 'Cancel'
+            confirmButtonText: 'Remove'
+            confirmButtonColor: '#da5347'
+        }, =>
+            Docs.remove parent._id
+            swal 'Removed', 'success'
+            FlowRouter.go @route
+     
+     
+     
             
 Template.delete_link.helpers
     confirming: -> Template.instance().confirming.get()
@@ -416,11 +437,18 @@ Template.add_to_cart.helpers
 Template.reflect_button.events
     'click #reflect': ->
         new_journal_id = Docs.insert
-            type:'journal'
+            type:'journal_entry'
             content: ''
             parent_id: @_id
-        Session.set 'editing_id', new_journal_id
-        FlowRouter.go("/view/#{@_id}")    
+        FlowRouter.go("/edit/#{new_journal_id}")    
+        
+Template.respond_button.events
+    'click #respond': ->
+        response_id = Docs.insert
+            type:'response'
+            content: ''
+            parent_id: @_id
+        FlowRouter.go("/edit/#{response_id}")    
         
         
 Template.add_doc_button.events

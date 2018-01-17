@@ -120,7 +120,7 @@ template(name='service_buttons')
     +call_watson
                         
                         
-template(name='parent_doc_segment')
+template(name='parent_doc_accordion')
     if parent_id
         .ui.styled.fluid.accordion
             .title
@@ -142,6 +142,17 @@ template(name='parent_doc_segment')
                     // img.ui.avatar.image(src="https://png.icons8.com/tags/color/48" width="48" height="48")
                     // each tags
                     //     .ui.basic.small.label #{this}
+                    
+
+template(name='parent_doc_segment')
+    if parent_id
+        .ui.header
+            +icon48 name='response' classes='avatar'
+            |In response to...
+    .ui.basic.segment
+        with parent
+            |!{content}
+            // +view_full_button
                     
 
 

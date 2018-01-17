@@ -279,6 +279,7 @@ Meteor.publish 'components', ->
 Meteor.publish 'new_facet', (
     selected_theme_tags
     type
+    parent_id
     tag_limit
     doc_limit
     )->
@@ -287,10 +288,10 @@ Meteor.publish 'new_facet', (
         
         if selected_theme_tags.length > 0 then match.tags = $all: selected_theme_tags
         if type then match.type = type
-        # if parent_id then match.parent_id = parent_id
+        if parent_id then match.parent_id = parent_id
 
 
-        console.log match    
+        # console.log match    
         
         theme_tag_cloud = Docs.aggregate [
             { $match: match }

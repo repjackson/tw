@@ -40,9 +40,9 @@ Docs.before.insert (userId, doc)=>
     doc.read_by = [Meteor.userId()]
     doc.upvoters = []
     doc.downvoters = []
-    doc.child_fields = ['title']
+    # doc.child_fields = ['title']
     doc.published = 0
-    doc.child_view = 'card_view'
+    # doc.child_view = 'card_view'
     doc.access = 'available'
     doc.completion_type = 'none'
     return

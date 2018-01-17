@@ -1,27 +1,26 @@
-// template(name='response')
-//     with response
-//         .ui.blue.segment
-//             .ui.header
-//                 |Your Response
-//                 +published_label
-//             if editing_mode
-//                 .content
-//                     .ui.form
-//                         .field
-//                             textarea#text(rows='3') #{text}
-//                 .content
-//                     .save_doc.ui.basic.big.circular.icon.button
-//                         i.big.green.check.icon
-//                     +published
-//                     +delete_button
-//             else
-//                 .content
-//                     .large130 #{text}
-//                 .content
-//                     if is_author
-//                         .edit_this.ui.basic.large.circular.icon.button
-//                             i.blue.pencil.icon
+template(name='edit_response')
+    .ui.segment
+        +parent_doc_segment
+        +edit_content
+        +edit_tags
 
+template(name='view_response')
+    .ui.segment
+        +parent_doc_segment
+        +view_content
+        +view_tags
+        
+        
+template(name='edit_journal_prompt')
+    .ui.segment
+        +edit_content
+        +edit_tags
+
+template(name='view_journal_prompt')
+    .ui.segment
+        +view_content
+        +view_tags
+        +child_docs
 
 // template(name='answer')
 //     .ui.fluid.card
@@ -239,3 +238,21 @@ template(name='card_view')
             .content
                 +published
                 +session_edit_button
+
+
+
+
+template(name='journal_prompt_card')
+    .ui.fluid.card
+        .content
+            if content
+                +view_content
+                if author_name
+                    h4.ui.header
+                        |- #{author_name}
+        .content
+            +view_tags
+        .content
+            |Response Count: #{child_count}
+            +respond_button
+            +view_full_button
