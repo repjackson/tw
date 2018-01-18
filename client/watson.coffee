@@ -5,38 +5,39 @@ Template.doc_emotion.onCreated ->
 
 
 
-# Template.doc_emotion.helpers
-#     sadness_percent: -> (@sadness*100).toFixed()            
-#     joy_percent: -> (@joy*100).toFixed()   
-#     disgust_percent: -> (@disgust*100).toFixed()         
-#     anger_percent: -> (@anger*100).toFixed()
-#     fear_percent: -> (@fear*100).toFixed()
+Template.doc_emotion.helpers
+    sadness_percent: -> (@sadness*100).toFixed()            
+    joy_percent: -> (@joy*100).toFixed()   
+    disgust_percent: -> (@disgust*100).toFixed()         
+    anger_percent: -> (@anger*100).toFixed()
+    fear_percent: -> (@fear*100).toFixed()
 
-# Template.analyzed_watson_keywords.helpers
-#     relevance_percent: -> (@relevance*100).toFixed()
+Template.analyzed_watson_keywords.helpers
+    relevance_percent: -> (@relevance*100).toFixed()
 
-#     sentiment_percent: -> 
-#         (@sentiment.score*100).toFixed()
+    sentiment_percent: -> 
+        (@sentiment.score*100).toFixed()
 
 
 
-#     sadness_percent: -> (@sadness*100).toFixed()            
-#     joy_percent: -> (@joy*100).toFixed()   
-#     disgust_percent: -> (@disgust*100).toFixed()         
-#     anger_percent: -> (@anger*100).toFixed()
-#     fear_percent: -> (@fear*100).toFixed()
+    sadness_percent: -> (@sadness*100).toFixed()            
+    joy_percent: -> (@joy*100).toFixed()   
+    disgust_percent: -> (@disgust*100).toFixed()         
+    anger_percent: -> (@anger*100).toFixed()
+    fear_percent: -> (@fear*100).toFixed()
 
-# Template.analyzed_watson_keywords.onRendered ->
-#     Meteor.setTimeout ->
-#         $('.progress').progress()
-#     , 2000
-#     Meteor.setTimeout ->
-#         $('.ui.accordion').accordion()
-#     , 2000
+Template.analyzed_watson_keywords.onRendered ->
+    Meteor.setTimeout ->
+        $('.progress').progress()
+    , 2000
+    Meteor.setTimeout ->
+        $('.ui.accordion').accordion()
+    , 2000
     
 
 Template.call_watson.events
     'click #call_watson': ->
+        console.log @
         parameters = 
             'html': @content
             'features':
@@ -50,13 +51,13 @@ Template.call_watson.events
                     # 'limit': 2
                 # 'concepts': {}
                 # 'categories': {}
-                # 'emotion': {}
+                'emotion': {}
                 # 'metadata': {}
                 # 'relations': {}
                 # 'semantic_roles': {}
-                # 'sentiment': {}
+                'sentiment': {}
         Meteor.call 'call_watson', parameters, @_id, ->
-            alert "Transaction with Content Analysis created"
+            # alert "Transaction with Content Analysis created"
 
 
 

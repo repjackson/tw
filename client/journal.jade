@@ -23,8 +23,6 @@ template(name='view_journal_section')
 
 template(name='journal_card')
     .ui.fluid.card
-        if parent_id
-            +parent_doc_segment
         .content
             .large130 !{content}
         if location_tags
@@ -38,6 +36,14 @@ template(name='journal_card')
             each tags
                 .ui.circular.small.compact.button.theme_tag(class=theme_tag_class)
                     strong #{this}
+        .content
+            if can_edit
+                +call_watson
+            if watson.emotion
+                +doc_emotion
+            if watson.sentiment
+                +doc_sentiment
+
         .content
             +author_info
             |#{when}
@@ -57,16 +63,21 @@ template(name='view_journal_entry')
                     h1.ui.header View Entry
             .row
                 .ten.wide.column
-                    if parent_id
-                        +parent_doc_segment
                     +view_intention_tags
                     +view_location_tags
                     +view_content
                     each tags
                         .ui.basic.label #{this}
+                    if watson.keywords
+                        +analyzed_watson_keywords
                 .five.wide.column
                     +author_info    
                     |#{when}
+                    +call_watson
+                    if watson.emotion
+                        +doc_emotion
+                    if watson.sentiment
+                        +doc_sentiment
                     if is_author
                         a.ui.basic.icon.button(href="/journal/#{_id}/edit")
                             i.pencil.icon
@@ -78,8 +89,6 @@ template(name='edit_journal_entry')
                 h1.ui.center.aligned.header Edit Entry
             .row
                 .sixteen.wide.column
-                    if parent_id
-                        +parent_doc_segment
                     .ui.segment
                         .ui.form
                             +edit_intention_tags

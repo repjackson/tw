@@ -15,18 +15,18 @@
     },
     "tone": {
       "url": "https://gateway.watsonplatform.net/tone-analyzer/api",
-      "username": "13c98936-0b22-4de6-9c1a-8b48318d0a72",
-      "password": "3hBI4YtiYckX"
+      "username": "355ae3de-c0bd-4d60-a35a-c287904bd360",
+      "password": "OzX5px2EtWGt"
     },
     "language": {
       "url": "https://gateway.watsonplatform.net/natural-language-understanding/api",
-      "username": "19ff8a66-7134-48f0-b276-5fd7fa6dfedf",
-      "password": "v45w4CEG7i1m"
+      "username": "1d2b3ee0-5e06-44a8-b1ab-e8a535132f9d",
+      "password": "5EKhvmppcFN2"
     },
     "personality": {
       "url": "https://gateway.watsonplatform.net/personality-insights/api",
-      "username": "4a7f60ae-dff4-4739-9f71-de122eb6e5fa",
-      "password": "g4BXN44p3RTm"
+      "username": "a80ae329-2664-438a-84b4-55d6866947a0",
+      "password": "bMI0PgCgyP3k"
     }
   },
   "cloudinary_key": "754714459692734",

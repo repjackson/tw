@@ -111,10 +111,10 @@ template(name='edit_doc')
                     if type
                         +Template.dynamic template=editing_template
                 .four.wide.column
-                    if tags
-                        a.ui.green.fluid.button(href="/view/#{_id}") Save
-                    else
-                        .ui.green.fluid.disabled.button Add Tags to Save
+                    // if tags
+                    a.ui.green.fluid.button(href="/view/#{_id}") Save
+                    // else
+                    //     .ui.green.fluid.disabled.button Add Tags to Save
                     .ui.hidden.divider
                     +published
                     .ui.hidden.divider
