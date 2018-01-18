@@ -1,0 +1,49 @@
+template(name='edit_template_response')
+    .ui.padded.stackable.grid.document_container
+        .center.aligned.row
+            .three.wide.column
+                a.ui.basic.circular.small.button(href='/journal/templates') 
+                    +icon48 name='template' classes='ui mini inline image'
+                    |Templates
+            .ten.wide.column
+                h1.ui.center.aligned.header
+                    +icon48 name='form' classes='ui mini spaced image'
+                    |Edit '#{journal_template.title}' Journal Template Response
+            .three.wide.column
+                // a.ui.basic.circular.small.button(href='/journal/browse') 
+                //     +icon48 name='reading' classes='ui mini inline image'
+                //     |Browse Entries
+
+        .centered.row
+            .twelve.wide.column
+                // with journal_template
+                //     h2.ui.center.aligned.header #{title}
+                each journal_template_sections
+                    +journal_template_section
+            .four.wide.column.edit_journal_sidebar
+                .ui.dividing.header
+                    +icon48 name='hashtag' classes='ui mini spaced image'
+                    |Tags
+                each journal_template.tags
+                    .ui.basic.label #{this}
+                .ui.middle.aligned.grid
+                    .twelve.wide.column
+                        a.ui.fluid.basic.circular.button(href="/view/#{_id}" data-tooltip='Save')
+                            +icon48 name='checked' classes='ui mini inline image'
+                    .four.wide.column
+                        #delete_doc.ui.fluid.basic.circular.button(data-tooltip='Delete')
+                            +icon48 name='delete' classes='ui mini inline image'
+                +published
+
+
+template(name='journal_template_section')
+    .ui.segment
+        .ui.header #{number}: #{title}
+        unless response_exists
+            .create_section_response.ui.basic.circular.compact.button(data-tooltip='Respond')
+                +icon48 name='response' classes='ui mini inline image'
+                // |Answer
+        else
+            each section_responses
+                +edit_text
+                +delete_button

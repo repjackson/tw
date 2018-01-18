@@ -70,17 +70,17 @@ template(name='edit_body')
                 // label Body
                 input#body(type='text' value=body)
                 
-template(name='edit_text')
-    if is_editing
-        .ui.form
-            .field
-                input#body(type='text' value=body)
-            +session_edit_button
-            +delete_button
-    else
-        h4 #{text}
-        if isInRole 'admin'
-            +session_edit_button
+// template(name='edit_text')
+//     if is_editing
+//         .ui.form
+//             .field
+//                 input#body(type='text' value=body)
+//             +session_edit_button
+//             +delete_button
+//     else
+//         h4 #{text}
+//         if isInRole 'admin'
+//             +session_edit_button
 
 
 template(name='edit_parentid_field')

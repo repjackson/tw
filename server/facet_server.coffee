@@ -180,7 +180,7 @@ Meteor.publish 'facet', (
         
         # doc_results = []
         int_doc_limit = parseInt doc_limit
-        subHandle = Docs.find(match, {limit:int_doc_limit, sort: timestamp:-1}).observeChanges(
+        subHandle = Docs.find(match, {limit:20, sort: timestamp:-1}).observeChanges(
             added: (id, fields) ->
                 # console.log 'added doc', id, fields
                 # doc_results.push id

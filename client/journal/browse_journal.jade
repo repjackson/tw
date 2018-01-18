@@ -1,0 +1,69 @@
+template(name='browse_journal')
+    .ui.stackable.padded.grid
+        .center.aligned.row
+            .four.wide.column
+                #create_checkin.ui.basic.circular.center.aligned.small.button 
+                    +icon48 name='create-document' classes='ui mini inline image'
+                    |Add Entry
+            .eight.wide.column
+                h1.ui.center.aligned.header
+                    +icon96 name='reading'
+                    | Browse Public Journal Entries
+            .four.wide.column
+                a.ui.basic.circular.small.button(href='/journal/mine') 
+                    +icon48 name='journal' classes='ui mini inline image'
+                    |My Entries
+                    +icon48 name='rotate-left' classes='ui mini inline image'
+        .row
+            .four.wide.column
+                +tag_facet type='journal'
+                +username_facet type='journal'
+                +intention_facet type='journal'
+                +location_facet type='journal'
+                +timestamp_facet type='journal'
+            .twelve.wide.column
+                .ui.relaxed.divided.items
+                    each journal_entries
+                        +browse_entry_view
+
+
+
+
+template(name='browse_entry_view')
+    .ui.segment(class=journal_card_class)
+        .content
+            .description
+                .ui.basic.segment.large
+                    |!{content} 
+                    with author
+                        |by 
+                        if profile.image_id
+                            img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                        a(href="/profile/#{username}") #{name} 
+                        +staus_indicator
+                    |#{when}
+                +view_tags
+        .ui.fluid.accordion
+            .title
+                .ui.header 
+                    +icon48 name='details' classes='ui mini inline image'
+                    |Details 
+                    i.dropdown.icon
+            .content
+                .ui.divided.stackable.grid
+                    .ten.wide.column
+                        .ui.basic.segment
+                            span.right.floated
+                                +view_full_button
+                            unless is_author
+                                +bookmark_button
+                                +thanks_button
+                            +mark_read
+                            // +read_by
+
+                    .six.wide.column
+                        .image
+                            if watson
+                                .ui.basic.segment
+                                    +doc_sentiment
+                                    +doc_emotion

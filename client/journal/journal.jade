@@ -1,0 +1,207 @@
+template(name='view_journal_section')
+    .ui.stackable.padded.grid
+        .centered.row
+            h1.ui.header 
+                +icon96 name='journal' classes='ui image'
+                |Journal
+        .row
+            .four.wide.column
+                if currentUser
+                    #add_entry.ui.compact.basic.fluid.button
+                        i.green.plus.icon
+                        |Add Entry
+                +tag_facet
+                +location_facet
+                +timestamp_facet
+                +username_facet
+                .ui.hidden.divider
+            .twelve.wide.column
+                .ui.cards
+                    each entries
+                        +journal_card
+
+
+template(name='journal_card')
+    .ui.fluid.card
+        .content
+            .large130 !{content}
+        if location_tags
+            .content
+                +icon48 name='sofa' classes='ui mini inline image' title='Location Tags'
+                each location_tags
+                    .ui.circular.small.compact.button.location_tag(class=location_tag_class)
+                        strong #{this}
+        .content
+            +icon48 name='hashtag' classes='ui mini inline image' title='Theme Tags'
+            each tags
+                .ui.circular.small.compact.button.theme_tag(class=theme_tag_class)
+                    strong #{this}
+        .content
+            if can_edit
+                +call_watson
+            if watson.emotion
+                +doc_emotion
+            if watson.sentiment
+                +doc_sentiment
+
+        .content
+            +author_info
+            |#{when}
+            a.ui.basic.right.floated.icon.button(href="/journal/#{_id}/view")
+                i.right.arrow.icon
+                
+                
+template(name='view_journal_entry')
+    with journal_entry
+        .ui.stackable.padded.centered.grid
+            .row
+                .three.wide.column
+                    a.ui.top.left.attached.basic.button(href="/journal")
+                        i.arrow.left.icon
+                        |Journal
+                .twelve.wide.center.aligned.column
+                    h1.ui.header View Entry
+            .row
+                .ten.wide.column
+                    +view_intention_tags
+                    +view_location_tags
+                    +view_content
+                    each tags
+                        .ui.basic.label #{this}
+                    if watson.keywords
+                        +analyzed_watson_keywords
+                .five.wide.column
+                    +author_info    
+                    |#{when}
+                    +call_watson
+                    if watson.emotion
+                        +doc_emotion
+                    if watson.sentiment
+                        +doc_sentiment
+                    if is_author
+                        a.ui.basic.icon.button(href="/journal/#{_id}/edit")
+                            i.pencil.icon
+                        
+template(name='edit_journal_entry')
+    with journal_entry
+        .ui.stackable.padded.grid
+            .centered.row
+                h1.ui.center.aligned.header Edit Entry
+            .row
+                .sixteen.wide.column
+                    .ui.segment
+                        .ui.form
+                            +edit_intention_tags
+                            +edit_location_tags
+                            +edit_content
+                            +edit_tags
+                    +delete_popup route='/journal'
+                    
+                    
+template(name='journal')
+    .ui.stackable.padded.grid
+        .row
+            .eight.wide.centered.column
+                #add_journal_entry.ui.large.basic.fluid.big.button 
+                    .ui.image
+                        +icon48 name='add-rule'
+                    |New Entry
+                .ui.hidden.divider    
+                a.ui.large.basic.fluid.big.button(href="/journal/mine")
+                    .ui.image
+                        +icon48 name='journal'
+                    |My Entries
+                .ui.hidden.divider    
+                a.ui.large.basic.fluid.big.button(href="/journal/prompts")
+                    .ui.image
+                        +icon48 name='ask-question'
+                    | Prompts
+                .ui.hidden.divider 
+                a.ui.large.basic.fluid.big.button(href="/journal/templates")
+                    .ui.image
+                        +icon48 name='template'
+                    |Templates
+                .ui.hidden.divider    
+                a.ui.large.basic.fluid.big.button(href="/journal/browse") 
+                    .ui.image
+                        +icon48 name='reading'
+                    |Browse Public Entries
+
+
+
+
+template(name='my_journal')
+    .ui.stackable.padded.grid
+        .centered.row
+            .four.wide.column
+                #create_checkin.ui.basic.circular.small.button 
+                    +icon48 name='add-rule' classes='ui mini inline image'
+                    |Add Entry
+            .nine.wide.column
+                h1.ui.center.aligned.header
+                    +icon96 name='journal' classes='ui mini inline image'
+                    | My Journal Entries
+            .three.wide.column
+                a.ui.basic.circular.small.button(href='/journal/browse') 
+                    +icon48 name='reading' classes='ui mini inline image'
+                    |Browse Entries
+                    // +icon48 name='rotate-left' classes='ui mini inline image'
+        .row
+            .four.wide.column
+                +tag_facet type='journal'
+                +location_facet type='journal'
+                +intention_facet type='journal'
+                +timestamp_facet type='journal'
+            .twelve.wide.column
+                .ui.relaxed.divided.items
+                    each journal_entries
+                        +my_entry_view
+        
+
+
+
+template(name='my_entry_view')
+    .ui.segment.document_container(class=journal_segment_class)
+        .content
+            if is_published
+                .ui.top.right.attached.basic.label(data-tooltip='Published')
+                    +icon48 name='visible'
+            else if is_anonymous
+                .ui.top.right.attached.basic.label(data-tooltip='Published Anonymously')
+                    +icon48 name='anonymous-mask'
+            else
+                .ui.top.right.attached.basic.label(data-tooltip='Private')
+                    +icon48 name='invisible'
+            .description
+                .ui.basic.segment
+                    .large130 !{content}
+            // +icon24 name='clock' classes='ui mini inline image'
+            .ui.hidden.fitted.divider
+            strong written #{when}
+            .ui.hidden.fitted.divider
+            +view_tags
+            .ui.hidden.divider
+        .ui.fluid.accordion
+            .title
+                .ui.header 
+                    // +icon48 name='more' classes='ui mini inline image'
+                    | More
+                    i.dropdown.icon
+            .content
+                .ui.divided.stackable.grid
+                    .ten.wide.column
+                        .ui.basic.segment
+                            .extra
+                                +bookmark_button
+                                if is_author
+                                    +published
+                                +view_full_button
+                    .six.wide.column
+                        .image
+                            .ui.basic.segment
+                                if watson
+                                    +doc_sentiment
+                                    +doc_emotion
+                                else
+                                    if can_edit
+                                        +call_watson

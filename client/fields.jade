@@ -86,12 +86,12 @@ template(name='edit_quantity')
     else
         .ui.header Quantity: #{quantity}
 
-template(name='text')
-    if editing
-        .ui.form
-            .field
-                textarea#text(rows='3') #{text}
-    else
+template(name='edit_text')
+    .ui.form
+        .field
+            textarea#text(rows='3') #{text}
+
+template(name='view_text')
         .ui.basic.segment
             |#{text}
             

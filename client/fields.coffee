@@ -263,7 +263,7 @@ Template.plural_slug.events
             $set: plural_slug: plural_slug
             
             
-Template.text.events
+Template.edit_text.events
     'blur #text': (e,t)->
         text = $(e.currentTarget).closest('#text').val()
         Docs.update @_id,

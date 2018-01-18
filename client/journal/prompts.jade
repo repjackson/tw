@@ -1,0 +1,17 @@
+template(name='journal_prompts')
+    .ui.stackable.padded.grid
+        .centered.row
+            h1.ui.center.aligned.header
+                +icon96 name='ask-question'
+                | Journal Prompts
+        // .ui.center.aligned.basic.segment
+        //     +doc_content tags='journal,prompt,blurb'
+        // #convert_journal_docs.ui.button Convert Journal Docs
+        .row
+            .four.wide.column
+                +tag_facet type='journal'
+                +username_facet type='journal'
+            .twelve.wide.column
+                .ui.relaxed.divided.items
+                    each journal_prompts
+                        +journal_prompt_card

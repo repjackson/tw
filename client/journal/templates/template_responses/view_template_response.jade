@@ -1,0 +1,44 @@
+template(name='view_template_response')
+    .ui.padded.stackable.grid.document_container
+        .centered.row
+            .four.wide.center.aligned.column
+                a.ui.basic.circular.small.button(href="/view/#{journal_template._id}") 
+                    +icon48 name='double-left' classes='ui mini inline image'
+                    |#{journal_template.title}
+            .eight.wide.center.aligned.column
+                h1.ui.center.aligned.header
+                    +icon48 name='form' classes='ui mini spaced image'
+                    |View '#{journal_template.title}' Journal Template Response
+            .four.wide.center.aligned.column
+                a.ui.basic.circular.small.button(href='/journal/templates') 
+                    +icon48 name='template' classes='ui mini inline image'
+                    |Journal Templates
+
+        .centered.row
+            .twelve.wide.column
+                // with journal_template
+                //     h2.ui.center.aligned.header #{title}
+                //     each tags
+                //         .ui.basic.label #{this}
+                each view_journal_template_sections
+                    +view_journal_template_section
+            .four.wide.column.edit_journal_sidebar
+                .ui.header
+                    |by
+                    img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+                    |#{author.name}
+                    with author
+                        +staus_indicator
+                    h3.ui.sub.header #{when}
+                .ui.dividing.header
+                    +icon48 name='calendar' classes='ui mini inline image'
+                    |Date Tags
+                each timestamp_tags
+                    .ui.basic.label #{this}
+
+template(name='view_journal_template_section')
+    .ui.segment
+        .ui.header #{number}: #{title}
+        each section_responses
+            .ui.basic.segment
+                .large130 #{text}
