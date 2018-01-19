@@ -217,7 +217,7 @@ Template.bounty.events
             $set: bounty: bounty
             
             
-Template.number.events
+Template.edit_number.events
     'blur #number': (e) ->
         # console.log @
         val = $(e.currentTarget).closest('#number').val()

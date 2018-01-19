@@ -11,7 +11,7 @@ Template.edit_journal.events
             confirmButtonColor: '#da5347'
         }, =>
             Docs.remove @_id
-            swal 'Removed', 'success'
+            # swal 'Removed', 'success'
             FlowRouter.go '/journal/mine'
 
 Template.edit_journal.onCreated -> 

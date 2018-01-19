@@ -3,7 +3,7 @@ template(name='journal_templates')
         .centered.middle.aligned.row
             .four.wide.center.aligned.column
                 a.ui.basic.circular.button(href="/journal") 
-                    +icon48 name='chevron-left' classes='ui mini inline image'
+                    +icon48 name='journal' classes='ui mini inline image'
                     |Journal
             .eight.wide.center.aligned.column
                 h1.ui.center.aligned.header
@@ -13,7 +13,8 @@ template(name='journal_templates')
                 //     +doc_content tags='journal,templates,blurb'
             .three.wide.center.aligned.column
                 if currentUser
-                    +add_doc_button type='journal_template' button_text='Add Journal Template'
+                    +add_doc_button type='journal_template'
+                    // +add_doc_button type='journal_template' button_text='Add Journal Template'
                 else
                     .ui.disabled.button Sign In to Add Journal Template
         .centered.row

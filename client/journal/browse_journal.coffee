@@ -17,10 +17,10 @@ Template.browse_journal.onCreated ->
             author_id=null
             parent_id=null
             tag_limit=10
-            doc_limit=20
+            doc_limit=10
             view_published=true
-            view_read=Session.get 'view_read'
-            view_bookmarked=Session.get 'view_bookmarked'
+            view_read=null
+            view_bookmarked=null
             view_resonates=null
             view_complete=null
             

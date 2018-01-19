@@ -1,12 +1,15 @@
 template(name='journal_prompts')
     .ui.stackable.padded.grid
         .centered.row
-            h1.ui.center.aligned.header
-                +icon96 name='ask-question'
-                | Journal Prompts
-        // .ui.center.aligned.basic.segment
-        //     +doc_content tags='journal,prompt,blurb'
-        // #convert_journal_docs.ui.button Convert Journal Docs
+            .four.wide.center.aligned.column
+                a.ui.basic.circular.small.button(href='/journal') 
+                    +icon48 name='journal' classes='ui mini inline image'
+                    | Journal
+            .eight.wide.column
+                h1.ui.center.aligned.header
+                    +icon96 name='ask-question'
+                    | Journal Prompts
+            .four.wide.column
         .row
             .four.wide.column
                 +tag_facet type='journal'
@@ -15,3 +18,85 @@ template(name='journal_prompts')
                 .ui.relaxed.divided.items
                     each journal_prompts
                         +journal_prompt_card
+
+
+template(name='journal_prompt_card')
+    .ui.fluid.card
+        .content
+            if content
+                +view_content
+                if author_name
+                    h4.ui.header
+                        |- #{author_name}
+        .content
+            +view_tags
+        .content
+            if child_count
+                |#{child_count} responses
+            +respond_button
+            .right.floated
+                +view_full_button
+                        
+                        
+                        
+template(name='edit_journal_prompt')
+    .ui.padded.stackable.grid.document_container
+        .centered.middle.aligned.row
+            .two.wide.center.aligned.column
+                #delete_doc.ui.fluid.basic.circular.button(data-position="bottom center" data-tooltip='Delete')
+                    +icon48 name='delete' classes='ui mini inline image'
+            .eight.wide.center.aligned.column
+                h1.ui.center.aligned.header
+                    +icon48 name='edit-file' classes='ui mini spaced image'
+                    |Edit Journal Prompt
+            .two.wide.center.aligned.column
+                +save_button
+        .centered.row
+            .fifteen.wide.column
+                +edit_content
+                +edit_tags
+        
+        
+        
+        
+        
+        
+
+template(name='view_journal_prompt')
+    .ui.stackable.padded.grid
+        .row
+            .four.wide.column
+                a.ui.basic.circular.button(href='/journal/prompts')
+                    +icon48 name='ask-question' classes='ui mini inline image'
+                    strong Prompts
+            .eight.wide.column
+                h1.ui.center.aligned.header View Journal Prompt
+            .four.wide.column
+                if can_edit
+                    +edit_link_button
+        .row
+            .twelve.wide.column
+                +view_content
+                +view_tags
+                +response_list
+                        
+                        
+                        
+template(name='response_list')
+    .ui.dividing.header Responses
+    .ui.segments
+        each responses
+            .ui.segment
+                .content
+                    .description
+                        |!{content}
+                        |#{text}
+                        .meta
+                            each tags
+                                .ui.basic.label #{this}
+                .content
+                    +author_info
+                    |#{when}    
+                    +view_full_button
+                            
+                        

@@ -33,11 +33,11 @@ Template.my_check_ins.events
         FlowRouter.go("/edit/#{new_checkin_doc_id}")
 
         
-Template.my_check_in_view.onCreated -> 
+Template.my_check_in_card.onCreated -> 
     @autorun => Meteor.subscribe 'author', @data._id
  
     
-Template.my_check_in_view.onRendered ->
+Template.my_check_in_card.onRendered ->
     @autorun =>
         if @subscriptionsReady()
             Meteor.setTimeout ->
@@ -58,11 +58,11 @@ Template.my_check_ins.helpers
 
 
 
-Template.my_check_in_view.helpers
+Template.my_check_in_card.helpers
     tag_class: -> if @valueOf() in selected_theme_tags.array() then 'teal' else 'basic'
     checkin_card_class: -> if @published then 'blue' else ''
 
 
-Template.my_check_in_view.events
+Template.my_check_in_card.events
     'click .tag': -> if @valueOf() in selected_theme_tags.array() then selected_theme_tags.remove(@valueOf()) else selected_theme_tags.push(@valueOf())
 

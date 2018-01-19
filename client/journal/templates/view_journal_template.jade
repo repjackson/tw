@@ -3,20 +3,17 @@ template(name='view_journal_template')
         .centered.row
             .three.wide.center.aligned.column
                 a.ui.basic.circular.small.button(href='/journal/templates')
-                    +icon48 name='chevron-left' classes='ui mini inline image'
-                    strong Journal Templates
+                    +icon48 name='template' classes='ui mini inline image'
+                    strong Templates
             .ten.wide.center.aligned.column
-                h1.ui.center.aligned.header 
+                h2.ui.center.aligned.header 
                     if icon_class
                         +icon96 name=icon_class classes='ui spaced image'
                     else
                         +icon96 name='template' classes='ui spaced image'
 
-                    |View '#{title}' Journal Template
+                    |'#{title}' Journal Template
             .three.wide.center.aligned.column
-                #create_response.ui.circular.large.basic.button
-                    +icon48 name='form' classes='ui mini inline image'
-                    strong Fill Out
         .centered.row
             .ten.wide.column
                 each journal_template_sections
@@ -24,6 +21,9 @@ template(name='view_journal_template')
                         .ui.header #{number}: #{title}
                 +template_responses
             .four.wide.column
+                #create_response.ui.circular.fluid.basic.button
+                    +icon48 name='form' classes='ui mini inline image'
+                    | Fill Out
                 .ui.header
                     |by
                     img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
@@ -31,11 +31,13 @@ template(name='view_journal_template')
                     with author
                         +staus_indicator
                     h3.ui.sub.header #{when}
-                .ui.dividing.header 
-                    +icon48 name='sports-mode'
-                    |Actions
-                +bookmark_button
-                +published
+                // .ui.dividing.header 
+                //     +icon48 name='sports-mode'
+                //     |Actions
+                // +bookmark_button
+                if can_edit
+                    // +published
+                    +edit_link_button
                 // div
                 //     #create_response.ui.circular.basic.button
                 //         +icon48 name='form' classes='ui mini inline image'

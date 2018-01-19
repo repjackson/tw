@@ -3,7 +3,7 @@ template(name='browse_journal')
         .center.aligned.row
             .four.wide.column
                 #create_checkin.ui.basic.circular.center.aligned.small.button 
-                    +icon48 name='create-document' classes='ui mini inline image'
+                    +icon48 name='add-rule' classes='ui mini inline image'
                     |Add Entry
             .eight.wide.column
                 h1.ui.center.aligned.header
@@ -13,7 +13,7 @@ template(name='browse_journal')
                 a.ui.basic.circular.small.button(href='/journal/mine') 
                     +icon48 name='journal' classes='ui mini inline image'
                     |My Entries
-                    +icon48 name='rotate-left' classes='ui mini inline image'
+                    // +icon48 name='rotate-left' classes='ui mini inline image'
         .row
             .four.wide.column
                 +tag_facet type='journal'

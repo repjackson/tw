@@ -15,12 +15,12 @@ template(name='edit_journal_template')
                     +icon48 name='delete' classes='ui mini inline image'
         .centered.row
             .ten.wide.column
-                +title
-                +tags
+                +edit_title
+                +edit_tags
                 each journal_template_sections
                     .ui.segment
-                        +title
-                        +number
+                        +edit_title
+                        +edit_number
                         +delete_button
             .four.wide.column
                 +published
@@ -30,7 +30,7 @@ template(name='edit_journal_template')
                         +icon48 name='add-row' classes='ui mini inline image'
                         |Add Section
                 .ui.hidden.divider
-                +icon_class
+                +edit_icon
                 // +created_date
                 .ui.hidden.divider
                 if isInRole 'admin'

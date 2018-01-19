@@ -22,9 +22,8 @@ template(name='my_check_ins')
                 +timestamp_facet type='checkin'
             
             .ten.wide.column
-                .ui.relaxed.divided.items
-                    each my_check_ins
-                        +my_check_in_view
+                each my_check_ins
+                    +my_check_in_card
             // .three.wide.column
                 // .ui.dividing.header
                 //     +icon48 name='filter'
@@ -35,16 +34,13 @@ template(name='my_check_ins')
 
 
 
-template(name='my_check_in_view')
-    .ui.segment.document_container(class=checkin_card_class)
+template(name='my_check_in_card')
+    .ui.fluid.card(class=checkin_card_class)
         .content
-            .description
-                +view_tags
-                .ui.basic.segment.large
-                    |!{content} 
-                |#{when}
-                // .ui.divider
+            +view_tags
+            |#{when}
+            // .ui.divider
         .content
             +edit_link_button
-            +published
             +view_full_button
+            +published

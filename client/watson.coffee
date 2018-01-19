@@ -37,7 +37,7 @@ Template.analyzed_watson_keywords.onRendered ->
 
 Template.call_watson.events
     'click #call_watson': ->
-        console.log @
+        # console.log @
         parameters = 
             'html': @content
             'features':

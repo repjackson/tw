@@ -53,10 +53,11 @@ Template.checkin.events
             if tag.length > 0
                 split_tags = tag.match(/\S+/g)
                 $('#quick_add').val('')
-                Meteor.call 'add_checkin', split_tags
-                selected_theme_tags.clear()
-                for tag in split_tags
-                    selected_theme_tags.push tag
+                Meteor.call 'add_checkin', split_tags, (err,res)->
+                    FlowRouter.go "/view/#{res}"
+                # selected_theme_tags.clear()
+                # for tag in split_tags
+                #     selected_theme_tags.push tag
 
 # Template.checkin_doc_view.helpers
 #     tag_class: -> if @valueOf() in selected_theme_tags.array() then 'teal' else 'basic'

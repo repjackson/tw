@@ -39,13 +39,13 @@ Template.browse_check_ins.events
 
 
 
-Template.browse_checkin_view.onCreated -> 
+Template.browse_checkin_card.onCreated -> 
     @autorun => Meteor.subscribe 'author', @data._id
  
     
             
 
-Template.browse_checkin_view.onRendered ->
+Template.browse_checkin_card.onRendered ->
     @autorun =>
         if @subscriptionsReady()
             Meteor.setTimeout ->
@@ -69,11 +69,11 @@ Template.browse_check_ins.helpers
 
 
 
-Template.browse_checkin_view.helpers
+Template.browse_checkin_card.helpers
     tag_class: -> if @valueOf() in selected_theme_tags.array() then 'teal' else 'basic'
     checkin_card_class: -> if @published then 'blue' else ''
 
 
-Template.browse_checkin_view.events
+Template.browse_checkin_card.events
     'click .tag': -> if @valueOf() in selected_theme_tags.array() then selected_theme_tags.remove(@valueOf()) else selected_theme_tags.push(@valueOf())
 

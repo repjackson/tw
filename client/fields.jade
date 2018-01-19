@@ -72,11 +72,10 @@ template(name='plural_slug')
         .ui.basic.label Plural Slug
         input#plural_slug(type='text' value=plural_slug)
 
-template(name='number')
-    if editing
-        .ui.labeled.input
-            .ui.basic.label Number
-            input#number(type='number' min='0' value=number)
+template(name='edit_number')
+    .ui.labeled.input
+        .ui.basic.label Number
+        input#number(type='number' min='0' value=number)
 
 template(name='edit_quantity')
     if editing

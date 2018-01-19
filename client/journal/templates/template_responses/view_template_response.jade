@@ -1,18 +1,18 @@
 template(name='view_template_response')
     .ui.padded.stackable.grid.document_container
         .centered.row
-            .four.wide.center.aligned.column
+            .three.wide.center.aligned.column
                 a.ui.basic.circular.small.button(href="/view/#{journal_template._id}") 
                     +icon48 name='double-left' classes='ui mini inline image'
                     |#{journal_template.title}
-            .eight.wide.center.aligned.column
-                h1.ui.center.aligned.header
+            .twelve.wide.center.aligned.column
+                h2.ui.center.aligned.header
                     +icon48 name='form' classes='ui mini spaced image'
-                    |View '#{journal_template.title}' Journal Template Response
-            .four.wide.center.aligned.column
-                a.ui.basic.circular.small.button(href='/journal/templates') 
-                    +icon48 name='template' classes='ui mini inline image'
-                    |Journal Templates
+                    |'#{journal_template.title}' Response
+            // .four.wide.center.aligned.column
+                // a.ui.basic.circular.small.button(href='/journal/templates') 
+                //     +icon48 name='template' classes='ui mini inline image'
+                //     |Journal Templates
 
         .centered.row
             .twelve.wide.column

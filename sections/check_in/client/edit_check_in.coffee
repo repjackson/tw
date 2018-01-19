@@ -11,7 +11,7 @@ Template.edit_checkin.events
             confirmButtonColor: '#da5347'
         }, =>
             Docs.remove @_id
-            swal 'Removed', 'success'
+            # swal 'Removed', 'success'
             FlowRouter.go '/checkins/mine'
 
 # Template.check_in_tag_selection.onCreated -> 
