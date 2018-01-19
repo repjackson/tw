@@ -1,0 +1,50 @@
+template(name='my_check_ins')
+    // .ui.container
+    .ui.stackable.padded.grid
+        .centered.row
+            .three.wide.center.aligned.column
+                #create_checkin.ui.basic.circular.small.button 
+                    +icon48 name='hand-planting' classes='ui mini inline image'
+                    |Check In
+            .nine.wide.center.aligned.column
+                h1.ui.center.aligned.header
+                    +icon96 name='grass' classes='ui tiny inline image'
+                    | My Check-Ins
+            .four.wide.center.aligned.column
+                a.ui.basic.circular.small.button(href='/checkins/browse') 
+                    +icon48 name='forest' classes='ui mini inline image'
+                    |Browse Check-Ins
+                    // +icon48 name='rotate-left' classes='ui mini inline image'
+        .row
+            .five.wide.column
+                +tag_facet type='checkin'
+                +location_facet type='checkin'
+                +timestamp_facet type='checkin'
+            
+            .ten.wide.column
+                .ui.relaxed.divided.items
+                    each my_check_ins
+                        +my_check_in_view
+            // .three.wide.column
+                // .ui.dividing.header
+                //     +icon48 name='filter'
+                //     |Filter
+                // +published_filter
+                // +doc_limit
+        
+
+
+
+template(name='my_check_in_view')
+    .ui.segment.document_container(class=checkin_card_class)
+        .content
+            .description
+                +view_tags
+                .ui.basic.segment.large
+                    |!{content} 
+                |#{when}
+                // .ui.divider
+        .content
+            +edit_link_button
+            +published
+            +view_full_button

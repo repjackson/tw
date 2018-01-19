@@ -113,16 +113,16 @@ Template.edit_location_tags.events
         $('#location_tag_select').val('')
    
    
-    'keyup #location_tag_select': (e,t)->
+    'keyup #add_location_tag': (e,t)->
         e.preventDefault()
-        val = $('#location_tag_select').val().toLowerCase().trim()
+        val = $('#add_location_tag').val().toLowerCase().trim()
         # console.log e
         switch e.which
             when 13 #enter
                 unless val.length is 0
                     Docs.update Template.currentData()._id,
                         $addToSet: location_tags: val
-                    $('#location_tag_select').val ''
+                    $('#add_location_tag').val ''
             # when 8
             #     if val.length is 0
             #         result = Docs.findOne(Template.currentData()._id).location_tags.slice -1

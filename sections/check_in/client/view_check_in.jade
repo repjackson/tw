@@ -1,0 +1,52 @@
+template(name='view_checkin')
+    .ui.stackable.padded.grid
+        .middle.aligned.centered.row
+            .four.wide.center.aligned.column
+                a.ui.basic.circular.button(href='/checkin')
+                    +icon48 name='sprout' classes='ui mini inline image'
+                    strong Check In's
+            .eight.wide.center.aligned.column
+                h1.ui.center.aligned.header View Check In
+            .four.wide.center.aligned.column
+                if is_author
+                    // +service_buttons
+                    +edit_link_button
+        .centered.row
+            .ten.wide.column
+                .ui.dividing.header 
+                    +icon48 name='hashtag' classes='ui mini inline image'
+                    |Tags
+                each tags
+                    .ui.basic.large.label.doc_tag #{this}
+                .ui.dividing.header 
+                    +icon48 name='sofa' classes='ui mini inline image'
+                    |Location Tags
+                each location_tags
+                    .ui.basic.large.label.location_tag #{this}
+                .ui.basic.segment
+                    |!{content}
+                if published
+                    +comments
+                // +doc_matches
+                // if watson
+                //     +analyzed_watson_keywords
+            .five.wide.column
+                .ui.header
+                    img.ui.avatar.image(src="{{c.url author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                    |by #{author.name}
+                .ui.sub.header #{when}
+                // .ui.divider
+                .ui.dividing.header Actions
+                +resonates_list
+                if is_author
+                    +published
+                else
+                    div
+                        +thanks_button
+                        +bookmark_button
+                        +resonate_button
+                    
+                // if watson
+                //     +doc_sentiment
+                //     +doc_emotion
+                //     +watson_keywords

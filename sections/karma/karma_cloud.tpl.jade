@@ -1,0 +1,23 @@
+if karma_tags
+    .ui.dividing.header Browse Tags
+if selected_karma_tags
+    #clear_tags.ui.primary.compact.icon.button
+        i.remove.icon
+if selected_karma_tags
+    each selected_karma_tags
+        a.ui.primary.compact.button.unselect_tag
+            strong #{this}
+each karma_tags
+    .ui.compact.basic.button.select_tag(class=karma_tag_class) #{this.name}
+        small #{this.count}
+.ui.dividing.header Browse Upvoters
+if selected_upvoter_ids
+    #clear_upvoters.ui.teal.icon.circular.button
+        i.remove.icon
+    each selected_upvoter_ids
+        .unselect_upvoter.ui.teal.circular.button
+            strong #{this}
+each upvoter_tags
+    .ui.basic.circular.button.select_upvoter(class=cloud_tag_class) 
+        | #{this.username}
+        small #{this.count}

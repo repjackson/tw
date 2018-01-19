@@ -1,12 +1,12 @@
 FlowRouter.route '/lightbank', action: ->
     BlazeLayout.render 'layout', 
-        main: 'view_lightbank_section'
+        main: 'lightbank'
 
-Template.view_lightbank_section.onCreated ->
+Template.lightbank.onCreated ->
     @autorun => Meteor.subscribe 'new_facet', selected_theme_tags.array(), 'lightbank'
 
 
-Template.view_lightbank_section.helpers
+Template.lightbank.helpers
     items: -> Docs.find {type: 'lightbank'}
 
 Template.lightbank_card.helpers
@@ -19,7 +19,7 @@ Template.lightbank_card.events
 
 
             
-Template.view_lightbank_section.events
+Template.lightbank.events
     'click #add_item': ->
         id = Docs.insert
             type: 'lightbank'

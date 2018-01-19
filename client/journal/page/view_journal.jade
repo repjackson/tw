@@ -1,0 +1,48 @@
+template(name='view_journal')
+    .ui.stackable.padded.grid.document_container
+        .row
+            .four.wide.column
+                a.ui.basic.circular.button(href='/journal')
+                    +icon48 name='journal' classes='ui mini inline image'
+                    strong Journal
+            .eight.wide.column
+                h1.ui.center.aligned.header View Journal Entry
+            .four.wide.column
+                if can_edit
+                    +edit_link_button
+        .row
+            .ten.wide.column
+                +parent_doc_segment
+                .ui.basic.segment
+                    .large130 !{content}
+                if published
+                    +comments
+                +doc_matches
+                if watson
+                    +analyzed_watson_keywords
+                +child_docs
+                +view_tags_sidebar
+            .five.wide.column
+                .ui.header
+                    |by
+                    img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+                    |#{author.name}
+                    with author
+                        +staus_indicator
+                    h3.ui.sub.header #{when}
+                // if is_author
+                //     +call_watson
+                if watson
+                    +doc_sentiment
+                    +doc_emotion
+                    +watson_keywords
+                .ui.dividing.header Actions
+                +bookmark_button
+                +reflect_button
+                unless is_author
+                    +resonate_button
+                    +thanks_button
+                +resonates_list
+                +mark_read
+                // +read_by
+                +published

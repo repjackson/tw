@@ -1,0 +1,61 @@
+template(name='edit_doc')
+    with doc
+        +Template.dynamic template=edit_type_template
+
+template(name='docs')
+    .ui.container
+        +cloud
+        // if one_doc
+        each docs
+            +doc_view
+        
+template(name='view_doc')
+    with doc
+        +Template.dynamic template=view_type_template
+        // .ui.container
+        //     .ui.breadcrumb
+        //         a.section(href='/') Home
+        //         .divider  / 
+        //         a.section(href="/#{type}s") #{type}
+        //         .divider  / 
+        //         .active.section #{title}
+        //     .ui.hidden.divider
+        //     if image_id
+        //         img.ui.centered.image(src="{{c.url image_id height=500 width=800 background='white' crop='lpad'}}")
+        //     .ui.stackable.grid
+        //         .eleven.wide.column
+        //             h1.ui.dividing.header #{title}
+        //             |!{content}
+        //             +comments
+        //             +doc_matches
+        //         .five.wide.column
+        //             if price
+        //                 .ui.dividing.header Price $#{price}
+        //                 +add_to_cart
+        //             .ui.dividing.header Actions
+        //             +favorite_button
+        //             +voting
+        //             +resonate_button
+        //             +resonates_list
+        //             if tags
+        //                 .ui.dividing.header Tags
+        //                 each tags
+        //                     .ui.basic.label #{this}
+        //             // +user_card
+        //             if can_edit
+        //                 .ui.dividing.header 
+        //                     i.red.configure.icon
+        //                     |Admin
+        //                 a.ui.basic.fluid.button(href="/edit/#{_id}")
+        //                     i.pencil.icon
+        //                     |Edit
+        //                 .ui.hidden.fitted.divider
+        //                 .ui.header
+        //                     |Published:
+        //                     if published
+        //                         .ui.green.basic.label True
+        //                     else
+        //                         .ui.basic.label False
+        //                 .ui.header
+        //                     |Type:
+        //                     .ui.basic.label #{type}

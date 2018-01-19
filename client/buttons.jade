@@ -44,6 +44,14 @@ template(name='reflect_button')
             +icon48 name='mirror' classes='ui mini inline image'
 
 
+
+template(name='edit_link_button')
+    if can_edit
+        // +call_watson
+        a.ui.basic.icon.large.circular.button(href="/edit/#{_id}" data-position="bottom center" data-tooltip='Edit')
+            +icon48 name='edit' classes='ui mini inline image'
+
+
 template(name='respond_button')
     if currentUser
         #respond.ui.circular.basic.icon.button(data-tooltip='Respond')

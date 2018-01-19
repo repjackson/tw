@@ -112,13 +112,13 @@ template(name='edit_tags')
                 |#{this}
 
 
-template(name='view_tags')
-    // .ui.dividing.header
-    //     +icon48 name='hashtag' classes='ui inline mini image'
-    //     |Tags
-    +icon48 name='hashtag' classes='ui inline mini image'
-    each tags
-        .ui.basic.label #{this}
+// template(name='view_tags')
+//     // .ui.dividing.header
+//     //     +icon48 name='hashtag' classes='ui inline mini image'
+//     //     |Tags
+//     +icon48 name='hashtag' classes='ui inline mini image'
+//     each tags
+//         .ui.basic.label #{this}
 
             
 
@@ -126,10 +126,10 @@ template(name='edit_location_tags')
     .ui.header 
         +icon48 name='sofa' classes='ui mini spaced image'
         |Location Tags &nbsp;
-        .ui.mini.input
-            +inputAutocomplete settings=location_select_settings id="location_tag_select" class="" autocomplete="off"
         // .ui.mini.input
-        //     input#add_location_tag(type='text' placeholder="eg. 'home', 'couch'" maxlength='50' )
+        //     +inputAutocomplete settings=location_select_settings id="location_tag_select" class="" autocomplete="off"
+        .ui.mini.input
+            input#add_location_tag(type='text' placeholder="eg. 'home', 'couch'" maxlength='50' )
         each location_tags
             // a.ui.basic.circular.button.doc_tag #{this}
             a.ui.basic.circular.button.doc_tag

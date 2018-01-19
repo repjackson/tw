@@ -1,0 +1,83 @@
+template(name='view_transaction')
+    a.ui.basic.button(href='/view/#{parent._id}')
+        +icon48 name='chevron-left' classes='ui mini inline image'
+        |'#{parent.title}' Service 
+    div    
+        a.ui.basic.button(href='/transactions')
+            +icon48 name='chevron-left' classes='ui mini inline image'
+            |My Transactions
+    .ui.container
+        h1.ui.center.aligned.header View Transaction
+        .ui.stackable.grid
+            .five.wide.column
+                .ui.segment
+                    .ui.dividing.header Parent Service
+                    .ui.header 
+                        if parent.image_id
+                            img.ui.avatar.image(src="{{c.url parent.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                        if parent.image_url
+                            img.ui.avatar.image(src=parent.image_url)
+                        |#{parent.title}
+                    .description !{parent.content}
+                .ui.segment
+                    .ui.dividing.header Service Applied To
+                    .ui.header 
+                        if object.image_id
+                            img.ui.avatar.image(src="{{c.url object.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                        if object.image_url
+                            img.ui.avatar.image(src=object.image_url)
+                        |#{object.title}
+                    .description !{object.content}
+                    .extra
+                        |Type: 
+                        .ui.basic.label #{object.type}
+                    .extra
+                        a.ui.basic.button(href="/view/#{object._id}") 
+                            |View Full
+                            +icon48 name='chevron-right' classes='ui mini inline image'
+            .five.wide.column
+                .ui.dividing.header When
+                |#{when}
+                .ui.dividing.header Sale Price
+                if sale_dollar_price
+                    |$#{sale_dollar_price}
+                |#{sale_point_price} point(s)
+                .ui.dividing.header Buyer 
+                img.ui.avatar.image(src="{{c.url author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                |#{author.name}
+                with author
+                    +staus_indicator
+                .ui.dividing.header Recipient
+                img.ui.avatar.image(src="{{c.url parent.author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                |#{parent.author.name}
+                with parent.author
+                    +staus_indicator
+            .five.wide.column
+                .ui.dividing.header Completed
+                p Once payment is made the seller (#{parent.author.name}) can mark transaction complete.  Seller can not unmark complete once buyer submits review.
+                if completed
+                    +icon48 name='inspection' classes='ui mini inline image'
+                else    
+                    +icon48 name='unchecked-checkbox' classes='ui mini inline image'
+                if can_mark_complete
+                    if completed
+                        #unmark_complete.ui.basic.button
+                            +icon48 name='cancel' classes='ui mini inline image'
+                            | Unmark Complete
+                    else
+                        #mark_complete.ui.basic.button
+                            +icon48 name='inspection' classes='ui mini inline image'
+                            | Mark Complete
+                .ui.dividing.header Reviewed
+                if reviewed
+                    +icon48 name='confirm' classes='ui mini inline image'
+                    |Reviewed
+                else
+                    +icon48 name='unchecked-checkbox' classes='ui mini inline image'
+                    |Not Reviewed
+                p When transaction is marked complete, the buyer (#{author.name}) can review the transaction with voting and tags.
+                if can_review
+                    i.thumbs.up.link.huge.icon.vote_up(class=vote_up_button_class)
+                    i.thumbs.down.link.huge.icon.vote_down(class=vote_down_button_class)
+                    // +tag_rate parent
+                // +tag_ratings parent

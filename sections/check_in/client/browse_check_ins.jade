@@ -1,0 +1,66 @@
+template(name='browse_check_ins')
+    // .ui.container
+    .ui.stackable.padded.grid
+        .centered.middle.aligned.row
+            .three.wide.center.aligned.column
+                #create_checkin.ui.basic.circular.small.button 
+                    +icon48 name='plant-tree' classes='ui inline mini image'
+                    |Check In
+                    // +icon48 name='rotate-right' classes='ui mini inline image'
+            .eight.wide.center.aligned.column
+                h1.ui.center.aligned.header
+                    +icon96 name='forest'
+                    | Browse Check-Ins
+            .four.wide.center.aligned.column
+                a.ui.basic.circular.small.button(href='/checkins/mine') 
+                    +icon48 name='grass' classes='ui inline mini image'
+                    |My Check-Ins
+                    // +icon48 name='rotate-right' classes='ui mini inline image'
+        .row
+            .five.wide.column
+                +tag_facet type='checkin'
+                +username_facet type='checkin'
+                +location_facet type='checkin'
+                +timestamp_facet type='checkin'
+            
+            .eight.wide.column
+                // .ui.centered.stackable.cards
+                .ui.relaxed.divided.items
+                    each public_checkins
+                        +browse_checkin_view
+            .three.wide.column
+                // .ui.dividing.header
+                //     +icon48 name='filter'
+                //     |Filter
+                // +bookmark_filter
+                // +read_filter
+                // +doc_limit
+
+
+
+
+template(name='browse_checkin_view')
+    .ui.segment(class=checkin_card_class)
+        .content
+            .description
+                +view_tags
+                if content
+                    .ui.basic.segment
+                        .large150 !{content}
+                .ui.horizontal.list
+                    .item
+                        .large130
+                            with author
+                                |by 
+                                if profile.image_id
+                                    img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                                a(href="/profile/#{username}") #{name} 
+                                +staus_indicator
+                            |#{when}
+                    .item
+                        if is_author
+                            +edit_link_button
+                        unless is_author
+                            +thanks_button
+                            +resonate_button
+                            +view_full_button

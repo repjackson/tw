@@ -1,0 +1,51 @@
+template(name='transactions')
+    .ui.stackable.padded.grid
+        .centered.row
+            .sixteen.wide.center.aligned.column
+                h1.ui.center.aligned.header
+                    +icon96 name='handshake'
+                    | #{currentUser.name} Transactions
+        .centered.row
+            .sixteen.wide.column
+                table.ui.selectable.unstackable.table
+                    thead
+                        tr
+                            th Title
+                            th Sale Price
+                            th When
+                            th Buyer
+                            th Seller
+                            th Actions
+                    tbody
+                        each transactions
+                            +transaction
+
+template(name='transaction')                    
+    tr
+        td 
+            if parent.image_id
+                img.ui.avatar.image(src="{{c.url parent.image_id}}")
+            if parent.image_url
+                img.ui.avatar.image(src=parent.image_url)
+            a.ui.header(href="/view/#{parent._id}") 
+                |#{parent.title}
+            div    
+                each parent.tags
+                    .ui.small.basic.label #{this}
+        td 
+            if sale_dollar_price
+                |$#{sale_dollar_price}
+            |#{sale_point_price} point(s)
+        td
+            |#{when}
+        td
+            img.ui.avatar.image(src="{{c.url author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+            |#{author.name}
+        td
+            img.ui.avatar.image(src="{{c.url recipient.author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+            |#{recipient.author.name}
+        td 
+            +view_full_button
+            // a.ui.large.basic.button(href="/view/#{_id}")
+            //     | View Full
+            //     +icon24 name='double-right' classes='ui mini inline image'

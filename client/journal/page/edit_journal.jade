@@ -1,0 +1,37 @@
+template(name='edit_journal')
+    .ui.padded.stackable.grid.document_container
+        .centered.middle.aligned.row
+            .two.wide.center.aligned.column
+                #delete_doc.ui.fluid.basic.circular.button(data-position="bottom center" data-tooltip='Delete')
+                    +icon48 name='delete' classes='ui mini inline image'
+            .eight.wide.center.aligned.column
+                h1.ui.center.aligned.header
+                    +icon48 name='edit-file' classes='ui mini spaced image'
+                    |Edit Journal Entry
+            .two.wide.center.aligned.column
+                +save_button
+        .centered.row
+            .fifteen.wide.column
+                if parent_id
+                    +parent_doc_segment
+                    .ui.hidden.divider
+                .ui.form
+                    +edit_intention_tags
+                    +edit_location_tags
+                    +edit_content
+                    +edit_tags
+                    if watson 
+                        +analyzed_watson_keywords
+            // .four.wide.column.edit_journal_sidebar
+            //     +published
+                // .ui.divider
+                // +created_date
+                // .ui.divider
+                // +request_tori_feedback
+                // +call_watson
+                // if watson
+                //     +doc_sentiment
+                //     +doc_emotion
+                //     +watson_keywords
+                // if isInRole 'admin'
+                //     +edit_author
