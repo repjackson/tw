@@ -197,14 +197,14 @@ Template.edit_intention_tags.helpers
     }
 
 
-Template.dollar_price.events
+Template.edit_dollar_price.events
     'change #dollar_price': ->
         dollar_price = parseInt $('#dollar_price').val()
 
         Docs.update @_id,
             $set: dollar_price: dollar_price
             
-Template.point_price.events
+Template.edit_point_price.events
     'change #point_price': ->
         point_price = parseInt $('#point_price').val()
         Docs.update @_id,
@@ -512,7 +512,7 @@ Template.edit_content.helpers
             height: 300
         }
 
-Template.transcript.events
+Template.edit_transcript.events
     'blur .froala-container': (e,t)->
         html = t.$('div.froala-reactive-meteorized-override').froalaEditor('html.get', true)
         
@@ -522,7 +522,7 @@ Template.transcript.events
             $set: transcript: html
                 
 
-Template.transcript.helpers
+Template.edit_transcript.helpers
     transcript_context: ->
         @current_doc = Docs.findOne @_id
         self = @
@@ -832,7 +832,13 @@ Template.remove_field.events
             
             
     
-Template.transcript.onRendered ->
+Template.view_transcript.onRendered ->
+    @autorun =>
+        if @subscriptionsReady()
+            Meteor.setTimeout ->
+                $('.ui.accordion').accordion()
+            , 1000
+Template.edit_transcript.onRendered ->
     @autorun =>
         if @subscriptionsReady()
             Meteor.setTimeout ->

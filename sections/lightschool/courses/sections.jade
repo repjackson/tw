@@ -1,0 +1,162 @@
+template(name='view_sections')
+    .ui.stackable.padded.grid
+        .row.header-background(style=background_style)
+            .three.wide.center.aligned.column
+                +parent_link
+            .ten.wide.column
+                h1.ui.inverted.center.aligned.header 
+                    +icon96 name=icon_class classes='ui inline image'
+                    |#{parent.title} sections
+            .three.wide.center.aligned.column
+                // if can_edit
+                //     +edit_button
+        .row
+            .ten.wide.centered.column
+                .ui.segments
+                    each sections
+                        .ui.segment
+                            a.ui.header(href="/view/#{_id}") 
+                                +icon48 name=icon_class
+                                |#{number}:
+                                |#{title}
+
+template(name='section_item')
+    .item
+        a.ui.small.image(href="/view/#{_id}")
+            img(src="{{c.url image_id  height=500 crop='fill' }}")
+            if image_url
+                img(src=image_url)
+        .middle.aligned.content
+            a.header(href="/view/#{_id}") #{title}
+
+template(name='view_section')
+    with section
+        .ui.stackable.padded.grid
+            .row.header-background(style=background_style)
+                .three.wide.center.aligned.column
+                    +parent_link
+                .ten.wide.column
+                    h1.ui.inverted.center.aligned.header 
+                        +icon96 name=icon_class classes='ui inline image'
+                        |#{number}: #{title}
+                .three.wide.center.aligned.column
+                    if can_edit
+                        +edit_button
+            .row
+                .centered.three.wide.column
+                    if younger_sibling
+                        a.ui.basic.circular.button(href="/view/#{younger_sibling._id}")
+                            // if younger_sibling.completed
+                            if younger_sibling.icon_class
+                                +icon48 name=younger_sibling.icon_class classes='ui mini spaced image'
+                            else
+                                +icon48 name='checked' classes='ui mini spaced image'
+                            // else
+                            //     if younger_sibling.icon_class
+                            //         +dots100 name=younger_sibling.icon_class classes='ui mini spaced image'
+                            //     else
+                            //         +icon48 name='circle' classes='ui mini spaced image'
+                            | #{younger_sibling.title}
+                            // | #{younger_sibling.body}
+
+                .centered.ten.wide.column
+                    +view_content
+                    +view_transcript
+                    +section_questions
+                    // +child_docs
+                .centered.three.wide.column
+                    if older_sibling
+                        // if completed
+                        a.ui.basic.circular.button(href="/view/#{older_sibling._id}")
+                            | #{older_sibling.title}
+                            if older_sibling.icon_class
+                                if older_sibling.completed
+                                    +icon48 name=older_sibling.icon_class classes='ui mini spaced image'
+                                else
+                                    +dots100 name=older_sibling.icon_class classes='ui mini spaced image'
+                        // else
+                        //     .ui.basic.disabled.circular.button
+                        //         | #{older_sibling.title} &nbsp;
+                        //         if older_sibling.icon_class
+                        //             if older_sibling.completed
+                        //                 +icon48 name=older_sibling.icon_class classes='ui mini spaced image'
+                        //             else
+                        //                 +dots100 name=older_sibling.icon_class classes='ui mini spaced image'
+
+
+
+template(name='section_questions')
+    h2.ui.header Questions
+    .ui.styled.fluid.accordion
+        each questions
+            // |hi
+            +section_question
+
+template(name='section_question')
+    .title
+        .ui.header
+            // +icon48 name=icon_class
+            | Question #{number}
+            small #{child_count} answers
+    .content
+        |!{content}
+        .ui.header
+            // i.unlock.icon
+            |#{child_count} Published Answers
+        .ui.segments
+            each published_answers
+                +answer
+        if isInRole 'admin'
+            .ui.header 
+                i.lock.icon
+                |Private Answers
+            .ui.segments
+                each published_answers
+                    +answer
+
+
+template(name='answer')            
+    .ui.segment
+        |#{text}
+        |#{body}
+        div
+            +author_info
+        // +edit_type
+
+
+
+
+
+
+
+
+template(name='edit_section')
+    with section
+        .ui.stackable.padded.grid
+            .centered.row
+                h1.ui.center.aligned.header Edit '#{title}' Section
+            .row
+                .twelve.wide.column
+                    // .ui.top.attached.tabular.four.item.menu
+                    //     a.active.item(data-tab="details") Details
+                        // a.item(data-tab="stats") Stats
+                    // .ui.bottom.attached.active.tab.segment(data-tab="details")
+                    .ui.form
+                        .field
+                            +edit_number
+                        .field
+                            +edit_title
+                        .field
+                            +edit_icon
+                        .field
+                            +edit_content
+                        .field
+                            +edit_transcript
+                    // .ui.bottom.attached.tab.segment(data-tab="stats")
+                .four.wide.column
+                    +save_link
+                    // +published
+                    #delete_section.ui.red.basic.icon.button
+                        i.trash.icon
+
+

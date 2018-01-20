@@ -91,8 +91,8 @@ template(name='edit_text')
             textarea#text(rows='3') #{text}
 
 template(name='view_text')
-        .ui.basic.segment
-            |#{text}
+    .ui.basic.segment
+        |#{text}
             
             
 template(name='edit_tags')
@@ -169,16 +169,15 @@ template(name='view_intention_tags')
         .ui.basic.large.label.intention_tag #{this}
 
 
-template(name='dollar_price')
-    if editing
-        .ui.labeled.input
-            .ui.basic.label $ Price
-            input#dollar_price(type='number' min='0' value=dollar_price)
-    else
-        .ui.header Price $#{dollar_price}
+template(name='edit_dollar_price')
+    .ui.labeled.input
+        .ui.basic.label $ Price
+        input#dollar_price(type='number' min='0' value=dollar_price)
 
+template(name='view_dollar_price')
+    .ui.header Price $#{dollar_price}
 
-template(name='point_price')
+template(name='edit_point_price')
     .ui.labeled.input
         .ui.basic.label Point Price
         input#point_price(type='number' min='0' value=point_price)
@@ -279,7 +278,7 @@ template(name='edit_banner_image_id')
         if banner_image_id
             .ui.header
                  +icon48 name='image-file' classes='ui mini spaced image'
-                 |Uploaded Image
+                 |Banner Image
             .ui.large.centered.image
                 img(src="{{c.url banner_image_id width=500 crop='fit'}}")
                 a#remove_photo.ui.top.right.attached.link.basic.label
@@ -290,7 +289,7 @@ template(name='edit_banner_image_id')
             .ui.labeled.fluid.input
                 .ui.basic.label
                     +icon48 name='add-image' classes='ui tiny spaced image'
-                    |Upload Image
+                    |Upload Banner Image
                 input(type='file' name='upload_picture' accept='image/*')
             // if isInRole 'dev'
             //     .ui.header or Choose Cloudinary Image Id
@@ -422,23 +421,23 @@ template(name='remove_field')
                         
                         
                         
-template(name='transcript')
-    if editing
-        .ui.header 
-            +icon48 name="paper" classes='ui mini inline image'
-            |Transcript
-        .froala-container
-            +froalaReactive transcript_context
-    else
-        .ui.styled.fluid.accordion
-            h3.title
-                +icon96 name="paper" classes='ui mini inline image'
-                | Transcript
-                i.dropdown.icon
-            .content
-                |!{transcript}
-                // if isInRole 'dev'
-                //     |old
-                // +doc_by_parentid_and_type parent_id=_id type='transcript'
-                // +doc_content tags='sol,welcome,transcript'
+template(name='edit_transcript')
+    .ui.header 
+        +icon48 name="paper" classes='ui mini inline image'
+        |Transcript
+    .froala-container
+        +froalaReactive transcript_context
+
+template(name='view_transcript')
+    .ui.styled.fluid.accordion
+        h3.title
+            +icon96 name="paper" classes='ui mini inline image'
+            | Transcript
+            i.dropdown.icon
+        .content
+            |!{transcript}
+            // if isInRole 'dev'
+            //     |old
+            // +doc_by_parentid_and_type parent_id=_id type='transcript'
+            // +doc_content tags='sol,welcome,transcript'
     .ui.hidden.divider

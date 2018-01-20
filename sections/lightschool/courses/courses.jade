@@ -63,7 +63,9 @@ template(name='course_module_overview')
     .ui.segments
         each modules
             .ui.segment
-                .ui.header #{title}
+                a.ui.header(href="/view/#{_id}") 
+                    +icon48 name=icon_class
+                    |#{title}
 
 
 
@@ -76,18 +78,26 @@ template(name='edit_course')
     with course
         .ui.stackable.padded.grid
             .centered.row
-                h1.ui.center.aligned.header Edit Course
+                h1.ui.center.aligned.header Edit '#{title}' Course
             .row
                 .twelve.wide.column
-                    .ui.form
-                        +edit_title
-                        +edit_subtitle
-                        +edit_tags
-                        +edit_image_id
-                        +edit_banner_image_id
-                        +edit_content
+                    .ui.top.attached.tabular.four.item.menu
+                        a.active.item(data-tab="details") Details
+                        a.item(data-tab="pricing") Pricing
+                    .ui.bottom.attached.active.tab.segment(data-tab="details")
+                        .ui.form
+                            +edit_title
+                            +edit_subtitle
+                            +edit_tags
+                            +edit_image_id
+                            +edit_banner_image_id
+                            +edit_content
+                    .ui.bottom.attached.tab.segment(data-tab="pricing")
+                        +course_pricing
                 .four.wide.column
                     +save_button
                     +published
                     #delete_course.ui.red.basic.icon.button
                         i.trash.icon
+
+

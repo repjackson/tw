@@ -124,6 +124,19 @@ Docs.helpers
             readers
         else []
 
+    younger_sibling: ->
+        if @number
+            previous_number = @number - 1
+            Docs.findOne
+                parent_id: @parent_id
+                number: previous_number
+
+    older_sibling: ->
+        if @number
+            next_number = @number + 1
+            Docs.findOne
+                parent_id: @parent_id
+                number: next_number
 
 
 

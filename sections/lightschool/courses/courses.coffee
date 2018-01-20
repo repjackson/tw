@@ -12,6 +12,11 @@ if Meteor.isClient
             $('.menu .item').tab()
         , 1000
     
+    Template.edit_course.onRendered ->
+        Meteor.setTimeout =>
+            $('.menu .item').tab()
+        , 1000
+    
     Template.view_courses.helpers
         courses: -> Docs.find {type: 'course'}
     
@@ -45,8 +50,9 @@ if Meteor.isClient
         modules: ->
             course = Docs.findOne FlowRouter.getParam('doc_id')
             modules_doc = Docs.findOne {type:'modules', parent_id:course._id}
-            Docs.find
-                parent_id: modules_doc._id
+            Docs.find { 
+                parent_id: modules_doc._id },
+                sort: number: -1
 
         
         
@@ -61,7 +67,7 @@ if Meteor.isClient
     Template.edit_course.events
         'click #delete_course': ->
             swal {
-                title: 'Delete check in?'
+                title: 'Delete Course?'
                 # text: 'Confirm delete?'
                 type: 'error'
                 animation: false

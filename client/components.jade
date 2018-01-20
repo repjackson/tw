@@ -156,9 +156,11 @@ template(name='parent_doc_segment')
 
 template(name='parent_link')
     with parent
-        a.ui.basic.circular.button(href="/view/#{_id}") 
+        a.ui.inverted.circular.button(href="/view/#{_id}") 
             if icon_class
                 +icon48 name=icon_class classes='avatar'
+            if number
+                |#{number}:
             |#{title}
                     
 
@@ -230,6 +232,10 @@ template(name='save_button')
             +icon48 name='checkmark' classes='ui mini inline image'
     else
         .ui.fluid.basic.disabled.circular.button Add Tags to Save
+
+template(name='save_link')
+    a.ui.fluid.basic.circular.button(data-position='bottom center' data-tooltip='Save' href="/view/#{_id}")
+        +icon48 name='checkmark' classes='ui mini inline image'
 
 
 template(name='author_info')
