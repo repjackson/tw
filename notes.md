@@ -267,3 +267,12 @@ simulate conversation between two people
         return
     result set represents overlap of terms
     return to top creating linear list of terms including selected terms from previous result set
+    
+    
+journal checkin in profile
+tag comparison in journal entries
+overlap in all views
+messaging
+
+
+6cbf170 good old commit

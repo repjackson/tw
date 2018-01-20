@@ -126,6 +126,14 @@ Template.parent_doc_segment.onCreated ->
     @autorun => Meteor.subscribe 'parent_doc', @data._id
     
     
+Template.parent_link.onCreated ->
+    # console.log @data
+    @autorun => Meteor.subscribe 'parent_doc', @data._id
+    
+Template.parent_link.helpers
+    parent: -> Docs.findOne _id: @parent_id
+    
+    
     
 Template.view_published_toggle.helpers
     viewing_mine: -> Session.equals 'view_private',true  

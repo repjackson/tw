@@ -9,7 +9,7 @@ template(name='view_journal')
                 h1.ui.center.aligned.header View Journal Entry
             .four.wide.column
                 if can_edit
-                    +edit_link_button
+                    +edit_button
         .row
             .ten.wide.column
                 +parent_doc_segment
@@ -38,7 +38,7 @@ template(name='view_journal')
                     +watson_keywords
                 .ui.dividing.header Actions
                 +bookmark_button
-                +reflect_button
+                // +reflect_button
                 unless is_author
                     +resonate_button
                     +thanks_button

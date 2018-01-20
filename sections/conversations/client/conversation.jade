@@ -4,7 +4,7 @@ template(name='full_conversation_view')
             span.right.floated
                 if isInRole 'admin'
                     +delete_button
-                +subscribe_button
+                // +subscribe_button
                 +view_full_button
             .ui.header 
                 |!{content}    

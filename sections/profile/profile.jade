@@ -23,9 +23,17 @@ template(name='profile_layout')
                         i.icon
                             +icon24 name='cloud'
                         | Comparison
+                    a.item(href="/profile/#{username}/journal" class="{{isActiveRoute name='profile_journal'}}") 
+                        i.icon
+                            +icon24 name='journal'
+                        | Journal
+                    a.item(href="/profile/#{username}/checkins" class="{{isActiveRoute name='profile_checkins'}}") 
+                        i.icon
+                            +icon24 name='hand-planting'
+                        | Check Ins
                     a.item(href="/profile/#{username}/contact" class="{{isActiveRoute name='profile_contact'}}") 
                         i.icon
-                            +icon24 name='contact' classes='icon'
+                            +icon24 name='phone' classes='icon'
                         |Contact #{name}
             if is_person_by_username
                 .ui.vertical.fluid.pointing.menu
@@ -56,28 +64,25 @@ template(name='profile_about')
             +icon96 name='info'
             |About
         .ui.hidden.divider
-        .ui.two.column.stackable.grid
-            .column
-                if tags
-                    +icon48 name='hashtag' classes='ui inline image'
-                    each tags
-                        .user_tag.ui.circular.large.basic.label #{this}
-                if profile.location
-                    .ui.header 
-                        +icon48 name='user-location'
-                        | #{profile.location}
-                if profile.about_me
-                    .ui.header About Me
-                    |#{profile.about_me}
-            .column
-                .ui.header My True Colors Are:
-                +color_dots
-                if profile.if_knew_me
-                    .ui.header If you really knew me you would know…
-                    |#{profile.if_knew_me}
-                if profile.if_not_working
-                    .ui.header If I am not at work or in class then I am probably…
-                    |#{profile.if_not_working}
+        if tags
+            +icon48 name='hashtag' classes='ui inline image'
+            each tags
+                .user_tag.ui.circular.large.basic.label #{this}
+        if profile.location
+            .ui.header 
+                +icon48 name='user-location'
+                | #{profile.location}
+        if profile.about_me
+            .ui.header About Me
+            |#{profile.about_me}
+        .ui.header My True Colors Are:
+        +color_dots
+        if profile.if_knew_me
+            .ui.header If you really knew me you would know…
+            |#{profile.if_knew_me}
+        if profile.if_not_working
+            .ui.header If I am not at work or in class then I am probably…
+            |#{profile.if_not_working}
 
         
         

@@ -1,0 +1,93 @@
+template(name='view_courses')
+    .ui.text.container
+        h1.ui.center.aligned.header Courses
+        .ui.divided.items
+            each courses
+                +course_item
+
+
+template(name='course_item')
+    .item
+        a.ui.small.image(href="/view/#{_id}")
+            img(src="{{c.url image_id  height=500 crop='fill' }}")
+            if image_url
+                img(src=image_url)
+        .middle.aligned.content
+            a.header(href="/view/#{_id}") #{title}
+
+template(name='view_course')
+    with course
+        .ui.stackable.padded.grid
+            .row.header-background(style=background_style)
+                .three.wide.center.aligned.column
+                    +parent_link
+                .twelve.wide.center.aligned.column
+                    +view_image_id
+                    h1.ui.header #{title}
+                    h3.ui.header #{subtitle}
+            .row
+                .twelve.wide.column
+                    .ui.top.attached.tabular.two.item.menu
+                        a.active.item(data-tab="sales") Sales
+                        a.item(data-tab="enrolled") Enrolled
+                    .ui.bottom.attached.active.tab.segment(data-tab="sales")
+                        |!{sales.content}
+                    .ui.bottom.attached.tab.segment(data-tab="enrolled")
+                        .ui.header welcome stuff
+                        .ui.header modules
+                    // +child_docs
+                    +course_module_overview
+                .four.wide.column
+                    +view_tags
+                    +author_info
+                    if is_author
+                        +edit_button
+
+
+template(name='view_course_sales')
+    .ui.stackable.padded.grid
+        .row.header-background(style=background_style)
+            with parent
+                .three.wide.center.aligned.column
+                    +parent_link
+                .twelve.wide.center.aligned.column
+                    +view_image_id
+                    h1.ui.header #{title}
+                    h3.ui.header #{subtitle}
+        .centered.row
+            .twelve.wide.column
+                |!{content}
+
+template(name='course_module_overview')
+    .ui.header Course Modules
+    .ui.segments
+        each modules
+            .ui.segment
+                .ui.header #{title}
+
+
+
+
+
+
+
+
+template(name='edit_course')
+    with course
+        .ui.stackable.padded.grid
+            .centered.row
+                h1.ui.center.aligned.header Edit Course
+            .row
+                .twelve.wide.column
+                    .ui.form
+                        +edit_title
+                        +edit_subtitle
+                        +edit_tags
+                        +edit_image_id
+                        +edit_banner_image_id
+                        +edit_content
+                .four.wide.column
+                    +save_button
+                    +published
+                    #delete_course.ui.red.basic.icon.button
+                        i.trash.icon

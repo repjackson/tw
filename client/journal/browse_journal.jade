@@ -30,7 +30,10 @@ template(name='browse_journal')
 
 
 template(name='browse_entry_view')
-    .ui.segment(class=journal_card_class)
+    .ui.fluid.card(class=journal_card_class)
+        if parent_id
+            .content
+                +parent_doc_segment
         .content
             .description
                 .ui.basic.segment.large
@@ -43,27 +46,20 @@ template(name='browse_entry_view')
                         +staus_indicator
                     |#{when}
                 +view_tags
-        .ui.fluid.accordion
-            .title
-                .ui.header 
-                    +icon48 name='details' classes='ui mini inline image'
-                    |Details 
-                    i.dropdown.icon
-            .content
-                .ui.divided.stackable.grid
-                    .ten.wide.column
-                        .ui.basic.segment
-                            span.right.floated
-                                +view_full_button
-                            unless is_author
-                                +bookmark_button
-                                +thanks_button
-                            +mark_read
-                            // +read_by
-
-                    .six.wide.column
-                        .image
-                            if watson
-                                .ui.basic.segment
-                                    +doc_sentiment
-                                    +doc_emotion
+                span.right.floated
+                    +view_full_button
+                unless is_author
+                    +bookmark_button
+                    +thanks_button
+                +mark_read
+        if watson
+            .ui.fluid.accordion
+                .title
+                    .ui.header 
+                        +icon48 name='dna-helix' classes='ui mini inline image'
+                        | Analysis
+                        i.dropdown.icon
+                .content
+                    .ui.basic.segment
+                        +doc_sentiment
+                        +doc_emotion

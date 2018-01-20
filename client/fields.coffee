@@ -1,4 +1,4 @@
-Template.subtitle.events
+Template.edit_subtitle.events
     'blur #subtitle': ->
         subtitle = $('#subtitle').val()
         Docs.update @_id,
@@ -358,6 +358,59 @@ Template.edit_image_id.events
                     Docs.update @_id, 
                         $unset: 
                             image_id: 1
+
+                else
+                    throw new Meteor.Error "it failed miserably"
+
+
+Template.edit_banner_image_id.events
+    "change input[type='file']": (e) ->
+        doc_id = @_id
+        files = e.currentTarget.files
+
+
+        Cloudinary.upload files[0],
+            # folder:"secret" # optional parameters described in http://cloudinary.com/documentation/upload_images#remote_upload
+            # type:"private" # optional: makes the image accessible only via a signed url. The signed url is available publicly for 1 hour.
+            (err,res) -> #optional callback, you can catch with the Cloudinary collection as well
+                # console.log "Upload Error: #{err}"
+                # console.dir res
+                if err
+                    console.error 'Error uploading', err
+                else
+                    Docs.update doc_id, $set: banner_image_id: res.public_id
+                return
+
+    'keydown #input_banner_image_id': (e,t)->
+        if e.which is 13
+            doc_id = @_id
+            banner_image_id = $('#input_banner_image_id').val().toLowerCase().trim()
+            if banner_image_id.length > 0
+                Docs.update doc_id,
+                    $set: banner_image_id: banner_image_id
+                $('#input_banner_image_id').val('')
+
+
+
+    'click #remove_photo': ->
+        swal {
+            title: 'Remove Photo?'
+            type: 'warning'
+            animation: false
+            showCancelButton: true
+            closeOnConfirm: true
+            cancelButtonText: 'No'
+            confirmButtonText: 'Remove'
+            confirmButtonColor: '#da5347'
+        }, =>
+            Meteor.call "c.delete_by_public_id", @banner_image_id, (err,res) =>
+                if not err
+                    # Do Stuff with res
+                    # console.log res
+                    # console.log @banner_image_id, @_id
+                    Docs.update @_id, 
+                        $unset: 
+                            banner_image_id: 1
 
                 else
                     throw new Meteor.Error "it failed miserably"

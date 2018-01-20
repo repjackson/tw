@@ -11,8 +11,7 @@ if Meteor.isClient
                 group_id: @_id },
                 sort: timestamp: -1
     
-        conversation_tag_class:->
-            if @valueOf() in selected_conversation_tags.array() then 'teal' else ''
+        conversation_tag_class:-> if @valueOf() in selected_conversation_tags.array() then 'teal' else ''
         conversation: -> Docs.findOne @_id
     
         in_conversation: -> if Meteor.userId() in @participant_ids then true else false

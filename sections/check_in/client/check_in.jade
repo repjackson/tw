@@ -63,7 +63,7 @@
 //             span.right.floated
 //                 +view_full_button
 //             // +bookmark_button
-//             +edit_link_button
+//             +edit_button
                     
                     
 // template(name='checkin_calendar_view')
@@ -74,9 +74,9 @@ template(name='checkin')
     //     +doc_content tags='journal,blurb'
     .ui.stackable.padded.grid
         .eight.wide.centered.column
-            .ui.center.aligned.header Quick Add (tags separated by spaces)
+            h1.ui.center.aligned.header Check In
             .ui.icon.fluid.large.input
-                input#quick_add(type='text' placeholder='eg. running sunny happy excited')
+                input#quick_add(type='text' placeholder='Quick Add (tags separated by spaces)')
                 i.yellow.lightning.icon
             .ui.divider
             #create_checkin.ui.basic.fluid.big.button 

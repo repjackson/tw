@@ -145,14 +145,21 @@ template(name='parent_doc_accordion')
                     
 
 template(name='parent_doc_segment')
-    if parent_id
+    .ui.segment
         .ui.header
             +icon48 name='response' classes='avatar'
             |In response to...
-    .ui.basic.segment
         with parent
             |!{content}
             // +view_full_button
+                    
+
+template(name='parent_link')
+    with parent
+        a.ui.basic.circular.button(href="/view/#{_id}") 
+            if icon_class
+                +icon48 name=icon_class classes='avatar'
+            |#{title}
                     
 
 

@@ -10,6 +10,7 @@ template(name='conversation_message')
                         span.date #{from_now}
                     .text
                         | #{text}
+                        | #{body}
                     .actions
                         if is_author
                             +delete_link

@@ -17,13 +17,13 @@ template(name='edit_title')
     //         //     +icon48 name=icon_class classes='ui mini inline image'
     //     |#{title}
 
-template(name='subtitle')
-    if editing
-        .ui.labeled.fluid.input
-            .ui.basic.label Subtitle
-            input#subtitle(type='text' value=subtitle)
-    else
-        h3.ui.center.aligned.header #{subtitle}
+template(name='edit_subtitle')
+    .ui.labeled.fluid.input
+        .ui.basic.label Subtitle
+        input#subtitle(type='text' value=subtitle)
+
+template(name='view_subtitle')
+    h3.ui.center.aligned.header #{subtitle}
 
 template(name='group')
     if editing
@@ -259,7 +259,7 @@ template(name='edit_image_id')
                  |Uploaded Image
             .ui.large.centered.image
                 img(src="{{c.url image_id width=500 crop='fit'}}")
-                a#remove_photo.ui.top.right.attached.link.red.basic.label
+                a#remove_photo.ui.top.right.attached.link.basic.label
                     +icon48 name='delete' classes='ui tiny spaced image'
                 if isInRole 'dev'
                     .ui.bottom.right.attached.blue.label Image Id: #{image_id}
@@ -274,7 +274,33 @@ template(name='edit_image_id')
             //     .ui.input
             //         input#input_image_id(type='text')
 
+template(name='edit_banner_image_id')
+    .ui.segment
+        if banner_image_id
+            .ui.header
+                 +icon48 name='image-file' classes='ui mini spaced image'
+                 |Uploaded Image
+            .ui.large.centered.image
+                img(src="{{c.url banner_image_id width=500 crop='fit'}}")
+                a#remove_photo.ui.top.right.attached.link.basic.label
+                    +icon48 name='delete' classes='ui tiny spaced image'
+                if isInRole 'dev'
+                    .ui.bottom.right.attached.blue.label Image Id: #{banner_image_id}
+        else
+            .ui.labeled.fluid.input
+                .ui.basic.label
+                    +icon48 name='add-image' classes='ui tiny spaced image'
+                    |Upload Image
+                input(type='file' name='upload_picture' accept='image/*')
+            // if isInRole 'dev'
+            //     .ui.header or Choose Cloudinary Image Id
+            //     .ui.input
+            //         input#input_image_id(type='text')
 
+
+template(name='view_banner_image_id')
+    img.ui.centered.image(src="{{c.url banner_image_id width=500 crop='fit'}}")
+        
 template(name='view_image_id')
     img.ui.centered.image(src="{{c.url image_id width=500 crop='fit'}}")
         

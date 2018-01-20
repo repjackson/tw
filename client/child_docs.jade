@@ -6,9 +6,10 @@ template(name='child_docs')
         each child_docs
             .card
                 .content
-                    .header
+                    a.header(href="/view/#{_id}")
                         if title
                             |#{title}
+                        |(#{type})
                     .description
                         .meta
                             each tags

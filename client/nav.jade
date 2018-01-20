@@ -28,9 +28,9 @@ template(name='nav')
             a.mobile.hidden.item(href='/about' class="{{isActivePath '/about'}}") 
                 +icon48 name='info' classes='ui mini spaced image'
                 |About
-            a.mobile.hidden.item(href='/view/erjtaDSCKwyGMxKt9' class="{{isActivePath '/view/erjtaDSCKwyGMxKt9'}}") 
-                +icon48 name='library' classes='ui mini spaced image'
-                |LightSchool
+            // a.mobile.hidden.item(href='/view/erjtaDSCKwyGMxKt9' class="{{isActivePath '/view/erjtaDSCKwyGMxKt9'}}") 
+            //     +icon48 name='library' classes='ui mini spaced image'
+            //     |LightSchool
             a.mobile.hidden.item(href='/lightbank' class="{{isActivePath '/lightbank'}}") 
                 +icon48 name='summer' classes='ui mini spaced image'
                 |Lightbank
@@ -39,7 +39,7 @@ template(name='nav')
                 |Contact
         else
             // a.ui.mobile.hidden.simple.dropdown.item(href='/lightschool' ) 
-            a.ui.mobile.hidden.item(href='/view/erjtaDSCKwyGMxKt9' data-position="bottom center" data-content="LightSchool") 
+            a.ui.mobile.hidden.item(href='/courses' data-position="bottom center" data-content="LightSchool") 
                 .ui.image
                     +icon48 name='library'
                 // .ui.large.menu
@@ -106,7 +106,7 @@ template(name='nav')
                 
             else
                 a.ui.item(href='/sign-in') 
-                    +icon48 name='signin' classes='ui mini inline spaced image'
+                    +icon48 name='login-rounded-down' classes='ui mini inline spaced image'
                     | Sign In
     
     .ui.basic.small.report.modal
