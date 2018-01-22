@@ -1,5 +1,10 @@
 {
   "public": {
+    "site": {
+      "slug": "twi",
+      "short":"TWI",
+      "long":"Tori Webster Inspires"
+    },
     "stripe": {
         "testPublishableKey": "pk_test_EeQ9GTKynLzNMq5hiTCkg3Ec",
         "livePublishableKey": "pk_live_I5XDcgYoZQHko5epFyMr5IWT"
@@ -34,7 +39,7 @@
   "galaxy.meteor.com": {
     "env": {
       "MONGO_URL": "mongodb://twiadmin:turnfearagainstthose@aws-us-east-1-portal.21.dblayer.com:10444/toridb?ssl=true",
-      "ROOT_URL": "https://www.toriwebster.com",
+      "ROOT_URL": "https://www.facet.cloud",
       "MAIL_URL": "smtp://postmaster%40mg.toriwebster.com:turnfearagainstthose@smtp.mailgun.org:587"
     }
   }

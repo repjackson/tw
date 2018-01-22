@@ -254,9 +254,10 @@ Meteor.publish 'usernames', ->
             points: 1
             
             
-Meteor.publish 'contact_submissions', ->
+Meteor.publish 'docs', (type)->
     Docs.find
-        type: 'contact_submission'            
+        site: Meteor.settings.public.site.slug
+        type: type            
         
 Meteor.publish 'user_clouds', (username)->
     other_person = Meteor.users.findOne username:username
@@ -268,12 +269,6 @@ Meteor.publish 'user_clouds', (username)->
             checkin_cloud: 1
             
             
-Meteor.publish 'components', ->
-    Docs.find
-        # type: 'component'
-        parent_id: 'MzHSPbvCYPngq2Dcz'            
-
-
 
 
 Meteor.publish 'new_facet', (
@@ -290,6 +285,7 @@ Meteor.publish 'new_facet', (
         if type then match.type = type
         if parent_id then match.parent_id = parent_id
 
+        match.site = Meteor.settings.public.site
 
         # console.log match    
         

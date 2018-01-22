@@ -105,9 +105,10 @@ template(name='section_question')
         .ui.header
             // +icon48 name=icon_class
             | Question #{number}
-            small #{child_count} answers
-            each child_authors
-                img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+            if is_admin
+                small #{child_count} answers
+                each child_authors
+                    img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
     .content
         unless is_admin
             |!{content}
@@ -137,7 +138,8 @@ template(name='answer')
         |#{body}
         div
             +author_info
-        +thanks_button
+            +thanks_button
+            +comments
 
 
 

@@ -1,7 +1,7 @@
 template(name='comments')
     .ui.fluid.styled.accordion
         .title 
-            img.ui.avatar.image(src="https://png.icons8.com/comments/color/48" width="48" height="48")
+            +icon48 name='comments' classes='ui avatar image'
             |Comments (#{comments.count})
             i.dropdown.icon
         .content

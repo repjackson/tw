@@ -10,6 +10,7 @@ Template.nav.onCreated ->
     # @autorun -> Meteor.subscribe 'cart'
     # @autorun -> Meteor.subscribe 'unread_messages'
     @autorun -> Meteor.subscribe 'all_notifications'
+    @autorun -> Meteor.subscribe 'site_doc'
     # @autorun -> Meteor.subscribe 'doc', Session.get 'new_checkin_doc_id'
     # @autorun -> Meteor.subscribe 'unread_lightbank_count'
     # @autorun -> Meteor.subscribe 'unread_journal_count'

@@ -86,6 +86,7 @@ if Meteor.isClient
 if Meteor.isServer
     Meteor.publish 'courses', ->
         Docs.find 
+            site: Meteor.settings.public.site
             type: 'course'
             
     Meteor.publish 'course_modules', (course_id)->
@@ -93,6 +94,7 @@ if Meteor.isServer
         modules_doc = Docs.findOne {type:'modules', parent_id:course._id}
         if modules_doc
             Docs.find
+                site: Meteor.settings.public.site
                 parent_id: modules_doc._id
             
             

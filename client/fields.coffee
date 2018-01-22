@@ -249,7 +249,7 @@ Template.field_type.events
             $set: field_type: field_type
             
             
-Template.slug.events
+Template.edit_slug.events
     'blur #slug': (e,t)->
         slug = $(e.currentTarget).closest('#slug').val()
         Docs.update @_id,

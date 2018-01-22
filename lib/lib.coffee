@@ -13,7 +13,6 @@
 #     create: (spec) ->
 #         React.createFactory React.createClass(spec)
 
-
 Docs.before.insert (userId, doc)=>
     timestamp = Date.now()
     doc.timestamp = timestamp
@@ -36,15 +35,11 @@ Docs.before.insert (userId, doc)=>
     doc.author_id = Meteor.userId()
     doc.tag_count = doc.tags?.length
     doc.points = 0
-    # doc.components = {}
     doc.read_by = [Meteor.userId()]
     doc.upvoters = []
     doc.downvoters = []
-    # doc.child_fields = ['title']
     doc.published = 0
-    # doc.child_view = 'card_view'
-    doc.access = 'available'
-    doc.completion_type = 'none'
+    doc.site = Meteor.settings.public.site.slug
     return
 
 Docs.after.update ((userId, doc, fieldNames, modifier, options) ->
@@ -130,7 +125,7 @@ Docs.helpers
             child_authors = []
             child_documents = Docs.find(parent_id: @_id).fetch()
             for child_document in child_documents
-                console.log child_document.author_id
+                # console.log child_document.author_id
                 child_authors.push Meteor.users.findOne child_document.author_id
             child_authors
         else []
@@ -232,9 +227,11 @@ FlowRouter.notFound =
             main: 'not_found'
 
 
-FlowRouter.route '/', action: ->
-    BlazeLayout.render 'layout', 
-        main: 'home'
+FlowRouter.route '/', 
+    title: Meteor.settings.public.site.short - "Home"
+    action: ->
+        BlazeLayout.render 'layout', 
+            main: 'home'
 
 
 FlowRouter.route '/contact', action: (params) ->

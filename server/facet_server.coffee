@@ -55,6 +55,10 @@ Meteor.publish 'facet', (
         if view_complete? then match.complete = view_complete
         # console.log view_complete
         
+        
+        
+        match.site = Meteor.settings.public.site
+
         # console.log 'match:', match
         if view_images? then match.components?.image = view_images
         

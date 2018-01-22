@@ -276,3 +276,23 @@ messaging
 
 
 6cbf170 good old commit
+
+coming soon for courses
+
+site options
+    title
+    header
+    
+bike loaner
+    events
+    volunteer checkin
+    scheduling
+    
+    
+gold run
+    checkin 
+    user management 
+    
+    
+    
+    

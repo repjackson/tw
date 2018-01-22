@@ -9,6 +9,7 @@ template(name='view_document')
 
 template(name='view_doc')
     with doc
+        .ui.header current site: #{site_name}
         +Template.dynamic template=view_type_template
         if is_admin
             +edit_type

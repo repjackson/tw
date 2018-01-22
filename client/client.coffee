@@ -1,3 +1,4 @@
+# import { FlowRouterTitle } from 'meteor/ostrio:flow-router-title';
 $.cloudinary.config
     cloud_name:"facet"
 
@@ -9,8 +10,13 @@ Session.setDefault 'view_complete', null
 Session.setDefault 'view_unread', false
 Session.setDefault 'admin_mode', false
     
+FlowRouter.globals.push({
+  title: Meteor.settings.public.site.short
+});
     
+document.title = Meteor.settings.public.site.short
     
+  
     
 # Meteor.startup ->
 #     stripeKey = Meteor.settings.public.stripe.livePublishableKey
@@ -41,6 +47,13 @@ Template.registerHelper 'can_edit', () ->  Meteor.userId() is @author_id or Role
 
 # Template.registerHelper 'zen_mode', () -> Session.get 'zen_mode'
 Template.registerHelper 'admin_mode', () ->  Session.get 'admin_mode'
+
+Template.registerHelper 'isActivePath', () ->  Session.get 'admin_mode'
+Template.registerHelper 'isActiveRoute', () ->  Session.get 'admin_mode'
+
+Template.registerHelper 'site_name', () ->  Meteor.settings.public.site.slug
+
+Template.registerHelper 'site_doc', () ->  Docs.findOne type:'site_doc'
 
 Template.registerHelper 'is_admin', () ->  
     Roles.userIsInRole(Meteor.userId(), 'admin') and Session.equals 'admin_mode', true
@@ -111,3 +124,4 @@ Template.staus_indicator.helpers
 
 Meteor.startup ->
     Status.setTemplate('semantic_ui')
+# new FlowRouterTitle(FlowRouter);

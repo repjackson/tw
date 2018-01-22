@@ -27,7 +27,6 @@ shell-server@0.3.0
 kadira:flow-router
 kadira:blaze-layout
 accounts-base@1.4.0
-zimme:active-route
 useraccounts:flow-routing
 useraccounts:semantic-ui
 lepozepo:cloudinary
@@ -43,7 +42,6 @@ froala:editor-reactive@=2.4.2
 okgrow:analytics
 perak:codemirror
 reywood:publish-composite
-arillo:flow-router-helpers
 mobile-experience@1.0.5
 underscore@1.0.10
 tmeasday:publish-counts

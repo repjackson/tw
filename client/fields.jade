@@ -61,11 +61,10 @@ template(name='plain')
         input#plain(type='text' value=plain)
 
 
-template(name='slug')
-    if editing
-        .ui.labeled.input
-            .ui.basic.label Slug
-            input#slug(type='text' value=slug)
+template(name='edit_slug')
+    .ui.labeled.input
+        .ui.basic.label Slug
+        input#slug(type='text' value=slug)
 
 template(name='plural_slug')
     .ui.labeled.input
