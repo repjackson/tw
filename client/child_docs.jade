@@ -7,6 +7,8 @@ template(name='child_docs')
             .card
                 .content
                     a.header(href="/view/#{_id}")
+                        if number
+                            |#{number}: 
                         if title
                             |#{title}
                         |(#{type})
@@ -15,6 +17,9 @@ template(name='child_docs')
                             each tags
                                 .ui.basic.label #{this}
                         |!{content}
+                        |#{text}
+                        |#{body}
                 .content
                     +author_info
                     |#{when}
+                    +edit_type

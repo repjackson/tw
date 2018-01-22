@@ -1,0 +1,74 @@
+
+template(name='view_debrief')
+    .ui.stackable.padded.grid
+        .row.header-background(style=background_style)
+            .three.wide.center.aligned.column
+                +parent_link
+            .ten.wide.column
+                h1.ui.inverted.center.aligned.header 
+                    +icon96 name='plant-under-sun' classes='ui inline image'
+                    |#{title}
+            .three.wide.center.aligned.column
+                if can_edit
+                    +edit_button
+        .centered.row
+            .centered.ten.wide.column
+                +view_content
+                .ui.header
+                    |#{child_count} Published Answers
+                .ui.segments
+                    each published_answers
+                        +answer
+                if isInRole 'admin'
+                    .ui.header 
+                        i.lock.icon
+                        |Private Answers
+                    .ui.segments
+                        each private_answers
+                            +answer
+                    +edit_type
+                    +view_full_button
+            +child_docs
+
+
+// template(name='answer')            
+//     .ui.segment
+//         |#{text}
+//         |#{body}
+//         div
+//             +author_info
+//         // +edit_type
+
+
+
+
+template(name='edit_debrief')
+    with section
+        .ui.stackable.padded.grid
+            .centered.row
+                h1.ui.center.aligned.header Edit '#{title}' Section
+            .row
+                .twelve.wide.column
+                    // .ui.top.attached.tabular.four.item.menu
+                    //     a.active.item(data-tab="details") Details
+                        // a.item(data-tab="stats") Stats
+                    // .ui.bottom.attached.active.tab.segment(data-tab="details")
+                    .ui.form
+                        .field
+                            +edit_number
+                        .field
+                            +edit_title
+                        .field
+                            +edit_icon
+                        .field
+                            +edit_content
+                        .field
+                            +edit_transcript
+                    // .ui.bottom.attached.tab.segment(data-tab="stats")
+                .four.wide.column
+                    +save_link
+                    // +published
+                    #delete_section.ui.red.basic.icon.button
+                        i.trash.icon
+
+

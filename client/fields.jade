@@ -239,10 +239,11 @@ template(name='location')
             input#location(type='text' value=location)
 
 template(name='edit_content')
-    .field
-        label #{label}
-        .froala-container
-            +froalaReactive getFEContext
+    .ui.header
+        +icon48 name='html' classes='ui mini spaced image'
+        | Edit Content
+    .froala-container
+        +froalaReactive getFEContext
 
 template(name='view_content')
     .ui.basic.segment

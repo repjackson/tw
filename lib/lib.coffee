@@ -123,6 +123,17 @@ Docs.helpers
                 readers.push Meteor.users.findOne reader_id
             readers
         else []
+    
+    
+    child_authors: ->
+        if Docs.findOne({parent_id: @_id})
+            child_authors = []
+            child_documents = Docs.find(parent_id: @_id).fetch()
+            for child_document in child_documents
+                console.log child_document.author_id
+                child_authors.push Meteor.users.findOne child_document.author_id
+            child_authors
+        else []
 
     younger_sibling: ->
         if @number

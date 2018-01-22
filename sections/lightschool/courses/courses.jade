@@ -17,26 +17,27 @@ template(name='course_item')
 
 template(name='view_course')
     with course
-        .ui.stackable.padded.grid
+        .ui.stackable.padded.centered.grid
             .row.header-background(style=background_style)
                 .three.wide.center.aligned.column
                     +parent_link
-                .twelve.wide.center.aligned.column
+                .ten.wide.center.aligned.column
                     +view_image_id
                     h1.ui.header #{title}
                     h3.ui.header #{subtitle}
             .row
                 .twelve.wide.column
-                    .ui.top.attached.tabular.two.item.menu
+                    .ui.top.attached.tabular.three.item.menu
                         a.active.item(data-tab="sales") Sales
                         a.item(data-tab="enrolled") Enrolled
+                        a.item(data-tab="modules") Modules
                     .ui.bottom.attached.active.tab.segment(data-tab="sales")
                         |!{sales.content}
                     .ui.bottom.attached.tab.segment(data-tab="enrolled")
                         .ui.header welcome stuff
-                        .ui.header modules
+                    .ui.bottom.attached.tab.segment(data-tab="modules")
+                        +course_module_overview
                     // +child_docs
-                    +course_module_overview
                 .four.wide.column
                     +view_tags
                     +author_info
@@ -59,13 +60,14 @@ template(name='view_course_sales')
                 |!{content}
 
 template(name='course_module_overview')
-    .ui.header Course Modules
+    .ui.center.aligned.header #{title} Course Modules
     .ui.segments
         each modules
             .ui.segment
                 a.ui.header(href="/view/#{_id}") 
                     +icon48 name=icon_class
-                    |#{title}
+                    |#{number}: #{title}
+                    small (#{child_count} Sections)
 
 
 

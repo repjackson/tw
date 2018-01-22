@@ -1,5 +1,5 @@
 template(name='nav')
-    #nav_menu.ui.labeled.icon.borderless.menu
+    #nav_menu.ui.labeled.icon.borderless.fixed.menu
         if currentUser
             a.ui.simple.dropdown.item(href='/' class="{{isActivePath '/about'}}") 
                 // .imogen TW
@@ -70,13 +70,13 @@ template(name='nav')
             a.ui.simple.dropdown.mobile.hidden.item(href='/checkin' class="{{isActivePath '/checkin'}}" data-position="bottom center" data-content="Check In") 
                 .ui.image
                     +icon48 name='sprout' classes='ui image'
-            // if isInRole 'admin'
-            //     a#toggle_admin_mode.item(href='#' data-position="bottom center" data-content="Toggle Admin Mode") 
-            //         .ui.image
-            //             if admin_mode
-            //                 +icon48 name='user-shield' classes='ui image'
-            //             else
-            //                 +dots50 name='user-shield' classes='ui image'
+            if isInRole 'admin'
+                a#toggle_admin_mode.item(href='#' data-position="bottom center" data-content="Toggle Admin Mode") 
+                    .ui.image
+                        if admin_mode
+                            +icon48 name='user-shield' classes='ui image'
+                        else
+                            +dots50 name='user-shield' classes='ui image'
         .right.menu
             if currentUser
                 a#report_bug.icon.item(href="#"  data-position="bottom center" data-content="Report a Bug/Feature Request")
@@ -129,4 +129,4 @@ template(name='nav')
     .ui.basic.small.confirm.modal
         h1.ui.center.aligned.header Thanks!
             .ui.green.ok.large.ok_button.button
-                | You're welcome!
+                | You're welcome

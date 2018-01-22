@@ -65,7 +65,7 @@ template(name='section_list')
                 a.ui.header(href="/view/#{_id}") 
                     +icon48 name=icon_class
                     |#{number}: #{title}
-                if isInRole 'dev'
+                if is_admin
                     +edit_type
 
 

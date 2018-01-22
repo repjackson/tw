@@ -52,7 +52,7 @@ if Meteor.isClient
             modules_doc = Docs.findOne {type:'modules', parent_id:course._id}
             Docs.find { 
                 parent_id: modules_doc._id },
-                sort: number: -1
+                sort: number: 1
 
         
         
@@ -91,8 +91,9 @@ if Meteor.isServer
     Meteor.publish 'course_modules', (course_id)->
         course = Docs.findOne course_id
         modules_doc = Docs.findOne {type:'modules', parent_id:course._id}
-        Docs.find
-            parent_id: modules_doc._id
+        if modules_doc
+            Docs.find
+                parent_id: modules_doc._id
             
             
             

@@ -111,6 +111,11 @@ Template.nav.events
             ).modal('show')
         # bug_description = prompt "Please decribe the bug:"
 
+    'click #toggle_admin_mode': ->
+        current_mode = Session.get 'admin_mode'
+        Session.set 'admin_mode', !current_mode
+
+
     # 'click #bug_icon': (e,t)->  
     #     console.log e
 

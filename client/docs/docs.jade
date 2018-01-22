@@ -10,8 +10,9 @@ template(name='view_document')
 template(name='view_doc')
     with doc
         +Template.dynamic template=view_type_template
-        if isInRole 'dev'
+        if is_admin
             +edit_type
+            +child_docs
         // .ui.container
         //     .ui.breadcrumb
         //         a.section(href='/') Home

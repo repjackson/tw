@@ -42,8 +42,8 @@ Template.registerHelper 'can_edit', () ->  Meteor.userId() is @author_id or Role
 # Template.registerHelper 'zen_mode', () -> Session.get 'zen_mode'
 Template.registerHelper 'admin_mode', () ->  Session.get 'admin_mode'
 
-# Template.registerHelper 'is_admin', () ->  
-#     Roles.userIsInRole(Meteor.userId(), 'admin') and Session.equals 'admin_mode', true
+Template.registerHelper 'is_admin', () ->  
+    Roles.userIsInRole(Meteor.userId(), 'admin') and Session.equals 'admin_mode', true
 
 Template.registerHelper 'publish_when', () -> moment(@publish_date).fromNow()
 

@@ -44,52 +44,60 @@ template(name='view_section')
                         +edit_button
             .row
                 .centered.three.wide.column
-                    if younger_sibling
-                        a.ui.basic.circular.button(href="/view/#{younger_sibling._id}")
-                            // if younger_sibling.completed
-                            if younger_sibling.icon_class
-                                +icon48 name=younger_sibling.icon_class classes='ui mini spaced image'
-                            else
-                                +icon48 name='checked' classes='ui mini spaced image'
-                            // else
-                            //     if younger_sibling.icon_class
-                            //         +dots100 name=younger_sibling.icon_class classes='ui mini spaced image'
-                            //     else
-                            //         +icon48 name='circle' classes='ui mini spaced image'
-                            | #{younger_sibling.title}
-                            // | #{younger_sibling.body}
+                    unless is_admin
+                        if younger_sibling
+                            a.ui.basic.circular.button(href="/view/#{younger_sibling._id}")
+                                // if younger_sibling.completed
+                                if younger_sibling.icon_class
+                                    +icon48 name=younger_sibling.icon_class classes='ui mini spaced image'
+                                else
+                                    +icon48 name='checked' classes='ui mini spaced image'
+                                // else
+                                //     if younger_sibling.icon_class
+                                //         +dots100 name=younger_sibling.icon_class classes='ui mini spaced image'
+                                //     else
+                                //         +icon48 name='circle' classes='ui mini spaced image'
+                                | #{younger_sibling.title}
+                                // | #{younger_sibling.body}
 
                 .centered.ten.wide.column
-                    +view_content
-                    +view_transcript
+                    if is_admin
+                        +edit_number
+                        +edit_title
+                        +edit_icon
+                        +edit_content
+                        +edit_transcript
+                    else
+                        +view_content
+                        if transcript
+                            +view_transcript
                     +section_questions
-                    // +child_docs
                 .centered.three.wide.column
-                    if older_sibling
-                        // if completed
-                        a.ui.basic.circular.button(href="/view/#{older_sibling._id}")
-                            | #{older_sibling.title}
-                            if older_sibling.icon_class
-                                if older_sibling.completed
+                    unless is_admin
+                        if older_sibling
+                            // if completed
+                            a.ui.basic.circular.button(href="/view/#{older_sibling._id}")
+                                | #{older_sibling.title}
+                                if older_sibling.icon_class
                                     +icon48 name=older_sibling.icon_class classes='ui mini spaced image'
-                                else
-                                    +dots100 name=older_sibling.icon_class classes='ui mini spaced image'
-                        // else
-                        //     .ui.basic.disabled.circular.button
-                        //         | #{older_sibling.title} &nbsp;
-                        //         if older_sibling.icon_class
-                        //             if older_sibling.completed
-                        //                 +icon48 name=older_sibling.icon_class classes='ui mini spaced image'
-                        //             else
-                        //                 +dots100 name=older_sibling.icon_class classes='ui mini spaced image'
+                                    // if older_sibling.completed
+                                    // else
+                                    //     +dots100 name=older_sibling.icon_class classes='ui mini spaced image'
+                            // else
+                            //     .ui.basic.disabled.circular.button
+                            //         | #{older_sibling.title} &nbsp;
+                            //         if older_sibling.icon_class
+                            //             if older_sibling.completed
+                            //                 +icon48 name=older_sibling.icon_class classes='ui mini spaced image'
+                            //             else
+                            //                 +dots100 name=older_sibling.icon_class classes='ui mini spaced image'
 
 
 
 template(name='section_questions')
-    h2.ui.header Questions
+    h2.ui.header #{child_count} Questions
     .ui.styled.fluid.accordion
         each questions
-            // |hi
             +section_question
 
 template(name='section_question')
@@ -98,21 +106,29 @@ template(name='section_question')
             // +icon48 name=icon_class
             | Question #{number}
             small #{child_count} answers
+            each child_authors
+                img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
     .content
-        |!{content}
-        .ui.header
-            // i.unlock.icon
-            |#{child_count} Published Answers
-        .ui.segments
-            each published_answers
-                +answer
-        if isInRole 'admin'
+        unless is_admin
+            |!{content}
+            |#{text}
+            .ui.header
+                // i.unlock.icon
+                |#{child_count} Published Answers
+            .ui.segments
+                each published_answers
+                    +answer
+        if is_admin
             .ui.header 
                 i.lock.icon
                 |Private Answers
             .ui.segments
-                each published_answers
+                each private_answers
                     +answer
+            +edit_number
+            +edit_text
+            +edit_content
+            // +view_full_button
 
 
 template(name='answer')            
@@ -121,9 +137,7 @@ template(name='answer')
         |#{body}
         div
             +author_info
-        // +edit_type
-
-
+        +thanks_button
 
 
 
