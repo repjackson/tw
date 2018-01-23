@@ -1,0 +1,14 @@
+template(name='view_theway')
+    .ui.padded.stackable.grid
+        .row
+            h1.ui.center.aligned.header 
+                +icon48 name=icon_class
+                |#{title}
+        .row
+            .five.wide.column
+                +tag_facet
+            .ten.wide.column
+                .ui.centered.cards
+                    each children
+                        +site_card
+            

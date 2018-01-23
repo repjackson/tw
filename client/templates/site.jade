@@ -1,0 +1,20 @@
+template(name='view_site')
+    h1.ui.center.aligned.header 
+        +icon48 name=icon_class
+        |#{title}
+    .ui.centered.cards
+        each children
+            +site_card
+        
+template(name='site_card')
+    .ui.center.aligned.card(class=card_class)
+        .content
+            a.ui.image(href="/view/#{_id}")
+                if image_url
+                    img.ui.tiny.inline.image(src=image_url)
+                +icon96 name=icon_class
+            .ui.hidden.divider
+            a.header(href="/view/#{_id}")
+                if number
+                    |#{number}: 
+                |#{title}

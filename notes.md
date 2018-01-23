@@ -294,5 +294,45 @@ gold run
     user management 
     
     
+cac
+    schedule management 
+
+herds
+    session variable changing current herd
+        would change publication filter
+        
+    site name
+    parent id 
+    sections = templates = docs
+    click into site
+    natural hierarchy
     
     
+    nav bar and look
+        nav bar needs to draw from settings
+        site logo
+        documents all need to be a part of the hierarchy
+        
+    ideal
+        as you move up and down in the hierarchy, into/out of sites, the look changes
+        loads a different site_doc 
+        allows custom nav bar/app experience
+        
+    into twi
+        white site
+        her world, everything as it is.
+        nav button below, back to the way
+        move up the hierarcy
+        into facet
+            facet is the dark side
+                commerce
+                money
+                power
+                competition
+        the way is above the two
+        facet 
+        change nav color and items
+            drawn from site doc
+            must trigger when site_doc template is drawn
+            nav and footer
+        

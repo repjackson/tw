@@ -10,11 +10,11 @@ Session.setDefault 'view_complete', null
 Session.setDefault 'view_unread', false
 Session.setDefault 'admin_mode', false
     
-FlowRouter.globals.push({
-  title: Meteor.settings.public.site.short
-});
+# FlowRouter.globals.push({
+#   title: Meteor.settings.public.site.short
+# });
     
-document.title = Meteor.settings.public.site.short
+# document.title = Meteor.settings.public.site.short
     
   
     
@@ -51,7 +51,7 @@ Template.registerHelper 'admin_mode', () ->  Session.get 'admin_mode'
 Template.registerHelper 'isActivePath', () ->  Session.get 'admin_mode'
 Template.registerHelper 'isActiveRoute', () ->  Session.get 'admin_mode'
 
-Template.registerHelper 'site_name', () ->  Meteor.settings.public.site.slug
+# Template.registerHelper 'site_name', () ->  Meteor.settings.public.site.slug
 
 Template.registerHelper 'site_doc', () ->  Docs.findOne type:'site_doc'
 

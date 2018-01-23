@@ -39,7 +39,6 @@ Docs.before.insert (userId, doc)=>
     doc.upvoters = []
     doc.downvoters = []
     doc.published = 0
-    doc.site = Meteor.settings.public.site.slug
     return
 
 Docs.after.update ((userId, doc, fieldNames, modifier, options) ->
@@ -228,7 +227,7 @@ FlowRouter.notFound =
 
 
 FlowRouter.route '/', 
-    title: Meteor.settings.public.site.short - "Home"
+    # title: Meteor.settings.public.site.short - "Home"
     action: ->
         BlazeLayout.render 'layout', 
             main: 'home'

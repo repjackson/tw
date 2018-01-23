@@ -256,7 +256,7 @@ Meteor.publish 'usernames', ->
             
 Meteor.publish 'docs', (type)->
     Docs.find
-        site: Meteor.settings.public.site.slug
+        # site: Meteor.settings.public.site.slug
         type: type            
         
 Meteor.publish 'user_clouds', (username)->
@@ -273,8 +273,8 @@ Meteor.publish 'user_clouds', (username)->
 
 Meteor.publish 'new_facet', (
     selected_theme_tags
-    type
     parent_id
+    type
     tag_limit
     doc_limit
     )->
@@ -285,7 +285,7 @@ Meteor.publish 'new_facet', (
         if type then match.type = type
         if parent_id then match.parent_id = parent_id
 
-        match.site = Meteor.settings.public.site
+        # match.site = Meteor.settings.public.site
 
         # console.log match    
         

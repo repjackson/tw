@@ -1,17 +1,17 @@
 FlowRouter.route '/people', action: (params) ->
     BlazeLayout.render 'layout',
         # sub_nav: 'member_nav'
-        main: 'people'
+        main: 'view_people'
 
 
 
-Template.people.onCreated ->
+Template.view_people.onCreated ->
     @autorun -> Meteor.subscribe('people', selected_people_tags.array())
 Template.person.onCreated ->
     @autorun -> Meteor.subscribe('person', @_id)
 
 
-Template.people.helpers
+Template.view_people.helpers
     people: -> 
         Meteor.users.find { 
             _id: $ne: Meteor.userId()

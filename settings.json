@@ -1,14 +1,9 @@
 {
   "public": {
-    "site": {
-      "slug": "twi",
-      "short":"TWI",
-      "long":"Tori Webster Inspires"
-    },
     "stripe": {
         "testPublishableKey": "pk_test_EeQ9GTKynLzNMq5hiTCkg3Ec",
         "livePublishableKey": "pk_live_I5XDcgYoZQHko5epFyMr5IWT"
-      },
+    },
     "analyticsSettings": {
       "Google Analytics" : {"trackingId": "UA-93827813-1"}
     }

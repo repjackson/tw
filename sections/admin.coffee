@@ -73,13 +73,13 @@ if Meteor.isClient
         'click #create_site_doc': ->
             Docs.insert
                 type: 'site_doc'
-                site: Meteor.settings.public.site.slug
+                # site: Meteor.settings.public.site.slug
             
 if Meteor.isServer
     Meteor.publish 'site_doc', ->
         Docs.find
             type: 'site_doc'
-            site: Meteor.settings.public.site.slug
+            # site: Meteor.settings.public.site.slug
             
     Meteor.publish 'components', ->
         Docs.find
