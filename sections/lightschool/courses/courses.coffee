@@ -4,8 +4,7 @@ if Meteor.isClient
             main: 'view_courses'
     
     Template.view_courses.onCreated ->
-        @autorun -> Meteor.subscribe 'usernames'
-        @autorun -> Meteor.subscribe 'courses'
+        # @autorun -> Meteor.subscribe 'usernames'
     
     Template.view_course.onRendered ->
         Meteor.setTimeout =>
@@ -17,10 +16,6 @@ if Meteor.isClient
             $('.menu .item').tab()
         , 1000
     
-    Template.view_courses.helpers
-        courses: -> Docs.find {type: 'course'}
-    
-    
                 
     Template.view_courses.events
         'click #add_course': ->
@@ -30,12 +25,8 @@ if Meteor.isClient
             
             
     
-    Template.view_course.onCreated ->
-        @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
     
     Template.view_course.helpers
-        course: -> Docs.findOne FlowRouter.getParam('doc_id')
-        
         background_style: -> "background-image:url('https://res.cloudinary.com/facet/image/upload/c_fit,w_500/rczjotzxkirmg4g83axa')"
         
         sales: ->
@@ -84,11 +75,6 @@ if Meteor.isClient
                     
                     
 if Meteor.isServer
-    Meteor.publish 'courses', ->
-        Docs.find 
-            # site: Meteor.settings.public.site
-            type: 'course'
-            
     Meteor.publish 'course_modules', (course_id)->
         course = Docs.findOne course_id
         modules_doc = Docs.findOne {type:'modules', parent_id:course._id}

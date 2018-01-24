@@ -1,9 +1,11 @@
 template(name='view_courses')
     // +parent_link
     .ui.text.container
-        h1.ui.center.aligned.header Courses
+        h1.ui.center.aligned.header 
+            +icon96 name=icon_class classes='ui image'
+            |#{title}
         .ui.divided.items
-            each courses
+            each children
                 +course_item
 
 

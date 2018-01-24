@@ -7,13 +7,8 @@ Template.body.events
     
 Template.nav.onCreated ->
     @autorun -> Meteor.subscribe 'me'
-    # @autorun -> Meteor.subscribe 'cart'
-    # @autorun -> Meteor.subscribe 'unread_messages'
-    @autorun -> Meteor.subscribe 'all_notifications'
-    @autorun -> Meteor.subscribe 'site_doc'
-    # @autorun -> Meteor.subscribe 'doc', Session.get 'new_checkin_doc_id'
-    # @autorun -> Meteor.subscribe 'unread_lightbank_count'
-    # @autorun -> Meteor.subscribe 'unread_journal_count'
+    @autorun -> Meteor.subscribe 'child_docs', Session.get('current_site_id')
+    @autorun -> Meteor.subscribe 'doc', Session.get('current_site_id')
 
     
     
@@ -34,45 +29,26 @@ Template.nav.onRendered ->
 
 
 Template.nav.helpers
-    # cart_items: -> Docs.find({type: 'cart_item'},{author_id: Meteor.userId()}).count()
-
-    # unread_message_count: ->
-    #     count = 0
-    #     my_conversations = Docs.find(
-    #         type: 'conversation'
-    #         participant_ids: $in: [Meteor.userId()]
-    #     ).fetch()
+    nav_class: -> 
+        site_doc = Docs.findOne Session.get('current_site_id')
+        # console.log 'got site doc', Session.get('current_site_id')
+        # console.log site_doc.nav
+        if site_doc
+            if site_doc.nav.color is 'white' then ''
+            if site_doc.nav.color is 'black' then 'inverted'
         
-    #     for conversation in my_conversations
-    #         unread_count = Docs.find(
-    #             type: 'message'
-    #             group_id: conversation._id
-    #             read_by: $nin: [Meteor.userId()]
-    #         ).count()
-    #         count += unread_count
-    #     count
-
-
-    # unread_lightbank_count: -> Counts.get('unread_lightbank_count')
-    # unread_journal_count: -> Counts.get('unread_journal_count')
-
+    nav_child_items: ->
+        site_doc = Docs.findOne Session.get('current_site_id')
+        if site_doc
+            Docs.find _id: $in: site_doc.nav.child_ids
         
-    # bookmark_docs: -> 
-    #     Docs.find
-    #         bookmarked_ids: $in: [Meteor.userId()]
-
-    # unread_notifications_count: ->
-    #     Notifications.find(
-    #         read_by: $nin: [Meteor.userId()]
-    #         ).count()
-
-    # unread_notifications: ->
-    #     Notifications.find {},
-    #         sort: timestamp: -1
-    #         limit: 10
+    site_doc: -> 
+        site_doc = Docs.findOne Session.get('current_site_id')
+        if site_doc then site_doc
 
     bug_link: -> Session.get 'bug_link'
-    # can_submit_bug: -> Session.get 'can_submit_bug'
+
+
 Template.nav.events
     'click #logout': -> AccountsTemplates.logout()
     
@@ -85,11 +61,6 @@ Template.nav.events
         Session.set 'editing_id', null
         Session.set 'view_published', null
     
-    
-    # 'click #check_in': ->
-    #     new_checkin_doc_id = Docs.insert type: 'checkin'
-    #     Session.set 'editing', true
-    #     FlowRouter.go("/view/#{new_checkin_doc_id}")
     
     "click #report_bug": ->
         Session.set 'bug_link', window.location.pathname

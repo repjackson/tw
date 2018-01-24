@@ -1,6 +1,5 @@
 template(name='admin_nav')                        
     .ui.menu
-        a.item(href='/admin/settings') Site Settings
         a.item(href='/admin/contact_submissions') Contact Submissions
         a.item(href='/admin/components') Components
 
@@ -31,15 +30,6 @@ template(name='contact_submissions')
                             +delete_button
                     
                             
-template(name='site_settings')
-    .ui.header Site Slug: #{site_name}
-    unless site_doc
-        #create_site_doc.ui.button Create Doc
-    with site_doc
-        +edit_title
-        +edit_subtitle
-        +edit_content
-
 
 template(name='site_components')
     .ui.header Selected Components

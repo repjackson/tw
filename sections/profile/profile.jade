@@ -1,88 +1,61 @@
-template(name='profile_layout')
-    +nav
-    .ui.stackable.padded.grid
-        .four.wide.column
-            with person
-                img.ui.small.centered.rounded.image(src="{{c.url profile.image_id width=400 height=400 gravity='face' crop='fill'}}")
-                .ui.center.aligned.header
-                    if profile.first_name
-                        |#{profile.first_name} #{profile.last_name}
-                    |(#{username})
-                    unless is_user
-                        +staus_indicator
-                if is_user
-                    a.ui.basic.fluid.large.circular.button(href="/account/profile/edit/#{_id}") 
-                        i.yellow.pencil.icon
-                        |Edit Profile
-                .ui.vertical.large.fluid.pointing.menu
-                    a.item(href="/profile/#{username}/about" class="{{isActiveRoute name='profile_about'}}") 
-                        i.icon
-                            +icon24 name='info'
-                        |About
-                    a.item(href="/profile/#{username}/comparison" class="{{isActiveRoute name='profile_comparison'}}") 
-                        i.icon
-                            +icon24 name='cloud'
-                        | Comparison
-                    a.item(href="/profile/#{username}/journal" class="{{isActiveRoute name='profile_journal'}}") 
-                        i.icon
-                            +icon24 name='journal'
-                        | Journal
-                    a.item(href="/profile/#{username}/checkins" class="{{isActiveRoute name='profile_checkins'}}") 
-                        i.icon
-                            +icon24 name='hand-planting'
-                        | Check Ins
-                    a.item(href="/profile/#{username}/contact" class="{{isActiveRoute name='profile_contact'}}") 
-                        i.icon
-                            +icon24 name='phone' classes='icon'
-                        |Contact #{name}
-            if is_person_by_username
-                .ui.vertical.fluid.pointing.menu
-                    a.item(href="/profile/#{currentUser.username}/account" class="{{isActiveRoute name='account_settings'}}") 
-                        i.icon
-                            +icon24 name='settings' classes='icon'
-                        |Account Settings
-                    a.item(href="/profile/#{currentUser.username}/membership" class="{{isActiveRoute name='account_settings'}}") 
-                        i.icon
-                            +icon24 name='settings' classes='icon'
-                        |Account Settings
-                .ui.vertical.fluid.menu
-                    a#logout.item(href="#" data-position="bottom center" data-content="Log Out")
-                        i.icon
-                            +icon24 name='burglary'
-                        |Log Out
-
-
-        .ten.wide.column
-            +Template.dynamic template=profile_content
-
-
-        
-        
-template(name='profile_about')
-    with person
-        h1.ui.center.aligned.header 
-            +icon96 name='info'
-            |About
-        .ui.hidden.divider
-        if tags
-            +icon48 name='hashtag' classes='ui inline image'
-            each tags
-                .user_tag.ui.circular.large.basic.label #{this}
-        if profile.location
-            .ui.header 
-                +icon48 name='user-location'
-                | #{profile.location}
-        if profile.about_me
-            .ui.header About Me
-            |#{profile.about_me}
-        .ui.header My True Colors Are:
-        +color_dots
-        if profile.if_knew_me
-            .ui.header If you really knew me you would know…
-            |#{profile.if_knew_me}
-        if profile.if_not_working
-            .ui.header If I am not at work or in class then I am probably…
-            |#{profile.if_not_working}
+template(name='view_profile')
+    .ui.container
+        with currentUser
+            img.ui.small.centered.rounded.image(src="{{c.url profile.image_id width=400 height=400 gravity='face' crop='fill'}}")
+            .ui.center.aligned.header
+                if profile.first_name
+                    |#{profile.first_name} #{profile.last_name}
+                |(#{username})
+                // unless is_user
+                +staus_indicator
+            // .ui.menu
+                // a.item(href="/profile/#{username}/about" class="{{isActiveRoute name='profile_about'}}") 
+                //     i.icon
+                //         +icon24 name='info'
+                //     |About
+                // a.item(href="/profile/#{username}/comparison" class="{{isActiveRoute name='profile_comparison'}}") 
+                //     i.icon
+                //         +icon24 name='cloud'
+                //     | Comparison
+                // a.item(href="/profile/#{username}/journal" class="{{isActiveRoute name='profile_journal'}}") 
+                //     i.icon
+                //         +icon24 name='journal'
+                //     | Journal
+                // a.item(href="/profile/#{username}/checkins" class="{{isActiveRoute name='profile_checkins'}}") 
+                //     i.icon
+                //         +icon24 name='hand-planting'
+                //     | Check Ins
+                // a.item(href="/profile/#{username}/contact" class="{{isActiveRoute name='profile_contact'}}") 
+                //     i.icon
+                //         +icon24 name='phone' classes='icon'
+                //     |Contact #{name}
+            if is_user
+                a.ui.basic.fluid.large.circular.button(href="/account/profile/edit/#{_id}") 
+                    i.yellow.pencil.icon
+                    |Edit Profile
+            // h1.ui.center.aligned.header 
+            //     +icon96 name='info'
+            //     |About
+            // .ui.hidden.divider
+            if tags
+                +icon48 name='hashtag' classes='ui inline image'
+                each tags
+                    .user_tag.ui.circular.large.basic.label #{this}
+            if profile.location
+                .ui.header 
+                    +icon48 name='user-location'
+                    | #{profile.location}
+            if profile.about_me
+                .ui.header About Me
+                |#{profile.about_me}
+            .ui.header My True Colors Are:
+            +color_dots
+            if profile.if_knew_me
+                .ui.header If you really knew me you would know…
+                |#{profile.if_knew_me}
+            if profile.if_not_working
+                .ui.header If I am not at work or in class then I am probably…
+                |#{profile.if_not_working}
 
         
         

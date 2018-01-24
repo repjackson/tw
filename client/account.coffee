@@ -8,15 +8,15 @@ if Meteor.isClient
             profile_content: 'account'
     
     
-    Template.account.onCreated ->
+    Template.view_account.onCreated ->
         @autorun -> Meteor.subscribe 'my_profile', FlowRouter.getParam('user_id') 
     
-    # Template.account.onRendered ->
+    # Template.view_account.onRendered ->
     #     console.log Meteor.users.findOne(FlowRouter.getParam('user_id'))
     
-    Template.account.helpers
+    Template.view_account.helpers
     
-    Template.account.events
+    Template.view_account.events
         'click #change_username': ->
             new_username = $('#new_username').val().trim()
             user = Meteor.user()

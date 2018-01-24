@@ -4,6 +4,8 @@ template(name='view_media')
             h1.ui.header 
                 +icon96 name=icon_class classes='ui image'
                 |#{title}
+                if can_edit
+                    +edit_doc_link
         .row
             .four.wide.column
                 if currentUser
@@ -17,6 +19,19 @@ template(name='view_media')
                     each children 
                         +media_card
 
+template(name='edit_media')
+    .ui.stackable.padded.grid
+        .centered.row
+            h1.ui.header 
+                +icon96 name=icon_class classes='ui image'
+                |Edit #{title}
+        .row
+            .twelve.wide.column
+                +edit_title
+                +edit_icon
+                +edit_child_fields
+            .four.wide.column
+                +save_link
 
 template(name='media_card')
     .ui.fluid.card

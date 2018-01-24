@@ -1,87 +1,25 @@
 template(name='nav')
-    #nav_menu.ui.labeled.icon.borderless.fixed.menu
-        if currentUser
-            a.ui.simple.dropdown.item(href='/' class="{{isActivePath '/about'}}") 
-                // .imogen TW
+    #nav_menu.ui.labeled.icon.borderless.menu(class=nav_class)
+        a.ui.header.item(href="/view/#{site_doc._id}" data-position='bottom center' data-content=site_doc.title) 
+            if site_doc.image_url
+                .ui.tiny.image
+                    img(src=image_url)
+            if site_doc.image_id
                 .ui.image
-                    img(src="{{c.url 'tw_logo' width=50 height=50 crop='fill'}}")
-                .ui.menu
-                    a.item(href='/about' class="{{isActivePath '/about'}}") 
-                        i.icon
-                            .ui.image
-                                +icon24 name='info'
-                        |About
-                    // a.mobile.hidden.item(href='/services' class="{{isActivePath '/services'}}") 
-                    //     i.icon
-                    //         .ui.image
-                    //             +icon24 name='service-bell'
-                    //     |Services
-                    a.item(href='/contact' class="{{isActivePath '/contact'}}") 
-                        i.icon
-                            .ui.image
-                                +icon24 name='phone'
-                        |Contact
-        unless currentUser
-            a.mobile.hidden.item(href='/view/9639QAQ4yPbMLs7CA' class="{{isActivePath '/view/9639QAQ4yPbMLs7CA'}}")
+                    img(src="{{c.url site_doc.image_id width=50 height=50 crop='fill'}}")
+            else
                 .ui.image
-                    img(src="{{c.url 'tw_logo' width=50 height=50 crop='fill'}}")
-            a.mobile.hidden.item(href='/about' class="{{isActivePath '/about'}}") 
-                +icon48 name='info' classes='ui mini spaced image'
-                |About
-            // a.mobile.hidden.item(href='/view/erjtaDSCKwyGMxKt9' class="{{isActivePath '/view/erjtaDSCKwyGMxKt9'}}") 
-            //     +icon48 name='library' classes='ui mini spaced image'
-            //     |LightSchool
-            a.mobile.hidden.item(href='/lightbank' class="{{isActivePath '/lightbank'}}") 
-                +icon48 name='summer' classes='ui mini spaced image'
-                |Lightbank
-            a.mobile.hidden.item(href='/contact' class="{{isActivePath '/contact'}}") 
-                +icon48 name='phone' classes='ui mini spaced image'
-                |Contact
-        else
-            // a.ui.mobile.hidden.simple.dropdown.item(href='/lightschool' ) 
-            a.ui.mobile.hidden.item(href='/courses' data-position="bottom center" data-content="LightSchool") 
+                    +icon48 name=site_doc.icon_class
+        each nav_child_items
+            a.ui.item(href="/view/#{_id}" data-position='bottom center' data-content=title)
                 .ui.image
-                    +icon48 name='library'
-                // .ui.large.menu
-                //     .header.item
-                //         .ui.header LightSchool
-                //     a.item(href='/courses' class="{{isActivePath '/courses'}}")
-                //         i.icon
-                //             .ui.image
-                //                 +icon24 name='classroom'
-                //         |Courses
-                    // a.item(href='/lightschool/exercises' class="{{isActivePath '/lightschool/exercises'}}")
-                    //     i.icon
-                    //         .ui.image
-                    //             +icon24 name='hand-with-pen'
-                    //     |Exercises
-                    // a.item(href='/quizzes' class="{{isActivePath '/quizzes'}}")
-                    //     i.icon
-                    //         .ui.image
-                    //             +icon24 name='report-card'
-                    //     |Quizzes
-            a.mobile.hidden.item(href='/lightbank' class="{{isActivePath '/lightbank'}}" data-position="bottom center" data-content="Lightbank") 
-                .ui.image
-                    +icon48 name='summer' classes='ui image'
-            a.ui.simple.dropdown.mobile.hidden.item(href='/journal') 
-                .ui.image
-                    +icon48 name='journal' classes='ui image'
-    
-            a.ui.simple.dropdown.mobile.hidden.item(href='/checkin' class="{{isActivePath '/checkin'}}" data-position="bottom center" data-content="Check In") 
-                .ui.image
-                    +icon48 name='sprout' classes='ui image'
-            if isInRole 'admin'
-                a#toggle_admin_mode.item(href='#' data-position="bottom center" data-content="Toggle Admin Mode") 
-                    .ui.image
-                        if admin_mode
-                            +icon48 name='user-shield' classes='ui image'
-                        else
-                            +dots50 name='user-shield' classes='ui image'
+                    +icon48 name=icon_class
+                // |#{title}
         .right.menu
             if currentUser
-                a#report_bug.icon.item(href="#"  data-position="bottom center" data-content="Report a Bug/Feature Request")
-                    .ui.image
-                        +icon48 name='bug'
+                // a#report_bug.icon.item(href="#"  data-position="bottom center" data-content="Report a Bug/Feature Request")
+                //     .ui.image
+                //         +icon48 name='bug'
                 a.icon.item(href="/dashboard" class="{{isActivePath '/dashboard'}}" data-position="bottom center" data-content="Dashboard")
                     .ui.image
                         +icon48 name='dashboard'

@@ -1,6 +1,17 @@
 template(name='view_theway')
+    .ui.container
+        h1.ui.center.aligned.header
+            +icon96 name=icon_class
+            |The Way 
+        .ui.centered.cards
+            each children
+                +site_card
+    
+
+
+template(name='view_sites')
     .ui.padded.stackable.grid
-        .row
+        .centered.row
             h1.ui.center.aligned.header 
                 +icon48 name=icon_class
                 |#{title}

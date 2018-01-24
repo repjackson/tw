@@ -192,3 +192,11 @@ Template.view_read_toggle.events
 
 Template.save_button.events
     'click #toggle_off_editing': -> Session.set 'editing', false
+    
+    
+                
+            
+Template.edit_child_fields.onCreated ->
+    Meteor.subscribe 'fields'
+            
+    

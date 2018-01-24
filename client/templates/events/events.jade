@@ -1,0 +1,78 @@
+template(name='view_events')
+    .ui.stackable.padded.grid
+        .centered.row
+            h1.ui.header Events
+        .row
+            .four.wide.column
+                +tag_facet
+                .ui.hidden.divider
+                #add_event.ui.compact.basic.fluid.button
+                    i.green.plus.icon
+                    |Add Event
+            .twelve.wide.column
+                .ui.cards
+                    each events
+                        +event_card
+
+
+template(name='event_card')
+    .ui.card
+        a.image(href="/event/#{_id}")
+            img(src="{{c.url image_id  height=300 crop='fill' gravity='face' }}")
+            if image_url
+                img.ui.centered.image(src=image_url)
+        .content
+            a.header(href="/event/#{_id}") #{title}
+        .content
+            strong #{formatted_start_date}
+            strong #{formatted_start_date}
+        .content
+            +volunteer_list
+        .content
+            each tags
+                .ui.compact.button.event_tag(class=tag_class) #{this}
+                
+                
+                
+template(name='view_event')
+    .ui.stackable.padded.grid
+        .row
+            .three.wide.column
+                a.ui.top.left.attached.basic.button(href="/events")
+                    i.arrow.left.icon
+                    |Events
+            .twelve.wide.center.aligned.column
+                h1.ui.header View Event
+        .row
+            .ten.wide.column
+                .ui.header #{title}
+                strong #{formatted_start_date} - #{formatted_start_date}
+                img.ui.centered.image(src="{{c.url image_id height=500 width=800 background='white' crop='lpad'}}")
+                if image_url
+                    img.ui.centered.image(src=image_url)
+                each tags
+                    .ui.basic.label #{this}
+                +volunteer_list
+                +join_button
+            .five.wide.column
+                +edit_button
+                        
+template(name='edit_event')                        
+    .centered.row
+        h1.ui.center.aligned.header Edit Event
+    .row
+        .twelve.wide.column
+            .ui.form
+                +title
+                +start_datetime
+                div
+                    +end_datetime
+                +tags
+                +image_id
+                +image_url
+                +content
+        .four.wide.column
+            +edit_button
+            #delete_event.ui.red.icon.button
+                i.trash.icon
+                

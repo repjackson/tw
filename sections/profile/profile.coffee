@@ -70,25 +70,15 @@ if Meteor.isClient
 
 
 
-    Template.profile_layout.onCreated ->
+    Template.view_profile.onCreated ->
         @autorun -> Meteor.subscribe('user_profile', FlowRouter.getParam('username'))
 
         
-    Template.profile_layout.onRendered ->
+    Template.view_profile.onRendered ->
     
     
-    Template.profile_about.helpers
-        person: -> Meteor.users.findOne username:FlowRouter.getParam('username') 
     
-    Template.profile_layout.helpers
-        person: -> Meteor.users.findOne username:FlowRouter.getParam('username') 
+    Template.view_profile.helpers
+        person: -> Meteor.users.findOne username:FlowRouter.getParam('username')
         is_user: -> FlowRouter.getParam('username') is Meteor.user()?.username
         
-    Template.profile_layout.events
-    # 	'mouseenter .item': -> $( ".corner.icon" ).addClass( "large" )
-    # 	'mouseenter .item': (e,t)-> $(e.currentTarget).closest('.item').transition('pulse')
-
-    # # 	'mouseleave .item': -> $( ".corner.icon" ).removeClass( "large" )
-    # 	'mouseleave .item': (e,t)-> $( ".corner.icon" ).removeClass( "large" )
-    
-        'click #logout': -> AccountsTemplates.logout()

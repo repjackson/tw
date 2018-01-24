@@ -4,11 +4,6 @@ if Meteor.isClient
             sub_nav: 'admin_nav'
             main: 'admin'
      
-    FlowRouter.route '/admin/settings', action: (params) ->
-        BlazeLayout.render 'layout',
-            sub_nav: 'admin_nav'
-            main: 'site_settings'
-     
     FlowRouter.route '/admin/contact_submissions', action: (params) ->
         BlazeLayout.render 'layout',
             sub_nav: 'admin_nav'
@@ -61,26 +56,7 @@ if Meteor.isClient
                 $pull: components: @_id
     
     
-    Template.site_settings.onCreated ->
-        @autorun -> Meteor.subscribe 'site_doc'
-    
-    Template.site_settings.helpers
-        site_doc: ->
-            Docs.findOne
-                type: 'site_doc'
-            
-    Template.site_settings.events
-        'click #create_site_doc': ->
-            Docs.insert
-                type: 'site_doc'
-                # site: Meteor.settings.public.site.slug
-            
-if Meteor.isServer
-    Meteor.publish 'site_doc', ->
-        Docs.find
-            type: 'site_doc'
-            # site: Meteor.settings.public.site.slug
-            
+if Meteor.isServer            
     Meteor.publish 'components', ->
         Docs.find
             type: 'component'

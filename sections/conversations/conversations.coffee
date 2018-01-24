@@ -31,11 +31,11 @@ Meteor.methods
 
 
 if Meteor.isClient
-    Template.conversations.onCreated ->
+    Template.view_conversations.onCreated ->
         @autorun -> Meteor.subscribe('conversations', selected_theme_tags.array(), selected_participant_ids.array())
         @view_published = new ReactiveVar(true)
 
-    Template.conversations.helpers
+    Template.view_conversations.helpers
         conversations: -> 
             if Template.instance().view_published.get() is true
                 Docs.find {
@@ -73,7 +73,7 @@ if Meteor.isClient
     
     
     
-    Template.conversations.events
+    Template.view_conversations.events
         'click #create_conversation': ->
             Meteor.call 'create_conversation', (err,id)->
                 Session.set 'editing', true

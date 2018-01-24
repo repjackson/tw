@@ -51,6 +51,11 @@ template(name='edit_button')
         a.ui.basic.icon.large.circular.button(href="/edit/#{_id}" data-position="bottom center" data-tooltip='Edit')
             +icon48 name='edit' classes='ui mini inline image'
 
+template(name='edit_doc_link')
+    if can_edit
+        // +call_watson
+        a(href="/edit/#{_id}" data-position="bottom center" data-tooltip='Edit')
+            i.link.pencil.icon
 
 template(name='respond_button')
     if currentUser

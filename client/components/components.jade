@@ -193,7 +193,7 @@ template(name='icon48')
 template(name='icon24')
     img(src="https://png.icons8.com/color/24/000000/#{name}.png" class=classes title=tooltip)
 template(name='icon96')
-    img(src="https://png.icons8.com/color/96/000000/#{name}.png" class=classes title=tooltip)
+    img(src="https://png.icons8.com/color/100/000000/#{name}.png" class=classes title=tooltip)
 
 template(name='ultraviolet_icon40')
     img(src="https://png.icons8.com/#{name}/ultraviolet/40" class=classes title=tooltip width="40" height="40")
@@ -297,3 +297,20 @@ template(name='published_label')
     if is_private
         .ui.basic.label(data-tooltip='Private')
             +icon48 name='invisible'
+
+
+template(name='edit_child_fields')
+    .ui.header Choose Child Docs
+    .ui.subheader Fields that are available when a user adds a document
+    .ui.header Selected Fields
+    .ui.list
+        each selected_fields
+            .item
+                +icon24 name=icon_class
+                |#{title}    
+    .ui.header Available Fields
+    .ui.list
+        each selected_fields
+            .item
+                +icon24 name=icon_class
+                |#{title}
