@@ -18,16 +18,18 @@ Template.view_doc.onCreated ->
         tag_limit = null
         doc_limit = 10
     
-Template.view_doc.onRendered ->
-    @autorun =>
-        if @subscriptionsReady()
-            doc = Docs.findOne FlowRouter.getParam('doc_id')
-            Meteor.setTimeout ->
-                document.title = doc.title
-            , 500
+# Template.view_doc.onRendered ->
+#     @autorun =>
+#         if @subscriptionsReady()
+#             doc = Docs.findOne FlowRouter.getParam('doc_id')
+#             Meteor.setTimeout ->
+#                 document.title = doc.title
+#             , 500
     
 
 Template.view_doc.helpers
     doc: -> Docs.findOne FlowRouter.getParam('doc_id')
     view_type_template: -> "view_#{@type}"
-    
+    show_parent_link: ->
+        doc = Docs.findOne FlowRouter.getParam('doc_id')
+        if doc.type is 'site' then false else true

@@ -1,10 +1,10 @@
-template(name='journal_prompts')
+template(name='view_journal_prompts')
     .ui.stackable.padded.grid
         .centered.row
             .four.wide.center.aligned.column
-                a.ui.basic.circular.small.button(href='/journal') 
-                    +icon48 name='journal' classes='ui mini inline image'
-                    | Journal
+                // a.ui.basic.circular.small.button(href='/journal') 
+                //     +icon48 name='journal' classes='ui mini inline image'
+                //     | Journal
             .eight.wide.column
                 h1.ui.center.aligned.header
                     +icon96 name='ask-question'
@@ -13,7 +13,7 @@ template(name='journal_prompts')
         .row
             .four.wide.column
                 +tag_facet type='journal'
-                +username_facet type='journal'
+                // +username_facet type='journal'
             .twelve.wide.column
                 .ui.relaxed.divided.items
                     each journal_prompts
@@ -66,9 +66,9 @@ template(name='view_journal_prompt')
     .ui.stackable.padded.grid
         .row
             .four.wide.column
-                a.ui.basic.circular.button(href='/journal/prompts')
-                    +icon48 name='ask-question' classes='ui mini inline image'
-                    strong Prompts
+                // a.ui.basic.circular.button(href='/journal/prompts')
+                //     +icon48 name='ask-question' classes='ui mini inline image'
+                //     strong Prompts
             .eight.wide.column
                 h1.ui.center.aligned.header View Journal Prompt
             .four.wide.column

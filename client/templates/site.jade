@@ -1,31 +1,46 @@
 template(name='view_site')
-    h1.ui.center.aligned.header 
-        +icon48 name=icon_class
-        |#{title}
-        if can_edit
-            +edit_doc_link
-    .ui.centered.cards
-        each children
-            +site_card
+    if slider.enabled
+        unless currentUser
+            +home
+        .ui.hidden.divider
+    .row
+        h1.ui.center.aligned.header 
+            +icon48 name=icon_class
+            |#{title}
+            if can_edit
+                +edit_doc_link
+        .ui.centered.cards
+            each children
+                +site_card
         
 template(name='edit_site')
-    +nav
+    // +nav
     .ui.hidden.divider
     .ui.container
         h1.ui.center.aligned.header Edit #{title} Site
-        +edit_title
-        +edit_subtitle
-        +edit_image_id
-        +edit_image_url
-        +edit_tags
-        // +edit_content
-        h2.ui.header Nav
-        .ui.header Nav Bar Color
-        #make_nav_bar_white.ui.button(class=white_button_class) White
-        #make_nav_bar_black.ui.button(class=black_button_class) Black
-        h4.ui.header Selected Children
-        each children
-            .toggle_child_nav_selection.ui.button(class=child_nav_toggle_class) #{title}
+        .ui.top.attached.tabular.three.item.menu
+            a.active.item(data-tab="general") General
+            a.item(data-tab="nav") Nav
+            a.item(data-tab="slider") Slider
+        .ui.bottom.attached.active.tab.segment(data-tab="general")
+            +edit_title
+            +edit_subtitle
+            +edit_image_id
+            +edit_image_url
+            +edit_tags
+            +edit_content
+        .ui.bottom.attached.tab.segment(data-tab="nav")
+            .ui.header Nav Bar Color
+            #make_nav_bar_white.ui.button(class=white_button_class) White
+            #make_nav_bar_black.ui.button(class=black_button_class) Black
+            h4.ui.header Selected Children
+            each children
+                .toggle_child_nav_selection.ui.button(class=child_nav_toggle_class) #{title}
+        .ui.bottom.attached.tab.segment(data-tab="slider")
+            #toggle_home_slider.ui.button(class=slider_toggle_class) Enable Home Slider
+            if doc.slider.enabled
+                .ui.segment
+                    .ui.header slider
         +save_button
 
 

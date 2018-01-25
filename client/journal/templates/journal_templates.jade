@@ -1,10 +1,7 @@
-template(name='journal_templates')
+template(name='view_journal_templates')
     .ui.padded.stackable.grid
         .centered.middle.aligned.row
             .four.wide.center.aligned.column
-                a.ui.basic.circular.button(href="/journal") 
-                    +icon48 name='journal' classes='ui mini inline image'
-                    |Journal
             .eight.wide.center.aligned.column
                 h1.ui.center.aligned.header
                     +icon96 name='template' 
@@ -38,20 +35,13 @@ template(name='journal_template')
 
                 a(href="/view/#{_id}") #{title}
             .meta
-                +icon48 name='hashtag' classes='ui mini inline image'
-                each tags
-                    .ui.tiny.circular.compact.button.tag(class=tag_class) #{this}
+                +view_tags
         .ui.basic.segment
             .ui.list
                 each journal_template_sections
                     .item #{number}: #{title}
         
         .content
-            |by
-            if author.profile.image_id
-                img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
-            |#{author.name}
-            with author
-                +staus_indicator
+            +author_info
             |#{when}
             +view_full_button

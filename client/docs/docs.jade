@@ -1,6 +1,7 @@
 template(name='edit_doc')
     with doc
-        +Template.dynamic template=edit_type_template
+        .ui.container
+            +Template.dynamic template=edit_type_template
 
 template(name='view_document')
     +edit_content
@@ -9,55 +10,30 @@ template(name='view_document')
 
 template(name='view_doc')
     with doc
-        +parent_link
-        +Template.dynamic template=view_type_template
+        .ui.padded.stackable.grid
+            // .centered.row
+            //     .three.wide.column
+            //         // .ui.button hi
+            //     .ten.wide.center.aligned.column
+            //         +parent_link
+            //     .three.wide.column
+            //         if currentUser
+            //             a.ui.icon.basic.circular.button(href="/profile/#{currentUser.username}" class="{{isActiveRoute name='view_profile'}}" data-position="bottom center" data-content="Profile")
+            //                 if currentUser.profile.image_id
+            //                     img.ui.avatar.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+            //                 else
+            //                     i.user.icon
+            //                 // span.mobile.hidden    
+            //                 //     if currentUser.name
+            //                 //         | #{currentUser.name}
+            //                 //     else
+            //                 //         | #{currentUser.username}
+            //         else
+            //             a.ui.icon.basic.circular.button(href='/sign-in') 
+            //                 +icon48 name='login-rounded-down' classes='ui mini inline spaced image'
+            //                 // | Sign In
+            .row
+                +Template.dynamic template=view_type_template
         if is_admin
             +edit_type
             +child_docs
-        // .ui.container
-        //     .ui.breadcrumb
-        //         a.section(href='/') Home
-        //         .divider  / 
-        //         a.section(href="/#{type}s") #{type}
-        //         .divider  / 
-        //         .active.section #{title}
-        //     .ui.hidden.divider
-        //     if image_id
-        //         img.ui.centered.image(src="{{c.url image_id height=500 width=800 background='white' crop='lpad'}}")
-        //     .ui.stackable.grid
-        //         .eleven.wide.column
-        //             h1.ui.dividing.header #{title}
-        //             |!{content}
-        //             +comments
-        //             +doc_matches
-        //         .five.wide.column
-        //             if price
-        //                 .ui.dividing.header Price $#{price}
-        //                 +add_to_cart
-        //             .ui.dividing.header Actions
-        //             +favorite_button
-        //             +voting
-        //             +resonate_button
-        //             +resonates_list
-        //             if tags
-        //                 .ui.dividing.header Tags
-        //                 each tags
-        //                     .ui.basic.label #{this}
-        //             // +user_card
-        //             if can_edit
-        //                 .ui.dividing.header 
-        //                     i.red.configure.icon
-        //                     |Admin
-        //                 a.ui.basic.fluid.button(href="/edit/#{_id}")
-        //                     i.pencil.icon
-        //                     |Edit
-        //                 .ui.hidden.fitted.divider
-        //                 .ui.header
-        //                     |Published:
-        //                     if published
-        //                         .ui.green.basic.label True
-        //                     else
-        //                         .ui.basic.label False
-        //                 .ui.header
-        //                     |Type:
-        //                     .ui.basic.label #{type}

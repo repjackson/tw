@@ -1,4 +1,4 @@
-template(name='view_media')
+template(name='view_databank')
     .ui.stackable.padded.grid
         .centered.row
             h1.ui.header 
@@ -17,9 +17,9 @@ template(name='view_media')
             .twelve.wide.column
                 .ui.cards
                     each children 
-                        +media_card
+                        +databank_card
 
-template(name='edit_media')
+template(name='edit_databank')
     .ui.stackable.padded.grid
         .centered.row
             h1.ui.header 
@@ -33,7 +33,7 @@ template(name='edit_media')
             .four.wide.column
                 +save_link
 
-template(name='media_card')
+template(name='databank_card')
     .ui.fluid.card
         if youtube
             +view_youtube
@@ -48,6 +48,9 @@ template(name='media_card')
                     |- #{author_name}
         .content
             +view_tags
+        .content
+            +author_info
+            |#{when}
         .content
             +voting
             +bookmark_button
@@ -80,10 +83,10 @@ template(name='media_card')
         //                             |#{name}
                 
 
-template(name='edit_media_item')
+template(name='edit_databank_item')
     .ui.stackable.padded.grid
         .centered.row
-            h1.ui.center.aligned.header Edit Media Item
+            h1.ui.center.aligned.header Edit databank Item
         .row
             .twelve.wide.column
                 .ui.form
@@ -97,12 +100,24 @@ template(name='edit_media_item')
                     i.trash.icon
 
 
-template(name='view_media_item')
+template(name='view_databank_item')
     .ui.stackable.padded.grid
         .centered.row
-            h1.ui.center.aligned.header View Media Item
+            h1.ui.center.aligned.header View databank Item
         .row
             .twelve.wide.column
+                if youtube
+                    +view_youtube
+                if image_id
+                    +view_image_id
+                if image_url
+                    +view_image_url
+                if content
+                    +view_content
+                    if author_name
+                        h4.ui.header
+                            |- #{author_name}
+
                 .ui.form
                     +view_tags
                     +view_image_id

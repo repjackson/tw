@@ -1,5 +1,9 @@
 Template.edit_site.onCreated ->
     @autorun -> Meteor.subscribe('child_docs', FlowRouter.getParam('doc_id'))
+Template.edit_site.onRendered ->
+    Meteor.setTimeout =>
+        $('.menu .item').tab()
+    , 1000
 
 Template.edit_site.helpers
     doc: -> Docs.findOne FlowRouter.getParam('doc_id')
@@ -14,6 +18,10 @@ Template.edit_site.helpers
     child_nav_toggle_class: ->
         doc = Docs.findOne FlowRouter.getParam('doc_id')
         if @_id in doc.nav.child_ids then 'blue' else 'basic'
+
+    slider_toggle_class: ->
+        doc = Docs.findOne FlowRouter.getParam('doc_id')
+        if doc.slider.enabled is true then 'blue' else 'basic'
 
 
 Template.edit_site.events
@@ -36,6 +44,11 @@ Template.edit_site.events
                 $addToSet: "nav.child_ids": @_id
             
         
+    'click #toggle_home_slider': ->
+        doc = Docs.findOne FlowRouter.getParam('doc_id')
+        Docs.update FlowRouter.getParam('doc_id'),
+            $set: "slider.enabled": !doc.slider.enabled
+
         
 
 Template.view_site.onRendered ->

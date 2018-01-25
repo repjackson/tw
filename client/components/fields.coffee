@@ -845,3 +845,15 @@ Template.edit_transcript.onRendered ->
                 $('.ui.accordion').accordion()
             , 1000
             
+Template.start_datetime.events
+    'blur #start_datetime': ->
+        start_datetime = $('#start_datetime').val()
+        Docs.update @_id,
+            $set: start_datetime: start_datetime
+
+
+Template.end_datetime.events
+    'blur #end_datetime': ->
+        end_datetime = $('#end_datetime').val()
+        Docs.update @_id,
+            $set: end_datetime: end_datetime

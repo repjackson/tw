@@ -9,8 +9,8 @@ Template.view_events.events
     'click #add_event': ->
         id = Docs.insert
             type: 'event'
-        FlowRouter.go "/event/#{id}"
-        Session.set 'editing', true
+            parent_id: @_id
+        FlowRouter.go "/edit/#{id}"
         
         
 Template.view_event.events

@@ -1,10 +1,11 @@
 template(name='home')
-    img.ui.fluid.image.go-behind(src="{{c.url 'tori_slider' width='1200' crop='scale' }}")
-    .slider-header
-        img.ui.image(src="{{c.url 'orange_tw_name' }}")
-    .mobile.hidden.slider-subheader
-        |I’m a lifestyle coach & motivational speaker currently living in Boulder, Colorado. 
-    .mobile.hidden.slider-sub-subheader
-        | My goal is to spread light to others to help them navigate their own journey through life.
-        
-    
+    #home_image
+        // img.ui.fluid.image.go-behind(src="{{c.url 'tori_slider' width='1200' crop='scale'}}")
+        // img.ui.fluid.image.go-behind(src="http://res.cloudinary.com/facet/image/upload/c_scale,g_north_west,l_orange_tw_name,w_550,y_0/v1486587543/tori_slider.png")
+        img.ui.fluid.image.go-behind(src="http://res.cloudinary.com/facet/image/upload/c_crop,g_north,h_451,w_909/c_scale,g_north_west,l_orange_tw_name,w_550,y_0/v1486587543/tori_slider.png")
+        // .slider-header
+        //     img.ui.image(src="{{c.url 'orange_tw_name' }}")
+        .mobile.hidden.slider-subheader
+            |I’m a lifestyle coach & motivational speaker currently living in Boulder, Colorado. 
+        .mobile.hidden.slider-sub-subheader
+            | My goal is to spread light to others to help them navigate their own journey through life.

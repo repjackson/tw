@@ -2,7 +2,7 @@ FlowRouter.route '/journal/prompts', action: (params) ->
     BlazeLayout.render 'layout',
         main: 'journal_prompts'
 
-Template.journal_prompts.onCreated -> 
+Template.view_journal_prompts.onCreated -> 
     selected_theme_tags.clear()
     selected_author_ids.clear()
     selected_location_tags.clear()
@@ -32,7 +32,7 @@ Template.journal_prompts.onCreated ->
             )
             
 
-Template.journal_prompts.helpers
+Template.view_journal_prompts.helpers
     journal_prompts: -> 
         match = {}
         match.type = 'journal_prompt'

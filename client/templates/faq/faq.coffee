@@ -1,5 +1,5 @@
 # Template.view_faq.onCreated ->
-#     @autorun -> Meteor.subscribe('facet', selected_tags.array(), 'question')
+#     @autorun -> Meteor.subscribe('facet', selected_theme_tags.array(), 'question')
 
 
 Template.view_faq.helpers

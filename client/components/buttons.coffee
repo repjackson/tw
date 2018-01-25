@@ -509,3 +509,18 @@ Template.toggle_zen_mode_button.events
         # $(e.currentTarget).find('#nav_menu').transition('fade left')
         Session.set 'zen_mode', true
     
+    
+    
+Template.join_button.helpers
+    joined: ->
+        if Meteor.userId() in @participants then true else false
+
+Template.join_button.events
+    'click #join': ->
+        Docs.update @_id,
+            $addToSet: participants: Meteor.userId()
+            
+    'click #leave': ->
+        Docs.update @_id,
+            $pull: participants: Meteor.userId()
+    

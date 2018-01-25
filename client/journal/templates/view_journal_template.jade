@@ -2,9 +2,7 @@ template(name='view_journal_template')
     .ui.stackable.padded.grid.document_container
         .centered.row
             .three.wide.center.aligned.column
-                a.ui.basic.circular.small.button(href='/journal/templates')
-                    +icon48 name='template' classes='ui mini inline image'
-                    strong Templates
+                +parent_link
             .ten.wide.center.aligned.column
                 h2.ui.center.aligned.header 
                     if icon_class

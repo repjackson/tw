@@ -1,4 +1,4 @@
-template(name='bugs')
+template(name='view_bugs')
     .ui.stackable.padded.grid
         .row
             .sixteen.wide.column
@@ -11,7 +11,7 @@ template(name='bugs')
                 +username_facet
             .eleven.wide.column
                 .ui.stackable.three.cards
-                    each bugs
+                    each children
                         +bug
             .two.wide.column
                 .ui.dividing.header

@@ -1,8 +1,7 @@
-FlowRouter.route '/account/profile/edit/:user_id?', 
+FlowRouter.route '/profile/edit/:user_id?', 
     action: (params) ->
-        if not params.user_id then FlowRouter.go "/account/profile/edit/#{Meteor.userId()}"
+        if not params.user_id then FlowRouter.go "/profile/edit/#{Meteor.userId()}"
         BlazeLayout.render 'layout',
-            sub_nav: 'member_nav'
             main: 'edit_profile'
 
 

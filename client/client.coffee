@@ -60,7 +60,7 @@ Template.registerHelper 'is_admin', () ->
 
 Template.registerHelper 'publish_when', () -> moment(@publish_date).fromNow()
 
-Template.registerHelper 'theme_tag_class': -> if @valueOf() in selected_tags.array() then 'teal' else 'basic'
+Template.registerHelper 'theme_tag_class': -> if @valueOf() in selected_theme_tags.array() then 'teal' else 'basic'
 Template.registerHelper 'location_tag_class': -> if @valueOf() in selected_location_tags.array() then 'teal' else 'basic'
 Template.registerHelper 'intention_tag_class': -> if @valueOf() in selected_intention_tags.array() then 'teal' else 'basic'
 
@@ -84,7 +84,7 @@ Template.registerHelper 'long_date', () -> moment(@timestamp).format("dddd, MMMM
 # Template.registerHelper 'in_sol', () -> Roles.userIsInRole 'sol_member'
 # Template.registerHelper 'in_demo', () -> Roles.userIsInRole 'sol_demo_member'
 
-Template.registerHelper 'tag_class', ()-> if @valueOf() in selected_tags.array() then 'blue' else 'basic'
+Template.registerHelper 'tag_class', ()-> if @valueOf() in selected_theme_tags.array() then 'blue' else 'basic'
 
 Template.registerHelper 'background_style', () -> "background-image:url('https://res.cloudinary.com/facet/image/upload/c_fit,w_500/rczjotzxkirmg4g83axa')"
 

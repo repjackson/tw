@@ -17,12 +17,12 @@ template(name='view_events')
 
 template(name='event_card')
     .ui.card
-        a.image(href="/event/#{_id}")
+        a.image(href="/view/#{_id}")
             img(src="{{c.url image_id  height=300 crop='fill' gravity='face' }}")
             if image_url
                 img.ui.centered.image(src=image_url)
         .content
-            a.header(href="/event/#{_id}") #{title}
+            a.header(href="/view/#{_id}") #{title}
         .content
             strong #{formatted_start_date}
             strong #{formatted_start_date}
@@ -36,11 +36,7 @@ template(name='event_card')
                 
 template(name='view_event')
     .ui.stackable.padded.grid
-        .row
-            .three.wide.column
-                a.ui.top.left.attached.basic.button(href="/events")
-                    i.arrow.left.icon
-                    |Events
+        .centered.row
             .twelve.wide.center.aligned.column
                 h1.ui.header View Event
         .row
@@ -59,20 +55,20 @@ template(name='view_event')
                         
 template(name='edit_event')                        
     .centered.row
-        h1.ui.center.aligned.header Edit Event
+        h1.ui.center.aligned.header Edit #{title} Event
     .row
         .twelve.wide.column
             .ui.form
-                +title
+                +edit_title
                 +start_datetime
                 div
                     +end_datetime
-                +tags
-                +image_id
-                +image_url
-                +content
+                +edit_tags
+                +edit_image_id
+                +edit_image_url
+                +edit_content
         .four.wide.column
-            +edit_button
+            +save_button
             #delete_event.ui.red.icon.button
                 i.trash.icon
                 

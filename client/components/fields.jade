@@ -444,3 +444,18 @@ template(name='view_transcript')
     
     
     
+template(name='start_datetime')
+    if editing
+        .ui.labeled.input
+            .ui.basic.label Start Date/Time
+            input#start_datetime(type='datetime-local' value=start_datetime)
+    else
+        .ui.header Start Date/Time #{start_datetime}
+        
+template(name='end_datetime')
+    if editing
+        .ui.labeled.input
+            .ui.basic.label End Date/Time
+            input#end_datetime(type='datetime-local' value=end_datetime)
+    else
+        .ui.header End Date/Time #{end_datetime}

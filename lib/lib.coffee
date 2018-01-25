@@ -80,7 +80,7 @@ Docs.helpers
     subject: -> Meteor.users.findOne @subject_id
     object: -> Docs.findOne @object_id
     has_children: -> if Docs.findOne(parent_id: @_id) then true else false
-    children: -> Docs.find parent_id: @_id
+    children: -> Docs.find {parent_id: @_id}, sort:timestamp:-1
     responded: -> 
         response = Docs.findOne
             author_id: Meteor.userId()
@@ -220,17 +220,23 @@ FlowRouter.route '/sol',
     return
  ]
 
+FlowRouter.route '/',
+  triggersEnter: [ (context, redirect) ->
+    redirect '/view/9639QAQ4yPbMLs7CA'
+    return
+ ]
+
 FlowRouter.notFound =
     action: ->
         BlazeLayout.render 'layout', 
             main: 'not_found'
 
 
-FlowRouter.route '/', 
-    # title: Meteor.settings.public.site.short - "Home"
-    action: ->
-        BlazeLayout.render 'layout', 
-            main: 'home'
+# FlowRouter.route '/', 
+#     # title: Meteor.settings.public.site.short - "Home"
+#     action: ->
+#         BlazeLayout.render 'layout', 
+#             main: 'home'
 
 
 FlowRouter.route '/contact', action: (params) ->

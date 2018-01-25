@@ -1,35 +1,30 @@
 if Meteor.isClient
-    FlowRouter.route '/journal/templates', action: (params) ->
-        BlazeLayout.render 'layout',
-            main: 'journal_templates'
-    
-    # @selected_author_ids = new ReactiveArray []
     Template.journal_template.onCreated -> 
         Meteor.subscribe 'author', @data._id
         Meteor.subscribe 'child_docs', @data._id
-    Template.journal_templates.onCreated -> 
-        self = @
-        @autorun => 
-        Meteor.subscribe('facet', 
-            selected_theme_tags.array()
-            selected_author_ids.array()
-            selected_location_tags.array()
-            selected_intention_tags.array()
-            selected_timestamp_tags.array()
-            type='journal_template'
-            author_id=null
-            parent_id=null
-            tag_limit=20
-            doc_limit=20
-            view_published= Session.get 'view_published'
-            view_read=null
-            view_bookmarked= Session.get 'view_bookmarked'
-            view_resonates=null
-            view_complete=null
-            view_images=null
-            view_lightbank_type=null
+    # Template.view_journal_templates.onCreated -> 
+    #     self = @
+    #     @autorun => 
+    #     Meteor.subscribe('facet', 
+    #         selected_theme_tags.array()
+    #         selected_author_ids.array()
+    #         selected_location_tags.array()
+    #         selected_intention_tags.array()
+    #         selected_timestamp_tags.array()
+    #         type='journal_template'
+    #         author_id=null
+    #         parent_id=null
+    #         tag_limit=20
+    #         doc_limit=20
+    #         view_published= Session.get 'view_published'
+    #         view_read=null
+    #         view_bookmarked= Session.get 'view_bookmarked'
+    #         view_resonates=null
+    #         view_complete=null
+    #         view_images=null
+    #         view_lightbank_type=null
 
-            )
+    #         )
             
     # Template.view_journal.onCreated ->
     #     Meteor.setTimeout ->
@@ -45,7 +40,7 @@ if Meteor.isClient
                 , 500
 
     
-    Template.journal_templates.helpers
+    Template.view_journal_templates.helpers
         journal_templates: -> 
             match = {}
             match.type = 'journal_template'

@@ -256,7 +256,7 @@ template(name='view_full_button')
 
 
 template(name='add_doc_button')
-    #add_doc.ui.basic.circular.fluid.button
+    #add_doc.ui.basic.circular.button
         +icon48 name='plus' classes='ui mini inline image'
         | #{add_button_text}
 
@@ -287,3 +287,16 @@ template(name='toggle_zen_mode_button')
 template(name='view_tags_button')
     .ui.circular.basic.button(data-tooltip=tags)
         +icon48 name='hashtag' classes='ui inline image'
+        
+        
+        
+        
+template(name='join_button')
+    if joined
+        #leave.ui.basic.button
+            i.red.remove.icon
+            | Leave
+    else
+        #join.ui.basic.button
+            i.green.plus.icon
+            | Join
