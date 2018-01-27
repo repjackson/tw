@@ -80,7 +80,11 @@ Docs.helpers
     subject: -> Meteor.users.findOne @subject_id
     object: -> Docs.findOne @object_id
     has_children: -> if Docs.findOne(parent_id: @_id) then true else false
-    children: -> Docs.find {parent_id: @_id}, sort:timestamp:-1
+    children: -> 
+        Docs.find {parent_id: @_id}, 
+            sort:
+                number:-1
+                timestamp:-1
     responded: -> 
         response = Docs.findOne
             author_id: Meteor.userId()

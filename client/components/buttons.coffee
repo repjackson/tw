@@ -453,12 +453,13 @@ Template.respond_button.events
         
 Template.add_doc_button.events
     'click #add_doc': (e,t)->
-        # console.log t.data.type
-        # console.log t.data.button_text
-        new_id = Docs.insert 
-            type: t.data.type
-        Session.set 'editing', true
-        FlowRouter.go("/view/#{new_id}")
+        console.log t.data.type
+        console.log t.data.button_text
+        new_id = Docs.insert
+            parent_id: FlowRouter.getParam('doc_id')
+            # type: t.data.type
+            type: 'databank_item'
+        FlowRouter.go("/edit/#{new_id}")
 
 Template.add_doc_button.helpers
     add_button_text: -> Template.currentData().button_text
@@ -523,4 +524,18 @@ Template.join_button.events
     'click #leave': ->
         Docs.update @_id,
             $pull: participants: Meteor.userId()
+
+
+
+
+Template.toggle_view_mode_button.helpers
+    viewing_public: -> Session.equals 'view_private', false
+
+Template.toggle_view_mode_button.events
+    'click #toggle_view_mode': ->
+        if Session.equals 'view_private', true
+            Session.set 'view_private', false
+        else
+            Session.set 'view_private', true
+            
     

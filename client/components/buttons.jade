@@ -258,7 +258,8 @@ template(name='view_full_button')
 template(name='add_doc_button')
     #add_doc.ui.basic.circular.button
         +icon48 name='plus' classes='ui mini inline image'
-        | #{add_button_text}
+        if add_button_text
+            | #{add_button_text}
 
 
 template(name='subscribe_button')
@@ -300,3 +301,13 @@ template(name='join_button')
         #join.ui.basic.button
             i.green.plus.icon
             | Join
+
+
+template(name='toggle_view_mode_button')
+    #toggle_view_mode.ui.basic.button
+        if viewing_public
+            |Viewing Public
+            +icon48 name='podium-with-speaker' classes='ui inline image'
+        else
+            +icon48 name='lock' classes='ui inline image'
+            |Viewing Private

@@ -17,6 +17,7 @@ Template.view_doc.onCreated ->
         type = null
         tag_limit = null
         doc_limit = 10
+        view_private = Session.get 'view_private'
     
 # Template.view_doc.onRendered ->
 #     @autorun =>

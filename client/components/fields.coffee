@@ -1,26 +1,26 @@
 Template.edit_subtitle.events
     'blur #subtitle': ->
         subtitle = $('#subtitle').val()
-        Docs.update @_id,
+        Docs.update FlowRouter.getParam('doc_id'),
             $set: subtitle: subtitle
             
 Template.group.events
     'blur #group': (e,t)->
         group = $(e.currentTarget).closest('#group').val()
-        Docs.update @_id,
+        Docs.update FlowRouter.getParam('doc_id'),
             $set: group: group
             
 Template.author_name.events
     'blur #author_name': (e,t)->
         author_name = $(e.currentTarget).closest('#author_name').val()
-        Docs.update @_id,
+        Docs.update FlowRouter.getParam('doc_id'),
             $set: author_name: author_name
             
 Template.edit_icon.events
     'blur #icon_class': (e,t)->
         val = $(e.currentTarget).closest('#icon_class').val()
 
-        Docs.update @_id,
+        Docs.update FlowRouter.getParam('doc_id'),
             $set: icon_class: val
             
 Template.created_date.helpers
@@ -32,13 +32,13 @@ Template.created_date.events
     'blur #created_date': ->
         created_date = $('#created_date').val()
         console.log created_date
-        # Docs.update @_id,
+        # Docs.update FlowRouter.getParam('doc_id'),
         #     $set: created_date: created_date
             
 Template.plain.events
     'blur #plain': ->
         plain = $('#plain').val()
-        Docs.update @_id,
+        Docs.update FlowRouter.getParam('doc_id'),
             $set: plain: plain
             
             
@@ -60,7 +60,7 @@ Template.plain.events
 Template.edit_tags.events
     "autocompleteselect input": (event, template, doc) ->
         # console.log("selected ", doc)
-        Docs.update Template.currentData()._id,
+        Docs.update FlowRouter.getParam('doc_id'),
             $addToSet: tags: doc.name
         $('#theme_tag_select').val('')
    
@@ -70,20 +70,20 @@ Template.edit_tags.events
         switch e.which
             when 13 #enter
                 unless val.length is 0
-                    Docs.update Template.currentData()._id,
+                    Docs.update FlowRouter.getParam('doc_id'),
                         $addToSet: tags: val
                     $('#theme_tag_select').val ''
             # when 8
             #     if val.length is 0
-            #         result = Docs.findOne(Template.currentData()._id).tags.slice -1
+            #         result = Docs.findOne(FlowRouter.getParam('doc_id')).tags.slice -1
             #         $('#theme_tag_select').val result[0]
-            #         Docs.update Template.currentData()._id,
+            #         Docs.update FlowRouter.getParam('doc_id'),
             #             $pop: tags: 1
 
 
     'click .doc_tag': (e,t)->
         tag = @valueOf()
-        Docs.update Template.currentData()._id,
+        Docs.update FlowRouter.getParam('doc_id'),
             $pull: tags: tag
         $('#theme_tag_select').val(tag)
         
@@ -108,7 +108,7 @@ Template.edit_tags.helpers
 Template.edit_location_tags.events
     "autocompleteselect input": (event, template, doc) ->
         # console.log("selected ", doc)
-        Docs.update Template.currentData()._id,
+        Docs.update FlowRouter.getParam('doc_id'),
             $addToSet: location_tags: doc.name
         $('#location_tag_select').val('')
    
@@ -120,20 +120,20 @@ Template.edit_location_tags.events
         switch e.which
             when 13 #enter
                 unless val.length is 0
-                    Docs.update Template.currentData()._id,
+                    Docs.update FlowRouter.getParam('doc_id'),
                         $addToSet: location_tags: val
                     $('#add_location_tag').val ''
             # when 8
             #     if val.length is 0
-            #         result = Docs.findOne(Template.currentData()._id).location_tags.slice -1
+            #         result = Docs.findOne(FlowRouter.getParam('doc_id')).location_tags.slice -1
             #         $('#location_tag_select').val result[0]
-            #         Docs.update Template.currentData()._id,
+            #         Docs.update FlowRouter.getParam('doc_id'),
             #             $pop: location_tags: 1
 
 
     'click .doc_tag': (e,t)->
         tag = @valueOf()
-        Docs.update Template.currentData()._id,
+        Docs.update FlowRouter.getParam('doc_id'),
             $pull: location_tags: tag
         $('#location_tag_select').val(tag)
 
@@ -155,7 +155,7 @@ Template.edit_location_tags.helpers
 Template.edit_intention_tags.events
     "autocompleteselect input": (event, template, doc) ->
         # console.log("selected ", doc)
-        Docs.update Template.currentData()._id,
+        Docs.update FlowRouter.getParam('doc_id'),
             $addToSet: intention_tags: doc.name
         $('#intention_tag_select').val('')
    
@@ -166,19 +166,19 @@ Template.edit_intention_tags.events
         switch e.which
             when 13 #enter
                 unless val.length is 0
-                    Docs.update Template.currentData()._id,
+                    Docs.update FlowRouter.getParam('doc_id'),
                         $addToSet: intention_tags: val
                     $('#intention_tag_select').val ''
             # when 8
             #     if val.length is 0
-            #         result = Docs.findOne(Template.currentData()._id).intention_tags.slice -1
+            #         result = Docs.findOne(FlowRouter.getParam('doc_id')).intention_tags.slice -1
             #         $('#intention_tag_select').val result[0]
-            #         Docs.update Template.currentData()._id,
+            #         Docs.update FlowRouter.getParam('doc_id'),
             #             $pop: intention_tags: 1
 
     'click .doc_tag': (e,t)->
         tag = @valueOf()
-        Docs.update Template.currentData()._id,
+        Docs.update FlowRouter.getParam('doc_id'),
             $pull: intention_tags: tag
         $('#intention_tag_select').val(tag)
 
@@ -201,19 +201,19 @@ Template.edit_dollar_price.events
     'change #dollar_price': ->
         dollar_price = parseInt $('#dollar_price').val()
 
-        Docs.update @_id,
+        Docs.update FlowRouter.getParam('doc_id'),
             $set: dollar_price: dollar_price
             
 Template.edit_point_price.events
     'change #point_price': ->
         point_price = parseInt $('#point_price').val()
-        Docs.update @_id,
+        Docs.update FlowRouter.getParam('doc_id'),
             $set: point_price: point_price
             
 Template.bounty.events
     'change #bounty': ->
         bounty = parseInt $('#bounty').val()
-        Docs.update @_id,
+        Docs.update FlowRouter.getParam('doc_id'),
             $set: bounty: bounty
             
             
@@ -223,7 +223,7 @@ Template.edit_number.events
         val = $(e.currentTarget).closest('#number').val()
         number = parseInt val
         # console.log number
-        Docs.update @_id,
+        Docs.update FlowRouter.getParam('doc_id'),
             $set: number: number
             
 Template.edit_quantity.events
@@ -232,87 +232,87 @@ Template.edit_quantity.events
         val = $(e.currentTarget).closest('#quantity').val()
         quantity = parseInt val
         # console.log quantity
-        Docs.update @_id,
+        Docs.update FlowRouter.getParam('doc_id'),
             $set: quantity: quantity
             
             
 Template.edit_title.events
     'blur #title': (e,t)->
         title = $(e.currentTarget).closest('#title').val()
-        Docs.update @_id,
+        Docs.update FlowRouter.getParam('doc_id'),
             $set: title: title
             
 Template.field_type.events
     'blur #field_type': (e,t)->
         field_type = $(e.currentTarget).closest('#field_type').val()
-        Docs.update @_id,
+        Docs.update FlowRouter.getParam('doc_id'),
             $set: field_type: field_type
             
             
 Template.edit_slug.events
     'blur #slug': (e,t)->
         slug = $(e.currentTarget).closest('#slug').val()
-        Docs.update @_id,
+        Docs.update FlowRouter.getParam('doc_id'),
             $set: slug: slug
             
             
 Template.plural_slug.events
     'blur #plural_slug': (e,t)->
         plural_slug = $(e.currentTarget).closest('#plural_slug').val()
-        Docs.update @_id,
+        Docs.update FlowRouter.getParam('doc_id'),
             $set: plural_slug: plural_slug
             
             
 Template.edit_text.events
     'blur #text': (e,t)->
         text = $(e.currentTarget).closest('#text').val()
-        Docs.update @_id,
+        Docs.update FlowRouter.getParam('doc_id'),
             $set: text: text
             
 Template.edit_type.events
     'blur #type': (e,t)->
         type = $(e.currentTarget).closest('#type').val()
-        Docs.update @_id,
+        Docs.update FlowRouter.getParam('doc_id'),
             $set: type: type
             
 Template.edit_child_type.events
     'blur #child_type': (e,t)->
         child_type = $(e.currentTarget).closest('#child_type').val()
-        Docs.update @_id,
+        Docs.update FlowRouter.getParam('doc_id'),
             $set: child_type: child_type
             
             
 Template.edit_link.events
     'blur #link': (e,t)->
         link = $(e.currentTarget).closest('#link').val()
-        Docs.update @_id,
+        Docs.update FlowRouter.getParam('doc_id'),
             $set: link: link
             
             
 Template.page_name.events
     'blur #name': (e,t)->
         name = $(e.currentTarget).closest('#name').val()
-        Docs.update @_id,
+        Docs.update FlowRouter.getParam('doc_id'),
             $set: name: name
             
             
 Template.type.events
     'blur #type': (e,t)->
         type = $(e.currentTarget).closest('#type').val()
-        Docs.update @_id,
+        Docs.update FlowRouter.getParam('doc_id'),
             $set: type: type
             
             
 Template.edit_parent_id.events
     'blur #parent_id': (e,t)->
         parent_id = $(e.currentTarget).closest('#parent_id').val()
-        Docs.update @_id,
+        Docs.update FlowRouter.getParam('doc_id'),
             $set: parent_id: parent_id
             
             
 Template.edit_image_id.events
     "change input[type='file']": (e) ->
-        doc_id = @_id
+        doc_id = FlowRouter.getParam('doc_id')
         files = e.currentTarget.files
 
 
@@ -330,7 +330,7 @@ Template.edit_image_id.events
 
     'keydown #input_image_id': (e,t)->
         if e.which is 13
-            doc_id = @_id
+            doc_id = FlowRouter.getParam('doc_id')
             image_id = $('#input_image_id').val().toLowerCase().trim()
             if image_id.length > 0
                 Docs.update doc_id,
@@ -354,8 +354,8 @@ Template.edit_image_id.events
                 if not err
                     # Do Stuff with res
                     # console.log res
-                    # console.log @image_id, @_id
-                    Docs.update @_id, 
+                    # console.log @image_id, FlowRouter.getParam('doc_id')
+                    Docs.update FlowRouter.getParam('doc_id'), 
                         $unset: 
                             image_id: 1
 
@@ -365,7 +365,7 @@ Template.edit_image_id.events
 
 Template.edit_banner_image_id.events
     "change input[type='file']": (e) ->
-        doc_id = @_id
+        doc_id = FlowRouter.getParam('doc_id')
         files = e.currentTarget.files
 
 
@@ -383,7 +383,7 @@ Template.edit_banner_image_id.events
 
     'keydown #input_banner_image_id': (e,t)->
         if e.which is 13
-            doc_id = @_id
+            doc_id = FlowRouter.getParam('doc_id')
             banner_image_id = $('#input_banner_image_id').val().toLowerCase().trim()
             if banner_image_id.length > 0
                 Docs.update doc_id,
@@ -407,8 +407,8 @@ Template.edit_banner_image_id.events
                 if not err
                     # Do Stuff with res
                     # console.log res
-                    # console.log @banner_image_id, @_id
-                    Docs.update @_id, 
+                    # console.log @banner_image_id, FlowRouter.getParam('doc_id')
+                    Docs.update FlowRouter.getParam('doc_id'), 
                         $unset: 
                             banner_image_id: 1
 
@@ -417,20 +417,20 @@ Template.edit_banner_image_id.events
 
 Template.edit_image_url.events
     'click #remove_image_url': ->
-        Docs.update @_id, 
+        Docs.update FlowRouter.getParam('doc_id'), 
             $unset: 
                 image_url: 1
         
     'blur #image_url': ->
         image_url = $('#image_url').val()
-        Docs.update @_id,
+        Docs.update FlowRouter.getParam('doc_id'),
             $set: image_url: image_url
 
 
             
 Template.location.events
     'change #location': ->
-        doc_id = @_id
+        doc_id = FlowRouter.getParam('doc_id')
         location = $('#location').val()
 
         Docs.update doc_id,
@@ -443,7 +443,7 @@ Template.edit_content.events
         # snippet = $('#snippet').val()
         # if snippet.length is 0
         #     snippet = $(html).text().substr(0, 300).concat('...')
-        doc_id = @_id
+        doc_id = FlowRouter.getParam('doc_id')
 
         Docs.update doc_id,
             $set: content: html
@@ -451,7 +451,7 @@ Template.edit_content.events
 
 Template.edit_content.helpers
     getFEContext: ->
-        @current_doc = Docs.findOne @_id
+        @current_doc = Docs.findOne FlowRouter.getParam 'doc_id'
         self = @
         {
             _value: self.current_doc.content
@@ -516,7 +516,7 @@ Template.edit_transcript.events
     'blur .froala-container': (e,t)->
         html = t.$('div.froala-reactive-meteorized-override').froalaEditor('html.get', true)
         
-        doc_id = @_id
+        doc_id = FlowRouter.getParam('doc_id')
 
         Docs.update doc_id,
             $set: transcript: html
@@ -524,7 +524,7 @@ Template.edit_transcript.events
 
 Template.edit_transcript.helpers
     transcript_context: ->
-        @current_doc = Docs.findOne @_id
+        @current_doc = Docs.findOne FlowRouter.getParam('doc_id')
         self = @
         {
             _value: self.current_doc.transcript
@@ -586,12 +586,12 @@ Template.edit_transcript.helpers
 Template.edit_youtube.events
     'blur #youtube': (e,t)->
         youtube = $(e.currentTarget).closest('#youtube').val()
-        Docs.update @_id,
+        Docs.update FlowRouter.getParam('doc_id'),
             $set: youtube: youtube
             
     'click #clear_youtube': (e,t)->
         $(e.currentTarget).closest('#youtube').val('')
-        Docs.update @_id,
+        Docs.update FlowRouter.getParam('doc_id'),
             $unset: youtube: 1
             
 Template.edit_youtube.onRendered ->
@@ -618,7 +618,7 @@ Template.participants.events
     'click #remove_participant': (e,t)->
         # console.log @
         Docs.update FlowRouter.getParam('doc_id'),
-            $pull: participant_ids: @_id
+            $pull: participant_ids: FlowRouter.getParam('doc_id')
 
 
 
@@ -784,19 +784,19 @@ Template.edit_recipient.helpers
 Template.start_date.events
     'blur #start_date': ->
         start_date = $('#start_date').val()
-        Docs.update @_id,
+        Docs.update FlowRouter.getParam('doc_id'),
             $set: start_date: start_date
     
 Template.end_date.events
     'blur #end_date': ->
         end_date = $('#end_date').val()
-        Docs.update @_id,
+        Docs.update FlowRouter.getParam('doc_id'),
             $set: end_date: end_date
 
 Template.time_marker.events
     'blur #time_marker': ->
         time_marker = parseFloat $('#time_marker').val()
-        Docs.update @_id,
+        Docs.update FlowRouter.getParam('doc_id'),
             $set: time_marker: time_marker
 
 
@@ -848,12 +848,12 @@ Template.edit_transcript.onRendered ->
 Template.start_datetime.events
     'blur #start_datetime': ->
         start_datetime = $('#start_datetime').val()
-        Docs.update @_id,
+        Docs.update FlowRouter.getParam('doc_id'),
             $set: start_datetime: start_datetime
 
 
 Template.end_datetime.events
     'blur #end_datetime': ->
         end_datetime = $('#end_datetime').val()
-        Docs.update @_id,
+        Docs.update FlowRouter.getParam('doc_id'),
             $set: end_datetime: end_datetime

@@ -277,6 +277,7 @@ Meteor.publish 'new_facet', (
     type
     tag_limit
     doc_limit
+    view_private
     )->
         self = @
         match = {}
@@ -286,6 +287,11 @@ Meteor.publish 'new_facet', (
         if parent_id then match.parent_id = parent_id
 
         # match.site = Meteor.settings.public.site
+        if view_private is true
+            match.author_id = Meteor.userId()
+        
+        if view_private is false
+            match.published = $in: [0,1]
 
         # console.log match    
         
@@ -309,7 +315,7 @@ Meteor.publish 'new_facet', (
 
         # doc_results = []
         int_doc_limit = parseInt doc_limit
-        subHandle = Docs.find(match, {limit:20, sort: timestamp:-1}).observeChanges(
+        subHandle = Docs.find(match, {limit:10, sort: timestamp:-1}).observeChanges(
             added: (id, fields) ->
                 # console.log 'added doc', id, fields
                 # doc_results.push id
@@ -350,3 +356,7 @@ Meteor.publish 'author', (doc_id)->
     doc = Docs.findOne doc_id
     if doc 
         Meteor.users.find _id: doc.author_id
+        
+        
+Meteor.publish 'fields', ->
+    Docs.find type: 'component'

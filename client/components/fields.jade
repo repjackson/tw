@@ -247,7 +247,9 @@ template(name='edit_content')
 template(name='view_content')
     .ui.basic.segment
         .large130 !{content}
-    
+        if watson
+            +analyzed_watson_keywords
+
     
     
 template(name='edit_image_id')

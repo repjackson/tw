@@ -199,4 +199,29 @@ Template.save_button.events
 Template.edit_child_fields.onCreated ->
     Meteor.subscribe 'fields'
             
+Template.edit_child_fields.helpers
+    child_fields: ->
+        Docs.find
+            type: 'component'
     
+    
+    child_field_toggle_class: ->
+        doc = Docs.findOne FlowRouter.getParam('doc_id')
+        if @slug in doc.child_fields then 'blue' else 'basic'
+
+
+
+Template.edit_child_fields.events
+    'click .toggle_child_field': ->
+        doc = Docs.findOne FlowRouter.getParam('doc_id')
+        if doc.child_fields 
+            if @slug in doc.child_fields
+                Docs.update doc._id,
+                    $pull: "child_fields": @slug
+            else
+                Docs.update doc._id,
+                    $addToSet: "child_fields": @slug
+        else
+            Docs.update doc._id,
+                $set: "child_fields": []
+                

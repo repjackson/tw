@@ -19,33 +19,30 @@ template(name='course_item')
             a.header(href="/view/#{_id}") #{title}
 
 template(name='view_course')
-    with course
-        .ui.stackable.padded.centered.grid
-            .row.header-background(style=background_style)
-                .three.wide.center.aligned.column
-                    +parent_link
-                .ten.wide.center.aligned.column
-                    +view_image_id
-                    h1.ui.header #{title}
-                    h3.ui.header #{subtitle}
-            .row
-                .twelve.wide.column
-                    .ui.top.attached.tabular.three.item.menu
-                        a.active.item(data-tab="sales") Sales
-                        a.item(data-tab="enrolled") Enrolled
-                        a.item(data-tab="modules") Modules
-                    .ui.bottom.attached.active.tab.segment(data-tab="sales")
-                        |!{sales.content}
-                    .ui.bottom.attached.tab.segment(data-tab="enrolled")
-                        .ui.header welcome stuff
-                    .ui.bottom.attached.tab.segment(data-tab="modules")
-                        +course_module_overview
-                    // +child_docs
-                .four.wide.column
-                    +view_tags
-                    +author_info
-                    if is_author
-                        +edit_button
+    .ui.stackable.padded.centered.grid
+        .centered.row.header-background(style=background_style)
+            .ten.wide.center.aligned.column
+                +view_image_id
+                // h1.ui.header #{title}
+                h3.ui.header #{subtitle}
+        .row
+            .twelve.wide.column
+                .ui.top.attached.tabular.three.item.menu
+                    a.active.item(data-tab="sales") Sales
+                    a.item(data-tab="enrolled") Enrolled
+                    a.item(data-tab="modules") Modules
+                .ui.bottom.attached.active.tab.segment(data-tab="sales")
+                    |!{sales.content}
+                .ui.bottom.attached.tab.segment(data-tab="enrolled")
+                    .ui.header welcome stuff
+                .ui.bottom.attached.tab.segment(data-tab="modules")
+                    +course_module_overview
+                // +child_docs
+            .four.wide.column
+                +view_tags
+                +author_info
+                if is_author
+                    +edit_button
 
 
 template(name='view_course_sales')

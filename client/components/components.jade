@@ -243,15 +243,12 @@ template(name='author_info')
         |by Anonymous
     else
         | by 
-        if is_author
-            | you
-        else
-            with author
-                if profile.image_id
-                    img.ui.avatar.spaced.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
-                |&nbsp;
-                a(href="/profile/#{username}") #{name} 
-                +staus_indicator
+        with author
+            if profile.image_id
+                img.ui.avatar.spaced.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+            |&nbsp;
+            a(href="/profile/#{username}") #{name} 
+            +staus_indicator
     // .ui.sub.header #{when}
 
 template(name='recipient_info')
@@ -302,15 +299,7 @@ template(name='published_label')
 template(name='edit_child_fields')
     .ui.header Choose Child Docs
     .ui.subheader Fields that are available when a user adds a document
-    .ui.header Selected Fields
-    .ui.list
-        each selected_fields
-            .item
-                +icon24 name=icon_class
-                |#{title}    
-    .ui.header Available Fields
-    .ui.list
-        each selected_fields
-            .item
-                +icon24 name=icon_class
-                |#{title}
+    each child_fields
+        .toggle_child_field.ui.button(class=child_field_toggle_class)
+            +icon24 name=icon_class
+            |#{title}    

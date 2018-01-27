@@ -9,10 +9,12 @@ template(name='view_databank')
         .row
             .four.wide.column
                 if currentUser
-                    #add_item.ui.compact.large.basic.circular.fluid.button
-                        i.green.plus.icon
-                        |Add Item
-                +tag_facet
+                    +toggle_view_mode_button
+                    +add_doc_button type=child_type
+                    .ui.hidden.divider
+                each doc.child_fields
+                    +Template.dynamic template=facet_template data=doc
+                +username_facet
                 .ui.hidden.divider
             .twelve.wide.column
                 .ui.cards
@@ -29,9 +31,11 @@ template(name='edit_databank')
             .twelve.wide.column
                 +edit_title
                 +edit_icon
+                +edit_child_type
                 +edit_child_fields
             .four.wide.column
                 +save_link
+                +edit_type
 
 template(name='databank_card')
     .ui.fluid.card
@@ -86,43 +90,43 @@ template(name='databank_card')
 template(name='edit_databank_item')
     .ui.stackable.padded.grid
         .centered.row
-            h1.ui.center.aligned.header Edit databank Item
+            h1.ui.center.aligned.header Edit #{parent.title} Item
         .row
             .twelve.wide.column
                 .ui.form
-                    +edit_tags
-                    +edit_image_id
-                    +edit_image_url
-                    +edit_content
+                    each child_field_slugs
+                        +Template.dynamic template=field_edit_template data=doc
             .four.wide.column
                 +save_button
-                #delete_item.ui.red.icon.button
-                    i.trash.icon
-
+                +delete_button
 
 template(name='view_databank_item')
     .ui.stackable.padded.grid
         .centered.row
-            h1.ui.center.aligned.header View databank Item
+            h1.ui.center.aligned.header View #{parent.title} Item
         .row
             .twelve.wide.column
-                if youtube
-                    +view_youtube
-                if image_id
-                    +view_image_id
-                if image_url
-                    +view_image_url
-                if content
-                    +view_content
-                    if author_name
-                        h4.ui.header
-                            |- #{author_name}
-
                 .ui.form
-                    +view_tags
-                    +view_image_id
-                    +view_image_url
-                    +view_content
+                    each child_field_slugs
+                        +Template.dynamic template=field_view_template data=doc
             .four.wide.column
+                +author_info
+                h3.ui.sub.header #{when}
                 if can_edit
                     +edit_button
+                if watson
+                    +doc_sentiment
+                    +doc_emotion
+                    +watson_keywords
+                else 
+                    if can_edit
+                        +call_watson
+                .ui.dividing.header Actions
+                +bookmark_button
+                // +reflect_button
+                unless is_author
+                    +resonate_button
+                    +thanks_button
+                +resonates_list
+                +mark_read
+                // +read_by

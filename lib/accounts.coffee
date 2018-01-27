@@ -112,11 +112,11 @@ AccountsTemplates.configureRoute 'resetPwd'
 
 
 AccountsTemplates.configureRoute('signIn', {
-  redirect: '/dashboard',
+  redirect: '/',
 });
 
 AccountsTemplates.configureRoute('signUp', {
-  redirect: '/account/profile/edit',
+  redirect: '/profile/edit',
 });
 
 
