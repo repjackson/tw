@@ -1,16 +1,20 @@
 template(name='view_databank')
     .ui.stackable.padded.grid
         .centered.row
-            h1.ui.header 
-                +icon96 name=icon_class classes='ui image'
-                |#{title}
+            .three.wide.center.aligned.column
+                if currentUser
+                    +add_doc_button type=child_type
+            .ten.wide.center.aligned.column
+                h1.ui.header 
+                    +icon96 name=icon_class classes='ui image'
+                    |#{title}
+            .three.wide.center.aligned.column
                 if can_edit
-                    +edit_doc_link
+                    +edit_button
         .row
-            .four.wide.column
+            .four.wide.center.aligned.column
                 if currentUser
                     +toggle_view_mode_button
-                    +add_doc_button type=child_type
                     .ui.hidden.divider
                 each doc.child_fields
                     +Template.dynamic template=facet_template data=doc
@@ -31,27 +35,21 @@ template(name='edit_databank')
             .twelve.wide.column
                 +edit_title
                 +edit_icon
-                +edit_child_type
+                // +edit_child_type
                 +edit_child_fields
             .four.wide.column
                 +save_link
                 +edit_type
+                +published
 
 template(name='databank_card')
     .ui.fluid.card
-        if youtube
-            +view_youtube
-        if image_id
-            +view_image_id
-        if image_url
-            +view_image_url
-        if content
-            +view_content
-            if author_name
-                h4.ui.header
-                    |- #{author_name}
+        // each parent.child_fields
+        //     .ui.label #{this}
         .content
-            +view_tags
+            each parent.child_fields
+                +Template.dynamic template=field_view_template data=..
+            
         .content
             +author_info
             |#{when}
@@ -61,6 +59,8 @@ template(name='databank_card')
             +resonate_button
             +view_full_button
             // +reflect_button
+        .content
+            +comments
         if favorite_count
             .content
                 strong
@@ -94,11 +94,12 @@ template(name='edit_databank_item')
         .row
             .twelve.wide.column
                 .ui.form
-                    each child_field_slugs
+                    each parent.child_fields
                         +Template.dynamic template=field_edit_template data=doc
             .four.wide.column
                 +save_button
                 +delete_button
+                +published
 
 template(name='view_databank_item')
     .ui.stackable.padded.grid
@@ -107,8 +108,10 @@ template(name='view_databank_item')
         .row
             .twelve.wide.column
                 .ui.form
-                    each child_field_slugs
+                    each parent.child_fields
                         +Template.dynamic template=field_view_template data=doc
+                    if is_visible
+                        +comments
             .four.wide.column
                 +author_info
                 h3.ui.sub.header #{when}

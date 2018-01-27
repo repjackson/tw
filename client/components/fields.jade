@@ -110,13 +110,13 @@ template(name='edit_tags')
                 |#{this}
 
 
-// template(name='view_tags')
-//     // .ui.dividing.header
-//     //     +icon48 name='hashtag' classes='ui inline mini image'
-//     //     |Tags
-//     +icon48 name='hashtag' classes='ui inline mini image'
-//     each tags
-//         .ui.basic.label #{this}
+template(name='view_tags')
+    // .ui.dividing.header
+    //     +icon48 name='hashtag' classes='ui inline mini image'
+    //     |Tags
+    +icon48 name='hashtag' classes='ui inline mini image'
+    each tags
+        .ui.basic.label #{this}
 
             
 
@@ -247,8 +247,8 @@ template(name='edit_content')
 template(name='view_content')
     .ui.basic.segment
         .large130 !{content}
-        if watson
-            +analyzed_watson_keywords
+        // if watson
+        //     +analyzed_watson_keywords
 
     
     
@@ -303,7 +303,8 @@ template(name='view_banner_image_id')
     img.ui.centered.image(src="{{c.url banner_image_id width=500 crop='fit'}}")
         
 template(name='view_image_id')
-    img.ui.centered.image(src="{{c.url image_id width=500 crop='fit'}}")
+    if image_id
+        img.ui.centered.image(src="{{c.url image_id width=500 crop='fit'}}")
         
 
 template(name='edit_image_url')
@@ -324,8 +325,9 @@ template(name='edit_image_url')
 
 
 template(name='view_image_url')
-    .ui.large.image
-        img(src=image_url)
+    if image_url
+        .ui.large.image
+            img(src=image_url)
         
     
 template(name='edit_youtube')

@@ -1,28 +1,20 @@
 template(name='comments')
-    .ui.fluid.styled.accordion
-        .title 
-            +icon48 name='comments' classes='ui avatar image'
-            |Comments (#{comments.count})
-            i.dropdown.icon
-        .content
-            if adding_id
-                .ui.form
-                    .field
-                        // label Body
-                        input#body(type='text' value=body)
-                #save_comment.ui.green.button Save Comment
-            else if currentUser
-                unless editing_comment
-                    #add_comment.ui.smsall.compact.teal.button
-                        i.plus.icon
-                        |Comment
-            .ui.threaded.comments
-                each comments
-                    +comment
+    .ui.horizontal.dividing.header
+        +icon48 name='comments' classes='ui avatar image'
+        |#{comments.count} Comments 
+    .content
+        if currentUser
+            unless editing_comment
+                #add_comment.ui.compact.blue.button
+                    i.plus.icon
+                    |Comment
+        .ui.threaded.comments
+            each comments
+                +comment
         
 template(name='comment')
     .comment
-        unless editing_comment
+        unless is_editing
             a.avatar
                 img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
             .content
@@ -35,8 +27,7 @@ template(name='comment')
                     // a.reply(href='#') Reply
                     // +favorite
                     if is_author
-                        +delete_link
-                        a.edit_comment Edit
+                        +session_edit_button
                     else
                         +voting
             // if children
@@ -65,9 +56,9 @@ template(name='comment')
             .ui.form
                 .field
                     // label Body
-                    .ui.left.icon.action.input
+                    .ui.left.icon.input
                         i.blue.pencil.icon
                         input#body(type='text' value=body)
-                        #save_comment.ui.green.button Save
+                    +session_edit_button
         
     

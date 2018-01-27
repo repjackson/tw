@@ -12,7 +12,7 @@ Template.journal_template_section.onCreated ->
 Template.edit_template_response.events
     'click #delete_doc': ->
         swal {
-            title: 'Delete this journal template response?'
+            title: 'Delete this Journal Template response?'
             type: 'warning'
             animation: true
             showCancelButton: true
@@ -21,9 +21,14 @@ Template.edit_template_response.events
             confirmButtonText: 'Remove'
             confirmButtonColor: '#da5347'
         }, =>
+            responses = Docs.find(group_id:@_id).fetch()
+            for response in responses
+                Docs.remove response._id
             Docs.remove @_id
             swal 'Removed', 'success'
-            FlowRouter.go '/journal/templates'
+            FlowRouter.go "/view/#{@parent_id}"
+                
+                
             
 
     'click .create_section_response': ->

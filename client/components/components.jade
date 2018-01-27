@@ -150,7 +150,9 @@ template(name='parent_doc_segment')
             +icon48 name='response' classes='avatar'
             |In response to...
         with parent
-            |!{content}
+            .ui.basic.segment
+                .large130 !{content}
+            +author_info
             // +view_full_button
                     
 
@@ -159,6 +161,8 @@ template(name='parent_link')
         a.ui.white.basic.circular.button(href="/view/#{_id}") 
             if icon_class
                 +icon48 name=icon_class classes='avatar'
+            else
+                +icon48 name='sort-up' classes='avatar'
             if number
                 |#{number}:
             |#{title}
@@ -303,3 +307,9 @@ template(name='edit_child_fields')
         .toggle_child_field.ui.button(class=child_field_toggle_class)
             +icon24 name=icon_class
             |#{title}    
+            
+            
+            
+template(name='child_authors')       
+    each child_authors
+        img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}" title=username)

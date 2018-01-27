@@ -1,15 +1,22 @@
 template(name='edit_response')
-    .ui.segment
+    .ui.hidden.divider
+    .ui.container
+        h2.ui.center.aligned.header Edit Journal Response
         +parent_doc_segment
         +edit_content
-        +edit_tags
+        +published
+        +save_link
+        +delete_button
 
 template(name='view_response')
-    .ui.segment
+    .ui.hidden.divider
+    .ui.container
+        h2.ui.center.aligned.header Journal Response
         +parent_doc_segment
         +view_content
-        +view_tags
-        
+        +author_info
+        if is_author
+            +edit_button
         
 
 // template(name='answer')

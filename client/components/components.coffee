@@ -225,3 +225,8 @@ Template.edit_child_fields.events
             Docs.update doc._id,
                 $set: "child_fields": []
                 
+Template.child_authors.onCreated ->
+    # console.log @data
+    @autorun => Meteor.subscribe 'usernames'
+    @autorun => Meteor.subscribe 'child_docs', @data._id
+    

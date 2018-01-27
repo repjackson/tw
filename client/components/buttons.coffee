@@ -255,37 +255,16 @@ Template.delete_button.events
 
     'click .cancel': (e,t)-> t.confirming.set false
     'click .confirm': (e,t)-> 
-        if Session.get 'editing_id' then Session.set 'editing_id', null
         Docs.remove @_id
+        FlowRouter.go("/view/#{@parent_id}")
             
-Template.delete_link.onCreated ->
+Template.session_delete_button.onCreated ->
     @confirming = new ReactiveVar(false)
             
      
-Template.delete_popup.events
-    'click #delete_doc': ->
-        parent = Template.parentData()
-        self = @
-        swal {
-            title: 'Remove Document?'
-            type: 'warning'
-            animation: true
-            showCancelButton: true
-            closeOnConfirm: true
-            cancelButtonText: 'Cancel'
-            confirmButtonText: 'Remove'
-            confirmButtonColor: '#da5347'
-        }, =>
-            Docs.remove parent._id
-            swal 'Removed', 'success'
-            FlowRouter.go @route
-     
-     
-     
-            
-Template.delete_link.helpers
+Template.session_delete_button.helpers
     confirming: -> Template.instance().confirming.get()
-Template.delete_link.events
+Template.session_delete_button.events
     'click .delete': (e,t)-> 
         # $(e.currentTarget).closest('.comment').transition('pulse')
         t.confirming.set true
@@ -537,5 +516,12 @@ Template.toggle_view_mode_button.events
             Session.set 'view_private', false
         else
             Session.set 'view_private', true
+            
+Template.session_edit_button.events
+    'click .toggle_editing': ->
+        if Session.equals 'editing_id', @_id
+            Session.set 'editing_id', null
+        else
+            Session.set 'editing_id', @_id
             
     

@@ -1,7 +1,8 @@
 template(name='view_facet')
     .ui.container
         h1.ui.center.aligned.header
-            .facet_black Facet
+            +icon48 name=icon_class
+            | Facet
         .ui.centered.cards
             each children
                 +site_card

@@ -135,19 +135,24 @@ template(name='delete_button')
         .delete.ui.basic.icon.circular.button
             i.red.remove.icon
     else
-        .ui.basic.circular.button.cancel Cancel
-        .ui.red.circular.button.confirm Confirm Delete
-        
-template(name='delete_link')
-    unless confirming
-        a.delete Delete
-    else
-        a.cancel 
+        .ui.basic.circular.button.cancel 
             i.ban.icon
             |Cancel
-        a.confirm 
-            i.red.trash.icon
+        .ui.red.circular.button.confirm 
+            i.remove.icon
             |Confirm Delete
+        
+template(name='session_delete_button')
+    unless confirming
+        .delete.ui.basic.red.icon.button
+            i.remove.icon
+    else
+        .ui.basic.icon.button.cancel 
+            i.ban.icon
+            // |Cancel
+        .ui.basic.button.red.confirm 
+            i.red.trash.icon
+            |Confirm
         
 
 template(name='published')
@@ -256,10 +261,10 @@ template(name='view_full_button')
 
 
 template(name='add_doc_button')
-    #add_doc.ui.basic.circular.button
+    #add_doc.ui.basic.circular.icon.button
         +icon48 name='plus' classes='ui mini inline image'
-        if add_button_text
-            | #{add_button_text}
+        // if add_button_text
+        //     | #{add_button_text}
 
 
 template(name='subscribe_button')
@@ -311,3 +316,12 @@ template(name='toggle_view_mode_button')
         else
             +icon48 name='lock' classes='ui inline image'
             |Viewing Private
+            
+            
+template(name='session_edit_button')
+    if is_editing
+        .toggle_editing.ui.green.button Save
+        +session_delete_button
+    else
+        .toggle_editing.ui.basic.icon.button
+            i.pencil.icon

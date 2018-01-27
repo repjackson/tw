@@ -19,13 +19,15 @@ Template.view_doc.onCreated ->
         doc_limit = 10
         view_private = Session.get 'view_private'
     
-# Template.view_doc.onRendered ->
-#     @autorun =>
-#         if @subscriptionsReady()
-#             doc = Docs.findOne FlowRouter.getParam('doc_id')
-#             Meteor.setTimeout ->
-#                 document.title = doc.title
-#             , 500
+Template.view_doc.onRendered ->
+    @autorun =>
+        if @subscriptionsReady()
+            doc = Docs.findOne FlowRouter.getParam('doc_id')
+            Meteor.setTimeout ->
+                if doc
+                    if doc.title
+                        document.title = doc.title
+            , 500
     
 
 Template.view_doc.helpers

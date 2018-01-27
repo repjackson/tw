@@ -2,15 +2,11 @@ template(name='edit_template_response')
     .ui.padded.stackable.grid.document_container
         .center.aligned.row
             .three.wide.center.aligned.column
-                #delete_doc.ui.basic.circular.button(data-tooltip='Delete')
-                    +icon48 name='delete' classes='ui mini inline image'
             .ten.wide.column
                 h1.ui.center.aligned.header
                     +icon48 name='form' classes='ui mini spaced image'
                     |Edit '#{journal_template.title}' Journal Template Response
             .three.wide.column
-                a.ui.fluid.basic.circular.button(href="/view/#{_id}" data-tooltip='Save')
-                    +icon48 name='checked' classes='ui mini inline image'
 
         .centered.row
             .twelve.wide.column
@@ -18,12 +14,10 @@ template(name='edit_template_response')
                 //     h2.ui.center.aligned.header #{title}
                 each journal_template_sections
                     +journal_template_section
-            .four.wide.column.edit_journal_sidebar
-                .ui.dividing.header
-                    +icon48 name='hashtag' classes='ui mini spaced image'
-                    |Tags
-                each journal_template.tags
-                    .ui.basic.label #{this}
+            .four.wide.column
+                +save_link
+                #delete_doc.ui.basic.circular.button(data-tooltip='Delete')
+                    +icon48 name='delete' classes='ui mini inline image'
                 +published
 
 

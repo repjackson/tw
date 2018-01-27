@@ -70,6 +70,7 @@ Docs.after.remove (userId, doc)->
 Docs.helpers
     author: -> Meteor.users.findOne @author_id
     when: -> moment(@timestamp).fromNow()
+    is_visible: -> @published in [0,1]
     is_published: -> @published is 1
     is_anonymous: -> @published is 0
     is_private: -> @published is -1
@@ -126,12 +127,14 @@ Docs.helpers
     child_authors: ->
         if Docs.findOne({parent_id: @_id})
             child_authors = []
-            child_documents = Docs.find(parent_id: @_id).fetch()
+            child_documents = Docs.find(parent_id: @_id, published:1).fetch()
             for child_document in child_documents
                 # console.log child_document.author_id
                 child_authors.push Meteor.users.findOne child_document.author_id
             child_authors
-        else []
+        else 
+            []
+            # console.log 'we aint found shit'
 
     younger_sibling: ->
         if @number
@@ -218,11 +221,11 @@ Meteor.methods
         unless older_sibling
             Meteor.call 'calculate_completion', doc.parent_id
 
-FlowRouter.route '/sol',
-  triggersEnter: [ (context, redirect) ->
-    redirect '/course/sol'
-    return
- ]
+# FlowRouter.route '/sol',
+#   triggersEnter: [ (context, redirect) ->
+#     redirect '/course/sol'
+#     return
+#  ]
 
 FlowRouter.route '/',
   triggersEnter: [ (context, redirect) ->

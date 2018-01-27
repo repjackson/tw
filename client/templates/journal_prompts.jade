@@ -23,16 +23,17 @@ template(name='view_journal_prompts')
 template(name='journal_prompt_card')
     .ui.fluid.card
         .content
-            if content
-                +view_content
-                if author_name
-                    h4.ui.header
-                        |- #{author_name}
+            +view_content
+            // if author_name
+            //     h4.ui.header
+            //         |- #{author_name}
+            +author_info                
         .content
             +view_tags
         .content
             if child_count
                 |#{child_count} responses
+            +child_authors
             +respond_button
             .right.floated
                 +view_full_button
@@ -83,7 +84,7 @@ template(name='view_journal_prompt')
                         
                         
 template(name='response_list')
-    .ui.dividing.header Responses
+    .ui.dividing.header #{child_count} Responses
     .ui.segments
         each responses
             .ui.segment
@@ -96,7 +97,9 @@ template(name='response_list')
                                 .ui.basic.label #{this}
                 .content
                     +author_info
-                    |#{when}    
-                    +view_full_button
+                    |#{when}
+                    +voting
+                    .floated.right
+                        +view_full_button
                             
                         

@@ -5,9 +5,10 @@ $.cloudinary.config
 Session.setDefault 'cart_item', null
 # Session.setDefault 'doc_limit', 10
 Session.setDefault 'view_complete', null
+Session.setDefault 'editing_id', null
 
 
-Session.setDefault 'view_unread', false
+Session.setDefault 'view_private', false
 Session.setDefault 'admin_mode', false
     
 # FlowRouter.globals.push({
@@ -55,10 +56,16 @@ Template.registerHelper 'isActiveRoute', () ->  Session.get 'admin_mode'
 
 Template.registerHelper 'site_doc', () ->  Docs.findOne type:'site_doc'
 
+Template.registerHelper 'is_editing', () ->  Session.equals 'editing_id', @_id
+
 Template.registerHelper 'is_admin', () ->  
     Roles.userIsInRole(Meteor.userId(), 'admin') and Session.equals 'admin_mode', true
 
 Template.registerHelper 'publish_when', () -> moment(@publish_date).fromNow()
+
+Template.registerHelper 'field_view_template', () ->  "view_#{@}"
+
+
 
 Template.registerHelper 'theme_tag_class': -> if @valueOf() in selected_theme_tags.array() then 'teal' else 'basic'
 Template.registerHelper 'location_tag_class': -> if @valueOf() in selected_location_tags.array() then 'teal' else 'basic'

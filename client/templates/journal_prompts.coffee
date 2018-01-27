@@ -1,7 +1,3 @@
-FlowRouter.route '/journal/prompts', action: (params) ->
-    BlazeLayout.render 'layout',
-        main: 'journal_prompts'
-
 Template.view_journal_prompts.onCreated -> 
     selected_theme_tags.clear()
     selected_author_ids.clear()
