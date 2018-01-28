@@ -1,7 +1,26 @@
 template(name='edit_doc')
     with doc
-        .ui.container
-            +Template.dynamic template=edit_type_template
+        .ui.padded.stackable.grid
+            .centered.row
+                .three.wide.center.aligned.column
+                    +delete_button
+                .ten.wide.center.aligned.column
+                    h1.ui.header
+                        +icon96 name=icon_class classes='ui image'
+                        |Edit #{title}
+                .three.wide.center.aligned.column
+                    +save_link
+            .centered.row
+                .ten.wide.column
+                    +Template.dynamic template=edit_type_template
+                .six.wide.column
+                    +edit_title
+                    +edit_icon
+                    // +edit_child_type
+                    +edit_number
+                    +published
+                    +edit_type
+
 
 template(name='view_document')
     +edit_content
@@ -10,7 +29,8 @@ template(name='view_document')
 
 template(name='view_doc')
     with doc
-        .header-background.fixedbg(style=background_style)
+        // .header-background.fixedbg(style=background_style)
+        .header-backgrou
             .ui.padded.stackable.grid
                 .centered.row
                     .three.wide.column
@@ -18,8 +38,15 @@ template(name='view_doc')
                     .ten.wide.center.aligned.column
                         +parent_link
                     .three.wide.column
+                        if isInRole 'admin'
+                            a#toggle_admin_mode.ui.basic.icon.white.inverted.circular.button(href='#' data-position="bottom center" data-content="Toggle Admin Mode") 
+                                .ui.image
+                                    if admin_mode
+                                        +icon48 name='user-shield' classes='ui image'
+                                    else
+                                        +dots50 name='user-shield' classes='ui image'
                         if currentUser
-                            a.ui.icon.basic.circular.button(href="/profile/#{currentUser.username}" class="{{isActiveRoute name='view_profile'}}" data-position="bottom center" data-content="Profile")
+                            a.ui.icon.basic.white.inverted.circular.button(href="/profile/#{currentUser.username}" class="{{isActiveRoute name='view_profile'}}" data-position="bottom center" data-content="Profile")
                                 if currentUser.profile.image_id
                                     img.ui.avatar.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
                                 else
@@ -30,7 +57,7 @@ template(name='view_doc')
                                 //     else
                                 //         | #{currentUser.username}
                         else
-                            a.ui.icon.basic.circular.button(href='/sign-in') 
+                            a.ui.icon.basic.white.inverted.circular.button(href='/sign-in') 
                                 +icon48 name='login-rounded-down' classes='ui mini inline spaced image'
                                 // | Sign In
             +Template.dynamic template=view_type_template

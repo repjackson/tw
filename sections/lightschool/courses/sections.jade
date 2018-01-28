@@ -1,6 +1,6 @@
 template(name='view_sections')
     .ui.stackable.padded.grid
-        .row.header-background(style=background_style)
+        .row
             .three.wide.center.aligned.column
             .ten.wide.column
                 h1.ui.inverted.center.aligned.header 
@@ -10,14 +10,15 @@ template(name='view_sections')
                 // if can_edit
                 //     +edit_button
         .row
-            .ten.wide.centered.column
-                .ui.segments
-                    each sections
-                        .ui.segment
-                            a.ui.header(href="/view/#{_id}") 
-                                +icon48 name=icon_class
-                                |#{number}:
-                                |#{title}
+            .sixteen.wide.centered.column
+                .ui.cards
+                    each children
+                        +grid_item
+                        // .ui.segment
+                        //     a.ui.header(href="/view/#{_id}") 
+                        //         +icon48 name=icon_class
+                        //         |#{number}:
+                        //         |#{title}
 
 template(name='section_item')
     .item
@@ -31,7 +32,7 @@ template(name='section_item')
 template(name='view_section')
     with section
         .ui.stackable.padded.grid
-            .row.header-background(style=background_style)
+            .row
                 .three.wide.center.aligned.column
                 .ten.wide.column
                     h1.ui.inverted.center.aligned.header 
@@ -44,7 +45,7 @@ template(name='view_section')
                 .centered.three.wide.column
                     unless is_admin
                         if younger_sibling
-                            a.ui.basic.circular.button(href="/view/#{younger_sibling._id}")
+                            a.ui.white.inverted.basic.circular.button(href="/view/#{younger_sibling._id}")
                                 // if younger_sibling.completed
                                 if younger_sibling.icon_class
                                     +icon48 name=younger_sibling.icon_class classes='ui mini spaced image'
@@ -59,22 +60,15 @@ template(name='view_section')
                                 // | #{younger_sibling.body}
 
                 .centered.ten.wide.column
-                    if is_admin
-                        +edit_number
-                        +edit_title
-                        +edit_icon
-                        +edit_content
-                        +edit_transcript
-                    else
-                        +view_content
-                        if transcript
-                            +view_transcript
+                    +view_content
+                    if transcript
+                        +view_transcript
                     +section_questions
                 .centered.three.wide.column
                     unless is_admin
                         if older_sibling
                             // if completed
-                            a.ui.basic.circular.button(href="/view/#{older_sibling._id}")
+                            a.ui.white.inverted.basic.circular.button(href="/view/#{older_sibling._id}")
                                 | #{older_sibling.title}
                                 if older_sibling.icon_class
                                     +icon48 name=older_sibling.icon_class classes='ui mini spaced image'
@@ -123,20 +117,28 @@ template(name='section_question')
             .ui.segments
                 each private_answers
                     +answer
-            +edit_number
-            +edit_text
-            +edit_content
-            // +view_full_button
+            +edit_button
+            +view_full_button
 
+
+template(name='edit_section_question')
+    .ui.header Edit Question
+        +edit_number
+        +edit_text
+        +edit_content
 
 template(name='answer')            
     .ui.segment
-        |#{text}
+        |!{content}
         |#{body}
         div
             +author_info
+            |#{when}
             +thanks_button
             +respond_button
+            if child_count
+                |#{child_count} Responses
+            +view_full_button
 
 
 

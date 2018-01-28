@@ -54,8 +54,8 @@ Template.thanks_button.helpers
 Template.thanks_button.events
     'click .vote_up': (e,t)-> 
         if Meteor.userId()
-            if Meteor.userId() not in @upvoters
-                $('#thanks_modal').modal('show')
+            # if Meteor.userId() not in @upvoters
+                # $('#thanks_modal').modal('show')
             Meteor.call 'vote_up', @_id
             $(e.currentTarget).closest('.vote_up').transition('pulse')
         else FlowRouter.go '/sign-in'
@@ -87,21 +87,21 @@ Template.big_both_voter.events
 
 
 
-Template.toggle_friend.helpers
-    is_friend: -> if Meteor.user()?.friends then @_id in Meteor.user().friends
+# Template.toggle_friend.helpers
+#     is_friend: -> if Meteor.user()?.friends then @_id in Meteor.user().friends
         
-Template.toggle_friend.events
-    'click #add_friend': (e,t)-> 
-        Meteor.users.update Meteor.userId(), $addToSet: friends: @_id
-        $(e.currentTarget).closest('#add_friend').transition('pulse')
+# Template.toggle_friend.events
+#     'click #add_friend': (e,t)-> 
+#         Meteor.users.update Meteor.userId(), $addToSet: friends: @_id
+#         $(e.currentTarget).closest('#add_friend').transition('pulse')
 
-        Meteor.call 'add_notification', @_id, 'friended', Meteor.userId()
+#         Meteor.call 'add_notification', @_id, 'friended', Meteor.userId()
 
-    'click #remove_friend': (e,t)-> 
-        Meteor.users.update Meteor.userId(), $pull: friends: @_id
-        $(e.currentTarget).closest('#remove_friend').transition('pulse')
+#     'click #remove_friend': (e,t)-> 
+#         Meteor.users.update Meteor.userId(), $pull: friends: @_id
+#         $(e.currentTarget).closest('#remove_friend').transition('pulse')
 
-        Meteor.call 'add_notification', @_id, 'unfriended', Meteor.userId()
+#         Meteor.call 'add_notification', @_id, 'unfriended', Meteor.userId()
 
 Template.published.helpers
     published_class: -> if @published is 1 then 'blue' else 'basic'
@@ -258,23 +258,23 @@ Template.delete_button.events
         Docs.remove @_id
         FlowRouter.go("/view/#{@parent_id}")
             
-Template.session_delete_button.onCreated ->
-    @confirming = new ReactiveVar(false)
+# Template.session_delete_button.onCreated ->
+#     @confirming = new ReactiveVar(false)
             
      
-Template.session_delete_button.helpers
-    confirming: -> Template.instance().confirming.get()
-Template.session_delete_button.events
-    'click .delete': (e,t)-> 
-        # $(e.currentTarget).closest('.comment').transition('pulse')
-        t.confirming.set true
+# Template.session_delete_button.helpers
+#     confirming: -> Template.instance().confirming.get()
+# Template.session_delete_button.events
+#     'click .delete': (e,t)-> 
+#         # $(e.currentTarget).closest('.comment').transition('pulse')
+#         t.confirming.set true
 
-    'click .cancel': (e,t)-> t.confirming.set false
-    'click .confirm': (e,t)-> 
-        $(e.currentTarget).closest('.comment').transition('fade right')
-        Meteor.setTimeout =>
-            Docs.remove(@_id)
-        , 1000
+#     'click .cancel': (e,t)-> t.confirming.set false
+#     'click .confirm': (e,t)-> 
+#         $(e.currentTarget).closest('.comment').transition('fade right')
+#         Meteor.setTimeout =>
+#             Docs.remove(@_id)
+#         , 1000
 
 
 Template.favorite_button.helpers

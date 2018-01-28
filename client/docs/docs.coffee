@@ -1,8 +1,8 @@
 FlowRouter.route '/view/:doc_id', 
     name: 'view'
     action: (params) ->
-        # if selected_theme_tags
-        #     selected_theme_tags.clear()
+        if selected_theme_tags
+            selected_theme_tags.clear()
         BlazeLayout.render 'layout',
             nav: 'nav'
             main: 'view_doc'
@@ -36,3 +36,17 @@ Template.view_doc.helpers
     show_parent_link: ->
         doc = Docs.findOne FlowRouter.getParam('doc_id')
         if doc.type is 'site' then false else true
+        
+        
+Template.view_doc.events
+    'click #toggle_admin_mode': ->
+        if Session.equals('admin_mode', true) then Session.set('admin_mode', false)
+        else if Session.equals('admin_mode', false) then Session.set('admin_mode', true)
+        Session.set 'editing_id', null
+        Session.set 'view_published', null
+    
+    
+
+        
+        
+        

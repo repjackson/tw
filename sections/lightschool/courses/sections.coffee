@@ -1,24 +1,16 @@
 if Meteor.isClient
     Template.view_sections.onCreated ->
         @autorun -> Meteor.subscribe 'usernames'
-        @autorun -> Meteor.subscribe 'sections'
+        @autorun -> Meteor.subscribe 'child_docs', FlowRouter.getParam('doc_id')
     
     Template.view_section.onCreated ->
         @autorun -> Meteor.subscribe 'child_docs'
     
-    Template.view_section.onRendered ->
-        Meteor.setTimeout =>
-            $('.menu .item').tab()
-        , 1000
     
     Template.edit_section.onRendered ->
         Meteor.setTimeout =>
             $('.menu .item').tab()
         , 1000
-    
-    Template.view_sections.helpers
-        sections: -> Docs.find {type: 'section'}, sort: number:1
-    
     
                 
     Template.view_sections.events

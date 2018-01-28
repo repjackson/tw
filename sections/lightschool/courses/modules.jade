@@ -1,6 +1,6 @@
 template(name='view_modules')
     .ui.stackable.padded.grid
-        .row.header-background(style=background_style)
+        .row
             .three.wide.center.aligned.column
             .ten.wide.column
                 h1.ui.inverted.center.aligned.header 
@@ -10,14 +10,20 @@ template(name='view_modules')
                 // if can_edit
                 //     +edit_button
         .row
-            .ten.wide.centered.column
-                .ui.segments
-                    each modules
-                        .ui.segment
-                            a.ui.header(href="/view/#{_id}") 
-                                +icon48 name=icon_class
-                                |#{number}:
-                                |#{title}
+            +sol_grid
+
+
+
+
+            // .sixteen.wide.centered.column
+            //     .ui.centered.cards
+            //         each children
+            //             +grid_item
+                        // .ui.segment
+                        //     a.ui.header(href="/view/#{_id}") 
+                        //         +icon48 name=icon_class
+                        //         |#{number}:
+                        //         |#{title}
 
 template(name='module_item')
     .item
@@ -31,7 +37,7 @@ template(name='module_item')
 template(name='view_module')
     with module
         .ui.stackable.padded.grid
-            .row.header-background(style=background_style)
+            .row
                 .three.wide.center.aligned.column
                 .ten.wide.column
                     h1.ui.inverted.center.aligned.header 
@@ -41,37 +47,7 @@ template(name='view_module')
                     if can_edit
                         +edit_button
             .row
-                .centered.twelve.wide.column
-                    // .ui.top.attached.tabular.two.item.menu
-                    //     a.active.item(data-tab="sales") Sales
-                    //     a.item(data-tab="enrolled") Enrolled
-                    // .ui.bottom.attached.active.tab.segment(data-tab="sales")
-                    //     |!{sales.content}
-                    // .ui.bottom.attached.tab.segment(data-tab="enrolled")
-                    //     .ui.header welcome stuff
-                    //     .ui.header modules
-                    +section_list
-                    // +child_docs
-
-
-
-template(name='section_list')
-    h2.ui.header Sections
-    .ui.segments
-        each sections
-            .ui.segment
-                a.ui.header(href="/view/#{_id}") 
-                    +icon48 name=icon_class
-                    |#{number}: #{title}
-                if is_admin
-                    +edit_type
-
-
-
-
-
-
-
+                +sol_grid
 
 template(name='edit_module')
     with module

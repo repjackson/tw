@@ -1,7 +1,7 @@
 if Meteor.isClient
     Template.view_modules.onCreated ->
         @autorun -> Meteor.subscribe 'usernames'
-        @autorun -> Meteor.subscribe 'modules'
+        @autorun => Meteor.subscribe 'child_docs', @data._id
     
     Template.view_module.onCreated ->
         @autorun -> Meteor.subscribe 'child_docs'
@@ -38,15 +38,6 @@ if Meteor.isClient
             module=Docs.findOne FlowRouter.getParam('doc_id')
             sales = Docs.findOne {parent_id:module._id, type:'module_sales'}
         
-        
-    Template.section_list.onCreated ->
-        @autorun -> Meteor.subscribe 'module_modules', FlowRouter.getParam('doc_id')
-        
-    Template.section_list.helpers
-        sections: ->
-            module = Docs.findOne FlowRouter.getParam('doc_id')
-            Docs.find {parent_id: module._id}, sort:number:1
-
         
         
         

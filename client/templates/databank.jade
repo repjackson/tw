@@ -26,27 +26,17 @@ template(name='view_databank')
                         +databank_card
 
 template(name='edit_databank')
-    .ui.stackable.padded.grid
-        .centered.row
-            h1.ui.header 
-                +icon96 name=icon_class classes='ui image'
-                |Edit #{title}
-        .row
-            .twelve.wide.column
-                +edit_title
-                +edit_icon
-                // +edit_child_type
-                +edit_child_fields
-            .four.wide.column
-                +save_link
-                +edit_type
-                +edit_number
-                +published
+    +edit_child_fields
 
 template(name='databank_card')
     .ui.fluid.card
         // each parent.child_fields
         //     .ui.label #{this}
+        .content    
+            if title
+                .header 
+                    +icon48 name=icon_class classes='ui mini inline spaced image'
+                    |#{title}
         .content
             each parent.child_fields
                 +Template.dynamic template=field_view_template data=..
@@ -91,23 +81,19 @@ template(name='databank_card')
                 
 
 template(name='edit_databank_item')
-    .ui.stackable.padded.grid
-        .centered.row
-            h1.ui.center.aligned.header Edit #{parent.title} Item
-        .row
-            .twelve.wide.column
-                .ui.form
-                    each parent.child_fields
-                        +Template.dynamic template=field_edit_template data=doc
-            .four.wide.column
-                +save_button
-                +delete_button
-                +published
+    .ui.form
+        each parent.child_fields
+            +Template.dynamic template=field_edit_template data=doc
 
 template(name='view_databank_item')
     .ui.stackable.padded.grid
         .centered.row
-            h1.ui.center.aligned.header View #{parent.title} Item
+            h1.ui.center.aligned.header 
+                if title
+                    |#{title}
+                else
+                    |View #{parent.title} Item
+                
         .row
             .twelve.wide.column
                 .ui.form
@@ -126,7 +112,8 @@ template(name='view_databank_item')
                     +watson_keywords
                 else 
                     if can_edit
-                        +call_watson
+                        if content
+                            +call_watson
                 .ui.dividing.header Actions
                 +bookmark_button
                 // +reflect_button

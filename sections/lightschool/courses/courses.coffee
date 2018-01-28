@@ -1,10 +1,6 @@
 if Meteor.isClient
-    FlowRouter.route '/courses', action: ->
-        BlazeLayout.render 'layout', 
-            main: 'view_courses'
-    
-    Template.view_courses.onCreated ->
-        # @autorun -> Meteor.subscribe 'usernames'
+    Template.view_course.onCreated ->
+        @autorun => Meteor.subscribe 'child_docs', @data._id
     
     Template.view_course.onRendered ->
         Meteor.setTimeout =>
@@ -33,17 +29,21 @@ if Meteor.isClient
             course=Docs.findOne FlowRouter.getParam('doc_id')
             sales = Docs.findOne {parent_id:course._id, type:'course_sales'}
         
+        welcome_doc: ->
+            course=Docs.findOne FlowRouter.getParam('doc_id')
+            Docs.findOne {_id:'WpdcfCz5GHs6qQD9R'}
         
-    Template.course_module_overview.onCreated ->
-        @autorun -> Meteor.subscribe 'course_modules', FlowRouter.getParam('doc_id')
         
-    Template.course_module_overview.helpers
-        modules: ->
-            course = Docs.findOne FlowRouter.getParam('doc_id')
-            modules_doc = Docs.findOne {type:'modules', parent_id:course._id}
-            Docs.find { 
-                parent_id: modules_doc._id },
-                sort: number: 1
+    # Template.course_module_overview.onCreated ->
+    #     @autorun -> Meteor.subscribe 'course_modules', FlowRouter.getParam('doc_id')
+        
+    # Template.course_module_overview.helpers
+    #     modules: ->
+    #         course = Docs.findOne FlowRouter.getParam('doc_id')
+    #         modules_doc = Docs.findOne {type:'modules', parent_id:course._id}
+    #         Docs.find { 
+    #             parent_id: modules_doc._id },
+    #             sort: number: 1
 
         
         
@@ -74,14 +74,14 @@ if Meteor.isClient
                     
                     
                     
-if Meteor.isServer
-    Meteor.publish 'course_modules', (course_id)->
-        course = Docs.findOne course_id
-        modules_doc = Docs.findOne {type:'modules', parent_id:course._id}
-        if modules_doc
-            Docs.find
-                # site: Meteor.settings.public.site
-                parent_id: modules_doc._id
+# if Meteor.isServer
+#     Meteor.publish 'course_modules', (course_id)->
+#         course = Docs.findOne course_id
+#         modules_doc = Docs.findOne {type:'modules', parent_id:course._id}
+#         if modules_doc
+#             Docs.find
+#                 # site: Meteor.settings.public.site
+#                 parent_id: modules_doc._id
             
             
             

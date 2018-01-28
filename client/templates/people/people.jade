@@ -1,19 +1,24 @@
 template(name='view_people')
-    .ui.stackable.padded.grid
-        .four.wide.column
-            .ui.dividing.header
-                +icon48 name='hashtag' classes='ui inline image'
-                | Browse Tags
-            +people_cloud
-        .twelve.wide.column
-            +doc_content tags='people cloud,blurb'
-            .ui.hidden.divider
-            .ui.centered.stackable.cards
-                each people
-                    +person
-            // .ui.stackable.grid
-            //     // .four.wide.column
-            //     .eleven.wide.column
+    .ui.container
+        h1.ui.center.aligned.header
+            +icon96 name=icon_class classes='ui inline image'
+            |#{title}
+        // .ui.stackable.padded.grid
+        //     .four.wide.column
+                // .ui.dividing.header
+                //     +icon48 name='hashtag' classes='ui inline image'
+                //     | Browse Tags
+        +people_cloud
+        .ui.hidden.divider
+            // .twelve.wide.column
+                // +doc_content tags='people cloud,blurb'
+                // .ui.hidden.divider
+        .ui.centered.stackable.cards
+            each people
+                +person
+                // .ui.stackable.grid
+                //     // .four.wide.column
+                //     .eleven.wide.column
 
 
 template(name='person')
@@ -22,7 +27,7 @@ template(name='person')
             a(href="/profile/#{username}")
                 img.ui.fluid.rounded.image(src="{{c.url profile.image_id width=400 height=400 gravity='face' crop='fill'}}")
         .content
-            .header
+            .center.aligned.header
                 a(href="/profile/#{username}")
                     if profile.first_name
                         | #{profile.first_name}
@@ -32,11 +37,11 @@ template(name='person')
                         | #{username}
                     +staus_indicator
             if profile.location
-                .meta
+                .center.aligned.meta
                     | #{profile.location}
-        .extra.content
-            +color_dots
-        .extra.content
-            each ten_tags
-                .ui.compact.tiny.circular.button.user_tag(class=person_tag_class) #{this}
+            .center.aligned.meta
+                +color_dots
+        // .extra.content
+        //     each ten_tags
+        //         .ui.compact.tiny.circular.button.user_tag(class=person_tag_class) #{this}
 

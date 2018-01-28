@@ -4,12 +4,12 @@
     //     i.search.icon
     //     +inputAutocomplete settings=settings id="search" class="" autocomplete="off" placeholder='Search...'
     if selected_people_tags
-        #clear_tags.ui.teal.circular.icon.big.button
+        #clear_tags.ui.white.inverted.circular.icon.big.button
             i.remove.icon
         each selected_people_tags
-            .unselect_tag.ui.circular.teal.big.button
+            .unselect_tag.ui.circular.white.inverted.big.button
                 strong #{this}
     each all_people_tags
-        .ui.circular.basic.button.select_tag(class=cloud_tag_class) #{this.name}
+        .ui.circular.basic.white.inverted.button.select_tag(class=cloud_tag_class) #{this.name}
                 // small #{this.count}
                 // small [#{this.index}]

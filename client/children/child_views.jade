@@ -236,17 +236,36 @@ template(name='card_view')
                 +published
                 +session_edit_button
 
+template(name='sol_grid')
+    .ui.stackable.centered.four.column.padded.grid
+        each children
+            .column
+                a.ui.icon.center.shadowed.aligned.header(href="/view/#{_id}")
+                    i.icon
+                        +icon96 name=icon_class
+                    h2 #{title}
+
 
 
 
 template(name='view_nav')
-    // +parent_link
-    .ui.center.aligned.header 
-        +icon48 name=icon_class
-        |#{title}
-    .ui.centered.cards
+    .ui.stackable.padded.grid
+        .row
+            .three.wide.center.aligned.column
+            .ten.wide.column
+                h1.ui.inverted.center.aligned.header 
+                    +icon96 name=icon_class classes='ui inline image'
+                    |#{title}
+            .three.wide.center.aligned.column
+                if can_edit
+                    +edit_button
+    .ui.stackable.centered.four.column.padded.grid
         each children
-            +grid_item
+            .column
+                a.ui.icon.center.shadowed.aligned.header(href="/view/#{_id}")
+                    i.icon
+                        +icon96 name=icon_class
+                    h2 #{title}
         
 
 

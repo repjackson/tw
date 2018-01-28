@@ -6,18 +6,18 @@ Template.people_cloud.onCreated ->
 Template.people_cloud.helpers
     all_people_tags: ->
         user_count = Meteor.users.find(_id: $ne:Meteor.userId()).count()
-        if 0 < user_count < 3 then People_tags.find({ count: $lt: user_count }, {limit:20}) else People_tags.find({}, limit:20)
+        if 0 < user_count < 3 then People_tags.find({ count: $lt: user_count }, {limit:42}) else People_tags.find({}, limit:42)
         # People_tags.find()
 
     selected_people_tags: -> selected_people_tags.array()
 
     cloud_tag_class: ->
         button_class = switch
-            when @index <= 5 then 'big'
-            when @index <= 10 then 'large'
-            when @index <= 15 then ''
-            when @index <= 20 then 'small'
-            when @index <= 25 then 'tiny'
+            when @index <= 10 then 'big'
+            when @index <= 20 then 'large'
+            when @index <= 30 then ''
+            when @index <= 40 then 'small'
+            when @index <= 50 then 'tiny'
         return button_class
     
     settings: -> {

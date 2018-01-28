@@ -1,10 +1,3 @@
-FlowRouter.route '/people', action: (params) ->
-    BlazeLayout.render 'layout',
-        # sub_nav: 'member_nav'
-        main: 'view_people'
-
-
-
 Template.view_people.onCreated ->
     @autorun -> Meteor.subscribe('people', selected_people_tags.array())
 Template.person.onCreated ->
@@ -19,7 +12,7 @@ Template.view_people.helpers
             }, 
             sort:
                 tag_count: 1
-            limit: 10
+            limit: 20
 
 
 Template.person.events

@@ -224,6 +224,32 @@ Template.edit_child_fields.events
         else
             Docs.update doc._id,
                 $set: "child_fields": []
+     
+     
+                
+Template.select_template.onCreated ->
+    Meteor.subscribe 'templates'
+            
+Template.select_template.helpers
+    templates: ->
+        Docs.find
+            type: 'template'
+    
+    child_field_toggle_class: ->
+        doc = Docs.findOne FlowRouter.getParam('doc_id')
+        if @slug is doc.template then 'blue' else 'basic'
+
+Template.select_template.events
+    'click .select_template': ->
+        doc = Docs.findOne FlowRouter.getParam('doc_id')
+        if doc.template 
+            Docs.update doc._id,
+                $set: template: @slug
+        else
+            Docs.update doc._id,
+                $set: template: ''
+ 
+ 
                 
 Template.child_authors.onCreated ->
     # console.log @data
