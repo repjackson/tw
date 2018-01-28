@@ -33,11 +33,7 @@ template(name='view_doc')
         .header-backgrou
             .ui.padded.stackable.grid
                 .centered.row
-                    .three.wide.column
-                        // .ui.button hi
-                    .ten.wide.center.aligned.column
-                        +parent_link
-                    .three.wide.column
+                    .three.wide.center.aligned.column
                         if isInRole 'admin'
                             a#toggle_admin_mode.ui.basic.icon.white.inverted.circular.button(href='#' data-position="bottom center" data-content="Toggle Admin Mode") 
                                 .ui.image
@@ -45,17 +41,24 @@ template(name='view_doc')
                                         +icon48 name='user-shield' classes='ui image'
                                     else
                                         +dots50 name='user-shield' classes='ui image'
+                    .ten.wide.center.aligned.column
+                        unless is_site
+                            +parent_link
+                        else
+                            .ui.small.image
+                                +view_image_id
+                    .three.wide.center.aligned.column
                         if currentUser
-                            a.ui.icon.basic.white.inverted.circular.button(href="/profile/#{currentUser.username}" class="{{isActiveRoute name='view_profile'}}" data-position="bottom center" data-content="Profile")
-                                if currentUser.profile.image_id
-                                    img.ui.avatar.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
-                                else
-                                    i.user.icon
-                                // span.mobile.hidden    
-                                //     if currentUser.name
-                                //         | #{currentUser.name}
-                                //     else
-                                //         | #{currentUser.username}
+                            .ui.horizontal.list
+                                .item
+                                    a.ui.icon.basic.white.inverted.circular.button(href="/karma" data-position="bottom center" data-tooltip='Karma')
+                                        +icon48 name='diamond' classes='ui mini inline image'
+                                .item
+                                    a.ui.icon.basic.white.inverted.circular.button(href="/profile/#{currentUser.username}" data-position="bottom center" data-tooltip=currentUser.username)
+                                        if currentUser.profile.image_id
+                                            img.ui.mini.image(src="{{c.url currentUser.profile.image_id width=60 height=60 gravity='face' crop='fill'}}")
+                                        else
+                                            i.user.icon
                         else
                             a.ui.icon.basic.white.inverted.circular.button(href='/sign-in') 
                                 +icon48 name='login-rounded-down' classes='ui mini inline spaced image'

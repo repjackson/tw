@@ -49,9 +49,6 @@ Template.registerHelper 'can_edit', () ->  Meteor.userId() is @author_id or Role
 # Template.registerHelper 'zen_mode', () -> Session.get 'zen_mode'
 Template.registerHelper 'admin_mode', () ->  Session.get 'admin_mode'
 
-Template.registerHelper 'isActivePath', () ->  Session.get 'admin_mode'
-Template.registerHelper 'isActiveRoute', () ->  Session.get 'admin_mode'
-
 # Template.registerHelper 'site_name', () ->  Meteor.settings.public.site.slug
 
 Template.registerHelper 'site_doc', () ->  Docs.findOne type:'site_doc'

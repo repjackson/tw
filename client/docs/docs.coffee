@@ -33,9 +33,9 @@ Template.view_doc.onRendered ->
 Template.view_doc.helpers
     doc: -> Docs.findOne FlowRouter.getParam('doc_id')
     view_type_template: -> "view_#{@type}"
-    show_parent_link: ->
+    is_site: ->
         doc = Docs.findOne FlowRouter.getParam('doc_id')
-        if doc.type is 'site' then false else true
+        if doc.type is 'site' then true else false
         
         
 Template.view_doc.events

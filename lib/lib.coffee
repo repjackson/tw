@@ -156,16 +156,16 @@ Meteor.methods
     add: (tags=[])->
         id = Docs.insert {}
         return id
-    add_checkin: (tags=[])->
-        id = Docs.insert
-            tags: tags
-            type: 'checkin'
-        return id
+    # add_checkin: (tags=[])->
+    #     id = Docs.insert
+    #         tags: tags
+    #         type: 'checkin'
+    #     return id
 
 
-    update_rating: (session_id, rating, question_id)->
-        Docs.update {_id:session_id,  "ratings.question_id": question_id},
-            $set: "ratings.$.rating": rating
+    # update_rating: (session_id, rating, question_id)->
+    #     Docs.update {_id:session_id,  "ratings.question_id": question_id},
+    #         $set: "ratings.$.rating": rating
 
 
     calculate_completion: (doc_id) ->
@@ -244,23 +244,6 @@ FlowRouter.notFound =
 #     action: ->
 #         BlazeLayout.render 'layout', 
 #             main: 'home'
-
-
-FlowRouter.route '/contact', action: (params) ->
-    BlazeLayout.render 'layout',
-        main: 'contact'
-
-FlowRouter.route '/about', action: (params) ->
-    BlazeLayout.render 'layout',
-        main: 'about'
-
-
-
-Meteor.users.helpers
-    course_ob: -> 
-        Docs.find
-            type: 'course'
-            _id: $in: @courses
 
 
 

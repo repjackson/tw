@@ -1,6 +1,7 @@
 template(name='view_page')
     .ui.container
-        |!{content}
+        .shadowed-box
+            |!{content}
         if can_edit
             +edit_button
         

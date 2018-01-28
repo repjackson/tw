@@ -5,7 +5,7 @@ template(name='view_profile')
                 a.ui.basic.icon.big.circular.button(href="/")
                     i.home.icon
         .centered.row
-            .twelve.wide.column
+            .twelve.wide.column.shadowed-box
                 with currentUser
                     img.ui.small.centered.rounded.image(src="{{c.url profile.image_id width=400 height=400 gravity='face' crop='fill'}}")
                     .ui.center.aligned.header
@@ -39,6 +39,6 @@ template(name='view_profile')
                         |#{profile.if_not_working}
         if is_user
             .ui.basic.center.aligned.segment
-                #logout.ui.large.red.button Log Out
+                #logout.ui.big.center.aligned.red.button Log Out
             
             

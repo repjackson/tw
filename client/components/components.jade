@@ -232,13 +232,13 @@ template(name='published_status')
             
 template(name='save_button')
     if tags
-        a.ui.fluid.basic.circular.button(data-position='bottom center' data-tooltip='Save' href="/view/#{_id}")
+        a.ui.fluid.basic.circular.white.inverted.button(data-position='bottom center' data-tooltip='Save' href="/view/#{_id}")
             +icon48 name='checkmark' classes='ui mini inline image'
     else
-        .ui.fluid.basic.disabled.circular.button Add Tags to Save
+        .ui.fluid.basic.disabled.circular.white.inverted.button Add Tags to Save
 
 template(name='save_link')
-    a.ui.fluid.basic.circular.button(data-position='bottom center' data-tooltip='Save' href="/view/#{_id}")
+    a.ui.fluid.basic.circular.white.inverted.button(data-position='bottom center' data-tooltip='Save' href="/view/#{_id}")
         +icon48 name='checkmark' classes='ui mini inline image'
 
 

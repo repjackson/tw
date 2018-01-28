@@ -243,8 +243,8 @@ template(name='sol_grid')
                 a.ui.icon.center.shadowed.aligned.header(href="/view/#{_id}")
                     i.icon
                         +icon96 name=icon_class
-                    h2 #{title}
-
+                    h2.ui.header.sol-header #{title}
+                    // .ui.hidden.divider
 
 
 
@@ -253,7 +253,7 @@ template(name='view_nav')
         .row
             .three.wide.center.aligned.column
             .ten.wide.column
-                h1.ui.inverted.center.aligned.header 
+                h1.ui.inverted.center.aligned.header.shadowed-text
                     +icon96 name=icon_class classes='ui inline image'
                     |#{title}
             .three.wide.center.aligned.column
@@ -265,8 +265,8 @@ template(name='view_nav')
                 a.ui.icon.center.shadowed.aligned.header(href="/view/#{_id}")
                     i.icon
                         +icon96 name=icon_class
-                    h2 #{title}
-        
+                    h2.ui.header.sol-header #{title}
+                    // .ui.hidden.divider        
 
 
 template(name='grid_item')

@@ -2,21 +2,25 @@ template(name='view_site')
     if slider.enabled
         unless currentUser
             +home
-        .ui.hidden.divider
-    .ui.padded.stackable.grid
-        .row
-            .three.wide.center.aligned.column
-            .ten.wide.center.aligned.column
-                h1.ui.center.aligned.header 
-                    +icon48 name=icon_class
-                    |#{title}
-            .three.wide.center.aligned.column
-                if can_edit
-                    +edit_button
-        .row
-            .ui.centered.cards
-                each children
-                    +site_card
+            .ui.hidden.divider
+    // .ui.padded.stackable.grid
+        // .row
+        //     .three.wide.center.aligned.column
+        //     .ten.wide.center.aligned.column
+        //         h1.ui.center.aligned.header 
+        //             +icon48 name=icon_class
+        //             |#{title}
+        //     .three.wide.center.aligned.column
+        //         if can_edit
+        //             +edit_button
+    .ui.stackable.centered.four.column.padded.grid
+        each children
+            .column
+                a.ui.icon.center.shadowed.aligned.header(href="/view/#{_id}")
+                    i.icon
+                        +icon96 name=icon_class
+                    h2.ui.header.sol-header #{title}
+                    // .ui.hidden.divider
         
 template(name='edit_site')
     // +nav

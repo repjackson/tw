@@ -34,7 +34,6 @@ momentjs:moment
 alanning:roles
 reactive-var@1.0.11
 kevohagan:sweetalert
-raix:handlebar-helpers
 matb33:collection-hooks
 themeteorchef:bert
 mizzao:autocomplete
@@ -44,7 +43,6 @@ perak:codemirror
 reywood:publish-composite
 mobile-experience@1.0.5
 underscore@1.0.10
-tmeasday:publish-counts
 meteorhacks:ssr
 francocatena:status
 mizzao:user-status
@@ -52,5 +50,4 @@ dynamic-import@0.2.0
 ecmascript@0.9.0
 email@1.2.3
 stylus@2.513.13
-zimme:active-route
 mdg:meteor-apm-agent

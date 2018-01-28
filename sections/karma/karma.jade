@@ -2,7 +2,7 @@ template(name='karma')
     .ui.stackable.padded.grid
         .centered.row
             .four.wide.center.aligned.column
-                a.ui.basic.circular.small.button(href='/transactions') 
+                a.ui.basic.circular.small.white.inverted.button(href='/transactions') 
                     +icon48 name='handshake' classes='ui mini inline image'
                     | Transactions
             .eight.wide.center.aligned.column
@@ -10,7 +10,7 @@ template(name='karma')
                     +icon96 name='diamond'
                     |#{currentUser.points} Karma
             .four.wide.center.aligned.column
-                a.ui.basic.circular.small.button(href='/shop') 
+                a.ui.basic.circular.small.white.inverted.button(href='/shop') 
                     +icon48 name='shop' classes='ui mini spaced image'
                     | Shop
                     // +icon48 name='rotate-left' classes='ui mini spaced image'
@@ -18,7 +18,7 @@ template(name='karma')
                 //     +icon48 name='handshake' classes='ui mini spaced image'
                 //     | Transactions
                 //     +icon48 name='rotate-left' classes='ui mini spaced image'
-        .row
+        .centered.row.shadowed-box
             .four.wide.column
                 +karma_cloud
                 // .ui.dividing.header Actions
@@ -58,12 +58,12 @@ template(name='karma')
                                                     |#{this.name}
                                                 
                                     +view_full_button
-            .four.wide.column
-                .ui.dividing.header
-                    +icon48 name='sports-mode'
-                    |Actions
-                if isInRole 'admin'
-                    a.ui.basic.circular.large.button(href='/karma/send')
-                        +icon48 name='donate' classes='ui mini inline image'
-                        | Give Karma
+            // .four.wide.column
+            //     .ui.dividing.header
+            //         +icon48 name='sports-mode'
+            //         |Actions
+            //     if isInRole 'admin'
+            //         a.ui.basic.circular.large.button(href='/karma/send')
+            //             +icon48 name='donate' classes='ui mini inline image'
+            //             | Give Karma
                     

@@ -488,7 +488,7 @@ Template.edit_content.helpers
                 #   'insertVideo'
                 #   'embedly'
                 #   'insertFile'
-                #   'insertTable'
+                  'insertTable'
                 #   '|'
                   'emoticons'
                 #   'specialCharacters'
