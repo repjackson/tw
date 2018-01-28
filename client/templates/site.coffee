@@ -1,5 +1,7 @@
 Template.edit_site.onCreated ->
     @autorun -> Meteor.subscribe('child_docs', FlowRouter.getParam('doc_id'))
+Template.view_site.onCreated ->
+    @autorun -> Meteor.subscribe('child_docs', FlowRouter.getParam('doc_id'))
 Template.edit_site.onRendered ->
     Meteor.setTimeout =>
         $('.menu .item').tab()

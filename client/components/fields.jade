@@ -111,15 +111,12 @@ template(name='edit_tags')
 
 
 template(name='view_tags')
-    // .ui.dividing.header
-    //     +icon48 name='hashtag' classes='ui inline mini image'
-    //     |Tags
-    +icon48 name='hashtag' classes='ui inline mini image'
-    each tags
-        .ui.basic.label #{this}
+    div
+        +icon48 name='hashtag' classes='ui inline mini image' tootip='Theme Tags'
+        each tags
+            .ui.basic.label #{this}
 
             
-
 template(name='edit_location_tags')
     .ui.header 
         +icon48 name='sofa' classes='ui mini spaced image'
@@ -136,13 +133,10 @@ template(name='edit_location_tags')
 
 
 template(name='view_location_tags')
-    .ui.dividing.header 
-        +icon48 name='sofa' classes='ui mini inline image'
-        |Location Tags
-    each location_tags
-        .ui.basic.large.label.location_tag #{this}
-
-
+    div
+        +icon48 name='sofa' classes='ui mini inline image' tootip='Location Tags'
+        each location_tags
+            .ui.basic.label.location_tag #{this}
 
 
 
@@ -161,11 +155,10 @@ template(name='edit_intention_tags')
                 |#{this}
 
 template(name='view_intention_tags')
-    .ui.dividing.header 
-        +icon48 name='sofa' classes='ui mini inline image'
-        |Intention Tags
-    each intention_tags
-        .ui.basic.large.label.intention_tag #{this}
+    div
+        +icon48 name='sofa' classes='ui mini inline image' tootip='Intention Tags'
+        each intention_tags
+            .ui.basic.label.intention_tag #{this}
 
 
 template(name='edit_dollar_price')

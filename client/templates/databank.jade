@@ -40,6 +40,7 @@ template(name='edit_databank')
             .four.wide.column
                 +save_link
                 +edit_type
+                +edit_number
                 +published
 
 template(name='databank_card')
@@ -57,10 +58,12 @@ template(name='databank_card')
             +voting
             +bookmark_button
             +resonate_button
-            +view_full_button
-            // +reflect_button
-        .content
-            +comments
+            +respond_button
+            .right.floated
+                +view_full_button
+        if child_count
+            .content
+                +response_list
         if favorite_count
             .content
                 strong
@@ -111,7 +114,7 @@ template(name='view_databank_item')
                     each parent.child_fields
                         +Template.dynamic template=field_view_template data=doc
                     if is_visible
-                        +comments
+                        +response_list
             .four.wide.column
                 +author_info
                 h3.ui.sub.header #{when}

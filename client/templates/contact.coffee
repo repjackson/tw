@@ -1,5 +1,5 @@
 if Meteor.isClient
-    Template.contact.events
+    Template.view_contact.events
         'click #send_contact_submission': ->
             name = $('#name').val()
             email = $('#email').val()

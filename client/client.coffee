@@ -93,7 +93,8 @@ Template.registerHelper 'long_date', () -> moment(@timestamp).format("dddd, MMMM
 
 Template.registerHelper 'tag_class', ()-> if @valueOf() in selected_theme_tags.array() then 'blue' else 'basic'
 
-Template.registerHelper 'background_style', () -> "background-image:url('https://res.cloudinary.com/facet/image/upload/c_fit,w_500/rczjotzxkirmg4g83axa')"
+# Template.registerHelper 'background_style', () -> "background-image:url('https://res.cloudinary.com/facet/image/upload/c_fit/rczjotzxkirmg4g83axa')"
+Template.registerHelper 'background_style', () -> "background-image:url('https://res.cloudinary.com/facet/image/upload/c_fit,w_900/drlclznxvdcaudmelygx')"
 
 
 

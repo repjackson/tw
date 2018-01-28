@@ -229,4 +229,13 @@ Template.child_authors.onCreated ->
     # console.log @data
     @autorun => Meteor.subscribe 'usernames'
     @autorun => Meteor.subscribe 'child_docs', @data._id
-    
+
+
+Template.response_list.onCreated ->
+    @autorun => Meteor.subscribe 'child_docs', @data._id
+
+Template.response_list.helpers
+    responses: ->
+        Docs.find
+            parent_id: @_id
+

@@ -84,7 +84,7 @@ Docs.helpers
     children: -> 
         Docs.find {parent_id: @_id}, 
             sort:
-                number:-1
+                number:1
                 timestamp:-1
     responded: -> 
         response = Docs.findOne

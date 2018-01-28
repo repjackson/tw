@@ -10,29 +10,30 @@ template(name='view_document')
 
 template(name='view_doc')
     with doc
-        .ui.padded.stackable.grid
-            .centered.row
-                .three.wide.column
-                    // .ui.button hi
-                .ten.wide.center.aligned.column
-                    +parent_link
-                .three.wide.column
-                    if currentUser
-                        a.ui.icon.basic.circular.button(href="/profile/#{currentUser.username}" class="{{isActiveRoute name='view_profile'}}" data-position="bottom center" data-content="Profile")
-                            if currentUser.profile.image_id
-                                img.ui.avatar.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
-                            else
-                                i.user.icon
-                            // span.mobile.hidden    
-                            //     if currentUser.name
-                            //         | #{currentUser.name}
-                            //     else
-                            //         | #{currentUser.username}
-                    else
-                        a.ui.icon.basic.circular.button(href='/sign-in') 
-                            +icon48 name='login-rounded-down' classes='ui mini inline spaced image'
-                            // | Sign In
-        +Template.dynamic template=view_type_template
-        // if is_admin
-        //     +edit_type
-        //     +child_docs
+        .header-background.fixedbg(style=background_style)
+            .ui.padded.stackable.grid
+                .centered.row
+                    .three.wide.column
+                        // .ui.button hi
+                    .ten.wide.center.aligned.column
+                        +parent_link
+                    .three.wide.column
+                        if currentUser
+                            a.ui.icon.basic.circular.button(href="/profile/#{currentUser.username}" class="{{isActiveRoute name='view_profile'}}" data-position="bottom center" data-content="Profile")
+                                if currentUser.profile.image_id
+                                    img.ui.avatar.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+                                else
+                                    i.user.icon
+                                // span.mobile.hidden    
+                                //     if currentUser.name
+                                //         | #{currentUser.name}
+                                //     else
+                                //         | #{currentUser.username}
+                        else
+                            a.ui.icon.basic.circular.button(href='/sign-in') 
+                                +icon48 name='login-rounded-down' classes='ui mini inline spaced image'
+                                // | Sign In
+            +Template.dynamic template=view_type_template
+            // if is_admin
+            //     +edit_type
+            //     +child_docs

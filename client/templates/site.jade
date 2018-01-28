@@ -3,15 +3,20 @@ template(name='view_site')
         unless currentUser
             +home
         .ui.hidden.divider
-    .row
-        h1.ui.center.aligned.header 
-            +icon48 name=icon_class
-            |#{title}
-            if can_edit
-                +edit_doc_link
-        .ui.centered.cards
-            each children
-                +site_card
+    .ui.padded.stackable.grid
+        .row
+            .three.wide.center.aligned.column
+            .ten.wide.center.aligned.column
+                h1.ui.center.aligned.header 
+                    +icon48 name=icon_class
+                    |#{title}
+            .three.wide.center.aligned.column
+                if can_edit
+                    +edit_button
+        .row
+            .ui.centered.cards
+                each children
+                    +site_card
         
 template(name='edit_site')
     // +nav
@@ -27,6 +32,7 @@ template(name='edit_site')
             +edit_subtitle
             +edit_image_id
             +edit_image_url
+            +edit_banner_image_id
             +edit_tags
             +edit_content
         .ui.bottom.attached.tab.segment(data-tab="nav")
@@ -61,6 +67,6 @@ template(name='site_card')
                 +icon96 name=icon_class
             .ui.hidden.divider
             a.header(href="/view/#{_id}")
-                if number
-                    |#{number}: 
+                // if number
+                //     |#{number}: 
                 |#{title}
