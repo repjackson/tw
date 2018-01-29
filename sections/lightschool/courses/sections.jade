@@ -88,7 +88,7 @@ template(name='view_section')
 
 template(name='section_questions')
     h2.ui.header #{child_count} Questions
-    .ui.styled.fluid.accordion
+    .ui.styled.fluid.question_accordion.accordion
         each questions
             +section_question
 
@@ -100,23 +100,30 @@ template(name='section_question')
             if is_admin
                 small #{child_count} answers
                 +child_authors
+            i.dropdown.icon
     .content
+        |!{content}
         unless is_admin
-            |!{content}
-            |#{text}
-            .ui.header
-                // i.unlock.icon
-                |#{child_count} Published Answers
-            .ui.segments
-                each published_answers
-                    +answer
+            +my_answer
+            .published_answers.styled.accordion
+                .title
+                    i.unlock.fitted.icon
+                    |#{child_count} Published Answers
+                    i.dropdown.icon
+                .content
+                    .ui.segments
+                        each published_answers
+                            +answer
         if is_admin
-            .ui.header 
-                i.lock.icon
-                |Private Answers
-            .ui.segments
-                each private_answers
-                    +answer
+            .private_answers.styled.accordion
+                .title
+                    i.lock.fitted.icon
+                    |Private Answers
+                    i.dropdown.icon
+                .content
+                    .ui.segments
+                        each private_answers
+                            +answer
             +edit_button
             +view_full_button
 
@@ -128,9 +135,9 @@ template(name='edit_section_question')
         +edit_content
 
 template(name='answer')            
-    .ui.segment
+    .ui.segment(class=published_class)
         |!{content}
-        |#{body}
+        // |#{body}
         div
             +author_info
             |#{when}
@@ -175,3 +182,14 @@ template(name='edit_section')
                         i.trash.icon
 
 
+
+template(name='my_answer')
+    with answer
+        .ui.segment(class=published_class)
+            .ui.top.left.attached.basic.label Your Answer
+            if is_editing
+                +edit_content
+                +published
+            else
+                +view_content
+            +session_edit_button

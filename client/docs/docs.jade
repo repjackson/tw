@@ -4,22 +4,25 @@ template(name='edit_doc')
             .centered.row
                 .three.wide.center.aligned.column
                     +delete_button
+                    +admin_toggle
                 .ten.wide.center.aligned.column
                     h1.ui.header
-                        +icon96 name=icon_class classes='ui image'
+                        if icon_class
+                            +icon96 name=icon_class classes='ui image'
                         |Edit #{title}
                 .three.wide.center.aligned.column
                     +save_link
             .centered.row
                 .ten.wide.column
                     +Template.dynamic template=edit_type_template
-                .six.wide.column
-                    +edit_title
-                    +edit_icon
-                    // +edit_child_type
-                    +edit_number
-                    +published
-                    +edit_type
+                if is_admin
+                    .six.wide.column
+                        +edit_title
+                        +edit_icon
+                        // +edit_child_type
+                        +edit_number
+                        +published
+                        +edit_type
 
 
 template(name='view_document')
@@ -34,13 +37,7 @@ template(name='view_doc')
             .ui.padded.stackable.grid
                 .centered.row
                     .three.wide.center.aligned.column
-                        if isInRole 'admin'
-                            a#toggle_admin_mode.ui.basic.icon.white.inverted.circular.button(href='#' data-position="bottom center" data-content="Toggle Admin Mode") 
-                                .ui.image
-                                    if admin_mode
-                                        +icon48 name='user-shield' classes='ui image'
-                                    else
-                                        +dots50 name='user-shield' classes='ui image'
+                        +admin_toggle
                     .ten.wide.center.aligned.column
                         unless is_site
                             +parent_link

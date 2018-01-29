@@ -76,7 +76,12 @@ Template.registerHelper 'segment_class', () ->
 # Template.registerHelper 'card_class', () -> if Session.equals('admin_mode', true) then '' else 'noborders'
 
 Template.registerHelper 'read_segment_class', () -> if @read_by and Meteor.userId() in @read_by then 'raised green' else 'basic'
-Template.registerHelper 'ribbon_class', () -> if @published then 'blue' else 'basic'
+Template.registerHelper 'published_class', () -> 
+    # console.log @published
+    switch @published
+        when 0 then 'blue'
+        when 1 then 'green'
+        when -1 then 'red'
 
 Template.registerHelper 'from_now', () -> moment(@timestamp).fromNow()
 

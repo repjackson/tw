@@ -443,15 +443,16 @@ Template.edit_content.events
         # snippet = $('#snippet').val()
         # if snippet.length is 0
         #     snippet = $(html).text().substr(0, 300).concat('...')
-        doc_id = FlowRouter.getParam('doc_id')
+        # doc_id = FlowRouter.getParam('doc_id')
 
-        Docs.update doc_id,
+        Docs.update @_id,
             $set: content: html
                 
 
 Template.edit_content.helpers
     getFEContext: ->
-        @current_doc = Docs.findOne FlowRouter.getParam 'doc_id'
+        # @current_doc = Docs.findOne FlowRouter.getParam 'doc_id'
+        @current_doc = Docs.findOne @_id
         self = @
         {
             _value: self.current_doc.content
@@ -509,16 +510,16 @@ Template.edit_content.helpers
             toolbarButtonsXS: ['bold', 'italic', 'underline']
             imageInsertButtons: ['imageBack', '|', 'imageByURL']
             tabSpaces: false
-            height: 300
+            height: 200
         }
 
 Template.edit_transcript.events
     'blur .froala-container': (e,t)->
         html = t.$('div.froala-reactive-meteorized-override').froalaEditor('html.get', true)
         
-        doc_id = FlowRouter.getParam('doc_id')
+        # doc_id = FlowRouter.getParam('doc_id')
 
-        Docs.update doc_id,
+        Docs.update @_id,
             $set: transcript: html
                 
 

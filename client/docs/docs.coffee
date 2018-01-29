@@ -38,7 +38,7 @@ Template.view_doc.helpers
         if doc.type is 'site' then true else false
         
         
-Template.view_doc.events
+Template.admin_toggle.events
     'click #toggle_admin_mode': ->
         if Session.equals('admin_mode', true) then Session.set('admin_mode', false)
         else if Session.equals('admin_mode', false) then Session.set('admin_mode', true)

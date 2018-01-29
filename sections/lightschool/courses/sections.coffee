@@ -38,8 +38,17 @@ if Meteor.isClient
         #     $('.progress').progress()
         # , 2000
         Meteor.setTimeout ->
-            $('.ui.accordion').accordion()
+            $('.ui.question_accordion.accordion').accordion()
         , 2000
+                        
+    # Template.section_question.onRendered ->
+    #     # Meteor.setTimeout ->
+    #     #     $('.progress').progress()
+    #     # , 2000
+    #     Meteor.setTimeout ->
+    #         $('.ui.published_answers.accordion').accordion()
+    #         $('.ui.private_answers.accordion').accordion()
+    #     , 2000
                         
     Template.section_questions.helpers
         questions: ->
@@ -58,8 +67,11 @@ if Meteor.isClient
         
         
         
-    Template.edit_section.helpers
-        section: -> Docs.findOne FlowRouter.getParam('doc_id')
+    Template.my_answer.helpers
+        answer: -> 
+            Docs.findOne 
+                author_id: Meteor.userId()
+                parent_id:@_id
         
         
     Template.edit_section.events

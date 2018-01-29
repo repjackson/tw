@@ -328,3 +328,13 @@ template(name='session_edit_button')
     else
         .toggle_editing.ui.basic.icon.button
             i.pencil.icon
+            
+template(name='admin_toggle')            
+    if isInRole 'admin'
+        a#toggle_admin_mode.ui.basic.icon.white.inverted.circular.button(href='#' data-position="bottom center" data-content="Toggle Admin Mode") 
+            .ui.image
+                if admin_mode
+                    +icon48 name='user-shield' classes='ui image'
+                else
+                    +dots50 name='user-shield' classes='ui image'
+            
