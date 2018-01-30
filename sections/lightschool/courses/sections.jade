@@ -63,7 +63,10 @@ template(name='view_section')
                     +view_content
                     if transcript
                         +view_transcript
-                    +section_questions
+                    .center.aligned
+                        +mark_read_button
+                    if read
+                        +section_questions
                 .centered.three.wide.column
                     unless is_admin
                         if older_sibling
@@ -87,7 +90,7 @@ template(name='view_section')
 
 
 template(name='section_questions')
-    h2.ui.header #{child_count} Questions
+    h2.ui.center.aligned.header #{child_count} Questions
     .ui.styled.fluid.question_accordion.accordion
         each questions
             +section_question
@@ -108,12 +111,21 @@ template(name='section_question')
             .published_answers.styled.accordion
                 .title
                     i.unlock.fitted.icon
-                    |#{child_count} Published Answers
+                    |#{published_children_count} Published Answers
                     i.dropdown.icon
                 .content
-                    .ui.segments
+                    .ui.threaded.comments
                         each published_answers
                             +answer
+                            if has_children
+                                .ui.grid
+                                    .two.wide.column
+                                        .ui.vertical.divider
+                                    .fourteen.wide.column
+                                        .comments
+                                            each children
+                                                +answer
+                                
         if is_admin
             .private_answers.styled.accordion
                 .title
@@ -135,17 +147,43 @@ template(name='edit_section_question')
         +edit_content
 
 template(name='answer')            
-    .ui.segment(class=published_class)
-        |!{content}
+    .comment(class=published_class)
+        a.avatar
+            img(src="{{c.url author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+        .content
+            a.author 
+                |&nbsp;
+                |#{author.name}
+            .metadata
+                .date #{when}
+                if child_count
+                    .rating #{child_count} Responses
+                if upvoters
+                    .test #{upvoters.length} Thanks
+                        // each upvoted_users
+                        //     img.ui.avatar.image(src="{{c.url profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+                    
+            .text
+                +view_content
+            .actions
+                if is_author
+                    a.edit(href="/edit/#{_id}") Edit
+                else
+                    a.reply Reply
+                    a.thank 
+                        if up_voted
+                            strong Thanks!
+                        else 
+                            |Thank
+                    // a.give Give Karma
+                // +thanks_button
+                // +respond_button
+                
         // |#{body}
-        div
-            +author_info
-            |#{when}
-            +thanks_button
-            +respond_button
-            if child_count
-                |#{child_count} Responses
-            +view_full_button
+        // div
+        //     +author_info
+        //     |#{when}
+        //     +view_full_button
 
 
 
@@ -153,43 +191,30 @@ template(name='answer')
 
 
 template(name='edit_section')
-    with section
-        .ui.stackable.padded.grid
-            .centered.row
-                h1.ui.center.aligned.header Edit '#{title}' Section
-            .row
-                .twelve.wide.column
-                    // .ui.top.attached.tabular.four.item.menu
-                    //     a.active.item(data-tab="details") Details
-                        // a.item(data-tab="stats") Stats
-                    // .ui.bottom.attached.active.tab.segment(data-tab="details")
-                    .ui.form
-                        .field
-                            +edit_number
-                        .field
-                            +edit_title
-                        .field
-                            +edit_icon
-                        .field
-                            +edit_content
-                        .field
-                            +edit_transcript
-                    // .ui.bottom.attached.tab.segment(data-tab="stats")
-                .four.wide.column
-                    +save_link
-                    // +published
-                    #delete_section.ui.red.basic.icon.button
-                        i.trash.icon
+    .ui.form
+        .field
+            +edit_number
+        .field
+            +edit_title
+        .field
+            +edit_icon
+        .field
+            +edit_content
+        .field
+            +edit_transcript
 
 
 
 template(name='my_answer')
     with answer
         .ui.segment(class=published_class)
-            .ui.top.left.attached.basic.label Your Answer
+            .ui.top.left.attached.basic.label 
+                |Your Answer
+            .ui.top.right.attached.basic.label 
+                +session_edit_button
             if is_editing
                 +edit_content
                 +published
             else
                 +view_content
-            +session_edit_button
+            // .center.aligned

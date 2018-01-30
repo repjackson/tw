@@ -29,11 +29,11 @@ template(name='edit_databank')
     +edit_child_fields
 
 template(name='databank_card')
-    .ui.fluid.card
+    .ui.fluid.card(class=published_class)
         // each parent.child_fields
         //     .ui.label #{this}
-        .content    
-            if title
+        if title
+            .content    
                 .header 
                     +icon48 name=icon_class classes='ui mini inline spaced image'
                     |#{title}

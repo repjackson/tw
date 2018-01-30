@@ -93,12 +93,16 @@ Docs.helpers
             type: 'response'
         if response then true else false
 
+    children_count: -> Docs.find({parent_id: @_id}).count() 
+
+    published_children_count: -> Docs.find({parent_id: @_id, published:$in:[0,1]}).count()
+
     completed: -> 
-        if @completion_type is 'none' then true
-        else
-            if @completed_by and Meteor.userId() in @completed_by
-                true 
-            else false
+        console.log 'complete'
+        if @completed_ids and Meteor.userId() in @completed_ids then true else false
+
+    up_voted: -> @upvoters and Meteor.userId() in @upvoters
+    down_voted: -> @downvoters and Meteor.userId() in @downvoters
 
     can_access: ->
         if @access is 'available' then true
@@ -115,6 +119,16 @@ Docs.helpers
                 if previous_doc.completed_by and Meteor.userId() in previous_doc.completed_by then true else false
             else
                 true
+    upvoted_users: ->
+        if @upvoters
+            upvoted_users = []
+            for upvoter_id in @upvoters
+                upvoted_users.push Meteor.users.findOne upvoter_id
+            upvoted_users
+        else []
+    
+    read: -> @read_by and Meteor.userId() in @read_by
+        
     readers: ->
         if @read_by
             readers = []

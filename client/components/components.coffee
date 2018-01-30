@@ -46,13 +46,13 @@ Template.bookmarked_by_list.helpers
             false
             
             
-Template.mark_read.events
+Template.mark_read_button.events
     'click .mark_read': (e,t)-> 
         Meteor.call 'mark_read', @_id
         
     'click .mark_unread': (e,t)-> Meteor.call 'mark_unread', @_id
 
-Template.mark_read.helpers
+Template.mark_read_button.helpers
     read: -> @read_by and Meteor.userId() in @read_by
     # read: -> true
     

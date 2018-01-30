@@ -14,7 +14,12 @@ template(name='edit_doc')
                     +save_link
             .centered.row
                 .ten.wide.column
-                    +Template.dynamic template=edit_type_template
+                    if type
+                        +Template.dynamic template=edit_type_template
+                    else
+                        +parent_doc_segment
+                        +edit_content
+                        +published
                 if is_admin
                     .six.wide.column
                         +edit_title
@@ -60,7 +65,12 @@ template(name='view_doc')
                             a.ui.icon.basic.white.inverted.circular.button(href='/sign-in') 
                                 +icon48 name='login-rounded-down' classes='ui mini inline spaced image'
                                 // | Sign In
-            +Template.dynamic template=view_type_template
-            // if is_admin
-            //     +edit_type
-            //     +child_docs
+            if type
+                +Template.dynamic template=view_type_template
+            else
+                .ui.text.container
+                    +parent_doc_segment
+                    .shadowed-box
+                        +view_content
+                        +author_info
+                        |#{when}

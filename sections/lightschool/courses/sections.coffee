@@ -4,6 +4,7 @@ if Meteor.isClient
         @autorun -> Meteor.subscribe 'child_docs', FlowRouter.getParam('doc_id')
     
     Template.view_section.onCreated ->
+        @autorun -> Meteor.subscribe 'usernames'
         @autorun -> Meteor.subscribe 'child_docs'
     
     
@@ -92,14 +93,28 @@ if Meteor.isClient
                     FlowRouter.go "/sections"        
                     
                     
+
+    Template.answer.onCreated ->
+        @autorun => Meteor.subscribe 'child_docs', @data._id
+        
+    Template.answer.events
+        'click .reply': ->
+            response_id = Docs.insert
+                type:'response'
+                content: ''
+                parent_id: @_id
+            FlowRouter.go("/edit/#{response_id}")    
+        
+
+        'click .thank': ->
+            Meteor.call 'vote_up', @_id
                     
                     
                     
-                    
-if Meteor.isServer
-    Meteor.publish 'sections', ->
-        Docs.find 
-            type: 'section'
+# if Meteor.isServer
+#     Meteor.publish 'sections', ->
+#         Docs.find 
+#             type: 'section'
             
     # Meteor.publish 'sections', (section_id)->
     #     section = Docs.findOne section_id

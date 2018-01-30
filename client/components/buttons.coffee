@@ -300,14 +300,18 @@ Template.favorite_button.events
 Template.mark_complete_button.helpers
     complete_button_class: -> 
         if Meteor.user()
-            if @completed_ids and Meteor.userId() in @completed_ids then 'blue' else 'basic'
+            if @completed_ids and Meteor.userId() in @completed_ids then 'inverted' else 'basic'
         else 'grey disabled'
-    completed: -> 
-        if Meteor.user()
-            if @completed_ids and Meteor.userId() in @completed_ids then true else false
-        else false
+    # completed: -> 
+    #     if Meteor.user()
+    #         if @completed_ids and Meteor.userId() in @completed_ids then true else false
+    #     else false
+
+
+
 Template.mark_complete_button.events
     'click .mark_complete': (e,t)-> 
+        console.log Template.parentData(0)
         if Meteor.userId() 
             Meteor.call 'mark_complete', Template.parentData(0)
             $(e.currentTarget).closest('.mark_complete').transition('pulse')
@@ -511,6 +515,13 @@ Template.toggle_view_mode_button.helpers
     viewing_public: -> Session.equals 'view_private', false
 
 Template.toggle_view_mode_button.events
+    'click #toggle_view_mode': ->
+        if Session.equals 'view_private', true
+            Session.set 'view_private', false
+        else
+            Session.set 'view_private', true
+            
+Template.toggle_completed_button.events
     'click #toggle_view_mode': ->
         if Session.equals 'view_private', true
             Session.set 'view_private', false

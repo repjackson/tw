@@ -6,11 +6,13 @@ template(name='voting')
         // |#{points}
 
 template(name='thanks_button')
-    .ui.circular.icon.basic.compact.button.vote_up(data-tooltip="Thank #{author.profile.first_name} for Sharing")
-        if said_thanks
+    if said_thanks
+        .vote_up
             +icon48 name='applause' classes='ui mini inline image'
-        else
+    else
+        .vote_up
             +dots50 name='applause' classes='ui mini inline image'
+    // .ui.circular.icon.basic.mini.compact.button.vote_up(data-tooltip="Thank #{author.profile.first_name} for Sharing")
         // img.ui.mini.image(src="https://png.icons8.com/pray-filled/ios7/50" width="50" height="50")
         // if said_thanks
         //     |Thanks #{author.profile.first_name}
@@ -62,11 +64,11 @@ template(name='edit_doc_link')
 
 template(name='respond_button')
     if currentUser
-        #respond.ui.circular.basic.icon.button(data-tooltip='Respond')
-            +icon48 name='response' classes='ui mini inline image'
+        +icon48 name='response' classes='ui inline image'
+        // #respond.ui.circular.basic.icon.button(data-tooltip='Respond')
     else
-        .ui.circular.basic.disabled.icon.button(data-tooltip='Respond')
-            +icon48 name='response' classes='ui mini inline image'
+        +icon48 name='response' classes='ui inline image'
+        // .ui.circular.basic.disabled.icon.button(data-tooltip='Respond')
 
 template(name='big_both_voter')
     i.thumbs.up.link.huge.icon.vote_up(class=vote_up_button_class)
@@ -147,13 +149,13 @@ template(name='delete_button')
         
 template(name='session_delete_button')
     unless confirming
-        .delete.ui.basic.red.icon.button
+        .delete.ui.basic.red.icon.circular.large.button
             i.remove.icon
     else
-        .ui.basic.icon.button.cancel 
+        .ui.basic.icon.large.button.circular.cancel 
             i.ban.icon
             // |Cancel
-        .ui.basic.button.red.confirm 
+        .ui.basic.large.button.red.circular.confirm 
             i.red.trash.icon
             |Confirm
         
@@ -195,13 +197,13 @@ template(name='favorite_button')
             | #{favorite_count}
 
 template(name='mark_complete_button')
-    .mark_complete.ui.circular.icon.button(class=complete_button_class) 
+    .mark_complete.ui.circular.white.button(class=complete_button_class) 
         if completed
-            +icon48 name='checkmark' classes='ui mini inline image'
-            // | Completed
+            +icon48 name='checked-checkbox' classes='ui mini inline image'
+            | Completed
         else
             +icon48 name='unchecked-checkbox' classes='ui mini inline image'
-            // | Mark Complete
+            | Mark Complete
         
 template(name='mark_doc_complete_button')
     .mark_complete.ui.circular.icon.basic.button(class=complete_button_class) 
@@ -320,13 +322,22 @@ template(name='toggle_view_mode_button')
             +icon48 name='lock' classes='ui inline image'
             |Viewing Private
             
+template(name='toggle_completed_button')
+    #toggle_view_mode.ui.basic.white.inverted.circular.button
+        if completed
+            |Completed
+            +icon48 name='checkmark' classes='ui inline image'
+        else
+            +icon48 name='unchecked-checkbox' classes='ui inline image'
+            |Uncompleted
+            
             
 template(name='session_edit_button')
     if is_editing
-        .toggle_editing.ui.green.button Save
+        .toggle_editing.ui.large.circular.basic.green.button Save
         +session_delete_button
     else
-        .toggle_editing.ui.basic.icon.button
+        .toggle_editing.ui.basic.icon.circular.blue.large.button(data-tooltip='Edit')
             i.pencil.icon
             
 template(name='admin_toggle')            

@@ -23,16 +23,16 @@ template(name='resonates_list')
                                 //     .ui.basic.label #{this}
 
 
-template(name='mark_read')
-    // if read
-    //     .mark_unread.ui.basic.button 
-    //         +icon48 name='read-message' classes='avatar'
-    //         |Mark Unread
-    // else
+template(name='mark_read_button')
     if currentUser
-        unless read
-            .mark_read.ui.basic.circular.icon.button(data-tooltip='Mark Read')
+        if read
+            .mark_unread.ui.circular.white.inverted.button(data-tooltip='Mark Unread')
+                +icon48 name='read-message' classes='avatar'
+                |Read
+        else
+            .mark_read.ui.basic.circular.white.inverted.button(data-tooltip='Mark Read')
                 +icon48 name='message' classes='ui mini inline image'
+                |Unread
 
 template(name='read_by_list')
     // if read_by.count
@@ -207,9 +207,11 @@ template(name='ultraviolet_icon80')
     
 template(name='dots100')
     img(src="https://png.icons8.com/hide/#{name}/100/000000" class=classes title=tooltip)
-    
 template(name='dots50')
-    img(src="https://png.icons8.com/hide/#{name}/50/000000" class=classes title=tooltip)
+    // img(src="https://png.icons8.com/hide/#{name}/50/000000" class=classes title=tooltip)
+    img(src="https://png.icons8.com/ios/50/000000/#{name}.png" class=classes title=tooltip)
+    
+    
     
     
 template(name='dusk_icon64')    
