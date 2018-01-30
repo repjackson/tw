@@ -10,7 +10,14 @@ if Meteor.isClient
         Meteor.setTimeout =>
             $('.menu .item').tab()
         , 1000
-    
+    Template.view_debrief.onRendered ->
+        # Meteor.setTimeout ->
+        #     $('.progress').progress()
+        # , 2000
+        Meteor.setTimeout ->
+            $('.ui.accordion').accordion()
+        , 2000
+
     Template.edit_section.onRendered ->
         Meteor.setTimeout =>
             $('.menu .item').tab()

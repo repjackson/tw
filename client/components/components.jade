@@ -355,5 +355,16 @@ template(name='response_list')
                     +voting
                     .floated.right
                         +view_full_button
-                            
                         
+                        
+template(name='user_image_name')
+    with user
+        img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+        |#{name}
+
+
+template(name='user_image')
+    with user
+        img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}" title=name)
+
+

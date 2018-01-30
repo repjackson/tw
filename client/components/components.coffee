@@ -276,3 +276,18 @@ Template.response_list.helpers
         Docs.find
             parent_id: @_id
 
+
+
+Template.user_image_name.onCreated ->
+    @autorun => Meteor.subscribe 'person_by_id', @data.user_id
+
+Template.user_image_name.helpers
+    user: -> Meteor.users.findOne Template.currentData().user_id
+    
+Template.user_image.onCreated ->
+    @autorun => Meteor.subscribe 'person_by_id', @data.user_id
+
+Template.user_image.helpers
+    user: -> Meteor.users.findOne Template.currentData().user_id
+    
+    

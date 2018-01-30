@@ -22,83 +22,86 @@ template(name='view_sections')
 
 
 template(name='view_section')
-    with section
-        .ui.stackable.padded.grid
-            .row
-                .three.wide.center.aligned.column
-                .ten.wide.column
-                    h1.ui.inverted.center.aligned.header 
-                        +icon96 name=icon_class classes='ui inline image'
-                        |#{number}: #{title}
-                .three.wide.center.aligned.column
-                    if can_edit
-                        +edit_button
-            .row
-                .centered.three.wide.column
-                    unless is_admin
-                        if younger_sibling
-                            a.ui.white.inverted.basic.circular.button(href="/view/#{younger_sibling._id}")
-                                // if younger_sibling.completed
-                                if younger_sibling.icon_class
-                                    +icon48 name=younger_sibling.icon_class classes='ui mini spaced image'
-                                else
-                                    +icon48 name='checked' classes='ui mini spaced image'
-                                // else
-                                //     if younger_sibling.icon_class
-                                //         +dots100 name=younger_sibling.icon_class classes='ui mini spaced image'
-                                //     else
-                                //         +icon48 name='circle' classes='ui mini spaced image'
-                                | #{younger_sibling.title}
-                                // | #{younger_sibling.body}
-
-                .centered.ten.wide.column
-                    +view_content
-                    if transcript
-                        +view_transcript
-                    .center.aligned
-                        +mark_watched_button
-                    if read
-                        +section_questions
-                .centered.three.wide.column
-                    unless is_admin
-                        if older_sibling
-                            // if completed
-                            a.ui.white.inverted.basic.circular.button(href="/view/#{older_sibling._id}")
-                                | #{older_sibling.title}
-                                if older_sibling.icon_class
-                                    +icon48 name=older_sibling.icon_class classes='ui mini spaced image'
-                                    // if older_sibling.completed
-                                    // else
-                                    //     +dots100 name=older_sibling.icon_class classes='ui mini spaced image'
+    .ui.stackable.padded.grid
+        .row
+            .three.wide.center.aligned.column
+            .ten.wide.column
+                h1.ui.inverted.center.aligned.header 
+                    +icon96 name=icon_class classes='ui inline image'
+                    |#{number}: #{title}
+            .three.wide.center.aligned.column
+                if can_edit
+                    +edit_button
+        .row
+            .centered.three.wide.column
+                unless is_admin
+                    if younger_sibling
+                        a.ui.white.inverted.basic.circular.button(href="/view/#{younger_sibling._id}")
+                            // if younger_sibling.completed
+                            if younger_sibling.icon_class
+                                +icon48 name=younger_sibling.icon_class classes='ui mini spaced image'
+                            else
+                                +icon48 name='checked' classes='ui mini spaced image'
                             // else
-                            //     .ui.basic.disabled.circular.button
-                            //         | #{older_sibling.title} &nbsp;
-                            //         if older_sibling.icon_class
-                            //             if older_sibling.completed
-                            //                 +icon48 name=older_sibling.icon_class classes='ui mini spaced image'
-                            //             else
-                            //                 +dots100 name=older_sibling.icon_class classes='ui mini spaced image'
-                    else
-                        .shadowed.padded10
-                            .ui.dividing.header Completors
-                            #check_section_completion.ui.button Check Completion
-                            .ui.dividing.header Readers
-                            .ui.list
-                                each readers
-                                    .item
-                                        img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
-                                        |#{name}
-                            .ui.dividing.header Questions
-                            .ui.list
-                                each children
-                                    .item 
-                                        .ui.header #{title}
-                                        |#{children_count} Answers
-                                        each child_authors
-                                            .item
-                                                img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
-                                                |#{name}
-                        
+                            //     if younger_sibling.icon_class
+                            //         +dots100 name=younger_sibling.icon_class classes='ui mini spaced image'
+                            //     else
+                            //         +icon48 name='circle' classes='ui mini spaced image'
+                            | #{younger_sibling.title}
+                            // | #{younger_sibling.body}
+                else
+                    .shadowed.padded10
+                        .ui.dividing.header Completors
+                        .ui.list
+                            each completed_ids
+                                .item
+                                    +user_image_name user_id=this
+            .centered.ten.wide.column
+                +view_content
+                if transcript
+                    +view_transcript
+                .center.aligned
+                    +mark_watched_button
+                if read
+                    +section_questions
+            .centered.three.wide.column
+                unless is_admin
+                    if older_sibling
+                        // if completed
+                        a.ui.white.inverted.basic.circular.button(href="/view/#{older_sibling._id}")
+                            | #{older_sibling.title}
+                            if older_sibling.icon_class
+                                +icon48 name=older_sibling.icon_class classes='ui mini spaced image'
+                                // if older_sibling.completed
+                                // else
+                                //     +dots100 name=older_sibling.icon_class classes='ui mini spaced image'
+                        // else
+                        //     .ui.basic.disabled.circular.button
+                        //         | #{older_sibling.title} &nbsp;
+                        //         if older_sibling.icon_class
+                        //             if older_sibling.completed
+                        //                 +icon48 name=older_sibling.icon_class classes='ui mini spaced image'
+                        //             else
+                        //                 +dots100 name=older_sibling.icon_class classes='ui mini spaced image'
+                else
+                    .shadowed.padded10
+                        .ui.dividing.header Completors
+                        #check_section_completion.ui.button Check Completion
+                        .ui.dividing.header Readers
+                        .ui.list
+                            each readers
+                                .item
+                                    +user_image_name user_id=this._id
+                        .ui.dividing.header Questions
+                        .ui.list
+                            each children
+                                .item 
+                                    .ui.header #{title}
+                                    |#{children_count} Answers
+                                    each child_authors
+                                        .item
+                                            +user_image_name user_id=this._id
+
 
 template(name='section_questions')
     h2.ui.center.aligned.header #{child_count} Questions

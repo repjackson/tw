@@ -223,7 +223,7 @@ Template.edit_number.events
         val = $(e.currentTarget).closest('#number').val()
         number = parseInt val
         # console.log number
-        Docs.update FlowRouter.getParam('doc_id'),
+        Docs.update @_id,
             $set: number: number
             
 Template.edit_quantity.events

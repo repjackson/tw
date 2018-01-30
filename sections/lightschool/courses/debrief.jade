@@ -1,9 +1,9 @@
 
 template(name='view_debrief')
     .ui.stackable.padded.grid
-        .row.header-background(style=background_style)
+        .row
             .three.wide.center.aligned.column
-                +parent_link
+                // +parent_link
             .ten.wide.column
                 h1.ui.inverted.center.aligned.header 
                     +icon96 name='plant-under-sun' classes='ui inline image'
@@ -14,21 +14,81 @@ template(name='view_debrief')
         .centered.row
             .centered.ten.wide.column
                 +view_content
-                .ui.header
-                    |#{child_count} Published Answers
-                .ui.segments
-                    each published_answers
-                        +answer
-                if isInRole 'admin'
-                    .ui.header 
-                        i.lock.icon
-                        |Private Answers
-                    .ui.segments
-                        each private_answers
-                            +answer
-                    +edit_type
-                    +view_full_button
-            +child_docs
+                unless is_admin
+                    +my_answer
+                    .ui.published_answers.styled.accordion
+                        .title
+                            i.unlock.fitted.icon
+                            |#{published_children_count} Published Answers
+                            i.dropdown.icon
+                        .content
+                            .ui.threaded.comments
+                                each published_children
+                                    +answer
+                                    if has_children
+                                        .ui.grid
+                                            .two.wide.column
+                                                .ui.vertical.divider
+                                            .fourteen.wide.column
+                                                .comments
+                                                    each children
+                                                        +answer
+                if is_admin
+                    .ui.private_answers.styled.accordion
+                        .title
+                            i.lock.fitted.icon
+                            |Private Answers
+                            i.dropdown.icon
+                        .content
+                            .ui.threaded.comments
+                                each private_children
+                                    +answer
+                                    if has_children
+                                        .ui.grid
+                                            .two.wide.column
+                                                .ui.vertical.divider
+                                            .fourteen.wide.column
+                                                .comments
+                                                    each children
+                                                        +answer
+            .centered.three.wide.column
+                unless is_admin
+                    if older_sibling
+                        // if completed
+                        a.ui.white.inverted.basic.circular.button(href="/view/#{older_sibling._id}")
+                            | #{older_sibling.title}
+                            if older_sibling.icon_class
+                                +icon48 name=older_sibling.icon_class classes='ui mini spaced image'
+                                // if older_sibling.completed
+                                // else
+                                //     +dots100 name=older_sibling.icon_class classes='ui mini spaced image'
+                        // else
+                        //     .ui.basic.disabled.circular.button
+                        //         | #{older_sibling.title} &nbsp;
+                        //         if older_sibling.icon_class
+                        //             if older_sibling.completed
+                        //                 +icon48 name=older_sibling.icon_class classes='ui mini spaced image'
+                        //             else
+                        //                 +dots100 name=older_sibling.icon_class classes='ui mini spaced image'
+                else
+                    .shadowed.padded10
+                        .ui.dividing.header Completors
+                        #check_section_completion.ui.button Check Completion
+                        .ui.dividing.header Readers
+                        .ui.list
+                            each readers
+                                .item
+                                    +user_image_name user_id=this._id
+                        .ui.dividing.header Questions
+                        .ui.list
+                            each children
+                                .item 
+                                    .ui.header #{title}
+                                    |#{children_count} Answers
+                                    each child_authors
+                                        .item
+                                            +user_image_name user_id=this._id
+                
 
 
 // template(name='answer')            
