@@ -20,14 +20,6 @@ template(name='view_sections')
                         //         |#{number}:
                         //         |#{title}
 
-template(name='section_item')
-    .item
-        a.ui.small.image(href="/view/#{_id}")
-            img(src="{{c.url image_id  height=500 crop='fill' }}")
-            if image_url
-                img(src=image_url)
-        .middle.aligned.content
-            a.header(href="/view/#{_id}") #{title}
 
 template(name='view_section')
     with section
@@ -64,7 +56,7 @@ template(name='view_section')
                     if transcript
                         +view_transcript
                     .center.aligned
-                        +mark_read_button
+                        +mark_watched_button
                     if read
                         +section_questions
                 .centered.three.wide.column
@@ -86,8 +78,27 @@ template(name='view_section')
                             //                 +icon48 name=older_sibling.icon_class classes='ui mini spaced image'
                             //             else
                             //                 +dots100 name=older_sibling.icon_class classes='ui mini spaced image'
-
-
+                    else
+                        .shadowed.padded10
+                            .ui.dividing.header Completors
+                            #check_section_completion.ui.button Check Completion
+                            .ui.dividing.header Readers
+                            .ui.list
+                                each readers
+                                    .item
+                                        img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                                        |#{name}
+                            .ui.dividing.header Questions
+                            .ui.list
+                                each children
+                                    .item 
+                                        .ui.header #{title}
+                                        |#{children_count} Answers
+                                        each child_authors
+                                            .item
+                                                img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                                                |#{name}
+                        
 
 template(name='section_questions')
     h2.ui.center.aligned.header #{child_count} Questions
@@ -133,9 +144,17 @@ template(name='section_question')
                     |Private Answers
                     i.dropdown.icon
                 .content
-                    .ui.segments
+                    .ui.threaded.comments
                         each private_answers
                             +answer
+                            if has_children
+                                .ui.grid
+                                    .two.wide.column
+                                        .ui.vertical.divider
+                                    .fourteen.wide.column
+                                        .comments
+                                            each children
+                                                +answer
             +edit_button
             +view_full_button
 

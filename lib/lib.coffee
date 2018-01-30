@@ -138,10 +138,21 @@ Docs.helpers
         else []
     
     
-    child_authors: ->
+    public_child_authors: ->
         if Docs.findOne({parent_id: @_id})
             child_authors = []
             child_documents = Docs.find(parent_id: @_id, published:1).fetch()
+            for child_document in child_documents
+                # console.log child_document.author_id
+                child_authors.push Meteor.users.findOne child_document.author_id
+            child_authors
+        else 
+            []
+            # console.log 'we aint found shit'
+    child_authors: ->
+        if Docs.findOne({parent_id: @_id})
+            child_authors = []
+            child_documents = Docs.find(parent_id: @_id).fetch()
             for child_document in child_documents
                 # console.log child_document.author_id
                 child_authors.push Meteor.users.findOne child_document.author_id
@@ -165,6 +176,24 @@ Docs.helpers
                 number: next_number
 
 
+    has_currentuser_grandchildren: ->
+        children = Docs.find({parent_id:@_id}).fetch()
+        children_count = children.length
+        console.log 'children_count', children_count
+        grandchildren_count = 0
+        for child in children
+            grandchild = 
+                Docs.findOne 
+                    parent_id: child._id
+                    author_id: Meteor.userId()
+            if grandchild then grandchildren_count++
+        console.log 'grandchildren_count', grandchildren_count
+        if grandchildren_count is children_count
+            console.log 'has all grandchildren'
+            return true
+        else
+            false
+
 
 Meteor.methods
     add: (tags=[])->
@@ -182,7 +211,60 @@ Meteor.methods
     #         $set: "ratings.$.rating": rating
 
 
-    calculate_completion: (doc_id) ->
+    # calculate_completion: (doc_id) ->
+    #     doc = Docs.findOne doc_id
+    #     # console.log doc.completion_type
+    #     if doc.completion_type is 'mark_read'
+    #         if Meteor.userId() in doc.read_by
+    #             Docs.update doc_id, 
+    #                 $addToSet: completed_by: Meteor.userId()
+    #         else
+    #             Docs.update doc_id, 
+    #                 $pull: completed_by: Meteor.userId()
+    #     if doc.completion_type is 'response'
+    #         # console.log 'response completion'
+    #         response_docs = 
+    #             Docs.find(
+    #                 parent_id: doc_id
+    #                 # author_id: Meteor.userId()
+    #                 ).fetch()
+    #         if response_docs
+    #             # console.log 'response docs found', response_docs
+    #             for response_doc in response_docs
+    #                 Docs.update doc_id, 
+    #                     $addToSet: completed_by: response_doc.author_id
+    #         # else
+    #         #     Docs.update doc_id, 
+    #         #         $pull: completed_by: Meteor.userId()
+    #     if doc.completion_type is 'check_children'
+    #         children_array = Docs.find(parent_id: doc_id).fetch()
+    #         children_count = Docs.find(parent_id: doc_id).count()
+    #         for user in Meteor.users.find().fetch()
+    #             child_completion_count = 0
+    #             for child in children_array
+    #                 # if Meteor.userId() in child.completed_by
+    #                 if user._id in child.completed_by
+    #                     child_completion_count++
+    #             # console.log 'child_completion_count', child_completion_count
+    #             # console.log 'children_count', children_count
+    #             if child_completion_count is children_count
+    #                 Docs.update doc_id, 
+    #                     $addToSet: completed_by: user._id
+    #                     # $addToSet: completed_by: Meteor.userId()
+    #             else
+    #                 Docs.update doc_id, 
+    #                     $pull: completed_by: user._id
+    #                     # $pull: completed_by: Meteor.userId()
+                
+    #     next_number = doc.number + 1
+    #     older_sibling = 
+    #         Docs.findOne 
+    #             parent_id: doc.parent_id
+    #             number: next_number
+    #     unless older_sibling
+    #         Meteor.call 'calculate_completion', doc.parent_id
+
+    calculate_section_completion: (doc_id) ->
         doc = Docs.findOne doc_id
         # console.log doc.completion_type
         if doc.completion_type is 'mark_read'

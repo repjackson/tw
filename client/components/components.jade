@@ -34,6 +34,17 @@ template(name='mark_read_button')
                 +icon48 name='message' classes='ui mini inline image'
                 |Unread
 
+template(name='mark_watched_button')
+    if currentUser
+        if read
+            .mark_unwatched.ui.circular.white.inverted.button(data-tooltip='Mark Unwatched')
+                +icon48 name='visible' classes='avatar'
+                |Watched
+        else
+            .mark_watched.ui.basic.circular.white.inverted.button(data-tooltip='Mark Watched')
+                +icon48 name='invisible' classes='ui mini inline image'
+                |Unwatched
+
 template(name='read_by_list')
     // if read_by.count
     .ui.segment

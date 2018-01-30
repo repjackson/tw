@@ -5,13 +5,33 @@ template(name='edit_response')
 
 template(name='view_response')
     .ui.hidden.divider
-    .ui.container
+    .ui.container.shadowed
         h2.ui.center.aligned.header Response
         +parent_doc_segment
         +view_content
         +author_info
         if is_author
             +edit_button
+        
+template(name='view_download')
+    .ui.hidden.divider
+    .ui.container.shadowed.padded10
+        h2.ui.center.aligned.header Download #{title}
+        if is_author
+            +edit_button
+        +view_content
+        +view_link
+        // +author_info
+        
+template(name='edit_download')
+    .ui.hidden.divider
+    .ui.container.shadowed
+        h2.ui.center.aligned.header Edit Download
+        +edit_content
+        +edit_link
+        // +author_info
+        // if is_author
+        //     +edit_button
         
 
 // template(name='answer')

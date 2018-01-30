@@ -17,4 +17,9 @@ Template.dev_footer.events
             $set: parent_id: parent_doc_id
         FlowRouter.go "/view/#{parent_doc_id}"
 
-
+    'click #move_above_parent': ->
+        current_doc = Docs.findOne FlowRouter.getParam('doc_id')
+        parent_doc = Docs.findOne current_doc.parent_id
+        console.log 'grandparent id', parent_doc.parent_id
+        Docs.update FlowRouter.getParam('doc_id'),
+            $set: parent_id: parent_doc.parent_id

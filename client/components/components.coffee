@@ -57,6 +57,17 @@ Template.mark_read_button.helpers
     # read: -> true
     
     
+Template.mark_watched_button.events
+    'click .mark_watched': (e,t)-> 
+        Meteor.call 'mark_read', @_id
+        
+    'click .mark_unwatched': (e,t)-> Meteor.call 'mark_unread', @_id
+
+Template.mark_watched_button.helpers
+    read: -> @read_by and Meteor.userId() in @read_by
+    # read: -> true
+    
+    
 
     
     
