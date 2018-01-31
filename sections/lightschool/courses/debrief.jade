@@ -22,8 +22,11 @@ template(name='view_debrief')
                                     +user_image_name user_id=this
 
             .centered.ten.wide.column
-                +view_content
-                +section_questions
+                if content
+                    .padded10.shadowed
+                        +view_content
+                if children
+                    +questions
             .centered.three.wide.column
                 unless is_admin
                     if older_sibling

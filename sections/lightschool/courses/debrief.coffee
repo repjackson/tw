@@ -40,37 +40,6 @@ if Meteor.isClient
         section: -> Docs.findOne FlowRouter.getParam('doc_id')
         
         
-    Template.section_questions.onCreated ->
-        @autorun -> Meteor.subscribe 'child_docs', FlowRouter.getParam('doc_id')
-        
-    Template.section_question.onCreated ->
-        @autorun => Meteor.subscribe 'child_docs', @data._id
-    Template.answer.onCreated ->
-        @autorun => Meteor.subscribe 'author', @data._id
-        
-    Template.section_questions.onRendered ->
-        # Meteor.setTimeout ->
-        #     $('.progress').progress()
-        # , 2000
-        Meteor.setTimeout ->
-            $('.ui.accordion').accordion()
-        , 2000
-                        
-    Template.section_questions.helpers
-        questions: ->
-            Docs.find {parent_id: FlowRouter.getParam('doc_id')}, sort:number:1
-            # Docs.find {}
-
-        
-    Template.section_question.helpers
-        published_answers: ->
-            Docs.find {parent_id: @_id, published:$in:[1,0]}
-
-        
-        private_answers: ->
-            Docs.find {parent_id: @_id, published:-1}
-
-        
         
         
     Template.edit_section.helpers

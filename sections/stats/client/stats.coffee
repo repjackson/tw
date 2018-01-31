@@ -1,20 +1,14 @@
 if Meteor.isClient
-    FlowRouter.route '/stats', action: (params) ->
-        BlazeLayout.render 'layout',
-            main: 'stats'
-    
-    
-    
-    Template.stats.onCreated ->
+    Template.view_stats.onCreated ->
         @autorun => Meteor.subscribe('my_stats', selected_theme_tags.array(), selected_upvoter_ids.array())
 
         
-    # Template.stats.onRendered ->
+    # Template.view_stats.onRendered ->
     #     Meteor.setTimeout ->
     #         $('.ui.accordion').accordion()
     #     , 500
 
-    Template.stats.helpers
+    Template.view_stats.helpers
         upvoted_docs: -> 
             Docs.find
                 author_id: Meteor.userId()
@@ -33,7 +27,7 @@ if Meteor.isClient
 
             
             
-    Template.stats.events
+    Template.view_stats.events
         'change #share_stats': (e,t)->
             value = $('#share_stats').is(":checked")
             Meteor.users.update Meteor.userId(), 

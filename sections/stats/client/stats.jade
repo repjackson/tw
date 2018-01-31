@@ -1,4 +1,4 @@
-template(name='stats')
+template(name='view_stats')
     .ui.stackable.padded.grid
         .centered.row
             .four.wide.center.aligned.column
@@ -28,12 +28,11 @@ template(name='stats')
                 // .ui.slider.checkbox
                 //     input#share_stats(type='checkbox' checked=currentUser.profile.share.stats)
                 //     label(for='share_bookmarks') Share Stats in Profile
-                .ui.dividing.header Filter Tags
                 +people_cloud
 
-            .four.wide.column
+            .four.wide.column.shadowed.padded10
                 +leaderboard
-            .four.wide.column
+            .four.wide.column.shadowed.padded10
                 +journal_stats
-            .four.wide.column
+            .four.wide.column.shadowed.padded10
                 +check_in_stats

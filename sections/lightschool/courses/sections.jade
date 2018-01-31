@@ -58,7 +58,7 @@ template(name='view_section')
                 .center.aligned
                     +mark_watched_button
                 if read
-                    +section_questions
+                    +questions
             .centered.three.wide.column
                 unless is_admin
                     if older_sibling
@@ -108,112 +108,6 @@ template(name='completed_list')
 
 
 
-template(name='section_questions')
-    h2.ui.center.aligned.header #{children_count} Questions
-    .ui.styled.fluid.question_accordion.accordion
-        each questions
-            +section_question
-
-template(name='section_question')
-    .title
-        .ui.header
-            // +icon48 name=icon_class
-            | Question #{number}
-            if is_admin
-                small #{child_count} answers
-                +child_authors
-            i.dropdown.icon
-    .content
-        +view_content
-        unless is_admin
-            +my_answer
-            .published_answers.styled.accordion
-                .title
-                    i.unlock.fitted.icon
-                    |#{published_children_count} Published Answers
-                    i.dropdown.icon
-                .content
-                    .ui.threaded.comments
-                        each published_answers
-                            +answer
-                            if has_children
-                                .ui.grid
-                                    .two.wide.column
-                                        .ui.vertical.divider
-                                    .fourteen.wide.column
-                                        .comments
-                                            each children
-                                                +answer
-                                
-        if is_admin
-            .private_answers.styled.accordion
-                .title
-                    i.lock.fitted.icon
-                    |Private Answers
-                    i.dropdown.icon
-                .content
-                    .ui.threaded.comments
-                        each private_answers
-                            +answer
-                            if has_children
-                                .ui.grid
-                                    .two.wide.column
-                                        .ui.vertical.divider
-                                    .fourteen.wide.column
-                                        .comments
-                                            each children
-                                                +answer
-            +edit_button
-            +view_full_button
-
-
-template(name='edit_section_question')
-    .ui.header Edit Question
-        +edit_number
-        +edit_text
-        +edit_content
-
-template(name='answer')            
-    .comment(class=published_class)
-        a.avatar
-            img(src="{{c.url author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
-        .content
-            a.author 
-                |&nbsp;
-                |#{author.name}
-            .metadata
-                .date #{when}
-                if child_count
-                    .rating #{child_count} Responses
-                if upvoters
-                    // .test #{upvoters.length} Thanked by
-                    .test Thanked by
-                        each upvoted_users
-                            |#{name}
-                            // img.ui.avatar.image(src="{{c.url profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
-                    
-            .text
-                +view_content
-            .actions
-                if is_author
-                    a.edit(href="/edit/#{_id}") Edit
-                else
-                    a.reply Reply
-                    a.thank 
-                        if up_voted
-                            strong Thanks!
-                        else 
-                            |Thank
-                    // a.give Give Karma
-                // +thanks_button
-                // +respond_button
-                
-        // |#{body}
-        // div
-        //     +author_info
-        //     |#{when}
-        //     +view_full_button
-
 
 
 
@@ -234,16 +128,3 @@ template(name='edit_section')
 
 
 
-template(name='my_answer')
-    with answer
-        .ui.segment(class=published_class)
-            .ui.top.left.attached.basic.label 
-                |Your Answer
-            if is_editing
-                +edit_content
-                +published
-            else
-                +view_content
-            |#{when}
-            +session_edit_button
-            // .center.aligned
