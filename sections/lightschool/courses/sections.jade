@@ -119,7 +119,7 @@ template(name='section_question')
                 +child_authors
             i.dropdown.icon
     .content
-        |!{content}
+        +view_content
         unless is_admin
             +my_answer
             .published_answers.styled.accordion

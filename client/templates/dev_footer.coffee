@@ -1,9 +1,10 @@
-# Template.dev_footer.onCreated ->
-#     @autorun -> Meteor.subscribe('parent_doc', FlowRouter.getParam('doc_id'))
-
+Template.dev_footer.onCreated ->
+    @autorun -> Meteor.subscribe('parent_doc', FlowRouter.getParam('doc_id'))
+    Session.setDefault 'show_child_docs', false
 Template.dev_footer.helpers
     doc: -> Docs.findOne FlowRouter.getParam('doc_id')
 
+    show_child_docs: -> Session.get 'show_child_docs'
 
 Template.dev_footer.events
     'click #create_child': ->
@@ -23,3 +24,7 @@ Template.dev_footer.events
         console.log 'grandparent id', parent_doc.parent_id
         Docs.update FlowRouter.getParam('doc_id'),
             $set: parent_id: parent_doc.parent_id
+    
+    
+    'click #toggle_child_docs': ->
+        Session.set 'show_child_docs', !Session.get('show_child_docs')

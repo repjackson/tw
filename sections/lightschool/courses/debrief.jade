@@ -13,44 +13,7 @@ template(name='view_debrief')
                     +edit_button
         .centered.row
             .centered.ten.wide.column
-                +view_content
-                unless is_admin
-                    +my_answer
-                    .ui.published_answers.styled.accordion
-                        .title
-                            i.unlock.fitted.icon
-                            |#{published_children_count} Published Answers
-                            i.dropdown.icon
-                        .content
-                            .ui.threaded.comments
-                                each published_children
-                                    +answer
-                                    if has_children
-                                        .ui.grid
-                                            .two.wide.column
-                                                .ui.vertical.divider
-                                            .fourteen.wide.column
-                                                .comments
-                                                    each children
-                                                        +answer
-                if is_admin
-                    .ui.private_answers.styled.accordion
-                        .title
-                            i.lock.fitted.icon
-                            |Private Answers
-                            i.dropdown.icon
-                        .content
-                            .ui.threaded.comments
-                                each private_children
-                                    +answer
-                                    if has_children
-                                        .ui.grid
-                                            .two.wide.column
-                                                .ui.vertical.divider
-                                            .fourteen.wide.column
-                                                .comments
-                                                    each children
-                                                        +answer
+                +section_questions
             .centered.three.wide.column
                 unless is_admin
                     if older_sibling

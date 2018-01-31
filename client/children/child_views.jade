@@ -82,17 +82,18 @@ template(name='sol_grid')
                                 +user_image user_id=this
                     // .ui.hidden.divider
         if is_admin
-            .ui.dividing.header Unpublished
-            each private_children
-                .column
-                    a.ui.icon.center.shadowed.aligned.header(href="/view/#{_id}")
-                        i.icon
-                            +icon96 name=icon_class
-                        h2.ui.header.sol-header #{title}
-                    if is_admin
-                        +edit_number
-
-                        // .ui.hidden.divider
+            if private_children
+                .ui.dividing.header Unpublished
+                each private_children
+                    .column
+                        a.ui.icon.center.shadowed.aligned.header(href="/view/#{_id}")
+                            i.icon
+                                +icon96 name=icon_class
+                            h2.ui.header.sol-header #{title}
+                        if is_admin
+                            +edit_number
+    
+                            // .ui.hidden.divider
         
 
 template(name='view_nav')

@@ -275,8 +275,14 @@ Meteor.methods
     #         Meteor.call 'calculate_completion', doc.parent_id
 
     calculate_section_completion: (section_id) ->
+        section = Docs.findOne section_id
         questions = Docs.find({parent_id:section_id}).fetch()
         question_count = questions.length
+        if question_count is 0
+            Docs.update section_id,
+                $set: completed_ids: section.read_by
+                
+
         # console.log 'question_count', question_count
         grandchildren_count = 0
         possible_user_ids = []
