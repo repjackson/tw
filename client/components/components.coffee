@@ -290,4 +290,9 @@ Template.user_image.onCreated ->
 Template.user_image.helpers
     user: -> Meteor.users.findOne Template.currentData().user_id
     
-    
+
+Template.check_completion_button.events
+    'click #check_completion': ->
+        doc = Docs.findOne FlowRouter.getParam('doc_id')
+        # console.log 'completion_type', doc.completion_type
+        Meteor.call 'calculate_doc_completion', FlowRouter.getParam('doc_id')

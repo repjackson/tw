@@ -216,8 +216,8 @@ Meteor.methods
     #     return id
 
 
-    # update_rating: (session_id, rating, question_id)->
-    #     Docs.update {_id:session_id,  "ratings.question_id": question_id},
+    # update_rating: (session_id, rating, child_id)->
+    #     Docs.update {_id:session_id,  "ratings.child_id": question_id},
     #         $set: "ratings.$.rating": rating
 
 
@@ -274,35 +274,68 @@ Meteor.methods
     #     unless older_sibling
     #         Meteor.call 'calculate_completion', doc.parent_id
 
-    calculate_section_completion: (section_id) ->
-        section = Docs.findOne section_id
-        questions = Docs.find({parent_id:section_id}).fetch()
-        question_count = questions.length
-        if question_count is 0
-            Docs.update section_id,
-                $set: completed_ids: section.read_by
-                
-
-        # console.log 'question_count', question_count
-        grandchildren_count = 0
+    calculate_doc_completion: (doc_id) ->
+        doc = Docs.findOne doc_id
+        children = Docs.find({parent_id:doc_id}).fetch()
+        child_count = children.length
         possible_user_ids = []
-        for question in questions
-            answers =  Docs.find(parent_id:question._id).fetch()
-            # console.log answers
-            for answer in answers
-                unless answer.author_id in possible_user_ids
-                    # console.log 'possible author', answer.author_id
-                    possible_user_ids.push answer.author_id
-        for possible_user_id in possible_user_ids
-            answer_count = 0
-            for question in questions
-                user_answer = Docs.findOne({author_id:possible_user_id, parent_id:question._id})
-                if user_answer then answer_count++
-            # console.log 'user', possible_user_id, 'answers', answer_count
-            if question_count is answer_count 
-                # nsole.log 'completed', possible_user_id
-                Docs.update section_id,
-                    $addToSet: completed_ids: possible_user_id
+        if doc.completion_type is 'grandchildren'
+            if child_count is 0
+                Docs.update doc_id,
+                    $set: completed_ids: doc.read_by
+                    
+    
+            console.log 'child_count', child_count
+            grandchildren_count = 0
+            for child in children
+                grandchildren =  Docs.find(parent_id:child._id).fetch()
+                # console.log grandchildren
+                for grandchild in grandchildren
+                    unless grandchild.author_id in possible_user_ids
+                        console.log 'possible author', grandchild.author_id
+                        possible_user_ids.push grandchild.author_id
+            for possible_user_id in possible_user_ids
+                grandchild_count = 0
+                for child in children
+                    user_grandchild = Docs.findOne({author_id:possible_user_id, parent_id:child._id})
+                    if user_grandchild then grandchild_count++
+                console.log 'user', possible_user_id, 'grandchildren', grandchild_count
+                if child_count is grandchild_count 
+                    console.log 'completed', possible_user_id
+                    Docs.update doc_id,
+                        $addToSet: completed_ids: possible_user_id
+        else if doc.completion_type is 'children'
+            console.log 'children'
+            all_completed_ids = []
+            for child in children
+                if child.completed_ids
+                    console.log child.completed_ids
+                    for completed_id in child.completed_ids
+                        all_completed_ids.push completed_id
+                        
+                    # _.union all_completed_ids, child.completed_ids
+            unique_completed_ids =  _.uniq all_completed_ids
+            for unique_completed_id in unique_completed_ids
+                user_child_completion_count = Docs.find(parent_id:doc_id, completed_ids:$in:[unique_completed_id]).count()
+                console.log 'user_child_completion_count', user_child_completion_count
+                if user_child_completion_count is child_count
+                    Docs.update doc_id,
+                        $addToSet: completed_ids: unique_completed_id
+
+            #         for completed_id in child.completed_ids
+            #             unless completed_id in possible_user_ids
+            #                 console.log 'possible completed_id', completed_id
+            #                 possible_user_ids.push completed_id
+            # for possible_user_id in possible_user_ids
+            #     possible_user_complete_count = 
+            #         Docs.find({parent_id:doc_id, completed_ids:$in:[possible_user_id]}).fetch()
+            #     console.log 'possible_user_complete_count', possible_user_complete_count
+            #     if possible_user_complete_count is child_count
+            #         console.log 'user completed module'
+            #         Docs.update doc_id,
+            #             $addToSet: completed_ids: possible_user_id
+
+        
         
         #     if grandchild then grandchildren_count++
         # console.log 'grandchildren_count', grandchildren_count
@@ -312,6 +345,39 @@ Meteor.methods
         # else
         #     false
 
+
+    calculate_completion: (doc_id)->
+        doc = Docs.findOne doc_id
+        if doc.completion_type is 'grandchildren'
+            children = Docs.find(parent_id:doc_id).fetch()
+            children_length = children.length
+            console.log 'children_length', children_length
+            
+            
+            children = Docs.find({parent_id:@_id}).fetch()
+            children_count = children.length
+            console.log 'children_count', children_count
+            grandchildren_count = 0
+            for child in children
+                grandchild = 
+                    Docs.findOne 
+                        parent_id: child._id
+                        author_id: Meteor.userId()
+                if grandchild then grandchildren_count++
+            console.log 'grandchildren_count', grandchildren_count
+            if grandchildren_count is children_count
+                console.log 'has all grandchildren'
+                Docs.update doc_id,
+                    $addToSet: completed_ids: Meteor.userId()
+            else
+                Docs.update doc_id,
+                    $pull: completed_ids: Meteor.userId()
+        else if doc.completion_type is 'children'
+            console.log 'children'
+            
+            
+            
+            
 # FlowRouter.route '/sol',
 #   triggersEnter: [ (context, redirect) ->
 #     redirect '/course/sol'

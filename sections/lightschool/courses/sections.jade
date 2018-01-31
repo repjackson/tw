@@ -50,12 +50,7 @@ template(name='view_section')
                             | #{younger_sibling.title}
                             // | #{younger_sibling.body}
                 else
-                    .shadowed.padded10
-                        .ui.dividing.header Completors
-                        .ui.list
-                            each completed_ids
-                                .item
-                                    +user_image_name user_id=this
+                    +completed_list
             .centered.ten.wide.column
                 +view_content
                 if transcript
@@ -86,8 +81,7 @@ template(name='view_section')
                 else
                     .shadowed.padded10
                         .ui.dividing.header Completors
-                        #check_section_completion.ui.button Check Completion
-                        .ui.dividing.header Readers
+                    .ui.dividing.header Readers
                         .ui.list
                             each readers
                                 .item
@@ -103,8 +97,19 @@ template(name='view_section')
                                             +user_image_name user_id=this._id
 
 
+template(name='completed_list')
+    .shadowed.padded10
+        +check_completion_button
+        .ui.dividing.header Completors
+        .ui.list
+            each completed_ids
+                .item
+                    +user_image_name user_id=this
+
+
+
 template(name='section_questions')
-    h2.ui.center.aligned.header #{child_count} Questions
+    h2.ui.center.aligned.header #{children_count} Questions
     .ui.styled.fluid.question_accordion.accordion
         each questions
             +section_question
@@ -181,9 +186,11 @@ template(name='answer')
                 if child_count
                     .rating #{child_count} Responses
                 if upvoters
-                    .test #{upvoters.length} Thanks
-                        // each upvoted_users
-                        //     img.ui.avatar.image(src="{{c.url profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+                    // .test #{upvoters.length} Thanked by
+                    .test Thanked by
+                        each upvoted_users
+                            |#{name}
+                            // img.ui.avatar.image(src="{{c.url profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
                     
             .text
                 +view_content
@@ -232,11 +239,11 @@ template(name='my_answer')
         .ui.segment(class=published_class)
             .ui.top.left.attached.basic.label 
                 |Your Answer
-            .ui.top.right.attached.basic.label 
-                +session_edit_button
             if is_editing
                 +edit_content
                 +published
             else
                 +view_content
+            |#{when}
+            +session_edit_button
             // .center.aligned

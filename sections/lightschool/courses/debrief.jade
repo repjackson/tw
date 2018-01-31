@@ -12,7 +12,17 @@ template(name='view_debrief')
                 if can_edit
                     +edit_button
         .centered.row
+            .centered.three.wide.column
+                if is_admin
+                    .shadowed.padded10
+                        .ui.dividing.header Completors
+                        .ui.list
+                            each completed_ids
+                                .item
+                                    +user_image_name user_id=this
+
             .centered.ten.wide.column
+                +view_content
                 +section_questions
             .centered.three.wide.column
                 unless is_admin
@@ -36,7 +46,7 @@ template(name='view_debrief')
                 else
                     .shadowed.padded10
                         .ui.dividing.header Completors
-                        #check_section_completion.ui.button Check Completion
+                        +check_completion_button
                         .ui.dividing.header Readers
                         .ui.list
                             each readers

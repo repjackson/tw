@@ -66,10 +66,15 @@ template(name='edit_slug')
         .ui.basic.label Slug
         input#slug(type='text' value=slug)
 
-template(name='template')
+template(name='edit_template')
     .ui.labeled.input
         .ui.basic.label template
         input#template(type='text' value=template)
+
+template(name='edit_completion_type')
+    .ui.labeled.input
+        .ui.basic.label completion type
+        input#completion_type(type='text' value=completion_type)
 
 template(name='plural_slug')
     .ui.labeled.input

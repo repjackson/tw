@@ -258,23 +258,23 @@ Template.delete_button.events
         Docs.remove @_id
         FlowRouter.go("/view/#{@parent_id}")
             
-# Template.session_delete_button.onCreated ->
-#     @confirming = new ReactiveVar(false)
+Template.session_delete_button.onCreated ->
+    @confirming = new ReactiveVar(false)
             
      
-# Template.session_delete_button.helpers
-#     confirming: -> Template.instance().confirming.get()
-# Template.session_delete_button.events
-#     'click .delete': (e,t)-> 
-#         # $(e.currentTarget).closest('.comment').transition('pulse')
-#         t.confirming.set true
+Template.session_delete_button.helpers
+    confirming: -> Template.instance().confirming.get()
+Template.session_delete_button.events
+    'click .delete': (e,t)-> 
+        # $(e.currentTarget).closest('.comment').transition('pulse')
+        t.confirming.set true
 
-#     'click .cancel': (e,t)-> t.confirming.set false
-#     'click .confirm': (e,t)-> 
-#         $(e.currentTarget).closest('.comment').transition('fade right')
-#         Meteor.setTimeout =>
-#             Docs.remove(@_id)
-#         , 1000
+    'click .cancel': (e,t)-> t.confirming.set false
+    'click .confirm': (e,t)-> 
+        $(e.currentTarget).closest('.comment').transition('fade right')
+        Meteor.setTimeout =>
+            Docs.remove(@_id)
+        , 1000
 
 
 Template.favorite_button.helpers

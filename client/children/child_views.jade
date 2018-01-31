@@ -108,6 +108,10 @@ template(name='view_nav')
                 if can_edit
                     +edit_button
     +sol_grid
+    if is_admin
+        .ui.stackable.padded.grid
+            .column
+                +completed_list
     // +child_docs
 
 // template(name='grid_item')

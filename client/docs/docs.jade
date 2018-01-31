@@ -68,10 +68,22 @@ template(name='view_doc')
                                 // | Sign In
             if type
                 +Template.dynamic template=view_type_template
-            else
-                .ui.text.container
-                    +parent_doc_segment
-                    .shadowed-box
-                        +view_content
-                        +author_info
-                        |#{when}
+            else            
+                .ui.padded.stackable.grid
+                    .row
+                        .three.wide.center.aligned.column
+                            // +parent_link
+                        .ten.wide.column
+                            h1.ui.inverted.center.aligned.header 
+                                +icon96 name=icon_class classes='ui inline image'
+                                |#{title}
+                        .three.wide.center.aligned.column
+                            if can_edit
+                                +edit_button
+                    .centered.row
+                        .ten.wide.column
+                            +parent_doc_segment
+                            .shadowed-box
+                                +view_content
+                                +author_info
+                                |#{when}

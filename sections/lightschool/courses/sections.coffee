@@ -21,8 +21,6 @@ if Meteor.isClient
             FlowRouter.go "/edit/#{id}"
             
     Template.view_section.events
-        'click #check_section_completion': ->
-            Meteor.call 'calculate_section_completion', FlowRouter.getParam('doc_id')
     
     Template.view_section.helpers
         section: -> Docs.findOne FlowRouter.getParam('doc_id')

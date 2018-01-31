@@ -242,6 +242,12 @@ Template.edit_title.events
         Docs.update FlowRouter.getParam('doc_id'),
             $set: title: title
             
+Template.edit_completion_type.events
+    'blur #completion_type': (e,t)->
+        completion_type = $(e.currentTarget).closest('#completion_type').val()
+        Docs.update FlowRouter.getParam('doc_id'),
+            $set: completion_type: completion_type
+            
 Template.field_type.events
     'blur #field_type': (e,t)->
         field_type = $(e.currentTarget).closest('#field_type').val()
