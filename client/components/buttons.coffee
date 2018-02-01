@@ -272,6 +272,7 @@ Template.session_delete_button.events
     'click .cancel': (e,t)-> t.confirming.set false
     'click .confirm': (e,t)-> 
         $(e.currentTarget).closest('.comment').transition('fade right')
+        $(e.currentTarget).closest('.notification_segment').transition('fade right')
         Meteor.setTimeout =>
             Docs.remove(@_id)
         , 1000

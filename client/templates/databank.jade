@@ -45,7 +45,7 @@ template(name='databank_card')
             +author_info
             |#{when}
         .content
-            +voting
+            +thanks_button
             +bookmark_button
             +resonate_button
             +respond_button
@@ -102,7 +102,7 @@ template(name='view_databank_item')
                 
         .row
             .twelve.wide.column
-                .ui.form.shadowed.padded10
+                .ui.form.shadowed-box
                     each parent.child_fields
                         +Template.dynamic template=field_view_template data=doc
                 if watson

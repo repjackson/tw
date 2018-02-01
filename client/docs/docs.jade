@@ -59,9 +59,12 @@ template(name='view_doc')
                             // .item
                             //     a.ui.icon.basic.white.inverted.circular.button(href="/karma" data-position="bottom center" data-tooltip='Karma')
                             //         +icon48 name='diamond' classes='ui mini inline image'
-                            // .item
-                            //     a.ui.icon.basic.white.inverted.circular.button(href="/notifications" data-position="bottom center" data-tooltip='Notifications')
-                            //         +icon48 name='bell' classes='ui mini inline image'
+                            .item
+                                a.ui.icon.basic.white.inverted.circular.button(href="/view/q6NwnyH93JB4Dg5K7" data-position="bottom center" data-tooltip='Messaging')
+                                    +icon48 name='chat' classes='ui mini inline image'
+                            .item
+                                a.ui.icon.basic.white.inverted.circular.button(href="/view/Gd7PigcoofFzYdau7" data-position="bottom center" data-tooltip='Notifications')
+                                    +icon48 name='bell' classes='ui mini inline image'
                             .item
                                 a.ui.icon.basic.white.inverted.circular.button(href="/profile/#{currentUser.username}" data-position="bottom center" data-tooltip=currentUser.username)
                                     if currentUser.profile.image_id

@@ -6,11 +6,10 @@ template(name='voting')
         // |#{points}
 
 template(name='thanks_button')
-    if said_thanks
-        .vote_up
+    .ui.circular.icon.basic.compact.button.vote_up(data-tooltip="Thank #{author.profile.first_name} for Sharing")
+        if said_thanks
             +icon48 name='applause' classes='ui mini inline image'
-    else
-        .vote_up
+        else
             +dots50 name='applause' classes='ui mini inline image'
     // .ui.circular.icon.basic.mini.compact.button.vote_up(data-tooltip="Thank #{author.profile.first_name} for Sharing")
         // img.ui.mini.image(src="https://png.icons8.com/pray-filled/ios7/50" width="50" height="50")
@@ -224,8 +223,7 @@ template(name='mark_doc_approved_button')
          
 template(name='bookmark_button')
     .bookmark_button.ui.circular.icon.button(class=bookmark_button_class data-tooltip='Bookmark') 
-        // +icon48 name='bookmark' classes='ui mini inline image'
-        i.bookmark.icon
+        +icon48 name='bookmark-ribbon' classes='ui mini inline image'
         // if bookmarked
         //     | Bookmarked
         // else

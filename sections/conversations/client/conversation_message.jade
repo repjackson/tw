@@ -11,9 +11,10 @@ template(name='conversation_message')
                     .text
                         | #{text}
                         | #{body}
+                        |!{content}
                     .actions
                         if is_author
-                            +delete_button
+                            +session_delete_button
                         else
                             +voting
                             if read
