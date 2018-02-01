@@ -11,7 +11,11 @@ Template.dev_footer.events
         doc = Docs.findOne FlowRouter.getParam('doc_id')
         Docs.insert
             parent_id: doc._id
-
+    # 'click #trickle_down': ->
+    #     doc = Docs.findOne FlowRouter.getParam('doc_id')
+    #     Meteor.call 'calculate_child_ancestor_array', FlowRouter.getParam('doc_id')
+        
+        
     'click #create_parent': ->
         parent_doc_id = Docs.insert {}
         Docs.update FlowRouter.getParam('doc_id'),

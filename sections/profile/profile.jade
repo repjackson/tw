@@ -2,8 +2,7 @@ template(name='view_profile')
     .ui.padded.stackable.grid
         .centered.row
             .ten.wide.center.aligned.column
-                a.ui.basic.icon.big.circular.button(href="/")
-                    i.home.icon
+                |View Profile
         .centered.row
             .twelve.wide.column.shadowed-box
                 with currentUser
@@ -42,3 +41,6 @@ template(name='view_profile')
                 #logout.ui.big.center.aligned.red.button Log Out
             
             
+template(name='user_journal_entries')
+    .ui.header User Journal Entries
+    

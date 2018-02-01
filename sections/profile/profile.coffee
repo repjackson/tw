@@ -8,7 +8,7 @@ if Meteor.isClient
     #             FlowRouter.go ‘login’
     #     ]
     
-    FlowRouter.route '/profile/:username', 
+    FlowRouter.route '/user/:username', 
         name: 'profile_home'
         action: (params) ->
             BlazeLayout.render 'layout',

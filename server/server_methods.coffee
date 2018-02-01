@@ -211,7 +211,43 @@ Meteor.methods
             $set: children_count: children_count
             
         
+    make_ancestor_array: (doc_id)->
+        ancestor_array = []
+        doc = Docs.findOne doc_id
+        current_id = 
+        while doc.parent_id
+            if doc.parent_id
+                ancestor_array.push doc.parent_id
+                parent = Docs.findOne doc.parent_id
+                if parent.parent_id
+                    grandparent = Docs.findOne parent.parent_id
+                    ancestor_array.push parent.parent_id
+
+    # calculate_child_ancestor_array: (doc_id)->
+    #     console.log doc_id
+    #     doc = Docs.findOne doc_id
+    #     if doc.ancestor_array
+    #         child_ancestor_array = doc.ancestor_array
+    #     else
+    #         child_ancestor_array = []
             
+    #     child_ancestor_array.push doc._id
+        
+    #     result = Docs.update {parent_id:doc_id},
+    #         {$set:ancestor_array:child_ancestor_array},
+    #         {multi:true}
+    #     console.log result
+        
+    #     # parent_doc = Docs.findOne doc_id
+    #     for child_doc in Docs.find(parent_id:doc_id).fetch()
+    #         Meteor.call 'calculate_child_ancestor_array', child_doc._id
+    #     #     # console.log 'child_doc', child_doc._id
+    #     #     child_ancestor_array = parent_doc.ancestor_array
+    #     #     child_ancestor_array.push parent_doc._id
+    #     #     console.log child_ancestor_array
+            
+            
+    # # calculate_child_ancestor_array: (doc_id)->
             
 Meteor.methods
     submit_contact_submission: (name, email, message)->

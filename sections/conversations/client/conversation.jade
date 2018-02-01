@@ -3,7 +3,7 @@ template(name='full_conversation_view')
         .content
             span.right.floated
                 if isInRole 'admin'
-                    +delete_button
+                    +session_delete_button
                 // +subscribe_button
                 +view_full_button
             .ui.header 

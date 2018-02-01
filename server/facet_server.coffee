@@ -1,5 +1,6 @@
 Meteor.publish 'facet', (
     selected_theme_tags
+    selected_ancestor_ids
     selected_author_ids=[]
     selected_location_tags
     selected_intention_tags
@@ -28,6 +29,8 @@ Meteor.publish 'facet', (
 
 
         if selected_theme_tags.length > 0 then match.tags = $all: selected_theme_tags
+        if selected_ancestor_ids.length > 0 then match.ancestor_array = $all: selected_ancestor_ids
+
         if selected_author_ids.length > 0 then match.author_id = $in: selected_author_ids
         if selected_location_tags.length > 0 then match.location_tags = $all: selected_location_tags
         if selected_intention_tags.length > 0 then match.intention_tags = $all: selected_intention_tags
@@ -66,6 +69,23 @@ Meteor.publish 'facet', (
         if view_lightbank_type? then match.lightbank_type = view_lightbank_type
         # match.lightbank_type = $ne:'journal_prompt'
         
+        ancestor_ids_cloud = Docs.aggregate [
+            { $match: match }
+            { $project: ancestor_array: 1 }
+            { $unwind: "$ancestor_array" }
+            { $group: _id: '$ancestor_array', count: $sum: 1 }
+            { $match: _id: $nin: selected_ancestor_ids }
+            { $sort: count: -1, _id: 1 }
+            { $limit: limit }
+            { $project: _id: 0, name: '$_id', count: 1 }
+            ]
+        # console.log 'theme ancestor_ids_cloud, ', ancestor_ids_cloud
+        ancestor_ids_cloud.forEach (ancestor_id, i) ->
+            self.added 'ancestor_ids', Random.id(),
+                name: ancestor_id.name
+                count: ancestor_id.count
+                index: i
+
         theme_tag_cloud = Docs.aggregate [
             { $match: match }
             { $project: tags: 1 }
