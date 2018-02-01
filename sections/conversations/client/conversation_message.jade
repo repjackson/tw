@@ -13,7 +13,7 @@ template(name='conversation_message')
                         | #{body}
                     .actions
                         if is_author
-                            +delete_link
+                            +delete_button
                         else
                             +voting
                             if read

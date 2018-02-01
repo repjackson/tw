@@ -1,8 +1,8 @@
 template(name='voting')
     .ui.basic.circular.icon.button
         i.thumbs.up.link.big.icon.vote_up(class=vote_up_button_class)
-    .ui.basic.circular.icon.button
-        i.thumbs.down.link.big.icon.vote_down(class=vote_down_button_class)
+    // .ui.basic.circular.icon.button
+    //     i.thumbs.down.link.big.icon.vote_down(class=vote_down_button_class)
         // |#{points}
 
 template(name='thanks_button')
@@ -64,11 +64,11 @@ template(name='edit_doc_link')
 
 template(name='respond_button')
     if currentUser
-        +icon48 name='response' classes='ui inline image'
-        // #respond.ui.circular.basic.icon.button(data-tooltip='Respond')
+        #respond.ui.circular.basic.icon.button(data-tooltip='Respond')
+            +icon48 name='response' classes='ui inline image'
     else
-        +icon48 name='response' classes='ui inline image'
-        // .ui.circular.basic.disabled.icon.button(data-tooltip='Respond')
+        .ui.circular.basic.disabled.icon.button(data-tooltip='Respond')
+            +icon48 name='response' classes='ui inline image'
 
 template(name='big_both_voter')
     i.thumbs.up.link.huge.icon.vote_up(class=vote_up_button_class)

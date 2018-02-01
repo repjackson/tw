@@ -115,7 +115,7 @@ template(name='edit_tags')
         //     +inputAutocomplete settings=theme_select_settings id="theme_tag_select" class="" autocomplete="off"
         each tags
             // a.ui.basic.circular.button.doc_tag #{this}
-            a.ui.basic.circular.button.doc_tag
+            a.ui.circular.white.button.doc_tag
                 i.remove.icon
                 |#{this}
 
@@ -137,7 +137,7 @@ template(name='edit_location_tags')
             input#add_location_tag(type='text' placeholder="eg. 'home', 'couch'" maxlength='50' )
         each location_tags
             // a.ui.basic.circular.button.doc_tag #{this}
-            a.ui.basic.circular.button.doc_tag
+            a.ui.circular.button.doc_tag
                 i.remove.icon
                 |#{this}
 
@@ -160,7 +160,7 @@ template(name='edit_intention_tags')
             input#intention_tag_select(type='text' maxlength='50' )
         each intention_tags
             // a.ui.basic.circular.button.doc_tag #{this}
-            a.ui.basic.circular.button.doc_tag
+            a.ui.circular.button.doc_tag
                 i.remove.icon
                 |#{this}
 
@@ -250,8 +250,6 @@ template(name='edit_content')
 template(name='view_content')
     .ui.basic.segment
         .large120 !{content}
-        // if watson
-        //     +analyzed_watson_keywords
 
     
     

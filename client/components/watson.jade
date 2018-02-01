@@ -53,11 +53,11 @@ template(name='call_watson')
         |Analyze Text
 
 template(name='analyzed_watson_keywords')
-    .ui.fluid.styled.accordion
+    .ui.fluid.shadowed.padded10.accordion
         .title
             .ui.header 
                 +icon48 name='dna-helix' classes='ui mini spaced image'
-                |Analyzed Keyword Details (#{watson.keywords.length})
+                |#{watson.keywords.length} Analyzed Keywords
                 i.dropdown.icon
         .content
             .ui.three.stackable.cards

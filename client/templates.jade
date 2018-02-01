@@ -4,7 +4,7 @@ head
     meta(name='apple-mobile-web-app-capable', content='yes')
     meta(name='apple-mobile-web-app-status-bar-style', content='white')
     meta(name='google-site-verification', content='6osbddgiRIkUEHj3ezFR6D2yOQuooBvvXsBliSWhAZA')
-    link(href="https://fonts.googleapis.com/css?family=Cabin" rel="stylesheet")
+    // link(href="https://fonts.googleapis.com/css?family=Cabin" rel="stylesheet")
     link(href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet")
     link(rel="apple-touch-icon", sizes="180x180", href="/apple-touch-icon.png")
     link(rel="icon", type="image/png", href="/favicon-32x32.png", sizes="32x32")
@@ -38,7 +38,7 @@ template(name='not_found')
 template(name='staus_indicator')
     if online 
         // .ui.label(class='{{labelClass}}') 
-        img.ui.avatar.image(src="https://png.icons8.com/connection-status-on/color/48" data-tooltip='Online' width="48" height="48")
+        img.ui.avatar.image(src="https://png.icons8.com/connection-status-on/color/48" title='Online' width="48" height="48")
         // |Online
     else if idle
         .ui.label(class='{{labelClass}}') Idle

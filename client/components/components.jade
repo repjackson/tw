@@ -259,6 +259,8 @@ template(name='author_info')
     if is_anonymous
         |by Anonymous
     else
+        if is_private
+            i.large.lock.icon
         | by 
         with author
             if profile.image_id

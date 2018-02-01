@@ -81,35 +81,42 @@ template(name='databank_card')
                 
 
 template(name='edit_databank_item')
-    .ui.form
+    .ui.form.shadowed.padded10
         each parent.child_fields
             +Template.dynamic template=field_edit_template data=doc
+        +published
 
 template(name='view_databank_item')
     .ui.stackable.padded.grid
         .centered.row
-            h1.ui.center.aligned.header 
-                if title
-                    |#{title}
-                else
-                    |View #{parent.title} Item
+            .centered.three.wide.column
+            .centered.ten.wide.column
+                h1.ui.center.aligned.header 
+                    if title
+                        |#{title}
+                    else
+                        |View #{parent.title} Item
+            .centered.three.wide.column
+                if can_edit
+                    +edit_button
                 
         .row
             .twelve.wide.column
-                .ui.form
+                .ui.form.shadowed.padded10
                     each parent.child_fields
                         +Template.dynamic template=field_view_template data=doc
-                    if is_visible
-                        +response_list
-            .four.wide.column
+                if watson
+                    +analyzed_watson_keywords
+    
+                if is_visible
+                    +response_list
+            .four.wide.column.shadowed.padded10
                 +author_info
                 h3.ui.sub.header #{when}
-                if can_edit
-                    +edit_button
                 if watson
                     +doc_sentiment
                     +doc_emotion
-                    +watson_keywords
+                    // +watson_keywords
                 else 
                     if can_edit
                         if content

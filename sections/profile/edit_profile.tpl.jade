@@ -14,7 +14,7 @@
                         else
                             label Add Profile Image
                             input(type='file' name='upload_picture' accept='image/*')
-                .ten.wide.column    
+                .ten.wide.column.shadowed.padded10
                     if enrolling_in_demo
                         h4.ui.orange.header Thanks for registering! Please finish creating your profile below before continuing on to the course.
                     .field
@@ -40,7 +40,7 @@
                     .field
                         label Tags (please select a few key words that embody yourself, interests, etc.)
                         each tags
-                            .ui.basic.circular.button.person_tag
+                            .ui.basic.circular.black.inverted.button.person_tag
                                 i.minus.icon
                                 |#{this}
                         .ui.left.icon.input

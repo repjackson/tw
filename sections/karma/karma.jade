@@ -18,8 +18,8 @@ template(name='karma')
                 //     +icon48 name='handshake' classes='ui mini spaced image'
                 //     | Transactions
                 //     +icon48 name='rotate-left' classes='ui mini spaced image'
-        .centered.row.shadowed-box
-            .four.wide.column
+        .centered.row
+            .four.wide.column.shadowed.padded10
                 +karma_cloud
                 // .ui.dividing.header Actions
                 // a.ui.basic.fluid.button(href="/karma/send")
@@ -29,7 +29,7 @@ template(name='karma')
                 // .ui.slider.checkbox
                 //     input#share_bookmarks(type='checkbox' checked=currentUser.profile.share_bookmarks)
                 //     label(for='share_bookmarks') Share Stats in Profile
-            .eight.wide.column
+            .eight.wide.column.shadowed.padded10
                 .ui.center.aligned.header
                     +icon48 name='like'
                     |Upvoted Documents

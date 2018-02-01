@@ -9,7 +9,12 @@ template(name='edit_doc')
                     h1.ui.header
                         if icon_class
                             +icon96 name=icon_class classes='ui image'
-                        |Edit #{title}
+                        |Edit 
+                        if title
+                            |#{title}
+                        else
+                            |#{parent.title} Item
+
                 .three.wide.center.aligned.column
                     +save_link
             .centered.row
@@ -38,52 +43,53 @@ template(name='view_document')
 
 template(name='view_doc')
     with doc
-        // .header-background.fixedbg(style=background_style)
-        .header-backgrou
+        .ui.padded.stackable.grid
+            .centered.row
+                .three.wide.center.aligned.column
+                    +admin_toggle
+                .nine.wide.center.aligned.column
+                    unless is_site
+                        +parent_link
+                    else
+                        .ui.small.image
+                            +view_image_id
+                .four.wide.center.aligned.column
+                    if currentUser
+                        .ui.horizontal.list
+                            // .item
+                            //     a.ui.icon.basic.white.inverted.circular.button(href="/karma" data-position="bottom center" data-tooltip='Karma')
+                            //         +icon48 name='diamond' classes='ui mini inline image'
+                            // .item
+                            //     a.ui.icon.basic.white.inverted.circular.button(href="/notifications" data-position="bottom center" data-tooltip='Notifications')
+                            //         +icon48 name='bell' classes='ui mini inline image'
+                            .item
+                                a.ui.icon.basic.white.inverted.circular.button(href="/profile/#{currentUser.username}" data-position="bottom center" data-tooltip=currentUser.username)
+                                    if currentUser.profile.image_id
+                                        img.ui.mini.image(src="{{c.url currentUser.profile.image_id width=60 height=60 gravity='face' crop='fill'}}")
+                                    else
+                                        i.user.icon
+                    else
+                        a.ui.icon.basic.white.inverted.circular.button(href='/sign-in') 
+                            +icon48 name='login-rounded-down' classes='ui mini inline spaced image'
+                            // | Sign In
+        if type
+            +Template.dynamic template=view_type_template
+        else            
             .ui.padded.stackable.grid
+                .row
+                    .three.wide.center.aligned.column
+                        // +parent_link
+                    .ten.wide.column
+                        h1.ui.inverted.center.aligned.header 
+                            +icon96 name=icon_class classes='ui inline image'
+                            |#{title}
+                    .three.wide.center.aligned.column
+                        if can_edit
+                            +edit_button
                 .centered.row
-                    .three.wide.center.aligned.column
-                        +admin_toggle
-                    .ten.wide.center.aligned.column
-                        unless is_site
-                            +parent_link
-                        else
-                            .ui.small.image
-                                +view_image_id
-                    .three.wide.center.aligned.column
-                        if currentUser
-                            .ui.horizontal.list
-                                .item
-                                    a.ui.icon.basic.white.inverted.circular.button(href="/karma" data-position="bottom center" data-tooltip='Karma')
-                                        +icon48 name='diamond' classes='ui mini inline image'
-                                .item
-                                    a.ui.icon.basic.white.inverted.circular.button(href="/profile/#{currentUser.username}" data-position="bottom center" data-tooltip=currentUser.username)
-                                        if currentUser.profile.image_id
-                                            img.ui.mini.image(src="{{c.url currentUser.profile.image_id width=60 height=60 gravity='face' crop='fill'}}")
-                                        else
-                                            i.user.icon
-                        else
-                            a.ui.icon.basic.white.inverted.circular.button(href='/sign-in') 
-                                +icon48 name='login-rounded-down' classes='ui mini inline spaced image'
-                                // | Sign In
-            if type
-                +Template.dynamic template=view_type_template
-            else            
-                .ui.padded.stackable.grid
-                    .row
-                        .three.wide.center.aligned.column
-                            // +parent_link
-                        .ten.wide.column
-                            h1.ui.inverted.center.aligned.header 
-                                +icon96 name=icon_class classes='ui inline image'
-                                |#{title}
-                        .three.wide.center.aligned.column
-                            if can_edit
-                                +edit_button
-                    .centered.row
-                        .ten.wide.column
-                            +parent_doc_segment
-                            .shadowed-box
-                                +view_content
-                                +author_info
-                                |#{when}
+                    .ten.wide.column
+                        +parent_doc_segment
+                        .shadowed-box
+                            +view_content
+                            +author_info
+                            |#{when}
