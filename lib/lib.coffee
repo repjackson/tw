@@ -60,7 +60,11 @@ Docs.after.update ((userId, doc, fieldNames, modifier, options) ->
 Docs.after.insert (userId, doc)->
     if doc.parent_id
         Meteor.call 'calculate_child_count', doc.parent_id
-    
+        parent = Docs.findOne doc.parent_id
+        new_ancestor_array = parent.ancestor_array
+        new_ancestor_array.push parent._id
+        Docs.update doc._id,
+            $set:ancestor_array:new_ancestor_array
     
 Docs.after.remove (userId, doc)->
     if doc.parent_id

@@ -11,7 +11,7 @@ Meteor.publish 'facet', (
     tag_limit
     doc_limit
     # sort_object
-    view_published
+    view_private
     view_read
     view_bookmarked
     view_resonates
@@ -29,7 +29,6 @@ Meteor.publish 'facet', (
 
 
         if selected_theme_tags.length > 0 then match.tags = $all: selected_theme_tags
-        if selected_ancestor_ids.length > 0 then match.ancestor_array = $all: selected_ancestor_ids
 
         if selected_author_ids.length > 0 then match.author_id = $in: selected_author_ids
         if selected_location_tags.length > 0 then match.location_tags = $all: selected_location_tags
@@ -38,24 +37,29 @@ Meteor.publish 'facet', (
         
         if tag_limit then limit=tag_limit else limit=50
         if author_id then match.author_id = author_id
-        
-        # if view_private is true then match.author_id = @userId
-        if view_resonates?
-            if view_resonates is true then match.favoriters = $in: [@userId]
-            else if view_resonates is false then match.favoriters = $nin: [@userId]
-        if view_read?
-            if view_read is true then match.read_by = $in: [@userId]
-            else if view_read is false then match.read_by = $nin: [@userId]
-        if view_published is true
-            match.published = $in: [1,0]
-        else if view_published is false
-            match.published = -1
+        if view_private is true
             match.author_id = Meteor.userId()
+        
+        if view_private is false
+            match.published = $in: [0,1]
+
+        # if view_private is true then match.author_id = @userId
+        # if view_resonates?
+        #     if view_resonates is true then match.favoriters = $in: [@userId]
+        #     else if view_resonates is false then match.favoriters = $nin: [@userId]
+        # if view_read?
+        #     if view_read is true then match.read_by = $in: [@userId]
+        #     else if view_read is false then match.read_by = $nin: [@userId]
+        # if view_published is true
+        #     match.published = $in: [1,0]
+        # else if view_published is false
+        #     match.published = -1
+        #     match.author_id = Meteor.userId()
             
-        if view_bookmarked?
-            if view_bookmarked is true then match.bookmarked_ids = $in: [@userId]
-            else if view_bookmarked is false then match.bookmarked_ids = $nin: [@userId]
-        if view_complete? then match.complete = view_complete
+        # if view_bookmarked?
+        #     if view_bookmarked is true then match.bookmarked_ids = $in: [@userId]
+        #     else if view_bookmarked is false then match.bookmarked_ids = $nin: [@userId]
+        # if view_complete? then match.complete = view_complete
         # console.log view_complete
         
         
@@ -63,28 +67,28 @@ Meteor.publish 'facet', (
         # match.site = Meteor.settings.public.site
 
         # console.log 'match:', match
-        if view_images? then match.components?.image = view_images
+        # if view_images? then match.components?.image = view_images
         
         # lightbank types
-        if view_lightbank_type? then match.lightbank_type = view_lightbank_type
+        # if view_lightbank_type? then match.lightbank_type = view_lightbank_type
         # match.lightbank_type = $ne:'journal_prompt'
         
-        ancestor_ids_cloud = Docs.aggregate [
-            { $match: match }
-            { $project: ancestor_array: 1 }
-            { $unwind: "$ancestor_array" }
-            { $group: _id: '$ancestor_array', count: $sum: 1 }
-            { $match: _id: $nin: selected_ancestor_ids }
-            { $sort: count: -1, _id: 1 }
-            { $limit: limit }
-            { $project: _id: 0, name: '$_id', count: 1 }
-            ]
-        # console.log 'theme ancestor_ids_cloud, ', ancestor_ids_cloud
-        ancestor_ids_cloud.forEach (ancestor_id, i) ->
-            self.added 'ancestor_ids', Random.id(),
-                name: ancestor_id.name
-                count: ancestor_id.count
-                index: i
+        # ancestor_ids_cloud = Docs.aggregate [
+        #     { $match: match }
+        #     { $project: ancestor_array: 1 }
+        #     { $unwind: "$ancestor_array" }
+        #     { $group: _id: '$ancestor_array', count: $sum: 1 }
+        #     { $match: _id: $nin: selected_ancestor_ids }
+        #     { $sort: count: -1, _id: 1 }
+        #     { $limit: limit }
+        #     { $project: _id: 0, name: '$_id', count: 1 }
+        #     ]
+        # # console.log 'theme ancestor_ids_cloud, ', ancestor_ids_cloud
+        # ancestor_ids_cloud.forEach (ancestor_id, i) ->
+        #     self.added 'ancestor_ids', Random.id(),
+        #         name: ancestor_id.name
+        #         count: ancestor_id.count
+        #         index: i
 
         theme_tag_cloud = Docs.aggregate [
             { $match: match }
@@ -239,3 +243,39 @@ Meteor.publish 'facet', (
         self.ready()
         
         self.onStop ()-> subHandle.stop()
+
+
+Meteor.publish 'ancestor_ids', (doc_id)->
+    match = {}
+    self = @
+    doc = Docs.findOne doc_id
+    # match._id = doc_id
+    # console.log match
+    one_child = Docs.findOne(parent_id:doc_id)
+    if one_child
+        match_array = one_child.ancestor_array
+        children = Docs.find(parent_id:one_child._id).fetch()
+        for child in children 
+            match_array.push child._id
+    else
+        match_array = doc.ancestor_array
+    match._id = $in:match_array
+        
+    console.log 'match',match
+    # if selected_ancestor_ids.length > 0 then match.ancestor_array = $all: selected_ancestor_ids
+    ancestor_ids_cloud = Docs.aggregate [
+        { $match: match }
+        { $project: ancestor_array: 1 }
+        { $unwind: "$ancestor_array" }
+        { $group: _id: '$ancestor_array', count: $sum: 1 }
+        # { $match: _id: $nin: selected_ancestor_ids }
+        { $sort: count: -1, _id: 1 }
+        { $limit: 20 }
+        { $project: _id: 0, name: '$_id', count: 1 }
+        ]
+    # console.log 'theme ancestor_ids_cloud, ', ancestor_ids_cloud
+    ancestor_ids_cloud.forEach (ancestor_id, i) ->
+        self.added 'ancestor_ids', Random.id(),
+            name: ancestor_id.name
+            count: ancestor_id.count
+            index: i

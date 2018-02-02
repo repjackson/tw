@@ -25,18 +25,20 @@ template(name='ancestor_facet')
     //     i.search.icon
     //     +inputAutocomplete settings=settings id="search" class="" autocomplete="off" placeholder='Search...'
     // |&nbsp;    
-    .ui.header ancestors
-    if selected_ancestor_ids
-        #clear_ancestor_ids.ui.white.inverted.large.icon.circular.button
-            i.remove.icon
-        each selected_ancestor_ids
-            .unselect_ancestor_id.ui.white.inverted.large.circular.button
-                strong #{this}
-    each ancestor_ids
-        .ui.white.inverted.basic.circular.button.select_ancestor_id(class=ancestor_id_class) 
+    // .ui.header ancestors
+    // if selected_ancestor_ids
+    //     #clear_ancestor_ids.ui.white.inverted.large.icon.circular.button
+    //         i.remove.icon
+    //     each selected_ancestor_ids
+    //         .unselect_ancestor_id.ui.white.inverted.large.circular.button
+    //             strong #{this}
+    each ancestors
+        // a.ui.white.inverted.basic.circular.button.select_ancestor_id(class=ancestor_id_class) 
+        a.ui.white.inverted.basic.circular.button.select_ancestor_id(href="/view/#{_id}") 
             // strong #{this.name}
-            +icon48 name=ancestor.icon_class classes='ui inline image'
-            strong #{ancestor.title}
+            if icon_class
+                +icon24 name=icon_class classes='ui inline image'
+            strong #{title}
             if isInRole 'admin'
                 small #{this.count}
     // .ui.divider

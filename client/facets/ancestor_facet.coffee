@@ -1,7 +1,7 @@
 @selected_ancestor_ids = new ReactiveArray []
 
 Template.ancestor_facet.helpers
-    ancestor_ids: ->
+    ancestors: ->
         
         # doc_count = Docs.find().count()
         # # if selected_ancestor_ids.array().length
@@ -11,9 +11,25 @@ Template.ancestor_facet.helpers
         #         count: $lt: doc_count
         #         }, limit:20
         # else
-        cursor = Ancestor_ids.find({}, limit:20)
+        cursor = Ancestor_ids.find({}, 
+            limit:20, 
+            # sort:ancestor_array.length
+            )
+        ancestors = []
+        ancestor_ids = Ancestor_ids.find({}).fetch()
+        for ancestor_id in ancestor_ids
+            ancestors.push Docs.findOne ancestor_id.name
+            
+        sorted_ancestors =
+            _.sortBy(ancestors, (an)->
+                if an.ancestor_array
+                    an.ancestor_array?.length
+                # an.ancestor_array.length 
+                )
+
+            
         # console.log cursor.fetch()
-        return cursor
+        # return cursor
             
             
             
