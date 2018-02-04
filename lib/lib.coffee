@@ -86,6 +86,9 @@ Docs.helpers
     subject: -> Meteor.users.findOne @subject_id
     object: -> Docs.findOne @object_id
     has_children: -> if Docs.findOne(parent_id: @_id) then true else false
+    
+    has_price: -> @dollar_price or @point_price
+    
     children: -> 
         Docs.find {parent_id: @_id}, 
             sort:

@@ -20,13 +20,16 @@ Template.ancestor_facet.helpers
         for ancestor_id in ancestor_ids
             ancestors.push Docs.findOne ancestor_id.name
             
-        sorted_ancestors =
-            _.sortBy(ancestors, (an)->
-                if an.ancestor_array
-                    an.ancestor_array?.length
-                # an.ancestor_array.length 
-                )
-
+        # console.dir ancestors
+        if ancestors.length > 0
+            sorted_ancestors =
+                _.sortBy(ancestors, (an)->
+                    if an.ancestor_array
+                        an.ancestor_array?.length
+                    # an.ancestor_array.length 
+                    )
+        
+        # return ancestors
             
         # console.log cursor.fetch()
         # return cursor

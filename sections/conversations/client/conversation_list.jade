@@ -11,7 +11,7 @@ template(name='conversation_list_item')
                 .ui.horizontal.list
                     each participants
                         .item
-                            // a(href="/profile/#{username}")
+                            // a(href="/user/#{username}")
                             img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}" title=name)
                             |#{profile.first_name}
                             +staus_indicator

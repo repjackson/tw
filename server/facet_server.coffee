@@ -251,17 +251,18 @@ Meteor.publish 'ancestor_ids', (doc_id)->
     doc = Docs.findOne doc_id
     # match._id = doc_id
     # console.log match
-    one_child = Docs.findOne(parent_id:doc_id)
-    if one_child
-        match_array = one_child.ancestor_array
-        children = Docs.find(parent_id:one_child._id).fetch()
-        for child in children 
-            match_array.push child._id
-    else
-        match_array = doc.ancestor_array
-    match._id = $in:match_array
+    # one_child = Docs.findOne(parent_id:doc_id)
+    # if one_child
+    #     match_array = one_child.ancestor_array
+    #     children = Docs.find(parent_id:one_child._id).fetch()
+    #     for child in children 
+    #         match_array.push child._id
+    # else
+    #     match_array = doc.ancestor_array
+    # match.parent_id = $in:match_array
+    match._id = doc_id    
         
-    console.log 'match',match
+    # console.log 'match',match
     # if selected_ancestor_ids.length > 0 then match.ancestor_array = $all: selected_ancestor_ids
     ancestor_ids_cloud = Docs.aggregate [
         { $match: match }

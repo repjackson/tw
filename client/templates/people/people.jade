@@ -24,11 +24,11 @@ template(name='view_people')
 template(name='person')
     .ui.card
         .image
-            a(href="/profile/#{username}")
+            a(href="/user/#{username}")
                 img.ui.fluid.rounded.image(src="{{c.url profile.image_id width=400 height=400 gravity='face' crop='fill'}}")
         .content
             .center.aligned.header
-                a(href="/profile/#{username}")
+                a(href="/user/#{username}")
                     if profile.first_name
                         | #{profile.first_name}
                     if profile.last_name

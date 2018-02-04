@@ -1,31 +1,42 @@
 template(name='nav')
     #nav_menu.ui.labeled.icon.borderless.menu(class=nav_class)
-        a.ui.header.item(href="/view/#{site_doc._id}" data-position='bottom center' data-content=site_doc.title) 
-            if site_doc.image_url
-                .ui.tiny.image
-                    img(src=image_url)
-            if site_doc.image_id
-                .ui.image
-                    img(src="{{c.url site_doc.image_id width=50 height=50 crop='fill'}}")
-            else
-                .ui.image
-                    +icon48 name=site_doc.icon_class
-        each nav_child_items
-            a.ui.item(href="/view/#{_id}" data-position='bottom center' data-content=title)
-                .ui.image
-                    +icon48 name=icon_class
+        // a.ui.header.item(href="/view/#{site_doc._id}" data-position='bottom center' data-content=site_doc.title) 
+        //     if site_doc.image_url
+        //         .ui.tiny.image
+        //             img(src=image_url)
+        //     if site_doc.image_id
+        //         .ui.image
+        //             img(src="{{c.url site_doc.image_id width=50 height=50 crop='fill'}}")
+        //     else
+        //         .ui.image
+        //             +icon48 name=site_doc.icon_class
+        +ancestor_facet
+        // each nav_child_items
+        //     a.ui.item(href="/view/#{_id}" data-position='bottom center' data-content=title)
+        //         .ui.image
+        //             +icon48 name=icon_class
                 // |#{title}
         .right.menu
             if currentUser
-                // a#report_bug.icon.item(href="#"  data-position="bottom center" data-content="Report a Bug/Feature Request")
-                //     .ui.image
-                //         +icon48 name='bug'
+                a.icon.item(href="/view/hBh38f3W9C3qXwNv2" data-position="bottom center" data-content='Karma')
+                    .ui.image
+                        +icon48 name='diamond' classes='ui mini inline image'
+                a#report_bug.icon.item(href="#"  data-position="bottom center" data-content="Report a Bug/Feature Request")
+                    .ui.image
+                        +icon48 name='bug' classes='ui mini inline image'
                 // if cart_items
-                //     a.icon.mobile.hidden.item(href='/cart' class="{{isActivePath '/cart'}}" data-position="bottom center" data-content="Shopping Cart")
-                //         i.large.icons
-                //             i.cart.icon
-                //             i.corner.teal.asterisk.icon
-                a.icon.item(href="/profile/#{currentUser.username}" data-position="bottom center" data-content="Profile")
+                a.ui.icon.mobile.hidden.item(href='/cart' data-position="bottom center" data-content="Shopping Cart")
+                    i.big.icons
+                        i.cart.icon
+                        i.corner.teal.asterisk.icon
+                a.item(href="/view/q6NwnyH93JB4Dg5K7" data-position="bottom center" data-content='Messaging')
+                    .ui.image
+                        +icon48 name='chat' classes='ui mini inline image'
+                a.item(href="/view/Gd7PigcoofFzYdau7" data-position="bottom center" data-content='Notifications')
+                    .ui.image
+                        +icon48 name='bell' classes='ui mini inline image'
+                        
+                a.labeled.icon.item(href="/user/#{currentUser.username}" data-position="bottom center" data-content="Profile")
                     if currentUser.profile.image_id
                         img.ui.avatar.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
                     else
@@ -67,52 +78,52 @@ template(name='nav')
                 | You're welcome
                 
                 
-template(name='about')
-    .ui.container.centered.stackable.grid
-        .six.wide.column
-            .center.shadows.large-text Hi, I'm Tori
-            .ui.basic.segment
-                p.large 
-                    | My vision is to create a tribe of people that live to be the change that they wish to see in their world. Through lifestyle coaching and motivational speaking, I aim to create a ripple effect that will positively impact and change the perspective of hundreds. 
-                p.large
-                    |I am here to spread light to you and help you navigate your own path. Leading, inspiring, guiding, helping, and teaching empowers us to take action; gives you hope and belief in the ability to create the life that you wish to live.
-        .six.wide.column
-            // img.ui.centered.image(src="{{c.url 'tori_profile' height=800 width=600 background='white' crop='lpad'}}")
-            img.ui.centered.image(src="{{c.url 'tori_profile' }}")
-        .twelve.wide.column
-            h1.ui.center.aligned.header
-                |I am passionate about life itself.
-            p.large Every day that I get a chance to live, I strive to live every hour to its fullest potential.
+// template(name='about')
+//     .ui.container.centered.stackable.grid
+//         .six.wide.column
+//             .center.shadows.large-text Hi, I'm Tori
+//             .ui.basic.segment
+//                 p.large 
+//                     | My vision is to create a tribe of people that live to be the change that they wish to see in their world. Through lifestyle coaching and motivational speaking, I aim to create a ripple effect that will positively impact and change the perspective of hundreds. 
+//                 p.large
+//                     |I am here to spread light to you and help you navigate your own path. Leading, inspiring, guiding, helping, and teaching empowers us to take action; gives you hope and belief in the ability to create the life that you wish to live.
+//         .six.wide.column
+//             // img.ui.centered.image(src="{{c.url 'tori_profile' height=800 width=600 background='white' crop='lpad'}}")
+//             img.ui.centered.image(src="{{c.url 'tori_profile' }}")
+//         .twelve.wide.column
+//             h1.ui.center.aligned.header
+//                 |I am passionate about life itself.
+//             p.large Every day that I get a chance to live, I strive to live every hour to its fullest potential.
         
-            p.large Every day I do my best to be in the moment and deeply feel my experience.
+//             p.large Every day I do my best to be in the moment and deeply feel my experience.
         
-            p.large Every day I strive to be my best version of myself.
+//             p.large Every day I strive to be my best version of myself.
         
-            p.large Every day I strive to discover where the limits of myself exist.
+//             p.large Every day I strive to discover where the limits of myself exist.
         
-            p.large Every day I strive to discover if the limits of life exist.
+//             p.large Every day I strive to discover if the limits of life exist.
         
-            .ui.basic.padded.segment
-                h1.center.aligned.header People often ask me, “Why do you do what you do?”
+//             .ui.basic.padded.segment
+//                 h1.center.aligned.header People often ask me, “Why do you do what you do?”
         
-                p.large I look around and see how fast the world is moving; how many people are on autopilot and letting their lives run them, instead of them running their lives. I see individuals leading lives that they want to escape from. After waking up and pulling myself out of the darkness, I discovered that we don’t have to live the way everyone else lives. 
-                p.large After changing my mindset, thought patterns, and self-care habits I cannot imagine living live a different way. I am here to be the light. In order help bring people to awareness, I introduce new values, paradigms and tools.
+//                 p.large I look around and see how fast the world is moving; how many people are on autopilot and letting their lives run them, instead of them running their lives. I see individuals leading lives that they want to escape from. After waking up and pulling myself out of the darkness, I discovered that we don’t have to live the way everyone else lives. 
+//                 p.large After changing my mindset, thought patterns, and self-care habits I cannot imagine living live a different way. I am here to be the light. In order help bring people to awareness, I introduce new values, paradigms and tools.
     
-            h1.ui.center.aligned.header
-                | If you really knew me, you would know...
+//             h1.ui.center.aligned.header
+//                 | If you really knew me, you would know...
     
-            p.large That I love color coding my planner.
-            p.large That when I ski, I feel free.
-            p.large That I value genuine connection and authentic relating greatly.
-            p.large That my favorite time of day is 9am.
-            p.large That I love making a positive impact in other's lives.
-            .ui.hidden.divider
-            .ui.hidden.divider
-            .ui.hidden.divider
-            .ui.divider
-        .six.wide.column
-            h2.ui.header 
-                | Are you ready to receive weekly doses of light and inspiration?
-        .six.wide.column
-            .ui.teal.big.button 
-                .uppercase Yes, Please send me the light!
+//             p.large That I love color coding my planner.
+//             p.large That when I ski, I feel free.
+//             p.large That I value genuine connection and authentic relating greatly.
+//             p.large That my favorite time of day is 9am.
+//             p.large That I love making a positive impact in other's lives.
+//             .ui.hidden.divider
+//             .ui.hidden.divider
+//             .ui.hidden.divider
+//             .ui.divider
+//         .six.wide.column
+//             h2.ui.header 
+//                 | Are you ready to receive weekly doses of light and inspiration?
+//         .six.wide.column
+//             .ui.teal.big.button 
+//                 .uppercase Yes, Please send me the light!

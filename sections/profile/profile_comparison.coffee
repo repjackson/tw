@@ -23,10 +23,16 @@ if Meteor.isClient
             
         target_docs: -> 
             user = Meteor.users.findOne username: FlowRouter.getParam('username')
-            Docs.find( author_id: user._id )
+            Docs.find( 
+                author_id: user._id 
+                published: $in:[0,1]
+                )
             
         your_docs: -> 
-            Docs.find( author_id: Meteor.userId() )
+            Docs.find( 
+                author_id: Meteor.userId()
+                published: $in:[0,1]
+                )
             
             
     Template.profile_comparison.events

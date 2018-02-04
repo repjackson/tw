@@ -45,8 +45,8 @@ template(name='view_course_sales')
                     h1.ui.header #{title}
                     h3.ui.header #{subtitle}
         .centered.row
-            .twelve.wide.column
-                |!{content}
+            .twelve.wide.column.shadowed-box
+                +view_content
 
 // template(name='course_module_overview')
 //     .ui.center.aligned.header #{title} Course Modules

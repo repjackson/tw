@@ -6,13 +6,13 @@ template(name='tag_facet')
     //     +inputAutocomplete settings=settings id="search" class="" autocomplete="off" placeholder='Search...'
     // |&nbsp;    
     if selected_theme_tags
-        #clear_theme_tags.ui.white.inverted.large.icon.circular.button
+        #clear_theme_tags.ui.large.icon.circular.button
             i.remove.icon
         each selected_theme_tags
-            .unselect_theme_tag.ui.white.inverted.large.circular.button
+            .unselect_theme_tag.ui.large.circular.button
                 strong #{this}
     each theme_tags
-        .ui.white.inverted.basic.circular.button.select_theme_tag(class=theme_tag_class) 
+        .ui.basic.circular.button.select_theme_tag(class=theme_tag_class) 
             strong #{this.name}
             // if isInRole 'admin'
             //     small #{this.count}
@@ -32,15 +32,18 @@ template(name='ancestor_facet')
     //     each selected_ancestor_ids
     //         .unselect_ancestor_id.ui.white.inverted.large.circular.button
     //             strong #{this}
+    unless ancestors
+        img(src="{{c.url 'orange_tw_name' height=70 crop='fill'}}")
+
     each ancestors
         // a.ui.white.inverted.basic.circular.button.select_ancestor_id(class=ancestor_id_class) 
-        a.ui.white.inverted.basic.circular.button.select_ancestor_id(href="/view/#{_id}") 
+        a.item.select_ancestor_id(href="/view/#{_id}" data-position="bottom center" data-content=title) 
             // strong #{this.name}
             if icon_class
-                +icon24 name=icon_class classes='ui inline image'
-            strong #{title}
-            if isInRole 'admin'
-                small #{this.count}
+                +icon48 name=icon_class classes='ui inline image'
+            // strong #{title}
+            // if isInRole 'admin'
+            //     small #{this.count}
     // .ui.divider
 
 template(name='location_facet')
@@ -119,10 +122,10 @@ template(name='keyword_facet')
 
 
 template(name='username_facet')
-    .ui.dividing.header
+    .ui.inverted.header
         img(src="https://png.icons8.com/color/100/000000/couple-man-woman.png")
         // +icon48 name='couple' classes='ui mini inline image' tooltip='Filter Authors'
-        |Filter Authors
+        | Authors
     if selected_author_ids
         #clear_authors.ui.white.inverted.large.icon.circular.button
             i.remove.icon

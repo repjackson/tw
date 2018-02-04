@@ -1,20 +1,14 @@
 if Meteor.isClient
-    FlowRouter.route '/karma', action: (params) ->
-        BlazeLayout.render 'layout',
-            main: 'karma'
-    
-    
-    
-    Template.karma.onCreated ->
+    Template.view_karma.onCreated ->
         @autorun => Meteor.subscribe('my_karma', selected_theme_tags.array(), selected_upvoter_ids.array())
 
         
-    Template.karma.onRendered ->
+    Template.view_karma.onRendered ->
         Meteor.setTimeout ->
             $('.ui.accordion').accordion()
         , 500
 
-    Template.karma.helpers
+    Template.view_karma.helpers
         upvoted_docs: -> 
             Docs.find
                 author_id: Meteor.userId()
@@ -31,7 +25,7 @@ if Meteor.isClient
 
             
             
-    Template.karma.events
+    Template.view_karma.events
         'change #share_karma': (e,t)->
             value = $('#share_karma').is(":checked")
             Meteor.users.update Meteor.userId(), 

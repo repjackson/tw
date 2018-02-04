@@ -39,7 +39,11 @@ template(name='view_profile')
         if is_user
             .ui.basic.center.aligned.segment
                 #logout.ui.big.center.aligned.red.button Log Out
-            
+        else
+            .centered.row
+                .twelve.wide.column.shadowed-box
+                    +profile_comparison
+        
             
 template(name='user_journal_entries')
     .ui.header User Journal Entries

@@ -2,10 +2,10 @@ template(name='conversation_message')
     .ui.segment.message_segment(class=message_segment_class)
         .ui.comments
             .comment
-                a.avatar(href="/profile/#{username}")
+                a.avatar(href="/user/#{username}")
                     img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
                 .content
-                    a.author(href="/profile/#{username}") #{author.name}
+                    a.author(href="/user/#{username}") #{author.name}
                     .metadata
                         span.date #{from_now}
                     .text

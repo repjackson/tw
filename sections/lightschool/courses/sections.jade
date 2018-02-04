@@ -52,7 +52,8 @@ template(name='view_section')
                 else
                     +completed_list
             .centered.ten.wide.column
-                +view_content
+                .shadowed
+                    +view_content
                 if transcript
                     +view_transcript
                 .center.aligned

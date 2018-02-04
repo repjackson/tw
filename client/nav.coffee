@@ -19,7 +19,7 @@ Template.nav.onRendered ->
     Meteor.setTimeout =>
         $('.item').popup
             position : 'bottom center'
-    , 1000
+    , 2000
     # Meteor.setTimeout =>
     #     $('.modal').modal({allowMultiple: false})
     # , 1000

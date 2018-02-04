@@ -105,6 +105,8 @@ template(name='view_databank_item')
                 .ui.form.shadowed-box
                     each parent.child_fields
                         +Template.dynamic template=field_view_template data=doc
+                if has_price
+                    +product_transactions
                 if watson
                     +analyzed_watson_keywords
     
@@ -113,14 +115,17 @@ template(name='view_databank_item')
             .four.wide.column.shadowed.padded10
                 +author_info
                 h3.ui.sub.header #{when}
-                if watson
-                    +doc_sentiment
-                    +doc_emotion
-                    // +watson_keywords
-                else 
-                    if can_edit
-                        if content
-                            +call_watson
+                if has_price
+                    +add_to_cart
+                else
+                    if watson
+                        +doc_sentiment
+                        +doc_emotion
+                        // +watson_keywords
+                    else 
+                        if can_edit
+                            if content
+                                +call_watson
                 .ui.dividing.header Actions
                 +bookmark_button
                 // +reflect_button

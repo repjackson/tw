@@ -140,6 +140,7 @@ template(name='parent_doc_accordion')
                 i.dropdown.icon
             .content
                 with parent
+                    +view_tags
                     |!{content}
                     +view_full_button
                     // .ui.horizontal.divided.list
@@ -160,11 +161,12 @@ template(name='parent_doc_segment')
         .ui.header
             +icon48 name='response' classes='avatar'
             |In response to...
+        +view_full_button
         with parent
             .ui.basic.segment
+                +view_tags
                 .large130 !{content}
             +author_info
-            // +view_full_button
                     
 
 template(name='parent_link')
@@ -266,7 +268,7 @@ template(name='author_info')
             if profile.image_id
                 img.ui.avatar.spaced.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
             |&nbsp;
-            a(href="/profile/#{username}") #{name} 
+            a(href="/user/#{username}") #{name} 
             +staus_indicator
     // .ui.sub.header #{when}
 
