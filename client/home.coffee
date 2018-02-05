@@ -1,6 +1,6 @@
 Template.home.onCreated ->
     # @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
-    @autorun -> Meteor.subscribe 'ancestor_ids'
+    # @autorun -> Meteor.subscribe 'ancestor_ids'
     # @autorun -> Meteor.subscribe 'child_docs', FlowRouter.getParam('doc_id')
     @autorun => Meteor.subscribe 'facet', 
         selected_theme_tags.array()
@@ -12,7 +12,5 @@ Template.home.onCreated ->
         type = null
         author_id = null
         # parent_id = FlowRouter.getParam('doc_id')
-        tag_limit = null
-        doc_limit = 10
         view_private = Session.get 'view_private'
         

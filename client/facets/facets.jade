@@ -20,18 +20,12 @@ template(name='tag_facet')
     
     
 template(name='ancestor_facet')
-    // +icon48 name='node' classes='ui mini inline image' tooltip='Browse Themes'
-    // .ui.left.icon.small.inline.input
-    //     i.search.icon
-    //     +inputAutocomplete settings=settings id="search" class="" autocomplete="off" placeholder='Search...'
-    // |&nbsp;    
-    // .ui.header ancestors
-    // if selected_ancestor_ids
-    //     #clear_ancestor_ids.ui.large.icon.button
-    //         i.remove.icon
-    //     each selected_ancestor_ids
-    //         .unselect_ancestor_id.ui.large.button
-    //             strong #{this}
+    if selected_ancestor_ids
+        #clear_ancestor_ids.ui.large.icon.button
+            i.remove.icon
+        each selected_ancestor_ids
+            .unselect_ancestor_id.ui.large.button
+                strong #{this}
 
     each ancestors
         // a.ui.button.select_ancestor_id(class=ancestor_id_class) 
