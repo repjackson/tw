@@ -10,7 +10,7 @@ template(name='nav')
         //     else
         //         .ui.image
         //             +icon48 name=site_doc.icon_class
-        +ancestor_facet
+        +ancestor_nav
         // each nav_child_items
         //     a.ui.item(href="/view/#{_id}" data-position='bottom center' data-content=title)
         //         .ui.image
@@ -127,3 +127,31 @@ template(name='nav')
 //         .six.wide.column
 //             .ui.teal.big.button 
 //                 .uppercase Yes, Please send me the light!
+
+
+template(name='ancestor_nav')
+    // +icon48 name='node' classes='ui mini inline image' tooltip='Browse Themes'
+    // .ui.left.icon.small.inline.input
+    //     i.search.icon
+    //     +inputAutocomplete settings=settings id="search" class="" autocomplete="off" placeholder='Search...'
+    // |&nbsp;    
+    // .ui.header ancestors
+    // if selected_ancestor_ids
+    //     #clear_ancestor_ids.ui.white.inverted.large.icon.circular.button
+    //         i.remove.icon
+    //     each selected_ancestor_ids
+    //         .unselect_ancestor_id.ui.white.inverted.large.circular.button
+    //             strong #{this}
+    unless ancestors
+        img(src="{{c.url 'orange_tw_name' height=70 crop='fill'}}")
+
+    each ancestors
+        // a.ui.white.inverted.basic.circular.button.select_ancestor_id(class=ancestor_id_class) 
+        a.item.select_ancestor_id(href="/view/#{_id}" data-position="bottom center" data-content=title) 
+            // strong #{this.name}
+            if icon_class
+                +icon48 name=icon_class classes='ui inline image'
+            strong #{title}
+            // if isInRole 'admin'
+            //     small #{this.count}
+    // .ui.divider

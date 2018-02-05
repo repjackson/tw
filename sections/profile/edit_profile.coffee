@@ -90,7 +90,7 @@ if Meteor.isClient
                 Meteor.users.update user_id,
                     $addToSet: courses: 'sol'
                 Session.set 'enrolling_in', null
-            FlowRouter.go "/profile/#{@username}"
+            FlowRouter.go "/user/#{@username}"
     
         "change input[type='file']": (e) ->
             files = e.currentTarget.files

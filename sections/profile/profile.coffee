@@ -12,20 +12,43 @@ if Meteor.isClient
         name: 'profile_home'
         action: (params) ->
             BlazeLayout.render 'layout',
-                main: 'view_profile'
+                main: 'profile_layout'
+                
+    FlowRouter.route '/user/:username/comparison', 
+        name: 'profile_home'
+        action: (params) ->
+            BlazeLayout.render 'profile_layout',
+                user_main: 'profile_comparison'
+                
+    FlowRouter.route '/user/:username/conversations', 
+        name: 'profile_home'
+        action: (params) ->
+            BlazeLayout.render 'profile_layout',
+                user_main: 'profile_conversations'
                 
 
 
-    Template.view_profile.onCreated ->
+    Template.profile_layout.onCreated ->
         @autorun -> Meteor.subscribe('user_profile', FlowRouter.getParam('username'))
+        @autorun -> Meteor.subscribe('ancestor_id_docs', null, FlowRouter.getParam('username'))
+        @autorun -> Meteor.subscribe('ancestor_ids', null, FlowRouter.getParam('username'))
 
         
-    Template.view_profile.onRendered ->
+    # Template.profile_layout.onRendered ->
+    #     Meteor.setTimeout =>
+    #         $('.menu .item').tab()
+    #     , 1000
+
     
     
-    
-    Template.view_profile.helpers
+    Template.profile_layout.helpers
         person: -> Meteor.users.findOne username:FlowRouter.getParam('username')
+        
+        user_docs: ->
+            person = Meteor.users.findOne username:FlowRouter.getParam('username')
+            Docs.find
+                author_id:person._id
+        
         is_user: -> FlowRouter.getParam('username') is Meteor.user()?.username
-    Template.view_profile.events
+    Template.profile_layout.events
         'click #logout': -> AccountsTemplates.logout()

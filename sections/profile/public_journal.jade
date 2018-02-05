@@ -6,7 +6,7 @@ template(name='profile_journal')
                 | Public Journal Entries
             .ui.cards
                 each public_journal_entries
-                    +browse_entry_view
+                    +databank_card
         else
             h4.ui.header #{name} doesn't have any public journal entries.
             a.ui.teal.labeled.icon.button(href="/journal")

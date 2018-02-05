@@ -10,8 +10,9 @@ Meteor.publish 'my_children', (parent_id)->
         
 Meteor.publish 'parent_doc', (child_id)->
     child_doc = Docs.findOne child_id
-    Docs.find
-        _id: child_doc.parent_id
+    if child_doc
+        Docs.find
+            _id: child_doc.parent_id
     
     
 publishComposite 'group_docs', (group_id)->

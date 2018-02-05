@@ -18,18 +18,19 @@ Template.ancestor_facet.helpers
         ancestors = []
         ancestor_ids = Ancestor_ids.find({}).fetch()
         for ancestor_id in ancestor_ids
+            # console.log ancestor_id
             ancestors.push Docs.findOne ancestor_id.name
             
         # console.dir ancestors
-        if ancestors.length > 0
-            sorted_ancestors =
-                _.sortBy(ancestors, (an)->
-                    if an.ancestor_array
-                        an.ancestor_array?.length
-                    # an.ancestor_array.length 
-                    )
+        # if ancestors.length > 0
+        #     sorted_ancestors =
+        #         _.sortBy(ancestors, (an)->
+        #             if an.ancestor_array
+        #                 an.ancestor_array?.length
+        #             # an.ancestor_array.length 
+        #             )
         
-        # return ancestors
+        return ancestors
             
         # console.log cursor.fetch()
         # return cursor
