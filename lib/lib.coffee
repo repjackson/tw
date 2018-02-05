@@ -392,16 +392,16 @@ Meteor.methods
 #     return
 #  ]
 
-FlowRouter.route '/',
-  triggersEnter: [ (context, redirect) ->
-    redirect '/view/9639QAQ4yPbMLs7CA'
-    return
- ]
+# FlowRouter.route '/',
+#   triggersEnter: [ (context, redirect) ->
+#     redirect '/view/9639QAQ4yPbMLs7CA'
+#     return
+#  ]
 
-FlowRouter.notFound =
-    action: ->
-        BlazeLayout.render 'layout', 
-            main: 'not_found'
+# FlowRouter.notFound =
+#     action: ->
+#         BlazeLayout.render 'layout', 
+#             main: 'not_found'
 
 
 # FlowRouter.route '/', 

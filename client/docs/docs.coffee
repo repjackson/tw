@@ -1,16 +1,16 @@
-FlowRouter.route '/view/:doc_id', 
-    name: 'view'
-    action: (params) ->
-        if selected_theme_tags
-            selected_theme_tags.clear()
-        BlazeLayout.render 'layout',
-            nav: 'nav'
-            main: 'view_doc'
+# FlowRouter.route '/view/:doc_id', 
+#     name: 'view'
+#     action: (params) ->
+#         if selected_theme_tags
+#             selected_theme_tags.clear()
+#         BlazeLayout.render 'layout',
+#             nav: 'nav'
+#             main: 'view_doc'
 
 
 Template.view_doc.onCreated ->
-    @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
-    @autorun -> Meteor.subscribe 'ancestor_ids', FlowRouter.getParam('doc_id')
+    # @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
+    # @autorun -> Meteor.subscribe 'ancestor_ids', FlowRouter.getParam('doc_id')
     # @autorun -> Meteor.subscribe 'child_docs', FlowRouter.getParam('doc_id')
     @autorun => Meteor.subscribe 'facet', 
         selected_theme_tags.array()
@@ -26,19 +26,19 @@ Template.view_doc.onCreated ->
         doc_limit = 10
         view_private = Session.get 'view_private'
     
-Template.view_doc.onRendered ->
-    @autorun =>
-        if @subscriptionsReady()
-            doc = Docs.findOne FlowRouter.getParam('doc_id')
-            Meteor.setTimeout ->
-                if doc
-                    if doc.title
-                        document.title = doc.title
-            , 500
+# Template.view_doc.onRendered ->
+#     @autorun =>
+#         if @subscriptionsReady()
+#             doc = Docs.findOne FlowRouter.getParam('doc_id')
+#             Meteor.setTimeout ->
+#                 if doc
+#                     if doc.title
+#                         document.title = doc.title
+#             , 500
     
 
 Template.view_doc.helpers
-    doc: -> Docs.findOne FlowRouter.getParam('doc_id')
+    # doc: -> Docs.findOne FlowRouter.getParam('doc_id')
     view_type_template: -> "view_#{@type}"
     is_site: ->
         doc = Docs.findOne FlowRouter.getParam('doc_id')

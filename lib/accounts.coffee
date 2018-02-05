@@ -1,10 +1,10 @@
-FlowRouter.route '/privacy', action: (params) ->
-    BlazeLayout.render 'layout',
-        main: 'privacy'
+# FlowRouter.route '/privacy', action: (params) ->
+#     BlazeLayout.render 'layout',
+#         main: 'privacy'
 
-FlowRouter.route '/terms-of-use', action: (params) ->
-    BlazeLayout.render 'layout',
-        main: 'terms-of-use'
+# FlowRouter.route '/terms-of-use', action: (params) ->
+#     BlazeLayout.render 'layout',
+#         main: 'terms-of-use'
 
 # Accounts.onLogin ->
 #     redirect = Session.get ‘redirectAfterLogin’
@@ -28,7 +28,7 @@ AccountsTemplates.configure
     defaultLayout: 'layout'
     # defaultLayoutRegions:
         # nav: ''
-    defaultContentRegion: 'main'
+    # defaultContentRegion: 'main'
     showForgotPasswordLink: true
     overrideLoginErrors: true
     enablePasswordChange: true
@@ -105,22 +105,22 @@ AccountsTemplates.addFields [
 ]
 
 
-AccountsTemplates.configureRoute 'changePwd'
-AccountsTemplates.configureRoute 'forgotPwd'
+# AccountsTemplates.configureRoute 'changePwd'
+# AccountsTemplates.configureRoute 'forgotPwd'
 
-AccountsTemplates.configureRoute 'resetPwd'
-
-
-AccountsTemplates.configureRoute('signIn', {
-  redirect: '/',
-});
-
-AccountsTemplates.configureRoute('signUp', {
-  redirect: '/profile/edit',
-});
+# AccountsTemplates.configureRoute 'resetPwd'
 
 
-AccountsTemplates.configureRoute 'verifyEmail'
+# AccountsTemplates.configureRoute('signIn', {
+#   redirect: '/',
+# });
+
+# AccountsTemplates.configureRoute('signUp', {
+#   redirect: '/profile/edit',
+# });
+
+
+# AccountsTemplates.configureRoute 'verifyEmail'
 
 
 

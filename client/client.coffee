@@ -19,30 +19,30 @@ Session.setDefault 'admin_mode', false
     
   
     
-Meteor.startup ->
-    stripeKey = Meteor.settings.public.stripe.livePublishableKey
-    Stripe.setPublishableKey stripeKey
+# Meteor.startup ->
+#     stripeKey = Meteor.settings.public.stripe.livePublishableKey
+#     Stripe.setPublishableKey stripeKey
     
-    STRIPE =
-        getToken: (domElement, card, callback) ->
-            Stripe.card.createToken card, (status, response) ->
-                if response.error
-                    Bert.alert response.error.message, 'danger'
-                else
-                    STRIPE.setToken response.id, domElement, callback
-                return
-            return
-        setToken: (token, domElement, callback) ->
-            $(domElement).append $('<input type=\'hidden\' name=\'stripeToken\' />').val(token)
-            callback()
-            return
+#     STRIPE =
+#         getToken: (domElement, card, callback) ->
+#             Stripe.card.createToken card, (status, response) ->
+#                 if response.error
+#                     Bert.alert response.error.message, 'danger'
+#                 else
+#                     STRIPE.setToken response.id, domElement, callback
+#                 return
+#             return
+#         setToken: (token, domElement, callback) ->
+#             $(domElement).append $('<input type=\'hidden\' name=\'stripeToken\' />').val(token)
+#             callback()
+#             return
 
-    return
+#     return
 
     
 Template.registerHelper 'is_author', () ->  Meteor.userId() is @author_id
 Template.registerHelper 'is_user', () ->  Meteor.userId() is @_id
-Template.registerHelper 'is_person_by_username', () ->  Meteor.user().username is FlowRouter.getParam('username')
+# Template.registerHelper 'is_person_by_username', () ->  Meteor.user().username is FlowRouter.getParam('username')
 
 Template.registerHelper 'can_edit', () ->  Meteor.userId() is @author_id or Roles.userIsInRole(Meteor.userId(), 'admin')
 
@@ -107,13 +107,13 @@ Template.registerHelper 'message_segment_class', -> if @read then '' else 'blue 
 
 Template.registerHelper 'is_dev', () -> Meteor.isDevelopment
 
-FlowRouter.wait()
-Tracker.autorun ->
-  # if the roles subscription is ready, start routing
-  # there are specific cases that this reruns, so we also check
-  # that FlowRouter hasn't initalized already
-  if Roles.subscription.ready() and !FlowRouter._initialized
-     FlowRouter.initialize()
+# FlowRouter.wait()
+# Tracker.autorun ->
+#   # if the roles subscription is ready, start routing
+#   # there are specific cases that this reruns, so we also check
+#   # that FlowRouter hasn't initalized already
+#   if Roles.subscription.ready() and !FlowRouter._initialized
+#      FlowRouter.initialize()
 
 
 

@@ -1,6 +1,6 @@
-FlowRouter.route '/edit/:doc_id', action: (params) ->
-    BlazeLayout.render 'layout',
-        main: 'edit_doc'
+# FlowRouter.route '/edit/:doc_id', action: (params) ->
+#     BlazeLayout.render 'layout',
+#         main: 'edit_doc'
 
 Template.edit_doc.onCreated ->
     @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')

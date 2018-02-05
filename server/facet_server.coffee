@@ -10,14 +10,7 @@ Meteor.publish 'facet', (
     parent_id
     tag_limit
     doc_limit
-    # sort_object
     view_private
-    view_read
-    view_bookmarked
-    view_resonates
-    view_complete
-    view_images
-    view_lightbank_type
     )->
     
         self = @
@@ -29,6 +22,7 @@ Meteor.publish 'facet', (
 
 
         if selected_theme_tags.length > 0 then match.tags = $all: selected_theme_tags
+        if selected_ancestor_ids.length > 0 then match.ancestor_araray = $all: selected_ancestor_ids
 
         if selected_author_ids.length > 0 then match.author_id = $in: selected_author_ids
         if selected_location_tags.length > 0 then match.location_tags = $all: selected_location_tags
@@ -43,52 +37,27 @@ Meteor.publish 'facet', (
         if view_private is false
             match.published = $in: [0,1]
 
-        # if view_private is true then match.author_id = @userId
-        # if view_resonates?
-        #     if view_resonates is true then match.favoriters = $in: [@userId]
-        #     else if view_resonates is false then match.favoriters = $nin: [@userId]
-        # if view_read?
-        #     if view_read is true then match.read_by = $in: [@userId]
-        #     else if view_read is false then match.read_by = $nin: [@userId]
-        # if view_published is true
-        #     match.published = $in: [1,0]
-        # else if view_published is false
-        #     match.published = -1
-        #     match.author_id = Meteor.userId()
-            
-        # if view_bookmarked?
-        #     if view_bookmarked is true then match.bookmarked_ids = $in: [@userId]
-        #     else if view_bookmarked is false then match.bookmarked_ids = $nin: [@userId]
-        # if view_complete? then match.complete = view_complete
-        # console.log view_complete
         
         
-        
-        # match.site = Meteor.settings.public.site
-
         # console.log 'match:', match
-        # if view_images? then match.components?.image = view_images
         
-        # lightbank types
-        # if view_lightbank_type? then match.lightbank_type = view_lightbank_type
-        # match.lightbank_type = $ne:'journal_prompt'
         
-        # ancestor_ids_cloud = Docs.aggregate [
-        #     { $match: match }
-        #     { $project: ancestor_array: 1 }
-        #     { $unwind: "$ancestor_array" }
-        #     { $group: _id: '$ancestor_array', count: $sum: 1 }
-        #     { $match: _id: $nin: selected_ancestor_ids }
-        #     { $sort: count: -1, _id: 1 }
-        #     { $limit: limit }
-        #     { $project: _id: 0, name: '$_id', count: 1 }
-        #     ]
-        # # console.log 'theme ancestor_ids_cloud, ', ancestor_ids_cloud
-        # ancestor_ids_cloud.forEach (ancestor_id, i) ->
-        #     self.added 'ancestor_ids', Random.id(),
-        #         name: ancestor_id.name
-        #         count: ancestor_id.count
-        #         index: i
+        ancestor_ids_cloud = Docs.aggregate [
+            { $match: match }
+            { $project: ancestor_array: 1 }
+            { $unwind: "$ancestor_array" }
+            { $group: _id: '$ancestor_array', count: $sum: 1 }
+            { $match: _id: $nin: selected_ancestor_ids }
+            { $sort: count: -1, _id: 1 }
+            { $limit: limit }
+            { $project: _id: 0, name: '$_id', count: 1 }
+            ]
+        # console.log 'theme ancestor_ids_cloud, ', ancestor_ids_cloud
+        ancestor_ids_cloud.forEach (ancestor_id, i) ->
+            self.added 'ancestor_ids', Random.id(),
+                name: ancestor_id.name
+                count: ancestor_id.count
+                index: i
 
         theme_tag_cloud = Docs.aggregate [
             { $match: match }
