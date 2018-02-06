@@ -55,7 +55,7 @@ template(name='reflect_button')
 template(name='edit_button')
     if can_edit
         // +call_watson
-        a.ui.basic.icon.white.inverted.circular.button(href="/edit/#{_id}" data-position="bottom center" data-tooltip='Edit')
+        a.ui.icon.circular.button(href="/edit/#{_id}" data-position="bottom center" data-tooltip='Edit')
             +icon48 name='edit' classes='ui mini inline image'
 
 template(name='edit_doc_link')
@@ -267,7 +267,7 @@ template(name='view_full_button')
 
 
 template(name='add_doc_button')
-    #add_doc.ui.basic.white.inverted.circular.icon.button
+    #add_doc.ui.circular.icon.button
         +icon48 name='plus' classes='ui mini inline image'
         // if add_button_text
         //     | #{add_button_text}
@@ -315,7 +315,7 @@ template(name='join_button')
 
 
 template(name='toggle_view_mode_button')
-    #toggle_view_mode.ui.basic.white.inverted.circular.button
+    #toggle_view_mode.ui.circular.button
         if viewing_public
             |Viewing Public
             +icon48 name='podium-with-speaker' classes='ui inline image'
@@ -324,7 +324,7 @@ template(name='toggle_view_mode_button')
             |Viewing Private
             
 template(name='toggle_completed_button')
-    #toggle_view_mode.ui.basic.white.inverted.circular.button
+    #toggle_view_mode.ui.circular.button
         if completed
             |Completed
             +icon48 name='checkmark' classes='ui inline image'
@@ -343,10 +343,14 @@ template(name='session_edit_button')
             
 template(name='admin_toggle')            
     if isInRole 'admin'
-        a#toggle_admin_mode.ui.basic.icon.white.inverted.circular.button(href='#' data-position="bottom center" data-content="Toggle Admin Mode") 
-            .ui.image
+        a#toggle_admin_mode.icon.item(href='#' data-position="bottom center" data-content="Toggle Admin Mode") 
+            // .ui.image
                 if admin_mode
                     +icon48 name='user-shield' classes='ui image'
                 else
                     +dots50 name='user-shield' classes='ui image'
-            
+            if admin_mode
+                i.large.red.asterisk.icon
+            else
+                i.large.asterisk.icon
+        

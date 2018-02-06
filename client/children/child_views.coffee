@@ -26,7 +26,7 @@
 
 
 Template.view_nav.onCreated ->
-    @autorun -> Meteor.subscribe 'child_docs', FlowRouter.getParam('doc_id')
+    # @autorun -> Meteor.subscribe 'child_docs', FlowRouter.getParam('doc_id')
     
     
 Template.child_docs.onCreated ->

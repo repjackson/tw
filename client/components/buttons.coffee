@@ -537,3 +537,9 @@ Template.session_edit_button.events
             Session.set 'editing_id', @_id
             
     
+Template.admin_toggle.events
+    'click #toggle_admin_mode': ->
+        current_mode = Session.get 'admin_mode'
+        Session.set 'admin_mode', !current_mode
+    
+    

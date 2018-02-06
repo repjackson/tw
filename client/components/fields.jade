@@ -350,6 +350,25 @@ template(name='view_youtube')
         .ui.embed(data-source="youtube" data-id=youtube)
 
 
+template(name='edit_vimeo')
+    .ui.segment
+        .ui.action.fluid.labeled.input
+            .ui.basic.label
+                +icon48 name='vimeo' classes='ui mini spaced image'
+                |vimeo Id
+            input#vimeo(type='text' value=vimeo)
+            .ui.icon.basic.button#clear_vimeo
+                +icon24 name='delete'
+        if vimeo
+            .ui.embed(data-source="vimeo" data-id=vimeo)
+
+
+template(name='view_vimeo')
+    // .ui.embed(data-source="vimeo" data-id=vimeo data-icon="video" data-placeholder="/images/video_placeholder.png")
+    if vimeo
+        .ui.embed(data-source="vimeo" data-id=vimeo)
+
+
 template(name='participants')
     .field
         label Participants: 

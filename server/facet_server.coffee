@@ -73,22 +73,22 @@ Meteor.publish 'facet', (
         # if view_lightbank_type? then match.lightbank_type = view_lightbank_type
         # match.lightbank_type = $ne:'journal_prompt'
         
-        # ancestor_ids_cloud = Docs.aggregate [
-        #     { $match: match }
-        #     { $project: ancestor_array: 1 }
-        #     { $unwind: "$ancestor_array" }
-        #     { $group: _id: '$ancestor_array', count: $sum: 1 }
-        #     { $match: _id: $nin: selected_ancestor_ids }
-        #     { $sort: count: -1, _id: 1 }
-        #     { $limit: limit }
-        #     { $project: _id: 0, name: '$_id', count: 1 }
-        #     ]
-        # # console.log 'theme ancestor_ids_cloud, ', ancestor_ids_cloud
-        # ancestor_ids_cloud.forEach (ancestor_id, i) ->
-        #     self.added 'ancestor_ids', Random.id(),
-        #         name: ancestor_id.name
-        #         count: ancestor_id.count
-        #         index: i
+        ancestor_ids_cloud = Docs.aggregate [
+            { $match: match }
+            { $project: ancestor_array: 1 }
+            { $unwind: "$ancestor_array" }
+            { $group: _id: '$ancestor_array', count: $sum: 1 }
+            { $match: _id: $nin: selected_ancestor_ids }
+            { $sort: count: -1, _id: 1 }
+            { $limit: limit }
+            { $project: _id: 0, name: '$_id', count: 1 }
+            ]
+        # console.log 'theme ancestor_ids_cloud, ', ancestor_ids_cloud
+        ancestor_ids_cloud.forEach (ancestor_id, i) ->
+            self.added 'ancestor_ids', Random.id(),
+                name: ancestor_id.name
+                count: ancestor_id.count
+                index: i
 
         theme_tag_cloud = Docs.aggregate [
             { $match: match }
@@ -245,92 +245,92 @@ Meteor.publish 'facet', (
         
         self.onStop ()-> subHandle.stop()
 
-Meteor.publish 'ancestor_id_docs', (ancestor_ids)->
-    console.log ancestor_ids
-    # Docs.find
-    #     _id: $in: ancestor_ids
+# Meteor.publish 'ancestor_id_docs', (ancestor_ids)->
+#     console.log ancestor_ids
+#     # Docs.find
+#     #     _id: $in: ancestor_ids
 
 
 
 
-Meteor.publish 'ancestor_ids', (doc_id, username)->
-    match = {}
-    self = @
-    if doc_id
-        # doc = Docs.findOne doc_id
-        match._id = doc_id
-    if username
-        user = Meteor.users.findOne username:username
-        match.author_id = user._id
+# Meteor.publish 'ancestor_ids', (doc_id, username)->
+#     match = {}
+#     self = @
+#     if doc_id
+#         # doc = Docs.findOne doc_id
+#         match._id = doc_id
+#     if username
+#         user = Meteor.users.findOne username:username
+#         match.author_id = user._id
         
-    match.ancestor_array = $exists:true    
-    # match._id = doc_id
-    # console.log match
-    # one_child = Docs.findOne(parent_id:doc_id)
-    # if one_child
-    #     match_array = one_child.ancestor_array
-    #     children = Docs.find(parent_id:one_child._id).fetch()
-    #     for child in children 
-    #         match_array.push child._id
-    # else
-    #     match_array = doc.ancestor_array
-    # match.parent_id = $in:match_array
+#     match.ancestor_array = $exists:true    
+#     # match._id = doc_id
+#     # console.log match
+#     # one_child = Docs.findOne(parent_id:doc_id)
+#     # if one_child
+#     #     match_array = one_child.ancestor_array
+#     #     children = Docs.find(parent_id:one_child._id).fetch()
+#     #     for child in children 
+#     #         match_array.push child._id
+#     # else
+#     #     match_array = doc.ancestor_array
+#     # match.parent_id = $in:match_array
         
-    console.log 'match',match
-    # if selected_ancestor_ids.length > 0 then match.ancestor_array = $all: selected_ancestor_ids
-    ancestor_ids_cloud = Docs.aggregate [
-        { $match: match }
-        { $project: ancestor_array: 1 }
-        { $unwind: "$ancestor_array" }
-        { $group: _id: '$ancestor_array', count: $sum: 1 }
-        # { $match: _id: $nin: selected_ancestor_ids }
-        { $sort: count: -1, _id: 1 }
-        { $limit: 10 }
-        { $project: _id: 0, name: '$_id', count: 1 }
-        ]
-    # console.log 'ancestor_ids_cloud, ', ancestor_ids_cloud
-    ancestor_ids_cloud.forEach (ancestor_id, i) ->
-        self.added 'ancestor_ids', Random.id(),
-            name: ancestor_id.name
-            count: ancestor_id.count
-            index: i
+#     # console.log 'match',match
+#     # if selected_ancestor_ids.length > 0 then match.ancestor_array = $all: selected_ancestor_ids
+#     ancestor_ids_cloud = Docs.aggregate [
+#         { $match: match }
+#         { $project: ancestor_array: 1 }
+#         { $unwind: "$ancestor_array" }
+#         { $group: _id: '$ancestor_array', count: $sum: 1 }
+#         # { $match: _id: $nin: selected_ancestor_ids }
+#         { $sort: count: -1, _id: 1 }
+#         { $limit: 10 }
+#         { $project: _id: 0, name: '$_id', count: 1 }
+#         ]
+#     # console.log 'ancestor_ids_cloud, ', ancestor_ids_cloud
+#     ancestor_ids_cloud.forEach (ancestor_id, i) ->
+#         self.added 'ancestor_ids', Random.id(),
+#             name: ancestor_id.name
+#             count: ancestor_id.count
+#             index: i
 
-    ancestor_doc_ids =  _.pluck ancestor_ids_cloud, 'name'
+#     ancestor_doc_ids =  _.pluck ancestor_ids_cloud, 'name'
 
-    # if username
-    subHandle = Docs.find( {_id:$in:ancestor_doc_ids}, {limit:20, sort: timestamp:-1}).observeChanges(
-        added: (id, fields) ->
-            # console.log 'added doc', id, fields
-            # doc_results.push id
-            self.added 'docs', id, fields
-        changed: (id, fields) ->
-            # console.log 'changed doc', id, fields
-            self.changed 'docs', id, fields
-        removed: (id) ->
-            # console.log 'removed doc', id, fields
-            # doc_results.pull id
-            self.removed 'docs', id
-    )
+#     # if username
+#     subHandle = Docs.find( {_id:$in:ancestor_doc_ids}, {limit:20, sort: timestamp:-1}).observeChanges(
+#         added: (id, fields) ->
+#             # console.log 'added doc', id, fields
+#             # doc_results.push id
+#             self.added 'docs', id, fields
+#         changed: (id, fields) ->
+#             # console.log 'changed doc', id, fields
+#             self.changed 'docs', id, fields
+#         removed: (id) ->
+#             # console.log 'removed doc', id, fields
+#             # doc_results.pull id
+#             self.removed 'docs', id
+#     )
 
-    self.ready()
+#     self.ready()
     
-    self.onStop ()-> subHandle.stop()
+#     self.onStop ()-> subHandle.stop()
 
 
-# Meteor.publish 'parent_ids', (username, selected_parent_id)->
-#         parent_tag_cloud = Docs.aggregate [
-#             { $match: author_id:Meteor.userId() }
-#             { $project: parent_id: 1 }
-#             # { $unwind: "$tags" }
-#             { $group: _id: '$parent_id', count: $sum: 1 }
-#             { $match: _id: $nin: selected_theme_tags }
-#             { $sort: count: -1, _id: 1 }
-#             { $limit: limit }
-#             { $project: _id: 0, name: '$_id', count: 1 }
-#             ]
-#         # console.log 'theme parent_tag_cloud, ', parent_tag_cloud
-#         parent_tag_cloud.forEach (tag, i) ->
-#             self.added 'tags', Random.id(),
-#                 name: tag.doc_id
-#                 count: tag.count
-#                 index: i
+# # Meteor.publish 'parent_ids', (username, selected_parent_id)->
+# #         parent_tag_cloud = Docs.aggregate [
+# #             { $match: author_id:Meteor.userId() }
+# #             { $project: parent_id: 1 }
+# #             # { $unwind: "$tags" }
+# #             { $group: _id: '$parent_id', count: $sum: 1 }
+# #             { $match: _id: $nin: selected_theme_tags }
+# #             { $sort: count: -1, _id: 1 }
+# #             { $limit: limit }
+# #             { $project: _id: 0, name: '$_id', count: 1 }
+# #             ]
+# #         # console.log 'theme parent_tag_cloud, ', parent_tag_cloud
+# #         parent_tag_cloud.forEach (tag, i) ->
+# #             self.added 'tags', Random.id(),
+# #                 name: tag.doc_id
+# #                 count: tag.count
+# #                 index: i

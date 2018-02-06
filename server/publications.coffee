@@ -348,9 +348,9 @@ Meteor.publish 'new_facet', (
         
         # console.log 'doc handle count', subHandle._observeDriver._results
 
-        self.ready()
+        # self.ready()
         
-        self.onStop ()-> subHandle.stop()
+        # self.onStop ()-> subHandle.stop()
 
 
 Meteor.publish 'author', (doc_id)->

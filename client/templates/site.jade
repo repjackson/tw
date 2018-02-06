@@ -15,13 +15,24 @@ template(name='view_site')
         //             +edit_button
     // +ancestor_facet
     .ui.stackable.centered.four.column.padded.grid
-        each children
+        each public_children
             .column
                 a.ui.icon.center.shadowed.aligned.header(href="/view/#{_id}")
                     i.icon
                         +icon96 name=icon_class
                     h2.ui.header.sol-header #{title}
                     // .ui.hidden.divider
+        if is_admin
+            .ui.horizontal.divider.header
+                i.large.red.asterisk.icon
+                |Private Documents
+            each private_children
+                .column
+                    a.ui.icon.center.shadowed.aligned.header(href="/view/#{_id}")
+                        i.icon
+                            +icon96 name=icon_class
+                        h2.ui.header.sol-header #{title}
+                        // .ui.hidden.divider
         
 template(name='edit_site')
     // +nav

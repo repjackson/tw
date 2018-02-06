@@ -1,15 +1,15 @@
-#cloud
+#cloud.ui.basic.center.aligned.segment
     // .ui.hidden.divider
     // .ui.left.icon.small.input
     //     i.search.icon
     //     +inputAutocomplete settings=settings id="search" class="" autocomplete="off" placeholder='Search...'
     if selected_people_tags
-        #clear_tags.ui.white.inverted.circular.icon.big.button
+        #clear_tags.ui.circular.icon.big.active.button
             i.remove.icon
         each selected_people_tags
-            .unselect_tag.ui.circular.white.inverted.big.button
+            .unselect_tag.ui.circular.big.active.button
                 strong #{this}
     each all_people_tags
-        .ui.circular.basic.white.inverted.button.select_tag(class=cloud_tag_class) #{this.name}
+        .ui.circular.button.select_tag(class=cloud_tag_class) #{this.name}
                 // small #{this.count}
                 // small [#{this.index}]

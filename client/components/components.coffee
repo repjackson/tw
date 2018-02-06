@@ -120,9 +120,9 @@ Template.parent_doc_accordion.onRendered ->
                 $('.ui.accordion').accordion()
             , 500
     
-Template.parent_doc_accordion.onCreated ->
-    # console.log @data
-    @autorun => Meteor.subscribe 'parent_doc', @data._id
+# Template.parent_doc_accordion.onCreated ->
+#     # console.log @data
+#     @autorun => Meteor.subscribe 'parent_doc', @data._id
     
     
 Template.parent_doc_segment.onRendered ->
@@ -132,14 +132,14 @@ Template.parent_doc_segment.onRendered ->
                 $('.ui.accordion').accordion()
             , 500
     
-Template.parent_doc_segment.onCreated ->
-    # console.log @data
-    @autorun => Meteor.subscribe 'parent_doc', @data._id
+# Template.parent_doc_segment.onCreated ->
+#     # console.log @data
+#     @autorun => Meteor.subscribe 'parent_doc', @data._id
     
     
-Template.parent_link.onCreated ->
-    # console.log @data
-    @autorun => Meteor.subscribe 'parent_doc', @data._id
+# Template.parent_link.onCreated ->
+#     # console.log @data
+#     @autorun => Meteor.subscribe 'parent_doc', @data._id
     
 Template.parent_link.helpers
     parent: -> Docs.findOne _id: @parent_id

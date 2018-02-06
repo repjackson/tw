@@ -53,6 +53,8 @@ template(name='view_section')
                     +completed_list
             .centered.ten.wide.column
                 .shadowed
+                    +view_vimeo
+                .shadowed
                     +view_content
                 if transcript
                     +view_transcript
@@ -122,6 +124,8 @@ template(name='edit_section')
             +edit_title
         .field
             +edit_icon
+        .field
+            +edit_vimeo
         .field
             +edit_content
         .field

@@ -612,6 +612,31 @@ Template.view_youtube.onRendered ->
     ), 2000
 
 
+# vimeo
+Template.edit_vimeo.events
+    'blur #vimeo': (e,t)->
+        vimeo = $(e.currentTarget).closest('#vimeo').val()
+        Docs.update FlowRouter.getParam('doc_id'),
+            $set: vimeo: vimeo
+            
+    'click #clear_vimeo': (e,t)->
+        $(e.currentTarget).closest('#vimeo').val('')
+        Docs.update FlowRouter.getParam('doc_id'),
+            $unset: vimeo: 1
+            
+Template.edit_vimeo.onRendered ->
+    Meteor.setTimeout (->
+        $('.ui.embed').embed()
+    ), 2000
+
+Template.view_vimeo.onRendered ->
+    Meteor.setTimeout (->
+        $('.ui.embed').embed()
+    ), 2000
+
+
+
+
 Template.participants.onCreated ->
     Meteor.subscribe 'usernames'
 

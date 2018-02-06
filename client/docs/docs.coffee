@@ -10,7 +10,7 @@ FlowRouter.route '/view/:doc_id',
 
 Template.view_doc.onCreated ->
     @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
-    @autorun -> Meteor.subscribe 'ancestor_ids', FlowRouter.getParam('doc_id')
+    # @autorun -> Meteor.subscribe 'ancestor_ids', FlowRouter.getParam('doc_id')
     # @autorun -> Meteor.subscribe 'child_docs', FlowRouter.getParam('doc_id')
     @autorun => Meteor.subscribe 'facet', 
         selected_theme_tags.array()
@@ -45,14 +45,6 @@ Template.view_doc.helpers
         if doc.type is 'site' then true else false
         
         
-Template.admin_toggle.events
-    'click #toggle_admin_mode': ->
-        if Session.equals('admin_mode', true) then Session.set('admin_mode', false)
-        else if Session.equals('admin_mode', false) then Session.set('admin_mode', true)
-        Session.set 'editing_id', null
-        Session.set 'view_published', null
-    
-    
 
         
         

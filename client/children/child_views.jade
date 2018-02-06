@@ -5,9 +5,9 @@ template(name='edit_response')
 
 template(name='view_response')
     .ui.hidden.divider
+    +parent_doc_segment
     .ui.container.shadowed
         h2.ui.center.aligned.header Response
-        +parent_doc_segment
         +view_content
         +author_info
         if is_author

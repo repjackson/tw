@@ -1,40 +1,55 @@
 template(name='nav')
     #nav_menu.ui.labeled.icon.borderless.menu(class=nav_class)
         // a.ui.header.item(href="/view/#{site_doc._id}" data-position='bottom center' data-content=site_doc.title) 
-        //     if site_doc.image_url
-        //         .ui.tiny.image
-        //             img(src=image_url)
-        //     if site_doc.image_id
-        //         .ui.image
-        //             img(src="{{c.url site_doc.image_id width=50 height=50 crop='fill'}}")
-        //     else
-        //         .ui.image
-        //             +icon48 name=site_doc.icon_class
-        +ancestor_nav
-        // each nav_child_items
-        //     a.ui.item(href="/view/#{_id}" data-position='bottom center' data-content=title)
-        //         .ui.image
-        //             +icon48 name=icon_class
-                // |#{title}
+            // if site_doc.image_url
+            //     .ui.tiny.image
+            //         img(src=image_url)
+            // if site_doc.image_id
+            //     .ui.image
+            //         img(src="{{c.url site_doc.image_id width=50 height=50 crop='fill'}}")
+            // else
+            //     .ui.image
+            //         +icon48 name=site_doc.icon_class
+        unless ancestors
+            a#nav_header(href='/')
+                img(src="{{c.url 'orange_tw_name' height=60 crop='fill'}}")
+            each nav_child_items
+                a.ui.item(href="/view/#{_id}" data-position='bottom center' data-content=title)
+                    .ui.image
+                        +icon48 name=icon_class
+                    // |#{title}
+    
+        each ancestors
+            // a.ui.white.inverted.basic.circular.button.select_ancestor_id(class=ancestor_id_class) 
+            a.item.select_ancestor_id(href="/view/#{_id}" data-position="bottom center" data-content=title) 
+                // strong #{this.name}
+                if icon_class
+                    +icon48 name=icon_class classes='ui inline image'
+                // strong #{title}
+                // if isInRole 'admin'
+                //     small #{this.count}
+        // .ui.divider
         .right.menu
             if currentUser
-                a.icon.item(href="/view/hBh38f3W9C3qXwNv2" data-position="bottom center" data-content='Karma')
-                    .ui.image
-                        +icon48 name='diamond' classes='ui mini inline image'
-                a#report_bug.icon.item(href="#"  data-position="bottom center" data-content="Report a Bug/Feature Request")
-                    .ui.image
-                        +icon48 name='bug' classes='ui mini inline image'
-                // if cart_items
-                a.ui.icon.mobile.hidden.item(href='/cart' data-position="bottom center" data-content="Shopping Cart")
-                    i.big.icons
-                        i.cart.icon
-                        i.corner.teal.asterisk.icon
-                a.item(href="/view/q6NwnyH93JB4Dg5K7" data-position="bottom center" data-content='Messaging')
-                    .ui.image
-                        +icon48 name='chat' classes='ui mini inline image'
-                a.item(href="/view/Gd7PigcoofFzYdau7" data-position="bottom center" data-content='Notifications')
-                    .ui.image
-                        +icon48 name='bell' classes='ui mini inline image'
+                // a.icon.item(href="/view/hBh38f3W9C3qXwNv2" data-position="bottom center" data-content='Karma')
+                //     .ui.image
+                //         +icon48 name='diamond' classes='ui mini inline image'
+                // a#report_bug.icon.item(href="#"  data-position="bottom center" data-content="Report a Bug/Feature Request")
+                //     .ui.image
+                //         +icon48 name='bug' classes='ui mini inline image'
+                if cart_items
+                    a.ui.icon.mobile.hidden.item(href='/cart' data-position="bottom center" data-content="Shopping Cart")
+                        i.big.icons
+                            i.cart.icon
+                            i.corner.teal.asterisk.icon
+                // a.icon.item(href="/view/q6NwnyH93JB4Dg5K7" data-position="bottom center" data-content='Messaging')
+                //     .ui.image
+                //         +icon48 name='chat' classes='ui mini inline image'
+                // a.icon.item(href="/view/Gd7PigcoofFzYdau7" data-position="bottom center" data-content='Notifications')
+                //     .ui.image
+                //         +icon48 name='bell' classes='ui mini inline image'
+                if isInRole 'admin'
+                    +admin_toggle
                         
                 a.labeled.icon.item(href="/user/#{currentUser.username}" data-position="bottom center" data-content="Profile")
                     if currentUser.profile.image_id
@@ -55,27 +70,27 @@ template(name='nav')
                     +icon48 name='login-rounded-down' classes='ui mini inline spaced image'
                     // | Sign In
     
-    .ui.basic.small.report.modal
-        h1.ui.center.aligned.header
-            img.bug_icon.ui.avatar.image(src="https://png.icons8.com/bug/color/96" width="96" height="96")
-            |     Report Bug/ Feature Request
-        h3.ui.center.aligned.header Current Page: #{bug_link}
-        .content
-            .ui.fluid.input
-                input#bug_description(type='text' placeholder='Description...')
-        .actions
-            .ui.cancel.basic.button
-                // i.remove.icon
-                | Cancel
-            // if can_submit_bug
-            .ui.green.ok.ok_button.button
-                // i.checkmark.icon
-                // +icon24 name='checkmark' classes='ui avatar image'
-                | Submit
-    .ui.basic.small.confirm.modal
-        h1.ui.center.aligned.header Thanks!
-            .ui.green.ok.large.ok_button.button
-                | You're welcome
+    // .ui.basic.small.report.modal
+    //     h1.ui.center.aligned.header
+    //         img.bug_icon.ui.avatar.image(src="https://png.icons8.com/bug/color/96" width="96" height="96")
+    //         |     Report Bug/ Feature Request
+    //     h3.ui.center.aligned.header Current Page: #{bug_link}
+    //     .content
+    //         .ui.fluid.input
+    //             input#bug_description(type='text' placeholder='Description...')
+    //     .actions
+    //         .ui.cancel.basic.button
+    //             // i.remove.icon
+    //             | Cancel
+    //         // if can_submit_bug
+    //         .ui.green.ok.ok_button.button
+    //             // i.checkmark.icon
+    //             // +icon24 name='checkmark' classes='ui avatar image'
+    //             | Submit
+    // .ui.basic.small.confirm.modal
+    //     h1.ui.center.aligned.header Thanks!
+    //         .ui.green.ok.large.ok_button.button
+    //             | You're welcome
                 
                 
 // template(name='about')
@@ -151,7 +166,7 @@ template(name='ancestor_nav')
             // strong #{this.name}
             if icon_class
                 +icon48 name=icon_class classes='ui inline image'
-            strong #{title}
+            // strong #{title}
             // if isInRole 'admin'
             //     small #{this.count}
     // .ui.divider
