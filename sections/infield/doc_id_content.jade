@@ -1,28 +1,28 @@
-template(name='doc_by_parentid_and_type')
-    if doc
-        with doc
-            if editing
-                +edit_content
-                .ui.form
-                    .field
-                        +tags
-            else
-                |!{content}
-                if pinnable
-                    +pin_button
-            if isInRole 'admin'
-                unless editing
-                    .edit_this.ui.basic.small.icon.button(title="parentId:#{doc_parent_id}, type:#{doc_type}")
-                        i.red.pencil.icon
-                        // |Edit #{tags} Content
-                else
-                    +delete_button    
-                    .save_doc.ui.green.basic.button
-                        i.check.icon
-                        |Save Content
-    else
-        if isInRole 'admin'
-            // .ui.header No Content Found
-            .create_doc.ui.basic.button
-                i.plus.icon
-                |Create Content with #{doc_type}, child of #{doc_parent_id}
+// template(name='doc_by_parentid_and_type')
+//     if doc
+//         with doc
+//             if editing
+//                 +edit_content
+//                 .ui.form
+//                     .field
+//                         +tags
+//             else
+//                 |!{content}
+//                 if pinnable
+//                     +pin_button
+//             if isInRole 'admin'
+//                 unless editing
+//                     .edit_this.ui.basic.small.icon.button(title="parentId:#{doc_parent_id}, type:#{doc_type}")
+//                         i.red.pencil.icon
+//                         // |Edit #{tags} Content
+//                 else
+//                     +delete_button    
+//                     .save_doc.ui.green.basic.button
+//                         i.check.icon
+//                         |Save Content
+//     else
+//         if isInRole 'admin'
+//             // .ui.header No Content Found
+//             .create_doc.ui.basic.button
+//                 i.plus.icon
+//                 |Create Content with #{doc_type}, child of #{doc_parent_id}

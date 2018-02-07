@@ -437,8 +437,8 @@ Template.respond_button.events
         
 Template.add_doc_button.events
     'click #add_doc': (e,t)->
-        console.log t.data.type
-        console.log t.data.button_text
+        # console.log t.data.type
+        # console.log t.data.button_text
         new_id = Docs.insert
             parent_id: FlowRouter.getParam('doc_id')
             # type: t.data.type

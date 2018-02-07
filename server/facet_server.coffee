@@ -30,7 +30,9 @@ Meteor.publish 'facet', (
 
         if selected_theme_tags.length > 0 then match.tags = $all: selected_theme_tags
 
-        if selected_author_ids.length > 0 then match.author_id = $in: selected_author_ids
+        if selected_author_ids.length > 0 
+            match.author_id = $in: selected_author_ids
+            match.published = 1
         if selected_location_tags.length > 0 then match.location_tags = $all: selected_location_tags
         if selected_intention_tags.length > 0 then match.intention_tags = $all: selected_intention_tags
         if selected_timestamp_tags.length > 0 then match.timestamp_tags = $all: selected_timestamp_tags

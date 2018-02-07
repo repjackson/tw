@@ -4,7 +4,7 @@ FlowRouter.route '/view/:doc_id',
         if selected_theme_tags
             selected_theme_tags.clear()
         BlazeLayout.render 'layout',
-            nav: 'nav'
+            # nav: 'nav'
             main: 'view_doc'
 
 

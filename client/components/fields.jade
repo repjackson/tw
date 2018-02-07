@@ -165,10 +165,11 @@ template(name='edit_intention_tags')
                 |#{this}
 
 template(name='view_intention_tags')
-    div
-        +icon48 name='sofa' classes='ui mini inline image' tootip='Intention Tags'
-        each intention_tags
-            .ui.basic.label.intention_tag #{this}
+    if intention_tags
+        div
+            +icon48 name='spotlight' classes='ui mini inline image' tootip='Intention Tags'
+            each intention_tags
+                .ui.basic.label.intention_tag #{this}
 
 
 template(name='edit_dollar_price')

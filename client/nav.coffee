@@ -54,32 +54,32 @@ Template.nav.events
     
     
     
-    'click #nav_header': ->
-        FlowRouter.reload() 
-        location.reload()
+    # 'click #nav_header': ->
+    #     FlowRouter.reload() 
+        # location.reload()
     # 'click #test': ->
     #     Notification.requestPermission()
     
-    # "click #report_bug": ->
-    #     Session.set 'bug_link', window.location.pathname
-    #     $('.ui.report.modal').modal(
-    #         inverted: true
-    #         transition: 'horizontal flip'
-    #         # observeChanges: true
-    #         duration: 500
-    #         onApprove : ()->
-    #             val = $("#bug_description").val()
-    #             # window.alert val
-    #             Docs.insert
-    #                 type: 'bug_report'
-    #                 complete: false
-    #                 body: val
-    #                 link: window.location.pathname
-    #             $("#bug_description").val('')
+    "click #report_bug": ->
+        Session.set 'bug_link', window.location.pathname
+        $('.ui.report.modal').modal(
+            inverted: true
+            transition: 'horizontal flip'
+            # observeChanges: true
+            duration: 500
+            onApprove : ()->
+                val = $("#bug_description").val()
+                # window.alert val
+                Docs.insert
+                    type: 'bug_report'
+                    complete: false
+                    body: val
+                    link: window.location.pathname
+                $("#bug_description").val('')
     
-    #             # $('.ui.confirm.modal').modal('show');
-    #         ).modal('show')
-    #     # bug_description = prompt "Please decribe the bug:"
+                # $('.ui.confirm.modal').modal('show');
+            ).modal('show')
+        # bug_description = prompt "Please decribe the bug:"
 
 
     # 'click #bug_icon': (e,t)->  

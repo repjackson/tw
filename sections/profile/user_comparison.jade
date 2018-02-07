@@ -1,4 +1,4 @@
-template(name='profile_comparison')
+template(name='user_comparison')
     h1.ui.center.aligned.header
         +icon96 name='cloud' classes='ui mini inline image'
         | Compare
@@ -17,7 +17,7 @@ template(name='profile_comparison')
     // .ui.header docs
     .ui.two.column.grid
         .column
-            .ui.header #{user.profile.first_name}'s Journal Entries
+            .ui.center.aligned.header #{person.profile.first_name}'s Journal Entries
             each target_docs
                 .ui.fluid.card
                     .content
@@ -27,7 +27,7 @@ template(name='profile_comparison')
                         +view_content
                         +author_info
         .column
-            .ui.header Your Journal Entries
+            .ui.center.aligned.header Your Journal Entries
             each your_docs
                 .ui.fluid.card
                     .content

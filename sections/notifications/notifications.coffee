@@ -1,3 +1,9 @@
+FlowRouter.route '/notifications', action: (params) ->
+    BlazeLayout.render 'layout',
+        main: 'view_notifications'
+
+
+
 Meteor.methods
     add_notification: (subject_id, predicate, object_id) ->
         new_id = Docs.insert

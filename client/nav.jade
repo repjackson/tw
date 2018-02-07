@@ -11,7 +11,7 @@ template(name='nav')
             //     .ui.image
             //         +icon48 name=site_doc.icon_class
         unless ancestors
-            a#nav_header(href='/')
+            a#nav_header(href='/view/9639QAQ4yPbMLs7CA')
                 img(src="{{c.url 'orange_tw_name' height=60 crop='fill'}}")
             each nav_child_items
                 a.ui.item(href="/view/#{_id}" data-position='bottom center' data-content=title)
@@ -37,15 +37,15 @@ template(name='nav')
                 // a#report_bug.icon.item(href="#"  data-position="bottom center" data-content="Report a Bug/Feature Request")
                 //     .ui.image
                 //         +icon48 name='bug' classes='ui mini inline image'
-                if cart_items
-                    a.ui.icon.mobile.hidden.item(href='/cart' data-position="bottom center" data-content="Shopping Cart")
-                        i.big.icons
-                            i.cart.icon
-                            i.corner.teal.asterisk.icon
-                // a.icon.item(href="/view/q6NwnyH93JB4Dg5K7" data-position="bottom center" data-content='Messaging')
+                // if cart_items
+                //     a.ui.icon.mobile.hidden.item(href='/cart' data-position="bottom center" data-content="Shopping Cart")
+                //         i.big.icons
+                //             i.cart.icon
+                //             i.corner.teal.asterisk.icon
+                // a.icon.item(href="/conversations" data-position="bottom center" data-content='Messaging')
                 //     .ui.image
                 //         +icon48 name='chat' classes='ui mini inline image'
-                // a.icon.item(href="/view/Gd7PigcoofFzYdau7" data-position="bottom center" data-content='Notifications')
+                // a.icon.item(href="/notifications" data-position="bottom center" data-content='Notifications')
                 //     .ui.image
                 //         +icon48 name='bell' classes='ui mini inline image'
                 if isInRole 'admin'
@@ -56,11 +56,11 @@ template(name='nav')
                         img.ui.avatar.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
                     else
                         i.user.icon
-                    span.mobile.hidden    
-                        if currentUser.name
-                            | #{currentUser.name}
-                        else
-                            | #{currentUser.username}
+                    // span.mobile.hidden    
+                    //     if currentUser.name
+                    //         | #{currentUser.name}
+                    //     else
+                    //         | #{currentUser.username}
                 // a#logout.icon.item(href="#" data-position="bottom center" data-content="Log Out")
                 //     .ui.image
                 //         img(src="https://png.icons8.com/burglary/color/48" width="48" height="48")
@@ -70,27 +70,27 @@ template(name='nav')
                     +icon48 name='login-rounded-down' classes='ui mini inline spaced image'
                     // | Sign In
     
-    // .ui.basic.small.report.modal
-    //     h1.ui.center.aligned.header
-    //         img.bug_icon.ui.avatar.image(src="https://png.icons8.com/bug/color/96" width="96" height="96")
-    //         |     Report Bug/ Feature Request
-    //     h3.ui.center.aligned.header Current Page: #{bug_link}
-    //     .content
-    //         .ui.fluid.input
-    //             input#bug_description(type='text' placeholder='Description...')
-    //     .actions
-    //         .ui.cancel.basic.button
-    //             // i.remove.icon
-    //             | Cancel
-    //         // if can_submit_bug
-    //         .ui.green.ok.ok_button.button
-    //             // i.checkmark.icon
-    //             // +icon24 name='checkmark' classes='ui avatar image'
-    //             | Submit
-    // .ui.basic.small.confirm.modal
-    //     h1.ui.center.aligned.header Thanks!
-    //         .ui.green.ok.large.ok_button.button
-    //             | You're welcome
+    .ui.basic.small.report.modal
+        h1.ui.center.aligned.header
+            img.bug_icon.ui.avatar.image(src="https://png.icons8.com/bug/color/96" width="96" height="96")
+            |     Report Bug/ Feature Request
+        h3.ui.center.aligned.header Current Page: #{bug_link}
+        .content
+            .ui.fluid.input
+                input#bug_description(type='text' placeholder='Description...')
+        .actions
+            .ui.cancel.basic.button
+                // i.remove.icon
+                | Cancel
+            // if can_submit_bug
+            .ui.green.ok.ok_button.button
+                // i.checkmark.icon
+                // +icon24 name='checkmark' classes='ui avatar image'
+                | Submit
+    .ui.basic.small.confirm.modal
+        h1.ui.center.aligned.header Thanks!
+            .ui.green.ok.large.ok_button.button
+                | You're welcome
                 
                 
 // template(name='about')

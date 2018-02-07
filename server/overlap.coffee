@@ -30,7 +30,7 @@ Meteor.publish 'overlap', (
         target_match.author_id = other_user._id
         
         target_match.type = type
-        target_match.published = $in:[0,1]
+        target_match.published = 1
         
         # console.log 'overlap match', match
         target_tag_cloud = Docs.aggregate [
@@ -53,7 +53,7 @@ Meteor.publish 'overlap', (
         
         if selected_overlap_tags.length > 0 then my_match.tags = $all: selected_overlap_tags
         my_match.author_id = Meteor.userId()
-        my_match.published = $in:[0,1]
+        my_match.published = 1
 
         my_match.type = type
 
@@ -102,6 +102,7 @@ Meteor.publish 'overlap', (
         doc_match.author_id = $in: [other_user._id, Meteor.userId()]
         if selected_overlap_tags.length > 0 then doc_match.tags = $all: selected_overlap_tags
         doc_match.type = type
+        doc_match.published = 1
 
         subHandle = Docs.find(doc_match, {limit:20, sort: timestamp:-1}).observeChanges(
             added: (id, fields) ->

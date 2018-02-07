@@ -1,12 +1,11 @@
 template(name='edit_doc')
     with doc
         .ui.padded.stackable.grid
-            .centered.row
+            .centered.middle.aligned.row
                 .three.wide.center.aligned.column
                     +delete_button
-                    +admin_toggle
                 .ten.wide.center.aligned.column
-                    h1.ui.header
+                    h1.ui.inverted.header
                         if icon_class
                             +icon96 name=icon_class classes='ui image'
                         |Edit 

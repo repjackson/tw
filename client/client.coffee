@@ -44,6 +44,10 @@ Template.registerHelper 'is_author', () ->  Meteor.userId() is @author_id
 Template.registerHelper 'is_user', () ->  Meteor.userId() is @_id
 Template.registerHelper 'is_person_by_username', () ->  Meteor.user().username is FlowRouter.getParam('username')
 
+
+Template.registerHelper 'person', ()-> Meteor.users.findOne username:FlowRouter.getParam('username')
+
+
 Template.registerHelper 'can_edit', () ->  Meteor.userId() is @author_id or Roles.userIsInRole(Meteor.userId(), 'admin')
 
 # Template.registerHelper 'zen_mode', () -> Session.get 'zen_mode'

@@ -139,13 +139,13 @@ template(name='add_to_cart')
 
 template(name='delete_button')
     unless confirming
-        .delete.ui.basic.large.icon.circular.inverted.white.button
+        .delete.ui.large.icon.circular.button
             i.red.large.remove.icon
     else
-        .ui.basic.circular.inverted.white.button.cancel 
+        .ui.circular.cancel 
             i.ban.icon
             |Cancel
-        .ui.red.circular.inverted.white.button.confirm 
+        .ui.red.circular.button.confirm 
             i.remove.icon
             |Confirm Delete
         

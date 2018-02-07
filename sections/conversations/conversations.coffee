@@ -1,6 +1,6 @@
 FlowRouter.route '/conversations', action: (params) ->
     BlazeLayout.render 'layout',
-        main: 'conversations'
+        main: 'view_conversations'
 
 
 Meteor.methods

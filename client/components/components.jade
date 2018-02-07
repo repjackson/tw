@@ -253,7 +253,7 @@ template(name='save_button')
         .ui.fluid.basic.disabled.circular.white.inverted.button Add Tags to Save
 
 template(name='save_link')
-    a.ui.fluid.basic.circular.white.inverted.button(data-position='bottom center' data-tooltip='Save' href="/view/#{_id}")
+    a.ui.fluid.circular.button(data-position='bottom center' data-tooltip='Save' href="/view/#{_id}")
         +icon48 name='checkmark' classes='ui mini inline image'
 
 
@@ -322,8 +322,8 @@ template(name='edit_child_fields')
     .ui.subheader Fields that are available when a user adds a document
     each child_fields
         .toggle_child_field.ui.button(class=child_field_toggle_class)
-            +icon24 name=icon_class
-            |#{title}    
+            +icon24 name=icon_class classes='ui inline image'
+            strong #{title}    
             
 template(name='select_template')
     .ui.header Select Template

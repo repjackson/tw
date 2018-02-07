@@ -1,4 +1,5 @@
-template(name='profile_layout')
+template(name='user_layout')
+    +nav
     .ui.padded.stackable.grid
         .centered.row
             .four.wide.column.shadowed-box
@@ -13,17 +14,34 @@ template(name='profile_layout')
                         if is_user
                             a(href="/profile/edit/#{_id}") 
                                 i.yellow.pencil.icon
-                +tag_facet
-                +ancestor_facet
+                    .ui.vertical.fluid.menu
+                        a.item(href="/user/#{username}")
+                            i.info.icon
+                            |About
+                        a.item(href="/user/#{username}/documents")
+                            i.librar.icon
+                            |Documents
+                        // a.item(href="/user/#{username}/contact")
+                        //     i.contact.icon
+                        //     |Contact
+                        a.item(href="/user/#{username}/comparison")
+                            i.fork.icon
+                            |Comparison
+                        // a.item(href="/user/#{username}/info")
+                        //     i.heart.icon
+                        //     |Karma
+                        // a.item(href="/user/#{username}/info")
+                        //     i.money.icon
+                        //     |Transactions
                 if is_user
                     .ui.basic.center.aligned.segment
                         #logout.ui.big.center.aligned.red.button Log Out
             .twelve.wide.column.shadowed-box
-                each user_docs
-                    +databank_card
-    
-template(name='profile_about')
-    h1.ui.header About
+                +Template.dynamic template=user_main
+
+
+template(name='user_info')
+    h1.ui.center.aligned.header About
     with person
         if tags
             +icon48 name='hashtag' classes='ui inline image'
@@ -44,9 +62,19 @@ template(name='profile_about')
         if profile.if_not_working
             .ui.header If I am not at work or in class then I am probably…
             |#{profile.if_not_working}
-            +profile_stripe
-        else
-            .centered.row
-                .twelve.wide.column.shadowed-box
-                    +profile_comparison
+        //     +profile_stripe
+        // else
+        //     .centered.row
+        //         .twelve.wide.column.shadowed-box
+        //             +profile_comparison
         
+        
+template(name='user_documents')
+    h1.ui.center.aligned.header #{person.first_name} Documents
+    +tag_facet
+    +ancestor_facet
+
+    
+    each user_docs
+        +databank_card
+

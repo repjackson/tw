@@ -5,7 +5,7 @@ template(name='view_databank')
                 if currentUser
                     +add_doc_button type=child_type
             .ten.wide.center.aligned.column
-                h1.ui.header 
+                h1.ui.inverted.header 
                     +icon96 name=icon_class classes='ui image'
                     |#{title}
             .three.wide.center.aligned.column
@@ -26,7 +26,8 @@ template(name='view_databank')
                         +databank_card
 
 template(name='edit_databank')
-    +edit_child_fields
+    .shadowed-box
+        +edit_child_fields
 
 template(name='databank_card')
     .ui.fluid.card(class=published_class)
@@ -90,8 +91,9 @@ template(name='view_databank_item')
     .ui.stackable.padded.grid
         .centered.row
             .centered.three.wide.column
+                +parent_link
             .centered.ten.wide.column
-                h1.ui.center.aligned.header 
+                h1.ui.center.aligned.inverted.header 
                     if title
                         |#{title}
                     else
