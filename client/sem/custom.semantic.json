@@ -35,7 +35,7 @@
     "rail": false,
     "rating": true,
     "reset": true,
-    "reveal": false,
+    "reveal": true,
     "search": false,
     "segment": true,
     "shape": false,

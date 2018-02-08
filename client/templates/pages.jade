@@ -1,6 +1,6 @@
 template(name='view_page')
     .ui.container
-        .shadowed-box
+        .shadowed-box.large130
             |!{content}
         if can_edit
             +edit_button
@@ -9,10 +9,9 @@ template(name='view_page')
 template(name='edit_page')
     .ui.container
         +edit_title
+        +edit_subtitle
         +edit_number
         +edit_content
-        +save_button
-        +delete_button
         
         
         

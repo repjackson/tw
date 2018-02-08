@@ -4,11 +4,21 @@ FlowRouter.route '/edit/:doc_id', action: (params) ->
 
 Template.edit_doc.onCreated ->
     @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
+    @autorun -> Meteor.subscribe 'templates'
 
+Template.edit_doc.onRendered ->
+    @autorun =>
+        if @subscriptionsReady()
+            Meteor.setTimeout ->
+                $('.ui.accordion').accordion()
+            , 1000
+        
 
 Template.edit_doc.helpers
     doc: -> Docs.findOne FlowRouter.getParam('doc_id')
     edit_type_template: -> "edit_#{@template}"
+    templates: -> Docs.find type:'template'
+
 
 Template.edit_doc.events
     # 'change #toggle_title': (e,t)->

@@ -16,7 +16,7 @@ template(name='view_site')
     // +ancestor_facet
     .ui.stackable.centered.four.column.padded.grid
         each public_children
-            .column
+            .column(data-position='bottom center' data-tooltip=subtitle)
                 a.ui.icon.center.shadowed.aligned.header(href="/view/#{_id}")
                     i.icon
                         +icon96 name=icon_class

@@ -2,6 +2,7 @@ template(name='view_sections')
     .ui.stackable.padded.grid
         .row
             .three.wide.center.aligned.column
+                +parent_link
             .ten.wide.column
                 h1.ui.inverted.center.aligned.header 
                     +icon96 name=icon_class classes='ui inline image'
@@ -25,6 +26,7 @@ template(name='view_section')
     .ui.stackable.padded.grid
         .row
             .three.wide.center.aligned.column
+                +parent_link
             .ten.wide.column
                 h1.ui.inverted.center.aligned.header 
                     +icon96 name=icon_class classes='ui inline image'
@@ -52,7 +54,7 @@ template(name='view_section')
                 else
                     +completed_list
             .centered.ten.wide.column
-                .shadowed
+                .shadowed.padded10
                     +view_vimeo
                 .shadowed
                     +view_content
@@ -62,7 +64,7 @@ template(name='view_section')
                     +mark_watched_button
                 if read
                     +questions
-            .centered.three.wide.column
+            .right.aligned.three.wide.column
                 unless is_admin
                     if older_sibling
                         // if completed
@@ -84,20 +86,20 @@ template(name='view_section')
                 else
                     .shadowed.padded10
                         .ui.dividing.header Completors
-                    .ui.dividing.header Readers
-                        .ui.list
-                            each readers
-                                .item
-                                    +user_image_name user_id=this._id
-                        .ui.dividing.header Questions
-                        .ui.list
-                            each children
-                                .item 
-                                    .ui.header #{title}
-                                    |#{children_count} Answers
-                                    each child_authors
-                                        .item
-                                            +user_image_name user_id=this._id
+                        .ui.dividing.header Readers
+                            .ui.list
+                                each readers
+                                    .item
+                                        +user_image_name user_id=this._id
+                            .ui.dividing.header Questions
+                            .ui.list
+                                each children
+                                    .item 
+                                        .ui.header #{title}
+                                        |#{children_count} Answers
+                                        each child_authors
+                                            .item
+                                                +user_image_name user_id=this._id
 
 
 template(name='completed_list')

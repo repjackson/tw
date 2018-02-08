@@ -7,8 +7,8 @@ Template.layout.events
     
 Template.nav.onCreated ->
     @autorun -> Meteor.subscribe 'me'
-    # @autorun -> Meteor.subscribe 'child_docs', Session.get('current_site_id')
-    # @autorun -> Meteor.subscribe 'doc', Session.get('current_site_id')
+    @autorun -> Meteor.subscribe 'child_docs', '9639QAQ4yPbMLs7CA'
+    @autorun -> Meteor.subscribe 'tori_site_doc'
 
     
     
@@ -38,7 +38,7 @@ Template.nav.helpers
     #         if site_doc.nav.color is 'black' then 'inverted'
         
     nav_child_items: ->
-        site_doc = Docs.findOne Session.get('current_site_id')
+        site_doc = Docs.findOne '9639QAQ4yPbMLs7CA'
         if site_doc
             Docs.find _id: $in: site_doc.nav.child_ids
         

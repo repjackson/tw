@@ -215,12 +215,6 @@
 
 
         
-# Template.edit_doc.onRendered ->
-#     @autorun =>
-#         if @subscriptionsReady()
-#             Meteor.setTimeout ->
-#                 $('.ui.accordion').accordion()
-#             , 1000
             
 # # Template.doc_editing_main.onRendered ->
 # #     @autorun =>
@@ -231,29 +225,6 @@
             
             
 
-# Template.toggle_key.helpers
-#     toggle_key_button_class: -> 
-#         # console.log @key
-#         # console.log Template.parentData()
-#         # console.log Template.parentData()["#{@key}"]
-#         if @value
-#             if Template.parentData()["#{@key}"] is @value then 'blue' else 'basic'
-#         else if Template.parentData()["#{@key}"] is true then 'blue' else 'basic'
-
-
-# Template.toggle_key.events
-#     'click #toggle_key': ->
-#         # console.log @
-#         if @value
-#             Docs.update FlowRouter.getParam('doc_id'), 
-#                 $set: "#{@key}": "#{@value}"
-#         else if Template.parentData()["#{@key}"] is true
-#             Docs.update FlowRouter.getParam('doc_id'), 
-#                 $set: "#{@key}": false
-#         else
-#             Docs.update FlowRouter.getParam('doc_id'), 
-#                 $set: "#{@key}": true
-            
     
     
 # Template.editing_session_question.helpers

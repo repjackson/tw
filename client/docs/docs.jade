@@ -24,14 +24,16 @@ template(name='edit_doc')
                         +parent_doc_segment
                         +edit_content
                         +published
-                if is_admin
-                    .six.wide.column
-                        +edit_title
-                        +edit_icon
-                        // +edit_child_type
-                        +edit_number
-                        +published
-                        +edit_type
+                .four.wide.column
+                    .ui.fluid.styled.accordion
+                        .title
+                            |Template:#{template}
+                            i.dropdown.icon
+                        .content
+                            each templates
+                                +toggle_key key='template' value=slug icon=icon_class label=title
+                    +published
+                    // +edit_type
 
 
 // template(name='view_document')
@@ -107,3 +109,17 @@ template(name='view_doc')
                             +view_content
                             +author_info
                             |#{when}
+                            
+                            
+                            
+template(name='doc_template_selection')
+    .ui.header Select Document Template
+    +toggle_key key='completion_type' value='response' icon='response' label='Response'
+
+    // .ui.header Choose Child Actions
+    each child_actions
+        .toggle_child_action.ui.button(class=child_action_toggle_class)
+            +icon24 name=icon_class classes='ui inline image'
+            strong #{title}    
+            
+                            

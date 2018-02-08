@@ -1,16 +1,3 @@
-Template.resonate_button.helpers
-    resonate_button_class: -> 
-        if Meteor.userId()
-            if @favoriters and Meteor.userId() in @favoriters then 'blue' else 'basic'
-        else 'disabled basic'
-
-Template.resonate_button.events
-    'click .resonate_button': (e,t)-> 
-        if Meteor.userId() 
-            Meteor.call 'favorite', Template.parentData(0)
-            $(e.currentTarget).closest('.resonate_button').transition('pulse')
-        else FlowRouter.go '/sign-in'
-
 
 Template.resonates_list.helpers
     resonates_with_people: ->
@@ -46,28 +33,6 @@ Template.bookmarked_by_list.helpers
             false
             
             
-Template.mark_read_button.events
-    'click .mark_read': (e,t)-> 
-        Meteor.call 'mark_read', @_id
-        
-    'click .mark_unread': (e,t)-> Meteor.call 'mark_unread', @_id
-
-Template.mark_read_button.helpers
-    read: -> @read_by and Meteor.userId() in @read_by
-    # read: -> true
-    
-    
-Template.mark_watched_button.events
-    'click .mark_watched': (e,t)-> 
-        Meteor.call 'mark_read', @_id
-        
-    'click .mark_unwatched': (e,t)-> Meteor.call 'mark_unread', @_id
-
-Template.mark_watched_button.helpers
-    read: -> @read_by and Meteor.userId() in @read_by
-    # read: -> true
-    
-    
 
     
     

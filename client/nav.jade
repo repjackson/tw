@@ -10,24 +10,24 @@ template(name='nav')
             // else
             //     .ui.image
             //         +icon48 name=site_doc.icon_class
-        unless ancestors
-            a#nav_header(href='/view/9639QAQ4yPbMLs7CA')
-                img(src="{{c.url 'orange_tw_name' height=60 crop='fill'}}")
-            each nav_child_items
-                a.ui.item(href="/view/#{_id}" data-position='bottom center' data-content=title)
-                    .ui.image
-                        +icon48 name=icon_class
-                    // |#{title}
+        // unless ancestors
+        a#nav_header(href='/view/9639QAQ4yPbMLs7CA')
+            img(src="{{c.url 'orange_tw_name' height=60 crop='fill'}}")
+        each nav_child_items
+            a.ui.labeled.item(href="/view/#{_id}" data-position='bottom center' data-content=title)
+                .ui.image
+                    +icon48 name=icon_class
+                // |#{title}
     
-        each ancestors
-            // a.ui.white.inverted.basic.circular.button.select_ancestor_id(class=ancestor_id_class) 
-            a.item.select_ancestor_id(href="/view/#{_id}" data-position="bottom center" data-content=title) 
-                // strong #{this.name}
-                if icon_class
-                    +icon48 name=icon_class classes='ui inline image'
-                // strong #{title}
-                // if isInRole 'admin'
-                //     small #{this.count}
+        // each ancestors
+        //     // a.ui.white.inverted.basic.circular.button.select_ancestor_id(class=ancestor_id_class) 
+        //     a.item.select_ancestor_id(href="/view/#{_id}" data-position="bottom center" data-content=title) 
+        //         // strong #{this.name}
+        //         if icon_class
+        //             +icon48 name=icon_class classes='ui inline image'
+        //         // strong #{title}
+        //         // if isInRole 'admin'
+        //         //     small #{this.count}
         // .ui.divider
         .right.menu
             if currentUser

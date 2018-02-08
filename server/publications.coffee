@@ -367,4 +367,11 @@ Meteor.publish 'actions', ->
     Docs.find type: 'action'
     
     
+Meteor.publish 'templates', ->
+    Docs.find type: 'template'
+    
+    
+Meteor.publish 'tori_site_doc', ->
+    Docs.find _id:'9639QAQ4yPbMLs7CA'
+    
     

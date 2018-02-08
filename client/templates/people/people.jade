@@ -1,12 +1,15 @@
 template(name='view_people')
-    h1.ui.center.aligned.header
-        +icon96 name=icon_class classes='ui inline image'
-        |#{title}
-    // .ui.stackable.padded.grid
-    //     .four.wide.column
-            // .ui.dividing.header
-            //     +icon48 name='hashtag' classes='ui inline image'
-            //     | Browse Tags
+    .ui.stackable.padded.grid
+        .centered.row
+            .three.wide.column
+                +parent_link
+            .ten.wide.column
+                h1.ui.center.aligned.header
+                    +icon96 name=icon_class classes='ui inline image'
+                    |#{title}
+            .three.wide.column
+                if can_edit
+                    +edit_button
     +people_cloud
     .ui.hidden.divider
         // .twelve.wide.column

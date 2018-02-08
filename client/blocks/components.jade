@@ -1,9 +1,3 @@
-template(name='resonate_button')
-    .resonate_button.ui.circular.icon.button(class=resonate_button_class data-tooltip='This Resonates with Me')
-        // i.big.red.heartbeat.icon
-        // <img src="https://png.icons8.com/heart-with-pulse/dusk/64" title="Heart with Pulse" width="64" height="64">        
-        img.ui.mini.inline.image(src="https://png.icons8.com/heart-with-pulse/dusk/64" width="64" height="64")
-        
 
 template(name='resonates_list')
     if resonates_with_people.count
@@ -23,16 +17,6 @@ template(name='resonates_list')
                                 //     .ui.basic.label #{this}
 
 
-template(name='mark_read_button')
-    if currentUser
-        if read
-            .mark_unread.ui.circular.white.inverted.button(data-tooltip='Mark Unread')
-                +icon48 name='read-message' classes='avatar'
-                |Read
-        else
-            .mark_read.ui.basic.circular.white.inverted.button(data-tooltip='Mark Read')
-                +icon48 name='message' classes='ui mini inline image'
-                |Unread
 
 template(name='mark_watched_button')
     if currentUser
@@ -157,7 +141,7 @@ template(name='parent_doc_accordion')
                     
 
 template(name='parent_doc_segment')
-    .ui.segment
+    .ui.secondary.segment
         .ui.header
             +icon48 name='response' classes='avatar'
             |In response to...
@@ -318,7 +302,7 @@ template(name='published_label')
 
 
 template(name='edit_child_fields')
-    .ui.header Choose Child Docs
+    // .ui.header Choose Child Docs
     .ui.subheader Fields that are available when a user adds a document
     each child_fields
         .toggle_child_field.ui.button(class=child_field_toggle_class)
@@ -326,7 +310,7 @@ template(name='edit_child_fields')
             strong #{title}    
             
 template(name='edit_child_actions')
-    .ui.header Choose Child Actions
+    // .ui.header Choose Child Actions
     .ui.subheader Available actions on the child documents
     each child_actions
         .toggle_child_action.ui.button(class=child_action_toggle_class)
