@@ -13,42 +13,42 @@ FlowRouter.route '/cart-profile/:user_id',
 
 if Meteor.isClient
     Template.cart.onCreated ->
-        if Meteor.isDevelopment
-            stripe_key = Meteor.settings.public.stripe.testPublishableKey
-            # console.log 'using test key'
-        else if Meteor.isProduction
-            stripe_key = Meteor.settings.public.stripe.livePublishableKey
-        else 
-            console.log 'not dev or prod'
+        # if Meteor.isDevelopment
+        #     stripe_key = Meteor.settings.public.stripe.testPublishableKey
+        #     # console.log 'using test key'
+        # else if Meteor.isProduction
+        #     stripe_key = Meteor.settings.public.stripe.livePublishableKey
+        # else 
+        #     console.log 'not dev or prod'
         
-        @autorun -> Meteor.subscribe 'cart'
-        Template.instance().checkout = StripeCheckout.configure(
-            key: stripe_key
-            image: '/toriwebster-logomark-04.png'
-            locale: 'auto'
-            # zipCode: true
-            token: (token) ->
-                # console.log token
-                purchasing_item = Docs.findOne Session.get 'purchasing_item'
-                console.dir 'purchasing_item', purchasing_item
-                charge = 
-                    amount: purchasing_item.price*100
-                    currency: 'usd'
-                    source: token.id
-                    description: token.description
-                    receipt_email: token.email
-                Meteor.call 'processPayment', charge, (error, response) =>
-                    if error then Bert.alert error.reason, 'danger'
-                    else
-                        Meteor.call 'register_transaction', purchasing_item._id, (err, response)->
-                            if err then console.error err
-                            else
-                                Bert.alert "You have purchased #{purchasing_item.title}.", 'success'
-                                Docs.remove Session.get('current_cart_item')
-                                FlowRouter.go "/account"
-            # closed: ->
-            #     Bert.alert "Payment Canceled", 'info', 'growl-top-right'
-        )
+        # @autorun -> Meteor.subscribe 'cart'
+        # Template.instance().checkout = StripeCheckout.configure(
+        #     key: stripe_key
+        #     image: '/toriwebster-logomark-04.png'
+        #     locale: 'auto'
+        #     # zipCode: true
+        #     token: (token) ->
+        #         # console.log token
+        #         purchasing_item = Docs.findOne Session.get 'purchasing_item'
+        #         console.dir 'purchasing_item', purchasing_item
+        #         charge = 
+        #             amount: purchasing_item.price*100
+        #             currency: 'usd'
+        #             source: token.id
+        #             description: token.description
+        #             receipt_email: token.email
+        #         Meteor.call 'processPayment', charge, (error, response) =>
+        #             if error then Bert.alert error.reason, 'danger'
+        #             else
+        #                 Meteor.call 'register_transaction', purchasing_item._id, (err, response)->
+        #                     if err then console.error err
+        #                     else
+        #                         Bert.alert "You have purchased #{purchasing_item.title}.", 'success'
+        #                         Docs.remove Session.get('current_cart_item')
+        #                         FlowRouter.go "/account"
+        #     # closed: ->
+        #     #     Bert.alert "Payment Canceled", 'info', 'growl-top-right'
+        # )
 
     Template.cart_checkout.helpers 
         cart_items: ->
@@ -94,22 +94,22 @@ if Meteor.isClient
         #                 Bert.alert "You are now enrolled in #{@title}", 'success'
         #                 # FlowRouter.go "/course/#{_id}"
 
-        'click .purchase_item': ->
-            Session.set 'purchasing_item', @parent_id
-            Session.set 'current_cart_item', @_id
-            parent_doc = Docs.findOne @parent_id
-            if parent_doc.dollar_price > 0
-                Template.instance().checkout.open
-                    name: 'Tori Webster Inspires, LLC'
-                    description: parent_doc.title
-                    amount: parent_doc.dollar_price*100
-            else
-                Meteor.call 'register_transaction', @parent_id, (err,response)=>
-                    if err then console.error err
-                    else
-                        Bert.alert "You have purchased #{parent_doc.title}.", 'success'
-                        Docs.remove @_id
-                        FlowRouter.go "/transactions"
+        # 'click .purchase_item': ->
+        #     Session.set 'purchasing_item', @parent_id
+        #     Session.set 'current_cart_item', @_id
+        #     parent_doc = Docs.findOne @parent_id
+        #     if parent_doc.dollar_price > 0
+        #         Template.instance().checkout.open
+        #             name: 'Tori Webster Inspires, LLC'
+        #             description: parent_doc.title
+        #             amount: parent_doc.dollar_price*100
+        #     else
+        #         Meteor.call 'register_transaction', @parent_id, (err,response)=>
+        #             if err then console.error err
+        #             else
+        #                 Bert.alert "You have purchased #{parent_doc.title}.", 'success'
+        #                 Docs.remove @_id
+        #                 FlowRouter.go "/transactions"
                         
                     
 

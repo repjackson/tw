@@ -2,13 +2,14 @@ template(name='view_databank')
     .ui.stackable.padded.grid
         .centered.row
             .three.wide.center.aligned.column
-                if currentUser
-                    +add_doc_button type=child_type
+                +parent_link
             .ten.wide.center.aligned.column
                 h1.ui.inverted.header 
                     +icon96 name=icon_class classes='ui image'
                     |#{title}
             .three.wide.center.aligned.column
+                if currentUser
+                    +add_doc_button type=child_type
                 if can_edit
                     +edit_button
         .row
@@ -24,11 +25,9 @@ template(name='view_databank')
                 .ui.cards
                     each children 
                         +databank_card
-
-template(name='edit_databank')
-    .shadowed-box
-        +edit_child_fields
-
+                        
+                        
+                        
 template(name='databank_card')
     .ui.fluid.card(class=published_class)
         // each parent.child_fields
@@ -38,6 +37,9 @@ template(name='databank_card')
                 .header 
                     +icon48 name=icon_class classes='ui mini inline spaced image'
                     |#{title}
+        if slug
+            .content
+                .meta Slug: #{slug}
         .content
             each parent.child_fields
                 +Template.dynamic template=field_view_template data=..
@@ -46,27 +48,25 @@ template(name='databank_card')
             +author_info
             |#{when}
         .content
-            +thanks_button
-            +bookmark_button
-            +resonate_button
-            +respond_button
+            each parent.child_actions
+                +Template.dynamic template=action_button_template data=..
             .right.floated
                 +view_full_button
         if child_count
             .content
                 +response_list
-        if favorite_count
-            .content
-                strong
-                    +icon48 name='heart-health' classes='ui mini inline image'
-                    | Resonates with #{favorite_count} 
-                .ui.divided.horizontal.list
-                    each favoriter_list
-                        .item
-                            img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
-                            .content
-                                .header
-                                    |#{name}
+        // if favorite_count
+        //     .content
+        //         strong
+        //             +icon48 name='heart-health' classes='ui mini inline image'
+        //             | Resonates with #{favorite_count} 
+        //         .ui.divided.horizontal.list
+        //             each favoriter_list
+        //                 .item
+        //                     img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+        //                     .content
+        //                         .header
+        //                             |#{name}
         // if upvoters
         //     .content
         //         strong
@@ -79,12 +79,25 @@ template(name='databank_card')
         //                     .content
         //                         .header
         //                             |#{name}
+
+template(name='edit_databank')
+    .shadowed-box
+        +edit_title
+        +edit_subtitle
+        +edit_icon
+        +edit_child_type
+        +edit_template
+    .shadowed-box
+        +edit_child_fields
+    .shadowed-box
+        +edit_child_actions
+
                 
 
 template(name='edit_databank_item')
     .ui.form.shadowed.padded10
         each parent.child_fields
-            +Template.dynamic template=field_edit_template data=doc
+            +Template.dynamic template=field_edit_template data=..
         +published
 
 template(name='view_databank_item')
@@ -94,6 +107,8 @@ template(name='view_databank_item')
                 +parent_link
             .centered.ten.wide.column
                 h1.ui.center.aligned.inverted.header 
+                    if icon_class
+                        +icon96 name=icon_class classes='ui image'
                     if title
                         |#{title}
                     else
@@ -106,7 +121,7 @@ template(name='view_databank_item')
             .twelve.wide.column
                 .ui.form.shadowed-box
                     each parent.child_fields
-                        +Template.dynamic template=field_view_template data=doc
+                        +Template.dynamic template=field_view_template data=..
                 if has_price
                     +product_transactions
                 if watson

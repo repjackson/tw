@@ -1,6 +1,9 @@
 template(name='dev_footer')
     .ui.inverted.segment
-        .ui.horizontal.dividing.header DEV
+        .ui.horizontal.dividing.header 
+            |DEV
+            a(href='/view/3qLXqhMDmxxZvh3tA') tasks
+
         with doc
             if parent_id
                 .ui.segment
@@ -9,6 +12,7 @@ template(name='dev_footer')
                         |Parent: #{parent.title}
             +edit_title
             +edit_type
+            +edit_template
             +edit_icon
             +edit_number
             +edit_tags

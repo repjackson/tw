@@ -61,10 +61,11 @@ Docs.after.insert (userId, doc)->
     if doc.parent_id
         Meteor.call 'calculate_child_count', doc.parent_id
         parent = Docs.findOne doc.parent_id
-        new_ancestor_array = parent.ancestor_array
-        new_ancestor_array.push parent._id
-        Docs.update doc._id,
-            $set:ancestor_array:new_ancestor_array
+        if parent.ancestor_array
+            new_ancestor_array = parent.ancestor_array
+            new_ancestor_array.push parent._id
+            Docs.update doc._id,
+                $set:ancestor_array:new_ancestor_array
     
 Docs.after.remove (userId, doc)->
     if doc.parent_id
@@ -116,7 +117,7 @@ Docs.helpers
     published_children_count: -> Docs.find({parent_id: @_id, published:$in:[0,1]}).count()
 
     completed: -> 
-        console.log 'complete'
+        # console.log 'complete'
         if @completed_ids and Meteor.userId() in @completed_ids then true else false
 
     up_voted: -> @upvoters and Meteor.userId() in @upvoters

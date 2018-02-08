@@ -19,25 +19,25 @@ Session.setDefault 'admin_mode', false
     
   
     
-Meteor.startup ->
-    stripeKey = Meteor.settings.public.stripe.livePublishableKey
-    Stripe.setPublishableKey stripeKey
+# Meteor.startup ->
+#     stripeKey = Meteor.settings.public.stripe.livePublishableKey
+#     Stripe.setPublishableKey stripeKey
     
-    STRIPE =
-        getToken: (domElement, card, callback) ->
-            Stripe.card.createToken card, (status, response) ->
-                if response.error
-                    Bert.alert response.error.message, 'danger'
-                else
-                    STRIPE.setToken response.id, domElement, callback
-                return
-            return
-        setToken: (token, domElement, callback) ->
-            $(domElement).append $('<input type=\'hidden\' name=\'stripeToken\' />').val(token)
-            callback()
-            return
+#     STRIPE =
+#         getToken: (domElement, card, callback) ->
+#             Stripe.card.createToken card, (status, response) ->
+#                 if response.error
+#                     Bert.alert response.error.message, 'danger'
+#                 else
+#                     STRIPE.setToken response.id, domElement, callback
+#                 return
+#             return
+#         setToken: (token, domElement, callback) ->
+#             $(domElement).append $('<input type=\'hidden\' name=\'stripeToken\' />').val(token)
+#             callback()
+#             return
 
-    return
+#     return
 
     
 Template.registerHelper 'is_author', () ->  Meteor.userId() is @author_id
@@ -65,6 +65,13 @@ Template.registerHelper 'is_admin', () ->
 Template.registerHelper 'publish_when', () -> moment(@publish_date).fromNow()
 
 Template.registerHelper 'field_view_template', () ->  "view_#{@}"
+
+Template.registerHelper 'field_edit_template', () -> "edit_#{@}"
+        
+
+Template.registerHelper 'action_button_template', () ->  "#{@}_button"
+
+        
 
 
 

@@ -17,8 +17,8 @@ template(name='edit_doc')
                 .three.wide.center.aligned.column
                     +save_link
             .centered.row
-                .ten.wide.column
-                    if type
+                .twelve.wide.column
+                    if template
                         +Template.dynamic template=edit_type_template
                     else
                         +parent_doc_segment
@@ -34,10 +34,10 @@ template(name='edit_doc')
                         +edit_type
 
 
-template(name='view_document')
-    +edit_content
-    +edit_transcript
-    +child_docs
+// template(name='view_document')
+//     +edit_content
+//     +edit_transcript
+//     +child_docs
 
 
 template(name='view_doc')
@@ -86,8 +86,8 @@ template(name='view_doc')
             //             a.ui.icon.basic.white.inverted.circular.button(href='/sign-in') 
             //                 +icon48 name='login-rounded-down' classes='ui mini inline spaced image'
             //                 // | Sign In
-        if type
-            +Template.dynamic template=view_type_template
+        if template
+            +Template.dynamic template=view_template
         else            
             .ui.padded.stackable.grid
                 .row

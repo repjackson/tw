@@ -1,61 +1,10 @@
-template(name='voting')
-    .ui.basic.circular.icon.button
-        i.thumbs.up.link.big.icon.vote_up(class=vote_up_button_class)
-    // .ui.basic.circular.icon.button
-    //     i.thumbs.down.link.big.icon.vote_down(class=vote_down_button_class)
-        // |#{points}
-
-template(name='thanks_button')
-    if said_thanks
-        .ui.circular.icon.blue.compact.button.vote_up(data-tooltip="Thank #{author.profile.first_name} for Sharing")
-            // img(src="https://png.icons8.com/small/50/000000/pray.png")
-            img(src="https://png.icons8.com/ios/50/000000/pray.png")
-    else
-        .ui.circular.icon.basic.compact.button.vote_up
-            img(src="https://png.icons8.com/ios/50/000000/pray.png")
-            // img(src="https://png.icons8.com/small/50/000000/pray.png")
-    // .ui.circular.icon.basic.mini.compact.button.vote_up(data-tooltip="Thank #{author.profile.first_name} for Sharing")
-        // img.ui.mini.image(src="https://png.icons8.com/pray-filled/ios7/50" width="50" height="50")
-        // if said_thanks
-        //     |Thanks #{author.profile.first_name}
-        // else
-        //     | Thank #{author.profile.first_name} for Sharing
-    // #thanks_modal.ui.small.modal
-    //     i.close.icon
-    //     .header Send #{author.profile.first_name} an optional private message?
-    //     .content
-    //         // img.ui.avatar.image(src="{{c.url author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
-    //         .ui.fluid.input
-    //             input#thanks_message_text(type='text')
-    //     .actions
-    //         .ui.cancel.basic.button
-    //             // i.ban.icon
-    //             | No Thanks
-    //         .ui.teal.approve.labeled.icon.button 
-    //             i.send.icon
-    //             |Send
-    // #message_sent.ui.small.modal
-    //     i.close.icon
-    //     .header Message sent to #{author.profile.first_name}.
-    //     .actions
-    //         .ui.green.approve.button 
-    //             i.check.icon
-    //             |Cool
-
-template(name='reflect_button')
-    if currentUser
-        #reflect.ui.circular.basic.icon.button(data-tooltip='Reflect in Journal')
-            +icon48 name='mirror' classes='ui mini inline image'
-    else
-        .ui.circular.basic.disabled.icon.button(data-tooltip='Reflect in Journal')
-            +icon48 name='mirror' classes='ui mini inline image'
 
 
 
 template(name='edit_button')
     if can_edit
         // +call_watson
-        a.ui.icon.circular.button(href="/edit/#{_id}" data-position="bottom center" data-tooltip='Edit')
+        a.ui.icon.white.inverted.basic.circular.button(href="/edit/#{_id}" data-position="bottom center" data-tooltip='Edit')
             +icon48 name='edit' classes='ui mini inline image'
 
 template(name='edit_doc_link')
@@ -64,13 +13,6 @@ template(name='edit_doc_link')
         a(href="/edit/#{_id}" data-position="bottom center" data-tooltip='Edit')
             i.link.pencil.icon
 
-template(name='respond_button')
-    if currentUser
-        #respond.ui.circular.basic.icon.button(data-tooltip='Respond')
-            +icon48 name='response' classes='ui inline image'
-    else
-        .ui.circular.basic.disabled.icon.button(data-tooltip='Respond')
-            +icon48 name='response' classes='ui inline image'
 
 template(name='big_both_voter')
     i.thumbs.up.link.huge.icon.vote_up(class=vote_up_button_class)
@@ -139,10 +81,10 @@ template(name='add_to_cart')
 
 template(name='delete_button')
     unless confirming
-        .delete.ui.large.icon.circular.button
-            i.red.large.remove.icon
+        .delete.ui.white.inverted.icon.circular.button
+            i.red.big.remove.icon
     else
-        .ui.circular.cancel 
+        .ui.circular.button.cancel 
             i.ban.icon
             |Cancel
         .ui.red.circular.button.confirm 
@@ -191,57 +133,6 @@ template(name='published')
 
 
 
-
-template(name='favorite_button')
-    .ui.basic.icon.button.favorite_item(class=favorite_item_class)
-        +icon24 name='heart' classes=''
-        if favorite_count
-            | #{favorite_count}
-
-template(name='mark_complete_button')
-    .mark_complete.ui.circular.white.button(class=complete_button_class) 
-        if completed
-            +icon48 name='checked-checkbox' classes='ui mini inline image'
-            | Completed
-        else
-            +icon48 name='unchecked-checkbox' classes='ui mini inline image'
-            | Mark Complete
-        
-template(name='mark_doc_complete_button')
-    .mark_complete.ui.circular.icon.basic.button(class=complete_button_class) 
-        if complete
-            +icon48 name='checkmark' classes='ui mini inline image'
-            // | Completed
-        else
-            +icon48 name='unchecked-checkbox' classes='ui mini inline image'
-            // | Complete
-        
-template(name='mark_doc_approved_button')
-    if approved
-        .unapprove.ui.circular.icon.basic.button(data-tooltip='Unapprove')
-            +ultraviolet_icon40 name='approval' classes='ui mini inline image'
-    else
-        .approve.ui.circular.icon.basic.button(data-tooltip='Approve')
-            +icon48 name='approval' classes='ui mini inline image'
-         
-template(name='bookmark_button')
-    .bookmark_button.ui.circular.icon.button(class=bookmark_button_class data-tooltip='Bookmark') 
-        +icon48 name='bookmark-ribbon' classes='ui mini inline image'
-        // if bookmarked
-        //     | Bookmarked
-        // else
-        //     | Bookmark
-        
-        
-template(name='pin_button')
-    .pin_button.ui.circular.icon.button(class=pin_button_class data-tooltip='Pin this') 
-        if pinned
-            +icon24 name="push-pin" classes='ui mini inline image'
-            // | Pinned
-        else
-            +icon24 name="push-pin" classes='ui mini inline image'
-            // | Pin
-        
         
 template(name='pin_corner_button')
     a.pin_button.ui.top.right.attached.button(class=pin_button_class data-tooltip='Pin this') 
@@ -267,7 +158,7 @@ template(name='view_full_button')
 
 
 template(name='add_doc_button')
-    #add_doc.ui.circular.icon.button
+    #add_doc.ui.white.inverted.basic.circular.icon.button
         +icon48 name='plus' classes='ui mini inline image'
         // if add_button_text
         //     | #{add_button_text}
@@ -284,16 +175,16 @@ template(name='subscribe_button')
                 |Not Subscribed
                 
                 
-template(name='toggle_zen_mode_button')
-    if zen_mode
-        a#turn_off_zen_mode(href="#")
-            +icon48 name='lotus' title="Turn off Zen Mode" classes='ui centered link image'
-            // |Zen
-    else
-        a#turn_on_zen_mode(href='#')
-            .ui.link.image
-                img(src="https://png.icons8.com/lotus/ios7/32" title="Turn on Zen Mode" width="32" height="32")
-            // |Zen
+// template(name='toggle_zen_mode_button')
+//     if zen_mode
+//         a#turn_off_zen_mode(href="#")
+//             +icon48 name='lotus' title="Turn off Zen Mode" classes='ui centered link image'
+//             // |Zen
+//     else
+//         a#turn_on_zen_mode(href='#')
+//             .ui.link.image
+//                 img(src="https://png.icons8.com/lotus/ios7/32" title="Turn on Zen Mode" width="32" height="32")
+//             // |Zen
         
         
 template(name='view_tags_button')
@@ -315,7 +206,7 @@ template(name='join_button')
 
 
 template(name='toggle_view_mode_button')
-    #toggle_view_mode.ui.circular.button
+    #toggle_view_mode.ui.white.inverted.basic.circular.button
         if viewing_public
             |Viewing Public
             +icon48 name='podium-with-speaker' classes='ui inline image'

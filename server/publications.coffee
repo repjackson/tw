@@ -361,3 +361,10 @@ Meteor.publish 'author', (doc_id)->
         
 Meteor.publish 'fields', ->
     Docs.find type: 'component'
+    
+    
+Meteor.publish 'actions', ->
+    Docs.find type: 'action'
+    
+    
+    

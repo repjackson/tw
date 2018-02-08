@@ -8,7 +8,7 @@ Template.edit_doc.onCreated ->
 
 Template.edit_doc.helpers
     doc: -> Docs.findOne FlowRouter.getParam('doc_id')
-    edit_type_template: -> "edit_#{@type}"
+    edit_type_template: -> "edit_#{@template}"
 
 Template.edit_doc.events
     # 'change #toggle_title': (e,t)->

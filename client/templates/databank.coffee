@@ -1,11 +1,11 @@
 Template.view_databank.onCreated ->
-    Meteor.subscribe 'fields'
+    # Meteor.subscribe 'fields'
     
 Template.view_databank.helpers
-    doc: -> Docs.findOne FlowRouter.getParam('doc_id')
+    # doc: -> Docs.findOne FlowRouter.getParam('doc_id')
 
-    child_field_slugs: ->
-        current_doc = Docs.findOne FlowRouter.getParam('doc_id')
+    # child_field_slugs: ->
+    #     current_doc = Docs.findOne FlowRouter.getParam('doc_id')
         
     
     facet_template: ->
@@ -22,16 +22,12 @@ Template.edit_databank_item.onCreated ->
         
 Template.edit_databank_item.helpers
 
-    doc: -> Docs.findOne FlowRouter.getParam('doc_id')
+    # doc: -> Docs.findOne FlowRouter.getParam('doc_id')
 
-    field_edit_template: ->
-        # console.log @
-        return "edit_#{@}"
         
-        
-Template.view_databank_item.onCreated ->
-    Meteor.subscribe 'fields'
+# Template.view_databank_item.onCreated ->
+#     Meteor.subscribe 'fields'
     
-Template.view_databank_item.helpers
+# Template.view_databank_item.helpers
 
-    doc: -> Docs.findOne FlowRouter.getParam('doc_id')
+    # doc: -> Docs.findOne FlowRouter.getParam('doc_id')

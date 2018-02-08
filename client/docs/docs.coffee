@@ -39,7 +39,7 @@ Template.view_doc.onRendered ->
 
 Template.view_doc.helpers
     doc: -> Docs.findOne FlowRouter.getParam('doc_id')
-    view_type_template: -> "view_#{@type}"
+    view_template: -> "view_#{@template}"
     is_site: ->
         doc = Docs.findOne FlowRouter.getParam('doc_id')
         if doc.type is 'site' then true else false
