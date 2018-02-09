@@ -65,28 +65,28 @@ template(name='doc_emotion')
                             .header 
                                 |#{text}
                                 .right.floated
-                                    small(data-tooltip='Keyword Relevance') #{relevance_percent}%
+                                    small(data-tooltip='Relevance') #{relevance_percent}%
                             // .meta
                             //     |Sentiment: #{sentiment.score}
                             .description
                                 with emotion
-                                    .ui.blue.small.progress.compacted-progress(data-percent=sadness_percent data-tooltip="#{sadness_percent}% Sadness")
+                                    .ui.blue.tiny.progress.compacted-progress(data-percent=sadness_percent data-tooltip="#{sadness_percent}% Sadness")
                                         .bar
                                         // .progress
                                         // .label #{sadness_percent}% Sadness
-                                    .ui.green.small.progress.compacted-progress(data-percent=joy_percent data-tooltip="#{joy_percent}% Joy")
+                                    .ui.green.tiny.progress.compacted-progress(data-percent=joy_percent data-tooltip="#{joy_percent}% Joy")
                                         .bar
                                         // .progress
                                         // .label #{joy_percent}% Joy 
-                                    .ui.black.small.progress.compacted-progress(data-percent=fear_percent data-tooltip="#{fear_percent}% Fear")
+                                    .ui.black.tiny.progress.compacted-progress(data-percent=fear_percent data-tooltip="#{fear_percent}% Fear")
                                         .bar
                                         // .progress
                                         // .label #{fear_percent}% Fear
-                                    .ui.yellow.small.progress.compacted-progress(data-percent=disgust_percent data-tooltip="#{disgust_percent}% Disgust")
+                                    .ui.yellow.tiny.progress.compacted-progress(data-percent=disgust_percent data-tooltip="#{disgust_percent}% Disgust")
                                         .bar
                                         // .progress
                                         // .label #{disgust_percent}% Disgust 
-                                    .ui.red.small.progress.compacted-progress(data-percent=anger_percent data-tooltip="#{anger_percent}% Anger")
+                                    .ui.red.tiny.progress.compacted-progress(data-percent=anger_percent data-tooltip="#{anger_percent}% Anger")
                                         .bar
                                         // .progress
                                         // .label #{anger_percent}% Anger 

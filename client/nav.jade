@@ -45,9 +45,9 @@ template(name='nav')
                 // a.icon.item(href="/conversations" data-position="bottom center" data-content='Messaging')
                 //     .ui.image
                 //         +icon48 name='chat' classes='ui mini inline image'
-                // a.icon.item(href="/notifications" data-position="bottom center" data-content='Notifications')
-                //     .ui.image
-                //         +icon48 name='bell' classes='ui mini inline image'
+                a.icon.item(href="/notifications" data-position="bottom center" data-content='Notifications')
+                    .ui.image
+                        +icon48 name='bell' classes='ui mini inline image'
                 if isInRole 'admin'
                     +admin_toggle
                 a.labeled.icon.item(href="/user/#{currentUser.username}" data-position="bottom center" data-content="Profile")

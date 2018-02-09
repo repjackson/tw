@@ -182,8 +182,11 @@ Meteor.publish 'facet', (
                 index: i
 
 
+        author_match = match
+        author_match.published = 1
+    
         author_tag_cloud = Docs.aggregate [
-            { $match: match }
+            { $match: author_match }
             { $project: author_id: 1 }
             { $group: _id: '$author_id', count: $sum: 1 }
             { $match: _id: $nin: selected_author_ids }

@@ -35,16 +35,17 @@ template(name='databank_card')
                 .ui.dividing.header
                     +author_info
                     |#{when}
+            if title
+                .ui.basic.segment    
+                    .ui.header 
+                        if icon_class
+                            +icon48 name=icon_class classes='ui mini inline spaced image'
+                        |#{title}
             .content
                 each parent.child_fields
                     +Template.dynamic template=field_view_template data=..
                 
         .four.wide.column.shadowed-box
-            if title
-                .content    
-                    .header 
-                        +icon48 name=icon_class classes='ui mini inline spaced image'
-                        |#{title}
             if slug
                 .content
                     .meta Slug: #{slug}
@@ -166,7 +167,7 @@ template(name='view_databank_item')
                     if title
                         |#{title}
                     else
-                        |View #{parent.title} Item
+                        |View #{parent.title} Entry
             .centered.three.wide.column
                 if can_edit
                     +edit_button

@@ -84,6 +84,7 @@ Docs.helpers
     only_child: -> Docs.findOne parent_id: @_id
     parent: -> Docs.findOne @parent_id
     recipient: -> Meteor.users.findOne @recipient_id
+    notified_users: -> Meteor.users.find _id:$in:@notified_ids
     subject: -> Meteor.users.findOne @subject_id
     object: -> Docs.findOne @object_id
     has_children: -> if Docs.findOne(parent_id: @_id) then true else false

@@ -228,4 +228,45 @@ Template.mark_watched_button.helpers
     # read: -> true
     
     
+
+Template.notify_button.onRendered ->
+    @autorun =>
+        if @subscriptionsReady()
+            Meteor.setTimeout ->
+                $('.ui.accordion').accordion()
+            , 500
+
+
+
+Template.notify_button.onCreated ->
+    Meteor.subscribe 'usernames'
+
+Template.notify_button.events
+    "autocompleteselect input": (event, template, selected_user) ->
+        # console.log("selected ", doc)
+        context_doc = Template.parentData(4)
+        Docs.update context_doc._id,
+            $addToSet: notified_ids: selected_user._id
+        $('#recipient_select').val("")
+
+
+    'click .remove_notified_user': ->
+        doc = Template.parentData(4)
+        Docs.update doc._id,
+            $pull: notified_ids: @_id
         
+
+
+Template.notify_button.helpers
+    recipient_select_settings: -> {
+        position: 'bottom'
+        limit: 10
+        rules: [
+            {
+                collection: Meteor.users
+                field: 'username'
+                matchAll: true
+                template: Template.user_pill
+            }
+            ]
+    }
