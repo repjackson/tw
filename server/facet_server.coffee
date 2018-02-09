@@ -27,6 +27,11 @@ Meteor.publish 'facet', (
         if type then match.type = type
         if parent_id then match.parent_id = parent_id
 
+        if view_private is true
+            match.author_id = Meteor.userId()
+        
+        if view_private is false
+            match.published = $in: [0,1]
 
         if selected_theme_tags.length > 0 then match.tags = $all: selected_theme_tags
 
@@ -39,11 +44,6 @@ Meteor.publish 'facet', (
         
         if tag_limit then limit=tag_limit else limit=50
         if author_id then match.author_id = author_id
-        if view_private is true
-            match.author_id = Meteor.userId()
-        
-        if view_private is false
-            match.published = $in: [0,1]
 
         # if view_private is true then match.author_id = @userId
         # if view_resonates?

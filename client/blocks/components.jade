@@ -151,7 +151,7 @@ template(name='parent_doc_segment')
                 +view_tags
                 .large130 !{content}
             +author_info
-                    
+            |#{when}
 
 template(name='parent_link')
     with parent
@@ -332,7 +332,7 @@ template(name='child_authors')
 
 
 template(name='response_list')
-    .ui.dividing.header 
+    .ui.dividing.inverted.header 
         +icon48 name='response' classes='ui mini inline image'
         |#{child_count} Responses
     .ui.segments

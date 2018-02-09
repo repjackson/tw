@@ -4,14 +4,22 @@ template(name='edit_response')
     +published
 
 template(name='view_response')
-    .ui.hidden.divider
-    +parent_doc_segment
-    .ui.container.shadowed
-        h2.ui.center.aligned.header Response
-        +view_content
-        +author_info
-        if is_author
-            +edit_button
+    .ui.padded.stackable.grid
+        .centered.row
+            .three.wide.column
+                +parent_link
+            .ten.wide.column
+                h2.ui.center.aligned.header Response
+            .three.wide.column
+        .row.shadowed
+            .twelve.wide.column
+                +parent_doc_segment
+                +view_content
+                .ui.segment
+                    +author_info
+                    |#{when}
+                    if is_author
+                        +edit_button
         
 template(name='view_download')
     .ui.hidden.divider

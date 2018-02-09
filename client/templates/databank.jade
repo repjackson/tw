@@ -22,39 +22,43 @@ template(name='view_databank')
                 +username_facet
                 .ui.hidden.divider
             .twelve.wide.column
-                .ui.cards
-                    each children 
-                        +databank_card
+                each children 
+                    +databank_card
                         
                         
                         
 template(name='databank_card')
-    .ui.fluid.card(class=published_class)
+    // .ui.fluid.card(class=published_class)
+    .ui.stackable.grid
+        .twelve.wide.column.shadowed-box
+            .content
+                .ui.dividing.header
+                    +author_info
+                    |#{when}
+            .content
+                each parent.child_fields
+                    +Template.dynamic template=field_view_template data=..
+                
+        .four.wide.column.shadowed-box
+            if title
+                .content    
+                    .header 
+                        +icon48 name=icon_class classes='ui mini inline spaced image'
+                        |#{title}
+            if slug
+                .content
+                    .meta Slug: #{slug}
+            .content
+                each parent.child_actions
+                    +Template.dynamic template=action_button_template data=..
+                if child_count
+                    |#{child_count} Responses
+                +view_full_button
         // each parent.child_fields
         //     .ui.label #{this}
-        if title
-            .content    
-                .header 
-                    +icon48 name=icon_class classes='ui mini inline spaced image'
-                    |#{title}
-        if slug
-            .content
-                .meta Slug: #{slug}
-        .content
-            each parent.child_fields
-                +Template.dynamic template=field_view_template data=..
-            
-        .content
-            +author_info
-            |#{when}
-        .content
-            each parent.child_actions
-                +Template.dynamic template=action_button_template data=..
-            .right.floated
-                +view_full_button
-        if child_count
-            .content
-                +response_list
+        // if child_count
+        //     .content
+        //         +response_list
         // if favorite_count
         //     .content
         //         strong
@@ -155,7 +159,7 @@ template(name='view_databank_item')
         .centered.row
             .centered.three.wide.column
                 +parent_link
-            .centered.ten.wide.column
+            .centered.middle.aligned.ten.wide.column
                 h1.ui.center.aligned.inverted.header 
                     if icon_class
                         +icon96 name=icon_class classes='ui image'
@@ -174,11 +178,8 @@ template(name='view_databank_item')
                         +Template.dynamic template=field_view_template data=..
                 if has_price
                     +product_transactions
-                if watson
-                    +analyzed_watson_keywords
-    
-                if is_visible
-                    +response_list
+                // if is_visible
+                //     +response_list
             .four.wide.column.shadowed.padded10
                 +author_info
                 h3.ui.sub.header #{when}
@@ -186,7 +187,6 @@ template(name='view_databank_item')
                     +add_to_cart
                 else
                     if watson
-                        +doc_sentiment
                         +doc_emotion
                         // +watson_keywords
                     else 
@@ -194,17 +194,41 @@ template(name='view_databank_item')
                             if content
                                 +call_watson
                 .ui.dividing.header Actions
-                +bookmark_button
-                // +reflect_button
-                unless is_author
-                    +resonate_button
-                    +thanks_button
-                +resonates_list
-                +mark_read_button
-                // +read_by
+                each parent.child_actions
+                    +Template.dynamic template=action_button_template data=..
+        .row
+            .sixteen.wide.column
+                each children
+                    +child_card
 
 
 template(name='toggle_key')
     #toggle_key.ui.compact.button(class=toggle_key_button_class) 
         +icon48 name=icon classes='ui mini spaced image'
         | #{label}
+
+
+template(name='child_card')
+    .ui.stackable.grid.shadowed-box  
+        .twelve.wide.column
+            +author_info
+            |#{when}
+            +view_content
+
+            +vote_button
+            +mark_read_button
+        .four.wide.column
+            if watson
+                +doc_emotion
+                // +watson_keywords
+                // +analyzed_watson_keywords
+            else 
+                if can_edit
+                    +call_watson
+
+    if children
+        .ui.grid
+            .one.wide.column
+            .fifteen.wide.column
+                each children
+                    +child_card

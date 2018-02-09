@@ -94,10 +94,11 @@ template(name='view_doc')
             .ui.padded.stackable.grid
                 .row
                     .three.wide.center.aligned.column
-                        // +parent_link
+                        +parent_link
                     .ten.wide.column
                         h1.ui.inverted.center.aligned.header 
-                            +icon96 name=icon_class classes='ui inline image'
+                            if icon_class
+                                +icon96 name=icon_class classes='ui inline image'
                             |#{title}
                     .three.wide.center.aligned.column
                         if can_edit

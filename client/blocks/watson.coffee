@@ -1,7 +1,10 @@
 Template.doc_emotion.onCreated ->
     Meteor.setTimeout ->
         $('.progress').progress()
-    , 2000
+    , 1000
+    Meteor.setTimeout ->
+        $('.ui.accordion').accordion()
+    , 1000
 
 
 
@@ -12,7 +15,20 @@ Template.doc_emotion.helpers
     anger_percent: -> (@anger*100).toFixed()
     fear_percent: -> (@fear*100).toFixed()
 
-Template.analyzed_watson_keywords.helpers
+
+    sentiment_score_percent: -> 
+        if @doc_sentiment_score > 0
+            (@doc_sentiment_score*100).toFixed()
+        else
+            (@doc_sentiment_score*-100).toFixed()
+            
+        
+    sentiment_bar_class: -> if @doc_sentiment_label is 'positive' then 'green' else 'red'
+        
+    is_positive: -> if @doc_sentiment_label is 'positive' then true else false    
+
+
+    # Template.analyzed_watson_keywords.helpers
     relevance_percent: -> (@relevance*100).toFixed()
 
     sentiment_percent: -> 

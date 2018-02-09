@@ -64,3 +64,8 @@ Template.toggle_key.events
             Docs.update FlowRouter.getParam('doc_id'), 
                 $set: "#{@key}": true
             
+
+Template.child_card.onCreated ->
+    @autorun => Meteor.subscribe 'child_docs', @data._id
+    @autorun => Meteor.subscribe 'author', @data._id
+    
