@@ -1,21 +1,4 @@
 
-template(name='resonates_list')
-    if resonates_with_people.count
-        .ui.segment
-            .ui.dividing.header
-                |This Resonates With... (#{resonates_with_people.count})
-            .ui.divided.list
-                each resonates_with_people
-                    .item
-                        img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
-                        .content
-                            .header
-                                |#{name}
-                            .description
-                                +tiny_color_dots
-                                // each five_tags
-                                //     .ui.basic.label #{this}
-
 
 
 template(name='mark_watched_button')
@@ -29,23 +12,6 @@ template(name='mark_watched_button')
                 +icon48 name='invisible' classes='ui mini inline image'
                 |Unwatched
 
-template(name='read_by_list')
-    // if read_by.count
-    .ui.segment
-        .ui.dividing.header
-            |Read by... 
-            span.floated.right (#{read_by.count})
-        .ui.divided.list
-            each read_by
-                .item
-                    img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
-                    .content
-                        .header
-                            |#{name}
-                        .description
-                            +tiny_color_dots
-                            // each five_tags
-                            //     .ui.basic.label #{this}
 
 template(name='bookmarked_by_list')
     // if read_by.count
@@ -109,12 +75,6 @@ template(name='doc_match')
                 +view_full_button match_doc
                 
                 
-template(name='service_buttons')
-    .ui.dividing.header Services
-    +request_tori_feedback
-    +call_watson
-                        
-                        
 template(name='parent_doc_accordion')
     if parent_id
         .ui.styled.fluid.accordion
@@ -367,3 +327,35 @@ template(name='user_image')
 
 template(name='check_completion_button')
     #check_completion.ui.button Check Completion
+
+
+template(name='edit_custom_fields')
+    .ui.header Add Custom Field
+    each fields
+        .add_custom_field.ui.button
+            +icon24 name=icon_class classes='ui inline image'
+            strong #{title}    
+    each child_fields
+        .ui.segment
+            |Type: #{this}
+            // i.red.remove.link.icon
+            // +custom_field_template
+            
+            
+template(name='custom_field_template')
+    .ui.header edit #{type}
+    +Template.dynamic template=field_config_template
+
+
+template(name='user_array_field_config')
+    .ui.header User List Options
+    .ui.form
+        .field
+            label List Name
+            input.list_name(type='text' placeholder='Volunteers, Upvoters')
+        .field
+            label Action Label
+            input.action_label(type='text' placeholder='Join, Vote')
+        .field
+            label Icon
+            input.field_icon(type='text' placeholder='Copy from Icons8')

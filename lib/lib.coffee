@@ -84,7 +84,9 @@ Docs.helpers
     only_child: -> Docs.findOne parent_id: @_id
     parent: -> Docs.findOne @parent_id
     recipient: -> Meteor.users.findOne @recipient_id
-    notified_users: -> Meteor.users.find _id:$in:@notified_ids
+    notified_users: -> 
+        if @notified_ids
+            Meteor.users.find _id:$in:@notified_ids
     subject: -> Meteor.users.findOne @subject_id
     object: -> Docs.findOne @object_id
     has_children: -> if Docs.findOne(parent_id: @_id) then true else false
@@ -94,7 +96,6 @@ Docs.helpers
     children: -> 
         Docs.find {parent_id: @_id}, 
             sort:
-                number:1
                 timestamp:-1
     public_children: -> 
         Docs.find {parent_id: @_id, published:$in:[0,1]}, 
@@ -224,6 +225,11 @@ Meteor.methods
     #         tags: tags
     #         type: 'checkin'
     #     return id
+
+    update_field_config: (doc_id, custom_field, key, value)->
+        
+        Docs.update {_id:doc_id,'custom_fields':custom_field},
+            $set: "custom_fields.$[#{key}]":value
 
 
     # update_rating: (session_id, rating, child_id)->

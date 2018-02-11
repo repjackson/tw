@@ -8,14 +8,14 @@ template(name='tag_facet')
         +icon48 name='hashtag' classes='ui mini inline image' tooltip='Browse Themes'
         |Theme Tags
     if selected_theme_tags
-        #clear_theme_tags.ui.large.icon.circular.button
+        #clear_theme_tags.ui.large.icon.circular.active.button
             i.remove.icon
         each selected_theme_tags
-            .unselect_theme_tag.ui.large.circular.button
+            .unselect_theme_tag.ui.large.circular.active.button
                 strong #{this}
     each theme_tags
         .ui.circular.button.select_theme_tag(class=theme_tag_class) 
-            .large120 #{this.name}
+            strong #{this.name}
             // if isInRole 'admin'
             //     small #{this.count}
     // .ui.divider
@@ -58,7 +58,7 @@ template(name='location_facet')
                 strong #{this}
     each location_tags
         .ui.circular.button.select_location_tag(class=location_tag_class) 
-            .large120 #{this.name}
+            strong #{this.name}
             // if isInRole 'admin'
             //     small #{this.count}
     // .ui.divider
@@ -75,7 +75,7 @@ template(name='timestamp_facet')
                 strong #{this}
     each timestamp_tags
         .ui.circular.button.select_timestamp_tag(class=timestamp_tag_class) 
-            .large120 #{this.name}
+            strong #{this.name}
             // if isInRole 'admin'
             //     small #{this.count}
     // .ui.divider
@@ -93,7 +93,7 @@ template(name='intention_facet')
     // .ui.hidden.fitted.divider
     each intention_tags
         .ui.circular.button.select_intention_tag(class=intention_tag_class) 
-            .large120 #{this.name}
+            strong #{this.name}
             // if isInRole 'admin'
             //     small #{this.count}
     // .ui.divider
@@ -115,7 +115,7 @@ template(name='keyword_facet')
     // .ui.hidden.fitted.divider
     each keywords
         .ui.circular.button.select_keyword(class=cloud_keyword_class) 
-            .large120 #{this.name}
+            strong #{this.name}
             // if isInRole 'admin'
             //     small #{this.count}
 
@@ -135,7 +135,7 @@ template(name='username_facet')
     each author_tags
         .ui.circular.button.select_author(class=cloud_tag_class) 
             img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
-            .large120 #{username}
+            strong #{username}
             // if isInRole 'admin'
             //     small #{this.count}
     // .ui.divider

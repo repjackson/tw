@@ -40,18 +40,18 @@ template(name='notification')
         .ui.feed
             .event
                 .label
-                    img.ui.avatar.image(src="{{c.url recipient.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+                    img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
                 .content
                     .summary
                         // a.user(href="/profile/#{subject.username}")
                         //     | #{subject_name}
                         // | #{predicate}
-                        a.user(href="/profile/#{recipient.username}")
-                            | #{recipient.username}.
+                        a.user(href="/profile/#{author.username}")
+                            | #{author.username}.
                         .date
                             | #{when}
                     .extra.text
                         p !{content}
                     .meta
                         +mark_read_button
-                        +session_delete_button
+                        // +session_delete_button

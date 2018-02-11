@@ -112,17 +112,6 @@ template(name='pin_button')
             +icon24 name="pin" classes='ui mini inline image'
             // | Pin
         
-template(name='mark_read_button')
-    if currentUser
-        if read
-            .mark_unread.ui.circular.white.inverted.button(data-tooltip='Mark Unread')
-                +icon48 name='read-message' classes='avatar'
-                |Read
-        else
-            .mark_read.ui.basic.circular.white.inverted.button(data-tooltip='Mark Read')
-                +icon48 name='message' classes='ui mini inline image'
-                |Unread
-
 
 template(name='resonate_button')
     .resonate_button.ui.circular.icon.button(class=resonate_button_class data-tooltip='This Resonates with Me')
@@ -132,7 +121,7 @@ template(name='resonate_button')
         
         
 template(name='notify_button')
-    .ui.styled.fluid.accordion
+    .ui.fluid.accordion.shadowed.padded10
         .title 
             +icon24 name='bell' classes='ui inline image'
             |Notify Someone
@@ -149,4 +138,57 @@ template(name='notify_button')
                             |#{username}
                         .right.floated.content
                             i.remove_notified_user.large.link.red.remove.icon
+                
+template(name='mark_read_button')
+    if currentUser
+        if read
+            .mark_unread.ui.circular.button(data-tooltip='Mark Unread')
+                +icon48 name='read-message' classes='avatar'
+                |Read
+        else
+            .mark_read.ui.basic.circular.button(data-tooltip='Mark Read')
+                +icon48 name='message' classes='ui mini inline image'
+                |Unread
+    +read_by_list
+
+
+    
+    
+                
+template(name='read_by_list')
+    if read_by.count
+        .ui.dividing.header
+            |Read by... 
+            span.floated.right (#{read_by.count})
+        .ui.divided.list
+            each read_by
+                .item
+                    img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                    .content
+                        .header
+                            |#{name}
+                        .description
+                            +tiny_color_dots
+                            // each five_tags
+                            //     .ui.basic.label #{this}
+                
+                
+                
+template(name='resonates_list')
+    if resonates_with_people.count
+        .ui.segment
+            .ui.dividing.header
+                |This Resonates With... (#{resonates_with_people.count})
+            .ui.divided.list
+                each resonates_with_people
+                    .item
+                        img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                        .content
+                            .header
+                                |#{name}
+                            .description
+                                +tiny_color_dots
+                                // each five_tags
+                                //     .ui.basic.label #{this}
+
                 

@@ -68,6 +68,7 @@ Template.registerHelper 'field_view_template', () ->  "view_#{@}"
 
 Template.registerHelper 'field_edit_template', () -> "edit_#{@}"
         
+Template.registerHelper 'field_config_template', () ->  "#{@type}_field_config"
 
 Template.registerHelper 'action_button_template', () ->  "#{@}_button"
 

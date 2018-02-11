@@ -5,38 +5,39 @@ FlowRouter.route '/notifications', action: (params) ->
 
 
 Meteor.methods
-    add_notification: (subject_id, predicate, object_id) ->
-        new_id = Docs.insert
-            type: 'notification'
-            subject_id: subject_id
-            predicate: predicate
-            object_id: object_id
-        return new_id
+    # add_notification: (subject_id, predicate, object_id) ->
+    #     new_id = Docs.insert
+    #         type: 'notification'
+    #         subject_id: subject_id
+    #         predicate: predicate
+    #         object_id: object_id
+    #     return new_id
 
 
 if Meteor.isClient
     Template.view_notifications.onCreated ->
-        @autorun => 
-            Meteor.subscribe('facet', 
-                selected_theme_tags.array()
-                selected_author_ids.array()
-                selected_location_tags.array()
-                selected_intention_tags.array()
-                selected_timestamp_tags.array()
-                type = 'notification'
-                author_id = null
-                parent_id = null
-                tag_limit = 20
-                doc_limit = 10
-                view_published = null
-                view_read = Session.get('view_read')
-                view_bookmarked = null
-                view_resonates = null
-                view_complete = null
-                view_images = null
-                view_lightbank_type = null
+        @autorun => Meteor.subscribe 'all_notifications'
+        # @autorun => 
+        #     Meteor.subscribe('facet', 
+        #         selected_theme_tags.array()
+        #         selected_author_ids.array()
+        #         selected_location_tags.array()
+        #         selected_intention_tags.array()
+        #         selected_timestamp_tags.array()
+        #         type = 'notification'
+        #         author_id = null
+        #         parent_id = null
+        #         tag_limit = 20
+        #         doc_limit = 10
+        #         view_published = null
+        #         view_read = Session.get('view_read')
+        #         view_bookmarked = null
+        #         view_resonates = null
+        #         view_complete = null
+        #         view_images = null
+        #         view_lightbank_type = null
     
-                )
+        #         )
 
     Template.view_notifications.helpers
         notifications: -> 

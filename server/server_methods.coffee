@@ -249,7 +249,6 @@ Meteor.methods
             
     # # calculate_child_ancestor_array: (doc_id)->
             
-Meteor.methods
     submit_contact_submission: (name, email, message)->
         Docs.insert
             type: 'contact_submission'
@@ -257,3 +256,45 @@ Meteor.methods
             email: email
             message: message
                     
+                    
+    notify_user_about_document: (doc_id, recipient_id)->
+        doc = Docs.findOne doc_id
+        parent = Docs.findOne doc.parent_id
+        recipient = Meteor.users.findOne recipient_id
+        
+        
+        doc_link = "/view/#{doc._id}"
+        notification = 
+            Docs.findOne
+                type:'notification'
+                object_id:doc_id
+                recipient_id:recipient_id
+        if notification
+            throw new Meteor.Error 500, 'User already notified.'
+            return
+        else
+            Docs.insert
+                type:'notification'
+                object_id:doc_id
+                recipient_id:recipient_id
+                content: 
+                    "<p>#{Meteor.user().name()} has notified you about <a href=#{doc_link}>#{parent.title} entry</a>.</p>"
+                
+                
+    remove_notification: (doc_id, recipient_id)->
+        doc = Docs.findOne doc_id
+        recipient = Meteor.users.findOne recipient_id
+        
+        notification = 
+            Docs.findOne
+                type:'notification'
+                object_id:doc_id
+                recipient_id:recipient_id
+        
+        if notification 
+            Docs.remove notification._id
+        else
+            console.log 'trying to remove unknown notification'
+                
+        return
+                

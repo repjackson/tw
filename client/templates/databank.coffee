@@ -1,9 +1,34 @@
 Template.view_databank.onCreated ->
-    # Meteor.subscribe 'fields'
+    @autorun => Meteor.subscribe 'facet', 
+        selected_theme_tags.array()
+        selected_author_ids.array()
+        selected_location_tags.array()
+        selected_intention_tags.array()
+        selected_timestamp_tags.array()
+        type=null
+        parent_id = FlowRouter.getParam('doc_id')
+        view_private = Session.get 'view_private'
+    # @autorun => Meteor.subscribe 'facet', 
+    #     selected_theme_tags.array()
+    #     selected_author_ids.array()
+    #     selected_location_tags.array()
+    #     selected_intention_tags.array()
+    #     selected_timestamp_tags.array()
+    #     type = null
+    #     author_id = null
+    #     parent_id = FlowRouter.getParam('doc_id')
+    #     tag_limit = null
+    #     doc_limit = 10
+    #     # view_private = Session.get 'view_private'
     
 Template.view_databank.helpers
     doc: -> Docs.findOne FlowRouter.getParam('doc_id')
 
+
+    databank_children: ->
+        # Docs.find {parent_id:FlowRouter.getParam('doc_id')},
+        Docs.find {type:'journal'},
+            limit: 10
     
     facet_template: ->
         # console.log @valueOf()
@@ -19,9 +44,8 @@ Template.edit_databank.onRendered ->
         if @subscriptionsReady()
             Meteor.setTimeout ->
                 $('.ui.accordion').accordion()
+                $('.menu .item').tab()
             , 1000
-        
-        
         
 Template.edit_databank_item.onCreated ->
     Meteor.subscribe 'fields'

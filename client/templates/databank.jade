@@ -19,7 +19,7 @@ template(name='view_databank')
                     .ui.hidden.divider
                 each doc.child_fields
                     +Template.dynamic template=facet_template data=doc
-                +username_facet
+                // +username_facet
                 .ui.hidden.divider
             .twelve.wide.column
                 each children 
@@ -49,11 +49,15 @@ template(name='databank_card')
             if slug
                 .content
                     .meta Slug: #{slug}
+            if is_admin
+                div type: #{type}
+                div template: #{template}
             .content
                 each parent.child_actions
                     +Template.dynamic template=action_button_template data=..
                 if child_count
                     |#{child_count} Responses
+                // +published
                 +view_full_button
         // each parent.child_fields
         //     .ui.label #{this}
@@ -146,14 +150,11 @@ template(name='edit_databank')
                     +edit_author
                     +edit_parent_id
                     +edit_type
-                    +edit_child_type
-                
 
 template(name='edit_databank_item')
     .ui.form.shadowed.padded10
         each parent.child_fields
             +Template.dynamic template=field_edit_template data=..
-        +published
 
 template(name='view_databank_item')
     .ui.stackable.padded.grid

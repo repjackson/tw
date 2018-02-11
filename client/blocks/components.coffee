@@ -7,18 +7,6 @@ Template.resonates_list.helpers
                 Meteor.users.find _id: $in: @favoriters
     
     
-Template.read_by_list.onCreated ->
-    @autorun => Meteor.subscribe 'read_by', Template.parentData()._id
-    
-Template.read_by_list.helpers
-    read_by: ->
-        if @read_by
-            if @read_by.length > 0
-        # console.log @read_by
-                Meteor.users.find _id: $in: @read_by
-        else 
-            false
-            
             
 Template.bookmarked_by_list.onCreated ->
     @autorun => Meteor.subscribe 'bookmarked_by', Template.parentData()._id
@@ -296,3 +284,45 @@ Template.check_completion_button.events
         doc = Docs.findOne FlowRouter.getParam('doc_id')
         # console.log 'completion_type', doc.completion_type
         Meteor.call 'calculate_doc_completion', FlowRouter.getParam('doc_id')
+
+
+
+
+     
+Template.edit_custom_fields.onCreated ->
+    Meteor.subscribe 'field_types'
+    Meteor.subscribe 'fields'
+
+Template.edit_custom_fields.helpers
+    field_types: ->
+        Docs.find
+            type: 'field_type'
+    
+    fields: ->
+        Docs.find type:'component'
+    
+    child_action_toggle_class: ->
+        doc = Docs.findOne FlowRouter.getParam('doc_id')
+        if @slug in doc.child_actions then 'blue' else 'basic'
+
+
+
+Template.edit_custom_fields.events
+    'click .add_custom_field': ->
+        doc = Docs.findOne FlowRouter.getParam('doc_id')
+        if doc.custom_fields 
+            Docs.update doc._id,
+                $push: 
+                    "custom_fields": 
+                        type:@slug
+        else
+            Docs.update doc._id,
+                $set: "custom_fields": []
+     
+
+
+Template.user_array_field_config.events
+    'blur .list_name': (e,t)->
+        list_name = $(e.currentTarget).closest('.list_name').val()
+        console.log @
+        Meteor.call 'update_field_config', FlowRouter.getParam('doc_id'), @, 'name', list_name

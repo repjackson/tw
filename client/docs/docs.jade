@@ -25,13 +25,14 @@ template(name='edit_doc')
                         +edit_content
                         +published
                 .four.wide.column
-                    .ui.fluid.styled.accordion
-                        .title
-                            |Template:#{template}
-                            i.dropdown.icon
-                        .content
-                            each templates
-                                +toggle_key key='template' value=slug icon=icon_class label=title
+                    if is_admin
+                        .ui.fluid.styled.accordion
+                            .active.title
+                                |Template:#{template}
+                                i.dropdown.icon
+                            .active.content
+                                each templates
+                                    +toggle_key key='template' value=slug icon=icon_class label=title
                     +published
                     // +edit_type
 
