@@ -1,10 +1,17 @@
-template(name='field_type') 
-    if editing
-        .ui.labeled.fluid.input
-            .ui.basic.label Field Type
-            input#field_type(type='text' value=field_type)
-    else
-        | Field Type: #{field_type}
+template(name='edit_field_type') 
+    .ui.labeled.fluid.input
+        .ui.basic.label Field Type
+        input#field_type(type='text' value=field_type)
+
+template(name='view_field_type') 
+    | Field Type: #{field_type}
+
+template(name='edit_string_field')
+    .ui.labeled.fluid.input
+        .ui.basic.label #{key}
+        input#value(type='text' value=value)
+
+    // +toggle_key key='completion_type' value='response' icon='response' label='Response'
 
 
 template(name='edit_title') 

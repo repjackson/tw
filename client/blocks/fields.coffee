@@ -248,7 +248,7 @@ Template.edit_completion_type.events
         Docs.update FlowRouter.getParam('doc_id'),
             $set: completion_type: completion_type
             
-Template.field_type.events
+Template.edit_field_type.events
     'blur #field_type': (e,t)->
         field_type = $(e.currentTarget).closest('#field_type').val()
         Docs.update FlowRouter.getParam('doc_id'),
@@ -262,11 +262,28 @@ Template.edit_slug.events
             $set: slug: slug
             
             
+Template.edit_string_field.events
+    'blur #value': (e,t)->
+        console.log @key
+        value = $(e.currentTarget).closest('#value').val()
+        Docs.update FlowRouter.getParam('doc_id'),
+            $set: "#{@key}": value
+            
+# Template.edit_string_field.helpers
+    # capitalized_key: ->
+
+
 Template.plural_slug.events
     'blur #plural_slug': (e,t)->
         plural_slug = $(e.currentTarget).closest('#plural_slug').val()
         Docs.update FlowRouter.getParam('doc_id'),
             $set: plural_slug: plural_slug
+            
+Template.edit_template.events
+    'blur #template': (e,t)->
+        template = $(e.currentTarget).closest('#template').val()
+        Docs.update FlowRouter.getParam('doc_id'),
+            $set: template: template
             
             
 Template.edit_text.events

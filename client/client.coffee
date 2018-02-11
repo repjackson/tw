@@ -66,7 +66,10 @@ Template.registerHelper 'publish_when', () -> moment(@publish_date).fromNow()
 
 Template.registerHelper 'field_view_template', () ->  "view_#{@}"
 
-Template.registerHelper 'field_edit_template', () -> "edit_#{@}"
+Template.registerHelper 'field_edit_template', () -> 
+    console.log @
+    console.log @slug
+    "edit_#{@}"
         
 Template.registerHelper 'field_config_template', () ->  "#{@type}_field_config"
 

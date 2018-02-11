@@ -226,11 +226,6 @@ Meteor.methods
     #         type: 'checkin'
     #     return id
 
-    update_field_config: (doc_id, custom_field, key, value)->
-        
-        Docs.update {_id:doc_id,'custom_fields':custom_field},
-            $set: "custom_fields.$[#{key}]":value
-
 
     # update_rating: (session_id, rating, child_id)->
     #     Docs.update {_id:session_id,  "ratings.child_id": question_id},

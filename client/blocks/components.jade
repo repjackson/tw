@@ -263,7 +263,10 @@ template(name='published_label')
 
 template(name='edit_child_fields')
     // .ui.header Choose Child Docs
-    .ui.subheader Fields that are available when a user adds a document
+    .ui.header 
+        |Fields that are available when a user adds a document
+        small
+            a(href="view/8SE48hfdLYhqmkFLC" target="_blank") Add/Edit
     each child_fields
         .toggle_child_field.ui.button(class=child_field_toggle_class)
             +icon24 name=icon_class classes='ui inline image'
@@ -327,35 +330,3 @@ template(name='user_image')
 
 template(name='check_completion_button')
     #check_completion.ui.button Check Completion
-
-
-template(name='edit_custom_fields')
-    .ui.header Add Custom Field
-    each fields
-        .add_custom_field.ui.button
-            +icon24 name=icon_class classes='ui inline image'
-            strong #{title}    
-    each child_fields
-        .ui.segment
-            |Type: #{this}
-            // i.red.remove.link.icon
-            // +custom_field_template
-            
-            
-template(name='custom_field_template')
-    .ui.header edit #{type}
-    +Template.dynamic template=field_config_template
-
-
-template(name='user_array_field_config')
-    .ui.header User List Options
-    .ui.form
-        .field
-            label List Name
-            input.list_name(type='text' placeholder='Volunteers, Upvoters')
-        .field
-            label Action Label
-            input.action_label(type='text' placeholder='Join, Vote')
-        .field
-            label Icon
-            input.field_icon(type='text' placeholder='Copy from Icons8')
