@@ -158,6 +158,9 @@ Docs.helpers
             readers
         else []
     
+    child_field_docs: ->
+        if @child_field_ids
+            Docs.find _id:$in:@child_field_ids
     
     public_child_authors: ->
         if Docs.findOne({parent_id: @_id})

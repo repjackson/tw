@@ -64,7 +64,10 @@ Template.registerHelper 'is_admin', () ->
 
 Template.registerHelper 'publish_when', () -> moment(@publish_date).fromNow()
 
-Template.registerHelper 'field_view_template', () ->  "view_#{@}"
+Template.registerHelper 'field_view_template', () ->  
+    field_doc = Docs.findOne @valueOf()
+    console.log field_doc
+    "view_#{field_doc.field_type}_field"
 
 Template.registerHelper 'field_edit_template', () -> 
     console.log @

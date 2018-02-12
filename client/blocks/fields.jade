@@ -491,3 +491,49 @@ template(name='end_datetime')
             input#end_datetime(type='datetime-local' value=end_datetime)
     else
         .ui.header End Date/Time #{end_datetime}
+
+
+template(name='field_view_template')
+    .ui.secondary.segment
+        .ui.header field_doc title: #{field_doc.title}
+        .ui.header field_doc field type: #{field_doc.field_type}
+        .ui.header field_doc slug: #{field_doc.slug}
+        +Template.dynamic template=field_template data=..
+
+
+template(name='view_text_field')
+    .ui.segment
+        .ui.header view text field
+        h5.ui.header id #{this._id}
+        h5.ui.header title #{this.title}: #{../title}
+        h5.ui.header slug #{this.slug}
+        h5.ui.header icon class #{this.icon_class}
+    
+template(name='view_number_field')
+    .ui.segment
+        .ui.header view number field
+        h5.ui.header id #{this._id}
+        h5.ui.header title #{this.title}
+        h5.ui.header slug #{this.slug}
+        h5.ui.header icon class #{this.icon_class}
+    
+    
+template(name='view_string_field')
+    .ui.segment
+        .ui.header view string field
+        h5.ui.header id #{this._id}
+        h5.ui.header title #{this.title}
+        h5.ui.header slug #{this.slug}
+        h5.ui.header icon class #{this.icon_class}
+    
+    
+template(name='view_array_field')
+    .ui.segment
+        .ui.header view array field: #{field_doc.title}:
+        // h5.ui.header id #{this._id}
+        each values
+            .ui.basic.label #{this}
+    
+    
+    
+    

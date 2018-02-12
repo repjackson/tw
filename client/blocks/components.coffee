@@ -164,7 +164,7 @@ Template.edit_child_fields.onCreated ->
     Meteor.subscribe 'fields'
             
 Template.edit_child_fields.helpers
-    child_fields: ->
+    available_child_fields: ->
         Docs.find
             type: 'component'
     
@@ -178,16 +178,16 @@ Template.edit_child_fields.helpers
 Template.edit_child_fields.events
     'click .toggle_child_field': ->
         doc = Docs.findOne FlowRouter.getParam('doc_id')
-        if doc.child_fields 
-            if @slug in doc.child_fields
+        if doc.child_field_ids 
+            if @_id in doc.child_field_ids
                 Docs.update doc._id,
-                    $pull: "child_fields": @slug
+                    $pull: "child_field_ids": @_id
             else
                 Docs.update doc._id,
-                    $addToSet: "child_fields": @slug
+                    $addToSet: "child_field_ids": @_id
         else
             Docs.update doc._id,
-                $set: "child_fields": []
+                $set: "child_field_ids": []
      
 
 

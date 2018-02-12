@@ -1,4 +1,6 @@
 Template.view_databank.onCreated ->
+    Meteor.subscribe 'fields'
+
     @autorun => Meteor.subscribe 'facet', 
         selected_theme_tags.array()
         selected_author_ids.array()
@@ -47,6 +49,9 @@ Template.edit_databank.onRendered ->
                 $('.menu .item').tab()
             , 1000
         
+Template.view_databank_item.onCreated ->
+    Meteor.subscribe 'fields'
+    
 Template.edit_databank_item.onCreated ->
     Meteor.subscribe 'fields'
     

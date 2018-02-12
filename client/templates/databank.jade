@@ -42,8 +42,9 @@ template(name='databank_card')
                             +icon48 name=icon_class classes='ui mini inline spaced image'
                         |#{title}
             .content
-                each parent.child_fields
-                    +Template.dynamic template=field_view_template data=..
+                each parent.child_field_ids
+                    // +Template.dynamic template=field_view_template data=..
+                    +field_view_template
                 
         .four.wide.column.shadowed-box
             if slug
@@ -177,8 +178,9 @@ template(name='view_databank_item')
         .row
             .twelve.wide.column
                 .ui.form.shadowed-box
-                    each parent.child_fields
-                        +Template.dynamic template=field_view_template data=..
+                    each parent.child_field_ids
+                        // +Template.dynamic template=field_view_template data=..
+                        +field_view_template
                 if has_price
                     +product_transactions
                 // if is_visible

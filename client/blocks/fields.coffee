@@ -906,3 +906,28 @@ Template.end_datetime.events
         end_datetime = $('#end_datetime').val()
         Docs.update FlowRouter.getParam('doc_id'),
             $set: end_datetime: end_datetime
+
+
+Template.field_view_template.helpers
+    field_doc: -> 
+        # console.log @
+        Docs.findOne @valueOf()
+        
+    field_template: ->
+        field_doc = Docs.findOne @valueOf()
+        switch field_doc.field_type
+            when 'text' then 'view_text_field'
+            when 'number' then 'view_number_field'
+            when 'string' then 'view_string_field'
+            when 'array' then 'view_array_field'
+            
+            
+            
+Template.view_array_field.helpers
+    values: -> 
+        # console.log Template.parentData(3)
+        field_doc = Docs.findOne Template.parentData(3)
+        # current_doc = Docs.findOne 
+        @["#{field_doc.slug}"]
+    
+    field_doc: -> Docs.findOne Template.parentData(3)

@@ -267,11 +267,19 @@ template(name='edit_child_fields')
         |Fields that are available when a user adds a document
         small
             a(href="view/8SE48hfdLYhqmkFLC" target="_blank") Add/Edit
-    each child_fields
+    each available_child_fields
         .toggle_child_field.ui.button(class=child_field_toggle_class)
             +icon24 name=icon_class classes='ui inline image'
             strong #{title}    
-            
+    .ui.segments
+        each child_field_docs
+            .segment
+                .content
+                    .header
+                        +icon48 name=icon_class classes='ui inline image'
+                        |#{title}
+                    .meta Slug: #{slug}
+    
 template(name='edit_child_actions')
     // .ui.header Choose Child Actions
     .ui.subheader Available actions on the child documents
