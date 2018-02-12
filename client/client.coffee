@@ -67,18 +67,29 @@ Template.registerHelper 'publish_when', () -> moment(@publish_date).fromNow()
 Template.registerHelper 'field_view_template', () ->  
     field_doc = Docs.findOne @valueOf()
     console.log field_doc
-    "view_#{field_doc.field_type}_field"
+    "view_#{field_doc.field_template}_field"
 
 Template.registerHelper 'field_edit_template', () -> 
-    console.log @
-    console.log @slug
-    "edit_#{@}"
+    field_doc = Docs.findOne @valueOf()
+    console.log field_doc
+    "edit_#{field_doc.field_template}_field"
+    # console.log @
+    # console.log @slug
+    # "edit_#{@}"
         
 Template.registerHelper 'field_config_template', () ->  "#{@type}_field_config"
 
 Template.registerHelper 'action_button_template', () ->  "#{@}_button"
 
         
+Template.registerHelper 'field_template_field_doc', ()-> Docs.findOne Template.parentData(3)
+
+Template.registerHelper 'field_template_value', ()->
+    # console.log Template.parentData(3)
+    field_doc = Docs.findOne Template.parentData(3)
+    # current_doc = Docs.findOne 
+    @["#{field_doc.slug}"]
+
 
 
 

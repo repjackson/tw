@@ -1,17 +1,17 @@
-template(name='edit_field_type') 
+template(name='edit_field_template') 
     .ui.labeled.fluid.input
-        .ui.basic.label Field Type
-        input#field_type(type='text' value=field_type)
+        .ui.basic.label Field Template
+        input#field_template(type='text' value=field_template)
 
-template(name='view_field_type') 
-    | Field Type: #{field_type}
+template(name='view_field_template') 
+    | Field Type: #{field_template}
 
-template(name='edit_string_field')
-    .ui.labeled.fluid.input
-        .ui.basic.label #{key}
-        input#value(type='text' value=value)
+// template(name='edit_string_field')
+//     .ui.labeled.fluid.input
+//         .ui.basic.label #{key}
+//         input#value(type='text' value=value)
 
-    // +toggle_key key='completion_type' value='response' icon='response' label='Response'
+//     // +toggle_key key='completion_type' value='response' icon='response' label='Response'
 
 
 template(name='edit_title') 
@@ -339,7 +339,7 @@ template(name='view_image_url')
             img(src=image_url)
         
     
-template(name='edit_youtube')
+template(name='edit_youtube_field')
     .ui.segment
         .ui.action.fluid.labeled.input
             .ui.basic.label
@@ -352,7 +352,7 @@ template(name='edit_youtube')
             .ui.embed(data-source="youtube" data-id=youtube)
 
 
-template(name='view_youtube')
+template(name='view_youtube_field')
     // .ui.embed(data-source="youtube" data-id=youtube data-icon="video" data-placeholder="/images/video_placeholder.png")
     if youtube
         .ui.embed(data-source="youtube" data-id=youtube)
@@ -494,46 +494,105 @@ template(name='end_datetime')
 
 
 template(name='field_view_template')
-    .ui.secondary.segment
-        .ui.header field_doc title: #{field_doc.title}
-        .ui.header field_doc field type: #{field_doc.field_type}
-        .ui.header field_doc slug: #{field_doc.slug}
-        +Template.dynamic template=field_template data=..
+    // .ui.secondary.segment
+    //     .ui.header field_doc title: #{field_doc.title}
+    //     .ui.header field_doc field type: #{field_doc.field_template}
+    //     .ui.header field_doc slug: #{field_doc.slug}
+    +Template.dynamic template=view_field_template data=..
+
+template(name='field_edit_template')
+    // .ui.secondary.segment
+    //     .ui.header field_doc title: #{field_doc.title}
+    //     .ui.header field_doc field type: #{field_doc.field_template}
+    //     .ui.header field_doc slug: #{field_doc.slug}
+    +Template.dynamic template=edit_field_template data=..
 
 
 template(name='view_text_field')
-    .ui.segment
-        .ui.header view text field
-        h5.ui.header id #{this._id}
-        h5.ui.header title #{this.title}: #{../title}
-        h5.ui.header slug #{this.slug}
-        h5.ui.header icon class #{this.icon_class}
+    if field_template_value
+        .ui.header
+            +icon48 name=field_template_field_doc.icon_class classes='ui inline image'
+            |#{field_template_field_doc.title}:
+            |#{field_template_value}
+    
+template(name='edit_text_field')
+    .ui.header
+        +icon48 name=field_template_field_doc.icon_class classes='ui inline image'
+        |#{field_template_field_doc.title}:
+        |#{field_template_value}
+    
+    .ui.labeled.fluid.input
+        .ui.basic.label #{field_template_field_doc.title}
+        input#text_field_input(type='text' value=field_template_value)
+
+    
+template(name='edit_string_field')
+    .ui.header
+        +icon48 name=field_template_field_doc.icon_class classes='ui inline image'
+        |#{field_template_field_doc.title}:
+        |#{field_template_value}
+    
+    .ui.labeled.fluid.input
+        .ui.basic.label #{field_template_field_doc.title}
+        input#text_field_input(type='text' value=field_template_value)
+
+    
     
 template(name='view_number_field')
-    .ui.segment
-        .ui.header view number field
-        h5.ui.header id #{this._id}
-        h5.ui.header title #{this.title}
-        h5.ui.header slug #{this.slug}
-        h5.ui.header icon class #{this.icon_class}
+    if field_template_value
+        .ui.header
+            |#{field_template_field_doc.title}:
+            |#{field_template_value}
     
     
 template(name='view_string_field')
-    .ui.segment
-        .ui.header view string field
-        h5.ui.header id #{this._id}
-        h5.ui.header title #{this.title}
-        h5.ui.header slug #{this.slug}
-        h5.ui.header icon class #{this.icon_class}
+    if field_template_value
+        .ui.header
+            +icon48 name=field_template_field_doc.icon_class classes='ui inline image'
+            |#{field_template_field_doc.title}:
+            |#{field_template_value}
     
     
 template(name='view_array_field')
-    .ui.segment
-        .ui.header view array field: #{field_doc.title}:
-        // h5.ui.header id #{this._id}
-        each values
-            .ui.basic.label #{this}
+    .ui.header
+        +icon48 name=field_template_field_doc.icon_class classes='ui inline image'
+        |#{field_template_field_doc.title}
+    each field_template_value
+        .ui.basic.label #{this}
+    
+    
+template(name='edit_array_field')
+    // .ui.segment
+    .ui.header
+        +icon48 name='hashtag' classes='ui mini spaced image'
+        |Tags &nbsp;
+        .ui.mini.input
+            input#theme_tag_select(type='text' placeholder='Add...' maxlength='50' )
+        // .ui.mini.input
+        //     +inputAutocomplete settings=theme_select_settings id="theme_tag_select" class="" autocomplete="off"
+        each tags
+            // a.ui.basic.circular.button.doc_tag #{this}
+            a.ui.circular.white.button.doc_tag
+                i.remove.icon
+                |#{this}
+
     
     
     
+template(name='view_html_field')
+    .ui.header
+        +icon48 name=field_template_field_doc.icon_class classes='ui inline image'
+        |#{field_template_field_doc.title}
+    |!{field_template_value}
+    
+    
+    
+    
+
+template(name='edit_html_field')
+    .ui.header
+        +icon48 name='html' classes='ui mini spaced image'
+        | Edit HTML
+    .froala-container
+        +froalaReactive getFEContext
     

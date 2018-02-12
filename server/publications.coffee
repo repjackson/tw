@@ -285,8 +285,8 @@ Meteor.publish 'fields', ->
 Meteor.publish 'actions', ->
     Docs.find type: 'action'
     
-Meteor.publish 'field_types', ->
-    Docs.find type: 'field_type'
+Meteor.publish 'field_templates', ->
+    Docs.find type: 'field_template'
     
     
 Meteor.publish 'templates', ->

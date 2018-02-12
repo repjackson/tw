@@ -248,11 +248,11 @@ Template.edit_completion_type.events
         Docs.update FlowRouter.getParam('doc_id'),
             $set: completion_type: completion_type
             
-Template.edit_field_type.events
-    'blur #field_type': (e,t)->
-        field_type = $(e.currentTarget).closest('#field_type').val()
+Template.edit_field_template.events
+    'blur #field_template': (e,t)->
+        field_template = $(e.currentTarget).closest('#field_template').val()
         Docs.update FlowRouter.getParam('doc_id'),
-            $set: field_type: field_type
+            $set: field_template: field_template
             
             
 Template.edit_slug.events
@@ -607,7 +607,7 @@ Template.edit_transcript.helpers
         }
 
 
-Template.edit_youtube.events
+Template.edit_youtube_field.events
     'blur #youtube': (e,t)->
         youtube = $(e.currentTarget).closest('#youtube').val()
         Docs.update FlowRouter.getParam('doc_id'),
@@ -618,12 +618,12 @@ Template.edit_youtube.events
         Docs.update FlowRouter.getParam('doc_id'),
             $unset: youtube: 1
             
-Template.edit_youtube.onRendered ->
+Template.edit_youtube_field.onRendered ->
     Meteor.setTimeout (->
         $('.ui.embed').embed()
     ), 2000
 
-Template.view_youtube.onRendered ->
+Template.view_youtube_field.onRendered ->
     Meteor.setTimeout (->
         $('.ui.embed').embed()
     ), 2000
@@ -913,21 +913,110 @@ Template.field_view_template.helpers
         # console.log @
         Docs.findOne @valueOf()
         
-    field_template: ->
+    view_field_template: ->
         field_doc = Docs.findOne @valueOf()
-        switch field_doc.field_type
-            when 'text' then 'view_text_field'
-            when 'number' then 'view_number_field'
-            when 'string' then 'view_string_field'
-            when 'array' then 'view_array_field'
+        if field_doc
+            "view_#{field_doc.field_template}_field"
+            # switch field_doc.field_template
+            #     when 'text' then 'view_text_field'
+            #     when 'number' then 'view_number_field'
+            #     when 'string' then 'view_string_field'
+            #     when 'array' then 'view_array_field'
+            #     when 'html' then 'view_html_field'
+            
+       
+Template.field_edit_template.helpers
+    field_doc: -> 
+        # console.log @
+        Docs.findOne @valueOf()
+        
+    edit_field_template: ->
+        field_doc = Docs.findOne @valueOf()
+        if field_doc
+            "edit_#{field_doc.field_template}_field"
+
+            # switch field_doc.field_template
+            #     when 'text' then 'edit_text_field'
+            #     when 'number' then 'edit_number_field'
+            #     when 'string' then 'edit_string_field'
+            #     when 'array' then 'edit_array_field'
+            #     when 'html' then 'edit_html_field'
             
             
+Template.edit_html_field.events
+    'blur .froala-container': (e,t)->
+        html = t.$('div.froala-reactive-meteorized-override').froalaEditor('html.get', true)
+        
+        # snippet = $('#snippet').val()
+        # if snippet.length is 0
+        #     snippet = $(html).text().substr(0, 300).concat('...')
+        # doc_id = FlowRouter.getParam('doc_id')
+
+        Docs.update @_id,
+            $set: content: html
+                
+
+Template.edit_html_field.helpers
+    getFEContext: ->
+        # @current_doc = Docs.findOne FlowRouter.getParam 'doc_id'
+        @current_doc = Docs.findOne @_id
+        self = @
+        {
+            _value: self.current_doc.content
+            _keepMarkers: true
+            _className: 'froala-reactive-meteorized-override'
+            toolbarInline: false
+            initOnClick: false
+            toolbarButtons:
+                [
+                  'fullscreen'
+                  'bold'
+                  'italic'
+                  'underline'
+                  'strikeThrough'
+                #   'subscript'
+                #   'superscript'
+                  '|'
+                #   'fontFamily'
+                  'fontSize'
+                  'color'
+                #   'inlineStyle'
+                #   'paragraphStyle'
+                  '|'
+                  'paragraphFormat'
+                  'align'
+                  'formatOL'
+                  'formatUL'
+                  'outdent'
+                  'indent'
+                  'quote'
+                #   '-'
+                  'insertLink'
+                #   'insertImage'
+                #   'insertVideo'
+                #   'embedly'
+                #   'insertFile'
+                  'insertTable'
+                #   '|'
+                  'emoticons'
+                #   'specialCharacters'
+                #   'insertHR'
+                  'selectAll'
+                  'clearFormatting'
+                  '|'
+                #   'print'
+                #   'spellChecker'
+                #   'help'
+                  'html'
+                #   '|'
+                  'undo'
+                  'redo'
+                ]
+            toolbarButtonsMD: ['bold', 'italic', 'underline']
+            toolbarButtonsSM: ['bold', 'italic', 'underline']
+            toolbarButtonsXS: ['bold', 'italic', 'underline']
+            imageInsertButtons: ['imageBack', '|', 'imageByURL']
+            tabSpaces: false
+            height: 200
+        }
             
-Template.view_array_field.helpers
-    values: -> 
-        # console.log Template.parentData(3)
-        field_doc = Docs.findOne Template.parentData(3)
-        # current_doc = Docs.findOne 
-        @["#{field_doc.slug}"]
-    
-    field_doc: -> Docs.findOne Template.parentData(3)

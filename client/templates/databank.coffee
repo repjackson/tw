@@ -34,10 +34,12 @@ Template.view_databank.helpers
     
     facet_template: ->
         # console.log @valueOf()
-        switch @valueOf()
-            when 'tags' then 'tag_facet'
-            when 'location_tags' then 'location_facet'
-            when 'intention_tags' then 'intention_facet'
+        field_doc = Docs.findOne @valueOf()
+        if field_doc
+            switch field_doc.slug
+                when 'tags' then 'tag_facet'
+                when 'location_tags' then 'location_facet'
+                when 'intention_tags' then 'intention_facet'
             
         
         

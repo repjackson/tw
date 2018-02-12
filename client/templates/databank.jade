@@ -17,7 +17,7 @@ template(name='view_databank')
                 if currentUser
                     +toggle_view_mode_button
                     .ui.hidden.divider
-                each doc.child_fields
+                each doc.child_field_ids
                     +Template.dynamic template=facet_template data=doc
                 // +username_facet
                 .ui.hidden.divider
@@ -60,6 +60,9 @@ template(name='databank_card')
                     |#{child_count} Responses
                 // +published
                 +view_full_button
+                if can_edit
+                    +edit_button
+
         // each parent.child_fields
         //     .ui.label #{this}
         // if child_count
@@ -155,9 +158,10 @@ template(name='edit_databank')
 
 template(name='edit_databank_item')
     .ui.form.shadowed.padded10
-        each parent.child_fields
-            +Template.dynamic template=field_edit_template data=..
-
+        each parent.child_field_ids
+            // +Template.dynamic template=field_edit_template data=..
+            +field_edit_template
+    
 template(name='view_databank_item')
     .ui.stackable.padded.grid
         .centered.row
