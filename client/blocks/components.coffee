@@ -8,59 +8,59 @@ Template.resonates_list.helpers
     
     
             
-Template.bookmarked_by_list.onCreated ->
-    @autorun => Meteor.subscribe 'bookmarked_by', Template.parentData()._id
+# Template.bookmarked_by_list.onCreated ->
+#     @autorun => Meteor.subscribe 'bookmarked_by', Template.parentData()._id
     
-Template.bookmarked_by_list.helpers
-    bookmarked_by: ->
-        if @bookmarked_ids
-            if @bookmarked_ids.length > 0
-        # console.log @bookmarked_ids
-                Meteor.users.find _id: $in: @bookmarked_ids
-        else 
-            false
+# Template.bookmarked_by_list.helpers
+#     bookmarked_by: ->
+#         if @bookmarked_ids
+#             if @bookmarked_ids.length > 0
+#         # console.log @bookmarked_ids
+#                 Meteor.users.find _id: $in: @bookmarked_ids
+#         else 
+#             false
             
             
 
     
     
-Template.doc_matches.onCreated ->
-    @is_calculating = new ReactiveVar 'false'
+# Template.doc_matches.onCreated ->
+#     @is_calculating = new ReactiveVar 'false'
     
-Template.doc_matches.onRendered ->
-    @autorun =>
-        if @subscriptionsReady()
-            Meteor.setTimeout ->
-                $('.ui.accordion').accordion()
-            , 500
+# Template.doc_matches.onRendered ->
+#     @autorun =>
+#         if @subscriptionsReady()
+#             Meteor.setTimeout ->
+#                 $('.ui.accordion').accordion()
+#             , 500
     
-Template.doc_match.onRendered ->
-    @autorun =>
-        if @subscriptionsReady()
-            Meteor.setTimeout ->
-                $('.ui.accordion').accordion()
-            , 500
+# Template.doc_match.onRendered ->
+#     @autorun =>
+#         if @subscriptionsReady()
+#             Meteor.setTimeout ->
+#                 $('.ui.accordion').accordion()
+#             , 500
     
-Template.doc_matches.helpers
-    # calculate_button_class: ->
-        # if Template.instance().is_calculating then 'loading' else ''
+# Template.doc_matches.helpers
+#     # calculate_button_class: ->
+#         # if Template.instance().is_calculating then 'loading' else ''
     
-Template.doc_matches.events
-    'click #compute_doc_matches': ->
-        $( "#compute_doc_matches" ).toggleClass( "loading" )
-        # console.log @
-        Meteor.call 'find_top_doc_matches', @_id, (err, res)->
-            $( "#compute_doc_matches" ).toggleClass( "loading" )
-            $( ".title" ).addClass( "active" )
-            $( ".match_content" ).addClass( "active" )
-            # console.log res
+# Template.doc_matches.events
+#     'click #compute_doc_matches': ->
+#         $( "#compute_doc_matches" ).toggleClass( "loading" )
+#         # console.log @
+#         Meteor.call 'find_top_doc_matches', @_id, (err, res)->
+#             $( "#compute_doc_matches" ).toggleClass( "loading" )
+#             $( ".title" ).addClass( "active" )
+#             $( ".match_content" ).addClass( "active" )
+#             # console.log res
             
             
-Template.doc_match.onCreated ->
-    @autorun => Meteor.subscribe 'doc', @data.doc_id
+# Template.doc_match.onCreated ->
+#     @autorun => Meteor.subscribe 'doc', @data.doc_id
             
-Template.doc_match.helpers
-    match_doc: -> Docs.findOne @doc_id
+# Template.doc_match.helpers
+#     match_doc: -> Docs.findOne @doc_id
             
             
             

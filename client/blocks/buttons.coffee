@@ -332,12 +332,12 @@ Template.toggle_view_mode_button.events
         else
             Session.set 'view_private', true
             
-Template.toggle_completed_button.events
-    'click #toggle_view_mode': ->
-        if Session.equals 'view_private', true
-            Session.set 'view_private', false
-        else
-            Session.set 'view_private', true
+# Template.toggle_completed_button.events
+#     'click #toggle_view_mode': ->
+#         if Session.equals 'view_private', true
+#             Session.set 'view_private', false
+#         else
+#             Session.set 'view_private', true
             
 Template.session_edit_button.events
     'click .toggle_editing': ->

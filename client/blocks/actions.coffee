@@ -141,36 +141,36 @@ Template.bookmark_button.events
 
 
 
-Template.pin_button.helpers
-    pin_button_class: -> 
-        if Meteor.user()
-            if @pinned_ids and Meteor.userId() in  @pinned_ids then 'blue' else 'basic'
-        else 'grey disabled'
+# Template.pin_button.helpers
+#     pin_button_class: -> 
+#         if Meteor.user()
+#             if @pinned_ids and Meteor.userId() in  @pinned_ids then 'blue' else 'basic'
+#         else 'grey disabled'
         
-    pinned: -> Meteor.user()?.pinned_ids and @_id in Meteor.user().pinned_ids
+#     pinned: -> Meteor.user()?.pinned_ids and @_id in Meteor.user().pinned_ids
 
-Template.pin_button.events
-    'click .pin_button': (e,t)-> 
-        if Meteor.userId() 
-            Meteor.call 'pin', Template.parentData(0)
-            $(e.currentTarget).closest('.pin_button').transition('pulse')
-        else FlowRouter.go '/sign-in'
+# Template.pin_button.events
+#     'click .pin_button': (e,t)-> 
+#         if Meteor.userId() 
+#             Meteor.call 'pin', Template.parentData(0)
+#             $(e.currentTarget).closest('.pin_button').transition('pulse')
+#         else FlowRouter.go '/sign-in'
 
-Template.pin_corner_button.helpers
-    pin_button_class: -> 
-        if Meteor.user()
-            if @pinned_ids and Meteor.userId() in  @pinned_ids then 'blue' else ''
-        else 'grey disabled'
+# Template.pin_corner_button.helpers
+#     pin_button_class: -> 
+#         if Meteor.user()
+#             if @pinned_ids and Meteor.userId() in  @pinned_ids then 'blue' else ''
+#         else 'grey disabled'
         
-    pinned: -> Meteor.user()?.pinned_ids and @_id in Meteor.user().pinned_ids
+#     pinned: -> Meteor.user()?.pinned_ids and @_id in Meteor.user().pinned_ids
 
 
-Template.pin_corner_button.events
-    'click .pin_button': (e,t)-> 
-        if Meteor.userId() 
-            Meteor.call 'pin', Template.parentData(0)
-            $(e.currentTarget).closest('.pin_button').transition('pulse')
-        else FlowRouter.go '/sign-in'
+# Template.pin_corner_button.events
+#     'click .pin_button': (e,t)-> 
+#         if Meteor.userId() 
+#             Meteor.call 'pin', Template.parentData(0)
+#             $(e.currentTarget).closest('.pin_button').transition('pulse')
+#         else FlowRouter.go '/sign-in'
 
 
 
