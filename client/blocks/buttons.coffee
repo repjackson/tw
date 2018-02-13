@@ -1,27 +1,27 @@
 
-Template.big_both_voter.helpers
-    vote_up_button_class: ->
-        if not Meteor.userId() then 'disabled'
-        else if @upvoters and Meteor.userId() in @upvoters then 'green'
-        else 'outline'
+# Template.big_both_voter.helpers
+#     vote_up_button_class: ->
+#         if not Meteor.userId() then 'disabled'
+#         else if @upvoters and Meteor.userId() in @upvoters then 'green'
+#         else 'outline'
 
-    vote_down_button_class: ->
-        if not Meteor.userId() then 'disabled'
-        else if @downvoters and Meteor.userId() in @downvoters then 'red'
-        else 'outline'
+#     vote_down_button_class: ->
+#         if not Meteor.userId() then 'disabled'
+#         else if @downvoters and Meteor.userId() in @downvoters then 'red'
+#         else 'outline'
 
-Template.big_both_voter.events
-    'click .vote_up': (e,t)-> 
-        if Meteor.userId() 
-            Meteor.call 'vote_up', @_id
-            # $(e.currentTarget).closest('.vote_up').transition('pulse')
-        else FlowRouter.go '/sign-in'
+# Template.big_both_voter.events
+#     'click .vote_up': (e,t)-> 
+#         if Meteor.userId() 
+#             Meteor.call 'vote_up', @_id
+#             # $(e.currentTarget).closest('.vote_up').transition('pulse')
+#         else FlowRouter.go '/sign-in'
 
-    'click .vote_down': (e,t)-> 
-        if Meteor.userId() 
-            Meteor.call 'vote_down', @_id
-            # $(e.currentTarget).closest('.vote_down').transition('pulse')
-        else FlowRouter.go '/sign-in'
+#     'click .vote_down': (e,t)-> 
+#         if Meteor.userId() 
+#             Meteor.call 'vote_down', @_id
+#             # $(e.currentTarget).closest('.vote_down').transition('pulse')
+#         else FlowRouter.go '/sign-in'
 
 
 
@@ -59,36 +59,36 @@ Template.published.events
         
         
 
-Template.rating.onRendered ->
-    # console.log 'template data', @data
-    self = @
+# Template.rating.onRendered ->
+#     # console.log 'template data', @data
+#     self = @
     
-    @autorun =>
-        if @subscriptionsReady()
-            session_id = FlowRouter.getParam('session_id')
-            existing_rating =         
-                Docs.findOne
-                    parent_id: self.data._id
-                    type: 'rating'
-                    session_id: session_id
-            # console.log 'existing rating', existing_rating
-            if existing_rating then initial_rating = existing_rating.rating
-            else initial_rating = 0
-            # console.log initial_rating
-            Meteor.setTimeout ->
-                $('.ui.rating').rating
-                    # initialRating: initial_rating,
-                    maxRating: 5
-                    # onRate: (value)->
-                    #     console.log value
-            , 2000
-            # console.log 'subs ready'
-Template.rating.helpers
-    question_rating: ->
-        session_doc = Docs.findOne FlowRouter.getParam('session_id')
-        if session_doc
-            rating = _.findWhere(session_doc.ratings, {question_id: @_id})?.rating
-            rating
+#     @autorun =>
+#         if @subscriptionsReady()
+#             session_id = FlowRouter.getParam('session_id')
+#             existing_rating =         
+#                 Docs.findOne
+#                     parent_id: self.data._id
+#                     type: 'rating'
+#                     session_id: session_id
+#             # console.log 'existing rating', existing_rating
+#             if existing_rating then initial_rating = existing_rating.rating
+#             else initial_rating = 0
+#             # console.log initial_rating
+#             Meteor.setTimeout ->
+#                 $('.ui.rating').rating
+#                     # initialRating: initial_rating,
+#                     maxRating: 5
+#                     # onRate: (value)->
+#                     #     console.log value
+#             , 2000
+#             # console.log 'subs ready'
+# Template.rating.helpers
+#     question_rating: ->
+#         session_doc = Docs.findOne FlowRouter.getParam('session_id')
+#         if session_doc
+#             rating = _.findWhere(session_doc.ratings, {question_id: @_id})?.rating
+#             rating
 # Template.rank.helpers
 #     rank_doc: ->
 #         rank_doc = 
@@ -129,25 +129,25 @@ Template.rating.helpers
 #                 parent_id: @_id
 #                 number: 1
 #                 group: 'personality_colors'
-Template.rating.events
-    'click .rating': (e,t)->
-        session_id = FlowRouter.getParam('session_id')
-        rating = $(e.currentTarget).closest('.rating').rating('get rating')
-        if Docs.findOne({_id: session_id, 'ratings.question_id': @_id})
-            # alert @_id, ' found'
-            # alert rating
-            Meteor.call 'update_rating', session_id, rating, @_id
-        else
-            # alert 'rating not found'
-            $(e.currentTarget).closest('.ui.card').transition('horizontal flip')
-            Meteor.setTimeout =>
-                Docs.update {_id:session_id},
-                    $addToSet:
-                        ratings:
-                            rating: rating
-                            question_id: @_id
-                            tags: @tags
-            , 250
+# Template.rating.events
+#     'click .rating': (e,t)->
+#         session_id = FlowRouter.getParam('session_id')
+#         rating = $(e.currentTarget).closest('.rating').rating('get rating')
+#         if Docs.findOne({_id: session_id, 'ratings.question_id': @_id})
+#             # alert @_id, ' found'
+#             # alert rating
+#             Meteor.call 'update_rating', session_id, rating, @_id
+#         else
+#             # alert 'rating not found'
+#             $(e.currentTarget).closest('.ui.card').transition('horizontal flip')
+#             Meteor.setTimeout =>
+#                 Docs.update {_id:session_id},
+#                     $addToSet:
+#                         ratings:
+#                             rating: rating
+#                             question_id: @_id
+#                             tags: @tags
+#             , 250
 
 
 
@@ -217,30 +217,30 @@ Template.session_delete_button.events
 
 
 
-Template.add_to_cart.onCreated ->
-    @autorun => Meteor.subscribe 'cart'
+# Template.add_to_cart.onCreated ->
+#     @autorun => Meteor.subscribe 'cart'
 
-Template.add_to_cart.events
-    'click #add_to_cart': (e,t)-> 
-        # console.log t.data.tags
-        # Session.set 'cart_item', @_id
-        # FlowRouter.go '/cart'
-        if Meteor.userId() then Meteor.call 'add_to_cart', @_id, =>
-            Bert.alert "#{@title} Added to Cart", 'success', 'growl-top-right'
-        else FlowRouter.go '/sign-in'
+# Template.add_to_cart.events
+#     'click #add_to_cart': (e,t)-> 
+#         # console.log t.data.tags
+#         # Session.set 'cart_item', @_id
+#         # FlowRouter.go '/cart'
+#         if Meteor.userId() then Meteor.call 'add_to_cart', @_id, =>
+#             Bert.alert "#{@title} Added to Cart", 'success', 'growl-top-right'
+#         else FlowRouter.go '/sign-in'
 
-    'click #remove_from_cart': ->
-        Meteor.call 'remove_from_cart', @_id, =>
-            Bert.alert "#{@title} Removed from Cart", 'info', 'growl-top-right'
+#     'click #remove_from_cart': ->
+#         Meteor.call 'remove_from_cart', @_id, =>
+#             Bert.alert "#{@title} Removed from Cart", 'info', 'growl-top-right'
         
-Template.add_to_cart.helpers
-    added: ->
-        Docs.findOne 
-            type: 'cart_item'
-            parent_id: @_id
-            author_id: Meteor.userId()
+# Template.add_to_cart.helpers
+#     added: ->
+#         Docs.findOne 
+#             type: 'cart_item'
+#             parent_id: @_id
+#             author_id: Meteor.userId()
             
-    can_add: -> @point_price < Meteor.user().points        
+#     can_add: -> @point_price < Meteor.user().points        
             
             
 Template.add_doc_button.events
@@ -260,37 +260,37 @@ Template.add_doc_button.helpers
     
     
     
-Template.subscribe_button.helpers
-    subscribe_buton_class: -> if @subscribed_ids and Meteor.userId() in @subscribed_ids then 'blue' else 'basic'
-    subscribed: -> if @subscribed_ids and Meteor.userId() in @subscribed_ids then true else false
-    is_participant: -> Meteor.userId() in @participant_ids
+# Template.subscribe_button.helpers
+#     subscribe_buton_class: -> if @subscribed_ids and Meteor.userId() in @subscribed_ids then 'blue' else 'basic'
+#     subscribed: -> if @subscribed_ids and Meteor.userId() in @subscribed_ids then true else false
+#     is_participant: -> Meteor.userId() in @participant_ids
         
-Template.subscribe_button.events
-    'click #subscribe_button': (e,t)->
-        if Meteor.userId()
-            Meteor.call 'subscribe', Template.parentData(0)
-            # $(e.currentTarget).closest('.subscribe_button').transition('pulse')
-        else FlowRouter.go '/sign-in'
+# Template.subscribe_button.events
+#     'click #subscribe_button': (e,t)->
+#         if Meteor.userId()
+#             Meteor.call 'subscribe', Template.parentData(0)
+#             # $(e.currentTarget).closest('.subscribe_button').transition('pulse')
+#         else FlowRouter.go '/sign-in'
 
-        # if Template.parentData(0).subscribers
-        #     if Meteor.userId() in Template.parentData(0).subscribers
-        #         Docs.update Template.parentData(0)._id,
-        #             $pull: subscribers: Meteor.userId()
-        #     else
-        #         Docs.update Template.parentData(0)._id,
-        #             $addToSet: subscribers: Meteor.userId()
-        #     $(e.currentTarget).closest('#subscribe_button').transition('pulse')
-        # else
-        #     Docs.update Template.parentData(0)._id,
-        #         $set: subscribers: []
+#         # if Template.parentData(0).subscribers
+#         #     if Meteor.userId() in Template.parentData(0).subscribers
+#         #         Docs.update Template.parentData(0)._id,
+#         #             $pull: subscribers: Meteor.userId()
+#         #     else
+#         #         Docs.update Template.parentData(0)._id,
+#         #             $addToSet: subscribers: Meteor.userId()
+#         #     $(e.currentTarget).closest('#subscribe_button').transition('pulse')
+#         # else
+#         #     Docs.update Template.parentData(0)._id,
+#         #         $set: subscribers: []
                 
                 
                 
-        # 'click .bookmark_button': (e,t)-> 
-        # if Meteor.userId() 
-        #     Meteor.call 'bookmark', Template.parentData(0)
-        #     # $(e.currentTarget).closest('.bookmark_button').transition('pulse')
-        # else FlowRouter.go '/sign-in'
+#         # 'click .bookmark_button': (e,t)-> 
+#         # if Meteor.userId() 
+#         #     Meteor.call 'bookmark', Template.parentData(0)
+#         #     # $(e.currentTarget).closest('.bookmark_button').transition('pulse')
+#         # else FlowRouter.go '/sign-in'
             
             
 # Template.toggle_zen_mode_button.helpers
@@ -306,18 +306,18 @@ Template.subscribe_button.events
     
     
     
-Template.join_button.helpers
-    joined: ->
-        if Meteor.userId() in @participants then true else false
+# Template.join_button.helpers
+#     joined: ->
+#         if Meteor.userId() in @participants then true else false
 
-Template.join_button.events
-    'click #join': ->
-        Docs.update @_id,
-            $addToSet: participants: Meteor.userId()
+# Template.join_button.events
+#     'click #join': ->
+#         Docs.update @_id,
+#             $addToSet: participants: Meteor.userId()
             
-    'click #leave': ->
-        Docs.update @_id,
-            $pull: participants: Meteor.userId()
+#     'click #leave': ->
+#         Docs.update @_id,
+#             $pull: participants: Meteor.userId()
 
 
 

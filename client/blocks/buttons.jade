@@ -14,23 +14,23 @@ template(name='edit_doc_link')
             i.link.pencil.icon
 
 
-template(name='big_both_voter')
-    i.thumbs.up.link.huge.icon.vote_up(class=vote_up_button_class)
-    i.thumbs.down.link.huge.icon.vote_down(class=vote_down_button_class)
-    // |#{points}
+// template(name='big_both_voter')
+//     i.thumbs.up.link.huge.icon.vote_up(class=vote_up_button_class)
+//     i.thumbs.down.link.huge.icon.vote_down(class=vote_down_button_class)
+//     // |#{points}
 
-template(name='rating')
-    .ui.massive.heart.rating(data-rating=question_rating)
+// template(name='rating')
+//     .ui.massive.heart.rating(data-rating=question_rating)
 
 
-template(name='rank')
-    .ui.tiny.statistic
-        .value #{rank_doc}
-        .label Rank
-    #increase_index.ui.icon.basic.circular.button
-        +icon48 name="chevron-up" classes='ui mini inline image'
-    // #decrease_index.ui.icon.basic.circular.button
-    //     i.chevron.down.icon
+// template(name='rank')
+//     .ui.tiny.statistic
+//         .value #{rank_doc}
+//         .label Rank
+//     #increase_index.ui.icon.basic.circular.button
+//         +icon48 name="chevron-up" classes='ui mini inline image'
+//     // #decrease_index.ui.icon.basic.circular.button
+//     //     i.chevron.down.icon
 
 
 template(name='delete_popup')
@@ -42,42 +42,42 @@ template(name='delete_popup')
 
 
 
-template(name='toggle_friend')
-    if currentUser
-        if is_friend
-            #remove_friend.ui.basic.button
-                +icon48 name="minus" classes='ui mini inline image'
-                |Unfriend
-        else
-            #add_friend.ui.basic.button
-                +icon48 name="plus" classes='ui mini inline image'
-                |Friend
+// template(name='toggle_friend')
+//     if currentUser
+//         if is_friend
+//             #remove_friend.ui.basic.button
+//                 +icon48 name="minus" classes='ui mini inline image'
+//                 |Unfriend
+//         else
+//             #add_friend.ui.basic.button
+//                 +icon48 name="plus" classes='ui mini inline image'
+//                 |Friend
 
 
 
-template(name='add_to_cart')
-    if can_add
-        unless added
-            #add_to_cart.ui.fluid.teal.button
-                i.large.icons
-                    i.add.to.cart.icon
-                    i.corner.green.plus.icon
-                |Add to Cart
-        else
-            .ui.fluid.labeled.basic.button
-                #remove_from_cart.ui.basic.teal.button
-                    i.large.icons
-                        i.add.to.cart.icon
-                        i.corner.red.minus.icon
-                    |Remove from Cart
-                a.ui.basic.right.pointing.label(href='/cart')
-                    |View Cart
-    else        
-            .ui.fluid.disabled.button
-                i.large.icons
-                    i.add.to.cart.icon
-                    i.corner.green.plus.icon
-                | Not Enough Karma
+// template(name='add_to_cart')
+//     if can_add
+//         unless added
+//             #add_to_cart.ui.fluid.teal.button
+//                 i.large.icons
+//                     i.add.to.cart.icon
+//                     i.corner.green.plus.icon
+//                 |Add to Cart
+//         else
+//             .ui.fluid.labeled.basic.button
+//                 #remove_from_cart.ui.basic.teal.button
+//                     i.large.icons
+//                         i.add.to.cart.icon
+//                         i.corner.red.minus.icon
+//                     |Remove from Cart
+//                 a.ui.basic.right.pointing.label(href='/cart')
+//                     |View Cart
+//     else        
+//             .ui.fluid.disabled.button
+//                 i.large.icons
+//                     i.add.to.cart.icon
+//                     i.corner.green.plus.icon
+//                 | Not Enough Karma
 
 template(name='delete_button')
     unless confirming
@@ -134,9 +134,9 @@ template(name='published')
 
 
         
-template(name='pin_corner_button')
-    a.pin_button.ui.top.right.attached.button(class=pin_button_class data-tooltip='Pin this') 
-        +icon48 name="push-pin" classes='ui mini inline image'
+// template(name='pin_corner_button')
+//     a.pin_button.ui.top.right.attached.button(class=pin_button_class data-tooltip='Pin this') 
+//         +icon48 name="push-pin" classes='ui mini inline image'
         
 template(name='view_full_button')
     a.ui.basic.circular.icon.button(href="/view/#{_id}" class=classes data-tooltip='View Full')
@@ -164,15 +164,15 @@ template(name='add_doc_button')
         //     | #{add_button_text}
 
 
-template(name='subscribe_button')
-    if is_participant
-        #subscribe_button.ui.button(class=subscribe_buton_class)
-            if subscribed
-                +icon48 name='checked' classes='ui mini inline image'
-                | Subscribed
-            else
-                +icon48 name='unchecked-checkbox' classes='ui mini inline image'
-                |Not Subscribed
+// template(name='subscribe_button')
+//     if is_participant
+//         #subscribe_button.ui.button(class=subscribe_buton_class)
+//             if subscribed
+//                 +icon48 name='checked' classes='ui mini inline image'
+//                 | Subscribed
+//             else
+//                 +icon48 name='unchecked-checkbox' classes='ui mini inline image'
+//                 |Not Subscribed
                 
                 
 // template(name='toggle_zen_mode_button')
@@ -187,22 +187,22 @@ template(name='subscribe_button')
 //             // |Zen
         
         
-template(name='view_tags_button')
-    .ui.circular.basic.button(data-tooltip=tags)
-        +icon48 name='hashtag' classes='ui inline image'
+// template(name='view_tags_button')
+//     .ui.circular.basic.button(data-tooltip=tags)
+//         +icon48 name='hashtag' classes='ui inline image'
         
         
         
         
-template(name='join_button')
-    if joined
-        #leave.ui.basic.button
-            i.red.remove.icon
-            | Leave
-    else
-        #join.ui.basic.button
-            i.green.plus.icon
-            | Join
+// template(name='join_button')
+//     if joined
+//         #leave.ui.basic.button
+//             i.red.remove.icon
+//             | Leave
+//     else
+//         #join.ui.basic.button
+//             i.green.plus.icon
+//             | Join
 
 
 template(name='toggle_view_mode_button')
@@ -214,14 +214,14 @@ template(name='toggle_view_mode_button')
             +icon48 name='lock' classes='ui inline image'
             |Viewing Private
             
-template(name='toggle_completed_button')
-    #toggle_view_mode.ui.circular.button
-        if completed
-            |Completed
-            +icon48 name='checkmark' classes='ui inline image'
-        else
-            +icon48 name='unchecked-checkbox' classes='ui inline image'
-            |Uncompleted
+// template(name='toggle_completed_button')
+//     #toggle_view_mode.ui.circular.button
+//         if completed
+//             |Completed
+//             +icon48 name='checkmark' classes='ui inline image'
+//         else
+//             +icon48 name='unchecked-checkbox' classes='ui inline image'
+//             |Uncompleted
             
             
 template(name='session_edit_button')
