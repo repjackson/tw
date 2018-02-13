@@ -1,45 +1,40 @@
-Template.edit_subtitle.events
-    'blur #subtitle': ->
-        subtitle = $('#subtitle').val()
-        Docs.update FlowRouter.getParam('doc_id'),
-            $set: subtitle: subtitle
+# Template.edit_subtitle.events
+#     'blur #subtitle': ->
+#         subtitle = $('#subtitle').val()
+#         Docs.update FlowRouter.getParam('doc_id'),
+#             $set: subtitle: subtitle
             
-Template.group.events
-    'blur #group': (e,t)->
-        group = $(e.currentTarget).closest('#group').val()
-        Docs.update FlowRouter.getParam('doc_id'),
-            $set: group: group
+# Template.group.events
+#     'blur #group': (e,t)->
+#         group = $(e.currentTarget).closest('#group').val()
+#         Docs.update FlowRouter.getParam('doc_id'),
+#             $set: group: group
             
-Template.author_name.events
-    'blur #author_name': (e,t)->
-        author_name = $(e.currentTarget).closest('#author_name').val()
-        Docs.update FlowRouter.getParam('doc_id'),
-            $set: author_name: author_name
             
-Template.edit_icon.events
+Template.edit_icon_field.events
     'blur #icon_class': (e,t)->
         val = $(e.currentTarget).closest('#icon_class').val()
 
         Docs.update FlowRouter.getParam('doc_id'),
             $set: icon_class: val
             
-Template.created_date.helpers
-    created_date: -> 
-        console.log @timestamp
-        @timestamp
+# Template.created_date.helpers
+#     created_date: -> 
+#         console.log @timestamp
+#         @timestamp
 
-Template.created_date.events
-    'blur #created_date': ->
-        created_date = $('#created_date').val()
-        console.log created_date
-        # Docs.update FlowRouter.getParam('doc_id'),
-        #     $set: created_date: created_date
+# Template.created_date.events
+#     'blur #created_date': ->
+#         created_date = $('#created_date').val()
+#         console.log created_date
+#         # Docs.update FlowRouter.getParam('doc_id'),
+#         #     $set: created_date: created_date
             
-Template.plain.events
-    'blur #plain': ->
-        plain = $('#plain').val()
-        Docs.update FlowRouter.getParam('doc_id'),
-            $set: plain: plain
+# Template.plain.events
+#     'blur #plain': ->
+#         plain = $('#plain').val()
+#         Docs.update FlowRouter.getParam('doc_id'),
+#             $set: plain: plain
             
             
 # Template.child_tags.events
@@ -57,196 +52,150 @@ Template.plain.events
 #             $pull: tags: tag
 #         $('#add_tag').val(tag)
 
-Template.edit_tags.events
-    "autocompleteselect input": (event, template, doc) ->
-        # console.log("selected ", doc)
-        Docs.update FlowRouter.getParam('doc_id'),
-            $addToSet: tags: doc.name
-        $('#theme_tag_select').val('')
-   
-    'keyup #theme_tag_select': (e,t)->
-        e.preventDefault()
-        val = $('#theme_tag_select').val().toLowerCase().trim()
-        switch e.which
-            when 13 #enter
-                unless val.length is 0
-                    Docs.update FlowRouter.getParam('doc_id'),
-                        $addToSet: tags: val
-                    $('#theme_tag_select').val ''
-            # when 8
-            #     if val.length is 0
-            #         result = Docs.findOne(FlowRouter.getParam('doc_id')).tags.slice -1
-            #         $('#theme_tag_select').val result[0]
-            #         Docs.update FlowRouter.getParam('doc_id'),
-            #             $pop: tags: 1
 
 
-    'click .doc_tag': (e,t)->
-        tag = @valueOf()
-        Docs.update FlowRouter.getParam('doc_id'),
-            $pull: tags: tag
-        $('#theme_tag_select').val(tag)
-        
-Template.edit_tags.helpers
-    # editing_mode: -> 
-    #     console.log Session.get 'editing'
-    #     if Session.equals 'editing', true then true else false
-    theme_select_settings: -> {
-        position: 'top'
-        limit: 10
-        rules: [
-            {
-                collection: Tags
-                field: 'name'
-                matchAll: false
-                template: Template.tag_result
-            }
-            ]
-    }
-
-
-Template.edit_location_tags.events
-    "autocompleteselect input": (event, template, doc) ->
-        # console.log("selected ", doc)
-        Docs.update FlowRouter.getParam('doc_id'),
-            $addToSet: location_tags: doc.name
-        $('#location_tag_select').val('')
+# Template.edit_location_tags.events
+#     "autocompleteselect input": (event, template, doc) ->
+#         # console.log("selected ", doc)
+#         Docs.update FlowRouter.getParam('doc_id'),
+#             $addToSet: location_tags: doc.name
+#         $('#location_tag_select').val('')
    
    
-    'keyup #add_location_tag': (e,t)->
-        e.preventDefault()
-        val = $('#add_location_tag').val().toLowerCase().trim()
-        # console.log e
-        switch e.which
-            when 13 #enter
-                unless val.length is 0
-                    Docs.update FlowRouter.getParam('doc_id'),
-                        $addToSet: location_tags: val
-                    $('#add_location_tag').val ''
-            # when 8
-            #     if val.length is 0
-            #         result = Docs.findOne(FlowRouter.getParam('doc_id')).location_tags.slice -1
-            #         $('#location_tag_select').val result[0]
-            #         Docs.update FlowRouter.getParam('doc_id'),
-            #             $pop: location_tags: 1
+#     'keyup #add_location_tag': (e,t)->
+#         e.preventDefault()
+#         val = $('#add_location_tag').val().toLowerCase().trim()
+#         # console.log e
+#         switch e.which
+#             when 13 #enter
+#                 unless val.length is 0
+#                     Docs.update FlowRouter.getParam('doc_id'),
+#                         $addToSet: location_tags: val
+#                     $('#add_location_tag').val ''
+#             # when 8
+#             #     if val.length is 0
+#             #         result = Docs.findOne(FlowRouter.getParam('doc_id')).location_tags.slice -1
+#             #         $('#location_tag_select').val result[0]
+#             #         Docs.update FlowRouter.getParam('doc_id'),
+#             #             $pop: location_tags: 1
 
 
-    'click .doc_tag': (e,t)->
-        tag = @valueOf()
-        Docs.update FlowRouter.getParam('doc_id'),
-            $pull: location_tags: tag
-        $('#location_tag_select').val(tag)
+#     'click .doc_tag': (e,t)->
+#         tag = @valueOf()
+#         Docs.update FlowRouter.getParam('doc_id'),
+#             $pull: location_tags: tag
+#         $('#location_tag_select').val(tag)
 
 
-Template.edit_location_tags.helpers
-    location_select_settings: -> {
-        position: 'bottom'
-        limit: 10
-        rules: [
-            {
-                collection: Location_tags
-                field: 'name'
-                matchAll: true
-                template: Template.tag_pill
-            }
-            ]
-    }
+# Template.edit_location_tags.helpers
+#     location_select_settings: -> {
+#         position: 'bottom'
+#         limit: 10
+#         rules: [
+#             {
+#                 collection: Location_tags
+#                 field: 'name'
+#                 matchAll: true
+#                 template: Template.tag_pill
+#             }
+#             ]
+#     }
 
-Template.edit_intention_tags.events
-    "autocompleteselect input": (event, template, doc) ->
-        # console.log("selected ", doc)
-        Docs.update FlowRouter.getParam('doc_id'),
-            $addToSet: intention_tags: doc.name
-        $('#intention_tag_select').val('')
+# Template.edit_intention_tags.events
+#     "autocompleteselect input": (event, template, doc) ->
+#         # console.log("selected ", doc)
+#         Docs.update FlowRouter.getParam('doc_id'),
+#             $addToSet: intention_tags: doc.name
+#         $('#intention_tag_select').val('')
    
    
-    'keyup #intention_tag_select': (e,t)->
-        e.preventDefault()
-        val = $('#intention_tag_select').val().toLowerCase().trim()
-        switch e.which
-            when 13 #enter
-                unless val.length is 0
-                    Docs.update FlowRouter.getParam('doc_id'),
-                        $addToSet: intention_tags: val
-                    $('#intention_tag_select').val ''
-            # when 8
-            #     if val.length is 0
-            #         result = Docs.findOne(FlowRouter.getParam('doc_id')).intention_tags.slice -1
-            #         $('#intention_tag_select').val result[0]
-            #         Docs.update FlowRouter.getParam('doc_id'),
-            #             $pop: intention_tags: 1
+#     'keyup #intention_tag_select': (e,t)->
+#         e.preventDefault()
+#         val = $('#intention_tag_select').val().toLowerCase().trim()
+#         switch e.which
+#             when 13 #enter
+#                 unless val.length is 0
+#                     Docs.update FlowRouter.getParam('doc_id'),
+#                         $addToSet: intention_tags: val
+#                     $('#intention_tag_select').val ''
+#             # when 8
+#             #     if val.length is 0
+#             #         result = Docs.findOne(FlowRouter.getParam('doc_id')).intention_tags.slice -1
+#             #         $('#intention_tag_select').val result[0]
+#             #         Docs.update FlowRouter.getParam('doc_id'),
+#             #             $pop: intention_tags: 1
 
-    'click .doc_tag': (e,t)->
-        tag = @valueOf()
-        Docs.update FlowRouter.getParam('doc_id'),
-            $pull: intention_tags: tag
-        $('#intention_tag_select').val(tag)
+#     'click .doc_tag': (e,t)->
+#         tag = @valueOf()
+#         Docs.update FlowRouter.getParam('doc_id'),
+#             $pull: intention_tags: tag
+#         $('#intention_tag_select').val(tag)
 
-Template.edit_intention_tags.helpers
-    intention_select_settings: -> {
-        position: 'bottom'
-        limit: 10
-        rules: [
-            {
-                collection: Intention_tags
-                field: 'name'
-                matchAll: true
-                template: Template.tag_pill
-            }
-            ]
-    }
+# Template.edit_intention_tags.helpers
+#     intention_select_settings: -> {
+#         position: 'bottom'
+#         limit: 10
+#         rules: [
+#             {
+#                 collection: Intention_tags
+#                 field: 'name'
+#                 matchAll: true
+#                 template: Template.tag_pill
+#             }
+#             ]
+#     }
 
 
-Template.edit_dollar_price.events
-    'change #dollar_price': ->
-        dollar_price = parseInt $('#dollar_price').val()
+# Template.edit_dollar_price.events
+#     'change #dollar_price': ->
+#         dollar_price = parseInt $('#dollar_price').val()
 
-        Docs.update FlowRouter.getParam('doc_id'),
-            $set: dollar_price: dollar_price
+#         Docs.update FlowRouter.getParam('doc_id'),
+#             $set: dollar_price: dollar_price
             
-Template.edit_point_price.events
-    'change #point_price': ->
-        point_price = parseInt $('#point_price').val()
-        Docs.update FlowRouter.getParam('doc_id'),
-            $set: point_price: point_price
+# Template.edit_point_price.events
+#     'change #point_price': ->
+#         point_price = parseInt $('#point_price').val()
+#         Docs.update FlowRouter.getParam('doc_id'),
+#             $set: point_price: point_price
             
-Template.bounty.events
-    'change #bounty': ->
-        bounty = parseInt $('#bounty').val()
-        Docs.update FlowRouter.getParam('doc_id'),
-            $set: bounty: bounty
-            
-            
-Template.edit_number.events
-    'blur #number': (e) ->
-        # console.log @
-        val = $(e.currentTarget).closest('#number').val()
-        number = parseInt val
-        # console.log number
-        Docs.update @_id,
-            $set: number: number
-            
-Template.edit_quantity.events
-    'blur #quantity': (e) ->
-        # console.log @
-        val = $(e.currentTarget).closest('#quantity').val()
-        quantity = parseInt val
-        # console.log quantity
-        Docs.update FlowRouter.getParam('doc_id'),
-            $set: quantity: quantity
+# Template.bounty.events
+#     'change #bounty': ->
+#         bounty = parseInt $('#bounty').val()
+#         Docs.update FlowRouter.getParam('doc_id'),
+#             $set: bounty: bounty
             
             
-Template.edit_title.events
-    'blur #title': (e,t)->
-        title = $(e.currentTarget).closest('#title').val()
-        Docs.update FlowRouter.getParam('doc_id'),
-            $set: title: title
+# Template.edit_number.events
+#     'blur #number': (e) ->
+#         # console.log @
+#         val = $(e.currentTarget).closest('#number').val()
+#         number = parseInt val
+#         # console.log number
+#         Docs.update @_id,
+#             $set: number: number
             
-Template.edit_completion_type.events
-    'blur #completion_type': (e,t)->
-        completion_type = $(e.currentTarget).closest('#completion_type').val()
-        Docs.update FlowRouter.getParam('doc_id'),
-            $set: completion_type: completion_type
+# Template.edit_quantity.events
+#     'blur #quantity': (e) ->
+#         # console.log @
+#         val = $(e.currentTarget).closest('#quantity').val()
+#         quantity = parseInt val
+#         # console.log quantity
+#         Docs.update FlowRouter.getParam('doc_id'),
+#             $set: quantity: quantity
+            
+            
+# Template.edit_title.events
+#     'blur #title': (e,t)->
+#         title = $(e.currentTarget).closest('#title').val()
+#         Docs.update FlowRouter.getParam('doc_id'),
+#             $set: title: title
+            
+# Template.edit_completion_type.events
+#     'blur #completion_type': (e,t)->
+#         completion_type = $(e.currentTarget).closest('#completion_type').val()
+#         Docs.update FlowRouter.getParam('doc_id'),
+#             $set: completion_type: completion_type
             
 Template.edit_field_template.events
     'blur #field_template': (e,t)->
@@ -255,11 +204,11 @@ Template.edit_field_template.events
             $set: field_template: field_template
             
             
-Template.edit_slug.events
-    'blur #slug': (e,t)->
-        slug = $(e.currentTarget).closest('#slug').val()
-        Docs.update FlowRouter.getParam('doc_id'),
-            $set: slug: slug
+# Template.edit_slug.events
+#     'blur #slug': (e,t)->
+#         slug = $(e.currentTarget).closest('#slug').val()
+#         Docs.update FlowRouter.getParam('doc_id'),
+#             $set: slug: slug
             
             
 Template.edit_string_field.events
@@ -273,67 +222,67 @@ Template.edit_string_field.events
     # capitalized_key: ->
 
 
-Template.plural_slug.events
-    'blur #plural_slug': (e,t)->
-        plural_slug = $(e.currentTarget).closest('#plural_slug').val()
-        Docs.update FlowRouter.getParam('doc_id'),
-            $set: plural_slug: plural_slug
+# Template.plural_slug.events
+#     'blur #plural_slug': (e,t)->
+#         plural_slug = $(e.currentTarget).closest('#plural_slug').val()
+#         Docs.update FlowRouter.getParam('doc_id'),
+#             $set: plural_slug: plural_slug
             
-Template.edit_template.events
-    'blur #template': (e,t)->
-        template = $(e.currentTarget).closest('#template').val()
-        Docs.update FlowRouter.getParam('doc_id'),
-            $set: template: template
-            
-            
-Template.edit_text.events
-    'blur #text': (e,t)->
-        text = $(e.currentTarget).closest('#text').val()
-        Docs.update FlowRouter.getParam('doc_id'),
-            $set: text: text
-            
-Template.edit_type.events
-    'blur #type': (e,t)->
-        type = $(e.currentTarget).closest('#type').val()
-        Docs.update FlowRouter.getParam('doc_id'),
-            $set: type: type
-            
-Template.edit_child_type.events
-    'blur #child_type': (e,t)->
-        child_type = $(e.currentTarget).closest('#child_type').val()
-        Docs.update FlowRouter.getParam('doc_id'),
-            $set: child_type: child_type
+# Template.edit_template.events
+#     'blur #template': (e,t)->
+#         template = $(e.currentTarget).closest('#template').val()
+#         Docs.update FlowRouter.getParam('doc_id'),
+#             $set: template: template
             
             
-Template.edit_link.events
+# Template.edit_text.events
+#     'blur #text': (e,t)->
+#         text = $(e.currentTarget).closest('#text').val()
+#         Docs.update FlowRouter.getParam('doc_id'),
+#             $set: text: text
+            
+# Template.edit_type.events
+#     'blur #type': (e,t)->
+#         type = $(e.currentTarget).closest('#type').val()
+#         Docs.update FlowRouter.getParam('doc_id'),
+#             $set: type: type
+            
+# Template.edit_child_type.events
+#     'blur #child_type': (e,t)->
+#         child_type = $(e.currentTarget).closest('#child_type').val()
+#         Docs.update FlowRouter.getParam('doc_id'),
+#             $set: child_type: child_type
+            
+            
+Template.edit_link_field.events
     'blur #link': (e,t)->
         link = $(e.currentTarget).closest('#link').val()
         Docs.update FlowRouter.getParam('doc_id'),
             $set: link: link
             
             
-Template.page_name.events
-    'blur #name': (e,t)->
-        name = $(e.currentTarget).closest('#name').val()
-        Docs.update FlowRouter.getParam('doc_id'),
-            $set: name: name
+# Template.page_name.events
+#     'blur #name': (e,t)->
+#         name = $(e.currentTarget).closest('#name').val()
+#         Docs.update FlowRouter.getParam('doc_id'),
+#             $set: name: name
             
             
-Template.type.events
-    'blur #type': (e,t)->
-        type = $(e.currentTarget).closest('#type').val()
-        Docs.update FlowRouter.getParam('doc_id'),
-            $set: type: type
+# Template.type.events
+#     'blur #type': (e,t)->
+#         type = $(e.currentTarget).closest('#type').val()
+#         Docs.update FlowRouter.getParam('doc_id'),
+#             $set: type: type
             
             
-Template.edit_parent_id.events
-    'blur #parent_id': (e,t)->
-        parent_id = $(e.currentTarget).closest('#parent_id').val()
-        Docs.update FlowRouter.getParam('doc_id'),
-            $set: parent_id: parent_id
+# Template.edit_parent_id.events
+#     'blur #parent_id': (e,t)->
+#         parent_id = $(e.currentTarget).closest('#parent_id').val()
+#         Docs.update FlowRouter.getParam('doc_id'),
+#             $set: parent_id: parent_id
             
             
-Template.edit_image_id.events
+Template.edit_uploaded_image_field.events
     "change input[type='file']": (e) ->
         doc_id = FlowRouter.getParam('doc_id')
         files = e.currentTarget.files
@@ -386,59 +335,59 @@ Template.edit_image_id.events
                     throw new Meteor.Error "it failed miserably"
 
 
-Template.edit_banner_image_id.events
-    "change input[type='file']": (e) ->
-        doc_id = FlowRouter.getParam('doc_id')
-        files = e.currentTarget.files
+# Template.edit_banner_image_id.events
+#     "change input[type='file']": (e) ->
+#         doc_id = FlowRouter.getParam('doc_id')
+#         files = e.currentTarget.files
 
 
-        Cloudinary.upload files[0],
-            # folder:"secret" # optional parameters described in http://cloudinary.com/documentation/upload_images#remote_upload
-            # type:"private" # optional: makes the image accessible only via a signed url. The signed url is available publicly for 1 hour.
-            (err,res) -> #optional callback, you can catch with the Cloudinary collection as well
-                # console.log "Upload Error: #{err}"
-                # console.dir res
-                if err
-                    console.error 'Error uploading', err
-                else
-                    Docs.update doc_id, $set: banner_image_id: res.public_id
-                return
+#         Cloudinary.upload files[0],
+#             # folder:"secret" # optional parameters described in http://cloudinary.com/documentation/upload_images#remote_upload
+#             # type:"private" # optional: makes the image accessible only via a signed url. The signed url is available publicly for 1 hour.
+#             (err,res) -> #optional callback, you can catch with the Cloudinary collection as well
+#                 # console.log "Upload Error: #{err}"
+#                 # console.dir res
+#                 if err
+#                     console.error 'Error uploading', err
+#                 else
+#                     Docs.update doc_id, $set: banner_image_id: res.public_id
+#                 return
 
-    'keydown #input_banner_image_id': (e,t)->
-        if e.which is 13
-            doc_id = FlowRouter.getParam('doc_id')
-            banner_image_id = $('#input_banner_image_id').val().toLowerCase().trim()
-            if banner_image_id.length > 0
-                Docs.update doc_id,
-                    $set: banner_image_id: banner_image_id
-                $('#input_banner_image_id').val('')
+#     'keydown #input_banner_image_id': (e,t)->
+#         if e.which is 13
+#             doc_id = FlowRouter.getParam('doc_id')
+#             banner_image_id = $('#input_banner_image_id').val().toLowerCase().trim()
+#             if banner_image_id.length > 0
+#                 Docs.update doc_id,
+#                     $set: banner_image_id: banner_image_id
+#                 $('#input_banner_image_id').val('')
 
 
 
-    'click #remove_photo': ->
-        swal {
-            title: 'Remove Photo?'
-            type: 'warning'
-            animation: false
-            showCancelButton: true
-            closeOnConfirm: true
-            cancelButtonText: 'No'
-            confirmButtonText: 'Remove'
-            confirmButtonColor: '#da5347'
-        }, =>
-            Meteor.call "c.delete_by_public_id", @banner_image_id, (err,res) =>
-                if not err
-                    # Do Stuff with res
-                    # console.log res
-                    # console.log @banner_image_id, FlowRouter.getParam('doc_id')
-                    Docs.update FlowRouter.getParam('doc_id'), 
-                        $unset: 
-                            banner_image_id: 1
+#     'click #remove_photo': ->
+#         swal {
+#             title: 'Remove Photo?'
+#             type: 'warning'
+#             animation: false
+#             showCancelButton: true
+#             closeOnConfirm: true
+#             cancelButtonText: 'No'
+#             confirmButtonText: 'Remove'
+#             confirmButtonColor: '#da5347'
+#         }, =>
+#             Meteor.call "c.delete_by_public_id", @banner_image_id, (err,res) =>
+#                 if not err
+#                     # Do Stuff with res
+#                     # console.log res
+#                     # console.log @banner_image_id, FlowRouter.getParam('doc_id')
+#                     Docs.update FlowRouter.getParam('doc_id'), 
+#                         $unset: 
+#                             banner_image_id: 1
 
-                else
-                    throw new Meteor.Error "it failed miserably"
+#                 else
+#                     throw new Meteor.Error "it failed miserably"
 
-Template.edit_image_url.events
+Template.edit_linked_image_field.events
     'click #remove_image_url': ->
         Docs.update FlowRouter.getParam('doc_id'), 
             $unset: 
@@ -451,92 +400,92 @@ Template.edit_image_url.events
 
 
             
-Template.location.events
-    'change #location': ->
-        doc_id = FlowRouter.getParam('doc_id')
-        location = $('#location').val()
+# Template.location.events
+#     'change #location': ->
+#         doc_id = FlowRouter.getParam('doc_id')
+#         location = $('#location').val()
 
-        Docs.update doc_id,
-            $set: location: location
+#         Docs.update doc_id,
+#             $set: location: location
 
-Template.edit_content.events
-    'blur .froala-container': (e,t)->
-        html = t.$('div.froala-reactive-meteorized-override').froalaEditor('html.get', true)
+# Template.edit_content.events
+#     'blur .froala-container': (e,t)->
+#         html = t.$('div.froala-reactive-meteorized-override').froalaEditor('html.get', true)
         
-        # snippet = $('#snippet').val()
-        # if snippet.length is 0
-        #     snippet = $(html).text().substr(0, 300).concat('...')
-        # doc_id = FlowRouter.getParam('doc_id')
+#         # snippet = $('#snippet').val()
+#         # if snippet.length is 0
+#         #     snippet = $(html).text().substr(0, 300).concat('...')
+#         # doc_id = FlowRouter.getParam('doc_id')
 
-        Docs.update @_id,
-            $set: content: html
+#         Docs.update @_id,
+#             $set: content: html
                 
 
-Template.edit_content.helpers
-    getFEContext: ->
-        # @current_doc = Docs.findOne FlowRouter.getParam 'doc_id'
-        @current_doc = Docs.findOne @_id
-        self = @
-        {
-            _value: self.current_doc.content
-            _keepMarkers: true
-            _className: 'froala-reactive-meteorized-override'
-            toolbarInline: false
-            initOnClick: false
-            toolbarButtons:
-                [
-                  'fullscreen'
-                  'bold'
-                  'italic'
-                  'underline'
-                  'strikeThrough'
-                #   'subscript'
-                #   'superscript'
-                  '|'
-                #   'fontFamily'
-                  'fontSize'
-                  'color'
-                #   'inlineStyle'
-                #   'paragraphStyle'
-                  '|'
-                  'paragraphFormat'
-                  'align'
-                  'formatOL'
-                  'formatUL'
-                  'outdent'
-                  'indent'
-                  'quote'
-                #   '-'
-                  'insertLink'
-                #   'insertImage'
-                #   'insertVideo'
-                #   'embedly'
-                #   'insertFile'
-                  'insertTable'
-                #   '|'
-                  'emoticons'
-                #   'specialCharacters'
-                #   'insertHR'
-                  'selectAll'
-                  'clearFormatting'
-                  '|'
-                #   'print'
-                #   'spellChecker'
-                #   'help'
-                  'html'
-                #   '|'
-                  'undo'
-                  'redo'
-                ]
-            toolbarButtonsMD: ['bold', 'italic', 'underline']
-            toolbarButtonsSM: ['bold', 'italic', 'underline']
-            toolbarButtonsXS: ['bold', 'italic', 'underline']
-            imageInsertButtons: ['imageBack', '|', 'imageByURL']
-            tabSpaces: false
-            height: 200
-        }
+# Template.edit_content.helpers
+#     getFEContext: ->
+#         # @current_doc = Docs.findOne FlowRouter.getParam 'doc_id'
+#         @current_doc = Docs.findOne @_id
+#         self = @
+#         {
+#             _value: self.current_doc.content
+#             _keepMarkers: true
+#             _className: 'froala-reactive-meteorized-override'
+#             toolbarInline: false
+#             initOnClick: false
+#             toolbarButtons:
+#                 [
+#                   'fullscreen'
+#                   'bold'
+#                   'italic'
+#                   'underline'
+#                   'strikeThrough'
+#                 #   'subscript'
+#                 #   'superscript'
+#                   '|'
+#                 #   'fontFamily'
+#                   'fontSize'
+#                   'color'
+#                 #   'inlineStyle'
+#                 #   'paragraphStyle'
+#                   '|'
+#                   'paragraphFormat'
+#                   'align'
+#                   'formatOL'
+#                   'formatUL'
+#                   'outdent'
+#                   'indent'
+#                   'quote'
+#                 #   '-'
+#                   'insertLink'
+#                 #   'insertImage'
+#                 #   'insertVideo'
+#                 #   'embedly'
+#                 #   'insertFile'
+#                   'insertTable'
+#                 #   '|'
+#                   'emoticons'
+#                 #   'specialCharacters'
+#                 #   'insertHR'
+#                   'selectAll'
+#                   'clearFormatting'
+#                   '|'
+#                 #   'print'
+#                 #   'spellChecker'
+#                 #   'help'
+#                   'html'
+#                 #   '|'
+#                   'undo'
+#                   'redo'
+#                 ]
+#             toolbarButtonsMD: ['bold', 'italic', 'underline']
+#             toolbarButtonsSM: ['bold', 'italic', 'underline']
+#             toolbarButtonsXS: ['bold', 'italic', 'underline']
+#             imageInsertButtons: ['imageBack', '|', 'imageByURL']
+#             tabSpaces: false
+#             height: 200
+#         }
 
-Template.edit_transcript.events
+Template.edit_transcript_field.events
     'blur .froala-container': (e,t)->
         html = t.$('div.froala-reactive-meteorized-override').froalaEditor('html.get', true)
         
@@ -546,7 +495,7 @@ Template.edit_transcript.events
             $set: transcript: html
                 
 
-Template.edit_transcript.helpers
+Template.edit_transcript_field.helpers
     transcript_context: ->
         @current_doc = Docs.findOne FlowRouter.getParam('doc_id')
         self = @
@@ -630,7 +579,7 @@ Template.view_youtube_field.onRendered ->
 
 
 # vimeo
-Template.edit_vimeo.events
+Template.edit_vimeo_field.events
     'blur #vimeo': (e,t)->
         vimeo = $(e.currentTarget).closest('#vimeo').val()
         Docs.update FlowRouter.getParam('doc_id'),
@@ -641,12 +590,12 @@ Template.edit_vimeo.events
         Docs.update FlowRouter.getParam('doc_id'),
             $unset: vimeo: 1
             
-Template.edit_vimeo.onRendered ->
+Template.edit_vimeo_field.onRendered ->
     Meteor.setTimeout (->
         $('.ui.embed').embed()
     ), 2000
 
-Template.view_vimeo.onRendered ->
+Template.view_vimeo_field.onRendered ->
     Meteor.setTimeout (->
         $('.ui.embed').embed()
     ), 2000
@@ -654,43 +603,43 @@ Template.view_vimeo.onRendered ->
 
 
 
-Template.participants.onCreated ->
-    Meteor.subscribe 'usernames'
+# Template.participants.onCreated ->
+#     Meteor.subscribe 'usernames'
 
-Template.participants.events
-    "autocompleteselect input": (event, template, doc) ->
-        # console.log("selected ", doc)
-        Docs.update FlowRouter.getParam('doc_id'),
-            $addToSet: participant_ids: doc._id
-        $('#participant_select').val("")
+# Template.participants.events
+#     "autocompleteselect input": (event, template, doc) ->
+#         # console.log("selected ", doc)
+#         Docs.update FlowRouter.getParam('doc_id'),
+#             $addToSet: participant_ids: doc._id
+#         $('#participant_select').val("")
    
-    'click #remove_participant': (e,t)->
-        # console.log @
-        Docs.update FlowRouter.getParam('doc_id'),
-            $pull: participant_ids: FlowRouter.getParam('doc_id')
+#     'click #remove_participant': (e,t)->
+#         # console.log @
+#         Docs.update FlowRouter.getParam('doc_id'),
+#             $pull: participant_ids: FlowRouter.getParam('doc_id')
 
 
 
-Template.participants.helpers
-    participants_edit_settings: -> {
-        position: 'bottom'
-        limit: 10
-        rules: [
-            {
-                collection: Meteor.users
-                field: 'username'
-                matchAll: true
-                template: Template.user_pill
-            }
-            ]
-    }
+# Template.participants.helpers
+#     participants_edit_settings: -> {
+#         position: 'bottom'
+#         limit: 10
+#         rules: [
+#             {
+#                 collection: Meteor.users
+#                 field: 'username'
+#                 matchAll: true
+#                 template: Template.user_pill
+#             }
+#             ]
+#     }
 
-    participants: ->
-        participants = []
+#     participants: ->
+#         participants = []
         
-        for participant_id in @participant_ids
-            participants.push Meteor.users.findOne(participant_id)
-        participants
+#         for participant_id in @participant_ids
+#             participants.push Meteor.users.findOne(participant_id)
+#         participants
 
 # Template.datetime.onRendered ->
 #     Meteor.setTimeout (->
@@ -764,32 +713,32 @@ Template.participants.helpers
 #         if @text.toLowerCase() in doc.tags then 'disabled' else ''
 
 
-Template.edit_author.onCreated ->
-    Meteor.subscribe 'usernames'
+# Template.edit_author.onCreated ->
+#     Meteor.subscribe 'usernames'
 
-Template.edit_author.events
-    "autocompleteselect input": (event, template, doc) ->
-        # console.log("selected ", doc)
-        if confirm 'Change author?'
-            Docs.update FlowRouter.getParam('doc_id'),
-                $set: author_id: doc._id
-            $('#author_select').val("")
+# Template.edit_author.events
+#     "autocompleteselect input": (event, template, doc) ->
+#         # console.log("selected ", doc)
+#         if confirm 'Change author?'
+#             Docs.update FlowRouter.getParam('doc_id'),
+#                 $set: author_id: doc._id
+#             $('#author_select').val("")
 
 
 
-Template.edit_author.helpers
-    author_edit_settings: -> {
-        position: 'bottom'
-        limit: 10
-        rules: [
-            {
-                collection: Meteor.users
-                field: 'username'
-                matchAll: true
-                template: Template.user_pill
-            }
-            ]
-    }
+# Template.edit_author.helpers
+#     author_edit_settings: -> {
+#         position: 'bottom'
+#         limit: 10
+#         rules: [
+#             {
+#                 collection: Meteor.users
+#                 field: 'username'
+#                 matchAll: true
+#                 template: Template.user_pill
+#             }
+#             ]
+#     }
 
     # edit_author: ->
     #     participants = []
@@ -797,30 +746,30 @@ Template.edit_author.helpers
     #     for participant_id in @participant_ids
     #         participants.push Meteor.users.findOne(participant_id)
     #     participants
-Template.edit_recipient.onCreated ->
-    Meteor.subscribe 'usernames'
+# Template.edit_recipient.onCreated ->
+#     Meteor.subscribe 'usernames'
 
-Template.edit_recipient.events
-    "autocompleteselect input": (event, template, doc) ->
-        # console.log("selected ", doc)
-        Docs.update FlowRouter.getParam('doc_id'),
-            $set: recipient_id: doc._id
-        $('#recipient_select').val("")
+# Template.edit_recipient.events
+#     "autocompleteselect input": (event, template, doc) ->
+#         # console.log("selected ", doc)
+#         Docs.update FlowRouter.getParam('doc_id'),
+#             $set: recipient_id: doc._id
+#         $('#recipient_select').val("")
 
 
-Template.edit_recipient.helpers
-    recipient_select_settings: -> {
-        position: 'bottom'
-        limit: 10
-        rules: [
-            {
-                collection: Meteor.users
-                field: 'username'
-                matchAll: true
-                template: Template.user_pill
-            }
-            ]
-    }
+# Template.edit_recipient.helpers
+#     recipient_select_settings: -> {
+#         position: 'bottom'
+#         limit: 10
+#         rules: [
+#             {
+#                 collection: Meteor.users
+#                 field: 'username'
+#                 matchAll: true
+#                 template: Template.user_pill
+#             }
+#             ]
+#     }
 
     # edit_participant: ->
     #     participants = []
@@ -830,82 +779,82 @@ Template.edit_recipient.helpers
     #     participants
 
 
-Template.start_date.events
-    'blur #start_date': ->
-        start_date = $('#start_date').val()
-        Docs.update FlowRouter.getParam('doc_id'),
-            $set: start_date: start_date
+# Template.start_date.events
+#     'blur #start_date': ->
+#         start_date = $('#start_date').val()
+#         Docs.update FlowRouter.getParam('doc_id'),
+#             $set: start_date: start_date
     
-Template.end_date.events
-    'blur #end_date': ->
-        end_date = $('#end_date').val()
-        Docs.update FlowRouter.getParam('doc_id'),
-            $set: end_date: end_date
+# Template.end_date.events
+#     'blur #end_date': ->
+#         end_date = $('#end_date').val()
+#         Docs.update FlowRouter.getParam('doc_id'),
+#             $set: end_date: end_date
 
-Template.time_marker.events
-    'blur #time_marker': ->
-        time_marker = parseFloat $('#time_marker').val()
-        Docs.update FlowRouter.getParam('doc_id'),
-            $set: time_marker: time_marker
+# Template.time_marker.events
+#     'blur #time_marker': ->
+#         time_marker = parseFloat $('#time_marker').val()
+#         Docs.update FlowRouter.getParam('doc_id'),
+#             $set: time_marker: time_marker
 
 
-Template.remove_field.events
-    'click .remove_field':  ->
-        # console.log @slug
-        self = @
-        swal {
-            title: "Remove #{@slug} field?"
-            type: 'warning'
-            animation: false
-            showCancelButton: true
-            closeOnConfirm: true
-            cancelButtonText: 'Cancel'
-            confirmButtonText: 'Remove'
-            confirmButtonColor: '#da5347'
-        }, =>
-            parent_doc = Docs.findOne FlowRouter.getParam('doc_id')
-            Docs.update parent_doc._id, 
-                $unset: 
-                    "#{self.slug}": 1
-            # swal("#{self.field} removed", "", "success")
-            swal {
-                title: "Removed #{self.slug} field."
-                type: 'success'
-                animation: false
-                showCancelButton: false
-                closeOnConfirm: true
-                # cancelButtonText: 'Cancel'
-                confirmButtonText: 'Ok'
-                # confirmButtonColor: '#da5347'
-            }
+# Template.remove_field.events
+#     'click .remove_field':  ->
+#         # console.log @slug
+#         self = @
+#         swal {
+#             title: "Remove #{@slug} field?"
+#             type: 'warning'
+#             animation: false
+#             showCancelButton: true
+#             closeOnConfirm: true
+#             cancelButtonText: 'Cancel'
+#             confirmButtonText: 'Remove'
+#             confirmButtonColor: '#da5347'
+#         }, =>
+#             parent_doc = Docs.findOne FlowRouter.getParam('doc_id')
+#             Docs.update parent_doc._id, 
+#                 $unset: 
+#                     "#{self.slug}": 1
+#             # swal("#{self.field} removed", "", "success")
+#             swal {
+#                 title: "Removed #{self.slug} field."
+#                 type: 'success'
+#                 animation: false
+#                 showCancelButton: false
+#                 closeOnConfirm: true
+#                 # cancelButtonText: 'Cancel'
+#                 confirmButtonText: 'Ok'
+#                 # confirmButtonColor: '#da5347'
+#             }
             
             
     
-Template.view_transcript.onRendered ->
+Template.view_transcript_field.onRendered ->
     @autorun =>
         if @subscriptionsReady()
             Meteor.setTimeout ->
                 $('.ui.accordion').accordion()
             , 1000
-Template.edit_transcript.onRendered ->
+Template.edit_transcript_field.onRendered ->
     @autorun =>
         if @subscriptionsReady()
             Meteor.setTimeout ->
                 $('.ui.accordion').accordion()
             , 1000
             
-Template.start_datetime.events
-    'blur #start_datetime': ->
-        start_datetime = $('#start_datetime').val()
-        Docs.update FlowRouter.getParam('doc_id'),
-            $set: start_datetime: start_datetime
+# Template.start_datetime.events
+#     'blur #start_datetime': ->
+#         start_datetime = $('#start_datetime').val()
+#         Docs.update FlowRouter.getParam('doc_id'),
+#             $set: start_datetime: start_datetime
 
 
-Template.end_datetime.events
-    'blur #end_datetime': ->
-        end_datetime = $('#end_datetime').val()
-        Docs.update FlowRouter.getParam('doc_id'),
-            $set: end_datetime: end_datetime
+# Template.end_datetime.events
+#     'blur #end_datetime': ->
+#         end_datetime = $('#end_datetime').val()
+#         Docs.update FlowRouter.getParam('doc_id'),
+#             $set: end_datetime: end_datetime
 
 
 Template.field_view_template.helpers
@@ -1019,4 +968,86 @@ Template.edit_html_field.helpers
             tabSpaces: false
             height: 200
         }
+            
+            
+            
+Template.edit_array_field.events
+    "autocompleteselect input": (event, template, doc) ->
+        # console.log("selected ", doc)
+        Docs.update FlowRouter.getParam('doc_id'),
+            $addToSet: tags: doc.name
+        $('#theme_tag_select').val('')
+   
+    'keyup #theme_tag_select': (e,t)->
+        e.preventDefault()
+        val = $('#theme_tag_select').val().toLowerCase().trim()
+        switch e.which
+            when 13 #enter
+                unless val.length is 0
+                    Docs.update FlowRouter.getParam('doc_id'),
+                        $addToSet: tags: val
+                    $('#theme_tag_select').val ''
+            # when 8
+            #     if val.length is 0
+            #         result = Docs.findOne(FlowRouter.getParam('doc_id')).tags.slice -1
+            #         $('#theme_tag_select').val result[0]
+            #         Docs.update FlowRouter.getParam('doc_id'),
+            #             $pop: tags: 1
+
+
+    'click .doc_tag': (e,t)->
+        tag = @valueOf()
+        Docs.update FlowRouter.getParam('doc_id'),
+            $pull: tags: tag
+        $('#theme_tag_select').val(tag)
+        
+Template.edit_array_field.helpers
+    # editing_mode: -> 
+    #     console.log Session.get 'editing'
+    #     if Session.equals 'editing', true then true else false
+    theme_select_settings: -> {
+        position: 'top'
+        limit: 10
+        rules: [
+            {
+                collection: Tags
+                field: 'name'
+                matchAll: false
+                template: Template.tag_result
+            }
+            ]
+    }
+            
+            
+            
+Template.edit_text_field.events
+    'blur #text_field_input': (e,t)->
+        field_key = Docs.findOne(Template.parentData(3)).slug
+        value = $(e.currentTarget).closest('#text_field_input').val()
+        # console.log value
+        Docs.update FlowRouter.getParam('doc_id'),
+            $set: "#{field_key}": value
+            
+Template.single_text_field_edit.events
+    'blur #value': (e,t)->
+        # console.log @
+        value = $(e.currentTarget).closest('#value').val()
+        # console.log value
+        Docs.update FlowRouter.getParam('doc_id'),
+            $set: "#{@key}": value
+            
+Template.single_text_field_edit.helpers
+    field_value: ->
+        # console.log @
+        current_doc = Docs.findOne FlowRouter.getParam('doc_id')
+        current_doc["#{@key}"]
+            
+            
+Template.single_html_field_view.helpers
+    field_value: ->
+        # console.log @
+        current_doc = Docs.findOne FlowRouter.getParam('doc_id')
+        current_doc["#{@key}"]
+            
+            
             

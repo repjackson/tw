@@ -6,50 +6,11 @@ template(name='edit_field_template')
 template(name='view_field_template') 
     | Field Type: #{field_template}
 
-// template(name='edit_string_field')
-//     .ui.labeled.fluid.input
-//         .ui.basic.label #{key}
-//         input#value(type='text' value=value)
-
-//     // +toggle_key key='completion_type' value='response' icon='response' label='Response'
 
 
-template(name='edit_title') 
-    .ui.labeled.fluid.input
-        .ui.basic.label Title
-        input#title(type='text' value=title)
-    // else
-    //     // h2.ui.header 
-    //         // if icon_class
-    //         //     +icon48 name=icon_class classes='ui mini inline image'
-    //     |#{title}
-
-template(name='edit_subtitle')
-    .ui.labeled.fluid.input
-        .ui.basic.label Subtitle
-        input#subtitle(type='text' value=subtitle)
-
-template(name='view_subtitle')
-    h3.ui.center.aligned.header #{subtitle}
-
-template(name='group')
-    if editing
-        .ui.labeled.fluid.input
-            .ui.basic.label Group
-            input#group(type='text' value=group)
-
-template(name='edit_type')
-    .ui.labeled.fluid.input
-        .ui.basic.label Type
-        input#type(type='text' value=type)
-
-template(name='edit_child_type')
-    .ui.labeled.fluid.input
-        .ui.basic.label(data-tooltip="Type that each child will be created as") Child Type
-        input#child_type(type='text' value=child_type)
 
 
-template(name='edit_icon')
+template(name='edit_icon_field')
     .ui.labeled.input
         a.ui.basic.label(href="https://icons8.com/icon/new-icons/color" target='_blank' data-tooltip="Lookup at icons8")
             |Icon 
@@ -57,211 +18,66 @@ template(name='edit_icon')
     if icon_class    
         +icon96 name=icon_class classes='ui inline image'
 
-template(name='created_date')
-    .ui.form
-        .inline.field
-            label Created Date
-            input#created_date(type='datetime-local' value=created_date)
-
-template(name='plain')
-    .field
-        input#plain(type='text' value=plain)
+// template(name='created_date')
+//     .ui.form
+//         .inline.field
+//             label Created Date
+//             input#created_date(type='datetime-local' value=created_date)
 
 
-template(name='edit_slug')
-    .ui.labeled.input
-        .ui.basic.label Slug
-        input#slug(type='text' value=slug)
+// template(name='edit_number')
+//     .ui.labeled.input
+//         .ui.basic.label Number
+//         input#number(type='number' min='0' value=number)
 
-template(name='edit_template')
-    .ui.labeled.input
-        .ui.basic.label template
-        input#template(type='text' value=template)
+// template(name='edit_text')
+//     .ui.form
+//         .field
+//             textarea#text(rows='3') #{text}
 
-template(name='edit_completion_type')
-    .ui.labeled.input
-        .ui.basic.label completion type
-        input#completion_type(type='text' value=completion_type)
-
-template(name='plural_slug')
-    .ui.labeled.input
-        .ui.basic.label Plural Slug
-        input#plural_slug(type='text' value=plural_slug)
-
-template(name='edit_number')
-    .ui.labeled.input
-        .ui.basic.label Number
-        input#number(type='number' min='0' value=number)
-
-template(name='edit_quantity')
-    if editing
-        .ui.labeled.input
-            .ui.basic.label Quantity (0 for infinite)
-            input#quantity(type='number' min='0' value=quantity)
-    else
-        .ui.header Quantity: #{quantity}
-
-template(name='edit_text')
-    .ui.form
-        .field
-            textarea#text(rows='3') #{text}
-
-template(name='view_text')
-    .ui.basic.segment
-        |#{text}
+// template(name='view_text')
+//     .ui.basic.segment
+//         |#{text}
             
             
-template(name='edit_tags')
-    // .ui.segment
-    .ui.header
-        +icon48 name='hashtag' classes='ui mini spaced image'
-        |Tags &nbsp;
-        .ui.mini.input
-            input#theme_tag_select(type='text' placeholder='Add...' maxlength='50' )
-        // .ui.mini.input
-        //     +inputAutocomplete settings=theme_select_settings id="theme_tag_select" class="" autocomplete="off"
-        each tags
-            // a.ui.basic.circular.button.doc_tag #{this}
-            a.ui.circular.white.button.doc_tag
-                i.remove.icon
-                |#{this}
+// template(name='edit_tags')
+//     // .ui.segment
+//     .ui.header
+//         +icon48 name='hashtag' classes='ui mini spaced image'
+//         |Tags &nbsp;
+//         .ui.mini.input
+//             input#theme_tag_select(type='text' placeholder='Add...' maxlength='50' )
+//         // .ui.mini.input
+//         //     +inputAutocomplete settings=theme_select_settings id="theme_tag_select" class="" autocomplete="off"
+//         each tags
+//             // a.ui.basic.circular.button.doc_tag #{this}
+//             a.ui.circular.white.button.doc_tag
+//                 i.remove.icon
+//                 |#{this}
 
 
-template(name='view_tags')
-    div
-        +icon48 name='hashtag' classes='ui inline mini image' tootip='Theme Tags'
-        each tags
-            .ui.basic.label #{this}
+// template(name='view_tags')
+//     div
+//         +icon48 name='hashtag' classes='ui inline mini image' tootip='Theme Tags'
+//         each tags
+//             .ui.basic.label #{this}
 
             
-template(name='edit_location_tags')
-    .ui.header 
-        +icon48 name='sofa' classes='ui mini spaced image'
-        |Location Tags &nbsp;
-        // .ui.mini.input
-        //     +inputAutocomplete settings=location_select_settings id="location_tag_select" class="" autocomplete="off"
-        .ui.mini.input
-            input#add_location_tag(type='text' placeholder="eg. 'home', 'couch'" maxlength='50' )
-        each location_tags
-            // a.ui.basic.circular.button.doc_tag #{this}
-            a.ui.circular.button.doc_tag
-                i.remove.icon
-                |#{this}
 
 
-template(name='view_location_tags')
-    div
-        +icon48 name='sofa' classes='ui mini inline image' tootip='Location Tags'
-        each location_tags
-            .ui.basic.label.location_tag #{this}
-
-
-
-template(name='edit_intention_tags')
-    .ui.header 
-        +icon48 name='spotlight' classes='ui mini spaced image'
-        |My intention for this entry is to... &nbsp;
-        // .ui.mini.input
-        //     +inputAutocomplete settings=intention_select_settings id="intention_tag_select" class="" autocomplete="off"
-        .ui.mini.input
-            input#intention_tag_select(type='text' maxlength='50' )
-        each intention_tags
-            // a.ui.basic.circular.button.doc_tag #{this}
-            a.ui.circular.button.doc_tag
-                i.remove.icon
-                |#{this}
-
-template(name='view_intention_tags')
-    if intention_tags
-        div
-            +icon48 name='spotlight' classes='ui mini inline image' tootip='Intention Tags'
-            each intention_tags
-                .ui.basic.label.intention_tag #{this}
-
-
-template(name='edit_dollar_price')
-    .ui.labeled.input
-        .ui.basic.label $ Price
-        input#dollar_price(type='number' min='0' value=dollar_price)
-
-template(name='view_dollar_price')
-    .ui.header Price $#{dollar_price}
-
-template(name='edit_point_price')
-    .ui.labeled.input
-        .ui.basic.label Point Price
-        input#point_price(type='number' min='0' value=point_price)
-
-template(name='bounty')
-    if editing
-        .ui.labeled.input
-            .ui.basic.label Bounty
-            input#bounty(type='number' min='0' value=bounty)
-            .ui.basic.label pts
-    else
-        .ui.header Offer: #{bounty}
-
-
-template(name='edit_link')
+template(name='edit_link_field')
     .ui.labeled.icon.input
         .ui.basic.label Link (include http://)
         // i.linkify.icon
         input#link(type='text' value=link)
 
 
-template(name='view_link')
+template(name='view_link_field')
     a(href=link) #{link}
 
 
-
-template(name='page_name')
-    .field
-        label Page Name
-        .ui.input
-            input#name(type='text' value=name)
-
-
-template(name='type')
-    .ui.labeled.fluid.input
-        .ui.basic.label Type
-        input#type(type='text' value=type)
-            
-template(name='author_name')
-    if editing
-        .ui.labeled.fluid.large.input
-            .ui.basic.label Author
-            input#author_name(type='text' value=author_name)
-    else
-        .ui.header Author: #{author_name}
-
-
-template(name='edit_parent_id')
-    .ui.form
-        .inline.field
-            label ParentID
-            input#parent_id(type='text' value=parent_id)
-
-template(name='location')
-    .field
-        label Location
-        .ui.left.icon.input
-            +icon48 name='geo-fence'
-            input#location(type='text' value=location)
-
-template(name='edit_content')
-    .ui.header
-        +icon48 name='html' classes='ui mini spaced image'
-        | Edit Content
-    .froala-container
-        +froalaReactive getFEContext
-
-template(name='view_content')
-    .ui.basic.segment
-        .large120 !{content}
-
     
-    
-template(name='edit_image_id')
+template(name='edit_uploaded_image_field')
     .ui.segment
         if image_id
             .ui.header
@@ -284,39 +100,39 @@ template(name='edit_image_id')
             //     .ui.input
             //         input#input_image_id(type='text')
 
-template(name='edit_banner_image_id')
-    .ui.segment
-        if banner_image_id
-            .ui.header
-                 +icon48 name='image-file' classes='ui mini spaced image'
-                 |Banner Image
-            .ui.large.centered.image
-                img(src="{{c.url banner_image_id width=500 crop='fit'}}")
-                a#remove_photo.ui.top.right.attached.link.basic.label
-                    +icon48 name='delete' classes='ui tiny spaced image'
-                if isInRole 'dev'
-                    .ui.bottom.right.attached.blue.label Image Id: #{banner_image_id}
-        else
-            .ui.labeled.fluid.input
-                .ui.basic.label
-                    +icon48 name='add-image' classes='ui tiny spaced image'
-                    |Upload Banner Image
-                input(type='file' name='upload_picture' accept='image/*')
-            // if isInRole 'dev'
-            //     .ui.header or Choose Cloudinary Image Id
-            //     .ui.input
-            //         input#input_image_id(type='text')
+// template(name='edit_banner_image_id')
+//     .ui.segment
+//         if banner_image_id
+//             .ui.header
+//                  +icon48 name='image-file' classes='ui mini spaced image'
+//                  |Banner Image
+//             .ui.large.centered.image
+//                 img(src="{{c.url banner_image_id width=500 crop='fit'}}")
+//                 a#remove_photo.ui.top.right.attached.link.basic.label
+//                     +icon48 name='delete' classes='ui tiny spaced image'
+//                 if isInRole 'dev'
+//                     .ui.bottom.right.attached.blue.label Image Id: #{banner_image_id}
+//         else
+//             .ui.labeled.fluid.input
+//                 .ui.basic.label
+//                     +icon48 name='add-image' classes='ui tiny spaced image'
+//                     |Upload Banner Image
+//                 input(type='file' name='upload_picture' accept='image/*')
+//             // if isInRole 'dev'
+//             //     .ui.header or Choose Cloudinary Image Id
+//             //     .ui.input
+//             //         input#input_image_id(type='text')
 
 
-template(name='view_banner_image_id')
-    img.ui.centered.image(src="{{c.url banner_image_id width=500 crop='fit'}}")
+// template(name='view_banner_image_id')
+//     img.ui.centered.image(src="{{c.url banner_image_id width=500 crop='fit'}}")
         
-template(name='view_image_id')
-    if image_id
-        img.ui.centered.image(src="{{c.url image_id width=500 crop='fit'}}")
+// template(name='view_image_id')
+//     if image_id
+//         img.ui.centered.image(src="{{c.url image_id width=500 crop='fit'}}")
         
 
-template(name='edit_image_url')
+template(name='edit_linked_image_field')
     if image_url
         label Image URL
         .ui.image
@@ -333,7 +149,7 @@ template(name='edit_image_url')
                 +icon24 name='sent'
 
 
-template(name='view_image_url')
+template(name='view_linked_image_field')
     if image_url
         .ui.large.image
             img(src=image_url)
@@ -358,7 +174,7 @@ template(name='view_youtube_field')
         .ui.embed(data-source="youtube" data-id=youtube)
 
 
-template(name='edit_vimeo')
+template(name='edit_vimeo_field')
     .ui.segment
         .ui.action.fluid.labeled.input
             .ui.basic.label
@@ -371,96 +187,43 @@ template(name='edit_vimeo')
             .ui.embed(data-source="vimeo" data-id=vimeo)
 
 
-template(name='view_vimeo')
+template(name='view_vimeo_field')
     // .ui.embed(data-source="vimeo" data-id=vimeo data-icon="video" data-placeholder="/images/video_placeholder.png")
     if vimeo
         .ui.embed(data-source="vimeo" data-id=vimeo)
 
 
-template(name='participants')
-    .field
-        label Participants: 
-        each participants
-            .ui.large.basic.label
-                img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
-                |#{username}
-                #remove_participant.ui.icon.basic.small.compact.circular.button
-                    i.red.remove.icon
-        .ui.left.icon.large.input
-            i.search.icon
-            +inputAutocomplete settings=participants_edit_settings id="participant_select" class="" autocomplete="off" placeholder='Search Username...'
             
             
-template(name='edit_author')
-    .ui.labeled.input
-        .ui.basic.label 
-            |Author: 
-            with author
-                img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
-                |#{username}
-        +inputAutocomplete settings=author_edit_settings id="author_select" class="" autocomplete="off" placeholder='Lookup...'
+// template(name='edit_author')
+//     .ui.labeled.input
+//         .ui.basic.label 
+//             |Author: 
+//             with author
+//                 img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+//                 |#{username}
+//         +inputAutocomplete settings=author_edit_settings id="author_select" class="" autocomplete="off" placeholder='Lookup...'
                     
                     
-template(name='edit_recipient')
-    .ui.labeled.input
-        .ui.basic.label 
-            |Recipient: 
-            with recipient
-                img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
-                |#{username}
-        +inputAutocomplete settings=recipient_select_settings id="recipient_select" class="" autocomplete="off" placeholder='Lookup...'
+// template(name='edit_recipient')
+//     .ui.labeled.input
+//         .ui.basic.label 
+//             |Recipient: 
+//             with recipient
+//                 img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+//                 |#{username}
+//         +inputAutocomplete settings=recipient_select_settings id="recipient_select" class="" autocomplete="off" placeholder='Lookup...'
                     
-template(name='start_date')
-    .ui.labeled.input
-        .ui.basic.label Start Date
-        input#start_date(type='date' value=start_date)
-
-template(name='start_time')
-    .ui.labeled.input
-        .ui.basic.label Start Time
-        input#start_time(type='time' value=start_time)
-            
-template(name='time_marker')
-    .ui.labeled.input
-        .ui.basic.label Time Marker
-        input#time_marker(type='number' value=time_marker step="0.01" min="0")
-            
-template(name='end_date')
-    if editing
-        .ui.labeled.input
-            .ui.basic.label End Date/Time
-            input#end_date(type='date' value=end_date)
-    else
-        .ui.header End Date #{end_date}
-        
-        
-template(name='remove_field')
-    .remove_field.ui.basic.icon.button
-        i.remove.red.icon
-        
-        
-        
-// template(name='child_view')
-//     .ui.labeled.fluid.input
-//         .ui.basic.label Child Type
-//         input#child_type(type='text' value=child_type)
-//     if card_view
-//         .ui.cards
-//             each typed_children
-//                 .ui.card
-//                     .content
-//                         a.header(href="/view/#{_id}") #{title}
                         
                         
-                        
-template(name='edit_transcript')
+template(name='edit_transcript_field')
     .ui.header 
         +icon48 name="paper" classes='ui mini inline image'
         |Transcript
     .froala-container
         +froalaReactive transcript_context
 
-template(name='view_transcript')
+template(name='view_transcript_field')
     .ui.styled.fluid.accordion
         h3.title
             +icon96 name="paper" classes='ui mini inline image'
@@ -476,21 +239,21 @@ template(name='view_transcript')
     
     
     
-template(name='start_datetime')
-    if editing
-        .ui.labeled.input
-            .ui.basic.label Start Date/Time
-            input#start_datetime(type='datetime-local' value=start_datetime)
-    else
-        .ui.header Start Date/Time #{start_datetime}
+// template(name='start_datetime')
+//     if editing
+//         .ui.labeled.input
+//             .ui.basic.label Start Date/Time
+//             input#start_datetime(type='datetime-local' value=start_datetime)
+//     else
+//         .ui.header Start Date/Time #{start_datetime}
         
-template(name='end_datetime')
-    if editing
-        .ui.labeled.input
-            .ui.basic.label End Date/Time
-            input#end_datetime(type='datetime-local' value=end_datetime)
-    else
-        .ui.header End Date/Time #{end_datetime}
+// template(name='end_datetime')
+//     if editing
+//         .ui.labeled.input
+//             .ui.basic.label End Date/Time
+//             input#end_datetime(type='datetime-local' value=end_datetime)
+//     else
+//         .ui.header End Date/Time #{end_datetime}
 
 
 template(name='field_view_template')
@@ -516,10 +279,10 @@ template(name='view_text_field')
             |#{field_template_value}
     
 template(name='edit_text_field')
-    .ui.header
-        +icon48 name=field_template_field_doc.icon_class classes='ui inline image'
-        |#{field_template_field_doc.title}:
-        |#{field_template_value}
+    // .ui.header
+    //     +icon48 name=field_template_field_doc.icon_class classes='ui inline image'
+    //     |#{field_template_field_doc.title}:
+    //     |#{field_template_value}
     
     .ui.labeled.fluid.input
         .ui.basic.label #{field_template_field_doc.title}
@@ -535,16 +298,11 @@ template(name='edit_string_field')
     .ui.labeled.fluid.input
         .ui.basic.label #{field_template_field_doc.title}
         input#text_field_input(type='text' value=field_template_value)
-
-    
-    
 template(name='view_number_field')
     if field_template_value
         .ui.header
             |#{field_template_field_doc.title}:
             |#{field_template_value}
-    
-    
 template(name='view_string_field')
     if field_template_value
         .ui.header
@@ -554,23 +312,24 @@ template(name='view_string_field')
     
     
 template(name='view_array_field')
-    .ui.header
-        +icon48 name=field_template_field_doc.icon_class classes='ui inline image'
-        |#{field_template_field_doc.title}
-    each field_template_value
-        .ui.basic.label #{this}
+    if field_template_value
+        .ui.basic.segment
+            +icon48 name=field_template_field_doc.icon_class classes='ui inline image'
+                // |#{field_template_field_doc.title}
+            each field_template_value
+                .ui.basic.large.label #{this}
     
     
 template(name='edit_array_field')
     // .ui.segment
     .ui.header
-        +icon48 name='hashtag' classes='ui mini spaced image'
-        |Tags &nbsp;
+        +icon48 name=field_template_field_doc.icon_class classes='ui inline image'
+        |#{field_template_field_doc.title}
         .ui.mini.input
             input#theme_tag_select(type='text' placeholder='Add...' maxlength='50' )
         // .ui.mini.input
         //     +inputAutocomplete settings=theme_select_settings id="theme_tag_select" class="" autocomplete="off"
-        each tags
+        each field_template_value
             // a.ui.basic.circular.button.doc_tag #{this}
             a.ui.circular.white.button.doc_tag
                 i.remove.icon
@@ -580,10 +339,19 @@ template(name='edit_array_field')
     
     
 template(name='view_html_field')
-    .ui.header
-        +icon48 name=field_template_field_doc.icon_class classes='ui inline image'
-        |#{field_template_field_doc.title}
-    |!{field_template_value}
+    if field_template_value
+        // .ui.header
+        //     +icon48 name=field_template_field_doc.icon_class classes='ui inline image'
+        //     |#{field_template_field_doc.title}
+        .large120 !{field_template_value}
+    
+    
+template(name='single_html_field_view')
+    if field_value
+        // .ui.header
+        //     +icon48 name=field_template_field_doc.icon_class classes='ui inline image'
+        //     |#{field_template_field_doc.title}
+        .large120 !{field_value}
     
     
     
@@ -596,3 +364,10 @@ template(name='edit_html_field')
     .froala-container
         +froalaReactive getFEContext
     
+    
+template(name='single_text_field_edit')
+    .ui.labeled.fluid.input
+        .ui.basic.label #{key}
+        input#value(type='text' value=field_value)
+
+    // +toggle_key key='completion_type' value='response' icon='response' label='Response'

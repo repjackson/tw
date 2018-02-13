@@ -318,7 +318,7 @@ Meteor.publish 'facet', (
         if parent_id then match.parent_id = parent_id
 
         if view_private is true
-            console.log 'viewing private'
+            # console.log 'viewing private'
             match.author_id = Meteor.userId()
             match.published = $in:[-1]
             # match.points = 0

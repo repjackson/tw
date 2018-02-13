@@ -53,6 +53,7 @@ Template.edit_databank.onRendered ->
         
 Template.view_databank_item.onCreated ->
     Meteor.subscribe 'fields'
+    Meteor.subscribe 'child_docs', FlowRouter.getParam('doc_id')
     
 Template.edit_databank_item.onCreated ->
     Meteor.subscribe 'fields'
@@ -63,11 +64,9 @@ Template.edit_databank_item.helpers
     # doc: -> Docs.findOne FlowRouter.getParam('doc_id')
 
         
-# Template.view_databank_item.onCreated ->
-#     Meteor.subscribe 'fields'
     
-# Template.view_databank_item.helpers
-#     doc: -> Docs.findOne FlowRouter.getParam('doc_id')
+Template.view_databank_item.helpers
+    doc: -> Docs.findOne FlowRouter.getParam('doc_id')
 
 
 Template.toggle_key.helpers
@@ -97,6 +96,10 @@ Template.toggle_key.events
             
 
 Template.child_card.onCreated ->
+    @autorun => Meteor.subscribe 'child_docs', @data._id
+    @autorun => Meteor.subscribe 'author', @data._id
+    
+Template.databank_card.onCreated ->
     @autorun => Meteor.subscribe 'child_docs', @data._id
     @autorun => Meteor.subscribe 'author', @data._id
     

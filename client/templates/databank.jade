@@ -101,11 +101,15 @@ template(name='edit_databank')
                 | Details
                 i.dropdown.icon
             .content
-                +edit_title
-                +edit_subtitle
-                +edit_icon
-                +edit_child_type
-                +edit_template
+                // +edit_title
+                +single_text_field_edit key='title'
+                +single_text_field_edit key='subtitle'
+                +single_text_field_edit key='child_type'
+                +single_text_field_edit key='template'
+                // +edit_subtitle
+                // +edit_icon
+                // +edit_child_type
+                // +edit_template
             h3.title
                 +icon48 name='shield' classes='ui mini inline image'
                 | Access
@@ -135,7 +139,7 @@ template(name='edit_databank')
                 | Choose Child Fields
                 i.dropdown.icon
             .content
-                +edit_string_field key='test_key'
+                // +edit_string_field key='test_key'
                 +edit_child_fields
             h3.title 
                 +icon48 name='sports-mode' classes='ui mini spaced image'
@@ -152,9 +156,9 @@ template(name='edit_databank')
                     #move_up.ui.basic.button
                         +icon48 name='up' classes='ui mini spaced image'
                         | Move Above Parent
-                    +edit_author
-                    +edit_parent_id
-                    +edit_type
+                    // +edit_author
+                    +single_text_field_edit key='parent_id'
+                    +single_text_field_edit key='type'
 
 template(name='edit_databank_item')
     .ui.form.shadowed.padded10
@@ -222,7 +226,7 @@ template(name='child_card')
         .twelve.wide.column
             +author_info
             |#{when}
-            +view_content
+            +single_html_field_view key='content'
 
             +vote_button
             +mark_read_button

@@ -10,14 +10,16 @@ template(name='dev_footer')
                     a.ui.header(href="/view/#{doc.parent_id}") 
                         +icon48 name=parent.icon_class
                         |Parent: #{parent.title}
-            +edit_title
-            +edit_type
-            +edit_template
-            +edit_icon
-            +edit_number
-            +edit_tags
+            +single_text_field_edit key='title'
+
+            // +edit_title
+            // +edit_type
+            // +edit_template
+            // +edit_icon
+            // +edit_number
+            // +edit_tags
             +published
-            +edit_completion_type
+            // +edit_completion_type
             #create_child.ui.button create child
             unless parent_id
                 #create_parent.ui.button create parent

@@ -169,9 +169,9 @@ Template.edit_child_fields.helpers
             type: 'component'
     
     
-    child_field_toggle_class: ->
-        doc = Docs.findOne FlowRouter.getParam('doc_id')
-        if @slug in doc.child_fields then 'blue' else 'basic'
+    # child_field_toggle_class: ->
+    #     doc = Docs.findOne FlowRouter.getParam('doc_id')
+    #     if @slug in doc.child_fields then 'blue' else 'basic'
 
 
 
@@ -252,7 +252,7 @@ Template.select_template.events
                 
 Template.child_authors.onCreated ->
     # console.log @data
-    @autorun => Meteor.subscribe 'usernames'
+    # @autorun => Meteor.subscribe 'usernames'
     @autorun => Meteor.subscribe 'child_docs', @data._id
 
 
