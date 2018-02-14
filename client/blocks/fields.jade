@@ -322,6 +322,16 @@ template(name='view_field')
     if is_html
         +view_html_field key=key
     
+template(name='edit_field')
+    if is_array
+        +edit_array_field key=key
+    if is_html
+        +edit_html_field key=key
+    
+    
+    
+    
+    
 template(name='view_array_field')
     if field_value
         .ui.basic.segment
@@ -337,7 +347,9 @@ template(name='edit_array_field')
         +icon48 name=icon classes='ui inline image'
         |#{field_doc.title}
         .ui.mini.input
-            input#new_entry(type='text' placeholder='Add...' maxlength='50' )
+            input.new_entry(type='text' placeholder='Add...' maxlength='50' )
+            // .ui.icon.button
+            //     i.right.arrow.icon
         // .ui.mini.input
         //     +inputAutocomplete settings=theme_select_settings id="theme_tag_select" class="" autocomplete="off"
         each field_value

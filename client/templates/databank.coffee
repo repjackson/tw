@@ -108,3 +108,19 @@ Template.databank_card.helpers
         field_doc = Docs.findOne @valueOf()
         # console.log 'db card field doc slug', field_doc.slug
         # console.log 'db card field doc template', field_doc.field_template
+        field_doc
+        # Docs.findOne Template.parentData(2)
+Template.edit_databank_item.helpers
+    field_doc: ->
+        field_doc = Docs.findOne @valueOf()
+        # console.log 'db card field doc slug', field_doc.slug
+        # console.log 'db card field doc template', field_doc.field_template
+        field_doc
+        # Docs.findOne Template.parentData(2)
+Template.view_databank_item.helpers
+    field_doc: ->
+        field_doc = Docs.findOne @valueOf()
+        # console.log 'db card field doc slug', field_doc.slug
+        # console.log 'db card field doc template', field_doc.field_template
+        field_doc
+        # Docs.findOne Template.parentData(2)

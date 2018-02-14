@@ -63,35 +63,6 @@ template(name='databank_card')
                 if can_edit
                     +edit_button
 
-        // each parent.child_fields
-        //     .ui.label #{this}
-        // if child_count
-        //     .content
-        //         +response_list
-        // if favorite_count
-        //     .content
-        //         strong
-        //             +icon48 name='heart-health' classes='ui mini inline image'
-        //             | Resonates with #{favorite_count} 
-        //         .ui.divided.horizontal.list
-        //             each favoriter_list
-        //                 .item
-        //                     img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
-        //                     .content
-        //                         .header
-        //                             |#{name}
-        // if upvoters
-        //     .content
-        //         strong
-        //             +icon48 name='thumbs-up' classes='ui mini inline image'
-        //             | Upvoted by
-        //         .ui.divided.horizontal.list
-        //             each upvoter_list
-        //                 .item
-        //                     img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
-        //                     .content
-        //                         .header
-        //                             |#{name}
 
 template(name='edit_databank')
     .shadowed-box
@@ -164,7 +135,7 @@ template(name='edit_databank_item')
     .ui.form.shadowed.padded10
         each parent.child_field_ids
             // +Template.dynamic template=field_edit_template data=..
-            +field_edit_template
+            +edit_field template=field_doc.field_template key=field_doc.slug
     
 template(name='view_databank_item')
     .ui.stackable.padded.grid
@@ -188,7 +159,7 @@ template(name='view_databank_item')
                 .ui.form.shadowed-box
                     each parent.child_field_ids
                         // +Template.dynamic template=field_view_template data=..
-                        +field_view_template
+                        +view_field template=field_doc.field_template key=field_doc.slug
                 if has_price
                     +product_transactions
                 // if is_visible
@@ -209,10 +180,10 @@ template(name='view_databank_item')
                 .ui.dividing.header Actions
                 each parent.child_actions
                     +Template.dynamic template=action_button_template data=..
-        .row
-            .sixteen.wide.column
-                each children
-                    +child_card
+        // .row
+        //     .sixteen.wide.column
+        //         each children
+        //             +child_card
 
 
 template(name='toggle_key')

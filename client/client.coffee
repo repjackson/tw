@@ -104,8 +104,8 @@ Template.registerHelper 'log_this', () ->  console.log @
         
 
 
-Template.registerHelper 'field_doc', ()-> 
-    Docs.findOne Template.parentData(2)
+# Template.registerHelper 'field_doc', ()-> 
+#     Docs.findOne Template.parentData(2)
     # console.log Template.parentData(0)
     # console.log Template.parentData(1)
     # console.log Template.parentData(2)
