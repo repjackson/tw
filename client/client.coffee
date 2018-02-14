@@ -64,27 +64,55 @@ Template.registerHelper 'is_admin', () ->
 
 Template.registerHelper 'publish_when', () -> moment(@publish_date).fromNow()
 
-Template.registerHelper 'field_view_template', () ->  
-    field_doc = Docs.findOne @valueOf()
-    console.log field_doc
-    "view_#{field_doc.field_template}_field"
+# Template.registerHelper 'field_view_template', () ->  
+#     field_doc = Docs.findOne @valueOf()
+#     console.log 'field_doc', field_doc.slug
+#     "view_#{field_doc.field_template}_field"
 
-Template.registerHelper 'field_edit_template', () -> 
-    field_doc = Docs.findOne @valueOf()
-    console.log field_doc
-    "edit_#{field_doc.field_template}_field"
+# Template.registerHelper 'field_edit_template', () -> 
+#     field_doc = Docs.findOne @valueOf()
+#     console.log field_doc
+#     "edit_#{field_doc.field_template}_field"
+#     # console.log @
+#     # console.log @slug
+#     # "edit_#{@}"
+        
+
+Template.registerHelper 'field_value', ->
     # console.log @
-    # console.log @slug
-    # "edit_#{@}"
+    current_doc = Template.parentData(3)
+    # current_doc = Docs.findOne FlowRouter.getParam('doc_id')
+    current_doc["#{@key}"]
+        
+Template.registerHelper 'passed_field_doc', ->
+    field_doc = Docs.findOne @valueOf()
+    # console.log 'passed_field_doc slug',field_doc.slug
+    field_doc
+    # current_doc = Docs.findOne FlowRouter.getParam('doc_id')
+    # current_doc["#{@key}"]
+        
+        
+        
+        
         
 Template.registerHelper 'field_config_template', () ->  "#{@type}_field_config"
 
 Template.registerHelper 'action_button_template', () ->  "#{@}_button"
 
-        
-Template.registerHelper 'field_template_field_doc', ()-> Docs.findOne Template.parentData(3)
+Template.registerHelper 'log_this', () ->  console.log @
 
-Template.registerHelper 'field_template_value', ()->
+        
+
+
+Template.registerHelper 'field_doc', ()-> 
+    Docs.findOne Template.parentData(2)
+    # console.log Template.parentData(0)
+    # console.log Template.parentData(1)
+    # console.log Template.parentData(2)
+    # console.log Template.parentData(3)
+
+
+Template.registerHelper 'databank_field_template_value', ()->
     # console.log Template.parentData(3)
     field_doc = Docs.findOne Template.parentData(3)
     # current_doc = Docs.findOne 
@@ -93,9 +121,9 @@ Template.registerHelper 'field_template_value', ()->
 
 
 
-Template.registerHelper 'theme_tag_class': -> if @valueOf() in selected_theme_tags.array() then 'teal' else 'basic'
-Template.registerHelper 'location_tag_class': -> if @valueOf() in selected_location_tags.array() then 'teal' else 'basic'
-Template.registerHelper 'intention_tag_class': -> if @valueOf() in selected_intention_tags.array() then 'teal' else 'basic'
+# Template.registerHelper 'theme_tag_class': -> if @valueOf() in selected_theme_tags.array() then 'teal' else 'basic'
+# Template.registerHelper 'location_tag_class': -> if @valueOf() in selected_location_tags.array() then 'teal' else 'basic'
+# Template.registerHelper 'intention_tag_class': -> if @valueOf() in selected_intention_tags.array() then 'teal' else 'basic'
 
 Template.registerHelper 'segment_class', () -> 
     if Roles.userIsInRole 'admin'

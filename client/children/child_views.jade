@@ -14,7 +14,7 @@ template(name='view_response')
         .row.shadowed
             .twelve.wide.column
                 +parent_doc_segment
-                +view_content
+                +view_html_field key='content'
                 .ui.segment
                     +author_info
                     |#{when}
@@ -27,7 +27,7 @@ template(name='view_download')
         h2.ui.center.aligned.header Download #{title}
         if is_author
             +edit_button
-        +view_content
+        +view_html_field key='content'
         +view_link
         // +author_info
         

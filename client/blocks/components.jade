@@ -126,28 +126,28 @@ template(name='parent_link')
                     
 
 
-template(name='view_published_toggle')
-    if viewing_mine
-        #view_all_entries.ui.basic.fluid.button
-            img.ui.avatar.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
-            |Viewing Mine (Public and Private)
-    if viewing_all
-        #view_my_entries.ui.basic.fluid.button 
-            +icon48 name='people' classes='avatar'
-            |Viewing All Public
+// template(name='view_published_toggle')
+//     if viewing_mine
+//         #view_all_entries.ui.basic.fluid.button
+//             img.ui.avatar.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+//             |Viewing Mine (Public and Private)
+//     if viewing_all
+//         #view_my_entries.ui.basic.fluid.button 
+//             +icon48 name='people' classes='avatar'
+//             |Viewing All Public
 
-template(name='view_read_toggle')
-    if viewing_unread
-        #view_all.ui.basic.fluid.button
-            +icon48 name='read-message' classes='avatar'
-            |Viewiing Unread
-    if viewing_all
-        #view_unread.ui.basic.fluid.button 
-            +icon48 name='message' classes='avatar'
-            |Viewing Read and Unread
+// template(name='view_read_toggle')
+//     if viewing_unread
+//         #view_all.ui.basic.fluid.button
+//             +icon48 name='read-message' classes='avatar'
+//             |Viewiing Unread
+//     if viewing_all
+//         #view_unread.ui.basic.fluid.button 
+//             +icon48 name='message' classes='avatar'
+//             |Viewing Read and Unread
 
-template(name='stripe_cc_form')
-    #card_element
+// template(name='stripe_cc_form')
+//     #card_element
     
 template(name='icon48')
     img.ui.image(src="https://png.icons8.com/color/48/000000/#{name}.png" class=classes title=tooltip)

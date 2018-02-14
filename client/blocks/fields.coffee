@@ -531,15 +531,16 @@ Template.field_view_template.helpers
         
     view_field_template: ->
         field_doc = Docs.findOne @valueOf()
+        console.log field_doc.field_template
         if field_doc
             "view_#{field_doc.field_template}_field"
-            # switch field_doc.field_template
-            #     when 'text' then 'view_text_field'
-            #     when 'number' then 'view_number_field'
-            #     when 'string' then 'view_string_field'
-            #     when 'array' then 'view_array_field'
-            #     when 'html' then 'view_html_field'
-            
+        
+        
+        
+Template.view_field.helpers
+    is_array: -> @template is 'array' 
+    is_html: -> @template is 'html' 
+        # console.log @
        
 Template.field_edit_template.helpers
     field_doc: -> 
@@ -551,13 +552,6 @@ Template.field_edit_template.helpers
         if field_doc
             "edit_#{field_doc.field_template}_field"
 
-            # switch field_doc.field_template
-            #     when 'text' then 'edit_text_field'
-            #     when 'number' then 'edit_number_field'
-            #     when 'string' then 'edit_string_field'
-            #     when 'array' then 'edit_array_field'
-            #     when 'html' then 'edit_html_field'
-            
             
 Template.edit_html_field.events
     'blur .froala-container': (e,t)->
@@ -569,11 +563,12 @@ Template.edit_html_field.events
 
 Template.edit_html_field.helpers
     getFEContext: ->
+        context_doc = Template.parentData(1)
         # @current_doc = Docs.findOne FlowRouter.getParam 'doc_id'
-        @current_doc = Docs.findOne @_id
+        # @current_doc = Docs.findOne @_id
         self = @
         {
-            _value: self.current_doc.content
+            _value: context_doc["#{@key}"]
             _keepMarkers: true
             _className: 'froala-reactive-meteorized-override'
             toolbarInline: false
@@ -638,21 +633,21 @@ Template.edit_array_field.events
         # console.log("selected ", doc)
         Docs.update FlowRouter.getParam('doc_id'),
             $addToSet: tags: doc.name
-        $('#theme_tag_select').val('')
+        $('#new_entry').val('')
    
-    'keyup #theme_tag_select': (e,t)->
+    'keyup #new_entry': (e,t)->
         e.preventDefault()
-        val = $('#theme_tag_select').val().toLowerCase().trim()
+        val = $('#new_entry').val().toLowerCase().trim()
         switch e.which
             when 13 #enter
                 unless val.length is 0
                     Docs.update FlowRouter.getParam('doc_id'),
                         $addToSet: tags: val
-                    $('#theme_tag_select').val ''
+                    $('#new_entry').val ''
             # when 8
             #     if val.length is 0
             #         result = Docs.findOne(FlowRouter.getParam('doc_id')).tags.slice -1
-            #         $('#theme_tag_select').val result[0]
+            #         $('#new_entry').val result[0]
             #         Docs.update FlowRouter.getParam('doc_id'),
             #             $pop: tags: 1
 
@@ -661,36 +656,37 @@ Template.edit_array_field.events
         tag = @valueOf()
         Docs.update FlowRouter.getParam('doc_id'),
             $pull: tags: tag
-        $('#theme_tag_select').val(tag)
+        $('#new_entry').val(tag)
         
 Template.edit_array_field.helpers
     # editing_mode: -> 
     #     console.log Session.get 'editing'
     #     if Session.equals 'editing', true then true else false
-    theme_select_settings: -> {
-        position: 'top'
-        limit: 10
-        rules: [
-            {
-                collection: Tags
-                field: 'name'
-                matchAll: false
-                template: Template.tag_result
-            }
-            ]
-    }
+    # theme_select_settings: -> {
+    #     position: 'top'
+    #     limit: 10
+    #     rules: [
+    #         {
+    #             collection: Tags
+    #             field: 'name'
+    #             matchAll: false
+    #             template: Template.tag_result
+    #         }
+    #         ]
+    # }
             
             
+            
+# Template.databank_edit_text_field.events
+#     'blur #text_field_input': (e,t)->
+#         # puling key from parent databank 
+#         field_key = Docs.findOne(Template.parentData(3)).slug
+#         value = $(e.currentTarget).closest('#text_field_input').val()
+#         # console.log value
+#         Docs.update FlowRouter.getParam('doc_id'),
+#             $set: "#{field_key}": value
             
 Template.edit_text_field.events
-    'blur #text_field_input': (e,t)->
-        field_key = Docs.findOne(Template.parentData(3)).slug
-        value = $(e.currentTarget).closest('#text_field_input').val()
-        # console.log value
-        Docs.update FlowRouter.getParam('doc_id'),
-            $set: "#{field_key}": value
-            
-Template.single_text_field_edit.events
     'blur #value': (e,t)->
         # console.log @
         value = $(e.currentTarget).closest('#value').val()
@@ -698,18 +694,18 @@ Template.single_text_field_edit.events
         Docs.update FlowRouter.getParam('doc_id'),
             $set: "#{@key}": value
             
-Template.single_text_field_edit.helpers
-    field_value: ->
-        # console.log @
-        current_doc = Docs.findOne FlowRouter.getParam('doc_id')
-        current_doc["#{@key}"]
+# Template.edit_text_field.helpers
+#     field_value: ->
+#         # console.log @
+#         current_doc = Docs.findOne FlowRouter.getParam('doc_id')
+#         current_doc["#{@key}"]
             
             
-Template.single_html_field_view.helpers
-    field_value: ->
-        # console.log @
-        current_doc = Docs.findOne FlowRouter.getParam('doc_id')
-        current_doc["#{@key}"]
+# Template.view_html_field.helpers
+#     field_value: ->
+#         # console.log @
+#         current_doc = Docs.findOne FlowRouter.getParam('doc_id')
+#         current_doc["#{@key}"]
             
             
             

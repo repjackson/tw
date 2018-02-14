@@ -55,11 +55,11 @@ template(name='view_section')
                     +completed_list
             .centered.ten.wide.column
                 .shadowed.padded10
-                    +view_vimeo
+                    +view_vimeo_field
                 .shadowed
-                    +view_content
+                    +view_html_field
                 if transcript
-                    +view_transcript
+                    +view_transcript_field
                 .center.aligned
                     +mark_watched_button
                 if read

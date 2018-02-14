@@ -43,8 +43,8 @@ template(name='databank_card')
                         |#{title}
             .content
                 each parent.child_field_ids
-                    // +Template.dynamic template=field_view_template data=..
-                    +field_view_template
+                    // +Template.dynamic template=field_view_template
+                    +view_field template=field_doc.field_template key=field_doc.slug
                 
         .four.wide.column.shadowed-box
             if slug
@@ -102,10 +102,10 @@ template(name='edit_databank')
                 i.dropdown.icon
             .content
                 // +edit_title
-                +single_text_field_edit key='title'
-                +single_text_field_edit key='subtitle'
-                +single_text_field_edit key='child_type'
-                +single_text_field_edit key='template'
+                +edit_text_field key='title'
+                +edit_text_field key='subtitle'
+                +edit_text_field key='child_type'
+                +edit_text_field key='template'
                 // +edit_subtitle
                 // +edit_icon
                 // +edit_child_type
@@ -157,8 +157,8 @@ template(name='edit_databank')
                         +icon48 name='up' classes='ui mini spaced image'
                         | Move Above Parent
                     // +edit_author
-                    +single_text_field_edit key='parent_id'
-                    +single_text_field_edit key='type'
+                    +edit_text_field key='parent_id'
+                    +edit_text_field key='type'
 
 template(name='edit_databank_item')
     .ui.form.shadowed.padded10
@@ -226,7 +226,7 @@ template(name='child_card')
         .twelve.wide.column
             +author_info
             |#{when}
-            +single_html_field_view key='content'
+            +view_html_field key='content'
 
             +vote_button
             +mark_read_button

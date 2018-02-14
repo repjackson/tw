@@ -24,7 +24,7 @@ template(name='user_comparison')
                         each tags
                             .ui.basic.label #{this}
                     .content
-                        +view_content
+                        +view_html_field key='content'
                         +author_info
         .column
             .ui.center.aligned.header Your Journal Entries
@@ -34,7 +34,7 @@ template(name='user_comparison')
                         each tags
                             .ui.basic.label #{this}
                     .content
-                        +view_content
+                        +view_html_field key='content'
                         +author_info
         // if checkin_list
         //     .ui.header check in list

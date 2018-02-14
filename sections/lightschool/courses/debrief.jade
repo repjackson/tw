@@ -24,7 +24,7 @@ template(name='view_debrief')
             .centered.ten.wide.column
                 if content
                     .padded10.shadowed
-                        +view_content
+                        +view_html_field key='content'
                 if children
                     +questions
             .centered.three.wide.column

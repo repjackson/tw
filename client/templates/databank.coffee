@@ -103,3 +103,8 @@ Template.databank_card.onCreated ->
     @autorun => Meteor.subscribe 'child_docs', @data._id
     @autorun => Meteor.subscribe 'author', @data._id
     
+Template.databank_card.helpers
+    field_doc: ->
+        field_doc = Docs.findOne @valueOf()
+        # console.log 'db card field doc slug', field_doc.slug
+        # console.log 'db card field doc template', field_doc.field_template

@@ -56,12 +56,6 @@ template(name='edit_icon_field')
 //                 |#{this}
 
 
-// template(name='view_tags')
-//     div
-//         +icon48 name='hashtag' classes='ui inline mini image' tootip='Theme Tags'
-//         each tags
-//             .ui.basic.label #{this}
-
             
 
 
@@ -127,9 +121,8 @@ template(name='edit_uploaded_image_field')
 // template(name='view_banner_image_id')
 //     img.ui.centered.image(src="{{c.url banner_image_id width=500 crop='fit'}}")
         
-// template(name='view_image_id')
-//     if image_id
-//         img.ui.centered.image(src="{{c.url image_id width=500 crop='fit'}}")
+template(name='view_image_field')
+    img.ui.centered.image(src="{{c.url image_id width=500 crop='fit'}}")
         
 
 template(name='edit_linked_image_field')
@@ -272,64 +265,82 @@ template(name='field_edit_template')
 
 
 template(name='view_text_field')
-    if field_template_value
+    if databank_field_template_value
         .ui.header
-            +icon48 name=field_template_field_doc.icon_class classes='ui inline image'
-            |#{field_template_field_doc.title}:
-            |#{field_template_value}
+            +icon48 name=field_doc.icon_class classes='ui inline image'
+            |#{field_doc.title}:
+            |#{databank_field_template_value}
     
-template(name='edit_text_field')
-    // .ui.header
-    //     +icon48 name=field_template_field_doc.icon_class classes='ui inline image'
-    //     |#{field_template_field_doc.title}:
-    //     |#{field_template_value}
+// template(name='databank_edit_text_field')
+//     // .ui.header
+//     //     +icon48 name=field_doc.icon_class classes='ui inline image'
+//     //     |#{field_doc.title}:
+//     //     |#{databank_field_template_value}
     
-    .ui.labeled.fluid.input
-        .ui.basic.label #{field_template_field_doc.title}
-        input#text_field_input(type='text' value=field_template_value)
+//     .ui.labeled.fluid.input
+//         .ui.basic.label #{field_doc.title}
+//         input#text_field_input(type='text' value=databank_field_template_value)
 
     
 template(name='edit_string_field')
     .ui.header
-        +icon48 name=field_template_field_doc.icon_class classes='ui inline image'
-        |#{field_template_field_doc.title}:
-        |#{field_template_value}
+        +icon48 name=field_doc.icon_class classes='ui inline image'
+        |#{field_doc.title}:
+        |#{databank_field_template_value}
     
     .ui.labeled.fluid.input
-        .ui.basic.label #{field_template_field_doc.title}
-        input#text_field_input(type='text' value=field_template_value)
-template(name='view_number_field')
-    if field_template_value
-        .ui.header
-            |#{field_template_field_doc.title}:
-            |#{field_template_value}
-template(name='view_string_field')
-    if field_template_value
-        .ui.header
-            +icon48 name=field_template_field_doc.icon_class classes='ui inline image'
-            |#{field_template_field_doc.title}:
-            |#{field_template_value}
+        .ui.basic.label #{field_doc.title}
+        input#text_field_input(type='text' value=databank_field_template_value)
+
+// template(name='view_number_field')
+//     if databank_field_template_value
+//         .ui.header
+//             |#{field_doc.title}:
+//             |#{databank_field_template_value}
+
+// template(name='view_string_field')
+//     if databank_field_template_value
+//         .ui.header
+//             +icon48 name=field_doc.icon_class classes='ui inline image'
+//             |#{field_doc.title}:
+//             |#{databank_field_template_value}
     
+    
+// template(name='databank_view_array_field')
+//     if databank_field_template_value
+//         .ui.basic.segment
+//             +icon48 name=field_doc.icon_class classes='ui inline image'
+//                 // |#{field_doc.title}
+//             each databank_field_template_value
+//                 .ui.basic.large.label #{this}
+    
+    
+    
+template(name='view_field')
+    if is_array
+        +view_array_field key=key
+    if is_html
+        +view_html_field key=key
     
 template(name='view_array_field')
-    if field_template_value
+    if field_value
         .ui.basic.segment
-            +icon48 name=field_template_field_doc.icon_class classes='ui inline image'
-                // |#{field_template_field_doc.title}
-            each field_template_value
+            +icon48 name=field_doc.icon_class classes='ui inline image'
+                // |#{field_doc.title}
+            each field_value
                 .ui.basic.large.label #{this}
     
     
 template(name='edit_array_field')
     // .ui.segment
     .ui.header
-        +icon48 name=field_template_field_doc.icon_class classes='ui inline image'
-        |#{field_template_field_doc.title}
+        +icon48 name=icon classes='ui inline image'
+        |#{field_doc.title}
         .ui.mini.input
-            input#theme_tag_select(type='text' placeholder='Add...' maxlength='50' )
+            input#new_entry(type='text' placeholder='Add...' maxlength='50' )
         // .ui.mini.input
         //     +inputAutocomplete settings=theme_select_settings id="theme_tag_select" class="" autocomplete="off"
-        each field_template_value
+        each field_value
             // a.ui.basic.circular.button.doc_tag #{this}
             a.ui.circular.white.button.doc_tag
                 i.remove.icon
@@ -338,20 +349,22 @@ template(name='edit_array_field')
     
     
     
+// template(name='databank_view_html_field')
+//     if databank_field_template_value
+//         // .ui.header
+//         //     +icon48 name=field_doc.icon_class classes='ui inline image'
+//         //     |#{field_doc.title}
+//         .ui.basic.segment
+//             .large120 !{databank_field_template_value}
+    
+    
 template(name='view_html_field')
-    if field_template_value
-        // .ui.header
-        //     +icon48 name=field_template_field_doc.icon_class classes='ui inline image'
-        //     |#{field_template_field_doc.title}
-        .large120 !{field_template_value}
-    
-    
-template(name='single_html_field_view')
     if field_value
         // .ui.header
-        //     +icon48 name=field_template_field_doc.icon_class classes='ui inline image'
-        //     |#{field_template_field_doc.title}
-        .large120 !{field_value}
+        //     +icon48 name=field_doc.icon_class classes='ui inline image'
+        //     |#{field_doc.title}
+        .ui.basic.segment
+            .large120 !{field_value}
     
     
     
@@ -365,7 +378,7 @@ template(name='edit_html_field')
         +froalaReactive getFEContext
     
     
-template(name='single_text_field_edit')
+template(name='edit_text_field')
     .ui.labeled.fluid.input
         .ui.basic.label #{key}
         input#value(type='text' value=field_value)

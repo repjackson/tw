@@ -26,7 +26,7 @@ template(name='view_course')
             .three.wide.center.aligned.column
                 +parent_link
             .ten.wide.center.aligned.column
-                +view_image_id
+                +view_image_field key='image_id'
                 // h1.ui.header #{title}
                 h2.ui.header.shadowed-text #{subtitle}
             .three.wide.center.aligned.column
@@ -42,12 +42,12 @@ template(name='view_course_sales')
                 .three.wide.center.aligned.column
                     +parent_link
                 .twelve.wide.center.aligned.column
-                    +view_image_id
+                    +view_image_field key='image_id'
                     h1.ui.header #{title}
                     h3.ui.header #{subtitle}
         .centered.row
             .twelve.wide.column.shadowed-box
-                +view_content
+                +view_html_field key='content'
 
 // template(name='course_module_overview')
 //     .ui.center.aligned.header #{title} Course Modules
@@ -67,18 +67,19 @@ template(name='view_course_sales')
 
 
 template(name='edit_course')
-    .ui.top.attached.tabular.four.item.menu
-        a.active.item(data-tab="details") Details
-        a.item(data-tab="pricing") Pricing
-    .ui.bottom.attached.active.tab.segment(data-tab="details")
-        .ui.form
-            +edit_title
-            +edit_subtitle
-            +edit_tags
-            +edit_image_id
-            +edit_banner_image_id
-            +edit_content
-    .ui.bottom.attached.tab.segment(data-tab="pricing")
-        +course_pricing
+    // .ui.top.attached.tabular.four.item.menu
+    //     a.active.item(data-tab="details") Details
+    //     a.item(data-tab="pricing") Pricing
+    // .ui.bottom.attached.active.tab.segment(data-tab="details")
+    .ui.form.segment
+        +edit_text_field key='title'
+        +edit_text_field key='subtitle'
+        +edit_array_field key='tags' icon='hashtag'
+        // +edit_text_field key='title'
+        // +edit_image_id
+        // +edit_banner_image_id
+        +edit_html_field key='content'
+    // .ui.bottom.attached.tab.segment(data-tab="pricing")
+    //     +course_pricing
 
 

@@ -99,24 +99,24 @@ Template.parent_link.helpers
     
     
     
-Template.view_published_toggle.helpers
-    viewing_mine: -> Session.equals 'view_private',true  
-    viewing_all: -> Session.equals 'view_private',false  
+# Template.view_published_toggle.helpers
+#     viewing_mine: -> Session.equals 'view_private',true  
+#     viewing_all: -> Session.equals 'view_private',false  
 
 
-Template.view_published_toggle.events
-    'click #view_my_entries': (e,t)-> Session.set('view_private',true)    
-    'click #view_all_entries': (e,t)-> Session.set('view_private', false)    
+# Template.view_published_toggle.events
+#     'click #view_my_entries': (e,t)-> Session.set('view_private',true)    
+#     'click #view_all_entries': (e,t)-> Session.set('view_private', false)    
 
 
-Template.view_read_toggle.helpers
-    viewing_unread: -> Session.equals 'view_unread', true  
-    viewing_all: -> Session.equals 'view_unread',false  
+# Template.view_read_toggle.helpers
+#     viewing_unread: -> Session.equals 'view_unread', true  
+#     viewing_all: -> Session.equals 'view_unread',false  
 
 
-Template.view_read_toggle.events
-    'click #view_unread': (e,t)-> Session.set('view_unread', true)    
-    'click #view_all': (e,t)-> Session.set('view_unread', false)    
+# Template.view_read_toggle.events
+#     'click #view_unread': (e,t)-> Session.set('view_unread', true)    
+#     'click #view_all': (e,t)-> Session.set('view_unread', false)    
 
 
 
