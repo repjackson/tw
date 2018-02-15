@@ -540,6 +540,7 @@ Template.field_view_template.helpers
 Template.view_field.helpers
     is_array: -> @template is 'array' 
     is_html: -> @template is 'html' 
+    is_html: -> @template is 'text' 
         # console.log @
        
 Template.edit_field.helpers
@@ -735,4 +736,11 @@ Template.edit_text_field.events
 #         current_doc["#{@key}"]
             
             
-            
+Template.view_array_field.helpers
+    field_doc: ->
+        Docs.findOne Template.parentData(2)
+
+Template.edit_array_field.helpers
+    field_doc: ->
+        Docs.findOne Template.parentData(2)
+

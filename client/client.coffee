@@ -84,6 +84,12 @@ Template.registerHelper 'field_value', ->
     # current_doc = Docs.findOne FlowRouter.getParam('doc_id')
     current_doc["#{@key}"]
         
+Template.registerHelper 'page_field_value', ->
+    # console.log @
+    # current_doc = Template.parentData(3)
+    current_doc = Docs.findOne FlowRouter.getParam('doc_id')
+    current_doc["#{@key}"]
+        
 Template.registerHelper 'passed_field_doc', ->
     field_doc = Docs.findOne @valueOf()
     # console.log 'passed_field_doc slug',field_doc.slug

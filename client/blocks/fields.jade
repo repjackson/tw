@@ -327,6 +327,8 @@ template(name='edit_field')
         +edit_array_field key=key
     if is_html
         +edit_html_field key=key
+    if is_
+        +edit_html_field key=key
     
     
     
@@ -344,7 +346,7 @@ template(name='view_array_field')
 template(name='edit_array_field')
     // .ui.segment
     .ui.header
-        +icon48 name=icon classes='ui inline image'
+        +icon48 name=field_doc.icon_class classes='ui inline image'
         |#{field_doc.title}
         .ui.mini.input
             input.new_entry(type='text' placeholder='Add...' maxlength='50' )
@@ -393,6 +395,6 @@ template(name='edit_html_field')
 template(name='edit_text_field')
     .ui.labeled.fluid.input
         .ui.basic.label #{key}
-        input#value(type='text' value=field_value)
+        input#value(type='text' value=page_field_value)
 
     // +toggle_key key='completion_type' value='response' icon='response' label='Response'
