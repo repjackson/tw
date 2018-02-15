@@ -3,7 +3,7 @@ template(name='edit_doc')
         .ui.padded.stackable.grid
             .centered.middle.aligned.row
                 .three.wide.center.aligned.column
-                    +delete_button
+                    +save_link
                 .ten.wide.center.aligned.column
                     h1.ui.inverted.header
                         if icon_class
@@ -15,7 +15,7 @@ template(name='edit_doc')
                             |#{parent.title} Item
 
                 .three.wide.center.aligned.column
-                    +save_link
+                    +delete_button
             .centered.row
                 .twelve.wide.column
                     if template

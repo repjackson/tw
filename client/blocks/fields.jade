@@ -25,10 +25,10 @@ template(name='edit_icon_field')
 //             input#created_date(type='datetime-local' value=created_date)
 
 
-// template(name='edit_number')
-//     .ui.labeled.input
-//         .ui.basic.label Number
-//         input#number(type='number' min='0' value=number)
+template(name='edit_number')
+    .ui.labeled.input
+        .ui.basic.label Number
+        input#number(type='number' min='0' value=number)
 
 // template(name='edit_text')
 //     .ui.form
@@ -40,25 +40,6 @@ template(name='edit_icon_field')
 //         |#{text}
             
             
-// template(name='edit_tags')
-//     // .ui.segment
-//     .ui.header
-//         +icon48 name='hashtag' classes='ui mini spaced image'
-//         |Tags &nbsp;
-//         .ui.mini.input
-//             input#theme_tag_select(type='text' placeholder='Add...' maxlength='50' )
-//         // .ui.mini.input
-//         //     +inputAutocomplete settings=theme_select_settings id="theme_tag_select" class="" autocomplete="off"
-//         each tags
-//             // a.ui.basic.circular.button.doc_tag #{this}
-//             a.ui.circular.white.button.doc_tag
-//                 i.remove.icon
-//                 |#{this}
-
-
-            
-
-
 template(name='edit_link_field')
     .ui.labeled.icon.input
         .ui.basic.label Link (include http://)
@@ -121,50 +102,52 @@ template(name='edit_uploaded_image_field')
 // template(name='view_banner_image_id')
 //     img.ui.centered.image(src="{{c.url banner_image_id width=500 crop='fit'}}")
         
-template(name='view_image_field')
+template(name='view_uploaded_image_field')
     img.ui.centered.image(src="{{c.url image_id width=500 crop='fit'}}")
         
 
 template(name='edit_linked_image_field')
-    if image_url
-        label Image URL
-        .ui.image
-            img(src=image_url)
-            a#remove_image_url.ui.top.left.attached.link.blue.label Remove
-        .ui.label Image URL: #{image_url}
-    else
-        .ui.labeled.icon.action.fluid.input
-            .ui.basic.label 
-                +icon48 name='add-link' classes='ui mini spaced image'
-                |Paste Image URL
-            input#image_url(type='text' value=image_url)
-            .ui.basic.button
-                +icon24 name='sent'
+    with context_doc
+        if image_url
+            label Image URL
+            .ui.image
+                img(src=image_url)
+                a#remove_image_url.ui.top.left.attached.link.blue.label Remove
+            .ui.label Image URL: #{image_url}
+        else
+            .ui.labeled.icon.action.fluid.input
+                .ui.basic.label 
+                    +icon48 name='add-link' classes='ui mini spaced image'
+                    |Paste Image URL
+                input#image_url(type='text' value=image_url)
+                .ui.basic.button
+                    +icon24 name='sent'
 
 
 template(name='view_linked_image_field')
-    if image_url
+    if linked_image_value
         .ui.large.image
-            img(src=image_url)
+            img(src=linked_image_value)
         
     
 template(name='edit_youtube_field')
-    .ui.segment
-        .ui.action.fluid.labeled.input
-            .ui.basic.label
-                +icon48 name='youtube' classes='ui mini spaced image'
-                |Youtube Id
-            input#youtube(type='text' value=youtube)
-            .ui.icon.basic.button#clear_youtube
-                +icon24 name='delete'
-        if youtube
-            .ui.embed(data-source="youtube" data-id=youtube)
+    with context_doc
+        .ui.segment
+            .ui.action.fluid.labeled.input
+                .ui.basic.label
+                    +icon48 name='youtube' classes='ui mini spaced image'
+                    |Youtube Id
+                input#youtube(type='text' value=youtube)
+                .ui.icon.basic.button#clear_youtube
+                    +icon24 name='delete'
+            if youtube
+                .ui.embed(data-source="youtube" data-id=youtube)
 
 
 template(name='view_youtube_field')
     // .ui.embed(data-source="youtube" data-id=youtube data-icon="video" data-placeholder="/images/video_placeholder.png")
-    if youtube
-        .ui.embed(data-source="youtube" data-id=youtube)
+    if youtube_field_value
+        .ui.embed(data-source="youtube" data-id=youtube_field_value)
 
 
 template(name='edit_vimeo_field')
@@ -271,16 +254,6 @@ template(name='view_text_field')
             |#{field_doc.title}:
             |#{databank_field_template_value}
     
-// template(name='databank_edit_text_field')
-//     // .ui.header
-//     //     +icon48 name=field_doc.icon_class classes='ui inline image'
-//     //     |#{field_doc.title}:
-//     //     |#{databank_field_template_value}
-    
-//     .ui.labeled.fluid.input
-//         .ui.basic.label #{field_doc.title}
-//         input#text_field_input(type='text' value=databank_field_template_value)
-
     
 template(name='edit_string_field')
     .ui.header
@@ -306,29 +279,36 @@ template(name='edit_string_field')
 //             |#{databank_field_template_value}
     
     
-// template(name='databank_view_array_field')
-//     if databank_field_template_value
-//         .ui.basic.segment
-//             +icon48 name=field_doc.icon_class classes='ui inline image'
-//                 // |#{field_doc.title}
-//             each databank_field_template_value
-//                 .ui.basic.large.label #{this}
-    
     
     
 template(name='view_field')
     if is_array
         +view_array_field key=key
+    if is_text
+        +view_text_field key=key
     if is_html
         +view_html_field key=key
+    if is_youtube
+        +view_youtube_field key=key
+    if is_vimeo
+        +view_vimeo_field key=key
+    if is_linked_image
+        +view_linked_image_field key=key
+        
     
 template(name='edit_field')
+    if is_text
+        +edit_text_field key=key
     if is_array
         +edit_array_field key=key
     if is_html
         +edit_html_field key=key
-    if is_
-        +edit_html_field key=key
+    if is_youtube
+        +edit_youtube_field key=key
+    if is_vimeo
+        +edit_vimeo_field key=key
+    if is_linked_image
+        +edit_linked_image_field key=key
     
     
     
@@ -363,22 +343,14 @@ template(name='edit_array_field')
     
     
     
-// template(name='databank_view_html_field')
-//     if databank_field_template_value
-//         // .ui.header
-//         //     +icon48 name=field_doc.icon_class classes='ui inline image'
-//         //     |#{field_doc.title}
-//         .ui.basic.segment
-//             .large120 !{databank_field_template_value}
-    
     
 template(name='view_html_field')
-    if field_value
+    if html_field_value
         // .ui.header
         //     +icon48 name=field_doc.icon_class classes='ui inline image'
         //     |#{field_doc.title}
         .ui.basic.segment
-            .large120 !{field_value}
+            .large120 !{html_field_value}
     
     
     

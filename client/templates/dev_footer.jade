@@ -2,7 +2,11 @@ template(name='dev_footer')
     .ui.inverted.segment
         .ui.horizontal.dividing.header 
             |DEV
-            a(href='/view/3qLXqhMDmxxZvh3tA') tasks
+            .ui.horizontal.list
+                .item
+                    a(href='/view/3qLXqhMDmxxZvh3tA') tasks
+                .item
+                    a(href='/view/z3fPCMJnhCLKs2kKK') facet
 
         with doc
             if parent_id

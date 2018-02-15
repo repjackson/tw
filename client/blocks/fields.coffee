@@ -33,6 +33,17 @@ Template.edit_link_field.events
             
             
             
+Template.view_uploaded_image_field.helpers
+    uploaded_image_field_value: ->
+        context_doc = Template.parentData(3)
+        # console.log context_doc["#{@key}"]
+        context_doc["#{@key}"]
+
+
+Template.edit_uploaded_image_field.helpers
+    context_doc: -> Template.parentData(3)
+
+
 Template.edit_uploaded_image_field.events
     "change input[type='file']": (e) ->
         doc_id = FlowRouter.getParam('doc_id')
@@ -149,8 +160,6 @@ Template.edit_linked_image_field.events
         Docs.update FlowRouter.getParam('doc_id'),
             $set: image_url: image_url
 
-
-            
 
 Template.edit_transcript_field.events
     'blur .froala-container': (e,t)->
@@ -540,13 +549,21 @@ Template.field_view_template.helpers
 Template.view_field.helpers
     is_array: -> @template is 'array' 
     is_html: -> @template is 'html' 
-    is_html: -> @template is 'text' 
+    is_text: -> @template is 'text' 
+    is_youtube: -> @template is 'youtube' 
+    is_vimeo: -> @template is 'vimeo' 
+    is_linked_image: -> @template is 'linked_image' 
+    is_uploaded_image: -> @template is 'uploaded_image' 
         # console.log @
        
 Template.edit_field.helpers
     is_array: -> @template is 'array' 
     is_html: -> @template is 'html' 
-        # console.log @
+    is_text: -> @template is 'text' 
+    is_youtube: -> @template is 'youtube' 
+    is_vimeo: -> @template is 'vimeo' 
+    is_linked_image: -> @template is 'linked_image' 
+    is_uploaded_image: -> @template is 'uploaded_image' 
        
 Template.field_edit_template.helpers
     field_doc: -> 
@@ -729,18 +746,39 @@ Template.edit_text_field.events
 #         current_doc["#{@key}"]
             
             
-# Template.view_html_field.helpers
-#     field_value: ->
-#         # console.log @
-#         current_doc = Docs.findOne FlowRouter.getParam('doc_id')
-#         current_doc["#{@key}"]
+Template.view_html_field.helpers
+    html_field_value: ->
+        context_doc = Template.parentData(3)
+        context_doc["#{@key}"]
             
             
 Template.view_array_field.helpers
-    field_doc: ->
-        Docs.findOne Template.parentData(2)
+    field_doc: -> Docs.findOne Template.parentData(2)
 
 Template.edit_array_field.helpers
-    field_doc: ->
-        Docs.findOne Template.parentData(2)
+    field_doc: -> Docs.findOne Template.parentData(2)
+
+
+Template.view_youtube_field.helpers
+    youtube_field_value: ->
+        context_doc = Template.parentData(3)
+        # console.log context_doc["#{@key}"]
+        context_doc["#{@key}"]
+
+Template.view_linked_image_field.helpers
+    linked_image_value: ->
+        # console.log @
+        context_doc = Template.parentData(3)
+        # console.log Template.parentData(3)
+
+        # console.log context_doc["#{@key}"]
+        context_doc["#{@key}"]
+
+
+Template.edit_youtube_field.helpers
+    context_doc: -> Template.parentData(3)
+
+Template.edit_linked_image_field.helpers
+    context_doc: -> Template.parentData(3)
+
 
