@@ -11,8 +11,8 @@ template(name='nav')
             //     .ui.image
             //         +icon48 name=site_doc.icon_class
         // unless ancestors
-        a#nav_header(href='/view/9639QAQ4yPbMLs7CA')
-            img(src="{{c.url 'orange_tw_name' height=60 crop='fill'}}")
+        a#nav_header.header.item(href='/view/9639QAQ4yPbMLs7CA')
+            +icon48 name='yin-yang' classes='ui inline image'
         each nav_child_items
             a.ui.labeled.item(href="/view/#{_id}" data-position='bottom center' data-content=title)
                 .ui.image

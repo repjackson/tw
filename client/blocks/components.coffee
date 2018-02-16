@@ -1,29 +1,4 @@
 
-Template.resonates_list.helpers
-    resonates_with_people: ->
-        if @favoriters
-            if @favoriters.length > 0
-        # console.log @favoriters
-                Meteor.users.find _id: $in: @favoriters
-    
-    
-            
-# Template.bookmarked_by_list.onCreated ->
-#     @autorun => Meteor.subscribe 'bookmarked_by', Template.parentData()._id
-    
-# Template.bookmarked_by_list.helpers
-#     bookmarked_by: ->
-#         if @bookmarked_ids
-#             if @bookmarked_ids.length > 0
-#         # console.log @bookmarked_ids
-#                 Meteor.users.find _id: $in: @bookmarked_ids
-#         else 
-#             false
-            
-            
-
-    
-    
 # Template.doc_matches.onCreated ->
 #     @is_calculating = new ReactiveVar 'false'
     

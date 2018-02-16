@@ -45,50 +45,50 @@ template(name='edit_doc')
 
 template(name='view_doc')
     with doc
-        // .ui.padded.stackable.grid
-            // .centered.row
-            //     .four.wide.center.aligned.column
-            //         .ui.horizontal.list
-            //             .item
-            //                 a.ui.icon.basic.white.inverted.circular.button(href="/view/hBh38f3W9C3qXwNv2" data-position="bottom center" data-tooltip='Karma')
-            //                     +icon48 name='diamond' classes='ui mini inline image'
-            //             .item
-            //                 +admin_toggle
-            //             .item
-            //                 #report_bug.ui.icon.basic.white.inverted.circular.button(data-position="bottom center" data-tooltip="Report a Bug/Feature Request")
-            //                     +icon48 name='bug'
-            //     .eight.wide.center.aligned.column
-            //         unless is_site
-            //             // +parent_link
-            //             +ancestor_facet
-            //         else
-            //             .ui.small.image
-            //                 +view_image_id
-            //     .four.wide.center.aligned.column
-            //         if currentUser
-            //             .ui.horizontal.list
-            //                 // if cart_items
-            //                 a.ui.icon.basic.white.inverted.circular.button(href='/cart' data-position="bottom center" data-tooltip="Shopping Cart")
-            //                     i.large.icons
-            //                         i.cart.icon
-            //                         i.corner.teal.asterisk.icon
+        .ui.padded.stackable.grid
+            .centered.row
+                .four.wide.center.aligned.column
+                    .ui.horizontal.list
+                        .item
+                            a.ui.icon.basic.white.inverted.circular.button(href="/view/hBh38f3W9C3qXwNv2" data-position="bottom center" data-tooltip='Karma')
+                                +icon48 name='diamond' classes='ui mini inline image'
+                        .item
+                            +admin_toggle
+                        // .item
+                        //     #report_bug.ui.icon.basic.white.inverted.circular.button(data-position="bottom center" data-tooltip="Report a Bug/Feature Request")
+                        //         +icon48 name='bug'
+                .eight.wide.center.aligned.column
+                    unless is_site
+                        +parent_link
+                        +ancestor_facet
+                    else
+                        .ui.small.image
+                            +view_image_id
+                .four.wide.center.aligned.column
+                    if currentUser
+                        .ui.horizontal.list
+                            // if cart_items
+                            // a.ui.icon.basic.white.inverted.circular.button(href='/cart' data-position="bottom center" data-tooltip="Shopping Cart")
+                            //     i.large.icons
+                            //         i.cart.icon
+                            //         i.corner.teal.asterisk.icon
                             
-            //                 .item
-            //                     a.ui.icon.basic.white.inverted.circular.button(href="/view/q6NwnyH93JB4Dg5K7" data-position="bottom center" data-tooltip='Messaging')
-            //                         +icon48 name='chat' classes='ui mini inline image'
-            //                 .item
-            //                     a.ui.icon.basic.white.inverted.circular.button(href="/view/Gd7PigcoofFzYdau7" data-position="bottom center" data-tooltip='Notifications')
-            //                         +icon48 name='bell' classes='ui mini inline image'
-            //                 .item
-            //                     a.ui.icon.basic.white.inverted.circular.button(href="/user/#{currentUser.username}" data-position="bottom center" data-tooltip=currentUser.username)
-            //                         if currentUser.profile.image_id
-            //                             img.ui.mini.image(src="{{c.url currentUser.profile.image_id width=60 height=60 gravity='face' crop='fill'}}")
-            //                         else
-            //                             i.user.icon
-            //         else
-            //             a.ui.icon.basic.white.inverted.circular.button(href='/sign-in') 
-            //                 +icon48 name='login-rounded-down' classes='ui mini inline spaced image'
-            //                 // | Sign In
+                            .item
+                                a.ui.icon.basic.white.inverted.circular.button(href="/view/q6NwnyH93JB4Dg5K7" data-position="bottom center" data-tooltip='Messaging')
+                                    +icon48 name='chat' classes='ui mini inline image'
+                            .item
+                                a.ui.icon.basic.white.inverted.circular.button(href="/view/Gd7PigcoofFzYdau7" data-position="bottom center" data-tooltip='Notifications')
+                                    +icon48 name='bell' classes='ui mini inline image'
+                            .item
+                                a.ui.icon.basic.white.inverted.circular.button(href="/user/#{currentUser.username}" data-position="bottom center" data-tooltip=currentUser.username)
+                                    if currentUser.profile.image_id
+                                        img.ui.mini.image(src="{{c.url currentUser.profile.image_id width=60 height=60 gravity='face' crop='fill'}}")
+                                    else
+                                        i.user.icon
+                    else
+                        a.ui.icon.basic.white.inverted.circular.button(href='/sign-in') 
+                            +icon48 name='login-rounded-down' classes='ui mini inline spaced image'
+                            // | Sign In
         if template
             +Template.dynamic template=view_template
         else            
