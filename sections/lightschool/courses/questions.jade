@@ -1,8 +1,12 @@
 template(name='edit_question')
-    .ui.header Edit Question
-        +edit_number
-        +edit_text
-        +edit_content
+    +edit_number
+    +edit_html_field key='content' type='direct'
+
+template(name='view_question')
+    +parent_link
+    .ui.header number #{number}
+    .ui.segment
+        |!{content}
 
 
 
@@ -75,7 +79,7 @@ template(name='my_answer')
             .ui.top.left.attached.basic.label 
                 |Your Answer
             if is_editing
-                +edit_content
+                +edit_html_field key='content'
                 +published
             else
                 +view_html_field key='content'

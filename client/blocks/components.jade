@@ -84,7 +84,7 @@ template(name='parent_doc_accordion')
                 i.dropdown.icon
             .content
                 with parent
-                    +view_tags
+                    +view_array_field key='tags'
                     |!{content}
                     +view_full_button
                     // .ui.horizontal.divided.list
@@ -108,7 +108,7 @@ template(name='parent_doc_segment')
         +view_full_button
         with parent
             .ui.basic.segment
-                +view_tags
+                +view_array_field key='tags'
                 .large130 !{content}
             +author_info
             |#{when}
@@ -197,7 +197,7 @@ template(name='save_button')
         .ui.fluid.basic.disabled.circular.white.inverted.button Add Tags to Save
 
 template(name='save_link')
-    a.ui.fluid.white.inverted.circular.button(data-position='bottom center' data-tooltip='Save' href="/view/#{_id}")
+    a.ui.fluid.white.basic.inverted.circular.button(data-position='bottom center' data-tooltip='Save' href="/view/#{_id}")
         +icon48 name='checked' classes='ui mini inline image'
 
 
@@ -279,6 +279,34 @@ template(name='edit_child_fields')
                         +icon48 name=icon_class classes='ui inline image'
                         |#{title}
                     .meta Slug: #{slug}
+    
+    
+    
+template(name='reference_other_children')
+    // .ui.header Choose Child Docs
+    .ui.header 
+        |Selected children from 
+        if selector.icon_class
+            +icon24 name=selector.icon_class classes='ui inline image'
+        |#{selector.title}
+        // small
+            // a(href="view/8SE48hfdLYhqmkFLC" target="_blank") Add/Edit
+    each available_children
+        .select_child.ui.basic.compact.button(class=child_field_toggle_class)
+            +icon24 name=icon_class classes='ui inline image'
+            strong #{title}    
+    .ui.items
+        each selected_children
+            .item
+                .content
+                    .header
+                        +icon48 name=icon_class classes='ui inline image'
+                        |#{title}
+                    .meta Slug: #{slug}
+                .content
+                    .disable_child.ui.right.floated.basic.red.icon.button
+                        i.remove.icon
+    
     
 template(name='edit_child_actions')
     // .ui.header Choose Child Actions

@@ -167,13 +167,9 @@ Template.edit_child_fields.helpers
     available_child_fields: ->
         Docs.find
             type: 'component'
-    
-    
     # child_field_toggle_class: ->
     #     doc = Docs.findOne FlowRouter.getParam('doc_id')
     #     if @slug in doc.child_fields then 'blue' else 'basic'
-
-
 
 Template.edit_child_fields.events
     'click .toggle_child_field': ->
@@ -190,6 +186,59 @@ Template.edit_child_fields.events
                 $set: "child_field_ids": []
      
 
+Template.reference_other_children.onCreated ->
+    @autorun => Meteor.subscribe 'child_docs', @data.doc_id
+    @autorun => Meteor.subscribe 'doc', @data.doc_id
+            
+Template.reference_other_children.helpers
+    selector: -> Docs.findOne @doc_id
+
+    available_children: ->
+        # Docs.find parent_id:@doc_id
+        current_doc = Docs.findOne FlowRouter.getParam('doc_id')
+        if current_doc["#{@key}"]
+            Docs.find
+                parent_id:@doc_id
+                _id:$nin:current_doc["#{@key}"]
+        else
+            Docs.find
+                parent_id:@doc_id
+        
+        
+    selected_children: -> 
+        current_doc = Docs.findOne FlowRouter.getParam('doc_id')
+        if current_doc["#{@key}"]
+            Docs.find
+                # parent_id:@doc_id
+                _id:$in:current_doc["#{@key}"]
+        
+    # child_field_toggle_class: ->
+    #     doc = Docs.findOne FlowRouter.getParam('doc_id')
+    #     if @slug in doc.child_fields then 'blue' else 'basic'
+
+Template.reference_other_children.events
+    'click .select_child': ->
+        current_doc = Docs.findOne FlowRouter.getParam('doc_id')
+        console.log @
+        passed_key = Template.parentData(0).key
+        
+        if current_doc["#{passed_key}"] 
+            if @_id in current_doc["#{passed_key}"]
+                Docs.update current_doc._id,
+                    $pull: "#{passed_key}": @_id
+            else
+                Docs.update current_doc._id,
+                    $addToSet: "#{passed_key}": @_id
+        else
+            Docs.update current_doc._id,
+                $set: "#{passed_key}": []
+     
+    'click .disable_child': ->
+        passed_key = Template.parentData(0).key
+        current_doc = Docs.findOne FlowRouter.getParam('doc_id')
+        Docs.update current_doc._id,
+            $pull: "#{passed_key}": @_id
+        
 
      
 Template.edit_child_actions.onCreated ->

@@ -26,7 +26,7 @@ template(name='view_course')
             .three.wide.center.aligned.column
                 +parent_link
             .ten.wide.center.aligned.column
-                +view_image_field key='image_id'
+                +view_uploaded_image_field key='image_id'
                 // h1.ui.header #{title}
                 h2.ui.header.shadowed-text #{subtitle}
             .three.wide.center.aligned.column
@@ -42,7 +42,7 @@ template(name='view_course_sales')
                 .three.wide.center.aligned.column
                     +parent_link
                 .twelve.wide.center.aligned.column
-                    +view_image_field key='image_id'
+                    +view_uploaded_image_field key='image_id'
                     h1.ui.header #{title}
                     h3.ui.header #{subtitle}
         .centered.row

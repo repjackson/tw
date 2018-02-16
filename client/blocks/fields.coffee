@@ -8,13 +8,6 @@ Template.edit_icon_field.events
 
 
             
-Template.edit_field_template.events
-    'blur #field_template': (e,t)->
-        field_template = $(e.currentTarget).closest('#field_template').val()
-        Docs.update FlowRouter.getParam('doc_id'),
-            $set: field_template: field_template
-            
-            
 Template.edit_string_field.events
     'blur #value': (e,t)->
         console.log @key
@@ -35,8 +28,7 @@ Template.edit_link_field.events
             
 Template.view_uploaded_image_field.helpers
     uploaded_image_field_value: ->
-        context_doc = Template.parentData(3)
-        # console.log context_doc["#{@key}"]
+        context_doc = Template.parentData(1)
         context_doc["#{@key}"]
 
 
@@ -97,59 +89,8 @@ Template.edit_uploaded_image_field.events
                     throw new Meteor.Error "it failed miserably"
 
 
-# Template.edit_banner_image_id.events
-#     "change input[type='file']": (e) ->
-#         doc_id = FlowRouter.getParam('doc_id')
-#         files = e.currentTarget.files
-
-
-#         Cloudinary.upload files[0],
-#             # folder:"secret" # optional parameters described in http://cloudinary.com/documentation/upload_images#remote_upload
-#             # type:"private" # optional: makes the image accessible only via a signed url. The signed url is available publicly for 1 hour.
-#             (err,res) -> #optional callback, you can catch with the Cloudinary collection as well
-#                 # console.log "Upload Error: #{err}"
-#                 # console.dir res
-#                 if err
-#                     console.error 'Error uploading', err
-#                 else
-#                     Docs.update doc_id, $set: banner_image_id: res.public_id
-#                 return
-
-#     'keydown #input_banner_image_id': (e,t)->
-#         if e.which is 13
-#             doc_id = FlowRouter.getParam('doc_id')
-#             banner_image_id = $('#input_banner_image_id').val().toLowerCase().trim()
-#             if banner_image_id.length > 0
-#                 Docs.update doc_id,
-#                     $set: banner_image_id: banner_image_id
-#                 $('#input_banner_image_id').val('')
-
-
-
-#     'click #remove_photo': ->
-#         swal {
-#             title: 'Remove Photo?'
-#             type: 'warning'
-#             animation: false
-#             showCancelButton: true
-#             closeOnConfirm: true
-#             cancelButtonText: 'No'
-#             confirmButtonText: 'Remove'
-#             confirmButtonColor: '#da5347'
-#         }, =>
-#             Meteor.call "c.delete_by_public_id", @banner_image_id, (err,res) =>
-#                 if not err
-#                     # Do Stuff with res
-#                     # console.log res
-#                     # console.log @banner_image_id, FlowRouter.getParam('doc_id')
-#                     Docs.update FlowRouter.getParam('doc_id'), 
-#                         $unset: 
-#                             banner_image_id: 1
-
-#                 else
-#                     throw new Meteor.Error "it failed miserably"
-
 Template.edit_linked_image_field.events
+    # todo fix for dymanic
     'click #remove_image_url': ->
         Docs.update FlowRouter.getParam('doc_id'), 
             $unset: 
@@ -533,16 +474,9 @@ Template.edit_transcript_field.onRendered ->
 #             $set: end_datetime: end_datetime
 
 
-Template.field_view_template.helpers
-    field_doc: -> 
-        # console.log @
-        Docs.findOne @valueOf()
+Template.view_text_field.helpers
+    field_doc: -> Docs.findOne Template.parentData(2)
         
-    view_field_template: ->
-        field_doc = Docs.findOne @valueOf()
-        console.log field_doc.field_template
-        if field_doc
-            "view_#{field_doc.field_template}_field"
         
         
         
@@ -565,22 +499,25 @@ Template.edit_field.helpers
     is_linked_image: -> @template is 'linked_image' 
     is_uploaded_image: -> @template is 'uploaded_image' 
        
-Template.field_edit_template.helpers
-    field_doc: -> 
-        # console.log @
-        Docs.findOne @valueOf()
+# Template.field_edit_template.helpers
+#     field_doc: -> 
+#         # console.log @
+#         Docs.findOne @valueOf()
         
-    edit_field_template: ->
-        field_doc = Docs.findOne @valueOf()
-        if field_doc
-            "edit_#{field_doc.field_template}_field"
+#     edit_field_template: ->
+#         field_doc = Docs.findOne @valueOf()
+#         if field_doc
+#             "edit_#{field_doc.field_template}_field"
 
             
 Template.edit_html_field.events
     'blur .froala-container': (e,t)->
         html = t.$('div.froala-reactive-meteorized-override').froalaEditor('html.get', true)
         # console.log 'html', html
-        context_doc = Template.parentData(3)
+        if @type is 'direct'
+            context_doc = Template.parentData(1)
+        else
+            context_doc = Template.parentData(3)
 
         Docs.update context_doc._id,
             $set: "#{@key}": html
@@ -588,11 +525,12 @@ Template.edit_html_field.events
 
 Template.edit_html_field.helpers
     getFEContext: ->
-        # console.log @
-        # console.log Template.parentData(1)
-        # console.log Template.parentData(2)
-        # console.log Template.parentData(3)
-        context_doc = Template.parentData(3)
+        console.log @
+        console.log Template.parentData(1)
+        if @type is 'direct'
+            context_doc = Template.parentData(1)
+        else
+            context_doc = Template.parentData(3)
         # @current_doc = Docs.findOne FlowRouter.getParam 'doc_id'
         # @current_doc = Docs.findOne @_id
         self = @

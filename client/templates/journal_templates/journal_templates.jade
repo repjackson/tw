@@ -36,7 +36,7 @@ template(name='journal_template')
 
                 a(href="/view/#{_id}") #{title}
             .meta
-                +view_tags
+                +view_array_field key='tags'
         .ui.basic.segment
             .ui.list
                 each journal_template_sections

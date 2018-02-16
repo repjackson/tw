@@ -1,3 +1,8 @@
+template(name='action')
+    .ui.basic.circular.icon.button.toggle_action(class=action_button_class data-tooltip=action_doc.title)
+        +icon24 name=action_doc.icon_class classes='ui mini inline image'
+
+
 template(name='thanks_button')
     if said_thanks
         .ui.circular.icon.blue.compact.button.vote_up(data-tooltip="Thank #{author.profile.first_name} for Sharing")

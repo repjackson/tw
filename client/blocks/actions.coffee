@@ -1,3 +1,8 @@
+Template.action.helpers
+    action_doc: -> 
+        # console.log @
+        action_doc = Docs.findOne @valueOf()
+        
 Template.vote_button.helpers
     vote_up_button_class: ->
         if not Meteor.userId() then 'disabled'

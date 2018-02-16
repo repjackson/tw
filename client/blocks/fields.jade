@@ -1,13 +1,33 @@
-template(name='edit_field_template') 
-    .ui.labeled.fluid.input
-        .ui.basic.label Field Template
-        input#field_template(type='text' value=field_template)
-
-template(name='view_field_template') 
-    | Field Type: #{field_template}
-
-
-
+template(name='view_field')
+    if is_array
+        +view_array_field key=key
+    if is_text
+        +view_text_field key=key
+    if is_html
+        +view_html_field key=key
+    if is_youtube
+        +view_youtube_field key=key
+    if is_vimeo
+        +view_vimeo_field key=key
+    if is_linked_image
+        +view_linked_image_field key=key
+        
+    
+template(name='edit_field')
+    if is_text
+        +edit_text_field key=key
+    if is_array
+        +edit_array_field key=key
+    if is_html
+        +edit_html_field key=key
+    if is_youtube
+        +edit_youtube_field key=key
+    if is_vimeo
+        +edit_vimeo_field key=key
+    if is_linked_image
+        +edit_linked_image_field key=key
+    
+    
 
 
 template(name='edit_icon_field')
@@ -75,35 +95,9 @@ template(name='edit_uploaded_image_field')
             //     .ui.input
             //         input#input_image_id(type='text')
 
-// template(name='edit_banner_image_id')
-//     .ui.segment
-//         if banner_image_id
-//             .ui.header
-//                  +icon48 name='image-file' classes='ui mini spaced image'
-//                  |Banner Image
-//             .ui.large.centered.image
-//                 img(src="{{c.url banner_image_id width=500 crop='fit'}}")
-//                 a#remove_photo.ui.top.right.attached.link.basic.label
-//                     +icon48 name='delete' classes='ui tiny spaced image'
-//                 if isInRole 'dev'
-//                     .ui.bottom.right.attached.blue.label Image Id: #{banner_image_id}
-//         else
-//             .ui.labeled.fluid.input
-//                 .ui.basic.label
-//                     +icon48 name='add-image' classes='ui tiny spaced image'
-//                     |Upload Banner Image
-//                 input(type='file' name='upload_picture' accept='image/*')
-//             // if isInRole 'dev'
-//             //     .ui.header or Choose Cloudinary Image Id
-//             //     .ui.input
-//             //         input#input_image_id(type='text')
-
-
-// template(name='view_banner_image_id')
-//     img.ui.centered.image(src="{{c.url banner_image_id width=500 crop='fit'}}")
-        
 template(name='view_uploaded_image_field')
-    img.ui.centered.image(src="{{c.url image_id width=500 crop='fit'}}")
+    if uploaded_image_field_value
+        img.ui.centered.image(src="{{c.url uploaded_image_field_value width=500 crop='fit'}}")
         
 
 template(name='edit_linked_image_field')
@@ -232,27 +226,28 @@ template(name='view_transcript_field')
 //         .ui.header End Date/Time #{end_datetime}
 
 
-template(name='field_view_template')
-    // .ui.secondary.segment
-    //     .ui.header field_doc title: #{field_doc.title}
-    //     .ui.header field_doc field type: #{field_doc.field_template}
-    //     .ui.header field_doc slug: #{field_doc.slug}
-    +Template.dynamic template=view_field_template data=..
+// template(name='field_view_template')
+//     // .ui.secondary.segment
+//     //     .ui.header field_doc title: #{field_doc.title}
+//     //     .ui.header field_doc field type: #{field_doc.field_template}
+//     //     .ui.header field_doc slug: #{field_doc.slug}
+//     +Template.dynamic template=view_field_template data=..
 
-template(name='field_edit_template')
-    // .ui.secondary.segment
-    //     .ui.header field_doc title: #{field_doc.title}
-    //     .ui.header field_doc field type: #{field_doc.field_template}
-    //     .ui.header field_doc slug: #{field_doc.slug}
-    +Template.dynamic template=edit_field_template data=..
+// template(name='field_edit_template')
+//     // .ui.secondary.segment
+//     //     .ui.header field_doc title: #{field_doc.title}
+//     //     .ui.header field_doc field type: #{field_doc.field_template}
+//     //     .ui.header field_doc slug: #{field_doc.slug}
+//     +Template.dynamic template=edit_field_template data=..
 
 
 template(name='view_text_field')
-    if databank_field_template_value
-        .ui.header
-            +icon48 name=field_doc.icon_class classes='ui inline image'
-            |#{field_doc.title}:
-            |#{databank_field_template_value}
+    if is_admin
+        if field_value
+            .ui.header
+                +icon48 name=field_doc.icon_class classes='ui inline image'
+                |#{field_doc.title}:
+                |#{field_value}
     
     
 template(name='edit_string_field')
@@ -271,48 +266,6 @@ template(name='edit_string_field')
 //             |#{field_doc.title}:
 //             |#{databank_field_template_value}
 
-// template(name='view_string_field')
-//     if databank_field_template_value
-//         .ui.header
-//             +icon48 name=field_doc.icon_class classes='ui inline image'
-//             |#{field_doc.title}:
-//             |#{databank_field_template_value}
-    
-    
-    
-    
-template(name='view_field')
-    if is_array
-        +view_array_field key=key
-    if is_text
-        +view_text_field key=key
-    if is_html
-        +view_html_field key=key
-    if is_youtube
-        +view_youtube_field key=key
-    if is_vimeo
-        +view_vimeo_field key=key
-    if is_linked_image
-        +view_linked_image_field key=key
-        
-    
-template(name='edit_field')
-    if is_text
-        +edit_text_field key=key
-    if is_array
-        +edit_array_field key=key
-    if is_html
-        +edit_html_field key=key
-    if is_youtube
-        +edit_youtube_field key=key
-    if is_vimeo
-        +edit_vimeo_field key=key
-    if is_linked_image
-        +edit_linked_image_field key=key
-    
-    
-    
-    
     
 template(name='view_array_field')
     if field_value

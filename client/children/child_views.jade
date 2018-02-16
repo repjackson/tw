@@ -1,6 +1,6 @@
 template(name='edit_response')
     +parent_doc_segment
-    +edit_content
+    +edit_html_field key='content'
     +published
 
 template(name='view_response')
@@ -35,7 +35,7 @@ template(name='edit_download')
     .ui.hidden.divider
     .ui.container.shadowed
         h2.ui.center.aligned.header Edit Download
-        +edit_content
+        +edit_html_field key='content'
         +edit_link
         // +author_info
         // if is_author

@@ -22,7 +22,7 @@ template(name='edit_doc')
                         +Template.dynamic template=edit_type_template
                     else
                         +parent_doc_segment
-                        +edit_content
+                        +edit_html_field key='content'
                         +published
                 .four.wide.column
                     if is_admin
@@ -38,7 +38,7 @@ template(name='edit_doc')
 
 
 // template(name='view_document')
-//     +edit_content
+//     +edit_html_field key='content'
 //     +edit_transcript
 //     +child_docs
 

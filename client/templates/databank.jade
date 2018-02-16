@@ -47,15 +47,16 @@ template(name='databank_card')
                     +view_field template=field_doc.field_template key=field_doc.slug
                 
         .four.wide.column.shadowed-box
-            if slug
-                .content
-                    .meta Slug: #{slug}
             if is_admin
                 div type: #{type}
                 div template: #{template}
+                if slug
+                    .content
+                        .meta Slug: #{slug}
             .content
-                each parent.child_actions
-                    +Template.dynamic template=action_button_template data=..
+                each parent.action_ids
+                    +action
+                    // +Template.dynamic template=action_button_template data=..
                 if child_count
                     |#{child_count} Responses
                 // +published
@@ -72,15 +73,11 @@ template(name='edit_databank')
                 | Details
                 i.dropdown.icon
             .content
-                // +edit_title
                 +edit_text_field key='title'
                 +edit_text_field key='subtitle'
                 +edit_text_field key='child_type'
                 +edit_text_field key='template'
-                // +edit_subtitle
-                // +edit_icon
-                // +edit_child_type
-                // +edit_template
+                +edit_text_field key='icon_class'
             h3.title
                 +icon48 name='shield' classes='ui mini inline image'
                 | Access
@@ -110,14 +107,14 @@ template(name='edit_databank')
                 | Choose Child Fields
                 i.dropdown.icon
             .content
-                // +edit_string_field key='test_key'
                 +edit_child_fields
             h3.title 
                 +icon48 name='sports-mode' classes='ui mini spaced image'
                 | Choose Child Actions
                 i.dropdown.icon
             .content
-                +edit_child_actions
+                +reference_other_children doc_id='wXQCFTLvGMdbQaZzN' key='action_ids'
+                // +edit_child_actions
 
             if isInRole 'dev'
                 h3.title 
