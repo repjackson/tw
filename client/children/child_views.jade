@@ -1,21 +1,21 @@
 template(name='edit_response')
     +parent_doc_segment
-    +edit_html_field key='content'
+    +edit_html_field key='content' type='direct'
     +published
 
 template(name='view_response')
     .ui.padded.stackable.grid
         .centered.row
             .three.wide.column
-                +parent_link
+                // +parent_link
             .ten.wide.column
-                h2.ui.center.aligned.header Response
+                h2.ui.center.aligned.inverted.header Response
             .three.wide.column
         .row.shadowed
             .twelve.wide.column
-                +parent_doc_segment
-                +view_html_field key='content'
+                +parent_doc_accordion
                 .ui.segment
+                    +view_html_field key='content' type='direct'
                     +author_info
                     |#{when}
                     if is_author

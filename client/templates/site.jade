@@ -1,22 +1,22 @@
 template(name='view_site')
-    if slider.enabled
-        unless currentUser
-            +home
-            .ui.hidden.divider
-    // .ui.padded.stackable.grid
-        // .row
-        //     .three.wide.center.aligned.column
-        //     .ten.wide.center.aligned.column
-        //         h1.ui.center.aligned.header 
-        //             +icon48 name=icon_class
-        //             |#{title}
-        //     .three.wide.center.aligned.column
-        //         if can_edit
-        //             +edit_button
+    // if slider.enabled
+    //     unless currentUser
+    //         +home
+    //         .ui.hidden.divider
+    .ui.padded.stackable.grid
+        .row
+            .three.wide.center.aligned.column
+            .ten.wide.center.aligned.column
+                h1.ui.center.aligned.header 
+                    +icon48 name=icon_class
+                    |#{title}
+            .three.wide.center.aligned.column
+                if can_edit
+                    +edit_button
     // +ancestor_facet
     .ui.stackable.centered.four.column.padded.grid
         each public_children
-            .column(data-position='bottom center' data-tooltip=subtitle)
+            .column(data-position='bottom center')
                 a.ui.icon.center.shadowed.aligned.header(href="/view/#{_id}")
                     i.icon
                         +icon96 name=icon_class

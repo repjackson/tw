@@ -20,9 +20,9 @@ template(name='layout')
     // +Template.dynamic template=nav
     +Template.dynamic template=sub_nav
     +Template.dynamic template=main
-    unless isInRole 'dev'
-        +footer
-    else
+    // unless isInRole 'dev'
+    //     // +footer
+    if isInRole 'dev'
         +dev_footer
                     
 

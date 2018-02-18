@@ -514,19 +514,21 @@ Template.edit_html_field.events
     'blur .froala-container': (e,t)->
         html = t.$('div.froala-reactive-meteorized-override').froalaEditor('html.get', true)
         # console.log 'html', html
+        console.log @
         if @type is 'direct'
             context_doc = Template.parentData(1)
         else
             context_doc = Template.parentData(3)
-
+        # console.log context_doc
+        # console.log @type
         Docs.update context_doc._id,
             $set: "#{@key}": html
                 
 
 Template.edit_html_field.helpers
     getFEContext: ->
-        console.log @
-        console.log Template.parentData(1)
+        # console.log @
+        # console.log Template.parentData(1)
         if @type is 'direct'
             context_doc = Template.parentData(1)
         else
@@ -660,14 +662,6 @@ Template.edit_array_field.helpers
             
             
             
-# Template.databank_edit_text_field.events
-#     'blur #text_field_input': (e,t)->
-#         # puling key from parent databank 
-#         field_key = Docs.findOne(Template.parentData(3)).slug
-#         value = $(e.currentTarget).closest('#text_field_input').val()
-#         # console.log value
-#         Docs.update FlowRouter.getParam('doc_id'),
-#             $set: "#{field_key}": value
             
 Template.edit_text_field.events
     'blur #value': (e,t)->
@@ -683,10 +677,22 @@ Template.edit_text_field.events
 #         current_doc = Docs.findOne FlowRouter.getParam('doc_id')
 #         current_doc["#{@key}"]
             
+Template.view_html_field.onRendered ->
+    @autorun =>
+        if @subscriptionsReady()
+            Meteor.setTimeout ->
+                $('.ui.accordion').accordion()
+            , 500
+
             
 Template.view_html_field.helpers
     html_field_value: ->
-        context_doc = Template.parentData(3)
+        if @type is 'direct'
+            context_doc = Template.parentData(1)
+        else
+            context_doc = Template.parentData(3)
+        # console.log context_doc
+        
         context_doc["#{@key}"]
             
             

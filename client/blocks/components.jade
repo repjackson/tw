@@ -81,6 +81,8 @@ template(name='parent_doc_accordion')
             .title
                 +icon48 name='response' classes='avatar'
                 |In response to...
+                if parent.title
+                    |#{parent.title}
                 i.dropdown.icon
             .content
                 with parent

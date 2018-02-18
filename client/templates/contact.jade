@@ -1,28 +1,28 @@
-template(name='view_contact')
-    .ui.container.centered.stackable.padded.grid
-        .seven.wide.centered.column
-            h1.ui.center.aligned.inverted.header Let's Connect!
-            .ui.large.inverted.form
-                .required.field
-                    label Name
-                    input#name(type='text')
-                .field
-                    label Email
-                    input#email(type='email')
-                .field
-                    label Message
-                    textarea#message(rows='4')
-                .field
-                    #send_contact_submission.ui.big.teal.fluid.button
-                        .uppercase Send
-        .seven.wide.column
-            img.ui.centered.image(src="{{c.url 'madbomber' }}")
-            +mailchimp
-            // // h1.ui.center.aligned.header
-            // //     |Want to receive weekly wisdom?
-            // // .ui.form
-            // //     .field
-            // //         label Email
-            // //         input#newsletter_email(type='text')
-            // #newsletter_signup.ui.teal.large.fluid.button
-            //     .uppercase Yes, please send me the light!
+// template(name='view_contact')
+//     .ui.container.centered.stackable.padded.grid
+//         .seven.wide.centered.column
+//             h1.ui.center.aligned.inverted.header Let's Connect!
+//             .ui.large.inverted.form
+//                 .required.field
+//                     label Name
+//                     input#name(type='text')
+//                 .field
+//                     label Email
+//                     input#email(type='email')
+//                 .field
+//                     label Message
+//                     textarea#message(rows='4')
+//                 .field
+//                     #send_contact_submission.ui.big.teal.fluid.button
+//                         .uppercase Send
+//         .seven.wide.column
+//             img.ui.centered.image(src="{{c.url 'madbomber' }}")
+//             +mailchimp
+//             // // h1.ui.center.aligned.header
+//             // //     |Want to receive weekly wisdom?
+//             // // .ui.form
+//             // //     .field
+//             // //         label Email
+//             // //         input#newsletter_email(type='text')
+//             // #newsletter_signup.ui.teal.large.fluid.button
+//             //     .uppercase Yes, please send me the light!

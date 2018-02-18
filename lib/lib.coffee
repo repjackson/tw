@@ -400,7 +400,7 @@ Meteor.methods
 
 FlowRouter.route '/',
   triggersEnter: [ (context, redirect) ->
-    redirect '/view/9639QAQ4yPbMLs7CA'
+    redirect '/view/z3fPCMJnhCLKs2kKK'
     return
  ]
 

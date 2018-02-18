@@ -1,5 +1,6 @@
 Template.view_databank.onCreated ->
     Meteor.subscribe 'fields'
+    Meteor.subscribe 'actions'
 
     @autorun => Meteor.subscribe 'facet', 
         selected_theme_tags.array()
@@ -28,9 +29,9 @@ Template.view_databank.helpers
 
 
     databank_children: ->
-        # Docs.find {parent_id:FlowRouter.getParam('doc_id')},
-        Docs.find {type:'journal'},
-            limit: 10
+        current_doc = Docs.findOne FlowRouter.getParam('doc_id')
+        Docs.find {parent_id:FlowRouter.getParam('doc_id')},
+            limit: parseInt(current_doc.result_size) or 10
     
     facet_template: ->
         # console.log @valueOf()
@@ -41,6 +42,13 @@ Template.view_databank.helpers
                 when 'location_tags' then 'location_facet'
                 when 'intention_tags' then 'intention_facet'
             
+    list_view: -> 
+        current_doc = Docs.findOne FlowRouter.getParam('doc_id')
+        current_doc.view_mode is 'list' or not current_doc.view_mode
+    grid_view: ->
+        current_doc = Docs.findOne FlowRouter.getParam('doc_id')
+        current_doc.view_mode is 'grid'
+
         
         
 Template.edit_databank.onRendered ->
@@ -67,7 +75,6 @@ Template.edit_databank_item.helpers
     
 Template.view_databank_item.helpers
     doc: -> Docs.findOne FlowRouter.getParam('doc_id')
-
 
 Template.toggle_key.helpers
     toggle_key_button_class: -> 
@@ -99,17 +106,31 @@ Template.child_card.onCreated ->
     @autorun => Meteor.subscribe 'child_docs', @data._id
     @autorun => Meteor.subscribe 'author', @data._id
     
-Template.databank_card.onCreated ->
+Template.databank_list_item.onCreated ->
     @autorun => Meteor.subscribe 'child_docs', @data._id
     @autorun => Meteor.subscribe 'author', @data._id
     
-Template.databank_card.helpers
+Template.databank_list_item.helpers
     field_doc: ->
         field_doc = Docs.findOne @valueOf()
         # console.log 'db card field doc slug', field_doc.slug
         # console.log 'db card field doc template', field_doc.field_template
         field_doc
         # Docs.findOne Template.parentData(2)
+
+Template.databank_grid_item.onCreated ->
+    @autorun => Meteor.subscribe 'child_docs', @data._id
+    @autorun => Meteor.subscribe 'author', @data._id
+    
+Template.databank_grid_item.helpers
+    field_doc: ->
+        field_doc = Docs.findOne @valueOf()
+        # console.log 'db card field doc slug', field_doc.slug
+        # console.log 'db card field doc template', field_doc.field_template
+        field_doc
+        # Docs.findOne Template.parentData(2)
+
+
 Template.edit_databank_item.helpers
     field_doc: ->
         field_doc = Docs.findOne @valueOf()
@@ -117,6 +138,8 @@ Template.edit_databank_item.helpers
         # console.log 'db card field doc template', field_doc.field_template
         field_doc
         # Docs.findOne Template.parentData(2)
+
+
 Template.view_databank_item.helpers
     field_doc: ->
         field_doc = Docs.findOne @valueOf()
