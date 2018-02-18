@@ -36,6 +36,7 @@ Template.view_doc.onRendered ->
                 if doc
                     if doc.title
                         document.title = doc.title
+                $('.ui.dropdown').dropdown()
             , 500
     
 

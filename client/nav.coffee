@@ -8,7 +8,7 @@ Template.layout.events
 Template.nav.onCreated ->
     @autorun -> Meteor.subscribe 'me'
     @autorun -> Meteor.subscribe 'child_docs', '9639QAQ4yPbMLs7CA'
-    @autorun -> Meteor.subscribe 'tori_site_doc'
+    # @autorun -> Meteor.subscribe 'tori_site_doc'
 
     
     
@@ -29,6 +29,8 @@ Template.nav.onRendered ->
 
 
 Template.nav.helpers
+    doc: -> Docs.findOne FlowRouter.getParam('doc_id')
+
     # nav_class: -> 
     #     site_doc = Docs.findOne Session.get('current_site_id')
     #     # console.log 'got site doc', Session.get('current_site_id')

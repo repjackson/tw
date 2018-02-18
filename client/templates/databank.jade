@@ -73,7 +73,7 @@ template(name='databank_grid_item')
         if title
             .content
                 // .ui.basic.segment    
-                a.ui.header(href="/view/#{_id}") 
+                a.ui.header.large130(href="/view/#{_id}") 
                     if icon_class
                         +icon48 name=icon_class classes='ui mini inline spaced image'
                     |#{title}
@@ -84,7 +84,8 @@ template(name='databank_grid_item')
                 
         .content
             +author_info
-            |#{when}
+            div
+                |#{when}
         if is_admin
             div type: #{type}
             div template: #{template}
@@ -205,7 +206,6 @@ template(name='view_databank_item')
             .centered.three.wide.column
                 if can_edit
                     +edit_button
-                
         .row
             .twelve.wide.column
                 .ui.form.shadowed-box
@@ -250,6 +250,7 @@ template(name='child_card')
             +author_info
             |#{when}
             +view_html_field key='content' type='direct'
+            +respond_button
             if can_edit
                 +edit_button
         .four.wide.column

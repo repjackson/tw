@@ -6,14 +6,14 @@ template(name='user_layout')
                 with person
                     img.ui.small.centered.rounded.image(src="{{c.url profile.image_id width=400 height=400 gravity='face' crop='fill'}}")
                     .ui.center.aligned.header
-                        if profile.first_name
-                            |#{profile.first_name} #{profile.last_name}
-                        |(#{username})
+                        // if profile.first_name
+                        //     |#{profile.first_name} #{profile.last_name}
+                        |#{username}
                         // unless is_user
                         +staus_indicator
                         if is_user
                             a(href="/profile/edit/#{_id}") 
-                                i.yellow.pencil.icon
+                                i.large.pencil.icon
                     .ui.vertical.fluid.menu
                         a.item(href="/user/#{username}")
                             i.info.icon
@@ -35,33 +35,25 @@ template(name='user_layout')
                         //     |Transactions
                 if is_user
                     .ui.basic.center.aligned.segment
-                        #logout.ui.big.center.aligned.red.button Log Out
+                        #logout.ui.center.aligned.button log out
             .twelve.wide.column.shadowed-box
                 +Template.dynamic template=user_main
 
 
 template(name='user_info')
-    h1.ui.center.aligned.header About
     with person
+        h1.ui.center.aligned.header #{username} profile
         if tags
-            +icon48 name='hashtag' classes='ui inline image'
+            i.large.tags.icon
+            // +icon48 name='tags' classes='ui inline image'
             each tags
-                .user_tag.ui.circular.large.basic.label #{this}
-        if profile.location
-            .ui.header 
-                +icon48 name='user-location'
-                | #{profile.location}
-        if profile.about_me
-            .ui.header About Me
-            |#{profile.about_me}
-        .ui.header My True Colors Are:
-        +color_dots
-        if profile.if_knew_me
-            .ui.header If you really knew me you would know…
-            |#{profile.if_knew_me}
-        if profile.if_not_working
-            .ui.header If I am not at work or in class then I am probably…
-            |#{profile.if_not_working}
+                .user_tag.ui.large.basic.label #{this}
+        if profile.sex_position
+            .ui.header favorite sex position
+            |#{profile.sex_position}
+        if profile.spirit_animal
+            .ui.header spirit animal
+            |#{profile.spirit_animal}
         //     +profile_stripe
         // else
         //     .centered.row

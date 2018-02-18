@@ -9,8 +9,8 @@ template(name='view_notifications')
             .four.wide.center.aligned.column
         .centered.row
             .four.wide.column
-                div
-                    +read_filter
+                // div
+                //     +read_filter
                 +tag_facet
                 +timestamp_facet
                 .ui.hidden.divider
@@ -52,6 +52,6 @@ template(name='notification')
                             | #{when}
                     .extra.text
                         p !{content}
-                    .meta
-                        +mark_read_button
+                    // .meta
+                    //     +mark_read_button
                         // +session_delete_button
