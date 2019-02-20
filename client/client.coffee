@@ -196,6 +196,6 @@ Template.staus_indicator.helpers
 
 
 
-Meteor.startup ->
-    Status.setTemplate('semantic_ui')
+# Meteor.startup ->
+#     Status.setTemplate('semantic_ui')
 # new FlowRouterTitle(FlowRouter);
